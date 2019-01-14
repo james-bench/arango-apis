@@ -20,7 +20,7 @@ service ResourceManagerService {
     rpc GetOrganizations(common.ListOptions) returns (OrganizationList);
     // Fetch an organization by its id.
     // The authenticated user must be a member of the organization.
-    rpc GetOrganization(common.GetOptions) returns (Organization);
+    rpc GetOrganization(common.IDOptions) returns (Organization);
     // Create a new organization
     rpc CreateOrganization(Organization) returns (Organization);
     // Update an organization
@@ -31,18 +31,18 @@ service ResourceManagerService {
     rpc DeleteOrganization(Organization) returns (common.Empty);
 
     // Get a list of members of the organization identified by the given ID.
-    rpc GetOrganizationMembers(common.GetOptions) returns (MemberList);
+    rpc GetOrganizationMembers(common.IDOptions) returns (MemberList);
     // Add one or more members to an organization.
     rpc AddOrganizationMembers(OrganizationMembersRequest) returns (common.Empty);
     // Remove one or more members from an organization.
     rpc DeleteOrganizationMembers(OrganizationMembersRequest) returns (common.Empty);
 
-    // Fetch all projects in the organization identified by the given ID.
-    // The authenticated user must be a member of the organization identifier by the given ID.
-    rpc GetProjects(GetProjectsOptions) returns (ProjectList);
+    // Fetch all projects in the organization identified by the given context ID.
+    // The authenticated user must be a member of the organization identifier by the given context ID.
+    rpc GetProjects(common.ListOptions) returns (ProjectList);
     // Fetch a project by its id.
     // The authenticated user must be a member of the organization that owns the project.
-    rpc GetProject(common.GetOptions) returns (Project);
+    rpc GetProject(common.IDOptions) returns (Project);
     // Create a new project
     // The authenticated user must be a member of the organization that owns the project.
     rpc CreateProject(Project) returns (Project);
@@ -62,14 +62,15 @@ message Organization {
     // System identifier of the organization.
     // This is a read-only value.
     string id = 1;
-    // Name of the organization
-    string name = 2; 
-    // Description of the organization
-    string description = 3; 
-    // Set when this organization is deleted
-    bool is_deleted = 4;
     // URL of this resource
-    string url = 5;
+    // This is a read-only value and cannot be initialized.
+    string url = 2;
+    // Name of the organization
+    string name = 3; 
+    // Description of the organization
+    string description = 4; 
+    // Set when this organization is deleted
+    bool is_deleted = 5;
 }
 
 // List of organizations.
@@ -104,27 +105,20 @@ message Project {
     // This is a read-only value.
     // It can be set when creating the project.
     string id = 1;
-    // Name of the project
-    string name = 2; 
-    // Description of the project
-    string description = 3; 
-    // Identifier of the organization that owns this project.
-    string organization_id = 4;
-    // Set when this project is deleted
-    bool is_deleted = 5;
     // URL of this resource
-    string url = 6;
+    // This is a read-only value and cannot be initialized.
+    string url = 2;
+    // Name of the project
+    string name = 3; 
+    // Description of the project
+    string description = 4; 
+    // Identifier of the organization that owns this project.
+    string organization_id = 5;
+    // Set when this project is deleted
+    bool is_deleted = 6;
 }
 
 // List of Projects.
 message ProjectList {
     repeated Project items = 1;
-}
-
-// Options for a GetProjects request.
-message GetProjectsOptions {
-    // Identifier of the organization of the projects to fetch.
-    string organization_id = 1;
-    // Optional list options
-    common.ListOptions list_options = 2;
 }

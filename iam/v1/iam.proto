@@ -16,16 +16,78 @@ import "common/v1/common.proto";
 
 // IAMService is the API used to configure IAM objects.
 service IAMService {
+    // Fetch all groups of the organization identified by the given context ID.
+    rpc GetGroups(common.ListOptions) returns (GroupList);
+    // Fetch a group by its id.
+    rpc GetGroup(common.IDOptions) returns (Group);
+    // Create a group
+    rpc CreateGroup(Group) returns (Group);
+    // Update a group
+    // Note that the `member_user_ids` field is only updated when it is set.
+    // Use Add/DeleteGroupMembers to add/remove individual members.
+    rpc UpdateGroup(Group) returns (Group);
+    // Delete a group
+    rpc DeleteGroup(Group) returns (common.Empty);
+    // Add one or more members to the group identified by given ID.
+    rpc AddGroupMembers(GroupMembersRequest) returns (Group);
+    // Remove one or more members from the group identified by given ID.
+    rpc DeleteGroupMembers(GroupMembersRequest) returns (Group);
+    // Is the authenticated user a member of the group with the given ID.
+    rpc IsMemberOfGroup(common.IDOptions) returns (common.YesOrNo);
+
     // Fetch all role by its id.
     rpc GetRoles(common.ListOptions) returns (RoleList);
     // Fetch a role by its id.
-    rpc GetRole(common.GetOptions) returns (Role);
+    rpc GetRole(common.IDOptions) returns (Role);
     // Create a custom role
     rpc CreateRole(Role) returns (Role);
     // Update a custom role
     rpc UpdateRole(Role) returns (Role);
     // Delete a custom role
     rpc DeleteRole(Role) returns (common.Empty);
+    
+    // Get the policy for a resource identified by given URL.
+    rpc GetPolicy(common.URLOptions) returns (Policy);
+    // Add one or more RoleBindings to the policy of a resource identified by given URL.
+    rpc AddRoleBindings(RoleBindingsRequest) returns (Policy);
+    // Remove one or more RoleBindings from the policy of a resource identified by given URL.
+    rpc DeleteRoleBindings(RoleBindingsRequest) returns (Policy);
+    // Return the list of permissions that are available to the currently authenticated
+    // used for actions on the resource identified by the given URL.
+    rpc GetEffectivePermissions(common.URLOptions) returns (PermissionList);
+}
+
+// Group of user accounts.
+message Group {
+    // System identifier of the group.
+    // This is a read-only value.
+    string id = 1;
+    // Identifier of the organization that owns this group.
+    string organization_id = 2;
+    // Name of the group
+    string name = 3; 
+    // Description of the group
+    string description = 4; 
+    // Members of the group as list of user IDs
+    repeated string member_user_ids = 5;
+}
+
+// List of groups.
+message GroupList {
+    repeated Group items = 1;
+}
+
+// Request arguments for Add/DeleteGroupMembers.
+message GroupMembersRequest {
+    // ID of the group to add/remove members to/from.
+    string group_id = 1;
+    // Role bindings to add/remove to the policy.
+    repeated RoleBinding member_user_ids = 2;    
+}
+
+// List of permissions.
+message PermissionList {
+    repeated string items = 1;
 }
 
 // A role is a list of permissions.
@@ -34,15 +96,18 @@ message Role {
     // System identifier of the role.
     // This is a read-only value.
     string id = 1;
+    // Identifier of the organization that owns this role.
+    // This value is undefined for predefined roles.
+    string organization_id = 2;
     // Name of the role
-    string name = 2; 
+    string name = 3; 
     // Description of the role
-    string description = 3; 
+    string description = 4; 
     // Permissions to grant when this role is bound.
-    repeated string permissions = 4;
+    repeated string permissions = 5;
     // Set if this role is predefined.
     // This is a read-only value.
-    bool is_predefined = 5;
+    bool is_predefined = 6;
 }
 
 // List of roles.
@@ -56,12 +121,28 @@ message RoleBinding {
     // This is a read-only value.
     string id = 1;
     // Identifier of the member to bind a role to
-    string member = 2;
+    string member_id = 2;
     // Identifier of the Role to grant to member
-    string role = 3;
+    string role_id = 3;
 }
 
 // List of role bindings.
 message RoleBindingList {
     repeated RoleBinding items = 1;
+}
+
+// Policy bindings members to roles for access to a resource.
+message Policy {
+    // URL of the resource to which this policy applies.
+    string resource_url = 1;
+    // Role bindings to apply to the resource.
+    repeated RoleBinding bindings = 2;
+}
+
+// Request arguments for Add/DeleteRoleBindings.
+message RoleBindingsRequest {
+    // URL of the resource to add/remove policy binding to/from.
+    string resource_url = 1;
+    // Role bindings to add/remove to the policy.
+    repeated RoleBinding bindings = 2;    
 }

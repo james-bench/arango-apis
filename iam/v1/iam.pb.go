@@ -26,21 +26,264 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
+// Group of user accounts.
+type Group struct {
+	// System identifier of the group.
+	// This is a read-only value.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Identifier of the organization that owns this group.
+	OrganizationId string `protobuf:"bytes,2,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	// Name of the group
+	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	// Description of the group
+	Description string `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	// Members of the group as list of user IDs
+	MemberUserIds        []string `protobuf:"bytes,5,rep,name=member_user_ids,json=memberUserIds" json:"member_user_ids,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Group) Reset()         { *m = Group{} }
+func (m *Group) String() string { return proto.CompactTextString(m) }
+func (*Group) ProtoMessage()    {}
+func (*Group) Descriptor() ([]byte, []int) {
+	return fileDescriptor_iam_0c48b91fdbbf1d0c, []int{0}
+}
+func (m *Group) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Group) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Group.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *Group) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Group.Merge(dst, src)
+}
+func (m *Group) XXX_Size() int {
+	return m.Size()
+}
+func (m *Group) XXX_DiscardUnknown() {
+	xxx_messageInfo_Group.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Group proto.InternalMessageInfo
+
+func (m *Group) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *Group) GetOrganizationId() string {
+	if m != nil {
+		return m.OrganizationId
+	}
+	return ""
+}
+
+func (m *Group) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *Group) GetDescription() string {
+	if m != nil {
+		return m.Description
+	}
+	return ""
+}
+
+func (m *Group) GetMemberUserIds() []string {
+	if m != nil {
+		return m.MemberUserIds
+	}
+	return nil
+}
+
+// List of groups.
+type GroupList struct {
+	Items                []*Group `protobuf:"bytes,1,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GroupList) Reset()         { *m = GroupList{} }
+func (m *GroupList) String() string { return proto.CompactTextString(m) }
+func (*GroupList) ProtoMessage()    {}
+func (*GroupList) Descriptor() ([]byte, []int) {
+	return fileDescriptor_iam_0c48b91fdbbf1d0c, []int{1}
+}
+func (m *GroupList) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GroupList) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GroupList.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *GroupList) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GroupList.Merge(dst, src)
+}
+func (m *GroupList) XXX_Size() int {
+	return m.Size()
+}
+func (m *GroupList) XXX_DiscardUnknown() {
+	xxx_messageInfo_GroupList.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GroupList proto.InternalMessageInfo
+
+func (m *GroupList) GetItems() []*Group {
+	if m != nil {
+		return m.Items
+	}
+	return nil
+}
+
+// Request arguments for Add/DeleteGroupMembers.
+type GroupMembersRequest struct {
+	// ID of the group to add/remove members to/from.
+	GroupId string `protobuf:"bytes,1,opt,name=group_id,json=groupId,proto3" json:"group_id,omitempty"`
+	// Role bindings to add/remove to the policy.
+	MemberUserIds        []*RoleBinding `protobuf:"bytes,2,rep,name=member_user_ids,json=memberUserIds" json:"member_user_ids,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *GroupMembersRequest) Reset()         { *m = GroupMembersRequest{} }
+func (m *GroupMembersRequest) String() string { return proto.CompactTextString(m) }
+func (*GroupMembersRequest) ProtoMessage()    {}
+func (*GroupMembersRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_iam_0c48b91fdbbf1d0c, []int{2}
+}
+func (m *GroupMembersRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GroupMembersRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GroupMembersRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *GroupMembersRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GroupMembersRequest.Merge(dst, src)
+}
+func (m *GroupMembersRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *GroupMembersRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GroupMembersRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GroupMembersRequest proto.InternalMessageInfo
+
+func (m *GroupMembersRequest) GetGroupId() string {
+	if m != nil {
+		return m.GroupId
+	}
+	return ""
+}
+
+func (m *GroupMembersRequest) GetMemberUserIds() []*RoleBinding {
+	if m != nil {
+		return m.MemberUserIds
+	}
+	return nil
+}
+
+// List of permissions.
+type PermissionList struct {
+	Items                []string `protobuf:"bytes,1,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *PermissionList) Reset()         { *m = PermissionList{} }
+func (m *PermissionList) String() string { return proto.CompactTextString(m) }
+func (*PermissionList) ProtoMessage()    {}
+func (*PermissionList) Descriptor() ([]byte, []int) {
+	return fileDescriptor_iam_0c48b91fdbbf1d0c, []int{3}
+}
+func (m *PermissionList) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PermissionList) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PermissionList.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *PermissionList) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PermissionList.Merge(dst, src)
+}
+func (m *PermissionList) XXX_Size() int {
+	return m.Size()
+}
+func (m *PermissionList) XXX_DiscardUnknown() {
+	xxx_messageInfo_PermissionList.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PermissionList proto.InternalMessageInfo
+
+func (m *PermissionList) GetItems() []string {
+	if m != nil {
+		return m.Items
+	}
+	return nil
+}
+
 // A role is a list of permissions.
 // Roles can be bound to resources for members.
 type Role struct {
 	// System identifier of the role.
 	// This is a read-only value.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Identifier of the organization that owns this role.
+	// This value is undefined for predefined roles.
+	OrganizationId string `protobuf:"bytes,2,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
 	// Name of the role
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
 	// Description of the role
-	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	Description string `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
 	// Permissions to grant when this role is bound.
-	Permissions []string `protobuf:"bytes,4,rep,name=permissions" json:"permissions,omitempty"`
+	Permissions []string `protobuf:"bytes,5,rep,name=permissions" json:"permissions,omitempty"`
 	// Set if this role is predefined.
 	// This is a read-only value.
-	IsPredefined         bool     `protobuf:"varint,5,opt,name=is_predefined,json=isPredefined,proto3" json:"is_predefined,omitempty"`
+	IsPredefined         bool     `protobuf:"varint,6,opt,name=is_predefined,json=isPredefined,proto3" json:"is_predefined,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -50,7 +293,7 @@ func (m *Role) Reset()         { *m = Role{} }
 func (m *Role) String() string { return proto.CompactTextString(m) }
 func (*Role) ProtoMessage()    {}
 func (*Role) Descriptor() ([]byte, []int) {
-	return fileDescriptor_iam_d9abd71545e52fb9, []int{0}
+	return fileDescriptor_iam_0c48b91fdbbf1d0c, []int{4}
 }
 func (m *Role) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -82,6 +325,13 @@ var xxx_messageInfo_Role proto.InternalMessageInfo
 func (m *Role) GetId() string {
 	if m != nil {
 		return m.Id
+	}
+	return ""
+}
+
+func (m *Role) GetOrganizationId() string {
+	if m != nil {
+		return m.OrganizationId
 	}
 	return ""
 }
@@ -126,7 +376,7 @@ func (m *RoleList) Reset()         { *m = RoleList{} }
 func (m *RoleList) String() string { return proto.CompactTextString(m) }
 func (*RoleList) ProtoMessage()    {}
 func (*RoleList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_iam_d9abd71545e52fb9, []int{1}
+	return fileDescriptor_iam_0c48b91fdbbf1d0c, []int{5}
 }
 func (m *RoleList) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -168,9 +418,9 @@ type RoleBinding struct {
 	// This is a read-only value.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Identifier of the member to bind a role to
-	Member string `protobuf:"bytes,2,opt,name=member,proto3" json:"member,omitempty"`
+	MemberId string `protobuf:"bytes,2,opt,name=member_id,json=memberId,proto3" json:"member_id,omitempty"`
 	// Identifier of the Role to grant to member
-	Role                 string   `protobuf:"bytes,3,opt,name=role,proto3" json:"role,omitempty"`
+	RoleId               string   `protobuf:"bytes,3,opt,name=role_id,json=roleId,proto3" json:"role_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -180,7 +430,7 @@ func (m *RoleBinding) Reset()         { *m = RoleBinding{} }
 func (m *RoleBinding) String() string { return proto.CompactTextString(m) }
 func (*RoleBinding) ProtoMessage()    {}
 func (*RoleBinding) Descriptor() ([]byte, []int) {
-	return fileDescriptor_iam_d9abd71545e52fb9, []int{2}
+	return fileDescriptor_iam_0c48b91fdbbf1d0c, []int{6}
 }
 func (m *RoleBinding) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -216,16 +466,16 @@ func (m *RoleBinding) GetId() string {
 	return ""
 }
 
-func (m *RoleBinding) GetMember() string {
+func (m *RoleBinding) GetMemberId() string {
 	if m != nil {
-		return m.Member
+		return m.MemberId
 	}
 	return ""
 }
 
-func (m *RoleBinding) GetRole() string {
+func (m *RoleBinding) GetRoleId() string {
 	if m != nil {
-		return m.Role
+		return m.RoleId
 	}
 	return ""
 }
@@ -242,7 +492,7 @@ func (m *RoleBindingList) Reset()         { *m = RoleBindingList{} }
 func (m *RoleBindingList) String() string { return proto.CompactTextString(m) }
 func (*RoleBindingList) ProtoMessage()    {}
 func (*RoleBindingList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_iam_d9abd71545e52fb9, []int{3}
+	return fileDescriptor_iam_0c48b91fdbbf1d0c, []int{7}
 }
 func (m *RoleBindingList) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -278,11 +528,133 @@ func (m *RoleBindingList) GetItems() []*RoleBinding {
 	return nil
 }
 
+// Policy bindings members to roles for access to a resource.
+type Policy struct {
+	// URL of the resource to which this policy applies.
+	ResourceUrl string `protobuf:"bytes,1,opt,name=resource_url,json=resourceUrl,proto3" json:"resource_url,omitempty"`
+	// Role bindings to apply to the resource.
+	Bindings             []*RoleBinding `protobuf:"bytes,2,rep,name=bindings" json:"bindings,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *Policy) Reset()         { *m = Policy{} }
+func (m *Policy) String() string { return proto.CompactTextString(m) }
+func (*Policy) ProtoMessage()    {}
+func (*Policy) Descriptor() ([]byte, []int) {
+	return fileDescriptor_iam_0c48b91fdbbf1d0c, []int{8}
+}
+func (m *Policy) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Policy) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Policy.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *Policy) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Policy.Merge(dst, src)
+}
+func (m *Policy) XXX_Size() int {
+	return m.Size()
+}
+func (m *Policy) XXX_DiscardUnknown() {
+	xxx_messageInfo_Policy.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Policy proto.InternalMessageInfo
+
+func (m *Policy) GetResourceUrl() string {
+	if m != nil {
+		return m.ResourceUrl
+	}
+	return ""
+}
+
+func (m *Policy) GetBindings() []*RoleBinding {
+	if m != nil {
+		return m.Bindings
+	}
+	return nil
+}
+
+// Request arguments for Add/DeleteRoleBindings.
+type RoleBindingsRequest struct {
+	// URL of the resource to add/remove policy binding to/from.
+	ResourceUrl string `protobuf:"bytes,1,opt,name=resource_url,json=resourceUrl,proto3" json:"resource_url,omitempty"`
+	// Role bindings to add/remove to the policy.
+	Bindings             []*RoleBinding `protobuf:"bytes,2,rep,name=bindings" json:"bindings,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *RoleBindingsRequest) Reset()         { *m = RoleBindingsRequest{} }
+func (m *RoleBindingsRequest) String() string { return proto.CompactTextString(m) }
+func (*RoleBindingsRequest) ProtoMessage()    {}
+func (*RoleBindingsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_iam_0c48b91fdbbf1d0c, []int{9}
+}
+func (m *RoleBindingsRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *RoleBindingsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_RoleBindingsRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *RoleBindingsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RoleBindingsRequest.Merge(dst, src)
+}
+func (m *RoleBindingsRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *RoleBindingsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_RoleBindingsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RoleBindingsRequest proto.InternalMessageInfo
+
+func (m *RoleBindingsRequest) GetResourceUrl() string {
+	if m != nil {
+		return m.ResourceUrl
+	}
+	return ""
+}
+
+func (m *RoleBindingsRequest) GetBindings() []*RoleBinding {
+	if m != nil {
+		return m.Bindings
+	}
+	return nil
+}
+
 func init() {
+	proto.RegisterType((*Group)(nil), "iam.Group")
+	proto.RegisterType((*GroupList)(nil), "iam.GroupList")
+	proto.RegisterType((*GroupMembersRequest)(nil), "iam.GroupMembersRequest")
+	proto.RegisterType((*PermissionList)(nil), "iam.PermissionList")
 	proto.RegisterType((*Role)(nil), "iam.Role")
 	proto.RegisterType((*RoleList)(nil), "iam.RoleList")
 	proto.RegisterType((*RoleBinding)(nil), "iam.RoleBinding")
 	proto.RegisterType((*RoleBindingList)(nil), "iam.RoleBindingList")
+	proto.RegisterType((*Policy)(nil), "iam.Policy")
+	proto.RegisterType((*RoleBindingsRequest)(nil), "iam.RoleBindingsRequest")
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -297,16 +669,43 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type IAMServiceClient interface {
+	// Fetch all groups of the organization identified by the given context ID.
+	GetGroups(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*GroupList, error)
+	// Fetch a group by its id.
+	GetGroup(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*Group, error)
+	// Create a group
+	CreateGroup(ctx context.Context, in *Group, opts ...grpc.CallOption) (*Group, error)
+	// Update a group
+	// Note that the `member_user_ids` field is only updated when it is set.
+	// Use Add/DeleteGroupMembers to add/remove individual members.
+	UpdateGroup(ctx context.Context, in *Group, opts ...grpc.CallOption) (*Group, error)
+	// Delete a group
+	DeleteGroup(ctx context.Context, in *Group, opts ...grpc.CallOption) (*v1.Empty, error)
+	// Add one or more members to the group identified by given ID.
+	AddGroupMembers(ctx context.Context, in *GroupMembersRequest, opts ...grpc.CallOption) (*Group, error)
+	// Remove one or more members from the group identified by given ID.
+	DeleteGroupMembers(ctx context.Context, in *GroupMembersRequest, opts ...grpc.CallOption) (*Group, error)
+	// Is the authenticated user a member of the group with the given ID.
+	IsMemberOfGroup(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.YesOrNo, error)
 	// Fetch all role by its id.
 	GetRoles(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*RoleList, error)
 	// Fetch a role by its id.
-	GetRole(ctx context.Context, in *v1.GetOptions, opts ...grpc.CallOption) (*Role, error)
+	GetRole(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*Role, error)
 	// Create a custom role
 	CreateRole(ctx context.Context, in *Role, opts ...grpc.CallOption) (*Role, error)
 	// Update a custom role
 	UpdateRole(ctx context.Context, in *Role, opts ...grpc.CallOption) (*Role, error)
 	// Delete a custom role
 	DeleteRole(ctx context.Context, in *Role, opts ...grpc.CallOption) (*v1.Empty, error)
+	// Get the policy for a resource identified by given URL.
+	GetPolicy(ctx context.Context, in *v1.URLOptions, opts ...grpc.CallOption) (*Policy, error)
+	// Add one or more RoleBindings to the policy of a resource identified by given URL.
+	AddRoleBindings(ctx context.Context, in *RoleBindingsRequest, opts ...grpc.CallOption) (*Policy, error)
+	// Remove one or more RoleBindings from the policy of a resource identified by given URL.
+	DeleteRoleBindings(ctx context.Context, in *RoleBindingsRequest, opts ...grpc.CallOption) (*Policy, error)
+	// Return the list of permissions that are available to the currently authenticated
+	// used for actions on the resource identified by the given URL.
+	GetEffectivePermissions(ctx context.Context, in *v1.URLOptions, opts ...grpc.CallOption) (*PermissionList, error)
 }
 
 type iAMServiceClient struct {
@@ -315,6 +714,78 @@ type iAMServiceClient struct {
 
 func NewIAMServiceClient(cc *grpc.ClientConn) IAMServiceClient {
 	return &iAMServiceClient{cc}
+}
+
+func (c *iAMServiceClient) GetGroups(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*GroupList, error) {
+	out := new(GroupList)
+	err := c.cc.Invoke(ctx, "/iam.IAMService/GetGroups", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iAMServiceClient) GetGroup(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*Group, error) {
+	out := new(Group)
+	err := c.cc.Invoke(ctx, "/iam.IAMService/GetGroup", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iAMServiceClient) CreateGroup(ctx context.Context, in *Group, opts ...grpc.CallOption) (*Group, error) {
+	out := new(Group)
+	err := c.cc.Invoke(ctx, "/iam.IAMService/CreateGroup", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iAMServiceClient) UpdateGroup(ctx context.Context, in *Group, opts ...grpc.CallOption) (*Group, error) {
+	out := new(Group)
+	err := c.cc.Invoke(ctx, "/iam.IAMService/UpdateGroup", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iAMServiceClient) DeleteGroup(ctx context.Context, in *Group, opts ...grpc.CallOption) (*v1.Empty, error) {
+	out := new(v1.Empty)
+	err := c.cc.Invoke(ctx, "/iam.IAMService/DeleteGroup", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iAMServiceClient) AddGroupMembers(ctx context.Context, in *GroupMembersRequest, opts ...grpc.CallOption) (*Group, error) {
+	out := new(Group)
+	err := c.cc.Invoke(ctx, "/iam.IAMService/AddGroupMembers", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iAMServiceClient) DeleteGroupMembers(ctx context.Context, in *GroupMembersRequest, opts ...grpc.CallOption) (*Group, error) {
+	out := new(Group)
+	err := c.cc.Invoke(ctx, "/iam.IAMService/DeleteGroupMembers", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iAMServiceClient) IsMemberOfGroup(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.YesOrNo, error) {
+	out := new(v1.YesOrNo)
+	err := c.cc.Invoke(ctx, "/iam.IAMService/IsMemberOfGroup", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *iAMServiceClient) GetRoles(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*RoleList, error) {
@@ -326,7 +797,7 @@ func (c *iAMServiceClient) GetRoles(ctx context.Context, in *v1.ListOptions, opt
 	return out, nil
 }
 
-func (c *iAMServiceClient) GetRole(ctx context.Context, in *v1.GetOptions, opts ...grpc.CallOption) (*Role, error) {
+func (c *iAMServiceClient) GetRole(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*Role, error) {
 	out := new(Role)
 	err := c.cc.Invoke(ctx, "/iam.IAMService/GetRole", in, out, opts...)
 	if err != nil {
@@ -362,22 +833,229 @@ func (c *iAMServiceClient) DeleteRole(ctx context.Context, in *Role, opts ...grp
 	return out, nil
 }
 
+func (c *iAMServiceClient) GetPolicy(ctx context.Context, in *v1.URLOptions, opts ...grpc.CallOption) (*Policy, error) {
+	out := new(Policy)
+	err := c.cc.Invoke(ctx, "/iam.IAMService/GetPolicy", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iAMServiceClient) AddRoleBindings(ctx context.Context, in *RoleBindingsRequest, opts ...grpc.CallOption) (*Policy, error) {
+	out := new(Policy)
+	err := c.cc.Invoke(ctx, "/iam.IAMService/AddRoleBindings", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iAMServiceClient) DeleteRoleBindings(ctx context.Context, in *RoleBindingsRequest, opts ...grpc.CallOption) (*Policy, error) {
+	out := new(Policy)
+	err := c.cc.Invoke(ctx, "/iam.IAMService/DeleteRoleBindings", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iAMServiceClient) GetEffectivePermissions(ctx context.Context, in *v1.URLOptions, opts ...grpc.CallOption) (*PermissionList, error) {
+	out := new(PermissionList)
+	err := c.cc.Invoke(ctx, "/iam.IAMService/GetEffectivePermissions", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IAMServiceServer is the server API for IAMService service.
 type IAMServiceServer interface {
+	// Fetch all groups of the organization identified by the given context ID.
+	GetGroups(context.Context, *v1.ListOptions) (*GroupList, error)
+	// Fetch a group by its id.
+	GetGroup(context.Context, *v1.IDOptions) (*Group, error)
+	// Create a group
+	CreateGroup(context.Context, *Group) (*Group, error)
+	// Update a group
+	// Note that the `member_user_ids` field is only updated when it is set.
+	// Use Add/DeleteGroupMembers to add/remove individual members.
+	UpdateGroup(context.Context, *Group) (*Group, error)
+	// Delete a group
+	DeleteGroup(context.Context, *Group) (*v1.Empty, error)
+	// Add one or more members to the group identified by given ID.
+	AddGroupMembers(context.Context, *GroupMembersRequest) (*Group, error)
+	// Remove one or more members from the group identified by given ID.
+	DeleteGroupMembers(context.Context, *GroupMembersRequest) (*Group, error)
+	// Is the authenticated user a member of the group with the given ID.
+	IsMemberOfGroup(context.Context, *v1.IDOptions) (*v1.YesOrNo, error)
 	// Fetch all role by its id.
 	GetRoles(context.Context, *v1.ListOptions) (*RoleList, error)
 	// Fetch a role by its id.
-	GetRole(context.Context, *v1.GetOptions) (*Role, error)
+	GetRole(context.Context, *v1.IDOptions) (*Role, error)
 	// Create a custom role
 	CreateRole(context.Context, *Role) (*Role, error)
 	// Update a custom role
 	UpdateRole(context.Context, *Role) (*Role, error)
 	// Delete a custom role
 	DeleteRole(context.Context, *Role) (*v1.Empty, error)
+	// Get the policy for a resource identified by given URL.
+	GetPolicy(context.Context, *v1.URLOptions) (*Policy, error)
+	// Add one or more RoleBindings to the policy of a resource identified by given URL.
+	AddRoleBindings(context.Context, *RoleBindingsRequest) (*Policy, error)
+	// Remove one or more RoleBindings from the policy of a resource identified by given URL.
+	DeleteRoleBindings(context.Context, *RoleBindingsRequest) (*Policy, error)
+	// Return the list of permissions that are available to the currently authenticated
+	// used for actions on the resource identified by the given URL.
+	GetEffectivePermissions(context.Context, *v1.URLOptions) (*PermissionList, error)
 }
 
 func RegisterIAMServiceServer(s *grpc.Server, srv IAMServiceServer) {
 	s.RegisterService(&_IAMService_serviceDesc, srv)
+}
+
+func _IAMService_GetGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.ListOptions)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IAMServiceServer).GetGroups(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/iam.IAMService/GetGroups",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IAMServiceServer).GetGroups(ctx, req.(*v1.ListOptions))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IAMService_GetGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.IDOptions)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IAMServiceServer).GetGroup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/iam.IAMService/GetGroup",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IAMServiceServer).GetGroup(ctx, req.(*v1.IDOptions))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IAMService_CreateGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Group)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IAMServiceServer).CreateGroup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/iam.IAMService/CreateGroup",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IAMServiceServer).CreateGroup(ctx, req.(*Group))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IAMService_UpdateGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Group)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IAMServiceServer).UpdateGroup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/iam.IAMService/UpdateGroup",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IAMServiceServer).UpdateGroup(ctx, req.(*Group))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IAMService_DeleteGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Group)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IAMServiceServer).DeleteGroup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/iam.IAMService/DeleteGroup",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IAMServiceServer).DeleteGroup(ctx, req.(*Group))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IAMService_AddGroupMembers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GroupMembersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IAMServiceServer).AddGroupMembers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/iam.IAMService/AddGroupMembers",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IAMServiceServer).AddGroupMembers(ctx, req.(*GroupMembersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IAMService_DeleteGroupMembers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GroupMembersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IAMServiceServer).DeleteGroupMembers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/iam.IAMService/DeleteGroupMembers",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IAMServiceServer).DeleteGroupMembers(ctx, req.(*GroupMembersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IAMService_IsMemberOfGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.IDOptions)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IAMServiceServer).IsMemberOfGroup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/iam.IAMService/IsMemberOfGroup",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IAMServiceServer).IsMemberOfGroup(ctx, req.(*v1.IDOptions))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _IAMService_GetRoles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -399,7 +1077,7 @@ func _IAMService_GetRoles_Handler(srv interface{}, ctx context.Context, dec func
 }
 
 func _IAMService_GetRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.GetOptions)
+	in := new(v1.IDOptions)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -411,7 +1089,7 @@ func _IAMService_GetRole_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: "/iam.IAMService/GetRole",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IAMServiceServer).GetRole(ctx, req.(*v1.GetOptions))
+		return srv.(IAMServiceServer).GetRole(ctx, req.(*v1.IDOptions))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -470,10 +1148,114 @@ func _IAMService_DeleteRole_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _IAMService_GetPolicy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.URLOptions)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IAMServiceServer).GetPolicy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/iam.IAMService/GetPolicy",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IAMServiceServer).GetPolicy(ctx, req.(*v1.URLOptions))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IAMService_AddRoleBindings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RoleBindingsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IAMServiceServer).AddRoleBindings(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/iam.IAMService/AddRoleBindings",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IAMServiceServer).AddRoleBindings(ctx, req.(*RoleBindingsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IAMService_DeleteRoleBindings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RoleBindingsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IAMServiceServer).DeleteRoleBindings(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/iam.IAMService/DeleteRoleBindings",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IAMServiceServer).DeleteRoleBindings(ctx, req.(*RoleBindingsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IAMService_GetEffectivePermissions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.URLOptions)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IAMServiceServer).GetEffectivePermissions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/iam.IAMService/GetEffectivePermissions",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IAMServiceServer).GetEffectivePermissions(ctx, req.(*v1.URLOptions))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _IAMService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "iam.IAMService",
 	HandlerType: (*IAMServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetGroups",
+			Handler:    _IAMService_GetGroups_Handler,
+		},
+		{
+			MethodName: "GetGroup",
+			Handler:    _IAMService_GetGroup_Handler,
+		},
+		{
+			MethodName: "CreateGroup",
+			Handler:    _IAMService_CreateGroup_Handler,
+		},
+		{
+			MethodName: "UpdateGroup",
+			Handler:    _IAMService_UpdateGroup_Handler,
+		},
+		{
+			MethodName: "DeleteGroup",
+			Handler:    _IAMService_DeleteGroup_Handler,
+		},
+		{
+			MethodName: "AddGroupMembers",
+			Handler:    _IAMService_AddGroupMembers_Handler,
+		},
+		{
+			MethodName: "DeleteGroupMembers",
+			Handler:    _IAMService_DeleteGroupMembers_Handler,
+		},
+		{
+			MethodName: "IsMemberOfGroup",
+			Handler:    _IAMService_IsMemberOfGroup_Handler,
+		},
 		{
 			MethodName: "GetRoles",
 			Handler:    _IAMService_GetRoles_Handler,
@@ -494,9 +1276,193 @@ var _IAMService_serviceDesc = grpc.ServiceDesc{
 			MethodName: "DeleteRole",
 			Handler:    _IAMService_DeleteRole_Handler,
 		},
+		{
+			MethodName: "GetPolicy",
+			Handler:    _IAMService_GetPolicy_Handler,
+		},
+		{
+			MethodName: "AddRoleBindings",
+			Handler:    _IAMService_AddRoleBindings_Handler,
+		},
+		{
+			MethodName: "DeleteRoleBindings",
+			Handler:    _IAMService_DeleteRoleBindings_Handler,
+		},
+		{
+			MethodName: "GetEffectivePermissions",
+			Handler:    _IAMService_GetEffectivePermissions_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "iam.proto",
+}
+
+func (m *Group) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Group) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Id) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Id)))
+		i += copy(dAtA[i:], m.Id)
+	}
+	if len(m.OrganizationId) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(len(m.OrganizationId)))
+		i += copy(dAtA[i:], m.OrganizationId)
+	}
+	if len(m.Name) > 0 {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Name)))
+		i += copy(dAtA[i:], m.Name)
+	}
+	if len(m.Description) > 0 {
+		dAtA[i] = 0x22
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Description)))
+		i += copy(dAtA[i:], m.Description)
+	}
+	if len(m.MemberUserIds) > 0 {
+		for _, s := range m.MemberUserIds {
+			dAtA[i] = 0x2a
+			i++
+			l = len(s)
+			for l >= 1<<7 {
+				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
+				l >>= 7
+				i++
+			}
+			dAtA[i] = uint8(l)
+			i++
+			i += copy(dAtA[i:], s)
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *GroupList) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GroupList) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Items) > 0 {
+		for _, msg := range m.Items {
+			dAtA[i] = 0xa
+			i++
+			i = encodeVarintIam(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *GroupMembersRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GroupMembersRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.GroupId) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(len(m.GroupId)))
+		i += copy(dAtA[i:], m.GroupId)
+	}
+	if len(m.MemberUserIds) > 0 {
+		for _, msg := range m.MemberUserIds {
+			dAtA[i] = 0x12
+			i++
+			i = encodeVarintIam(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *PermissionList) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PermissionList) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Items) > 0 {
+		for _, s := range m.Items {
+			dAtA[i] = 0xa
+			i++
+			l = len(s)
+			for l >= 1<<7 {
+				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
+				l >>= 7
+				i++
+			}
+			dAtA[i] = uint8(l)
+			i++
+			i += copy(dAtA[i:], s)
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *Role) Marshal() (dAtA []byte, err error) {
@@ -520,21 +1486,27 @@ func (m *Role) MarshalTo(dAtA []byte) (int, error) {
 		i = encodeVarintIam(dAtA, i, uint64(len(m.Id)))
 		i += copy(dAtA[i:], m.Id)
 	}
-	if len(m.Name) > 0 {
+	if len(m.OrganizationId) > 0 {
 		dAtA[i] = 0x12
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(len(m.OrganizationId)))
+		i += copy(dAtA[i:], m.OrganizationId)
+	}
+	if len(m.Name) > 0 {
+		dAtA[i] = 0x1a
 		i++
 		i = encodeVarintIam(dAtA, i, uint64(len(m.Name)))
 		i += copy(dAtA[i:], m.Name)
 	}
 	if len(m.Description) > 0 {
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x22
 		i++
 		i = encodeVarintIam(dAtA, i, uint64(len(m.Description)))
 		i += copy(dAtA[i:], m.Description)
 	}
 	if len(m.Permissions) > 0 {
 		for _, s := range m.Permissions {
-			dAtA[i] = 0x22
+			dAtA[i] = 0x2a
 			i++
 			l = len(s)
 			for l >= 1<<7 {
@@ -548,7 +1520,7 @@ func (m *Role) MarshalTo(dAtA []byte) (int, error) {
 		}
 	}
 	if m.IsPredefined {
-		dAtA[i] = 0x28
+		dAtA[i] = 0x30
 		i++
 		if m.IsPredefined {
 			dAtA[i] = 1
@@ -617,17 +1589,17 @@ func (m *RoleBinding) MarshalTo(dAtA []byte) (int, error) {
 		i = encodeVarintIam(dAtA, i, uint64(len(m.Id)))
 		i += copy(dAtA[i:], m.Id)
 	}
-	if len(m.Member) > 0 {
+	if len(m.MemberId) > 0 {
 		dAtA[i] = 0x12
 		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Member)))
-		i += copy(dAtA[i:], m.Member)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.MemberId)))
+		i += copy(dAtA[i:], m.MemberId)
 	}
-	if len(m.Role) > 0 {
+	if len(m.RoleId) > 0 {
 		dAtA[i] = 0x1a
 		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Role)))
-		i += copy(dAtA[i:], m.Role)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.RoleId)))
+		i += copy(dAtA[i:], m.RoleId)
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -668,6 +1640,84 @@ func (m *RoleBindingList) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
+func (m *Policy) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Policy) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.ResourceUrl) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(len(m.ResourceUrl)))
+		i += copy(dAtA[i:], m.ResourceUrl)
+	}
+	if len(m.Bindings) > 0 {
+		for _, msg := range m.Bindings {
+			dAtA[i] = 0x12
+			i++
+			i = encodeVarintIam(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *RoleBindingsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *RoleBindingsRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.ResourceUrl) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(len(m.ResourceUrl)))
+		i += copy(dAtA[i:], m.ResourceUrl)
+	}
+	if len(m.Bindings) > 0 {
+		for _, msg := range m.Bindings {
+			dAtA[i] = 0x12
+			i++
+			i = encodeVarintIam(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
 func encodeVarintIam(dAtA []byte, offset int, v uint64) int {
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
@@ -677,6 +1727,98 @@ func encodeVarintIam(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return offset + 1
 }
+func (m *Group) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovIam(uint64(l))
+	}
+	l = len(m.OrganizationId)
+	if l > 0 {
+		n += 1 + l + sovIam(uint64(l))
+	}
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovIam(uint64(l))
+	}
+	l = len(m.Description)
+	if l > 0 {
+		n += 1 + l + sovIam(uint64(l))
+	}
+	if len(m.MemberUserIds) > 0 {
+		for _, s := range m.MemberUserIds {
+			l = len(s)
+			n += 1 + l + sovIam(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *GroupList) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Items) > 0 {
+		for _, e := range m.Items {
+			l = e.Size()
+			n += 1 + l + sovIam(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *GroupMembersRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.GroupId)
+	if l > 0 {
+		n += 1 + l + sovIam(uint64(l))
+	}
+	if len(m.MemberUserIds) > 0 {
+		for _, e := range m.MemberUserIds {
+			l = e.Size()
+			n += 1 + l + sovIam(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *PermissionList) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Items) > 0 {
+		for _, s := range m.Items {
+			l = len(s)
+			n += 1 + l + sovIam(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *Role) Size() (n int) {
 	if m == nil {
 		return 0
@@ -684,6 +1826,10 @@ func (m *Role) Size() (n int) {
 	var l int
 	_ = l
 	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovIam(uint64(l))
+	}
+	l = len(m.OrganizationId)
 	if l > 0 {
 		n += 1 + l + sovIam(uint64(l))
 	}
@@ -738,11 +1884,11 @@ func (m *RoleBinding) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovIam(uint64(l))
 	}
-	l = len(m.Member)
+	l = len(m.MemberId)
 	if l > 0 {
 		n += 1 + l + sovIam(uint64(l))
 	}
-	l = len(m.Role)
+	l = len(m.RoleId)
 	if l > 0 {
 		n += 1 + l + sovIam(uint64(l))
 	}
@@ -770,6 +1916,50 @@ func (m *RoleBindingList) Size() (n int) {
 	return n
 }
 
+func (m *Policy) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ResourceUrl)
+	if l > 0 {
+		n += 1 + l + sovIam(uint64(l))
+	}
+	if len(m.Bindings) > 0 {
+		for _, e := range m.Bindings {
+			l = e.Size()
+			n += 1 + l + sovIam(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *RoleBindingsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ResourceUrl)
+	if l > 0 {
+		n += 1 + l + sovIam(uint64(l))
+	}
+	if len(m.Bindings) > 0 {
+		for _, e := range m.Bindings {
+			l = e.Size()
+			n += 1 + l + sovIam(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func sovIam(x uint64) (n int) {
 	for {
 		n++
@@ -782,6 +1972,475 @@ func sovIam(x uint64) (n int) {
 }
 func sozIam(x uint64) (n int) {
 	return sovIam(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *Group) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowIam
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Group: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Group: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OrganizationId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OrganizationId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Description = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MemberUserIds", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.MemberUserIds = append(m.MemberUserIds, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipIam(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GroupList) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowIam
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GroupList: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GroupList: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Items", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Items = append(m.Items, &Group{})
+			if err := m.Items[len(m.Items)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipIam(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GroupMembersRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowIam
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GroupMembersRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GroupMembersRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field GroupId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.GroupId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MemberUserIds", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.MemberUserIds = append(m.MemberUserIds, &RoleBinding{})
+			if err := m.MemberUserIds[len(m.MemberUserIds)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipIam(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *PermissionList) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowIam
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: PermissionList: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: PermissionList: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Items", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Items = append(m.Items, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipIam(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
 }
 func (m *Role) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -843,6 +2502,35 @@ func (m *Role) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OrganizationId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OrganizationId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
 			}
 			var stringLen uint64
@@ -870,7 +2558,7 @@ func (m *Role) Unmarshal(dAtA []byte) error {
 			}
 			m.Name = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 3:
+		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
 			}
@@ -899,7 +2587,7 @@ func (m *Role) Unmarshal(dAtA []byte) error {
 			}
 			m.Description = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 4:
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Permissions", wireType)
 			}
@@ -928,7 +2616,7 @@ func (m *Role) Unmarshal(dAtA []byte) error {
 			}
 			m.Permissions = append(m.Permissions, string(dAtA[iNdEx:postIndex]))
 			iNdEx = postIndex
-		case 5:
+		case 6:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field IsPredefined", wireType)
 			}
@@ -1112,7 +2800,7 @@ func (m *RoleBinding) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Member", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field MemberId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -1137,11 +2825,11 @@ func (m *RoleBinding) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Member = string(dAtA[iNdEx:postIndex])
+			m.MemberId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Role", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field RoleId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -1166,7 +2854,7 @@ func (m *RoleBinding) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Role = string(dAtA[iNdEx:postIndex])
+			m.RoleId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -1247,6 +2935,228 @@ func (m *RoleBindingList) Unmarshal(dAtA []byte) error {
 			}
 			m.Items = append(m.Items, &RoleBinding{})
 			if err := m.Items[len(m.Items)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipIam(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Policy) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowIam
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Policy: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Policy: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ResourceUrl", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ResourceUrl = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Bindings", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Bindings = append(m.Bindings, &RoleBinding{})
+			if err := m.Bindings[len(m.Bindings)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipIam(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *RoleBindingsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowIam
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RoleBindingsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RoleBindingsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ResourceUrl", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ResourceUrl = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Bindings", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Bindings = append(m.Bindings, &RoleBinding{})
+			if err := m.Bindings[len(m.Bindings)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -1377,33 +3287,54 @@ var (
 	ErrIntOverflowIam   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("iam.proto", fileDescriptor_iam_d9abd71545e52fb9) }
+func init() { proto.RegisterFile("iam.proto", fileDescriptor_iam_0c48b91fdbbf1d0c) }
 
-var fileDescriptor_iam_d9abd71545e52fb9 = []byte{
-	// 396 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x92, 0xc1, 0x6a, 0x14, 0x41,
-	0x10, 0x86, 0xed, 0xdd, 0x4d, 0xdc, 0xad, 0x75, 0x55, 0x5a, 0x08, 0x43, 0x0e, 0xe3, 0x30, 0x42,
-	0x1c, 0x10, 0x67, 0x48, 0x3c, 0xe5, 0x68, 0x54, 0x42, 0x40, 0x51, 0x46, 0xbc, 0x78, 0x91, 0x9e,
-	0xed, 0x72, 0x2c, 0xd8, 0xee, 0x1e, 0xba, 0xdb, 0x05, 0x9f, 0xc3, 0x8b, 0x8f, 0xe4, 0xd1, 0x93,
-	0x67, 0x59, 0x5f, 0x44, 0xba, 0x77, 0x32, 0x59, 0x0d, 0x78, 0xab, 0xfa, 0xeb, 0xa3, 0xfe, 0xfe,
-	0x8b, 0x86, 0x19, 0x09, 0x55, 0x76, 0xd6, 0x78, 0xc3, 0xc7, 0x24, 0xd4, 0xe1, 0xc1, 0xd2, 0x28,
-	0x65, 0x74, 0xb5, 0x3e, 0xae, 0xb6, 0xd5, 0x76, 0x98, 0x7f, 0x65, 0x30, 0xa9, 0xcd, 0x0a, 0xf9,
-	0x6d, 0x18, 0x91, 0x4c, 0x58, 0xc6, 0x8a, 0x59, 0x3d, 0x22, 0xc9, 0x39, 0x4c, 0xb4, 0x50, 0x98,
-	0x8c, 0xa2, 0x12, 0x6b, 0x9e, 0xc1, 0x5c, 0xa2, 0x5b, 0x5a, 0xea, 0x3c, 0x19, 0x9d, 0x8c, 0xe3,
-	0x68, 0x57, 0x0a, 0x44, 0x87, 0x56, 0x91, 0x73, 0x64, 0xb4, 0x4b, 0x26, 0xd9, 0x38, 0x10, 0x3b,
-	0x12, 0x7f, 0x00, 0x0b, 0x72, 0x1f, 0x3a, 0x8b, 0x12, 0x3f, 0x92, 0x46, 0x99, 0xec, 0x65, 0xac,
-	0x98, 0xd6, 0xb7, 0xc8, 0xbd, 0x19, 0xb4, 0xfc, 0x11, 0x4c, 0xc3, 0xa3, 0x5e, 0x92, 0xf3, 0xfc,
-	0x3e, 0xec, 0x91, 0x47, 0xe5, 0x12, 0x96, 0x8d, 0x8b, 0xf9, 0xc9, 0xac, 0x0c, 0xc9, 0xc2, 0xb4,
-	0xde, 0xea, 0xf9, 0x05, 0xcc, 0x43, 0x7b, 0x46, 0x5a, 0x92, 0x6e, 0xaf, 0x05, 0x39, 0x80, 0x7d,
-	0x85, 0xaa, 0x41, 0xdb, 0x47, 0xe9, 0xbb, 0x10, 0xd0, 0x9a, 0x15, 0xf6, 0x29, 0x62, 0x9d, 0x9f,
-	0xc2, 0x9d, 0x9d, 0x55, 0xd1, 0xfe, 0xe8, 0x6f, 0xfb, 0xbb, 0x83, 0x7d, 0x0f, 0xf5, 0xaf, 0x38,
-	0xf9, 0xc9, 0x00, 0x2e, 0x9e, 0xbe, 0x7a, 0x8b, 0x76, 0x4d, 0x4b, 0xe4, 0x25, 0x4c, 0xcf, 0xd1,
-	0x07, 0xce, 0xf1, 0x7b, 0x65, 0x7f, 0xf2, 0xb0, 0xf0, 0x75, 0x3c, 0x94, 0x3b, 0x5c, 0x0c, 0x8b,
-	0xa2, 0x4d, 0x01, 0x37, 0x7b, 0x9e, 0xf3, 0x4b, 0xfc, 0x1c, 0x07, 0xfa, 0x2a, 0x35, 0xcf, 0x01,
-	0x9e, 0x59, 0x14, 0x1e, 0x63, 0x77, 0x35, 0xf8, 0x87, 0x79, 0xd7, 0xc9, 0xff, 0x33, 0x47, 0x00,
-	0xcf, 0x71, 0x85, 0xd7, 0x99, 0xc5, 0xa5, 0xff, 0x0b, 0xd5, 0xf9, 0x2f, 0x67, 0xa7, 0xdf, 0x37,
-	0x29, 0xfb, 0xb1, 0x49, 0xd9, 0xaf, 0x4d, 0xca, 0xbe, 0xfd, 0x4e, 0x6f, 0xbc, 0x7f, 0xd8, 0x92,
-	0xff, 0xf4, 0xb9, 0x09, 0x58, 0x25, 0xac, 0xd0, 0xad, 0x91, 0xcd, 0x63, 0x25, 0xb4, 0x68, 0x51,
-	0x56, 0xa2, 0x23, 0x57, 0x91, 0x50, 0xd5, 0xfa, 0xb8, 0xd9, 0x8f, 0x7f, 0xec, 0xc9, 0x9f, 0x00,
-	0x00, 0x00, 0xff, 0xff, 0xa0, 0x3c, 0x64, 0x22, 0x8d, 0x02, 0x00, 0x00,
+var fileDescriptor_iam_0c48b91fdbbf1d0c = []byte{
+	// 733 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x55, 0xdd, 0x6e, 0x12, 0x5b,
+	0x14, 0x3e, 0x03, 0x2d, 0x65, 0xd6, 0x14, 0x38, 0x67, 0x73, 0x72, 0x3a, 0xa7, 0x26, 0x88, 0x18,
+	0x29, 0xc6, 0x16, 0x6c, 0x8d, 0xb1, 0xd5, 0xab, 0xd6, 0x36, 0xcd, 0x24, 0xad, 0x25, 0xd3, 0x70,
+	0x51, 0x6f, 0xc8, 0xc0, 0x5e, 0xe0, 0x36, 0xcc, 0x8f, 0x7b, 0x0f, 0x24, 0xf5, 0x49, 0xbc, 0xf2,
+	0x49, 0x4c, 0xbc, 0xf5, 0xd2, 0x47, 0x30, 0xf5, 0x45, 0xcc, 0xec, 0xf9, 0x61, 0xa0, 0x54, 0xa3,
+	0x31, 0xde, 0xb1, 0xd7, 0xf7, 0xad, 0xb5, 0xbf, 0xf5, 0xad, 0xbd, 0x06, 0x50, 0x99, 0x65, 0x37,
+	0x3d, 0xee, 0xfa, 0x2e, 0xc9, 0x32, 0xcb, 0x5e, 0xff, 0xaf, 0xef, 0xda, 0xb6, 0xeb, 0xb4, 0x26,
+	0xdb, 0xad, 0xf0, 0x57, 0x08, 0xd6, 0xde, 0x2b, 0xb0, 0x7c, 0xcc, 0xdd, 0xb1, 0x47, 0x8a, 0x90,
+	0x61, 0x54, 0x57, 0xaa, 0x4a, 0x43, 0x35, 0x33, 0x8c, 0x92, 0x0d, 0x28, 0xb9, 0x7c, 0x68, 0x39,
+	0xec, 0xad, 0xe5, 0x33, 0xd7, 0xe9, 0x32, 0xaa, 0x67, 0x24, 0x58, 0x4c, 0x87, 0x0d, 0x4a, 0x08,
+	0x2c, 0x39, 0x96, 0x8d, 0x7a, 0x56, 0xa2, 0xf2, 0x37, 0xa9, 0x82, 0x46, 0x51, 0xf4, 0x39, 0xf3,
+	0x02, 0x92, 0xbe, 0x24, 0xa1, 0x74, 0x88, 0xd4, 0xa1, 0x64, 0xa3, 0xdd, 0x43, 0xde, 0x1d, 0x0b,
+	0xe4, 0x5d, 0x46, 0x85, 0xbe, 0x5c, 0xcd, 0x36, 0x54, 0xb3, 0x10, 0x86, 0x3b, 0x02, 0xb9, 0x41,
+	0x45, 0x6d, 0x0b, 0x54, 0xa9, 0xef, 0x84, 0x09, 0x9f, 0x54, 0x61, 0x99, 0xf9, 0x68, 0x0b, 0x5d,
+	0xa9, 0x66, 0x1b, 0xda, 0x0e, 0x34, 0x83, 0x2e, 0x25, 0x6c, 0x86, 0x40, 0xed, 0x35, 0x94, 0xe5,
+	0xf9, 0x54, 0x16, 0x11, 0x26, 0xbe, 0x19, 0xa3, 0xf0, 0xc9, 0xff, 0x90, 0x1f, 0x06, 0xe1, 0x6e,
+	0xd2, 0xe2, 0x8a, 0x3c, 0x1b, 0x94, 0xec, 0x5e, 0x17, 0x92, 0x91, 0xd5, 0xff, 0x96, 0xd5, 0x4d,
+	0x77, 0x84, 0x07, 0xcc, 0xa1, 0xcc, 0x19, 0xce, 0x4b, 0xab, 0x43, 0xb1, 0x8d, 0xdc, 0x66, 0x42,
+	0x30, 0xd7, 0x91, 0xfa, 0xfe, 0x4d, 0xeb, 0x53, 0x63, 0x4d, 0x1f, 0x14, 0x58, 0x0a, 0xca, 0xfc,
+	0x69, 0x8b, 0xab, 0xa0, 0x79, 0x89, 0xbe, 0xd8, 0xde, 0x74, 0x88, 0xdc, 0x85, 0x02, 0x13, 0x5d,
+	0x8f, 0x23, 0xc5, 0x01, 0x73, 0x90, 0xea, 0xb9, 0xaa, 0xd2, 0xc8, 0x9b, 0xab, 0x4c, 0xb4, 0x93,
+	0x58, 0xed, 0x01, 0xe4, 0x03, 0xf5, 0xb2, 0xc1, 0xdb, 0xb3, 0x03, 0x50, 0x13, 0x8b, 0xe2, 0x5e,
+	0xcf, 0x41, 0x4b, 0x39, 0x76, 0xad, 0xe3, 0x5b, 0xa0, 0x46, 0x66, 0x27, 0xbd, 0xe6, 0xc3, 0x80,
+	0x41, 0xc9, 0x1a, 0xac, 0x70, 0x77, 0x84, 0x01, 0x14, 0x36, 0x9a, 0x0b, 0x8e, 0x06, 0xad, 0xed,
+	0x41, 0x29, 0x55, 0x54, 0x0a, 0xa9, 0xcf, 0x0a, 0xb9, 0x3e, 0xab, 0x48, 0xcf, 0x05, 0xe4, 0xda,
+	0xee, 0x88, 0xf5, 0x2f, 0xc9, 0x1d, 0x58, 0xe5, 0x28, 0xdc, 0x31, 0xef, 0x63, 0x77, 0xcc, 0x47,
+	0x91, 0x28, 0x2d, 0x8e, 0x75, 0xf8, 0x88, 0x6c, 0x42, 0xbe, 0x17, 0xa6, 0xdf, 0xfc, 0x06, 0x12,
+	0x46, 0x6d, 0x00, 0xe5, 0x14, 0x90, 0x3c, 0xb5, 0xdf, 0x7d, 0xcf, 0xce, 0xc7, 0x1c, 0x80, 0xb1,
+	0x7f, 0x7a, 0x8e, 0x7c, 0xc2, 0xfa, 0x48, 0x1e, 0x82, 0x7a, 0x8c, 0xbe, 0x7c, 0xe4, 0x82, 0x94,
+	0x9b, 0xd1, 0x36, 0x07, 0xa6, 0x9c, 0xc9, 0xb1, 0x8b, 0xf5, 0xe2, 0x74, 0x2d, 0xa4, 0x57, 0xf7,
+	0x21, 0x1f, 0x67, 0x90, 0x7f, 0xe2, 0x04, 0xe3, 0x30, 0xa6, 0xa7, 0xb6, 0x88, 0xdc, 0x03, 0xed,
+	0x39, 0x47, 0xcb, 0xc7, 0xf0, 0x98, 0x82, 0xe6, 0x69, 0x1d, 0x8f, 0xfe, 0x90, 0xd6, 0x00, 0xed,
+	0x10, 0x47, 0xb8, 0x88, 0x56, 0x88, 0x75, 0x1c, 0xd9, 0x9e, 0x7f, 0x49, 0x9e, 0x40, 0x69, 0x9f,
+	0xd2, 0xf4, 0xe6, 0x12, 0x7d, 0xca, 0x9e, 0x5d, 0xe6, 0x99, 0x2b, 0x9e, 0x02, 0x49, 0x5d, 0xf1,
+	0x73, 0xb9, 0x8f, 0xa1, 0x64, 0x88, 0x10, 0x3f, 0x1b, 0xdc, 0x68, 0x4f, 0x29, 0x0e, 0x5d, 0xa0,
+	0x38, 0xe3, 0x2f, 0x5c, 0xd2, 0x94, 0x76, 0x06, 0xb3, 0xba, 0xc1, 0xff, 0x42, 0x32, 0x4c, 0x69,
+	0xff, 0x06, 0xac, 0x44, 0xfc, 0x45, 0xe5, 0xa7, 0x2b, 0x44, 0x6a, 0x00, 0xa1, 0xf9, 0xf2, 0x34,
+	0x05, 0xe6, 0x38, 0xa1, 0xf3, 0xdf, 0xe1, 0xd4, 0x01, 0x42, 0x4f, 0xe6, 0x39, 0x73, 0xa6, 0x6f,
+	0xca, 0x97, 0x14, 0xad, 0x07, 0x89, 0xb1, 0x8e, 0x79, 0x12, 0x6b, 0xd3, 0x64, 0x6a, 0x44, 0xd8,
+	0x95, 0x23, 0x4a, 0xbf, 0xf8, 0xc8, 0xe6, 0x05, 0x4b, 0x30, 0x9b, 0xf9, 0x2c, 0x9e, 0xd1, 0xaf,
+	0x24, 0x1f, 0xc0, 0xda, 0x31, 0xfa, 0x47, 0x83, 0x01, 0xf6, 0x7d, 0x36, 0xc1, 0x76, 0xea, 0xeb,
+	0xb5, 0x48, 0x72, 0x39, 0xcc, 0x9d, 0xf9, 0x2c, 0x1f, 0xec, 0x7d, 0xba, 0xaa, 0x28, 0x9f, 0xaf,
+	0x2a, 0xca, 0x97, 0xab, 0x8a, 0xf2, 0xee, 0x6b, 0xe5, 0xaf, 0x97, 0x1b, 0x43, 0xe6, 0xbf, 0x1a,
+	0xf7, 0x82, 0x02, 0x2d, 0x8b, 0x5b, 0xce, 0xd0, 0xa5, 0xbd, 0x2d, 0xdb, 0x72, 0xac, 0x21, 0xd2,
+	0x96, 0xe5, 0x31, 0xd1, 0x62, 0x96, 0xdd, 0x9a, 0x6c, 0xf7, 0x72, 0xf2, 0x6f, 0xf2, 0xd1, 0xb7,
+	0x00, 0x00, 0x00, 0xff, 0xff, 0x81, 0xcd, 0x52, 0xc8, 0x50, 0x07, 0x00, 0x00,
 }
