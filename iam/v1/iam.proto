@@ -1,0 +1,67 @@
+// 
+// DISCLAIMER
+// 
+// Copyright 2019 ArangoDB Inc, Cologne, Germany
+// 
+// Author Ewout Prangsma
+// 
+
+syntax = "proto3";
+
+package iam;
+
+option go_package = "github.com/arangodb-managed/apis/iam/v1";
+
+import "common/v1/common.proto";
+
+// IAMService is the API used to configure IAM objects.
+service IAMService {
+    // Fetch all role by its id.
+    rpc GetRoles(common.ListOptions) returns (RoleList);
+    // Fetch a role by its id.
+    rpc GetRole(common.GetOptions) returns (Role);
+    // Create a custom role
+    rpc CreateRole(Role) returns (Role);
+    // Update a custom role
+    rpc UpdateRole(Role) returns (Role);
+    // Delete a custom role
+    rpc DeleteRole(Role) returns (common.Empty);
+}
+
+// A role is a list of permissions.
+// Roles can be bound to resources for members.
+message Role {   
+    // System identifier of the role.
+    // This is a read-only value.
+    string id = 1;
+    // Name of the role
+    string name = 2; 
+    // Description of the role
+    string description = 3; 
+    // Permissions to grant when this role is bound.
+    repeated string permissions = 4;
+    // Set if this role is predefined.
+    // This is a read-only value.
+    bool is_predefined = 5;
+}
+
+// List of roles.
+message RoleList {
+    repeated Role items = 1;
+}
+
+// RoleBinding binds a Role to a member.
+message RoleBinding {
+    // System identifier of the role-binding.
+    // This is a read-only value.
+    string id = 1;
+    // Identifier of the member to bind a role to
+    string member = 2;
+    // Identifier of the Role to grant to member
+    string role = 3;
+}
+
+// List of role bindings.
+message RoleBindingList {
+    repeated RoleBinding items = 1;
+}
