@@ -84,7 +84,8 @@ message OrganizationList {
     repeated Organization items = 1;
 }
 
-// Member of an organization
+// Member of an organization.
+// A member is always a user.
 message Member {
     // Identifier of the user
     string user_id = 1;
@@ -101,8 +102,11 @@ message MemberList {
 message OrganizationMembersRequest {
     // Identifier of the organization to add/remove a user from
     string organization_id = 1;
-    // Identifiers of the users to add/remove
-    repeated string user_ids = 2;
+    // Users to add/remove.
+    // For every user, an owner flag is provided as well.
+    // If you add an existing user, the owner flag or the add request
+    // will overwrite the value of the existing owner flag.
+    MemberList members = 2;
 }
 
 // A Project is represents a unit within an organization such as a department.
