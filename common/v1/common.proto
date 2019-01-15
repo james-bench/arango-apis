@@ -1,0 +1,44 @@
+// 
+// DISCLAIMER
+// 
+// Copyright 2019 ArangoDB Inc, Cologne, Germany
+// 
+// Author Ewout Prangsma
+// 
+
+syntax = "proto3";
+
+package common;
+
+option go_package = "github.com/arangodb-managed/apis/common/v1";
+
+// Empty message
+message Empty {}
+
+// Options for a list request.
+message ListOptions {
+    // Maximum number of items to return.
+    // If not specified, all remaining items are returned.
+    int32 page_size = 1;
+    // Page to start with (defaults to 0).
+    int64 page = 2;
+    // Identifier of the resource in which the list request is made.
+    string context_id = 3;
+}
+
+// Options for a get-by-id request
+message IDOptions {
+    // System identifier of the object to fetch.
+    string id = 1;
+}
+
+// Options for a get-by-url request
+message URLOptions {
+    // URL of the resource to fetch.
+    string url = 1;
+}
+
+// Response for single boolean.
+message YesOrNo {
+    bool result = 1;
+}

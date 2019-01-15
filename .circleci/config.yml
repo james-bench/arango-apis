@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.11.3
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: make build-image all
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build
