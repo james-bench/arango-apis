@@ -14,10 +14,12 @@ option go_package = "github.com/arangodb-managed/apis/resourcemanager/v1";
 
 import "common/v1/common.proto";
 
+import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
+
 // ResourceManagerService is the API used to configure basic resource objects.
 service ResourceManagerService {
     // Fetch all organizations that the authenticated user is a member of.
-    rpc GetOrganizations(common.ListOptions) returns (OrganizationList);
+    rpc ListOrganizations(common.ListOptions) returns (OrganizationList);
     // Fetch an organization by its id.
     // The authenticated user must be a member of the organization.
     rpc GetOrganization(common.IDOptions) returns (Organization);
@@ -31,7 +33,7 @@ service ResourceManagerService {
     rpc DeleteOrganization(Organization) returns (common.Empty);
 
     // Get a list of members of the organization identified by the given ID.
-    rpc GetOrganizationMembers(common.IDOptions) returns (MemberList);
+    rpc ListOrganizationMembers(common.IDOptions) returns (MemberList);
     // Add one or more members to an organization.
     rpc AddOrganizationMembers(OrganizationMembersRequest) returns (common.Empty);
     // Remove one or more members from an organization.
@@ -39,7 +41,7 @@ service ResourceManagerService {
 
     // Fetch all projects in the organization identified by the given context ID.
     // The authenticated user must be a member of the organization identifier by the given context ID.
-    rpc GetProjects(common.ListOptions) returns (ProjectList);
+    rpc ListProjects(common.ListOptions) returns (ProjectList);
     // Fetch a project by its id.
     // The authenticated user must be a member of the organization that owns the project.
     rpc GetProject(common.IDOptions) returns (Project);
@@ -71,6 +73,10 @@ message Organization {
     string description = 4; 
     // Set when this organization is deleted
     bool is_deleted = 5;
+    // The creation timestamp of the organization
+    google.protobuf.Timestamp created_at = 6;
+    // The deletion timestamp of the organization
+    google.protobuf.Timestamp deleted_at = 7;
 }
 
 // List of organizations.
@@ -116,6 +122,10 @@ message Project {
     string organization_id = 5;
     // Set when this project is deleted
     bool is_deleted = 6;
+    // The creation timestamp of the project
+    google.protobuf.Timestamp created_at = 7;
+    // The deletion timestamp of the project
+    google.protobuf.Timestamp deleted_at = 8;
 }
 
 // List of Projects.

@@ -14,10 +14,17 @@ option go_package = "github.com/arangodb-managed/apis/iam/v1";
 
 import "common/v1/common.proto";
 
+import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
+
 // IAMService is the API used to configure IAM objects.
 service IAMService {
+    // Fetch all available information of the currently authenticated user.
+    rpc GetThisUser(common.Empty) returns (User);
+    // Fetch all available information of the user identified by the given ID.
+    rpc GetUser(common.IDOptions) returns (User);
+
     // Fetch all groups of the organization identified by the given context ID.
-    rpc GetGroups(common.ListOptions) returns (GroupList);
+    rpc ListGroups(common.ListOptions) returns (GroupList);
     // Fetch a group by its id.
     rpc GetGroup(common.IDOptions) returns (Group);
     // Create a group
@@ -28,6 +35,9 @@ service IAMService {
     rpc UpdateGroup(Group) returns (Group);
     // Delete a group
     rpc DeleteGroup(Group) returns (common.Empty);
+
+    // List of members of the group identified by the given ID.
+    rpc ListGroupMembers(common.IDOptions) returns (GroupMemberList);
     // Add one or more members to the group identified by given ID.
     rpc AddGroupMembers(GroupMembersRequest) returns (Group);
     // Remove one or more members from the group identified by given ID.
@@ -35,8 +45,8 @@ service IAMService {
     // Is the authenticated user a member of the group with the given ID.
     rpc IsMemberOfGroup(common.IDOptions) returns (common.YesOrNo);
 
-    // Fetch all role by its id.
-    rpc GetRoles(common.ListOptions) returns (RoleList);
+    // Fetch all roles in the organization identified by the given context ID.
+    rpc ListRoles(common.ListOptions) returns (RoleList);
     // Fetch a role by its id.
     rpc GetRole(common.IDOptions) returns (Role);
     // Create a custom role
@@ -55,6 +65,32 @@ service IAMService {
     // Return the list of permissions that are available to the currently authenticated
     // used for actions on the resource identified by the given URL.
     rpc GetEffectivePermissions(common.URLOptions) returns (PermissionList);
+    // Does the authenticated user have all of the requested permissions for the resource
+    // identified by the given URL?
+    rpc HasPermissions(HasPermissionsRequest) returns (common.YesOrNo);
+
+    // List all known permissions.
+    rpc ListPermissions(common.Empty) returns (PermissionList);
+}
+
+// User represents an actual person.
+message User {
+    // Identifier of the user.
+    // This is a read-only value.
+    string id = 1;
+    // Email address of the user.
+    string email = 2;
+    // Name of the user.
+    // This may be empty is not filled out by the user.
+    string name = 3;
+    // Given name of the user.
+    // This may be empty is not filled out by the user.
+    string given_name = 4;
+    // Family name of the user.
+    // This may be empty is not filled out by the user.
+    string family_name = 5;
+    // The creation timestamp of the user.
+    google.protobuf.Timestamp created_at = 6;
 }
 
 // Group of user accounts.
@@ -68,8 +104,8 @@ message Group {
     string name = 3; 
     // Description of the group
     string description = 4; 
-    // Members of the group as list of user IDs
-    repeated string member_user_ids = 5;
+    // The creation timestamp of the group
+    google.protobuf.Timestamp created_at = 5;
 }
 
 // List of groups.
@@ -77,17 +113,31 @@ message GroupList {
     repeated Group items = 1;
 }
 
+// List of group members (user ID's)
+message GroupMemberList {
+    // List of ID's of users that are member of the group.
+    repeated string items = 1;
+}
+
 // Request arguments for Add/DeleteGroupMembers.
 message GroupMembersRequest {
     // ID of the group to add/remove members to/from.
     string group_id = 1;
-    // Role bindings to add/remove to the policy.
-    repeated RoleBinding member_user_ids = 2;    
+    // ID's of users to add/remove to/from the group.
+    repeated string user_ids = 2;    
 }
 
 // List of permissions.
 message PermissionList {
     repeated string items = 1;
+}
+
+// Request arguments for HasPermissionsRequest.
+message HasPermissionsRequest {
+    // URL of the resource to query permissions for.
+    string url = 1;
+    // The list of permissions that are required.
+    repeated string permissions = 2;
 }
 
 // A role is a list of permissions.
@@ -108,6 +158,8 @@ message Role {
     // Set if this role is predefined.
     // This is a read-only value.
     bool is_predefined = 6;
+    // The creation timestamp of the role
+    google.protobuf.Timestamp created_at = 7;
 }
 
 // List of roles.
@@ -120,7 +172,10 @@ message RoleBinding {
     // System identifier of the role-binding.
     // This is a read-only value.
     string id = 1;
-    // Identifier of the member to bind a role to
+    // Identifier of the member to bind a role to.
+    // Member ID is formatted as:
+    // - user:<user_id>
+    // - group:<group_id>
     string member_id = 2;
     // Identifier of the Role to grant to member
     string role_id = 3;
