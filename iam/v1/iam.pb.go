@@ -54,7 +54,7 @@ func (m *User) Reset()         { *m = User{} }
 func (m *User) String() string { return proto.CompactTextString(m) }
 func (*User) ProtoMessage()    {}
 func (*User) Descriptor() ([]byte, []int) {
-	return fileDescriptor_iam_2d70dcf2eee5e3d9, []int{0}
+	return fileDescriptor_iam_3c45b2e8d3258213, []int{0}
 }
 func (m *User) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -147,7 +147,7 @@ func (m *Group) Reset()         { *m = Group{} }
 func (m *Group) String() string { return proto.CompactTextString(m) }
 func (*Group) ProtoMessage()    {}
 func (*Group) Descriptor() ([]byte, []int) {
-	return fileDescriptor_iam_2d70dcf2eee5e3d9, []int{1}
+	return fileDescriptor_iam_3c45b2e8d3258213, []int{1}
 }
 func (m *Group) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -223,7 +223,7 @@ func (m *GroupList) Reset()         { *m = GroupList{} }
 func (m *GroupList) String() string { return proto.CompactTextString(m) }
 func (*GroupList) ProtoMessage()    {}
 func (*GroupList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_iam_2d70dcf2eee5e3d9, []int{2}
+	return fileDescriptor_iam_3c45b2e8d3258213, []int{2}
 }
 func (m *GroupList) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -272,7 +272,7 @@ func (m *GroupMemberList) Reset()         { *m = GroupMemberList{} }
 func (m *GroupMemberList) String() string { return proto.CompactTextString(m) }
 func (*GroupMemberList) ProtoMessage()    {}
 func (*GroupMemberList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_iam_2d70dcf2eee5e3d9, []int{3}
+	return fileDescriptor_iam_3c45b2e8d3258213, []int{3}
 }
 func (m *GroupMemberList) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -323,7 +323,7 @@ func (m *GroupMembersRequest) Reset()         { *m = GroupMembersRequest{} }
 func (m *GroupMembersRequest) String() string { return proto.CompactTextString(m) }
 func (*GroupMembersRequest) ProtoMessage()    {}
 func (*GroupMembersRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_iam_2d70dcf2eee5e3d9, []int{4}
+	return fileDescriptor_iam_3c45b2e8d3258213, []int{4}
 }
 func (m *GroupMembersRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -378,7 +378,7 @@ func (m *PermissionList) Reset()         { *m = PermissionList{} }
 func (m *PermissionList) String() string { return proto.CompactTextString(m) }
 func (*PermissionList) ProtoMessage()    {}
 func (*PermissionList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_iam_2d70dcf2eee5e3d9, []int{5}
+	return fileDescriptor_iam_3c45b2e8d3258213, []int{5}
 }
 func (m *PermissionList) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -429,7 +429,7 @@ func (m *HasPermissionsRequest) Reset()         { *m = HasPermissionsRequest{} }
 func (m *HasPermissionsRequest) String() string { return proto.CompactTextString(m) }
 func (*HasPermissionsRequest) ProtoMessage()    {}
 func (*HasPermissionsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_iam_2d70dcf2eee5e3d9, []int{6}
+	return fileDescriptor_iam_3c45b2e8d3258213, []int{6}
 }
 func (m *HasPermissionsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -501,7 +501,7 @@ func (m *Role) Reset()         { *m = Role{} }
 func (m *Role) String() string { return proto.CompactTextString(m) }
 func (*Role) ProtoMessage()    {}
 func (*Role) Descriptor() ([]byte, []int) {
-	return fileDescriptor_iam_2d70dcf2eee5e3d9, []int{7}
+	return fileDescriptor_iam_3c45b2e8d3258213, []int{7}
 }
 func (m *Role) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -591,7 +591,7 @@ func (m *RoleList) Reset()         { *m = RoleList{} }
 func (m *RoleList) String() string { return proto.CompactTextString(m) }
 func (*RoleList) ProtoMessage()    {}
 func (*RoleList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_iam_2d70dcf2eee5e3d9, []int{8}
+	return fileDescriptor_iam_3c45b2e8d3258213, []int{8}
 }
 func (m *RoleList) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -648,7 +648,7 @@ func (m *RoleBinding) Reset()         { *m = RoleBinding{} }
 func (m *RoleBinding) String() string { return proto.CompactTextString(m) }
 func (*RoleBinding) ProtoMessage()    {}
 func (*RoleBinding) Descriptor() ([]byte, []int) {
-	return fileDescriptor_iam_2d70dcf2eee5e3d9, []int{9}
+	return fileDescriptor_iam_3c45b2e8d3258213, []int{9}
 }
 func (m *RoleBinding) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -710,7 +710,7 @@ func (m *RoleBindingList) Reset()         { *m = RoleBindingList{} }
 func (m *RoleBindingList) String() string { return proto.CompactTextString(m) }
 func (*RoleBindingList) ProtoMessage()    {}
 func (*RoleBindingList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_iam_2d70dcf2eee5e3d9, []int{10}
+	return fileDescriptor_iam_3c45b2e8d3258213, []int{10}
 }
 func (m *RoleBindingList) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -761,7 +761,7 @@ func (m *Policy) Reset()         { *m = Policy{} }
 func (m *Policy) String() string { return proto.CompactTextString(m) }
 func (*Policy) ProtoMessage()    {}
 func (*Policy) Descriptor() ([]byte, []int) {
-	return fileDescriptor_iam_2d70dcf2eee5e3d9, []int{11}
+	return fileDescriptor_iam_3c45b2e8d3258213, []int{11}
 }
 func (m *Policy) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -819,7 +819,7 @@ func (m *RoleBindingsRequest) Reset()         { *m = RoleBindingsRequest{} }
 func (m *RoleBindingsRequest) String() string { return proto.CompactTextString(m) }
 func (*RoleBindingsRequest) ProtoMessage()    {}
 func (*RoleBindingsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_iam_2d70dcf2eee5e3d9, []int{12}
+	return fileDescriptor_iam_3c45b2e8d3258213, []int{12}
 }
 func (m *RoleBindingsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -914,7 +914,7 @@ type IAMServiceClient interface {
 	DeleteGroupMembers(ctx context.Context, in *GroupMembersRequest, opts ...grpc.CallOption) (*Group, error)
 	// Is the authenticated user a member of the group with the given ID.
 	IsMemberOfGroup(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.YesOrNo, error)
-	// Fetch all role by its id.
+	// Fetch all roles in the organization identified by the given context ID.
 	ListRoles(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*RoleList, error)
 	// Fetch a role by its id.
 	GetRole(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*Role, error)
@@ -1172,7 +1172,7 @@ type IAMServiceServer interface {
 	DeleteGroupMembers(context.Context, *GroupMembersRequest) (*Group, error)
 	// Is the authenticated user a member of the group with the given ID.
 	IsMemberOfGroup(context.Context, *v1.IDOptions) (*v1.YesOrNo, error)
-	// Fetch all role by its id.
+	// Fetch all roles in the organization identified by the given context ID.
 	ListRoles(context.Context, *v1.ListOptions) (*RoleList, error)
 	// Fetch a role by its id.
 	GetRole(context.Context, *v1.IDOptions) (*Role, error)
@@ -4363,9 +4363,9 @@ var (
 	ErrIntOverflowIam   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("iam.proto", fileDescriptor_iam_2d70dcf2eee5e3d9) }
+func init() { proto.RegisterFile("iam.proto", fileDescriptor_iam_3c45b2e8d3258213) }
 
-var fileDescriptor_iam_2d70dcf2eee5e3d9 = []byte{
+var fileDescriptor_iam_3c45b2e8d3258213 = []byte{
 	// 936 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x56, 0xc1, 0x6e, 0x23, 0x45,
 	0x13, 0xfe, 0x27, 0x89, 0x63, 0x4f, 0xcd, 0xc6, 0xce, 0xdf, 0x09, 0xac, 0x31, 0x22, 0x6b, 0x8c,
