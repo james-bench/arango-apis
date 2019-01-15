@@ -33,13 +33,13 @@ type User struct {
 	// Email address of the user.
 	Email string `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
 	// Name of the user.
-	// This may be empty is not filled out by the user.
+	// This may be empty if not filled out by the user.
 	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
 	// Given name of the user.
-	// This may be empty is not filled out by the user.
+	// This may be empty if not filled out by the user.
 	GivenName string `protobuf:"bytes,4,opt,name=given_name,json=givenName,proto3" json:"given_name,omitempty"`
 	// Family name of the user.
-	// This may be empty is not filled out by the user.
+	// This may be empty if not filled out by the user.
 	FamilyName string `protobuf:"bytes,5,opt,name=family_name,json=familyName,proto3" json:"family_name,omitempty"`
 	// The creation timestamp of the user.
 	CreatedAt            *types.Timestamp `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`

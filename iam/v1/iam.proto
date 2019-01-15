@@ -81,13 +81,13 @@ message User {
     // Email address of the user.
     string email = 2;
     // Name of the user.
-    // This may be empty is not filled out by the user.
+    // This may be empty if not filled out by the user.
     string name = 3;
     // Given name of the user.
-    // This may be empty is not filled out by the user.
+    // This may be empty if not filled out by the user.
     string given_name = 4;
     // Family name of the user.
-    // This may be empty is not filled out by the user.
+    // This may be empty if not filled out by the user.
     string family_name = 5;
     // The creation timestamp of the user.
     google.protobuf.Timestamp created_at = 6;
