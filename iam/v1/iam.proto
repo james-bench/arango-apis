@@ -181,11 +181,6 @@ message RoleBinding {
     string role_id = 3;
 }
 
-// List of role bindings.
-message RoleBindingList {
-    repeated RoleBinding items = 1;
-}
-
 // Policy bindings members to roles for access to a resource.
 message Policy {
     // URL of the resource to which this policy applies.
