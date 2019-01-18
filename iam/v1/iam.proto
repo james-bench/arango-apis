@@ -19,57 +19,100 @@ import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
 // IAMService is the API used to configure IAM objects.
 service IAMService {
     // Fetch all available information of the currently authenticated user.
+    // Required permissions:
+    // - None
     rpc GetThisUser(common.Empty) returns (User);
     // Fetch all available information of the user identified by the given ID.
+    // Required permissions:
+    // - resourcemanager.organization.get on one of the organizations that the request user and authenticated user are both a member of
     rpc GetUser(common.IDOptions) returns (User);
 
     // Fetch all groups of the organization identified by the given context ID.
+    // Required permissions:
+    // - iam.group.list on organization identified by given context ID.
     rpc ListGroups(common.ListOptions) returns (GroupList);
     // Fetch a group by its id.
+    // Required permissions:
+    // - iam.group.get on organization that owns the group
     rpc GetGroup(common.IDOptions) returns (Group);
     // Create a group
+    // Required permissions:
+    // - iam.group.create on organization that owns the group
     rpc CreateGroup(Group) returns (Group);
     // Update a group
-    // Note that the `member_user_ids` field is only updated when it is set.
-    // Use Add/DeleteGroupMembers to add/remove individual members.
+    // Required permissions:
+    // - iam.group.update on organization that owns the group
     rpc UpdateGroup(Group) returns (Group);
     // Delete a group
+    // Required permissions:
+    // - iam.group.delete on organization that owns the group
     rpc DeleteGroup(Group) returns (common.Empty);
 
     // List of members of the group identified by the given ID.
+    // Required permissions:
+    // - iam.group.get on organization that owns the group
     rpc ListGroupMembers(common.IDOptions) returns (GroupMemberList);
     // Add one or more members to the group identified by given ID.
+    // Required permissions:
+    // - iam.group.update on organization that owns the group
     rpc AddGroupMembers(GroupMembersRequest) returns (Group);
     // Remove one or more members from the group identified by given ID.
+    // Required permissions:
+    // - iam.group.update on organization that owns the group
     rpc DeleteGroupMembers(GroupMembersRequest) returns (Group);
-    // Is the authenticated user a member of the group with the given ID.
-    rpc IsMemberOfGroup(common.IDOptions) returns (common.YesOrNo);
+    // Is the user identified by the given user ID a member of the group identified by the given group ID.
+    // Required permissions:
+    // - iam.group.get on organization that owns the group, unless the requested user is identical to the authenticated user.
+    // Note that if the identified group does not exist, no is returned.
+    rpc IsMemberOfGroup(IsMemberOfGroupRequest) returns (common.YesOrNo);
 
     // Fetch all roles in the organization identified by the given context ID.
+    // Required permissions:
+    // - iam.role.list on organization identified by given context ID.
     rpc ListRoles(common.ListOptions) returns (RoleList);
     // Fetch a role by its id.
+    // Required permissions:
+    // - iam.role.get on organization that owns the role
     rpc GetRole(common.IDOptions) returns (Role);
     // Create a custom role
+    // Required permissions:
+    // - iam.role.create on organization that owns the role
     rpc CreateRole(Role) returns (Role);
     // Update a custom role
+    // Required permissions:
+    // - iam.role.update on organization that owns the role
     rpc UpdateRole(Role) returns (Role);
     // Delete a custom role
+    // Required permissions:
+    // - iam.role.delete on organization that owns the role
     rpc DeleteRole(Role) returns (common.Empty);
     
     // Get the policy for a resource identified by given URL.
+    // Required permissions:
+    // - iam.policy.get on resource identified by the url
     rpc GetPolicy(common.URLOptions) returns (Policy);
     // Add one or more RoleBindings to the policy of a resource identified by given URL.
+    // Required permissions:
+    // - iam.policy.update on resource identified by the url
     rpc AddRoleBindings(RoleBindingsRequest) returns (Policy);
     // Remove one or more RoleBindings from the policy of a resource identified by given URL.
+    // Required permissions:
+    // - iam.policy.update on resource identified by the url
     rpc DeleteRoleBindings(RoleBindingsRequest) returns (Policy);
     // Return the list of permissions that are available to the currently authenticated
     // used for actions on the resource identified by the given URL.
+    // Required permissions:
+    // - None
     rpc GetEffectivePermissions(common.URLOptions) returns (PermissionList);
     // Does the authenticated user have all of the requested permissions for the resource
     // identified by the given URL?
+    // Required permissions:
+    // - None
     rpc HasPermissions(HasPermissionsRequest) returns (common.YesOrNo);
 
     // List all known permissions.
+    // Required permissions:
+    // - None
     rpc ListPermissions(common.Empty) returns (PermissionList);
 }
 
@@ -111,6 +154,14 @@ message Group {
 // List of groups.
 message GroupList {
     repeated Group items = 1;
+}
+
+// Request arguments for IsMemberOfGroup.
+message IsMemberOfGroupRequest {
+    // Identifier of the user
+    string user_id = 1;
+    // Identifier of the group
+    string group_id = 2;
 }
 
 // List of group members (user ID's)

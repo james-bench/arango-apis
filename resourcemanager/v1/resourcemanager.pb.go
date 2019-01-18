@@ -285,6 +285,64 @@ func (m *MemberList) GetItems() []*Member {
 	return nil
 }
 
+// Request arguments for IsMemberOfOrganization.
+type IsMemberOfOrganizationRequest struct {
+	// Identifier of the user
+	UserId string `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	// Identifier of the organization
+	OrganizationId       string   `protobuf:"bytes,2,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *IsMemberOfOrganizationRequest) Reset()         { *m = IsMemberOfOrganizationRequest{} }
+func (m *IsMemberOfOrganizationRequest) String() string { return proto.CompactTextString(m) }
+func (*IsMemberOfOrganizationRequest) ProtoMessage()    {}
+func (*IsMemberOfOrganizationRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_81de387952a6887e, []int{4}
+}
+func (m *IsMemberOfOrganizationRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *IsMemberOfOrganizationRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_IsMemberOfOrganizationRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *IsMemberOfOrganizationRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IsMemberOfOrganizationRequest.Merge(m, src)
+}
+func (m *IsMemberOfOrganizationRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *IsMemberOfOrganizationRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_IsMemberOfOrganizationRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_IsMemberOfOrganizationRequest proto.InternalMessageInfo
+
+func (m *IsMemberOfOrganizationRequest) GetUserId() string {
+	if m != nil {
+		return m.UserId
+	}
+	return ""
+}
+
+func (m *IsMemberOfOrganizationRequest) GetOrganizationId() string {
+	if m != nil {
+		return m.OrganizationId
+	}
+	return ""
+}
+
 // Request arguments for Add/DeleteOrganizationMembers.
 type OrganizationMembersRequest struct {
 	// Identifier of the organization to add/remove a user from
@@ -303,7 +361,7 @@ func (m *OrganizationMembersRequest) Reset()         { *m = OrganizationMembersR
 func (m *OrganizationMembersRequest) String() string { return proto.CompactTextString(m) }
 func (*OrganizationMembersRequest) ProtoMessage()    {}
 func (*OrganizationMembersRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_81de387952a6887e, []int{4}
+	return fileDescriptor_81de387952a6887e, []int{5}
 }
 func (m *OrganizationMembersRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -376,7 +434,7 @@ func (m *Project) Reset()         { *m = Project{} }
 func (m *Project) String() string { return proto.CompactTextString(m) }
 func (*Project) ProtoMessage()    {}
 func (*Project) Descriptor() ([]byte, []int) {
-	return fileDescriptor_81de387952a6887e, []int{5}
+	return fileDescriptor_81de387952a6887e, []int{6}
 }
 func (m *Project) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -473,7 +531,7 @@ func (m *ProjectList) Reset()         { *m = ProjectList{} }
 func (m *ProjectList) String() string { return proto.CompactTextString(m) }
 func (*ProjectList) ProtoMessage()    {}
 func (*ProjectList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_81de387952a6887e, []int{6}
+	return fileDescriptor_81de387952a6887e, []int{7}
 }
 func (m *ProjectList) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -514,6 +572,7 @@ func init() {
 	proto.RegisterType((*OrganizationList)(nil), "resourcemanager.OrganizationList")
 	proto.RegisterType((*Member)(nil), "resourcemanager.Member")
 	proto.RegisterType((*MemberList)(nil), "resourcemanager.MemberList")
+	proto.RegisterType((*IsMemberOfOrganizationRequest)(nil), "resourcemanager.IsMemberOfOrganizationRequest")
 	proto.RegisterType((*OrganizationMembersRequest)(nil), "resourcemanager.OrganizationMembersRequest")
 	proto.RegisterType((*Project)(nil), "resourcemanager.Project")
 	proto.RegisterType((*ProjectList)(nil), "resourcemanager.ProjectList")
@@ -522,50 +581,53 @@ func init() {
 func init() { proto.RegisterFile("resourcemanager.proto", fileDescriptor_81de387952a6887e) }
 
 var fileDescriptor_81de387952a6887e = []byte{
-	// 681 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x55, 0xcd, 0x6e, 0xd3, 0x4a,
-	0x14, 0xbe, 0x4e, 0x9b, 0xa4, 0x3d, 0xe9, 0xef, 0xdc, 0x7b, 0x5b, 0xdf, 0x5c, 0x1a, 0x85, 0x6c,
-	0x88, 0x84, 0x6a, 0xab, 0xa9, 0x10, 0x54, 0x15, 0x8b, 0xf4, 0x47, 0x55, 0x04, 0x15, 0xc8, 0x14,
-	0x21, 0xb1, 0xa9, 0x1c, 0xcf, 0x60, 0x06, 0xc5, 0x1e, 0x33, 0x33, 0x29, 0x2a, 0xe2, 0x41, 0xd8,
-	0xf1, 0x3a, 0x2c, 0x11, 0x4f, 0x80, 0xca, 0x63, 0xb0, 0x41, 0x9e, 0xb1, 0xa9, 0x9d, 0x26, 0x2e,
-	0x85, 0xb2, 0x9b, 0x9c, 0xf9, 0xce, 0x37, 0xe7, 0x7c, 0xe7, 0x3b, 0x0e, 0xfc, 0xcb, 0x89, 0x60,
-	0x43, 0xee, 0x91, 0xc0, 0x0d, 0x5d, 0x9f, 0x70, 0x2b, 0xe2, 0x4c, 0x32, 0xb4, 0x38, 0x12, 0xae,
-	0xaf, 0x78, 0x2c, 0x08, 0x58, 0x68, 0x9f, 0x6c, 0xd8, 0xfa, 0xa4, 0x81, 0xf5, 0x6d, 0x9f, 0xca,
-	0x97, 0xc3, 0xbe, 0xe5, 0xb1, 0xc0, 0xf6, 0xd9, 0xc0, 0x0d, 0x7d, 0x5b, 0x5d, 0xf4, 0x87, 0x2f,
-	0xec, 0x48, 0x9e, 0x46, 0x44, 0xd8, 0x92, 0x06, 0x44, 0x48, 0x37, 0x88, 0xce, 0x4f, 0x3a, 0xb9,
-	0xf5, 0xcd, 0x80, 0xb9, 0x47, 0xdc, 0x77, 0x43, 0xfa, 0xd6, 0x95, 0x94, 0x85, 0x68, 0x01, 0x4a,
-	0x14, 0x9b, 0x46, 0xd3, 0x68, 0xcf, 0x3a, 0x25, 0x8a, 0xd1, 0x12, 0x4c, 0x0d, 0xf9, 0xc0, 0x2c,
-	0xa9, 0x40, 0x7c, 0x44, 0x08, 0xa6, 0x43, 0x37, 0x20, 0xe6, 0x94, 0x0a, 0xa9, 0x33, 0x6a, 0x42,
-	0x0d, 0x13, 0xe1, 0x71, 0x1a, 0xc5, 0x24, 0xe6, 0xb4, 0xba, 0xca, 0x86, 0xd0, 0x1a, 0x00, 0x15,
-	0xc7, 0x98, 0x0c, 0x88, 0x24, 0xd8, 0x2c, 0x37, 0x8d, 0xf6, 0x8c, 0x33, 0x4b, 0xc5, 0x9e, 0x0e,
-	0xa0, 0x2d, 0x00, 0x8f, 0x13, 0x57, 0x12, 0x7c, 0xec, 0x4a, 0xb3, 0xd2, 0x34, 0xda, 0xb5, 0x4e,
-	0xdd, 0xf2, 0x19, 0xf3, 0x07, 0xc4, 0x4a, 0xdb, 0xb1, 0x8e, 0xd2, 0xea, 0x9d, 0xd9, 0x04, 0xdd,
-	0x95, 0x71, 0x6a, 0x42, 0x1b, 0xa7, 0x56, 0x2f, 0x4f, 0x4d, 0xd0, 0x5d, 0xd9, 0x3a, 0x80, 0xa5,
-	0x6c, 0xf3, 0x0f, 0xa9, 0x90, 0x68, 0x13, 0xca, 0x54, 0x92, 0x40, 0x98, 0x46, 0x73, 0xaa, 0x5d,
-	0xeb, 0xac, 0x59, 0xa3, 0xe3, 0xc9, 0x66, 0x38, 0x1a, 0xdb, 0xba, 0x0b, 0x95, 0x43, 0x12, 0xf4,
-	0x09, 0x47, 0xab, 0x50, 0x1d, 0x0a, 0xc2, 0x8f, 0x7f, 0x88, 0x58, 0x89, 0x7f, 0xf6, 0x30, 0xfa,
-	0x07, 0xca, 0xec, 0x4d, 0x48, 0xb8, 0x92, 0x72, 0xc6, 0xd1, 0x3f, 0x5a, 0xdb, 0x00, 0x3a, 0x51,
-	0xbd, 0xbd, 0x9e, 0x7f, 0x7b, 0xf5, 0xc2, 0xdb, 0x1a, 0x9b, 0xbe, 0xfa, 0x0e, 0xea, 0xd9, 0x62,
-	0xf4, 0xa5, 0x70, 0xc8, 0xeb, 0x21, 0x11, 0x12, 0xdd, 0x82, 0x45, 0x96, 0xb9, 0x3d, 0xaf, 0x68,
-	0x21, 0x1b, 0xee, 0x61, 0x74, 0x07, 0xaa, 0x81, 0x4e, 0x55, 0xb5, 0xd5, 0x3a, 0xff, 0x4f, 0x78,
-	0x37, 0xae, 0xd1, 0x49, 0xb1, 0xad, 0x0f, 0x25, 0xa8, 0x3e, 0xe6, 0xec, 0x15, 0xf1, 0xe4, 0x1f,
-	0x73, 0xcd, 0x98, 0x1e, 0xca, 0x63, 0x7b, 0xc8, 0xdb, 0xab, 0x52, 0x6c, 0xaf, 0xea, 0xaf, 0xdb,
-	0x6b, 0xe6, 0x2a, 0xf6, 0xba, 0x0f, 0xb5, 0x44, 0x20, 0x35, 0x5d, 0x2b, 0x3f, 0x5d, 0xf3, 0x82,
-	0xca, 0x09, 0x38, 0x19, 0x6f, 0xe7, 0x73, 0x15, 0x56, 0x9c, 0x04, 0x72, 0xa8, 0x21, 0x4f, 0x08,
-	0x3f, 0xa1, 0x1e, 0x41, 0x0f, 0x60, 0x39, 0xa6, 0xcc, 0x4e, 0x5f, 0xa0, 0xbf, 0xad, 0xe4, 0xbb,
-	0xa0, 0xae, 0x94, 0x80, 0xa2, 0x7e, 0xb3, 0xd0, 0xbf, 0xaa, 0xae, 0x5d, 0x58, 0x3c, 0x20, 0x39,
-	0x2e, 0xb4, 0x9c, 0x52, 0xf5, 0xf6, 0x52, 0xa2, 0xe2, 0x45, 0x40, 0x0e, 0xa0, 0x5d, 0xa5, 0x59,
-	0x2e, 0x5a, 0x9c, 0xf4, 0x13, 0x9c, 0x4f, 0x23, 0x7c, 0xbd, 0x9c, 0x3b, 0x80, 0xb4, 0x29, 0xae,
-	0xc2, 0x39, 0x9f, 0xca, 0xb1, 0x1f, 0x44, 0xf2, 0x14, 0xf5, 0x60, 0x75, 0x54, 0xfd, 0x64, 0xf7,
-	0xc6, 0x09, 0x57, 0xb4, 0x4d, 0xe8, 0x08, 0x56, 0xba, 0x18, 0x8f, 0x63, 0xba, 0x5d, 0x58, 0x52,
-	0x7e, 0xd7, 0x47, 0x0b, 0x7c, 0x06, 0xff, 0x5d, 0x6c, 0xf2, 0x3a, 0x88, 0xbb, 0x30, 0x17, 0x97,
-	0x9d, 0x18, 0x75, 0x82, 0xe5, 0x6e, 0x4c, 0x32, 0xb6, 0xea, 0x78, 0x0b, 0xe0, 0x80, 0xa4, 0x0c,
-	0xe3, 0xf4, 0x9a, 0xb8, 0x17, 0x68, 0x17, 0xe6, 0xb5, 0xc7, 0xd2, 0xc0, 0x44, 0x68, 0x31, 0x89,
-	0x36, 0xd5, 0xef, 0x90, 0xdc, 0x83, 0x79, 0x2d, 0xf0, 0xe5, 0x24, 0x79, 0x05, 0x77, 0xf6, 0x3f,
-	0x9e, 0x35, 0x8c, 0x4f, 0x67, 0x0d, 0xe3, 0xcb, 0x59, 0xc3, 0x78, 0xff, 0xb5, 0xf1, 0xd7, 0xf3,
-	0xcd, 0xcc, 0xff, 0xb7, 0xcb, 0xdd, 0xd0, 0x67, 0xb8, 0xbf, 0xae, 0x59, 0xb0, 0xed, 0x46, 0x54,
-	0xd8, 0x23, 0xd4, 0xf6, 0xc9, 0x46, 0xbf, 0xa2, 0xbe, 0x3c, 0x9b, 0xdf, 0x03, 0x00, 0x00, 0xff,
-	0xff, 0xb4, 0xfb, 0x41, 0xcd, 0x3d, 0x08, 0x00, 0x00,
+	// 725 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x56, 0xcd, 0x6e, 0xd3, 0x4a,
+	0x14, 0xbe, 0x4e, 0x9b, 0x9f, 0x9e, 0xb4, 0x4d, 0x3b, 0xf7, 0xde, 0xd4, 0x37, 0x97, 0x46, 0x21,
+	0x1b, 0x22, 0xa1, 0xda, 0x6a, 0x2a, 0x04, 0x55, 0xc5, 0x22, 0xfd, 0x51, 0x15, 0x41, 0x29, 0x32,
+	0x45, 0xa8, 0x6c, 0x2a, 0xc7, 0x9e, 0x1a, 0xa3, 0xd8, 0x63, 0x66, 0x26, 0x45, 0x45, 0x3c, 0x08,
+	0x3b, 0x9e, 0x80, 0xf7, 0x60, 0xc9, 0x23, 0xa0, 0xf2, 0x18, 0x6c, 0x90, 0x67, 0x6c, 0xb0, 0x13,
+	0xc7, 0xa5, 0x50, 0x76, 0x93, 0xe3, 0xef, 0x7c, 0x73, 0xce, 0x77, 0xbe, 0x33, 0x0a, 0xfc, 0x4b,
+	0x31, 0x23, 0x23, 0x6a, 0x61, 0xcf, 0xf4, 0x4d, 0x07, 0x53, 0x2d, 0xa0, 0x84, 0x13, 0x54, 0x1b,
+	0x0b, 0x37, 0xea, 0x16, 0xf1, 0x3c, 0xe2, 0xeb, 0x67, 0xeb, 0xba, 0x3c, 0x49, 0x60, 0x63, 0xcb,
+	0x71, 0xf9, 0x8b, 0xd1, 0x40, 0xb3, 0x88, 0xa7, 0x3b, 0x64, 0x68, 0xfa, 0x8e, 0x2e, 0x3e, 0x0c,
+	0x46, 0xa7, 0x7a, 0xc0, 0xcf, 0x03, 0xcc, 0x74, 0xee, 0x7a, 0x98, 0x71, 0xd3, 0x0b, 0x7e, 0x9c,
+	0x64, 0x72, 0xfb, 0xab, 0x02, 0xf3, 0x87, 0xd4, 0x31, 0x7d, 0xf7, 0x8d, 0xc9, 0x5d, 0xe2, 0xa3,
+	0x45, 0x28, 0xb8, 0xb6, 0xaa, 0xb4, 0x94, 0xce, 0x9c, 0x51, 0x70, 0x6d, 0xb4, 0x04, 0x33, 0x23,
+	0x3a, 0x54, 0x0b, 0x22, 0x10, 0x1e, 0x11, 0x82, 0x59, 0xdf, 0xf4, 0xb0, 0x3a, 0x23, 0x42, 0xe2,
+	0x8c, 0x5a, 0x50, 0xb5, 0x31, 0xb3, 0xa8, 0x1b, 0x84, 0x24, 0xea, 0xac, 0xf8, 0x94, 0x0c, 0xa1,
+	0x55, 0x00, 0x97, 0x9d, 0xd8, 0x78, 0x88, 0x39, 0xb6, 0xd5, 0x62, 0x4b, 0xe9, 0x54, 0x8c, 0x39,
+	0x97, 0xed, 0xca, 0x00, 0xda, 0x04, 0xb0, 0x28, 0x36, 0x39, 0xb6, 0x4f, 0x4c, 0xae, 0x96, 0x5a,
+	0x4a, 0xa7, 0xda, 0x6d, 0x68, 0x0e, 0x21, 0xce, 0x10, 0x6b, 0x71, 0x3b, 0xda, 0x51, 0x5c, 0xbd,
+	0x31, 0x17, 0xa1, 0x7b, 0x3c, 0x4c, 0x8d, 0x68, 0xc3, 0xd4, 0xf2, 0xe5, 0xa9, 0x11, 0xba, 0xc7,
+	0xdb, 0xfb, 0xb0, 0x94, 0x6c, 0xfe, 0xa1, 0xcb, 0x38, 0xda, 0x80, 0xa2, 0xcb, 0xb1, 0xc7, 0x54,
+	0xa5, 0x35, 0xd3, 0xa9, 0x76, 0x57, 0xb5, 0xf1, 0xf1, 0x24, 0x33, 0x0c, 0x89, 0x6d, 0xdf, 0x85,
+	0xd2, 0x01, 0xf6, 0x06, 0x98, 0xa2, 0x15, 0x28, 0x8f, 0x18, 0xa6, 0x27, 0xdf, 0x45, 0x2c, 0x85,
+	0x3f, 0xfb, 0x36, 0xfa, 0x07, 0x8a, 0xe4, 0xb5, 0x8f, 0xa9, 0x90, 0xb2, 0x62, 0xc8, 0x1f, 0xed,
+	0x2d, 0x00, 0x99, 0x28, 0xee, 0x5e, 0x4b, 0xdf, 0xbd, 0x32, 0x71, 0xb7, 0xc4, 0xc6, 0xb7, 0x9a,
+	0xb0, 0xda, 0x67, 0x32, 0x74, 0x78, 0x9a, 0x2a, 0x0b, 0xbf, 0x1a, 0x61, 0xc6, 0xa7, 0x17, 0x73,
+	0x0b, 0x6a, 0x24, 0x81, 0x0f, 0x01, 0x72, 0xc2, 0x8b, 0xc9, 0x70, 0xdf, 0x6e, 0xbf, 0x85, 0x46,
+	0x92, 0x58, 0x5e, 0xc6, 0x62, 0xfe, 0x0c, 0x1a, 0x25, 0x8b, 0x06, 0xdd, 0x81, 0xb2, 0x27, 0x53,
+	0xc5, 0x3d, 0xd5, 0xee, 0xff, 0x53, 0x5a, 0x0b, 0x65, 0x30, 0x62, 0x6c, 0xfb, 0x7d, 0x01, 0xca,
+	0x8f, 0x29, 0x79, 0x89, 0x2d, 0xfe, 0xc7, 0x8c, 0x99, 0xd1, 0x43, 0x31, 0xb3, 0x87, 0xb4, 0x83,
+	0x4b, 0xf9, 0x0e, 0x2e, 0xff, 0xba, 0x83, 0x2b, 0x57, 0x71, 0xf0, 0x7d, 0xa8, 0x46, 0x02, 0x09,
+	0x03, 0x69, 0x69, 0x03, 0xa9, 0x13, 0x2a, 0x47, 0xe0, 0xc8, 0x41, 0xdd, 0x0f, 0x15, 0xa8, 0x1b,
+	0x11, 0xe4, 0x40, 0x42, 0x9e, 0x60, 0x7a, 0xe6, 0x5a, 0x18, 0x3d, 0x80, 0xe5, 0x90, 0x32, 0x39,
+	0x7d, 0x86, 0xfe, 0xd6, 0xa2, 0xa7, 0x47, 0x7c, 0x12, 0x02, 0xb2, 0xc6, 0xcd, 0xdc, 0x15, 0x11,
+	0x75, 0xed, 0x40, 0x6d, 0x1f, 0xa7, 0xb8, 0xd0, 0x72, 0x4c, 0xd5, 0xdf, 0x8d, 0x89, 0xf2, 0x77,
+	0x0d, 0x19, 0x80, 0x76, 0x84, 0x66, 0xa9, 0x68, 0x7e, 0xd2, 0x4f, 0x70, 0x3e, 0x0d, 0xec, 0xeb,
+	0xe5, 0xdc, 0x06, 0x24, 0x4d, 0x71, 0x15, 0xce, 0x85, 0x58, 0x8e, 0x3d, 0x2f, 0xe0, 0xe7, 0xa8,
+	0x0f, 0x2b, 0xe3, 0xea, 0x47, 0xbb, 0x97, 0x25, 0x5c, 0xde, 0x36, 0xa1, 0x23, 0xa8, 0xf7, 0x6c,
+	0x3b, 0x8b, 0xe9, 0x76, 0x6e, 0x49, 0xe9, 0x5d, 0x1f, 0x2f, 0xf0, 0x19, 0xfc, 0x37, 0xd9, 0xe4,
+	0x75, 0x10, 0x1f, 0x43, 0x3d, 0xfb, 0x51, 0x43, 0xda, 0x04, 0x6b, 0xee, 0xeb, 0xd7, 0xa8, 0xc5,
+	0xc4, 0xc7, 0x98, 0x1d, 0xd2, 0x47, 0x04, 0xf5, 0x60, 0x3e, 0x54, 0x24, 0xda, 0x81, 0x29, 0x6e,
+	0xbe, 0x31, 0x6d, 0x67, 0x84, 0x98, 0x9b, 0x00, 0xfb, 0x38, 0x66, 0xc8, 0x1a, 0xc5, 0xd4, 0x95,
+	0x43, 0x3b, 0xb0, 0x20, 0xed, 0x1b, 0x07, 0xa6, 0x42, 0xf3, 0x49, 0xa4, 0x5f, 0x7f, 0x87, 0xe4,
+	0x1e, 0x2c, 0xc8, 0xd9, 0x5d, 0x4e, 0x92, 0x1e, 0xce, 0xf6, 0xde, 0xc7, 0x8b, 0xa6, 0xf2, 0xe9,
+	0xa2, 0xa9, 0x7c, 0xbe, 0x68, 0x2a, 0xef, 0xbe, 0x34, 0xff, 0x7a, 0xbe, 0x91, 0xf8, 0xf7, 0x61,
+	0x52, 0xd3, 0x77, 0x88, 0x3d, 0x58, 0x93, 0x2c, 0xb6, 0x6e, 0x06, 0x2e, 0xd3, 0xc7, 0xa8, 0xf5,
+	0xb3, 0xf5, 0x41, 0x49, 0x3c, 0x6a, 0x1b, 0xdf, 0x02, 0x00, 0x00, 0xff, 0xff, 0x38, 0xa5, 0x16,
+	0xdc, 0xfb, 0x08, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -581,41 +643,73 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type ResourceManagerServiceClient interface {
 	// Fetch all organizations that the authenticated user is a member of.
+	// Required permissions:
+	// - None
 	ListOrganizations(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*OrganizationList, error)
 	// Fetch an organization by its id.
 	// The authenticated user must be a member of the organization.
+	// Required permissions:
+	// - None
 	GetOrganization(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*Organization, error)
 	// Create a new organization
+	// Required permissions:
+	// - None
 	CreateOrganization(ctx context.Context, in *Organization, opts ...grpc.CallOption) (*Organization, error)
 	// Update an organization
+	// Required permissions:
+	// - resourcemanager.organization.update on the organization
 	UpdateOrganization(ctx context.Context, in *Organization, opts ...grpc.CallOption) (*Organization, error)
 	// Delete an organization
 	// Note that organization are never really removed.
 	// Instead their is_deleted field is set to true.
+	// Required permissions:
+	// - resourcemanager.organization.delete on the organization
 	DeleteOrganization(ctx context.Context, in *Organization, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Get a list of members of the organization identified by the given ID.
+	// Required permissions:
+	// - resourcemanager.organization.get on the organization
 	ListOrganizationMembers(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*MemberList, error)
 	// Add one or more members to an organization.
+	// Required permissions:
+	// - resourcemanager.organization.update on the organization
 	AddOrganizationMembers(ctx context.Context, in *OrganizationMembersRequest, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Remove one or more members from an organization.
+	// Required permissions:
+	// - resourcemanager.organization.update on the organization
 	DeleteOrganizationMembers(ctx context.Context, in *OrganizationMembersRequest, opts ...grpc.CallOption) (*v1.Empty, error)
+	// Is the user identified by the given user ID a member
+	// of the organization identified by the given organization ID.
+	// Required permissions:
+	// - resourcemanager.organization.get on the organization, unless the requested user is identical to the authenticated user.
+	// Note that if the identified user or organization does not exist, no is returned.
+	IsMemberOfOrganization(ctx context.Context, in *IsMemberOfOrganizationRequest, opts ...grpc.CallOption) (*v1.YesOrNo, error)
 	// Fetch all projects in the organization identified by the given context ID.
 	// The authenticated user must be a member of the organization identifier by the given context ID.
+	// Required permissions:
+	// - resourcemanager.project.list on the organization identified by the given context ID
 	ListProjects(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*ProjectList, error)
 	// Fetch a project by its id.
 	// The authenticated user must be a member of the organization that owns the project.
+	// Required permissions:
+	// - resourcemanager.project.get on the project identified by the given ID
 	GetProject(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*Project, error)
 	// Create a new project
 	// The authenticated user must be a member of the organization that owns the project.
+	// Required permissions:
+	// - resourcemanager.project.create on the organization that owns the project
 	CreateProject(ctx context.Context, in *Project, opts ...grpc.CallOption) (*Project, error)
 	// Update a project
 	// The authenticated user must be a member of the organization that owns the project.
+	// Required permissions:
+	// - resourcemanager.project.update on the project
 	UpdateProject(ctx context.Context, in *Project, opts ...grpc.CallOption) (*Project, error)
 	// Delete a project
 	// Note that project are initially only marked for deleted.
 	// Once all their resources are removed the project itself is deleted
 	// and cannot be restored.
 	// The authenticated user must be a member of the organization that owns the project.
+	// Required permissions:
+	// - resourcemanager.project.delete on the project
 	DeleteProject(ctx context.Context, in *Project, opts ...grpc.CallOption) (*v1.Empty, error)
 }
 
@@ -699,6 +793,15 @@ func (c *resourceManagerServiceClient) DeleteOrganizationMembers(ctx context.Con
 	return out, nil
 }
 
+func (c *resourceManagerServiceClient) IsMemberOfOrganization(ctx context.Context, in *IsMemberOfOrganizationRequest, opts ...grpc.CallOption) (*v1.YesOrNo, error) {
+	out := new(v1.YesOrNo)
+	err := c.cc.Invoke(ctx, "/resourcemanager.ResourceManagerService/IsMemberOfOrganization", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *resourceManagerServiceClient) ListProjects(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*ProjectList, error) {
 	out := new(ProjectList)
 	err := c.cc.Invoke(ctx, "/resourcemanager.ResourceManagerService/ListProjects", in, out, opts...)
@@ -747,41 +850,73 @@ func (c *resourceManagerServiceClient) DeleteProject(ctx context.Context, in *Pr
 // ResourceManagerServiceServer is the server API for ResourceManagerService service.
 type ResourceManagerServiceServer interface {
 	// Fetch all organizations that the authenticated user is a member of.
+	// Required permissions:
+	// - None
 	ListOrganizations(context.Context, *v1.ListOptions) (*OrganizationList, error)
 	// Fetch an organization by its id.
 	// The authenticated user must be a member of the organization.
+	// Required permissions:
+	// - None
 	GetOrganization(context.Context, *v1.IDOptions) (*Organization, error)
 	// Create a new organization
+	// Required permissions:
+	// - None
 	CreateOrganization(context.Context, *Organization) (*Organization, error)
 	// Update an organization
+	// Required permissions:
+	// - resourcemanager.organization.update on the organization
 	UpdateOrganization(context.Context, *Organization) (*Organization, error)
 	// Delete an organization
 	// Note that organization are never really removed.
 	// Instead their is_deleted field is set to true.
+	// Required permissions:
+	// - resourcemanager.organization.delete on the organization
 	DeleteOrganization(context.Context, *Organization) (*v1.Empty, error)
 	// Get a list of members of the organization identified by the given ID.
+	// Required permissions:
+	// - resourcemanager.organization.get on the organization
 	ListOrganizationMembers(context.Context, *v1.IDOptions) (*MemberList, error)
 	// Add one or more members to an organization.
+	// Required permissions:
+	// - resourcemanager.organization.update on the organization
 	AddOrganizationMembers(context.Context, *OrganizationMembersRequest) (*v1.Empty, error)
 	// Remove one or more members from an organization.
+	// Required permissions:
+	// - resourcemanager.organization.update on the organization
 	DeleteOrganizationMembers(context.Context, *OrganizationMembersRequest) (*v1.Empty, error)
+	// Is the user identified by the given user ID a member
+	// of the organization identified by the given organization ID.
+	// Required permissions:
+	// - resourcemanager.organization.get on the organization, unless the requested user is identical to the authenticated user.
+	// Note that if the identified user or organization does not exist, no is returned.
+	IsMemberOfOrganization(context.Context, *IsMemberOfOrganizationRequest) (*v1.YesOrNo, error)
 	// Fetch all projects in the organization identified by the given context ID.
 	// The authenticated user must be a member of the organization identifier by the given context ID.
+	// Required permissions:
+	// - resourcemanager.project.list on the organization identified by the given context ID
 	ListProjects(context.Context, *v1.ListOptions) (*ProjectList, error)
 	// Fetch a project by its id.
 	// The authenticated user must be a member of the organization that owns the project.
+	// Required permissions:
+	// - resourcemanager.project.get on the project identified by the given ID
 	GetProject(context.Context, *v1.IDOptions) (*Project, error)
 	// Create a new project
 	// The authenticated user must be a member of the organization that owns the project.
+	// Required permissions:
+	// - resourcemanager.project.create on the organization that owns the project
 	CreateProject(context.Context, *Project) (*Project, error)
 	// Update a project
 	// The authenticated user must be a member of the organization that owns the project.
+	// Required permissions:
+	// - resourcemanager.project.update on the project
 	UpdateProject(context.Context, *Project) (*Project, error)
 	// Delete a project
 	// Note that project are initially only marked for deleted.
 	// Once all their resources are removed the project itself is deleted
 	// and cannot be restored.
 	// The authenticated user must be a member of the organization that owns the project.
+	// Required permissions:
+	// - resourcemanager.project.delete on the project
 	DeleteProject(context.Context, *Project) (*v1.Empty, error)
 }
 
@@ -933,6 +1068,24 @@ func _ResourceManagerService_DeleteOrganizationMembers_Handler(srv interface{}, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ResourceManagerService_IsMemberOfOrganization_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IsMemberOfOrganizationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ResourceManagerServiceServer).IsMemberOfOrganization(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/resourcemanager.ResourceManagerService/IsMemberOfOrganization",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ResourceManagerServiceServer).IsMemberOfOrganization(ctx, req.(*IsMemberOfOrganizationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ResourceManagerService_ListProjects_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(v1.ListOptions)
 	if err := dec(in); err != nil {
@@ -1058,6 +1211,10 @@ var _ResourceManagerService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteOrganizationMembers",
 			Handler:    _ResourceManagerService_DeleteOrganizationMembers_Handler,
+		},
+		{
+			MethodName: "IsMemberOfOrganization",
+			Handler:    _ResourceManagerService_IsMemberOfOrganization_Handler,
 		},
 		{
 			MethodName: "ListProjects",
@@ -1255,6 +1412,39 @@ func (m *MemberList) MarshalTo(dAtA []byte) (int, error) {
 			}
 			i += n
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *IsMemberOfOrganizationRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *IsMemberOfOrganizationRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.UserId) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintResourcemanager(dAtA, i, uint64(len(m.UserId)))
+		i += copy(dAtA[i:], m.UserId)
+	}
+	if len(m.OrganizationId) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintResourcemanager(dAtA, i, uint64(len(m.OrganizationId)))
+		i += copy(dAtA[i:], m.OrganizationId)
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -1509,6 +1699,26 @@ func (m *MemberList) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovResourcemanager(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *IsMemberOfOrganizationRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.UserId)
+	if l > 0 {
+		n += 1 + l + sovResourcemanager(uint64(l))
+	}
+	l = len(m.OrganizationId)
+	if l > 0 {
+		n += 1 + l + sovResourcemanager(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -2104,6 +2314,115 @@ func (m *MemberList) Unmarshal(dAtA []byte) error {
 			if err := m.Items[len(m.Items)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipResourcemanager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthResourcemanager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *IsMemberOfOrganizationRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowResourcemanager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: IsMemberOfOrganizationRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: IsMemberOfOrganizationRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UserId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowResourcemanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthResourcemanager
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.UserId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OrganizationId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowResourcemanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthResourcemanager
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OrganizationId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
