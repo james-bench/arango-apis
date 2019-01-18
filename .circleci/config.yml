@@ -7,6 +7,7 @@ jobs:
       - checkout
       - setup_remote_docker
       - run: make build-image all
+      - run: make test
 
 workflows:
   version: 2
