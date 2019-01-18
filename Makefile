@@ -33,3 +33,7 @@ $(CACHEVOL):
 generate: $(CACHEVOL) 
 	docker $(DOCKERARGS) \
 		go generate ./...
+
+.PHONY: test
+test:
+	go test ./...
