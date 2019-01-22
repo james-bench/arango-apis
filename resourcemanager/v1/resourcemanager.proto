@@ -42,10 +42,10 @@ service ResourceManagerService {
     // - resourcemanager.organization.delete on the organization
     rpc DeleteOrganization(Organization) returns (common.Empty);
 
-    // Get a list of members of the organization identified by the given ID.
+    // Get a list of members of the organization identified by the given context ID.
     // Required permissions:
     // - resourcemanager.organization.get on the organization
-    rpc ListOrganizationMembers(common.IDOptions) returns (MemberList);
+    rpc ListOrganizationMembers(common.ListOptions) returns (MemberList);
     // Add one or more members to an organization.
     // Required permissions:
     // - resourcemanager.organization.update on the organization
