@@ -48,10 +48,10 @@ service IAMService {
     // - iam.group.delete on organization that owns the group
     rpc DeleteGroup(Group) returns (common.Empty);
 
-    // List of members of the group identified by the given ID.
+    // List of members of the group identified by the given context ID.
     // Required permissions:
     // - iam.group.get on organization that owns the group
-    rpc ListGroupMembers(common.IDOptions) returns (GroupMemberList);
+    rpc ListGroupMembers(common.ListOptions) returns (GroupMemberList);
     // Add one or more members to the group identified by given ID.
     // Required permissions:
     // - iam.group.update on organization that owns the group
