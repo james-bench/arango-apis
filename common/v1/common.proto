@@ -8,7 +8,7 @@
 
 syntax = "proto3";
 
-package common;
+package arangodb.cloud.common.v1;
 
 option go_package = "github.com/arangodb-managed/apis/common/v1";
 

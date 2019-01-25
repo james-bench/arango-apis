@@ -8,7 +8,7 @@
 
 syntax = "proto3";
 
-package resourcemanager;
+package arangodb.cloud.resourcemanager.v1;
 
 option go_package = "github.com/arangodb-managed/apis/resourcemanager/v1";
 
@@ -22,7 +22,7 @@ service ResourceManagerService {
     // Fetch all organizations that the authenticated user is a member of.
     // Required permissions:
     // - None
-    rpc ListOrganizations(common.ListOptions) returns (OrganizationList) {
+    rpc ListOrganizations(common.v1.ListOptions) returns (OrganizationList) {
         option (google.api.http) = {
             get: "/api/resourcemanager/v1/self/organizations"
         };
@@ -32,7 +32,7 @@ service ResourceManagerService {
     // The authenticated user must be a member of the organization.
     // Required permissions:
     // - None
-    rpc GetOrganization(common.IDOptions) returns (Organization) {
+    rpc GetOrganization(common.v1.IDOptions) returns (Organization) {
         option (google.api.http) = {
             get: "/api/resourcemanager/v1/organizations/{id}"
         };
@@ -63,7 +63,7 @@ service ResourceManagerService {
     // Instead their is_deleted field is set to true.
     // Required permissions:
     // - resourcemanager.organization.delete on the organization
-    rpc DeleteOrganization(Organization) returns (common.Empty) {
+    rpc DeleteOrganization(Organization) returns (common.v1.Empty) {
         option (google.api.http) = {
             delete: "/api/resourcemanager/v1/organizations/{id}"
         };
@@ -72,7 +72,7 @@ service ResourceManagerService {
     // Get a list of members of the organization identified by the given context ID.
     // Required permissions:
     // - resourcemanager.organization.get on the organization
-    rpc ListOrganizationMembers(common.ListOptions) returns (MemberList) {
+    rpc ListOrganizationMembers(common.v1.ListOptions) returns (MemberList) {
         option (google.api.http) = {
             get: "/api/resourcemanager/v1/organizations/{context_id}/members"
         };
@@ -81,7 +81,7 @@ service ResourceManagerService {
     // Add one or more members to an organization.
     // Required permissions:
     // - resourcemanager.organization.update on the organization
-    rpc AddOrganizationMembers(OrganizationMembersRequest) returns (common.Empty) {
+    rpc AddOrganizationMembers(OrganizationMembersRequest) returns (common.v1.Empty) {
         option (google.api.http) = {
             post: "/api/resourcemanager/v1/organizations/{organization_id}/members"
             body: "*"
@@ -91,7 +91,7 @@ service ResourceManagerService {
     // Remove one or more members from an organization.
     // Required permissions:
     // - resourcemanager.organization.update on the organization
-    rpc DeleteOrganizationMembers(OrganizationMembersRequest) returns (common.Empty) {
+    rpc DeleteOrganizationMembers(OrganizationMembersRequest) returns (common.v1.Empty) {
         option (google.api.http) = {
             delete: "/api/resourcemanager/v1/organizations/{organization_id}/members"
             body: "*"
@@ -103,7 +103,7 @@ service ResourceManagerService {
     // Required permissions:
     // - resourcemanager.organization.get on the organization, unless the requested user is identical to the authenticated user.
     // Note that if the identified user or organization does not exist, no is returned.
-    rpc IsMemberOfOrganization(IsMemberOfOrganizationRequest) returns (common.YesOrNo) {
+    rpc IsMemberOfOrganization(IsMemberOfOrganizationRequest) returns (common.v1.YesOrNo) {
         option (google.api.http) = {
             get: "/api/resourcemanager/v1/organizations/{organization_id}/members/{user_id}"
         };
@@ -113,7 +113,7 @@ service ResourceManagerService {
     // The authenticated user must be a member of the organization identifier by the given context ID.
     // Required permissions:
     // - resourcemanager.project.list on the organization identified by the given context ID
-    rpc ListProjects(common.ListOptions) returns (ProjectList) {
+    rpc ListProjects(common.v1.ListOptions) returns (ProjectList) {
         option (google.api.http) = {
             get: "/api/resourcemanager/v1/organizations/{context_id}/projects"
         };
@@ -123,7 +123,7 @@ service ResourceManagerService {
     // The authenticated user must be a member of the organization that owns the project.
     // Required permissions:
     // - resourcemanager.project.get on the project identified by the given ID
-    rpc GetProject(common.IDOptions) returns (Project) {
+    rpc GetProject(common.v1.IDOptions) returns (Project) {
         option (google.api.http) = {
             get: "/api/resourcemanager/v1/projects/{id}"
         };
@@ -158,7 +158,7 @@ service ResourceManagerService {
     // The authenticated user must be a member of the organization that owns the project.
     // Required permissions:
     // - resourcemanager.project.delete on the project
-    rpc DeleteProject(Project) returns (common.Empty) {
+    rpc DeleteProject(Project) returns (common.v1.Empty) {
         option (google.api.http) = {
             delete: "/api/resourcemanager/v1/projects/{id}"
         };
