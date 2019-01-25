@@ -2,12 +2,14 @@ SCRIPTDIR := $(shell pwd)
 ROOTDIR := $(shell cd $(SCRIPTDIR) && pwd)
 BUILDIMAGE := arangodb-cloud-apis-build
 CACHEVOL := arangodb-cloud-apis-gocache
+MODVOL := arangodb-cloud-apis-pkg-mod
 
 DOCKERARGS := run -t --rm \
 	-u $(shell id -u):$(shell id -g) \
 	-v $(ROOTDIR)/vendor:/go/src \
 	-v $(ROOTDIR):/usr/src \
 	-v $(CACHEVOL):/usr/gocache \
+	-v $(MODVOL):/go/pkg/mod \
 	-e GOCACHE=/usr/gocache \
 	-e CGO_ENABLED=0 \
 	-w /usr/src \
@@ -28,9 +30,16 @@ $(CACHEVOL):
 		$(BUILDIMAGE) \
 		chown -R $(shell id -u):$(shell id -g) /usr/gocache
 
+.PHONY: $(MODVOL)
+$(MODVOL):
+	@docker volume create $(MODVOL)
+	docker run -it 	--rm -v $(MODVOL):/go/pkg/mod \
+		$(BUILDIMAGE) \
+		chown -R $(shell id -u):$(shell id -g) /go/pkg/mod
+
 # Generate go code for proto files
 .PHONY: generate
-generate: $(CACHEVOL) 
+generate: $(CACHEVOL) $(MODVOL)
 	docker $(DOCKERARGS) \
 		go generate ./...
 
