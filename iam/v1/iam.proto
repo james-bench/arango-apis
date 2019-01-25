@@ -15,105 +15,219 @@ option go_package = "github.com/arangodb-managed/apis/iam/v1";
 import "common/v1/common.proto";
 
 import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
+import "google/api/annotations.proto";
 
 // IAMService is the API used to configure IAM objects.
 service IAMService {
     // Fetch all available information of the currently authenticated user.
     // Required permissions:
     // - None
-    rpc GetThisUser(common.Empty) returns (User);
+    rpc GetThisUser(common.Empty) returns (User) {
+        option (google.api.http) = {
+            get: "/api/iam/v1/self/user"
+        };
+    }
+
     // Fetch all available information of the user identified by the given ID.
     // Required permissions:
     // - resourcemanager.organization.get on one of the organizations that the request user and authenticated user are both a member of
-    rpc GetUser(common.IDOptions) returns (User);
+    rpc GetUser(common.IDOptions) returns (User) {
+        option (google.api.http) = {
+            get: "/api/iam/v1/users/{id}"
+        };
+    }
 
     // Fetch all groups of the organization identified by the given context ID.
     // Required permissions:
     // - iam.group.list on organization identified by given context ID.
-    rpc ListGroups(common.ListOptions) returns (GroupList);
+    rpc ListGroups(common.ListOptions) returns (GroupList) {
+        option (google.api.http) = {
+            get: "/api/iam/v1/organizations/{context_id}/groups"
+        };
+    }
+    
     // Fetch a group by its id.
     // Required permissions:
     // - iam.group.get on organization that owns the group
-    rpc GetGroup(common.IDOptions) returns (Group);
+    rpc GetGroup(common.IDOptions) returns (Group) {
+        option (google.api.http) = {
+            get: "/api/iam/v1/groups/{id}"
+        };
+    }
+
     // Create a group
     // Required permissions:
     // - iam.group.create on organization that owns the group
-    rpc CreateGroup(Group) returns (Group);
+    rpc CreateGroup(Group) returns (Group) {
+        option (google.api.http) = {
+            post: "/api/iam/v1/organizations/{organization_id}/groups"
+            body: "*"
+        };
+    }
+
     // Update a group
     // Required permissions:
     // - iam.group.update on organization that owns the group
-    rpc UpdateGroup(Group) returns (Group);
+    rpc UpdateGroup(Group) returns (Group) {
+        option (google.api.http) = {
+            patch: "/api/iam/v1/groups/{id}"
+            body: "*"
+        };
+    }
+
     // Delete a group
     // Required permissions:
     // - iam.group.delete on organization that owns the group
-    rpc DeleteGroup(Group) returns (common.Empty);
+    rpc DeleteGroup(Group) returns (common.Empty) {
+        option (google.api.http) = {
+            delete: "/api/iam/v1/groups/{id}"
+        };
+    }
 
     // List of members of the group identified by the given context ID.
     // Required permissions:
     // - iam.group.get on organization that owns the group
-    rpc ListGroupMembers(common.ListOptions) returns (GroupMemberList);
+    rpc ListGroupMembers(common.ListOptions) returns (GroupMemberList) {
+        option (google.api.http) = {
+            get: "/api/iam/v1/groups/{context_id}/members"
+        };
+    }
+
     // Add one or more members to the group identified by given ID.
     // Required permissions:
     // - iam.group.update on organization that owns the group
-    rpc AddGroupMembers(GroupMembersRequest) returns (Group);
+    rpc AddGroupMembers(GroupMembersRequest) returns (Group) {
+        option (google.api.http) = {
+            post: "/api/iam/v1/groups/{group_id}/members"
+            body: "*"
+        };
+    }
+
     // Remove one or more members from the group identified by given ID.
     // Required permissions:
     // - iam.group.update on organization that owns the group
-    rpc DeleteGroupMembers(GroupMembersRequest) returns (Group);
+    rpc DeleteGroupMembers(GroupMembersRequest) returns (Group) {
+        option (google.api.http) = {
+            delete: "/api/iam/v1/groups/{group_id}/members"
+            body: "*"
+        };
+    }
+
     // Is the user identified by the given user ID a member of the group identified by the given group ID.
     // Required permissions:
     // - iam.group.get on organization that owns the group, unless the requested user is identical to the authenticated user.
     // Note that if the identified group does not exist, no is returned.
-    rpc IsMemberOfGroup(IsMemberOfGroupRequest) returns (common.YesOrNo);
+    rpc IsMemberOfGroup(IsMemberOfGroupRequest) returns (common.YesOrNo) {
+        option (google.api.http) = {
+            get: "/api/iam/v1/groups/{group_id}/members/{user_id}"
+        };
+    }
 
     // Fetch all roles in the organization identified by the given context ID.
     // Required permissions:
     // - iam.role.list on organization identified by given context ID.
-    rpc ListRoles(common.ListOptions) returns (RoleList);
+    rpc ListRoles(common.ListOptions) returns (RoleList) {
+        option (google.api.http) = {
+            get: "/api/iam/v1/organizations/{context_id}/roles"
+        };
+    }
+
     // Fetch a role by its id.
     // Required permissions:
     // - iam.role.get on organization that owns the role
-    rpc GetRole(common.IDOptions) returns (Role);
+    rpc GetRole(common.IDOptions) returns (Role) {
+        option (google.api.http) = {
+            get: "/api/iam/v1/roles/{id}"
+        };
+    }
+
     // Create a custom role
     // Required permissions:
     // - iam.role.create on organization that owns the role
-    rpc CreateRole(Role) returns (Role);
+    rpc CreateRole(Role) returns (Role) {
+        option (google.api.http) = {
+            post: "/api/iam/v1/organizations/{organization_id}/roles"
+            body: "*"
+        };
+    }
+
     // Update a custom role
     // Required permissions:
     // - iam.role.update on organization that owns the role
-    rpc UpdateRole(Role) returns (Role);
+    rpc UpdateRole(Role) returns (Role) {
+        option (google.api.http) = {
+            patch: "/api/iam/v1/roles/{id}"
+            body: "*"
+        };
+    }
+
     // Delete a custom role
     // Required permissions:
     // - iam.role.delete on organization that owns the role
-    rpc DeleteRole(Role) returns (common.Empty);
+    rpc DeleteRole(Role) returns (common.Empty) {
+        option (google.api.http) = {
+            delete: "/api/iam/v1/roles/{id}"
+            body: "*"
+        };
+    }
     
     // Get the policy for a resource identified by given URL.
     // Required permissions:
     // - iam.policy.get on resource identified by the url
-    rpc GetPolicy(common.URLOptions) returns (Policy);
+    rpc GetPolicy(common.URLOptions) returns (Policy) {
+        option (google.api.http) = {
+            get: "/api/iam/v1/policies"
+        };
+    }
+
     // Add one or more RoleBindings to the policy of a resource identified by given URL.
     // Required permissions:
     // - iam.policy.update on resource identified by the url
-    rpc AddRoleBindings(RoleBindingsRequest) returns (Policy);
+    rpc AddRoleBindings(RoleBindingsRequest) returns (Policy) {
+        option (google.api.http) = {
+            post: "/api/iam/v1/policies/bindings"
+            body: "*"
+        };
+    }
+
     // Remove one or more RoleBindings from the policy of a resource identified by given URL.
     // Required permissions:
     // - iam.policy.update on resource identified by the url
-    rpc DeleteRoleBindings(RoleBindingsRequest) returns (Policy);
+    rpc DeleteRoleBindings(RoleBindingsRequest) returns (Policy) {
+        option (google.api.http) = {
+            delete: "/api/iam/v1/policies/bindings"
+            body: "*"
+        };
+    }
+
     // Return the list of permissions that are available to the currently authenticated
     // used for actions on the resource identified by the given URL.
     // Required permissions:
     // - None
-    rpc GetEffectivePermissions(common.URLOptions) returns (PermissionList);
+    rpc GetEffectivePermissions(common.URLOptions) returns (PermissionList) {
+        option (google.api.http) = {
+            get: "/api/iam/v1/policies/effective-permissions"
+        };
+    }
+
     // Does the authenticated user have all of the requested permissions for the resource
     // identified by the given URL?
     // Required permissions:
     // - None
-    rpc HasPermissions(HasPermissionsRequest) returns (common.YesOrNo);
+    rpc HasPermissions(HasPermissionsRequest) returns (common.YesOrNo) {
+        option (google.api.http) = {
+            get: "/api/iam/v1/policies/permissions"
+        };
+    }
 
     // List all known permissions.
     // Required permissions:
     // - None
-    rpc ListPermissions(common.Empty) returns (PermissionList);
+    rpc ListPermissions(common.Empty) returns (PermissionList) {
+        option (google.api.http) = {
+            get: "/api/iam/v1/permissions"
+        };
+    }
 }
 
 // User represents an actual person.
