@@ -8,22 +8,22 @@
 
 syntax = "proto3";
 
-package arangodb.cloud.provider.v1;
+package arangodb.cloud.platform.v1;
 
-option go_package = "github.com/arangodb-managed/apis/provider/v1";
+option go_package = "github.com/arangodb-managed/apis/platform/v1";
 
 import "common/v1/common.proto";
 
 import "google/api/annotations.proto";
 
-// ProviderService is the API used to query for cloud provider & regional info.
-service ProviderService {
+// PlatformService is the API used to query for cloud provider & regional info.
+service PlatformService {
     // Fetch all providers that are supported by the ArangoDB cloud.
     // Required permissions:
     // - None
     rpc ListProviders(common.v1.ListOptions) returns (ProviderList) {
         option (google.api.http) = {
-            get: "/api/provider/v1/providers"
+            get: "/api/platform/v1/providers"
         };
     }
     
@@ -32,7 +32,7 @@ service ProviderService {
     // - None
     rpc GetProvider(common.v1.IDOptions) returns (Provider) {
         option (google.api.http) = {
-            get: "/api/provider/v1/providers/{id}"
+            get: "/api/platform/v1/providers/{id}"
         };
     }
 
@@ -41,7 +41,7 @@ service ProviderService {
     // - None
     rpc ListRegions(common.v1.ListOptions) returns (RegionList) {
         option (google.api.http) = {
-            get: "/api/provider/v1/providers/{context_id}/regions"
+            get: "/api/platform/v1/providers/{context_id}/regions"
         };
     }
 
@@ -50,7 +50,7 @@ service ProviderService {
     // - None
     rpc GetRegion(common.v1.IDOptions) returns (Region) {
         option (google.api.http) = {
-            get: "/api/provider/v1/regions/{id}"
+            get: "/api/platform/v1/regions/{id}"
         };
     }
 }
