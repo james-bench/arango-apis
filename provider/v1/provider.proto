@@ -1,0 +1,86 @@
+// 
+// DISCLAIMER
+// 
+// Copyright 2019 ArangoDB Inc, Cologne, Germany
+// 
+// Author Ewout Prangsma
+// 
+
+syntax = "proto3";
+
+package arangodb.cloud.provider.v1;
+
+option go_package = "github.com/arangodb-managed/apis/provider/v1";
+
+import "common/v1/common.proto";
+
+import "google/api/annotations.proto";
+
+// ProviderService is the API used to query for cloud provider & regional info.
+service ProviderService {
+    // Fetch all providers that are supported by the ArangoDB cloud.
+    // Required permissions:
+    // - None
+    rpc ListProviders(common.v1.ListOptions) returns (ProviderList) {
+        option (google.api.http) = {
+            get: "/api/provider/v1/providers"
+        };
+    }
+    
+    // Fetch a provider by its id.
+    // Required permissions:
+    // - None
+    rpc GetProvider(common.v1.IDOptions) returns (Provider) {
+        option (google.api.http) = {
+            get: "/api/provider/v1/providers/{id}"
+        };
+    }
+
+    // Fetch all regions provided by the provided identified by the given context ID.
+    // Required permissions:
+    // - None
+    rpc ListRegions(common.v1.ListOptions) returns (RegionList) {
+        option (google.api.http) = {
+            get: "/api/provider/v1/providers/{context_id}/regions"
+        };
+    }
+
+    // Fetch a region by its id.
+    // Required permissions:
+    // - None
+    rpc GetRegion(common.v1.IDOptions) returns (Region) {
+        option (google.api.http) = {
+            get: "/api/provider/v1/regions/{id}"
+        };
+    }
+}
+
+// Provider represents a specific cloud provider such as AWS or GCP.
+message Provider {
+    // System identifier of the provider.
+    string id = 1;
+    // Name of the provider
+    string name = 2; 
+}
+
+// List of providers.
+message ProviderList {
+    repeated Provider items = 1;
+}
+
+// Region represents a geographical region in which deployments are run.
+message Region {
+    // System identifier of the region.
+    string id = 1;
+    // Identifier of the provider that hosts this region.    
+    string provider_id = 2;
+    // Name of the region
+    string name = 3;
+    // Is this region available for creating new deployments?
+    bool available = 4;
+}
+
+// List of regions.
+message RegionList {
+    repeated Region items = 1;
+}
