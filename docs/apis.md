@@ -288,7 +288,7 @@ Region represents a geographical region in which deployments are run.
 | ----- | ---- | ----- | ----------- |
 | id | [string](#string) |  | System identifier of the region. |
 | provider_id | [string](#string) |  | Identifier of the provider that hosts this region. |
-| name | [string](#string) |  | Name of the region |
+| location | [string](#string) |  | Location of the region |
 | available | [bool](#bool) |  | Is this region available for creating new deployments? |
 
 
