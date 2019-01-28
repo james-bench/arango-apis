@@ -112,3 +112,16 @@ func Unauthenticated(msg string, args ...interface{}) error {
 	}
 	return status.Error(codes.Unauthenticated, msg)
 }
+
+// IsUnknown returns true if the given error signals an unknown error.
+func IsUnknown(err error) bool {
+	return status.Code(Cause(err)) == codes.Unknown
+}
+
+// Unknown creates a new error that signals an unknown error.
+func Unknown(msg string, args ...interface{}) error {
+	if len(args) > 0 {
+		return status.Errorf(codes.Unknown, msg, args...)
+	}
+	return status.Error(codes.Unknown, msg)
+}
