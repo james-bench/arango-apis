@@ -3,11 +3,14 @@ jobs:
   build:
     docker:
       - image: circleci/golang:1.11.5
-    working_directory: /go/src/github.com/arangodb-managed/apis
     steps:
       - checkout
       - setup_remote_docker
-      - run: make build-image all
+      - run: |
+          curl -L https://github.com/protocolbuffers/protobuf/releases/download/v3.6.1/protoc-3.6.1-linux-x86_64.zip -o /tmp/protoc.zip
+          cd /usr/local/ && unzip /tmp/protoc.zip
+      - run: make build-image
+      - run: make all
       - run: make test
 
 workflows:
