@@ -3,6 +3,7 @@ ROOTDIR := $(shell cd $(SCRIPTDIR) && pwd)
 BUILDIMAGE := arangodb-cloud-apis-build
 CACHEVOL := arangodb-cloud-apis-gocache
 MODVOL := arangodb-cloud-apis-pkg-mod
+PROTOSOURCES := $(shell find .  -name '*.proto' -not -path './vendor/*')
 
 DOCKERARGS := run -t --rm \
 	-u $(shell id -u):$(shell id -g) \
@@ -16,7 +17,7 @@ DOCKERARGS := run -t --rm \
 	$(BUILDIMAGE)
 
 .PHONY: all
-all: generate
+all: generate docs
 
 # Build docker builder image
 .PHONY: build-image
@@ -42,6 +43,15 @@ $(MODVOL):
 generate: $(CACHEVOL) $(MODVOL)
 	docker $(DOCKERARGS) \
 		go generate ./...
+
+# Generate API docs
+.PHONY: docs
+docs: $(CACHEVOL) $(MODVOL)
+	@echo $(PROTOSOURCES)
+	docker $(DOCKERARGS) \
+		protoc -I.:vendor:vendor/googleapis/:vendor/github.com/gogo/protobuf/protobuf/ \
+			--doc_out=docs $(PROTOSOURCES) \
+			--doc_opt=markdown,apis.md
 
 .PHONY: test
 test:
