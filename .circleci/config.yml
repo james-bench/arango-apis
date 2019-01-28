@@ -8,7 +8,7 @@ jobs:
       - setup_remote_docker
       - run: |
           curl -L https://github.com/protocolbuffers/protobuf/releases/download/v3.6.1/protoc-3.6.1-linux-x86_64.zip -o /tmp/protoc.zip
-          cd /usr/local/ && unzip /tmp/protoc.zip
+          cd /usr/local/ && sudo unzip /tmp/protoc.zip
       - run: make build-image
       - run: make all
       - run: make test
