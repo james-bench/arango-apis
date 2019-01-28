@@ -16,6 +16,12 @@ DOCKERARGS := run -t --rm \
 	-w /usr/src \
 	$(BUILDIMAGE)
 
+ifndef CIRCLECI
+	DOCKERENV := docker $(DOCKERARGS)
+else
+	DOCKERENV :=
+endif
+
 .PHONY: all
 all: generate docs
 
@@ -57,18 +63,13 @@ endif
 # Generate go code for proto files
 .PHONY: generate
 generate: $(CACHEVOL) $(MODVOL)
-ifndef CIRCLECI
-	docker $(DOCKERARGS) \
-endif
+	$(DOCKERENV) \
 		go generate ./...
 
 # Generate API docs
 .PHONY: docs
 docs: $(CACHEVOL) $(MODVOL)
-	@echo $(PROTOSOURCES)
-ifndef CIRCLECI
-	docker $(DOCKERARGS) \
-endif
+	$(DOCKERENV) \
 		protoc -I.:vendor:vendor/googleapis/:vendor/github.com/gogo/protobuf/protobuf/ \
 			--doc_out=docs $(PROTOSOURCES) \
 			--doc_opt=markdown,apis.md
