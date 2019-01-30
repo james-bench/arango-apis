@@ -46,10 +46,13 @@ type CACertificate struct {
 	// This value cannot be changed after creation.
 	Lifetime *types.Duration `protobuf:"bytes,6,opt,name=lifetime,proto3" json:"lifetime,omitempty"`
 	// The creation timestamp of the CA certificate
+	// This is a read-only value.
 	CreatedAt *types.Timestamp `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	// The deletion timestamp of the CA certificate
+	// This is a read-only value.
 	DeletedAt *types.Timestamp `protobuf:"bytes,8,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`
 	// The expiration timestamp of the CA certificate
+	// This is a read-only value.
 	ExpiresAt *types.Timestamp `protobuf:"bytes,9,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
 	// A PEM encoded representation of the public key of the CA certificate.
 	// This is a read-only value.

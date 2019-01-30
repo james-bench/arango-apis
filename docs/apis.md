@@ -271,9 +271,9 @@ TLS certificates for deployments &amp; client authentication.
 | description | [string](#string) |  | Description of the CA certificate |
 | project_id | [string](#string) |  | Identifier of the project that owns this CA certificate. This value cannot be changed after creation. |
 | lifetime | [google.protobuf.Duration](#google.protobuf.Duration) |  | Time from creation of the CA certificate to expiration. This value cannot be changed after creation. |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the CA certificate |
-| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the CA certificate |
-| expires_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The expiration timestamp of the CA certificate |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the CA certificate This is a read-only value. |
+| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the CA certificate This is a read-only value. |
+| expires_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The expiration timestamp of the CA certificate This is a read-only value. |
 | certificate_pem | [string](#string) |  | A PEM encoded representation of the public key of the CA certificate. This is a read-only value. |
 
 

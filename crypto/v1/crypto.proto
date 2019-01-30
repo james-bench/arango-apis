@@ -91,10 +91,13 @@ message CACertificate {
     // This value cannot be changed after creation.
     google.protobuf.Duration lifetime = 6;
     // The creation timestamp of the CA certificate
+    // This is a read-only value.
     google.protobuf.Timestamp created_at = 7;
     // The deletion timestamp of the CA certificate
+    // This is a read-only value.
     google.protobuf.Timestamp deleted_at = 8;
     // The expiration timestamp of the CA certificate
+    // This is a read-only value.
     google.protobuf.Timestamp expires_at = 9;
     // A PEM encoded representation of the public key of the CA certificate.
     // This is a read-only value.
