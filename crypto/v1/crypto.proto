@@ -1,0 +1,107 @@
+// 
+// DISCLAIMER
+// 
+// Copyright 2019 ArangoDB Inc, Cologne, Germany
+// 
+// Author Ewout Prangsma
+// 
+
+syntax = "proto3";
+
+package arangodb.cloud.crypto.v1;
+
+option go_package = "github.com/arangodb-managed/apis/crypto/v1";
+
+import "common/v1/common.proto";
+
+import "github.com/golang/protobuf/ptypes/duration/duration.proto";
+import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
+import "google/api/annotations.proto";
+
+// CryptoService is the API used to configure various crypto objects.
+service CryptoService {
+    // Fetch all CA certificates in the project identified by the given context ID.
+    // Required permissions:
+    // - crypto.cacertificate.list on the project identified by the given context ID
+    rpc ListCACertificates(common.v1.ListOptions) returns (CACertificate) {
+        option (google.api.http) = {
+            get: "/api/crypto/v1/projects/{context_id}/cacertificates"
+        };
+    }
+
+    // Fetch a CA certificate by its id.
+    // Required permissions:
+    // - crypto.cacertificate.get on the CA certificate identified by the given ID
+    rpc GetCACertificate(common.v1.IDOptions) returns (CACertificate) {
+        option (google.api.http) = {
+            get: "/api/crypto/v1/cacertificates/{id}"
+        };
+    }
+
+    // Create a new CA certificate
+    // Required permissions:
+    // - crypto.cacertificate.create on the project that owns the CA certificate
+    rpc CreateCACertificate(CACertificate) returns (CACertificate) {
+        option (google.api.http) = {
+            post: "/api/crypto/v1/projects/{project_id}/cacertificates"
+            body: "*"
+        };
+    }
+
+    // Update a CA certificate
+    // Required permissions:
+    // - crypto.cacertificate.update on the CA certificate
+    rpc UpdateCACertificate(CACertificate) returns (CACertificate) {
+        option (google.api.http) = {
+            patch: "/api/crypto/v1/cacertificates/{id}"
+            body: "*"
+        };
+    }
+
+    // Delete a CA certificate
+    // Note that CA certificate are initially only marked for deleted.
+    // Once all the resources that depend on it are removed the CA certificate itself is deleted
+    // and cannot be restored.
+    // Required permissions:
+    // - crypto.cacertificate.delete on the CA certificate
+    rpc DeleteCACertificate(CACertificate) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            delete: "/api/crypto/v1/cacertificates/{id}"
+        };
+    }
+}
+
+// A CACertificate is represents a self-signed certificate authority used to sign
+// TLS certificates for deployments & client authentication.
+message CACertificate {   
+    // System identifier of the CA certificate.
+    // This is a read-only value.
+    string id = 1;
+    // URL of this resource
+    // This is a read-only value.
+    string url = 2;
+    // Name of the CA certificate
+    string name = 3; 
+    // Description of the CA certificate
+    string description = 4; 
+    // Identifier of the project that owns this CA certificate.
+    // This value cannot be changed after creation.
+    string project_id = 5;
+    // Time from creation of the CA certificate to expiration.
+    // This value cannot be changed after creation.
+    google.protobuf.Duration lifetime = 6;
+    // The creation timestamp of the CA certificate
+    google.protobuf.Timestamp created_at = 7;
+    // The deletion timestamp of the CA certificate
+    google.protobuf.Timestamp deleted_at = 8;
+    // The expiration timestamp of the CA certificate
+    google.protobuf.Timestamp expires_at = 9;
+    // A PEM encoded representation of the public key of the CA certificate.
+    // This is a read-only value.
+    string certificate_pem = 10;
+}
+
+// List of CACertificates.
+message CACertificateList {
+    repeated CACertificate items = 1;
+}
