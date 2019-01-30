@@ -52,14 +52,21 @@ type Deployment struct {
 	DeletedAt *types.Timestamp `protobuf:"bytes,8,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`
 	// ArangoDB version to use for this deployment.
 	// See Version.version.
-	Version string `protobuf:"bytes,100,opt,name=version,proto3" json:"version,omitempty"`
-	// Zero or more DNS names to include in the TLS certificate of the deployment.
-	AlternateDnsNames []string `protobuf:"bytes,101,rep,name=alternate_dns_names,json=alternateDnsNames,proto3" json:"alternate_dns_names,omitempty"`
-	// Identifier of the CACertificate used to sign TLS certificates for the deployment.
-	CaCertificateId      string   `protobuf:"bytes,102,opt,name=ca_certificate_id,json=caCertificateId,proto3" json:"ca_certificate_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	// If you change this value to a higher version,
+	// the deployment will be upgraded.
+	// If you change this value to a lower patch value,
+	// the deployment will be downgraded.
+	// Any attempt to change to a lower minor or major version
+	// is considered an invalid request.
+	// Any attempt to change to a version that is not in the
+	// list of available versions is considered an invalid request.
+	Version              string                      `protobuf:"bytes,101,opt,name=version,proto3" json:"version,omitempty"`
+	Certificates         *Deployment_CertificateSpec `protobuf:"bytes,102,opt,name=certificates,proto3" json:"certificates,omitempty"`
+	Servers              *Deployment_ServersSpec     `protobuf:"bytes,103,opt,name=servers,proto3" json:"servers,omitempty"`
+	Status               *Deployment_Status          `protobuf:"bytes,201,opt,name=status,proto3" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                    `json:"-"`
+	XXX_unrecognized     []byte                      `json:"-"`
+	XXX_sizecache        int32                       `json:"-"`
 }
 
 func (m *Deployment) Reset()         { *m = Deployment{} }
@@ -158,18 +165,266 @@ func (m *Deployment) GetVersion() string {
 	return ""
 }
 
-func (m *Deployment) GetAlternateDnsNames() []string {
+func (m *Deployment) GetCertificates() *Deployment_CertificateSpec {
+	if m != nil {
+		return m.Certificates
+	}
+	return nil
+}
+
+func (m *Deployment) GetServers() *Deployment_ServersSpec {
+	if m != nil {
+		return m.Servers
+	}
+	return nil
+}
+
+func (m *Deployment) GetStatus() *Deployment_Status {
+	if m != nil {
+		return m.Status
+	}
+	return nil
+}
+
+type Deployment_CertificateSpec struct {
+	// Identifier of the CACertificate used to sign TLS certificates for the deployment.
+	// If this value is empty during creation of the deployment, a new CA certificate
+	// will be created for this deployment.
+	// If you change this value after the creation of the deployment a complete
+	// rotation of the deployment is required, which will result in some downtime.
+	CaCertificateId string `protobuf:"bytes,1,opt,name=ca_certificate_id,json=caCertificateId,proto3" json:"ca_certificate_id,omitempty"`
+	// Zero or more DNS names to include in the TLS certificate of the deployment.
+	AlternateDnsNames    []string `protobuf:"bytes,2,rep,name=alternate_dns_names,json=alternateDnsNames,proto3" json:"alternate_dns_names,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Deployment_CertificateSpec) Reset()         { *m = Deployment_CertificateSpec{} }
+func (m *Deployment_CertificateSpec) String() string { return proto.CompactTextString(m) }
+func (*Deployment_CertificateSpec) ProtoMessage()    {}
+func (*Deployment_CertificateSpec) Descriptor() ([]byte, []int) {
+	return fileDescriptor_871986018790d2fd, []int{0, 0}
+}
+func (m *Deployment_CertificateSpec) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Deployment_CertificateSpec) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Deployment_CertificateSpec.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Deployment_CertificateSpec) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Deployment_CertificateSpec.Merge(m, src)
+}
+func (m *Deployment_CertificateSpec) XXX_Size() int {
+	return m.Size()
+}
+func (m *Deployment_CertificateSpec) XXX_DiscardUnknown() {
+	xxx_messageInfo_Deployment_CertificateSpec.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Deployment_CertificateSpec proto.InternalMessageInfo
+
+func (m *Deployment_CertificateSpec) GetCaCertificateId() string {
+	if m != nil {
+		return m.CaCertificateId
+	}
+	return ""
+}
+
+func (m *Deployment_CertificateSpec) GetAlternateDnsNames() []string {
 	if m != nil {
 		return m.AlternateDnsNames
 	}
 	return nil
 }
 
-func (m *Deployment) GetCaCertificateId() string {
+type Deployment_ServersSpec struct {
+	// Number of coordinators of the deployment
+	Coordinators int32 `protobuf:"varint,1,opt,name=coordinators,proto3" json:"coordinators,omitempty"`
+	// Amount of memory (in GB) to allocate for coordinators.
+	CoordinatorMemorySize int32 `protobuf:"varint,2,opt,name=coordinator_memory_size,json=coordinatorMemorySize,proto3" json:"coordinator_memory_size,omitempty"`
+	// Number of dbservers of the deployment
+	Dbservers int32 `protobuf:"varint,11,opt,name=dbservers,proto3" json:"dbservers,omitempty"`
+	// Amount of memory (in GB) to allocate for dbservers.
+	DbserverMemorySize int32 `protobuf:"varint,12,opt,name=dbserver_memory_size,json=dbserverMemorySize,proto3" json:"dbserver_memory_size,omitempty"`
+	// Amount of disk space (in GB) to allocate for dbservers.
+	DbserverDiskSize     int32    `protobuf:"varint,13,opt,name=dbserver_disk_size,json=dbserverDiskSize,proto3" json:"dbserver_disk_size,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Deployment_ServersSpec) Reset()         { *m = Deployment_ServersSpec{} }
+func (m *Deployment_ServersSpec) String() string { return proto.CompactTextString(m) }
+func (*Deployment_ServersSpec) ProtoMessage()    {}
+func (*Deployment_ServersSpec) Descriptor() ([]byte, []int) {
+	return fileDescriptor_871986018790d2fd, []int{0, 1}
+}
+func (m *Deployment_ServersSpec) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Deployment_ServersSpec) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Deployment_ServersSpec.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Deployment_ServersSpec) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Deployment_ServersSpec.Merge(m, src)
+}
+func (m *Deployment_ServersSpec) XXX_Size() int {
+	return m.Size()
+}
+func (m *Deployment_ServersSpec) XXX_DiscardUnknown() {
+	xxx_messageInfo_Deployment_ServersSpec.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Deployment_ServersSpec proto.InternalMessageInfo
+
+func (m *Deployment_ServersSpec) GetCoordinators() int32 {
 	if m != nil {
-		return m.CaCertificateId
+		return m.Coordinators
+	}
+	return 0
+}
+
+func (m *Deployment_ServersSpec) GetCoordinatorMemorySize() int32 {
+	if m != nil {
+		return m.CoordinatorMemorySize
+	}
+	return 0
+}
+
+func (m *Deployment_ServersSpec) GetDbservers() int32 {
+	if m != nil {
+		return m.Dbservers
+	}
+	return 0
+}
+
+func (m *Deployment_ServersSpec) GetDbserverMemorySize() int32 {
+	if m != nil {
+		return m.DbserverMemorySize
+	}
+	return 0
+}
+
+func (m *Deployment_ServersSpec) GetDbserverDiskSize() int32 {
+	if m != nil {
+		return m.DbserverDiskSize
+	}
+	return 0
+}
+
+// Status of the deployment
+// All members of this field are read-only.
+type Deployment_Status struct {
+	// Endpoint URL used to reach the deployment
+	// This value will be empty during the creation of the deployment.
+	Endpoint string `protobuf:"bytes,1,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
+	// Human readable description of the status of the deployment
+	Description string `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
+	// Has the deployment been created
+	Created bool `protobuf:"varint,3,opt,name=created,proto3" json:"created,omitempty"`
+	// Is the deployment ready to be used
+	Ready bool `protobuf:"varint,4,opt,name=ready,proto3" json:"ready,omitempty"`
+	// Is the deployment being upgraded
+	Upgrading bool `protobuf:"varint,5,opt,name=upgrading,proto3" json:"upgrading,omitempty"`
+	// Versions of running servers
+	ServerVersions       []string `protobuf:"bytes,6,rep,name=server_versions,json=serverVersions,proto3" json:"server_versions,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Deployment_Status) Reset()         { *m = Deployment_Status{} }
+func (m *Deployment_Status) String() string { return proto.CompactTextString(m) }
+func (*Deployment_Status) ProtoMessage()    {}
+func (*Deployment_Status) Descriptor() ([]byte, []int) {
+	return fileDescriptor_871986018790d2fd, []int{0, 2}
+}
+func (m *Deployment_Status) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Deployment_Status) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Deployment_Status.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Deployment_Status) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Deployment_Status.Merge(m, src)
+}
+func (m *Deployment_Status) XXX_Size() int {
+	return m.Size()
+}
+func (m *Deployment_Status) XXX_DiscardUnknown() {
+	xxx_messageInfo_Deployment_Status.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Deployment_Status proto.InternalMessageInfo
+
+func (m *Deployment_Status) GetEndpoint() string {
+	if m != nil {
+		return m.Endpoint
 	}
 	return ""
+}
+
+func (m *Deployment_Status) GetDescription() string {
+	if m != nil {
+		return m.Description
+	}
+	return ""
+}
+
+func (m *Deployment_Status) GetCreated() bool {
+	if m != nil {
+		return m.Created
+	}
+	return false
+}
+
+func (m *Deployment_Status) GetReady() bool {
+	if m != nil {
+		return m.Ready
+	}
+	return false
+}
+
+func (m *Deployment_Status) GetUpgrading() bool {
+	if m != nil {
+		return m.Upgrading
+	}
+	return false
+}
+
+func (m *Deployment_Status) GetServerVersions() []string {
+	if m != nil {
+		return m.ServerVersions
+	}
+	return nil
 }
 
 // List of Deployments.
@@ -319,6 +574,9 @@ func (m *VersionList) GetItems() []*Version {
 
 func init() {
 	proto.RegisterType((*Deployment)(nil), "arangodb.cloud.data.v1.Deployment")
+	proto.RegisterType((*Deployment_CertificateSpec)(nil), "arangodb.cloud.data.v1.Deployment.CertificateSpec")
+	proto.RegisterType((*Deployment_ServersSpec)(nil), "arangodb.cloud.data.v1.Deployment.ServersSpec")
+	proto.RegisterType((*Deployment_Status)(nil), "arangodb.cloud.data.v1.Deployment.Status")
 	proto.RegisterType((*DeploymentList)(nil), "arangodb.cloud.data.v1.DeploymentList")
 	proto.RegisterType((*Version)(nil), "arangodb.cloud.data.v1.Version")
 	proto.RegisterType((*VersionList)(nil), "arangodb.cloud.data.v1.VersionList")
@@ -327,52 +585,68 @@ func init() {
 func init() { proto.RegisterFile("data.proto", fileDescriptor_871986018790d2fd) }
 
 var fileDescriptor_871986018790d2fd = []byte{
-	// 716 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x95, 0xcd, 0x6e, 0xd3, 0x4a,
-	0x14, 0xc7, 0xaf, 0x93, 0xb6, 0x69, 0x4e, 0xee, 0x6d, 0xd3, 0xb9, 0xba, 0xbd, 0x56, 0xa0, 0x69,
-	0xe4, 0xaa, 0x28, 0xaa, 0x54, 0x9b, 0x06, 0x81, 0x4a, 0x59, 0x95, 0x06, 0xa1, 0x20, 0x04, 0x52,
-	0xf8, 0x58, 0xb0, 0x89, 0x26, 0x9e, 0x89, 0x19, 0x64, 0x7b, 0x2c, 0xcf, 0x24, 0x22, 0x2a, 0x05,
-	0x09, 0xb1, 0x64, 0x07, 0x8b, 0x3e, 0x0e, 0x4b, 0x96, 0x48, 0xbc, 0x00, 0x2a, 0x3c, 0x08, 0x9a,
-	0x89, 0x4d, 0x1c, 0xd4, 0x90, 0xb0, 0x60, 0x37, 0x39, 0x9f, 0xbf, 0x73, 0xe6, 0x3f, 0x31, 0x00,
-	0xc1, 0x12, 0xdb, 0x51, 0xcc, 0x25, 0x47, 0xeb, 0x38, 0xc6, 0xa1, 0xc7, 0x49, 0xd7, 0x76, 0x7d,
-	0xde, 0x27, 0xb6, 0x76, 0x0d, 0xf6, 0x2a, 0xeb, 0x2e, 0x0f, 0x02, 0x1e, 0x3a, 0x83, 0x3d, 0x67,
-	0x74, 0x1a, 0xc5, 0x57, 0x6e, 0x78, 0x4c, 0x3e, 0xed, 0x77, 0x6d, 0x97, 0x07, 0x8e, 0xc7, 0x7d,
-	0x1c, 0x7a, 0x8e, 0x76, 0x74, 0xfb, 0x3d, 0x27, 0x92, 0xc3, 0x88, 0x0a, 0x47, 0xb2, 0x80, 0x0a,
-	0x89, 0x83, 0x68, 0x7c, 0x4a, 0x92, 0x2f, 0x7a, 0x9c, 0x7b, 0x3e, 0x75, 0x70, 0xc4, 0x1c, 0x1c,
-	0x86, 0x5c, 0x62, 0xc9, 0x78, 0x28, 0x46, 0x5e, 0xeb, 0x6d, 0x1e, 0xa0, 0x49, 0x23, 0x9f, 0x0f,
-	0x03, 0x1a, 0x4a, 0xb4, 0x02, 0x39, 0x46, 0x4c, 0xa3, 0x66, 0xd4, 0x8b, 0xed, 0x1c, 0x23, 0xa8,
-	0x0c, 0xf9, 0x7e, 0xec, 0x9b, 0x39, 0x6d, 0x50, 0x47, 0x84, 0x60, 0x21, 0xc4, 0x01, 0x35, 0xf3,
-	0xda, 0xa4, 0xcf, 0xa8, 0x06, 0x25, 0x42, 0x85, 0x1b, 0xb3, 0x48, 0x95, 0x36, 0x17, 0xb4, 0x2b,
-	0x6b, 0x42, 0x1b, 0x00, 0x51, 0xcc, 0x9f, 0x51, 0x57, 0x76, 0x18, 0x31, 0x17, 0x75, 0x40, 0x31,
-	0xb1, 0xb4, 0x08, 0xba, 0x00, 0xc5, 0x98, 0x7a, 0x8c, 0x87, 0xca, 0xbb, 0xa4, 0xbd, 0xcb, 0x23,
-	0x43, 0x8b, 0xa0, 0xeb, 0x00, 0x6e, 0x4c, 0xb1, 0xa4, 0xa4, 0x83, 0xa5, 0x59, 0xa8, 0x19, 0xf5,
-	0x52, 0xa3, 0x62, 0x8f, 0xa6, 0xb2, 0xd3, 0x3d, 0xd8, 0x0f, 0xd3, 0xb1, 0xdb, 0xc5, 0x24, 0xfa,
-	0x50, 0xaa, 0x54, 0x42, 0x7d, 0x9a, 0xa4, 0x2e, 0xcf, 0x4e, 0x4d, 0xa2, 0x0f, 0x25, 0x32, 0xa1,
-	0x30, 0xa0, 0xb1, 0x50, 0xf3, 0x10, 0x0d, 0x94, 0xfe, 0x44, 0x36, 0xfc, 0x8b, 0x7d, 0x49, 0xe3,
-	0x10, 0x4b, 0xda, 0x21, 0xa1, 0xe8, 0xa8, 0x1d, 0x08, 0x93, 0xd6, 0xf2, 0xf5, 0x62, 0x7b, 0xed,
-	0x87, 0xab, 0x19, 0x8a, 0x7b, 0xca, 0x81, 0x76, 0x60, 0xcd, 0xc5, 0x1d, 0x97, 0xc6, 0x92, 0xf5,
-	0x98, 0xab, 0x92, 0x18, 0x31, 0x7b, 0xba, 0xe6, 0xaa, 0x8b, 0x8f, 0xc6, 0xf6, 0x16, 0xb1, 0xee,
-	0xc0, 0xca, 0xf8, 0x36, 0xee, 0x32, 0x21, 0xd1, 0x3e, 0x2c, 0x32, 0x49, 0x03, 0x61, 0x1a, 0xb5,
-	0x7c, 0xbd, 0xd4, 0xb0, 0xec, 0xf3, 0xb5, 0x63, 0x8f, 0xd3, 0xda, 0xa3, 0x04, 0x6b, 0x0b, 0x0a,
-	0x8f, 0x13, 0xe4, 0xcc, 0x30, 0xc6, 0xc4, 0x30, 0x56, 0x13, 0x4a, 0x49, 0x90, 0xee, 0x76, 0x75,
-	0xb2, 0xdb, 0xe6, 0xb4, 0x6e, 0x49, 0x4e, 0xd2, 0xaa, 0xf1, 0xa1, 0x00, 0xa5, 0x26, 0x96, 0xf8,
-	0x01, 0x8d, 0x07, 0xcc, 0xa5, 0xe8, 0xd4, 0x80, 0x55, 0x55, 0x6f, 0x0c, 0x25, 0xd0, 0xf6, 0xcf,
-	0xb5, 0x12, 0x89, 0x0f, 0xf6, 0x6c, 0x15, 0x7a, 0x5f, 0x0b, 0x45, 0x54, 0x2e, 0xcd, 0x1e, 0x50,
-	0x85, 0x5b, 0xd7, 0x5e, 0x7f, 0xfe, 0xf6, 0x2e, 0x77, 0x19, 0xd9, 0x5a, 0xd8, 0x2a, 0x48, 0x3d,
-	0x9b, 0x44, 0x52, 0xc2, 0x39, 0x76, 0x79, 0x28, 0xe9, 0x73, 0x25, 0xb7, 0x13, 0x87, 0x64, 0x30,
-	0x5e, 0xc1, 0x3f, 0xb7, 0x69, 0x06, 0x0c, 0x6d, 0x4d, 0xe7, 0x6a, 0x35, 0x53, 0xaa, 0x39, 0xd6,
-	0x6e, 0x6d, 0x6b, 0xa2, 0x4d, 0xb4, 0x31, 0x41, 0x94, 0xe9, 0xed, 0x1c, 0x33, 0x72, 0x82, 0xde,
-	0x1b, 0x50, 0x3e, 0xd2, 0x0a, 0xcd, 0x40, 0xcc, 0x51, 0x7f, 0x2e, 0x86, 0x7d, 0xcd, 0xd0, 0xb0,
-	0x76, 0xcf, 0xdb, 0x8a, 0x73, 0x3c, 0x7e, 0x83, 0x13, 0x4b, 0x39, 0x30, 0x76, 0xd0, 0x1b, 0x03,
-	0xca, 0x8f, 0x22, 0xf2, 0x67, 0xb0, 0xea, 0x1a, 0xcb, 0x6a, 0xfc, 0x7a, 0x35, 0x0a, 0xe3, 0x25,
-	0x94, 0x9b, 0xfa, 0x0d, 0xfe, 0x26, 0xc5, 0xe6, 0xf4, 0x5b, 0xbc, 0x15, 0x44, 0x72, 0x98, 0xde,
-	0xce, 0xce, 0x8c, 0xdb, 0x19, 0xc2, 0xdf, 0x4a, 0x5e, 0x89, 0xbe, 0xe7, 0x56, 0xed, 0xd6, 0x8c,
-	0x87, 0xa2, 0x25, 0xbb, 0xa1, 0x11, 0xfe, 0x47, 0xff, 0x4d, 0x20, 0x0c, 0xd2, 0x56, 0x2f, 0x60,
-	0x4d, 0x2b, 0xb3, 0x87, 0xfb, 0x7e, 0x0a, 0x80, 0x66, 0xcd, 0x55, 0x99, 0xf5, 0x44, 0xa7, 0xc8,
-	0x32, 0xed, 0xea, 0x90, 0x51, 0xbf, 0x9b, 0x07, 0x1f, 0xcf, 0xaa, 0xc6, 0xa7, 0xb3, 0xaa, 0xf1,
-	0xe5, 0xac, 0x6a, 0x9c, 0x7e, 0xad, 0xfe, 0xf5, 0xa4, 0x9e, 0xf9, 0xea, 0xa4, 0x3d, 0x76, 0x03,
-	0x1c, 0x62, 0x8f, 0x12, 0x55, 0x4b, 0xa4, 0xc5, 0xba, 0x4b, 0xfa, 0xaf, 0xf4, 0xca, 0xf7, 0x00,
-	0x00, 0x00, 0xff, 0xff, 0xaf, 0x9d, 0x0c, 0x6b, 0xe4, 0x06, 0x00, 0x00,
+	// 962 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x56, 0xdd, 0x6e, 0x1b, 0x45,
+	0x14, 0x66, 0x9d, 0xfa, 0xef, 0x38, 0x4d, 0x9c, 0xa1, 0x3f, 0xab, 0xa5, 0xf9, 0xd1, 0x46, 0x05,
+	0x13, 0xd1, 0xdd, 0xc6, 0x88, 0xaa, 0x94, 0xab, 0xb6, 0x46, 0x10, 0xc4, 0x8f, 0xb4, 0x81, 0x5e,
+	0x70, 0x63, 0x8d, 0x77, 0x26, 0xcb, 0x50, 0xef, 0xce, 0x6a, 0x67, 0x1c, 0xe1, 0x86, 0x82, 0x84,
+	0x78, 0x03, 0xb8, 0xe8, 0x5b, 0xf0, 0x04, 0x48, 0x5c, 0xc2, 0x1d, 0x12, 0x2f, 0x80, 0x02, 0x12,
+	0xaf, 0x81, 0xe6, 0xec, 0x6e, 0xbc, 0x0e, 0x0d, 0x36, 0x17, 0xdc, 0xed, 0x9c, 0xf3, 0x9d, 0xef,
+	0x7c, 0xe7, 0xcc, 0x39, 0x63, 0x03, 0x30, 0xaa, 0xa9, 0x97, 0x66, 0x52, 0x4b, 0x72, 0x8d, 0x66,
+	0x34, 0x89, 0x24, 0x1b, 0x79, 0xe1, 0x58, 0x4e, 0x98, 0x87, 0xae, 0xe3, 0x7d, 0xe7, 0x5a, 0x28,
+	0xe3, 0x58, 0x26, 0xfe, 0xf1, 0xbe, 0x9f, 0x7f, 0xe5, 0x78, 0xe7, 0xad, 0x48, 0xe8, 0xcf, 0x26,
+	0x23, 0x2f, 0x94, 0xb1, 0x1f, 0xc9, 0x31, 0x4d, 0x22, 0x1f, 0x1d, 0xa3, 0xc9, 0x91, 0x9f, 0xea,
+	0x69, 0xca, 0x95, 0xaf, 0x45, 0xcc, 0x95, 0xa6, 0x71, 0x3a, 0xfb, 0x2a, 0x82, 0x6f, 0x44, 0x52,
+	0x46, 0x63, 0xee, 0xd3, 0x54, 0xf8, 0x34, 0x49, 0xa4, 0xa6, 0x5a, 0xc8, 0x44, 0xe5, 0x5e, 0xf7,
+	0x87, 0x16, 0xc0, 0x80, 0xa7, 0x63, 0x39, 0x8d, 0x79, 0xa2, 0xc9, 0x1a, 0xd4, 0x04, 0xb3, 0xad,
+	0x1d, 0xab, 0xd7, 0x0e, 0x6a, 0x82, 0x91, 0x2e, 0xac, 0x4c, 0xb2, 0xb1, 0x5d, 0x43, 0x83, 0xf9,
+	0x24, 0x04, 0x2e, 0x25, 0x34, 0xe6, 0xf6, 0x0a, 0x9a, 0xf0, 0x9b, 0xec, 0x40, 0x87, 0x71, 0x15,
+	0x66, 0x22, 0x35, 0xd4, 0xf6, 0x25, 0x74, 0x55, 0x4d, 0x64, 0x13, 0x20, 0xcd, 0xe4, 0xe7, 0x3c,
+	0xd4, 0x43, 0xc1, 0xec, 0x3a, 0x02, 0xda, 0x85, 0xe5, 0x80, 0x91, 0x97, 0xa0, 0x9d, 0xf1, 0x48,
+	0xc8, 0xc4, 0x78, 0x1b, 0xe8, 0x6d, 0xe5, 0x86, 0x03, 0x46, 0xde, 0x04, 0x08, 0x33, 0x4e, 0x35,
+	0x67, 0x43, 0xaa, 0xed, 0xe6, 0x8e, 0xd5, 0xeb, 0xf4, 0x1d, 0x2f, 0xaf, 0xca, 0x2b, 0xfb, 0xe0,
+	0x7d, 0x5c, 0x96, 0x1d, 0xb4, 0x0b, 0xf4, 0x7d, 0x6d, 0x42, 0x19, 0x1f, 0xf3, 0x22, 0xb4, 0xb5,
+	0x38, 0xb4, 0x40, 0xdf, 0xd7, 0xc4, 0x86, 0xe6, 0x31, 0xcf, 0x94, 0xa9, 0x87, 0xa3, 0xa0, 0xf2,
+	0x48, 0x1e, 0xc1, 0x6a, 0xc8, 0x33, 0x2d, 0x8e, 0x44, 0x48, 0x35, 0x57, 0xf6, 0x11, 0xd2, 0xf6,
+	0xbd, 0xe7, 0x5f, 0xaa, 0x37, 0xeb, 0xae, 0xf7, 0x70, 0x16, 0x76, 0x98, 0xf2, 0x30, 0x98, 0xe3,
+	0x21, 0xef, 0x42, 0x53, 0xf1, 0xcc, 0x64, 0xb1, 0x23, 0xa4, 0xf4, 0x96, 0xa0, 0x3c, 0xcc, 0x23,
+	0x90, 0xae, 0x0c, 0x27, 0x0f, 0xa0, 0xa1, 0x34, 0xd5, 0x13, 0x65, 0xff, 0x62, 0x21, 0xd3, 0xab,
+	0xcb, 0x30, 0x61, 0x44, 0x50, 0x44, 0x3a, 0x31, 0xac, 0x9f, 0x93, 0x4b, 0xf6, 0x60, 0x23, 0xa4,
+	0xc3, 0x8a, 0xe6, 0xe1, 0xd9, 0xac, 0xac, 0x87, 0xb4, 0x82, 0x3e, 0x60, 0xc4, 0x83, 0x17, 0xe9,
+	0x58, 0xf3, 0x2c, 0x31, 0x30, 0x96, 0xa8, 0xa1, 0x19, 0x14, 0x65, 0xd7, 0x76, 0x56, 0x7a, 0xed,
+	0x60, 0xe3, 0xcc, 0x35, 0x48, 0xd4, 0x87, 0xc6, 0xe1, 0xfc, 0x65, 0x41, 0xa7, 0x52, 0x0b, 0x71,
+	0x61, 0x35, 0x94, 0x32, 0x63, 0x22, 0xa1, 0x5a, 0x66, 0x0a, 0xd3, 0xd4, 0x83, 0x39, 0x1b, 0xb9,
+	0x03, 0xd7, 0x2b, 0xe7, 0x61, 0xcc, 0x63, 0x99, 0x4d, 0x87, 0x4a, 0x3c, 0xe1, 0x38, 0xb0, 0xf5,
+	0xe0, 0x6a, 0xc5, 0xfd, 0x01, 0x7a, 0x0f, 0xc5, 0x13, 0x4e, 0x6e, 0x40, 0x9b, 0x8d, 0xca, 0x56,
+	0x77, 0x10, 0x39, 0x33, 0x90, 0xdb, 0x70, 0xa5, 0x3c, 0xcc, 0x51, 0xae, 0x22, 0x90, 0x94, 0xbe,
+	0x0a, 0xdf, 0x6b, 0x70, 0x66, 0x1d, 0x32, 0xa1, 0x1e, 0xe7, 0xf8, 0xcb, 0x88, 0xef, 0x96, 0x9e,
+	0x81, 0x50, 0x8f, 0x0d, 0xda, 0xf9, 0xd1, 0x82, 0x46, 0xde, 0x6b, 0xe2, 0x40, 0x8b, 0x27, 0x2c,
+	0x95, 0x22, 0xd1, 0x45, 0x1f, 0xcf, 0xce, 0xe7, 0x77, 0xaa, 0xf6, 0xcf, 0x9d, 0xb2, 0xa1, 0x59,
+	0x4c, 0x3a, 0x2e, 0x63, 0x2b, 0x28, 0x8f, 0xe4, 0x0a, 0xd4, 0x33, 0x4e, 0xd9, 0x14, 0x37, 0xb1,
+	0x15, 0xe4, 0x07, 0x53, 0xf6, 0x24, 0x8d, 0x32, 0xca, 0x44, 0x12, 0xe1, 0x0a, 0xb6, 0x82, 0x99,
+	0x81, 0xbc, 0x02, 0xeb, 0x45, 0x09, 0xc5, 0x9c, 0x2b, 0xbb, 0x81, 0x97, 0xb5, 0x96, 0x9b, 0x1f,
+	0x15, 0x56, 0xf7, 0x3d, 0x58, 0x9b, 0x4d, 0xcd, 0xfb, 0x42, 0x69, 0x72, 0x17, 0xea, 0x42, 0xf3,
+	0xd8, 0x5c, 0xd2, 0x4a, 0xaf, 0xd3, 0x77, 0x17, 0x0f, 0x5b, 0x90, 0x07, 0xb8, 0xbb, 0xd0, 0x2c,
+	0x78, 0xab, 0xfb, 0x66, 0xcd, 0xed, 0x9b, 0x3b, 0x80, 0x4e, 0x01, 0xc2, 0x6c, 0x6f, 0xcc, 0x67,
+	0xdb, 0xbe, 0x28, 0x5b, 0x11, 0x53, 0xa4, 0xea, 0xff, 0xd4, 0x84, 0xce, 0x80, 0x6a, 0x6a, 0x86,
+	0x4c, 0x84, 0x9c, 0x3c, 0xb3, 0x60, 0xdd, 0xf0, 0xcd, 0x44, 0x29, 0x72, 0xf3, 0x3c, 0x57, 0xf1,
+	0x0a, 0x1f, 0xef, 0x7b, 0x06, 0xfa, 0x11, 0xf6, 0x5d, 0x39, 0x2f, 0x2f, 0x2e, 0xd0, 0xc0, 0xdd,
+	0x3b, 0xdf, 0xfc, 0xf6, 0xe7, 0x77, 0xb5, 0xdb, 0xc4, 0xc3, 0xb7, 0xd7, 0x80, 0xcc, 0xcb, 0x5e,
+	0xbc, 0x7a, 0xca, 0x3f, 0x09, 0x65, 0xa2, 0xf9, 0x17, 0xe6, 0x45, 0x7c, 0xea, 0xb3, 0x8a, 0x8c,
+	0xaf, 0xe1, 0xf2, 0x3b, 0xbc, 0x22, 0x8c, 0xec, 0x5e, 0xac, 0xeb, 0x60, 0x50, 0xaa, 0x5a, 0xa2,
+	0xed, 0xee, 0x4d, 0x54, 0xb4, 0x4d, 0x36, 0xe7, 0x14, 0x55, 0x72, 0xfb, 0x27, 0x82, 0x3d, 0x25,
+	0xdf, 0x5b, 0xd0, 0x7d, 0x88, 0xb3, 0x54, 0x11, 0xb1, 0x04, 0xff, 0x52, 0x1a, 0xee, 0xa2, 0x86,
+	0xbe, 0x7b, 0xeb, 0x79, 0x5d, 0xf1, 0x4f, 0x66, 0x3f, 0x13, 0x73, 0x4d, 0xb9, 0x67, 0xed, 0x91,
+	0x6f, 0x2d, 0xe8, 0x7e, 0x92, 0xb2, 0xff, 0x47, 0x56, 0x0f, 0x65, 0xb9, 0xfd, 0x7f, 0x6f, 0x8d,
+	0x91, 0xf1, 0x15, 0x74, 0x07, 0xf8, 0x33, 0xf1, 0x1f, 0x55, 0x6c, 0x5f, 0x7c, 0x8b, 0x6f, 0xc7,
+	0xa9, 0x9e, 0x96, 0xb7, 0xb3, 0xb7, 0xe0, 0x76, 0xa6, 0xb0, 0x6a, 0xc6, 0xab, 0x5c, 0xc8, 0x65,
+	0xa7, 0x76, 0x77, 0xc1, 0xa2, 0xe0, 0xc8, 0x6e, 0xa2, 0x84, 0xeb, 0xe4, 0xea, 0x9c, 0x84, 0xf2,
+	0x45, 0x20, 0x5f, 0xc2, 0x06, 0x4e, 0xe6, 0x11, 0x9d, 0x8c, 0x4b, 0x01, 0x64, 0x51, 0x5d, 0xce,
+	0xa2, 0x15, 0xbd, 0x60, 0x2c, 0xcb, 0xac, 0x3e, 0xcb, 0xf3, 0x3d, 0xb8, 0xf7, 0xf3, 0xe9, 0x96,
+	0xf5, 0xeb, 0xe9, 0x96, 0xf5, 0xfb, 0xe9, 0x96, 0xf5, 0xec, 0x8f, 0xad, 0x17, 0x3e, 0xed, 0x55,
+	0xfe, 0x18, 0x95, 0x39, 0x6e, 0xc5, 0x34, 0xa1, 0x11, 0x67, 0x86, 0x4b, 0x95, 0x64, 0xa3, 0x06,
+	0xfe, 0xda, 0xbf, 0xfe, 0x77, 0x00, 0x00, 0x00, 0xff, 0xff, 0xfa, 0x13, 0x23, 0x26, 0x87, 0x09,
+	0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -763,18 +1037,79 @@ func (m *Deployment) MarshalTo(dAtA []byte) (int, error) {
 		i += n2
 	}
 	if len(m.Version) > 0 {
-		dAtA[i] = 0xa2
+		dAtA[i] = 0xaa
 		i++
 		dAtA[i] = 0x6
 		i++
 		i = encodeVarintData(dAtA, i, uint64(len(m.Version)))
 		i += copy(dAtA[i:], m.Version)
 	}
+	if m.Certificates != nil {
+		dAtA[i] = 0xb2
+		i++
+		dAtA[i] = 0x6
+		i++
+		i = encodeVarintData(dAtA, i, uint64(m.Certificates.Size()))
+		n3, err := m.Certificates.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n3
+	}
+	if m.Servers != nil {
+		dAtA[i] = 0xba
+		i++
+		dAtA[i] = 0x6
+		i++
+		i = encodeVarintData(dAtA, i, uint64(m.Servers.Size()))
+		n4, err := m.Servers.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n4
+	}
+	if m.Status != nil {
+		dAtA[i] = 0xca
+		i++
+		dAtA[i] = 0xc
+		i++
+		i = encodeVarintData(dAtA, i, uint64(m.Status.Size()))
+		n5, err := m.Status.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n5
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *Deployment_CertificateSpec) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Deployment_CertificateSpec) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.CaCertificateId) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintData(dAtA, i, uint64(len(m.CaCertificateId)))
+		i += copy(dAtA[i:], m.CaCertificateId)
+	}
 	if len(m.AlternateDnsNames) > 0 {
 		for _, s := range m.AlternateDnsNames {
-			dAtA[i] = 0xaa
-			i++
-			dAtA[i] = 0x6
+			dAtA[i] = 0x12
 			i++
 			l = len(s)
 			for l >= 1<<7 {
@@ -787,13 +1122,129 @@ func (m *Deployment) MarshalTo(dAtA []byte) (int, error) {
 			i += copy(dAtA[i:], s)
 		}
 	}
-	if len(m.CaCertificateId) > 0 {
-		dAtA[i] = 0xb2
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *Deployment_ServersSpec) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Deployment_ServersSpec) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Coordinators != 0 {
+		dAtA[i] = 0x8
 		i++
-		dAtA[i] = 0x6
+		i = encodeVarintData(dAtA, i, uint64(m.Coordinators))
+	}
+	if m.CoordinatorMemorySize != 0 {
+		dAtA[i] = 0x10
 		i++
-		i = encodeVarintData(dAtA, i, uint64(len(m.CaCertificateId)))
-		i += copy(dAtA[i:], m.CaCertificateId)
+		i = encodeVarintData(dAtA, i, uint64(m.CoordinatorMemorySize))
+	}
+	if m.Dbservers != 0 {
+		dAtA[i] = 0x58
+		i++
+		i = encodeVarintData(dAtA, i, uint64(m.Dbservers))
+	}
+	if m.DbserverMemorySize != 0 {
+		dAtA[i] = 0x60
+		i++
+		i = encodeVarintData(dAtA, i, uint64(m.DbserverMemorySize))
+	}
+	if m.DbserverDiskSize != 0 {
+		dAtA[i] = 0x68
+		i++
+		i = encodeVarintData(dAtA, i, uint64(m.DbserverDiskSize))
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *Deployment_Status) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Deployment_Status) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Endpoint) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintData(dAtA, i, uint64(len(m.Endpoint)))
+		i += copy(dAtA[i:], m.Endpoint)
+	}
+	if len(m.Description) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintData(dAtA, i, uint64(len(m.Description)))
+		i += copy(dAtA[i:], m.Description)
+	}
+	if m.Created {
+		dAtA[i] = 0x18
+		i++
+		if m.Created {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i++
+	}
+	if m.Ready {
+		dAtA[i] = 0x20
+		i++
+		if m.Ready {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i++
+	}
+	if m.Upgrading {
+		dAtA[i] = 0x28
+		i++
+		if m.Upgrading {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i++
+	}
+	if len(m.ServerVersions) > 0 {
+		for _, s := range m.ServerVersions {
+			dAtA[i] = 0x32
+			i++
+			l = len(s)
+			for l >= 1<<7 {
+				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
+				l >>= 7
+				i++
+			}
+			dAtA[i] = uint8(l)
+			i++
+			i += copy(dAtA[i:], s)
+		}
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -945,15 +1396,101 @@ func (m *Deployment) Size() (n int) {
 	if l > 0 {
 		n += 2 + l + sovData(uint64(l))
 	}
+	if m.Certificates != nil {
+		l = m.Certificates.Size()
+		n += 2 + l + sovData(uint64(l))
+	}
+	if m.Servers != nil {
+		l = m.Servers.Size()
+		n += 2 + l + sovData(uint64(l))
+	}
+	if m.Status != nil {
+		l = m.Status.Size()
+		n += 2 + l + sovData(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *Deployment_CertificateSpec) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.CaCertificateId)
+	if l > 0 {
+		n += 1 + l + sovData(uint64(l))
+	}
 	if len(m.AlternateDnsNames) > 0 {
 		for _, s := range m.AlternateDnsNames {
 			l = len(s)
-			n += 2 + l + sovData(uint64(l))
+			n += 1 + l + sovData(uint64(l))
 		}
 	}
-	l = len(m.CaCertificateId)
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *Deployment_ServersSpec) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Coordinators != 0 {
+		n += 1 + sovData(uint64(m.Coordinators))
+	}
+	if m.CoordinatorMemorySize != 0 {
+		n += 1 + sovData(uint64(m.CoordinatorMemorySize))
+	}
+	if m.Dbservers != 0 {
+		n += 1 + sovData(uint64(m.Dbservers))
+	}
+	if m.DbserverMemorySize != 0 {
+		n += 1 + sovData(uint64(m.DbserverMemorySize))
+	}
+	if m.DbserverDiskSize != 0 {
+		n += 1 + sovData(uint64(m.DbserverDiskSize))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *Deployment_Status) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Endpoint)
 	if l > 0 {
-		n += 2 + l + sovData(uint64(l))
+		n += 1 + l + sovData(uint64(l))
+	}
+	l = len(m.Description)
+	if l > 0 {
+		n += 1 + l + sovData(uint64(l))
+	}
+	if m.Created {
+		n += 2
+	}
+	if m.Ready {
+		n += 2
+	}
+	if m.Upgrading {
+		n += 2
+	}
+	if len(m.ServerVersions) > 0 {
+		for _, s := range m.ServerVersions {
+			l = len(s)
+			n += 1 + l + sovData(uint64(l))
+		}
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1295,7 +1832,7 @@ func (m *Deployment) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 100:
+		case 101:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Version", wireType)
 			}
@@ -1324,7 +1861,186 @@ func (m *Deployment) Unmarshal(dAtA []byte) error {
 			}
 			m.Version = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 101:
+		case 102:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Certificates", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthData
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Certificates == nil {
+				m.Certificates = &Deployment_CertificateSpec{}
+			}
+			if err := m.Certificates.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 103:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Servers", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthData
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Servers == nil {
+				m.Servers = &Deployment_ServersSpec{}
+			}
+			if err := m.Servers.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 201:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthData
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Status == nil {
+				m.Status = &Deployment_Status{}
+			}
+			if err := m.Status.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipData(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthData
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Deployment_CertificateSpec) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowData
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CertificateSpec: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CertificateSpec: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CaCertificateId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthData
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.CaCertificateId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field AlternateDnsNames", wireType)
 			}
@@ -1353,9 +2069,206 @@ func (m *Deployment) Unmarshal(dAtA []byte) error {
 			}
 			m.AlternateDnsNames = append(m.AlternateDnsNames, string(dAtA[iNdEx:postIndex]))
 			iNdEx = postIndex
-		case 102:
+		default:
+			iNdEx = preIndex
+			skippy, err := skipData(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthData
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Deployment_ServersSpec) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowData
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ServersSpec: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ServersSpec: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Coordinators", wireType)
+			}
+			m.Coordinators = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Coordinators |= (int32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CoordinatorMemorySize", wireType)
+			}
+			m.CoordinatorMemorySize = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.CoordinatorMemorySize |= (int32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 11:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Dbservers", wireType)
+			}
+			m.Dbservers = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Dbservers |= (int32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 12:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DbserverMemorySize", wireType)
+			}
+			m.DbserverMemorySize = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.DbserverMemorySize |= (int32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 13:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DbserverDiskSize", wireType)
+			}
+			m.DbserverDiskSize = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.DbserverDiskSize |= (int32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipData(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthData
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Deployment_Status) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowData
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Status: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Status: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field CaCertificateId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Endpoint", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -1380,7 +2293,125 @@ func (m *Deployment) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.CaCertificateId = string(dAtA[iNdEx:postIndex])
+			m.Endpoint = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthData
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Description = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Created", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Created = bool(v != 0)
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Ready", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Ready = bool(v != 0)
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Upgrading", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Upgrading = bool(v != 0)
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ServerVersions", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthData
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ServerVersions = append(m.ServerVersions, string(dAtA[iNdEx:postIndex]))
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

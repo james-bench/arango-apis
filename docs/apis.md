@@ -62,6 +62,9 @@
 
 - [data/v1/data.proto](#data/v1/data.proto)
     - [Deployment](#arangodb.cloud.data.v1.Deployment)
+    - [Deployment.CertificateSpec](#arangodb.cloud.data.v1.Deployment.CertificateSpec)
+    - [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec)
+    - [Deployment.Status](#arangodb.cloud.data.v1.Deployment.Status)
     - [DeploymentList](#arangodb.cloud.data.v1.DeploymentList)
     - [Version](#arangodb.cloud.data.v1.Version)
     - [VersionList](#arangodb.cloud.data.v1.VersionList)
@@ -720,9 +723,66 @@ A Deployment is represents one deployment of an ArangoDB cluster.
 | region_id | [string](#string) |  | Identifier of the region in which the deployment is created. After creation, this value cannot be changed. |
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the deployment This is a read-only value. |
 | deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the deployment This is a read-only value. |
-| version | [string](#string) |  | ArangoDB version to use for this deployment. See Version.version. |
+| version | [string](#string) |  | ArangoDB version to use for this deployment. See Version.version. If you change this value to a higher version, the deployment will be upgraded. If you change this value to a lower patch value, the deployment will be downgraded. Any attempt to change to a lower minor or major version is considered an invalid request. Any attempt to change to a version that is not in the list of available versions is considered an invalid request. |
+| certificates | [Deployment.CertificateSpec](#arangodb.cloud.data.v1.Deployment.CertificateSpec) |  |  |
+| servers | [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  |  |
+| status | [Deployment.Status](#arangodb.cloud.data.v1.Deployment.Status) |  |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.Deployment.CertificateSpec"></a>
+
+### Deployment.CertificateSpec
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ca_certificate_id | [string](#string) |  | Identifier of the CACertificate used to sign TLS certificates for the deployment. If this value is empty during creation of the deployment, a new CA certificate will be created for this deployment. If you change this value after the creation of the deployment a complete rotation of the deployment is required, which will result in some downtime. |
 | alternate_dns_names | [string](#string) | repeated | Zero or more DNS names to include in the TLS certificate of the deployment. |
-| ca_certificate_id | [string](#string) |  | Identifier of the CACertificate used to sign TLS certificates for the deployment. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.Deployment.ServersSpec"></a>
+
+### Deployment.ServersSpec
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| coordinators | [int32](#int32) |  | Number of coordinators of the deployment |
+| coordinator_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for coordinators. |
+| dbservers | [int32](#int32) |  | Number of dbservers of the deployment |
+| dbserver_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for dbservers. |
+| dbserver_disk_size | [int32](#int32) |  | Amount of disk space (in GB) to allocate for dbservers. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.Deployment.Status"></a>
+
+### Deployment.Status
+Status of the deployment
+All members of this field are read-only.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| endpoint | [string](#string) |  | Endpoint URL used to reach the deployment This value will be empty during the creation of the deployment. |
+| description | [string](#string) |  | Human readable description of the status of the deployment |
+| created | [bool](#bool) |  | Has the deployment been created |
+| ready | [bool](#bool) |  | Is the deployment ready to be used |
+| upgrading | [bool](#bool) |  | Is the deployment being upgraded |
+| server_versions | [string](#string) | repeated | Versions of running servers |
 
 
 
