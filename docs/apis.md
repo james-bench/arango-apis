@@ -60,6 +60,17 @@
     - [IAMService](#arangodb.cloud.iam.v1.IAMService)
   
 
+- [data/v1/data.proto](#data/v1/data.proto)
+    - [Deployment](#arangodb.cloud.data.v1.Deployment)
+    - [DeploymentList](#arangodb.cloud.data.v1.DeploymentList)
+    - [Version](#arangodb.cloud.data.v1.Version)
+    - [VersionList](#arangodb.cloud.data.v1.VersionList)
+  
+  
+  
+    - [DataService](#arangodb.cloud.data.v1.DataService)
+  
+
 - [Scalar Value Types](#scalar-value-types)
 
 
@@ -681,6 +692,108 @@ IAMService is the API used to configure IAM objects.
 | GetEffectivePermissions | [.arangodb.cloud.common.v1.URLOptions](#arangodb.cloud.common.v1.URLOptions) | [PermissionList](#arangodb.cloud.iam.v1.PermissionList) | Return the list of permissions that are available to the currently authenticated used for actions on the resource identified by the given URL. Required permissions: - None |
 | HasPermissions | [HasPermissionsRequest](#arangodb.cloud.iam.v1.HasPermissionsRequest) | [.arangodb.cloud.common.v1.YesOrNo](#arangodb.cloud.common.v1.YesOrNo) | Does the authenticated user have all of the requested permissions for the resource identified by the given URL? Required permissions: - None |
 | ListPermissions | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [PermissionList](#arangodb.cloud.iam.v1.PermissionList) | List all known permissions. Required permissions: - None |
+
+ 
+
+
+
+<a name="data/v1/data.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## data/v1/data.proto
+
+
+
+<a name="arangodb.cloud.data.v1.Deployment"></a>
+
+### Deployment
+A Deployment is represents one deployment of an ArangoDB cluster.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the deployment. This is a read-only value. |
+| url | [string](#string) |  | URL of this resource This is a read-only value. |
+| name | [string](#string) |  | Name of the deployment |
+| description | [string](#string) |  | Description of the deployment |
+| project_id | [string](#string) |  | Identifier of the project that owns this deployment. After creation, this value cannot be changed. |
+| region_id | [string](#string) |  | Identifier of the region in which the deployment is created. After creation, this value cannot be changed. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the deployment This is a read-only value. |
+| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the deployment This is a read-only value. |
+| version | [string](#string) |  | ArangoDB version to use for this deployment. See Version.version. |
+| alternate_dns_names | [string](#string) | repeated | Zero or more DNS names to include in the TLS certificate of the deployment. |
+| ca_certificate_id | [string](#string) |  | Identifier of the CACertificate used to sign TLS certificates for the deployment. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.DeploymentList"></a>
+
+### DeploymentList
+List of Deployments.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Deployment](#arangodb.cloud.data.v1.Deployment) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.Version"></a>
+
+### Version
+Version of an ArangoDB release
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| version | [string](#string) |  | Version in the format of major.minor.patch |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.VersionList"></a>
+
+### VersionList
+List of Versions.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Version](#arangodb.cloud.data.v1.Version) | repeated |  |
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+
+<a name="arangodb.cloud.data.v1.DataService"></a>
+
+### DataService
+DataService is the API used to configure data objects.
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+| ListDeployments | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [DeploymentList](#arangodb.cloud.data.v1.DeploymentList) | Fetch all deployments in the project identified by the given context ID. Required permissions: - data.deployment.list on the project identified by the given context ID |
+| GetDeployment | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Fetch a deployment by its id. Required permissions: - data.deployment.get on the deployment identified by the given ID |
+| CreateDeployment | [Deployment](#arangodb.cloud.data.v1.Deployment) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Create a new deployment Required permissions: - data.deployment.create on the project that owns the deployment |
+| UpdateDeployment | [Deployment](#arangodb.cloud.data.v1.Deployment) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Update a deployment Required permissions: - data.deployment.update on the deployment |
+| DeleteDeployment | [Deployment](#arangodb.cloud.data.v1.Deployment) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a deployment Note that deployments are initially only marked for deletion. Once all their resources are removed the deployment itself is removed. Required permissions: - data.deployment.delete on the deployment |
+| ListVersions | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [VersionList](#arangodb.cloud.data.v1.VersionList) | Fetch all ArangoDB versions that are available for deployments. Required permissions: - None |
+| GetDefaultVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [Version](#arangodb.cloud.data.v1.Version) | Fetch the default ArangoDB version for new deployment. Required permissions: - None |
 
  
 
