@@ -18,6 +18,15 @@
     - [ResourceManagerService](#arangodb.cloud.resourcemanager.v1.ResourceManagerService)
   
 
+- [crypto/v1/crypto.proto](#crypto/v1/crypto.proto)
+    - [CACertificate](#arangodb.cloud.crypto.v1.CACertificate)
+    - [CACertificateList](#arangodb.cloud.crypto.v1.CACertificateList)
+  
+  
+  
+    - [CryptoService](#arangodb.cloud.crypto.v1.CryptoService)
+  
+
 - [platform/v1/platform.proto](#platform/v1/platform.proto)
     - [Provider](#arangodb.cloud.platform.v1.Provider)
     - [ProviderList](#arangodb.cloud.platform.v1.ProviderList)
@@ -235,6 +244,76 @@ ResourceManagerService is the API used to configure basic resource objects.
 | CreateProject | [Project](#arangodb.cloud.resourcemanager.v1.Project) | [Project](#arangodb.cloud.resourcemanager.v1.Project) | Create a new project The authenticated user must be a member of the organization that owns the project. Required permissions: - resourcemanager.project.create on the organization that owns the project |
 | UpdateProject | [Project](#arangodb.cloud.resourcemanager.v1.Project) | [Project](#arangodb.cloud.resourcemanager.v1.Project) | Update a project The authenticated user must be a member of the organization that owns the project. Required permissions: - resourcemanager.project.update on the project |
 | DeleteProject | [Project](#arangodb.cloud.resourcemanager.v1.Project) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a project Note that project are initially only marked for deleted. Once all their resources are removed the project itself is deleted and cannot be restored. The authenticated user must be a member of the organization that owns the project. Required permissions: - resourcemanager.project.delete on the project |
+
+ 
+
+
+
+<a name="crypto/v1/crypto.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## crypto/v1/crypto.proto
+
+
+
+<a name="arangodb.cloud.crypto.v1.CACertificate"></a>
+
+### CACertificate
+A CACertificate is represents a self-signed certificate authority used to sign
+TLS certificates for deployments &amp; client authentication.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the CA certificate. This is a read-only value. |
+| url | [string](#string) |  | URL of this resource This is a read-only value. |
+| name | [string](#string) |  | Name of the CA certificate |
+| description | [string](#string) |  | Description of the CA certificate |
+| project_id | [string](#string) |  | Identifier of the project that owns this CA certificate. This value cannot be changed after creation. |
+| lifetime | [google.protobuf.Duration](#google.protobuf.Duration) |  | Time from creation of the CA certificate to expiration. This value cannot be changed after creation. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the CA certificate This is a read-only value. |
+| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the CA certificate This is a read-only value. |
+| expires_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The expiration timestamp of the CA certificate This is a read-only value. |
+| certificate_pem | [string](#string) |  | A PEM encoded representation of the public key of the CA certificate. This is a read-only value. |
+
+
+
+
+
+
+<a name="arangodb.cloud.crypto.v1.CACertificateList"></a>
+
+### CACertificateList
+List of CACertificates.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | repeated |  |
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+
+<a name="arangodb.cloud.crypto.v1.CryptoService"></a>
+
+### CryptoService
+CryptoService is the API used to configure various crypto objects.
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+| ListCACertificates | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | Fetch all CA certificates in the project identified by the given context ID. Required permissions: - crypto.cacertificate.list on the project identified by the given context ID |
+| GetCACertificate | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | Fetch a CA certificate by its id. Required permissions: - crypto.cacertificate.get on the CA certificate identified by the given ID |
+| CreateCACertificate | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | Create a new CA certificate Required permissions: - crypto.cacertificate.create on the project that owns the CA certificate |
+| UpdateCACertificate | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | Update a CA certificate Required permissions: - crypto.cacertificate.update on the CA certificate |
+| DeleteCACertificate | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a CA certificate Note that CA certificate are initially only marked for deleted. Once all the resources that depend on it are removed the CA certificate itself is deleted and cannot be restored. Required permissions: - crypto.cacertificate.delete on the CA certificate |
 
  
 
