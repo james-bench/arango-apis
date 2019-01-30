@@ -22,3 +22,10 @@ const (
 	// PermissionDeploymentDelete is needed for deleting a deployment
 	PermissionDeploymentDelete = "data.deployment.delete"
 )
+
+const (
+	// ServerSpecLimits permissions
+
+	// PermissionLimitsGet is needed for fetching server spec limits in a project
+	PermissionLimitsGet = "data.limits.get"
+)

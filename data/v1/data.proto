@@ -85,6 +85,16 @@ service DataService {
             get: "/api/data/v1/versions/default"
         };
     }
+
+    // Fetch the limits for server specifications for deployments
+    // owned by the given projected, created in the given region.
+    // Required permissions:
+    // - data.limits.get on the requested project
+    rpc GetServersSpecLimits(ServersSpecLimitsRequest) returns (ServersSpecLimits) {
+        option (google.api.http) = {
+            get: "/api/data/v1/projects/{project_id}/regions/{region_id}/limits"
+        };
+    }
 }
 
 // A Deployment is represents one deployment of an ArangoDB cluster.
@@ -157,13 +167,15 @@ message Deployment {
         // Endpoint URL used to reach the deployment
         // This value will be empty during the creation of the deployment.
         string endpoint = 1;
-        // Human readable description of the status of the deployment
+        // Human readable description of the status of the deployment.
         string description = 2;
-        // Has the deployment been created
+        // Set once the deployment has been created.
         bool created = 3;
-        // Is the deployment ready to be used
+        // Set if the deployment is ready to be used.
+        // If the deployment has downtime (e.g. because of changing a CA certificate)
+        // this will go to false until the downtime is over.
         bool ready = 4;
-        // Is the deployment being upgraded
+        // Set if the deployment is being upgraded.
         bool upgrading = 5;
         // Versions of running servers
         repeated string server_versions = 6;
@@ -185,4 +197,39 @@ message Version {
 // List of Versions.
 message VersionList {
     repeated Version items = 1;
+}
+
+// Request arguments for GetServersSpecLimits
+message ServersSpecLimitsRequest {
+    // Identifier of project that will own a deployment.
+    string project_id = 1;
+    // Identifier of a region in which a deployment will be created.
+    string region_id = 2;
+}
+
+// Limits of allowed values for fields of Deployment.ServersSpec.
+message ServersSpecLimits {
+    message Limits {
+        // Minimum value
+        int32 min = 1;
+        // Maximum value
+        int32 max = 2;
+        // Set of allowed values.
+        // If this field is non-empty, only one of these values
+        // is allowed.
+        repeated int32 allowed_values = 3;
+    }
+    // Limits for the number of coordinators of the deployment
+    Limits coordinators = 1;
+    // Possible values for the amount of memory (in GB) to allocate
+    // for coordinators.
+    Limits coordinator_memory_size = 2;
+
+    // Limits for the number of dbservers of the deployment
+    Limits dbservers = 11;
+    // Possible values for the amount of memory (in GB) to allocate
+    // for dbservers.
+    Limits dbserver_memory_size = 12;
+    // Amount of disk space (in GB) to allocate for dbservers.
+    Limits dbserver_disk_size = 13;
 }

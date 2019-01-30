@@ -66,6 +66,9 @@
     - [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec)
     - [Deployment.Status](#arangodb.cloud.data.v1.Deployment.Status)
     - [DeploymentList](#arangodb.cloud.data.v1.DeploymentList)
+    - [ServersSpecLimits](#arangodb.cloud.data.v1.ServersSpecLimits)
+    - [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits)
+    - [ServersSpecLimitsRequest](#arangodb.cloud.data.v1.ServersSpecLimitsRequest)
     - [Version](#arangodb.cloud.data.v1.Version)
     - [VersionList](#arangodb.cloud.data.v1.VersionList)
   
@@ -778,10 +781,10 @@ All members of this field are read-only.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | endpoint | [string](#string) |  | Endpoint URL used to reach the deployment This value will be empty during the creation of the deployment. |
-| description | [string](#string) |  | Human readable description of the status of the deployment |
-| created | [bool](#bool) |  | Has the deployment been created |
-| ready | [bool](#bool) |  | Is the deployment ready to be used |
-| upgrading | [bool](#bool) |  | Is the deployment being upgraded |
+| description | [string](#string) |  | Human readable description of the status of the deployment. |
+| created | [bool](#bool) |  | Set once the deployment has been created. |
+| ready | [bool](#bool) |  | Set if the deployment is ready to be used. If the deployment has downtime (e.g. because of changing a CA certificate) this will go to false until the downtime is over. |
+| upgrading | [bool](#bool) |  | Set if the deployment is being upgraded. |
 | server_versions | [string](#string) | repeated | Versions of running servers |
 
 
@@ -798,6 +801,58 @@ List of Deployments.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | items | [Deployment](#arangodb.cloud.data.v1.Deployment) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.ServersSpecLimits"></a>
+
+### ServersSpecLimits
+Limits of allowed values for fields of Deployment.ServersSpec.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| coordinators | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Limits for the number of coordinators of the deployment |
+| coordinator_memory_size | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Possible values for the amount of memory (in GB) to allocate for coordinators. |
+| dbservers | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Limits for the number of dbservers of the deployment |
+| dbserver_memory_size | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Possible values for the amount of memory (in GB) to allocate for dbservers. |
+| dbserver_disk_size | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Amount of disk space (in GB) to allocate for dbservers. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.ServersSpecLimits.Limits"></a>
+
+### ServersSpecLimits.Limits
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| min | [int32](#int32) |  | Minimum value |
+| max | [int32](#int32) |  | Maximum value |
+| allowed_values | [int32](#int32) | repeated | Set of allowed values. If this field is non-empty, only one of these values is allowed. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.ServersSpecLimitsRequest"></a>
+
+### ServersSpecLimitsRequest
+Request arguments for GetServersSpecLimits
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| project_id | [string](#string) |  | Identifier of project that will own a deployment. |
+| region_id | [string](#string) |  | Identifier of a region in which a deployment will be created. |
 
 
 
@@ -854,6 +909,7 @@ DataService is the API used to configure data objects.
 | DeleteDeployment | [Deployment](#arangodb.cloud.data.v1.Deployment) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a deployment Note that deployments are initially only marked for deletion. Once all their resources are removed the deployment itself is removed. Required permissions: - data.deployment.delete on the deployment |
 | ListVersions | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [VersionList](#arangodb.cloud.data.v1.VersionList) | Fetch all ArangoDB versions that are available for deployments. Required permissions: - None |
 | GetDefaultVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [Version](#arangodb.cloud.data.v1.Version) | Fetch the default ArangoDB version for new deployment. Required permissions: - None |
+| GetServersSpecLimits | [ServersSpecLimitsRequest](#arangodb.cloud.data.v1.ServersSpecLimitsRequest) | [ServersSpecLimits](#arangodb.cloud.data.v1.ServersSpecLimits) | Fetch the limits for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.limits.get on the requested project |
 
  
 
