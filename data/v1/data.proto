@@ -1,0 +1,235 @@
+// 
+// DISCLAIMER
+// 
+// Copyright 2019 ArangoDB Inc, Cologne, Germany
+// 
+// Author Ewout Prangsma
+// 
+
+syntax = "proto3";
+
+package arangodb.cloud.data.v1;
+
+option go_package = "github.com/arangodb-managed/apis/data/v1";
+
+import "common/v1/common.proto";
+
+import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
+import "google/api/annotations.proto";
+
+// DataService is the API used to configure data objects.
+service DataService {
+    // Fetch all deployments in the project identified by the given context ID.
+    // Required permissions:
+    // - data.deployment.list on the project identified by the given context ID
+    rpc ListDeployments(common.v1.ListOptions) returns (DeploymentList) {
+        option (google.api.http) = {
+            get: "/api/data/v1/projects/{context_id}/deployments"
+        };
+    }
+
+    // Fetch a deployment by its id.
+    // Required permissions:
+    // - data.deployment.get on the deployment identified by the given ID
+    rpc GetDeployment(common.v1.IDOptions) returns (Deployment) {
+        option (google.api.http) = {
+            get: "/api/data/v1/deployments/{id}"
+        };
+    }
+
+    // Create a new deployment
+    // Required permissions:
+    // - data.deployment.create on the project that owns the deployment
+    rpc CreateDeployment(Deployment) returns (Deployment) {
+        option (google.api.http) = {
+            post: "/api/data/v1/project/{project_id}/deployments"
+            body: "*"
+        };
+    }
+
+    // Update a deployment
+    // Required permissions:
+    // - data.deployment.update on the deployment
+    rpc UpdateDeployment(Deployment) returns (Deployment) {
+        option (google.api.http) = {
+            patch: "/api/data/v1/deployments/{id}"
+            body: "*"
+        };
+    }
+
+    // Delete a deployment
+    // Note that deployments are initially only marked for deletion.
+    // Once all their resources are removed the deployment itself is removed.
+    // Required permissions:
+    // - data.deployment.delete on the deployment
+    rpc DeleteDeployment(Deployment) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            delete: "/api/data/v1/deployments/{id}"
+        };
+    }
+
+    // Fetch all ArangoDB versions that are available for deployments.
+    // Required permissions:
+    // - None
+    rpc ListVersions(common.v1.ListOptions) returns (VersionList) {
+        option (google.api.http) = {
+            get: "/api/data/v1/versions"
+        };
+    }
+
+    // Fetch the default ArangoDB version for new deployment.
+    // Required permissions:
+    // - None
+    rpc GetDefaultVersion(common.v1.Empty) returns (Version) {
+        option (google.api.http) = {
+            get: "/api/data/v1/versions/default"
+        };
+    }
+
+    // Fetch the limits for server specifications for deployments
+    // owned by the given projected, created in the given region.
+    // Required permissions:
+    // - data.limits.get on the requested project
+    rpc GetServersSpecLimits(ServersSpecLimitsRequest) returns (ServersSpecLimits) {
+        option (google.api.http) = {
+            get: "/api/data/v1/projects/{project_id}/regions/{region_id}/limits"
+        };
+    }
+}
+
+// A Deployment is represents one deployment of an ArangoDB cluster.
+message Deployment {   
+    // System identifier of the deployment.
+    // This is a read-only value.
+    string id = 1;
+    // URL of this resource
+    // This is a read-only value.
+    string url = 2;
+    // Name of the deployment
+    string name = 3; 
+    // Description of the deployment
+    string description = 4; 
+    // Identifier of the project that owns this deployment.
+    // After creation, this value cannot be changed.
+    string project_id = 5;
+    // Identifier of the region in which the deployment is created.
+    // After creation, this value cannot be changed.
+    string region_id = 6;
+    // The creation timestamp of the deployment
+    // This is a read-only value.
+    google.protobuf.Timestamp created_at = 7;
+    // The deletion timestamp of the deployment
+    // This is a read-only value.
+    google.protobuf.Timestamp deleted_at = 8;
+
+    // ArangoDB version to use for this deployment.
+    // See Version.version.
+    // If you change this value to a higher version,
+    // the deployment will be upgraded.
+    // If you change this value to a lower patch value,
+    // the deployment will be downgraded.
+    // Any attempt to change to a lower minor or major version
+    // is considered an invalid request.
+    // Any attempt to change to a version that is not in the
+    // list of available versions is considered an invalid request.
+    string version = 101;
+
+    message CertificateSpec {
+        // Identifier of the CACertificate used to sign TLS certificates for the deployment.
+        // If this value is empty during creation of the deployment, a new CA certificate
+        // will be created for this deployment.
+        // If you change this value after the creation of the deployment a complete
+        // rotation of the deployment is required, which will result in some downtime.
+        string ca_certificate_id = 1;
+        // Zero or more DNS names to include in the TLS certificate of the deployment.
+        repeated string alternate_dns_names = 2;
+    }
+    CertificateSpec certificates = 102;
+
+    message ServersSpec {
+        // Number of coordinators of the deployment
+        int32 coordinators = 1;
+        // Amount of memory (in GB) to allocate for coordinators.
+        int32 coordinator_memory_size = 2;
+
+        // Number of dbservers of the deployment
+        int32 dbservers = 11;
+        // Amount of memory (in GB) to allocate for dbservers.
+        int32 dbserver_memory_size = 12;
+        // Amount of disk space (in GB) to allocate for dbservers.
+        int32 dbserver_disk_size = 13;
+    }
+    ServersSpec servers = 103;
+
+    // Status of the deployment
+    // All members of this field are read-only.
+    message Status {
+        // Endpoint URL used to reach the deployment
+        // This value will be empty during the creation of the deployment.
+        string endpoint = 1;
+        // Human readable description of the status of the deployment.
+        string description = 2;
+        // Set once the deployment has been created.
+        bool created = 3;
+        // Set if the deployment is ready to be used.
+        // If the deployment has downtime (e.g. because of changing a CA certificate)
+        // this will go to false until the downtime is over.
+        bool ready = 4;
+        // Set if the deployment is being upgraded.
+        bool upgrading = 5;
+        // Versions of running servers
+        repeated string server_versions = 6;
+    }
+    Status status = 201;
+}
+
+// List of Deployments.
+message DeploymentList {
+    repeated Deployment items = 1;
+}
+
+// Version of an ArangoDB release
+message Version {
+    // Version in the format of major.minor.patch
+    string version = 1;
+}
+
+// List of Versions.
+message VersionList {
+    repeated Version items = 1;
+}
+
+// Request arguments for GetServersSpecLimits
+message ServersSpecLimitsRequest {
+    // Identifier of project that will own a deployment.
+    string project_id = 1;
+    // Identifier of a region in which a deployment will be created.
+    string region_id = 2;
+}
+
+// Limits of allowed values for fields of Deployment.ServersSpec.
+message ServersSpecLimits {
+    message Limits {
+        // Minimum value
+        int32 min = 1;
+        // Maximum value
+        int32 max = 2;
+        // Set of allowed values.
+        // If this field is non-empty, only one of these values
+        // is allowed.
+        repeated int32 allowed_values = 3;
+    }
+    // Limits for the number of coordinators of the deployment
+    Limits coordinators = 1;
+    // Possible values for the amount of memory (in GB) to allocate
+    // for coordinators.
+    Limits coordinator_memory_size = 2;
+
+    // Limits for the number of dbservers of the deployment
+    Limits dbservers = 11;
+    // Possible values for the amount of memory (in GB) to allocate
+    // for dbservers.
+    Limits dbserver_memory_size = 12;
+    // Amount of disk space (in GB) to allocate for dbservers.
+    Limits dbserver_disk_size = 13;
+}
