@@ -23,7 +23,7 @@ service CryptoService {
     // Fetch all CA certificates in the project identified by the given context ID.
     // Required permissions:
     // - crypto.cacertificate.list on the project identified by the given context ID
-    rpc ListCACertificates(common.v1.ListOptions) returns (CACertificate) {
+    rpc ListCACertificates(common.v1.ListOptions) returns (CACertificateList) {
         option (google.api.http) = {
             get: "/api/crypto/v1/projects/{context_id}/cacertificates"
         };
