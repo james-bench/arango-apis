@@ -237,6 +237,7 @@ message Project {
     // Description of the project
     string description = 4; 
     // Identifier of the organization that owns this project.
+    // This is a read-only value.
     string organization_id = 5;
     // Set when this project is deleted
     bool is_deleted = 6;

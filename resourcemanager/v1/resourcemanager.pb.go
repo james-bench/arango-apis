@@ -419,6 +419,7 @@ type Project struct {
 	// Description of the project
 	Description string `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
 	// Identifier of the organization that owns this project.
+	// This is a read-only value.
 	OrganizationId string `protobuf:"bytes,5,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
 	// Set when this project is deleted
 	IsDeleted bool `protobuf:"varint,6,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
