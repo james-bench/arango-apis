@@ -163,6 +163,17 @@ service ResourceManagerService {
             delete: "/api/resourcemanager/v1/projects/{id}"
         };
     }
+
+
+    // Fetch all events in the organization identified by the given context ID.
+    // The authenticated user must be a member of the organization identifier by the given context ID.
+    // Required permissions:
+    // - resourcemanager.event.list on the organization identified by the given context ID
+    rpc ListEvents(ListEventOptions) returns (EventList) {
+        option (google.api.http) = {
+            get: "/api/resourcemanager/v1/organizations/{options.context_id}/events"
+        };
+    }
 }
 
 // An Organization is represents a real world organization such as a company.
@@ -250,4 +261,50 @@ message Project {
 // List of Projects.
 message ProjectList {
     repeated Project items = 1;
+}
+
+// An Event represents something that happened to an organization
+// in the ArangoDB Managed service.
+message Event {   
+    // System identifier of the event.
+    // This is a read-only value.
+    string id = 1;
+    // URL of this resource
+    // This is a read-only value and cannot be initialized.
+    string url = 2;
+    // Identifier of the organization that owns this event.
+    // This is a read-only value.
+    string organization_id = 3;
+    // Identifier of the subject of this event.
+    // This is a read-only value.
+    // If the subject of this event is an organization,
+    // this value is a duplicate of organization_id.
+    string subject_id = 4;
+    // Type of the event.
+    string type = 5;
+    // Payload of the event.
+    // The fields used in the payload are specific
+    // to the type of event.
+    map<string, string> payload = 6;
+    // The creation timestamp of the event
+    google.protobuf.Timestamp created_at = 7;
+}
+
+// List of Events.
+message EventList {
+    repeated Event items = 1;
+}
+
+// Options for ListEvents
+message ListEventOptions {
+    // Standard list options
+    common.v1.ListOptions options = 1;
+    // If set, filter on the subject_id of event
+    repeated string subject_ids = 2;
+    // If set, filter on the type of event
+    repeated string types = 3;
+    // If set, filter of events created after this timestamp
+    google.protobuf.Timestamp created_after = 4;
+    // If set, filter of events created before this timestamp
+    google.protobuf.Timestamp created_before = 5;
 }

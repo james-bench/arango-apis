@@ -33,3 +33,10 @@ const (
 	// PermissionProjectDelete is needed for deleting a project
 	PermissionProjectDelete = "resourcemanager.project.delete"
 )
+
+const (
+	// Event permissions
+
+	// PermissionEventList is needed for listing events in an organization
+	PermissionEventList = "resourcemanager.event.list"
+)
