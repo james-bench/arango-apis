@@ -1,3 +1,4 @@
+SHELL = bash
 SCRIPTDIR := $(shell pwd)
 ROOTDIR := $(shell cd $(SCRIPTDIR) && pwd)
 BUILDIMAGE := arangodb-cloud-apis-build
@@ -75,4 +76,10 @@ docs: $(CACHEVOL) $(MODVOL)
 
 .PHONY: test
 test:
-	go test ./...
+	mkdir -p bin/test
+	go test -coverprofile=bin/test/coverage.out -v ./... | tee bin/test/test-output.txt ; exit "$${PIPESTATUS[0]}"
+	cat bin/test/test-output.txt | go-junit-report > bin/test/unit-tests.xml
+	go tool cover -html=bin/test/coverage.out -o bin/test/coverage.html
+
+bootstrap:
+	go get github.com/jstemmer/go-junit-report
