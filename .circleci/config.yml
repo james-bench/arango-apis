@@ -6,16 +6,19 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
+      - run: cp go.sum go.sum.orig
       - restore_cache:
           keys:
-            - go-mod-v1-{{ checksum "go.sum" }}
+            - go-mod-v1-{{ checksum "go.sum.orig" }}
       - run: |
           curl -L https://github.com/protocolbuffers/protobuf/releases/download/v3.6.1/protoc-3.6.1-linux-x86_64.zip -o /tmp/protoc.zip
           cd /usr/local/ && sudo unzip /tmp/protoc.zip
       - run: make build-image
-      - run: make all
+      - run: |
+          make bootstrap
+          make all
       - save_cache:
-          key: go-mod-v1-{{ checksum "go.sum" }}
+          key: go-mod-v1-{{ checksum "go.sum.org" }}
           paths:
             - "/go/pkg/mod"
       - run: make test
