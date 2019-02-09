@@ -8,6 +8,7 @@
     - [Event.PayloadEntry](#arangodb.cloud.resourcemanager.v1.Event.PayloadEntry)
     - [EventList](#arangodb.cloud.resourcemanager.v1.EventList)
     - [IsMemberOfOrganizationRequest](#arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationRequest)
+    - [IsMemberOfOrganizationResponse](#arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationResponse)
     - [ListEventOptions](#arangodb.cloud.resourcemanager.v1.ListEventOptions)
     - [Member](#arangodb.cloud.resourcemanager.v1.Member)
     - [MemberList](#arangodb.cloud.resourcemanager.v1.MemberList)
@@ -164,6 +165,22 @@ Request arguments for IsMemberOfOrganization.
 | ----- | ---- | ----- | ----------- |
 | user_id | [string](#string) |  | Identifier of the user |
 | organization_id | [string](#string) |  | Identifier of the organization |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationResponse"></a>
+
+### IsMemberOfOrganizationResponse
+Response for IsMemberOfOrganization.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| member | [bool](#bool) |  | Set if the requested user is a member of the requested organization. |
+| owner | [bool](#bool) |  | Set if the requested user is an owner of the requested organization. |
 
 
 
@@ -331,7 +348,7 @@ ResourceManagerService is the API used to configure basic resource objects.
 | ListOrganizationMembers | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [MemberList](#arangodb.cloud.resourcemanager.v1.MemberList) | Get a list of members of the organization identified by the given context ID. Required permissions: - resourcemanager.organization.get on the organization |
 | AddOrganizationMembers | [OrganizationMembersRequest](#arangodb.cloud.resourcemanager.v1.OrganizationMembersRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Add one or more members to an organization. Required permissions: - resourcemanager.organization.update on the organization |
 | DeleteOrganizationMembers | [OrganizationMembersRequest](#arangodb.cloud.resourcemanager.v1.OrganizationMembersRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Remove one or more members from an organization. Required permissions: - resourcemanager.organization.update on the organization |
-| IsMemberOfOrganization | [IsMemberOfOrganizationRequest](#arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationRequest) | [.arangodb.cloud.common.v1.YesOrNo](#arangodb.cloud.common.v1.YesOrNo) | Is the user identified by the given user ID a member of the organization identified by the given organization ID. Required permissions: - resourcemanager.organization.get on the organization, unless the requested user is identical to the authenticated user. Note that if the identified user or organization does not exist, no is returned. |
+| IsMemberOfOrganization | [IsMemberOfOrganizationRequest](#arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationRequest) | [IsMemberOfOrganizationResponse](#arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationResponse) | Is the user identified by the given user ID a member of the organization identified by the given organization ID. Required permissions: - resourcemanager.organization.get on the organization, unless the requested user is identical to the authenticated user. Note that if the identified user or organization does not exist, no is returned. |
 | ListProjects | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [ProjectList](#arangodb.cloud.resourcemanager.v1.ProjectList) | Fetch all projects in the organization identified by the given context ID. The authenticated user must be a member of the organization identifier by the given context ID. Required permissions: - resourcemanager.project.list on the organization identified by the given context ID |
 | GetProject | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Project](#arangodb.cloud.resourcemanager.v1.Project) | Fetch a project by its id. The authenticated user must be a member of the organization that owns the project. Required permissions: - resourcemanager.project.get on the project identified by the given ID |
 | CreateProject | [Project](#arangodb.cloud.resourcemanager.v1.Project) | [Project](#arangodb.cloud.resourcemanager.v1.Project) | Create a new project The authenticated user must be a member of the organization that owns the project. Required permissions: - resourcemanager.project.create on the organization that owns the project |
@@ -614,6 +631,8 @@ Group of user accounts.
 | name | [string](#string) |  | Name of the group |
 | description | [string](#string) |  | Description of the group |
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the group |
+| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the group |
+| url | [string](#string) |  | URL of this resource This is a read-only value and cannot be initialized. |
 
 
 
@@ -745,6 +764,8 @@ Roles can be bound to resources for members.
 | permissions | [string](#string) | repeated | Permissions to grant when this role is bound. |
 | is_predefined | [bool](#bool) |  | Set if this role is predefined. This is a read-only value. |
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the role |
+| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the role |
+| url | [string](#string) |  | URL of this resource This is a read-only value and cannot be initialized. |
 
 
 

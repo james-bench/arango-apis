@@ -103,7 +103,7 @@ service ResourceManagerService {
     // Required permissions:
     // - resourcemanager.organization.get on the organization, unless the requested user is identical to the authenticated user.
     // Note that if the identified user or organization does not exist, no is returned.
-    rpc IsMemberOfOrganization(IsMemberOfOrganizationRequest) returns (common.v1.YesOrNo) {
+    rpc IsMemberOfOrganization(IsMemberOfOrganizationRequest) returns (IsMemberOfOrganizationResponse) {
         option (google.api.http) = {
             get: "/api/resourcemanager/v1/organizations/{organization_id}/members/{user_id}"
         };
@@ -221,6 +221,14 @@ message IsMemberOfOrganizationRequest {
     string user_id = 1;
     // Identifier of the organization
     string organization_id = 2;
+}
+
+// Response for IsMemberOfOrganization.
+message IsMemberOfOrganizationResponse {
+    // Set if the requested user is a member of the requested organization.
+    bool member = 1;
+    // Set if the requested user is an owner of the requested organization.
+    bool owner = 2;
 }
 
 // Request arguments for Add/DeleteOrganizationMembers.

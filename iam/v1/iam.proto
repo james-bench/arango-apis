@@ -263,6 +263,11 @@ message Group {
     string description = 4; 
     // The creation timestamp of the group
     google.protobuf.Timestamp created_at = 5;
+    // The deletion timestamp of the group
+    google.protobuf.Timestamp deleted_at = 6;
+    // URL of this resource
+    // This is a read-only value and cannot be initialized.
+    string url = 7;
 }
 
 // List of groups.
@@ -325,6 +330,11 @@ message Role {
     bool is_predefined = 6;
     // The creation timestamp of the role
     google.protobuf.Timestamp created_at = 7;
+    // The deletion timestamp of the role
+    google.protobuf.Timestamp deleted_at = 8;
+    // URL of this resource
+    // This is a read-only value and cannot be initialized.
+    string url = 9;
 }
 
 // List of roles.
