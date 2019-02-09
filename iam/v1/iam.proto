@@ -265,9 +265,12 @@ message Group {
     google.protobuf.Timestamp created_at = 5;
     // The deletion timestamp of the group
     google.protobuf.Timestamp deleted_at = 6;
+    // Set when this organization is deleted.
+    // This is a read-only value.
+    bool is_deleted = 7;
     // URL of this resource
     // This is a read-only value and cannot be initialized.
-    string url = 7;
+    string url = 8;
 }
 
 // List of groups.
@@ -332,9 +335,12 @@ message Role {
     google.protobuf.Timestamp created_at = 7;
     // The deletion timestamp of the role
     google.protobuf.Timestamp deleted_at = 8;
+    // Set when this organization is deleted.
+    // This is a read-only value.
+    bool is_deleted = 9;
     // URL of this resource
     // This is a read-only value and cannot be initialized.
-    string url = 9;
+    string url = 10;
 }
 
 // List of roles.

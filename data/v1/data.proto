@@ -121,6 +121,9 @@ message Deployment {
     // The deletion timestamp of the deployment
     // This is a read-only value.
     google.protobuf.Timestamp deleted_at = 8;
+    // Set when this deployment is deleted.
+    // This is a read-only value.
+    bool is_deleted = 9;
 
     // ArangoDB version to use for this deployment.
     // See Version.version.

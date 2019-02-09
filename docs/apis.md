@@ -250,7 +250,7 @@ An Organization is represents a real world organization such as a company.
 | url | [string](#string) |  | URL of this resource This is a read-only value and cannot be initialized. |
 | name | [string](#string) |  | Name of the organization |
 | description | [string](#string) |  | Description of the organization |
-| is_deleted | [bool](#bool) |  | Set when this organization is deleted |
+| is_deleted | [bool](#bool) |  | Set when this organization is deleted. This is a read-only value. |
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the organization |
 | deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the organization |
 
@@ -386,6 +386,7 @@ TLS certificates for deployments &amp; client authentication.
 | deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the CA certificate This is a read-only value. |
 | expires_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The expiration timestamp of the CA certificate This is a read-only value. |
 | certificate_pem | [string](#string) |  | A PEM encoded representation of the public key of the CA certificate. This is a read-only value. |
+| is_deleted | [bool](#bool) |  | Set when this CA certificate is deleted. This is a read-only value. |
 
 
 
@@ -632,6 +633,7 @@ Group of user accounts.
 | description | [string](#string) |  | Description of the group |
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the group |
 | deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the group |
+| is_deleted | [bool](#bool) |  | Set when this organization is deleted. This is a read-only value. |
 | url | [string](#string) |  | URL of this resource This is a read-only value and cannot be initialized. |
 
 
@@ -765,6 +767,7 @@ Roles can be bound to resources for members.
 | is_predefined | [bool](#bool) |  | Set if this role is predefined. This is a read-only value. |
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the role |
 | deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the role |
+| is_deleted | [bool](#bool) |  | Set when this organization is deleted. This is a read-only value. |
 | url | [string](#string) |  | URL of this resource This is a read-only value and cannot be initialized. |
 
 
@@ -903,6 +906,7 @@ A Deployment is represents one deployment of an ArangoDB cluster.
 | region_id | [string](#string) |  | Identifier of the region in which the deployment is created. After creation, this value cannot be changed. |
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the deployment This is a read-only value. |
 | deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the deployment This is a read-only value. |
+| is_deleted | [bool](#bool) |  | Set when this deployment is deleted. This is a read-only value. |
 | version | [string](#string) |  | ArangoDB version to use for this deployment. See Version.version. If you change this value to a higher version, the deployment will be upgraded. If you change this value to a lower patch value, the deployment will be downgraded. Any attempt to change to a lower minor or major version is considered an invalid request. Any attempt to change to a version that is not in the list of available versions is considered an invalid request. |
 | certificates | [Deployment.CertificateSpec](#arangodb.cloud.data.v1.Deployment.CertificateSpec) |  |  |
 | servers | [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  |  |

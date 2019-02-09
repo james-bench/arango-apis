@@ -188,7 +188,8 @@ message Organization {
     string name = 3; 
     // Description of the organization
     string description = 4; 
-    // Set when this organization is deleted
+    // Set when this organization is deleted.
+    // This is a read-only value.
     bool is_deleted = 5;
     // The creation timestamp of the organization
     google.protobuf.Timestamp created_at = 6;
