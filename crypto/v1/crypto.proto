@@ -102,6 +102,9 @@ message CACertificate {
     // A PEM encoded representation of the public key of the CA certificate.
     // This is a read-only value.
     string certificate_pem = 10;
+    // Set when this CA certificate is deleted.
+    // This is a read-only value.
+    bool is_deleted = 11;
 }
 
 // List of CACertificates.

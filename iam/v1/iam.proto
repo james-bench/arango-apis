@@ -263,6 +263,17 @@ message Group {
     string description = 4; 
     // The creation timestamp of the group
     google.protobuf.Timestamp created_at = 5;
+    // The deletion timestamp of the group
+    google.protobuf.Timestamp deleted_at = 6;
+    // Set when this organization is deleted.
+    // This is a read-only value.
+    bool is_deleted = 7;
+    // URL of this resource
+    // This is a read-only value and cannot be initialized.
+    string url = 8;
+    // Set if this group is virtual and managed by the system.
+    // This is a read-only value.
+    bool is_virtual = 9;
 }
 
 // List of groups.
@@ -325,6 +336,14 @@ message Role {
     bool is_predefined = 6;
     // The creation timestamp of the role
     google.protobuf.Timestamp created_at = 7;
+    // The deletion timestamp of the role
+    google.protobuf.Timestamp deleted_at = 8;
+    // Set when this organization is deleted.
+    // This is a read-only value.
+    bool is_deleted = 9;
+    // URL of this resource
+    // This is a read-only value and cannot be initialized.
+    string url = 10;
 }
 
 // List of roles.
