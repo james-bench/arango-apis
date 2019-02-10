@@ -271,6 +271,9 @@ message Group {
     // URL of this resource
     // This is a read-only value and cannot be initialized.
     string url = 8;
+    // Set if this group is virtual and managed by the system.
+    // This is a read-only value.
+    bool is_virtual = 9;
 }
 
 // List of groups.

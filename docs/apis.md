@@ -635,6 +635,7 @@ Group of user accounts.
 | deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the group |
 | is_deleted | [bool](#bool) |  | Set when this organization is deleted. This is a read-only value. |
 | url | [string](#string) |  | URL of this resource This is a read-only value and cannot be initialized. |
+| is_virtual | [bool](#bool) |  | Set if this group is virtual and managed by the system. This is a read-only value. |
 
 
 
