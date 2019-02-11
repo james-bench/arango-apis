@@ -1241,7 +1241,7 @@ type ResourceManagerServiceClient interface {
 	// Fetch all organization invites in the organization identified by the given context ID.
 	// The authenticated user must be a member of the organization identifier by the given context ID.
 	// Required permissions:
-	// - resourcemanager.organization-invite.get on the invite.
+	// - resourcemanager.organization-invite.list on the invite.
 	ListOrganizationInvites(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*OrganizationInviteList, error)
 	// Fetch all organization invites for the email address of the authenticated user.
 	// Required permissions:
@@ -1561,7 +1561,7 @@ type ResourceManagerServiceServer interface {
 	// Fetch all organization invites in the organization identified by the given context ID.
 	// The authenticated user must be a member of the organization identifier by the given context ID.
 	// Required permissions:
-	// - resourcemanager.organization-invite.get on the invite.
+	// - resourcemanager.organization-invite.list on the invite.
 	ListOrganizationInvites(context.Context, *v1.ListOptions) (*OrganizationInviteList, error)
 	// Fetch all organization invites for the email address of the authenticated user.
 	// Required permissions:

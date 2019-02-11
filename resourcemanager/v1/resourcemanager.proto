@@ -177,7 +177,7 @@ service ResourceManagerService {
     // Fetch all organization invites in the organization identified by the given context ID.
     // The authenticated user must be a member of the organization identifier by the given context ID.
     // Required permissions:
-    // - resourcemanager.organization-invite.get on the invite.
+    // - resourcemanager.organization-invite.list on the invite.
     rpc ListOrganizationInvites(common.v1.ListOptions) returns (OrganizationInviteList) {
         option (google.api.http) = {
             get: "/api/resourcemanager/v1/organizations/{context_id}/organization-invites"
