@@ -297,6 +297,9 @@ message Event {
     map<string, string> payload = 6;
     // The creation timestamp of the event
     google.protobuf.Timestamp created_at = 7;
+    // URL of the subject of this event.
+    // This is a read-only value.
+    string subject_url = 8;
 }
 
 // List of Events.

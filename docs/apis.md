@@ -118,6 +118,7 @@ in the ArangoDB Managed service.
 | type | [string](#string) |  | Type of the event. |
 | payload | [Event.PayloadEntry](#arangodb.cloud.resourcemanager.v1.Event.PayloadEntry) | repeated | Payload of the event. The fields used in the payload are specific to the type of event. |
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the event |
+| subject_url | [string](#string) |  | URL of the subject of this event. This is a read-only value. |
 
 
 
