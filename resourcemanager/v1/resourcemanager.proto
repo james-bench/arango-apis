@@ -407,11 +407,20 @@ message OrganizationInvite {
     // Email address of the human who is invited.
     string email = 4;
     // If set, the invitee accepted the invite.
+    // This is a read-only value.
     bool accepted = 5;
     // If set, the invitee rejected the invite.
+    // This is a read-only value.
     bool rejected = 6;
-    // The creation timestamp of the event
+    // The creation timestamp of the invite
+    // This is a read-only value.
     google.protobuf.Timestamp created_at = 7;
+    // The acceptance timestamp of the invite
+    // This is a read-only value.
+    google.protobuf.Timestamp accepted_at = 8;
+    // The rejection timestamp of the invite
+    // This is a read-only value.
+    google.protobuf.Timestamp rejected_at = 9;
 }
 
 // List of OrganizationInvites.

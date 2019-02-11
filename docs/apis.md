@@ -275,9 +275,11 @@ organization.
 | url | [string](#string) |  | URL of this resource This is a read-only value and cannot be initialized. |
 | organization_id | [string](#string) |  | Identifier of the organization that the human is invited to join. This is a read-only value. |
 | email | [string](#string) |  | Email address of the human who is invited. |
-| accepted | [bool](#bool) |  | If set, the invitee accepted the invite. |
-| rejected | [bool](#bool) |  | If set, the invitee rejected the invite. |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the event |
+| accepted | [bool](#bool) |  | If set, the invitee accepted the invite. This is a read-only value. |
+| rejected | [bool](#bool) |  | If set, the invitee rejected the invite. This is a read-only value. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the invite This is a read-only value. |
+| accepted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The acceptance timestamp of the invite This is a read-only value. |
+| rejected_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The rejection timestamp of the invite This is a read-only value. |
 
 
 
