@@ -280,6 +280,7 @@ organization.
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the invite This is a read-only value. |
 | accepted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The acceptance timestamp of the invite This is a read-only value. |
 | rejected_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The rejection timestamp of the invite This is a read-only value. |
+| user_id | [string](#string) |  | Identifier of the user that accepted or rejected this invite. This is a read-only value. |
 
 
 

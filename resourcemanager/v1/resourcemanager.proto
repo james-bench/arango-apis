@@ -421,6 +421,9 @@ message OrganizationInvite {
     // The rejection timestamp of the invite
     // This is a read-only value.
     google.protobuf.Timestamp rejected_at = 9;
+    // Identifier of the user that accepted or rejected this invite.
+    // This is a read-only value.
+    string user_id = 10;
 }
 
 // List of OrganizationInvites.
