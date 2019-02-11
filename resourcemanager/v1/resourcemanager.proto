@@ -164,7 +164,6 @@ service ResourceManagerService {
         };
     }
 
-
     // Fetch all events in the organization identified by the given context ID.
     // The authenticated user must be a member of the organization identifier by the given context ID.
     // Required permissions:
@@ -172,6 +171,78 @@ service ResourceManagerService {
     rpc ListEvents(ListEventOptions) returns (EventList) {
         option (google.api.http) = {
             get: "/api/resourcemanager/v1/organizations/{options.context_id}/events"
+        };
+    }
+
+    // Fetch all organization invites in the organization identified by the given context ID.
+    // The authenticated user must be a member of the organization identifier by the given context ID.
+    // Required permissions:
+    // - resourcemanager.organization-invite.get on the invite.
+    rpc ListOrganizationInvites(common.v1.ListOptions) returns (OrganizationInviteList) {
+        option (google.api.http) = {
+            get: "/api/resourcemanager/v1/organizations/{context_id}/organization-invites"
+        };
+    }
+
+    // Fetch all organization invites for the email address of the authenticated user.
+    // Required permissions:
+    // - None
+    rpc ListMyOrganizationInvites(common.v1.ListOptions) returns (OrganizationInviteList) {
+        option (google.api.http) = {
+            get: "/api/resourcemanager/v1/self/organization-invites"
+        };
+    }
+
+    // Fetch an organization invite by its id.
+    // The authenticated user must be a member of the organization that the invite is for.
+    // Required permissions:
+    // - resourcemanager.organization-invite.get on the invite.
+    rpc GetOrganizationInvite(common.v1.IDOptions) returns (OrganizationInvite) {
+        option (google.api.http) = {
+            get: "/api/resourcemanager/v1/organization-invites/{id}"
+        };
+    }
+
+    // Create a new organization invite.
+    // The authenticated user must be a member of the organization that the invite is for.
+    // Required permissions:
+    // - resourcemanager.organization-invite.create on the organization that the invite is for.
+    rpc CreateOrganizationInvite(OrganizationInvite) returns (OrganizationInvite) {
+        option (google.api.http) = {
+            post: "/api/resourcemanager/v1/organizations/{organization_id}/organization-invites"
+            body: "*"
+        };
+    }
+
+    // Delete an organization invite
+    // The authenticated user must be a member of the organization that the invite is for.
+    // Required permissions:
+    // - resourcemanager.organization-invite.delete on the invite
+    rpc DeleteOrganizationInvite(OrganizationInvite) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            delete: "/api/resourcemanager/v1/organization-invites/{id}"
+        };
+    }
+
+    // Accept an organization invite
+    // The authenticated user's email address must match the email address specified in
+    // the invite.
+    // Required permissions:
+    // - None
+    rpc AcceptOrganizationInvite(OrganizationInvite) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            post: "/api/resourcemanager/v1/organization-invites/{id}/accept"
+        };
+    }
+
+    // Reject an organization invite
+    // The authenticated user's email address must match the email address specified in
+    // the invite.
+    // Required permissions:
+    // - None
+    rpc RejectOrganizationInvite(OrganizationInvite) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            post: "/api/resourcemanager/v1/organization-invites/{id}/reject"
         };
     }
 }
@@ -319,4 +390,31 @@ message ListEventOptions {
     google.protobuf.Timestamp created_after = 4;
     // If set, filter of events created before this timestamp
     google.protobuf.Timestamp created_before = 5;
+}
+
+// An OrganizationInvite represents an invite for a human to join an
+// organization.
+message OrganizationInvite {   
+    // System identifier of the invite.
+    // This is a read-only value.
+    string id = 1;
+    // URL of this resource
+    // This is a read-only value and cannot be initialized.
+    string url = 2;
+    // Identifier of the organization that the human is invited to join.
+    // This is a read-only value.
+    string organization_id = 3;
+    // Email address of the human who is invited.
+    string email = 4;
+    // If set, the invitee accepted the invite.
+    bool accepted = 5;
+    // If set, the invitee rejected the invite.
+    bool rejected = 6;
+    // The creation timestamp of the event
+    google.protobuf.Timestamp created_at = 7;
+}
+
+// List of OrganizationInvites.
+message OrganizationInviteList {
+    repeated OrganizationInvite items = 1;
 }

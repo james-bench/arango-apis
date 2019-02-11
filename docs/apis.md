@@ -13,6 +13,8 @@
     - [Member](#arangodb.cloud.resourcemanager.v1.Member)
     - [MemberList](#arangodb.cloud.resourcemanager.v1.MemberList)
     - [Organization](#arangodb.cloud.resourcemanager.v1.Organization)
+    - [OrganizationInvite](#arangodb.cloud.resourcemanager.v1.OrganizationInvite)
+    - [OrganizationInviteList](#arangodb.cloud.resourcemanager.v1.OrganizationInviteList)
     - [OrganizationList](#arangodb.cloud.resourcemanager.v1.OrganizationList)
     - [OrganizationMembersRequest](#arangodb.cloud.resourcemanager.v1.OrganizationMembersRequest)
     - [Project](#arangodb.cloud.resourcemanager.v1.Project)
@@ -260,6 +262,43 @@ An Organization is represents a real world organization such as a company.
 
 
 
+<a name="arangodb.cloud.resourcemanager.v1.OrganizationInvite"></a>
+
+### OrganizationInvite
+An OrganizationInvite represents an invite for a human to join an
+organization.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the invite. This is a read-only value. |
+| url | [string](#string) |  | URL of this resource This is a read-only value and cannot be initialized. |
+| organization_id | [string](#string) |  | Identifier of the organization that the human is invited to join. This is a read-only value. |
+| email | [string](#string) |  | Email address of the human who is invited. |
+| accepted | [bool](#bool) |  | If set, the invitee accepted the invite. |
+| rejected | [bool](#bool) |  | If set, the invitee rejected the invite. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the event |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.OrganizationInviteList"></a>
+
+### OrganizationInviteList
+List of OrganizationInvites.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [OrganizationInvite](#arangodb.cloud.resourcemanager.v1.OrganizationInvite) | repeated |  |
+
+
+
+
+
+
 <a name="arangodb.cloud.resourcemanager.v1.OrganizationList"></a>
 
 ### OrganizationList
@@ -356,6 +395,13 @@ ResourceManagerService is the API used to configure basic resource objects.
 | UpdateProject | [Project](#arangodb.cloud.resourcemanager.v1.Project) | [Project](#arangodb.cloud.resourcemanager.v1.Project) | Update a project The authenticated user must be a member of the organization that owns the project. Required permissions: - resourcemanager.project.update on the project |
 | DeleteProject | [Project](#arangodb.cloud.resourcemanager.v1.Project) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a project Note that project are initially only marked for deleted. Once all their resources are removed the project itself is deleted and cannot be restored. The authenticated user must be a member of the organization that owns the project. Required permissions: - resourcemanager.project.delete on the project |
 | ListEvents | [ListEventOptions](#arangodb.cloud.resourcemanager.v1.ListEventOptions) | [EventList](#arangodb.cloud.resourcemanager.v1.EventList) | Fetch all events in the organization identified by the given context ID. The authenticated user must be a member of the organization identifier by the given context ID. Required permissions: - resourcemanager.event.list on the organization identified by the given context ID |
+| ListOrganizationInvites | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [OrganizationInviteList](#arangodb.cloud.resourcemanager.v1.OrganizationInviteList) | Fetch all organization invites in the organization identified by the given context ID. The authenticated user must be a member of the organization identifier by the given context ID. Required permissions: - resourcemanager.organization-invite.get on the invite. |
+| ListMyOrganizationInvites | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [OrganizationInviteList](#arangodb.cloud.resourcemanager.v1.OrganizationInviteList) | Fetch all organization invites for the email address of the authenticated user. Required permissions: - None |
+| GetOrganizationInvite | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [OrganizationInvite](#arangodb.cloud.resourcemanager.v1.OrganizationInvite) | Fetch an organization invite by its id. The authenticated user must be a member of the organization that the invite is for. Required permissions: - resourcemanager.organization-invite.get on the invite. |
+| CreateOrganizationInvite | [OrganizationInvite](#arangodb.cloud.resourcemanager.v1.OrganizationInvite) | [OrganizationInvite](#arangodb.cloud.resourcemanager.v1.OrganizationInvite) | Create a new organization invite. The authenticated user must be a member of the organization that the invite is for. Required permissions: - resourcemanager.organization-invite.create on the organization that the invite is for. |
+| DeleteOrganizationInvite | [OrganizationInvite](#arangodb.cloud.resourcemanager.v1.OrganizationInvite) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete an organization invite The authenticated user must be a member of the organization that the invite is for. Required permissions: - resourcemanager.organization-invite.delete on the invite |
+| AcceptOrganizationInvite | [OrganizationInvite](#arangodb.cloud.resourcemanager.v1.OrganizationInvite) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Accept an organization invite The authenticated user&#39;s email address must match the email address specified in the invite. Required permissions: - None |
+| RejectOrganizationInvite | [OrganizationInvite](#arangodb.cloud.resourcemanager.v1.OrganizationInvite) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Reject an organization invite The authenticated user&#39;s email address must match the email address specified in the invite. Required permissions: - None |
 
  
 
