@@ -34,6 +34,12 @@ func TestProjectURL(t *testing.T) {
 	assert.Equal(t, "/Organization/123%2F567/Project/a%25b", ProjectURL("123/567", "a%b"))
 }
 
+func TestOrganizationInviteURL(t *testing.T) {
+	assert.Equal(t, "/Organization/123/OrganizationInvite/p1", OrganizationInviteURL("123", "p1"))
+	assert.Equal(t, "/Organization/123%2F567/OrganizationInvite/ab", OrganizationInviteURL("123/567", "ab"))
+	assert.Equal(t, "/Organization/123%2F567/OrganizationInvite/a%25b", OrganizationInviteURL("123/567", "a%b"))
+}
+
 func TestParseResourceURL(t *testing.T) {
 	u, err := ParseResourceURL("/Organization/123/Project/p1")
 	require.NoError(t, err)

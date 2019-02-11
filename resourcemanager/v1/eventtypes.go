@@ -42,3 +42,20 @@ const (
 	// SubjectID contains the ID of the project.
 	EventTypeProjectDeleted = "resourcemanager.project.deleted"
 )
+
+const (
+	// OrganizationInvite event types
+
+	// EventTypeOrganizationInviteCreated is the type of event fired after an organization invite has been created
+	// SubjectID contains the ID of the organization invite.
+	EventTypeOrganizationInviteCreated = "resourcemanager.organization-invite.created"
+	// EventTypeOrganizationInviteDeleted is the type of event fired after an organization has been (marked for) deleted
+	// SubjectID contains the ID of the organization.
+	EventTypeOrganizationInviteDeleted = "resourcemanager.organization-invite.deleted"
+	// EventTypeOrganizationInviteAccepted is the type of event fired after an invite has been accepted for an organization.
+	// SubjectID contains the ID of the accepted invite.
+	EventTypeOrganizationInviteAccepted = "resourcemanager.organization-invite.accepted"
+	// EventTypeOrganizationInviteRejected is the type of event fired after an invite has been rejected for an organization.
+	// SubjectID contains the ID of the rejected invite.
+	EventTypeOrganizationInviteRejected = "resourcemanager.organization-invite.rejected"
+)

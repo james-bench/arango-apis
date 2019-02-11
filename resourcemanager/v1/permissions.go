@@ -40,3 +40,16 @@ const (
 	// PermissionEventList is needed for listing events in an organization
 	PermissionEventList = "resourcemanager.event.list"
 )
+
+const (
+	// OrganizationInvite permissions
+
+	// PermissionOrganizationInviteList is needed for fetching invites in an organization
+	PermissionOrganizationInviteList = "resourcemanager.organization-invite.list"
+	// PermissionOrganizationInviteGet is needed for fetching an individual invite in an organization
+	PermissionOrganizationInviteGet = "resourcemanager.organization-invite.get"
+	// PermissionOrganizationInviteCreate is needed for creating an organization invite
+	PermissionOrganizationInviteCreate = "resourcemanager.organization-invite.create"
+	// PermissionOrganizationInviteDelete is needed for deleting an organization invite
+	PermissionOrganizationInviteDelete = "resourcemanager.organization-invite.delete"
+)

@@ -16,8 +16,9 @@ import (
 )
 
 const (
-	organizationKind = "Organization"
-	projectKind      = "Project"
+	organizationKind       = "Organization"
+	projectKind            = "Project"
+	organizationInviteKind = "OrganizationInvite"
 )
 
 // OrganizationURL creates a resource URL for the organization with given ID.
@@ -28,6 +29,11 @@ func OrganizationURL(organizationID string) string {
 // ProjectURL creates a resource URL for the project & organization with given IDs.
 func ProjectURL(organizationID, projectID string) string {
 	return path.Join(OrganizationURL(organizationID), projectKind, url.PathEscape(projectID))
+}
+
+// OrganizationInviteURL creates a resource URL for the invite & organization with given IDs.
+func OrganizationInviteURL(organizationID, inviteID string) string {
+	return path.Join(OrganizationURL(organizationID), organizationInviteKind, url.PathEscape(inviteID))
 }
 
 // ResourceURL holds a parsed resource URL.
