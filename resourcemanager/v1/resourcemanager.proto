@@ -424,6 +424,8 @@ message OrganizationInvite {
     // Identifier of the user that accepted or rejected this invite.
     // This is a read-only value.
     string user_id = 10;
+    // Identifier of the user that created this invite.
+    string created_by_id = 11;
 }
 
 // List of OrganizationInvites.

@@ -281,6 +281,7 @@ organization.
 | accepted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The acceptance timestamp of the invite This is a read-only value. |
 | rejected_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The rejection timestamp of the invite This is a read-only value. |
 | user_id | [string](#string) |  | Identifier of the user that accepted or rejected this invite. This is a read-only value. |
+| created_by_id | [string](#string) |  | Identifier of the user that created this invite. |
 
 
 
@@ -883,11 +884,12 @@ User represents an actual person.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | id | [string](#string) |  | Identifier of the user. This is a read-only value. |
-| email | [string](#string) |  | Email address of the user. |
+| email | [string](#string) |  | Primary email address of the user. All emails send to this user will use this address. |
 | name | [string](#string) |  | Name of the user. This may be empty if not filled out by the user. |
 | given_name | [string](#string) |  | Given name of the user. This may be empty if not filled out by the user. |
 | family_name | [string](#string) |  | Family name of the user. This may be empty if not filled out by the user. |
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the user. |
+| additional_emails | [string](#string) | repeated | Additional email addresses of the user. This will be filled in when the authentication provided knows multiple email addresses for the user. |
 
 
 
