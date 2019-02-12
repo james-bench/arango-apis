@@ -39,6 +39,18 @@ func OrganizationInviteURL(organizationID, inviteID string) string {
 // ResourceURL holds a parsed resource URL.
 type ResourceURL []ResourceID
 
+// String representation of the URL
+func (u ResourceURL) String() string {
+	builder := strings.Builder{}
+	for _, x := range u {
+		builder.WriteString("/")
+		builder.WriteString(x.Kind)
+		builder.WriteString("/")
+		builder.WriteString(url.PathEscape(x.ID))
+	}
+	return builder.String()
+}
+
 // OrganizationID returns the organization ID of the given URL.
 func (u ResourceURL) OrganizationID() string {
 	return u[0].ID
