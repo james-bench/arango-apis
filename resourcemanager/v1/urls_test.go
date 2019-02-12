@@ -46,18 +46,21 @@ func TestParseResourceURL(t *testing.T) {
 	assert.Equal(t, "123", u.OrganizationID())
 	assert.Equal(t, "p1", u.ProjectID())
 	assert.Equal(t, "", u.ProjectChildID("Foo"))
+	assert.Equal(t, "/Organization/123/Project/p1", u.String())
 
 	u, err = ParseResourceURL("/Organization/123%2F567/Project/p1")
 	require.NoError(t, err)
 	assert.Equal(t, "123/567", u.OrganizationID())
 	assert.Equal(t, "p1", u.ProjectID())
 	assert.Equal(t, "", u.ProjectChildID("Foo"))
+	assert.Equal(t, "/Organization/123%2F567/Project/p1", u.String())
 
 	u, err = ParseResourceURL("/Organization/123%2F567/Project/p1/Backup/b52")
 	require.NoError(t, err)
 	assert.Equal(t, "123/567", u.OrganizationID())
 	assert.Equal(t, "p1", u.ProjectID())
 	assert.Equal(t, "b52", u.ProjectChildID("Backup"))
+	assert.Equal(t, "/Organization/123%2F567/Project/p1/Backup/b52", u.String())
 
 	u, err = ParseResourceURL("/Organization/123%2F567/Project/p1/Foo/b52/Bar/a17")
 	require.NoError(t, err)
@@ -65,4 +68,5 @@ func TestParseResourceURL(t *testing.T) {
 	assert.Equal(t, "p1", u.ProjectID())
 	assert.Equal(t, "b52", u.ProjectChildID("Foo"))
 	assert.Equal(t, "a17", u.ProjectChildID("Foo", "Bar"))
+	assert.Equal(t, "/Organization/123%2F567/Project/p1/Foo/b52/Bar/a17", u.String())
 }
