@@ -311,7 +311,7 @@ export namespace arangodb {
           // Required permissions:
           // - None
           async GetOrganization(req: arangodb.cloud.common.v1.IDOptions): Promise<arangodb.cloud.resourcemanager.v1.Organization> {
-            const path = `/api/resourcemanager/v1/organizations/${req.id}`;
+            const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.id)}`;
             const url = path + api.queryString(req, [`id`]);
             return api.get(url, undefined);
           }
@@ -328,7 +328,7 @@ export namespace arangodb {
           // Required permissions:
           // - resourcemanager.organization.update on the organization
           async UpdateOrganization(req: arangodb.cloud.resourcemanager.v1.Organization): Promise<arangodb.cloud.resourcemanager.v1.Organization> {
-            const url = `/api/resourcemanager/v1/organizations/${req.id}`;
+            const url = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.id)}`;
             return api.patch(url, req);
           }
           
@@ -338,7 +338,7 @@ export namespace arangodb {
           // Required permissions:
           // - resourcemanager.organization.delete on the organization
           async DeleteOrganization(req: arangodb.cloud.common.v1.IDOptions): Promise<void> {
-            const path = `/api/resourcemanager/v1/organizations/${req.id}`;
+            const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.id)}`;
             const url = path + api.queryString(req, [`id`]);
             return api.delete(url, undefined);
           }
@@ -347,7 +347,7 @@ export namespace arangodb {
           // Required permissions:
           // - resourcemanager.organization.get on the organization
           async ListOrganizationMembers(req: arangodb.cloud.common.v1.ListOptions): Promise<arangodb.cloud.resourcemanager.v1.MemberList> {
-            const path = `/api/resourcemanager/v1/organizations/${req.context_id}/members`;
+            const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.context_id)}/members`;
             const url = path + api.queryString(req, [`context_id`]);
             return api.get(url, undefined);
           }
@@ -356,7 +356,7 @@ export namespace arangodb {
           // Required permissions:
           // - resourcemanager.organization.update on the organization
           async AddOrganizationMembers(req: arangodb.cloud.resourcemanager.v1.OrganizationMembersRequest): Promise<void> {
-            const url = `/api/resourcemanager/v1/organizations/${req.organization_id}/members`;
+            const url = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.organization_id)}/members`;
             return api.post(url, req);
           }
           
@@ -364,7 +364,7 @@ export namespace arangodb {
           // Required permissions:
           // - resourcemanager.organization.update on the organization
           async DeleteOrganizationMembers(req: arangodb.cloud.resourcemanager.v1.OrganizationMembersRequest): Promise<void> {
-            const url = `/api/resourcemanager/v1/organizations/${req.organization_id}/members`;
+            const url = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.organization_id)}/members`;
             return api.delete(url, req);
           }
           
@@ -374,7 +374,7 @@ export namespace arangodb {
           // - resourcemanager.organization.get on the organization, unless the requested user is identical to the authenticated user.
           // Note that if the identified user or organization does not exist, no is returned.
           async IsMemberOfOrganization(req: arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationRequest): Promise<arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationResponse> {
-            const path = `/api/resourcemanager/v1/organizations/${req.organization_id}/members/${req.user_id}`;
+            const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.organization_id)}/members/${encodeURIComponent(req.user_id)}`;
             const url = path + api.queryString(req, [`organization_id`, `user_id`]);
             return api.get(url, undefined);
           }
@@ -384,7 +384,7 @@ export namespace arangodb {
           // Required permissions:
           // - resourcemanager.project.list on the organization identified by the given context ID
           async ListProjects(req: arangodb.cloud.common.v1.ListOptions): Promise<arangodb.cloud.resourcemanager.v1.ProjectList> {
-            const path = `/api/resourcemanager/v1/organizations/${req.context_id}/projects`;
+            const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.context_id)}/projects`;
             const url = path + api.queryString(req, [`context_id`]);
             return api.get(url, undefined);
           }
@@ -394,7 +394,7 @@ export namespace arangodb {
           // Required permissions:
           // - resourcemanager.project.get on the project identified by the given ID
           async GetProject(req: arangodb.cloud.common.v1.IDOptions): Promise<arangodb.cloud.resourcemanager.v1.Project> {
-            const path = `/api/resourcemanager/v1/projects/${req.id}`;
+            const path = `/api/resourcemanager/v1/projects/${encodeURIComponent(req.id)}`;
             const url = path + api.queryString(req, [`id`]);
             return api.get(url, undefined);
           }
@@ -404,7 +404,7 @@ export namespace arangodb {
           // Required permissions:
           // - resourcemanager.project.create on the organization that owns the project
           async CreateProject(req: arangodb.cloud.resourcemanager.v1.Project): Promise<arangodb.cloud.resourcemanager.v1.Project> {
-            const url = `/api/resourcemanager/v1/organizations/${req.organization_id}/projects`;
+            const url = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.organization_id)}/projects`;
             return api.post(url, req);
           }
           
@@ -413,7 +413,7 @@ export namespace arangodb {
           // Required permissions:
           // - resourcemanager.project.update on the project
           async UpdateProject(req: arangodb.cloud.resourcemanager.v1.Project): Promise<arangodb.cloud.resourcemanager.v1.Project> {
-            const url = `/api/resourcemanager/v1/projects/${req.id}`;
+            const url = `/api/resourcemanager/v1/projects/${encodeURIComponent(req.id)}`;
             return api.patch(url, req);
           }
           
@@ -425,7 +425,7 @@ export namespace arangodb {
           // Required permissions:
           // - resourcemanager.project.delete on the project
           async DeleteProject(req: arangodb.cloud.common.v1.IDOptions): Promise<void> {
-            const path = `/api/resourcemanager/v1/projects/${req.id}`;
+            const path = `/api/resourcemanager/v1/projects/${encodeURIComponent(req.id)}`;
             const url = path + api.queryString(req, [`id`]);
             return api.delete(url, undefined);
           }
@@ -435,7 +435,7 @@ export namespace arangodb {
           // Required permissions:
           // - resourcemanager.event.list on the organization identified by the given context ID
           async ListEvents(req: arangodb.cloud.resourcemanager.v1.ListEventOptions): Promise<arangodb.cloud.resourcemanager.v1.EventList> {
-            const path = `/api/resourcemanager/v1/organizations/${req.options.context_id}/events`;
+            const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.options.context_id)}/events`;
             const url = path + api.queryString(req, [`options.context_id`]);
             return api.get(url, undefined);
           }
@@ -445,7 +445,7 @@ export namespace arangodb {
           // Required permissions:
           // - resourcemanager.organization-invite.list on the invite.
           async ListOrganizationInvites(req: arangodb.cloud.common.v1.ListOptions): Promise<arangodb.cloud.resourcemanager.v1.OrganizationInviteList> {
-            const path = `/api/resourcemanager/v1/organizations/${req.context_id}/organization-invites`;
+            const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.context_id)}/organization-invites`;
             const url = path + api.queryString(req, [`context_id`]);
             return api.get(url, undefined);
           }
@@ -464,7 +464,7 @@ export namespace arangodb {
           // Required permissions:
           // - resourcemanager.organization-invite.get on the invite.
           async GetOrganizationInvite(req: arangodb.cloud.common.v1.IDOptions): Promise<arangodb.cloud.resourcemanager.v1.OrganizationInvite> {
-            const path = `/api/resourcemanager/v1/organization-invites/${req.id}`;
+            const path = `/api/resourcemanager/v1/organization-invites/${encodeURIComponent(req.id)}`;
             const url = path + api.queryString(req, [`id`]);
             return api.get(url, undefined);
           }
@@ -474,7 +474,7 @@ export namespace arangodb {
           // Required permissions:
           // - resourcemanager.organization-invite.create on the organization that the invite is for.
           async CreateOrganizationInvite(req: arangodb.cloud.resourcemanager.v1.OrganizationInvite): Promise<arangodb.cloud.resourcemanager.v1.OrganizationInvite> {
-            const url = `/api/resourcemanager/v1/organizations/${req.organization_id}/organization-invites`;
+            const url = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.organization_id)}/organization-invites`;
             return api.post(url, req);
           }
           
@@ -483,7 +483,7 @@ export namespace arangodb {
           // Required permissions:
           // - resourcemanager.organization-invite.delete on the invite
           async DeleteOrganizationInvite(req: arangodb.cloud.resourcemanager.v1.OrganizationInvite): Promise<void> {
-            const path = `/api/resourcemanager/v1/organization-invites/${req.id}`;
+            const path = `/api/resourcemanager/v1/organization-invites/${encodeURIComponent(req.id)}`;
             const url = path + api.queryString(req, [`id`]);
             return api.delete(url, undefined);
           }
@@ -494,7 +494,7 @@ export namespace arangodb {
           // Required permissions:
           // - None
           async AcceptOrganizationInvite(req: arangodb.cloud.resourcemanager.v1.OrganizationInvite): Promise<void> {
-            const path = `/api/resourcemanager/v1/organization-invites/${req.id}/accept`;
+            const path = `/api/resourcemanager/v1/organization-invites/${encodeURIComponent(req.id)}/accept`;
             const url = path + api.queryString(req, [`id`]);
             return api.post(url, undefined);
           }
@@ -505,7 +505,7 @@ export namespace arangodb {
           // Required permissions:
           // - None
           async RejectOrganizationInvite(req: arangodb.cloud.resourcemanager.v1.OrganizationInvite): Promise<void> {
-            const path = `/api/resourcemanager/v1/organization-invites/${req.id}/reject`;
+            const path = `/api/resourcemanager/v1/organization-invites/${encodeURIComponent(req.id)}/reject`;
             const url = path + api.queryString(req, [`id`]);
             return api.post(url, undefined);
           }
@@ -590,7 +590,7 @@ export namespace arangodb {
           // Required permissions:
           // - crypto.cacertificate.list on the project identified by the given context ID
           async ListCACertificates(req: arangodb.cloud.common.v1.ListOptions): Promise<arangodb.cloud.crypto.v1.CACertificateList> {
-            const path = `/api/crypto/v1/projects/${req.context_id}/cacertificates`;
+            const path = `/api/crypto/v1/projects/${encodeURIComponent(req.context_id)}/cacertificates`;
             const url = path + api.queryString(req, [`context_id`]);
             return api.get(url, undefined);
           }
@@ -599,7 +599,7 @@ export namespace arangodb {
           // Required permissions:
           // - crypto.cacertificate.get on the CA certificate identified by the given ID
           async GetCACertificate(req: arangodb.cloud.common.v1.IDOptions): Promise<arangodb.cloud.crypto.v1.CACertificate> {
-            const path = `/api/crypto/v1/cacertificates/${req.id}`;
+            const path = `/api/crypto/v1/cacertificates/${encodeURIComponent(req.id)}`;
             const url = path + api.queryString(req, [`id`]);
             return api.get(url, undefined);
           }
@@ -608,7 +608,7 @@ export namespace arangodb {
           // Required permissions:
           // - crypto.cacertificate.create on the project that owns the CA certificate
           async CreateCACertificate(req: arangodb.cloud.crypto.v1.CACertificate): Promise<arangodb.cloud.crypto.v1.CACertificate> {
-            const url = `/api/crypto/v1/projects/${req.project_id}/cacertificates`;
+            const url = `/api/crypto/v1/projects/${encodeURIComponent(req.project_id)}/cacertificates`;
             return api.post(url, req);
           }
           
@@ -616,7 +616,7 @@ export namespace arangodb {
           // Required permissions:
           // - crypto.cacertificate.update on the CA certificate
           async UpdateCACertificate(req: arangodb.cloud.crypto.v1.CACertificate): Promise<arangodb.cloud.crypto.v1.CACertificate> {
-            const url = `/api/crypto/v1/cacertificates/${req.id}`;
+            const url = `/api/crypto/v1/cacertificates/${encodeURIComponent(req.id)}`;
             return api.patch(url, req);
           }
           
@@ -627,7 +627,7 @@ export namespace arangodb {
           // Required permissions:
           // - crypto.cacertificate.delete on the CA certificate
           async DeleteCACertificate(req: arangodb.cloud.common.v1.IDOptions): Promise<void> {
-            const path = `/api/crypto/v1/cacertificates/${req.id}`;
+            const path = `/api/crypto/v1/cacertificates/${encodeURIComponent(req.id)}`;
             const url = path + api.queryString(req, [`id`]);
             return api.delete(url, undefined);
           }
@@ -700,7 +700,7 @@ export namespace arangodb {
           // Required permissions:
           // - None
           async GetProvider(req: arangodb.cloud.common.v1.IDOptions): Promise<arangodb.cloud.platform.v1.Provider> {
-            const path = `/api/platform/v1/providers/${req.id}`;
+            const path = `/api/platform/v1/providers/${encodeURIComponent(req.id)}`;
             const url = path + api.queryString(req, [`id`]);
             return api.get(url, undefined);
           }
@@ -709,7 +709,7 @@ export namespace arangodb {
           // Required permissions:
           // - None
           async ListRegions(req: arangodb.cloud.common.v1.ListOptions): Promise<arangodb.cloud.platform.v1.RegionList> {
-            const path = `/api/platform/v1/providers/${req.context_id}/regions`;
+            const path = `/api/platform/v1/providers/${encodeURIComponent(req.context_id)}/regions`;
             const url = path + api.queryString(req, [`context_id`]);
             return api.get(url, undefined);
           }
@@ -718,7 +718,7 @@ export namespace arangodb {
           // Required permissions:
           // - None
           async GetRegion(req: arangodb.cloud.common.v1.IDOptions): Promise<arangodb.cloud.platform.v1.Region> {
-            const path = `/api/platform/v1/regions/${req.id}`;
+            const path = `/api/platform/v1/regions/${encodeURIComponent(req.id)}`;
             const url = path + api.queryString(req, [`id`]);
             return api.get(url, undefined);
           }
@@ -1028,7 +1028,7 @@ export namespace arangodb {
           // Required permissions:
           // - resourcemanager.organization.get on one of the organizations that the request user and authenticated user are both a member of
           async GetUser(req: arangodb.cloud.common.v1.IDOptions): Promise<arangodb.cloud.iam.v1.User> {
-            const path = `/api/iam/v1/users/${req.id}`;
+            const path = `/api/iam/v1/users/${encodeURIComponent(req.id)}`;
             const url = path + api.queryString(req, [`id`]);
             return api.get(url, undefined);
           }
@@ -1037,7 +1037,7 @@ export namespace arangodb {
           // Required permissions:
           // - iam.group.list on organization identified by given context ID.
           async ListGroups(req: arangodb.cloud.common.v1.ListOptions): Promise<arangodb.cloud.iam.v1.GroupList> {
-            const path = `/api/iam/v1/organizations/${req.context_id}/groups`;
+            const path = `/api/iam/v1/organizations/${encodeURIComponent(req.context_id)}/groups`;
             const url = path + api.queryString(req, [`context_id`]);
             return api.get(url, undefined);
           }
@@ -1046,7 +1046,7 @@ export namespace arangodb {
           // Required permissions:
           // - iam.group.get on organization that owns the group
           async GetGroup(req: arangodb.cloud.common.v1.IDOptions): Promise<arangodb.cloud.iam.v1.Group> {
-            const path = `/api/iam/v1/groups/${req.id}`;
+            const path = `/api/iam/v1/groups/${encodeURIComponent(req.id)}`;
             const url = path + api.queryString(req, [`id`]);
             return api.get(url, undefined);
           }
@@ -1055,7 +1055,7 @@ export namespace arangodb {
           // Required permissions:
           // - iam.group.create on organization that owns the group
           async CreateGroup(req: arangodb.cloud.iam.v1.Group): Promise<arangodb.cloud.iam.v1.Group> {
-            const url = `/api/iam/v1/organizations/${req.organization_id}/groups`;
+            const url = `/api/iam/v1/organizations/${encodeURIComponent(req.organization_id)}/groups`;
             return api.post(url, req);
           }
           
@@ -1063,7 +1063,7 @@ export namespace arangodb {
           // Required permissions:
           // - iam.group.update on organization that owns the group
           async UpdateGroup(req: arangodb.cloud.iam.v1.Group): Promise<arangodb.cloud.iam.v1.Group> {
-            const url = `/api/iam/v1/groups/${req.id}`;
+            const url = `/api/iam/v1/groups/${encodeURIComponent(req.id)}`;
             return api.patch(url, req);
           }
           
@@ -1071,7 +1071,7 @@ export namespace arangodb {
           // Required permissions:
           // - iam.group.delete on organization that owns the group
           async DeleteGroup(req: arangodb.cloud.common.v1.IDOptions): Promise<void> {
-            const path = `/api/iam/v1/groups/${req.id}`;
+            const path = `/api/iam/v1/groups/${encodeURIComponent(req.id)}`;
             const url = path + api.queryString(req, [`id`]);
             return api.delete(url, undefined);
           }
@@ -1080,7 +1080,7 @@ export namespace arangodb {
           // Required permissions:
           // - iam.group.get on organization that owns the group
           async ListGroupMembers(req: arangodb.cloud.common.v1.ListOptions): Promise<arangodb.cloud.iam.v1.GroupMemberList> {
-            const path = `/api/iam/v1/groups/${req.context_id}/members`;
+            const path = `/api/iam/v1/groups/${encodeURIComponent(req.context_id)}/members`;
             const url = path + api.queryString(req, [`context_id`]);
             return api.get(url, undefined);
           }
@@ -1089,7 +1089,7 @@ export namespace arangodb {
           // Required permissions:
           // - iam.group.update on organization that owns the group
           async AddGroupMembers(req: arangodb.cloud.iam.v1.GroupMembersRequest): Promise<arangodb.cloud.iam.v1.Group> {
-            const url = `/api/iam/v1/groups/${req.group_id}/members`;
+            const url = `/api/iam/v1/groups/${encodeURIComponent(req.group_id)}/members`;
             return api.post(url, req);
           }
           
@@ -1097,7 +1097,7 @@ export namespace arangodb {
           // Required permissions:
           // - iam.group.update on organization that owns the group
           async DeleteGroupMembers(req: arangodb.cloud.iam.v1.GroupMembersRequest): Promise<arangodb.cloud.iam.v1.Group> {
-            const url = `/api/iam/v1/groups/${req.group_id}/members`;
+            const url = `/api/iam/v1/groups/${encodeURIComponent(req.group_id)}/members`;
             return api.delete(url, req);
           }
           
@@ -1106,7 +1106,7 @@ export namespace arangodb {
           // - iam.group.get on organization that owns the group, unless the requested user is identical to the authenticated user.
           // Note that if the identified group does not exist, no is returned.
           async IsMemberOfGroup(req: arangodb.cloud.iam.v1.IsMemberOfGroupRequest): Promise<arangodb.cloud.common.v1.YesOrNo> {
-            const path = `/api/iam/v1/groups/${req.group_id}/members/${req.user_id}`;
+            const path = `/api/iam/v1/groups/${encodeURIComponent(req.group_id)}/members/${encodeURIComponent(req.user_id)}`;
             const url = path + api.queryString(req, [`group_id`, `user_id`]);
             return api.get(url, undefined);
           }
@@ -1115,7 +1115,7 @@ export namespace arangodb {
           // Required permissions:
           // - iam.role.list on organization identified by given context ID.
           async ListRoles(req: arangodb.cloud.common.v1.ListOptions): Promise<arangodb.cloud.iam.v1.RoleList> {
-            const path = `/api/iam/v1/organizations/${req.context_id}/roles`;
+            const path = `/api/iam/v1/organizations/${encodeURIComponent(req.context_id)}/roles`;
             const url = path + api.queryString(req, [`context_id`]);
             return api.get(url, undefined);
           }
@@ -1124,7 +1124,7 @@ export namespace arangodb {
           // Required permissions:
           // - iam.role.get on organization that owns the role
           async GetRole(req: arangodb.cloud.common.v1.IDOptions): Promise<arangodb.cloud.iam.v1.Role> {
-            const path = `/api/iam/v1/roles/${req.id}`;
+            const path = `/api/iam/v1/roles/${encodeURIComponent(req.id)}`;
             const url = path + api.queryString(req, [`id`]);
             return api.get(url, undefined);
           }
@@ -1133,7 +1133,7 @@ export namespace arangodb {
           // Required permissions:
           // - iam.role.create on organization that owns the role
           async CreateRole(req: arangodb.cloud.iam.v1.Role): Promise<arangodb.cloud.iam.v1.Role> {
-            const url = `/api/iam/v1/organizations/${req.organization_id}/roles`;
+            const url = `/api/iam/v1/organizations/${encodeURIComponent(req.organization_id)}/roles`;
             return api.post(url, req);
           }
           
@@ -1141,7 +1141,7 @@ export namespace arangodb {
           // Required permissions:
           // - iam.role.update on organization that owns the role
           async UpdateRole(req: arangodb.cloud.iam.v1.Role): Promise<arangodb.cloud.iam.v1.Role> {
-            const url = `/api/iam/v1/roles/${req.id}`;
+            const url = `/api/iam/v1/roles/${encodeURIComponent(req.id)}`;
             return api.patch(url, req);
           }
           
@@ -1149,7 +1149,7 @@ export namespace arangodb {
           // Required permissions:
           // - iam.role.delete on organization that owns the role
           async DeleteRole(req: arangodb.cloud.common.v1.IDOptions): Promise<void> {
-            const url = `/api/iam/v1/roles/${req.id}`;
+            const url = `/api/iam/v1/roles/${encodeURIComponent(req.id)}`;
             return api.delete(url, req);
           }
           
@@ -1427,7 +1427,7 @@ export namespace arangodb {
           // Required permissions:
           // - data.deployment.list on the project identified by the given context ID
           async ListDeployments(req: arangodb.cloud.common.v1.ListOptions): Promise<arangodb.cloud.data.v1.DeploymentList> {
-            const path = `/api/data/v1/projects/${req.context_id}/deployments`;
+            const path = `/api/data/v1/projects/${encodeURIComponent(req.context_id)}/deployments`;
             const url = path + api.queryString(req, [`context_id`]);
             return api.get(url, undefined);
           }
@@ -1436,7 +1436,7 @@ export namespace arangodb {
           // Required permissions:
           // - data.deployment.get on the deployment identified by the given ID
           async GetDeployment(req: arangodb.cloud.common.v1.IDOptions): Promise<arangodb.cloud.data.v1.Deployment> {
-            const path = `/api/data/v1/deployments/${req.id}`;
+            const path = `/api/data/v1/deployments/${encodeURIComponent(req.id)}`;
             const url = path + api.queryString(req, [`id`]);
             return api.get(url, undefined);
           }
@@ -1445,7 +1445,7 @@ export namespace arangodb {
           // Required permissions:
           // - data.deployment.create on the project that owns the deployment
           async CreateDeployment(req: arangodb.cloud.data.v1.Deployment): Promise<arangodb.cloud.data.v1.Deployment> {
-            const url = `/api/data/v1/project/${req.project_id}/deployments`;
+            const url = `/api/data/v1/project/${encodeURIComponent(req.project_id)}/deployments`;
             return api.post(url, req);
           }
           
@@ -1453,7 +1453,7 @@ export namespace arangodb {
           // Required permissions:
           // - data.deployment.update on the deployment
           async UpdateDeployment(req: arangodb.cloud.data.v1.Deployment): Promise<arangodb.cloud.data.v1.Deployment> {
-            const url = `/api/data/v1/deployments/${req.id}`;
+            const url = `/api/data/v1/deployments/${encodeURIComponent(req.id)}`;
             return api.patch(url, req);
           }
           
@@ -1463,7 +1463,7 @@ export namespace arangodb {
           // Required permissions:
           // - data.deployment.delete on the deployment
           async DeleteDeployment(req: arangodb.cloud.common.v1.IDOptions): Promise<void> {
-            const path = `/api/data/v1/deployments/${req.id}`;
+            const path = `/api/data/v1/deployments/${encodeURIComponent(req.id)}`;
             const url = path + api.queryString(req, [`id`]);
             return api.delete(url, undefined);
           }
@@ -1491,7 +1491,7 @@ export namespace arangodb {
           // Required permissions:
           // - data.limits.get on the requested project
           async GetServersSpecLimits(req: arangodb.cloud.data.v1.ServersSpecLimitsRequest): Promise<arangodb.cloud.data.v1.ServersSpecLimits> {
-            const path = `/api/data/v1/projects/${req.project_id}/regions/${req.region_id}/limits`;
+            const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id)}/regions/${encodeURIComponent(req.region_id)}/limits`;
             const url = path + api.queryString(req, [`project_id`, `region_id`]);
             return api.get(url, undefined);
           }
