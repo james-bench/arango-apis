@@ -9,13 +9,19 @@ RUN cd /usr/local/ && unzip /tmp/protoc.zip
 FROM golang:1.11.5
 ARG version=1.0.5
 ARG arch=amd64
+ARG TOKEN
 
 # Install required build packages
 RUN apt-get install -y git curl
 COPY --from=protoinstall /usr/local/bin/protoc /usr/local/bin/
 
+RUN git config --global "url.https://${TOKEN}@github.com/arangodb-managed/.insteadOf" "https://github.com/arangodb-managed/"
+RUN git config --global --list 
+
 # Install go tools
-RUN go get github.com/gogo/protobuf/protoc-gen-gogo && \
+RUN \
+	go get github.com/arangodb-managed/protoc-gen-ts/cmd/protoc-gen-ts && \
+    go get github.com/gogo/protobuf/protoc-gen-gogo && \
     go get github.com/gogo/protobuf/protoc-gen-gofast && \
     go get github.com/gogo/protobuf/protoc-gen-gogofaster && \
     go get golang.org/x/tools/cmd/goimports && \

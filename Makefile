@@ -24,13 +24,16 @@ else
 endif
 
 .PHONY: all
-all: generate docs
+all: generate ts docs
 
 # Build docker builder image
 .PHONY: build-image
 build-image:
 ifndef CIRCLECI
-	docker build -t $(BUILDIMAGE) -f Dockerfile.build .
+	docker build \
+		--build-arg=TOKEN=$(shell cat $(HOME)/.arangodb/ms/github-readonly-code-acces.token) \
+		-t $(BUILDIMAGE) \
+		-f Dockerfile.build .
 else
 	go get github.com/gogo/protobuf/protoc-gen-gogo
 	go get github.com/gogo/protobuf/protoc-gen-gofast
@@ -40,6 +43,7 @@ else
 	go get github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
 	go get github.com/golang/protobuf/protoc-gen-go
 	go get github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc
+	go get github.com/arangodb-managed/protoc-gen-ts/cmd/protoc-gen-ts
 endif
 
 .PHONY: $(CACHEVOL)
@@ -73,6 +77,15 @@ docs: $(CACHEVOL) $(MODVOL)
 		protoc -I.:vendor:vendor/googleapis/:vendor/github.com/gogo/protobuf/protobuf/ \
 			--doc_out=docs $(PROTOSOURCES) \
 			--doc_opt=markdown,apis.md
+
+# Generate API as typescript
+.PHONY: ts
+ts: $(CACHEVOL) $(MODVOL)
+	@mkdir -p typescript
+	$(DOCKERENV) \
+		protoc -I.:vendor:vendor/googleapis/:vendor/github.com/gogo/protobuf/protobuf/ \
+			--ts_out=typescript $(PROTOSOURCES) \
+			--ts_opt=ts,apis.ts
 
 .PHONY: test
 test:
