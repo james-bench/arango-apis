@@ -556,8 +556,8 @@ export namespace arangodb {
           
           // Time from creation of the CA certificate to expiration.
           // This value cannot be changed after creation.
-          // google.protobuf.Duration
-          lifetime: google.protobuf.Duration;
+          // googleTypes.Duration
+          lifetime: googleTypes.Duration;
           
           // The creation timestamp of the CA certificate
           // This is a read-only value.
