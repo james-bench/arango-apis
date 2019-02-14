@@ -81,11 +81,12 @@ docs: $(CACHEVOL) $(MODVOL)
 # Generate API as typescript
 .PHONY: ts
 ts: $(CACHEVOL) $(MODVOL)
+	@rm -Rf typescript
 	@mkdir -p typescript
 	$(DOCKERENV) \
 		protoc -I.:vendor:vendor/googleapis/:vendor/github.com/gogo/protobuf/protobuf/ \
 			--ts_out=typescript $(PROTOSOURCES) \
-			--ts_opt=ts,apis.ts
+			--ts_opt=../..
 
 .PHONY: test
 test:
