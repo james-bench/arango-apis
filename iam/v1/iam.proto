@@ -78,7 +78,7 @@ service IAMService {
     // Delete a group
     // Required permissions:
     // - iam.group.delete on organization that owns the group
-    rpc DeleteGroup(Group) returns (common.v1.Empty) {
+    rpc DeleteGroup(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             delete: "/api/iam/v1/groups/{id}"
         };
@@ -164,7 +164,7 @@ service IAMService {
     // Delete a custom role
     // Required permissions:
     // - iam.role.delete on organization that owns the role
-    rpc DeleteRole(Role) returns (common.v1.Empty) {
+    rpc DeleteRole(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             delete: "/api/iam/v1/roles/{id}"
             body: "*"
