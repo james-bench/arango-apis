@@ -62,7 +62,7 @@ service DataService {
     // Once all their resources are removed the deployment itself is removed.
     // Required permissions:
     // - data.deployment.delete on the deployment
-    rpc DeleteDeployment(Deployment) returns (common.v1.Empty) {
+    rpc DeleteDeployment(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             delete: "/api/data/v1/deployments/{id}"
         };

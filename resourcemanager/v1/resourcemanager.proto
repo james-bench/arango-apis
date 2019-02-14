@@ -63,7 +63,7 @@ service ResourceManagerService {
     // Instead their is_deleted field is set to true.
     // Required permissions:
     // - resourcemanager.organization.delete on the organization
-    rpc DeleteOrganization(Organization) returns (common.v1.Empty) {
+    rpc DeleteOrganization(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             delete: "/api/resourcemanager/v1/organizations/{id}"
         };
@@ -158,7 +158,7 @@ service ResourceManagerService {
     // The authenticated user must be a member of the organization that owns the project.
     // Required permissions:
     // - resourcemanager.project.delete on the project
-    rpc DeleteProject(Project) returns (common.v1.Empty) {
+    rpc DeleteProject(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             delete: "/api/resourcemanager/v1/projects/{id}"
         };

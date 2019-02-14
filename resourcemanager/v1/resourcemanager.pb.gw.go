@@ -125,12 +125,8 @@ func request_ResourceManagerService_UpdateOrganization_0(ctx context.Context, ma
 
 }
 
-var (
-	filter_ResourceManagerService_DeleteOrganization_0 = &utilities.DoubleArray{Encoding: map[string]int{"id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
-)
-
 func request_ResourceManagerService_DeleteOrganization_0(ctx context.Context, marshaler runtime.Marshaler, client ResourceManagerServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Organization
+	var protoReq v1.IDOptions
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -149,10 +145,6 @@ func request_ResourceManagerService_DeleteOrganization_0(ctx context.Context, ma
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
-	}
-
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_ResourceManagerService_DeleteOrganization_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.DeleteOrganization(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -435,12 +427,8 @@ func request_ResourceManagerService_UpdateProject_0(ctx context.Context, marshal
 
 }
 
-var (
-	filter_ResourceManagerService_DeleteProject_0 = &utilities.DoubleArray{Encoding: map[string]int{"id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
-)
-
 func request_ResourceManagerService_DeleteProject_0(ctx context.Context, marshaler runtime.Marshaler, client ResourceManagerServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Project
+	var protoReq v1.IDOptions
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -459,10 +447,6 @@ func request_ResourceManagerService_DeleteProject_0(ctx context.Context, marshal
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
-	}
-
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_ResourceManagerService_DeleteProject_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.DeleteProject(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))

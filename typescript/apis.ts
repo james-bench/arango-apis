@@ -337,7 +337,7 @@ export namespace arangodb {
           // Instead their is_deleted field is set to true.
           // Required permissions:
           // - resourcemanager.organization.delete on the organization
-          async DeleteOrganization(req: arangodb.cloud.resourcemanager.v1.Organization): Promise<void> {
+          async DeleteOrganization(req: arangodb.cloud.common.v1.IDOptions): Promise<void> {
             const path = `/api/resourcemanager/v1/organizations/${req.id}`;
             const url = path + api.queryString(req, [`id`]);
             return api.delete(url, undefined);
@@ -424,7 +424,7 @@ export namespace arangodb {
           // The authenticated user must be a member of the organization that owns the project.
           // Required permissions:
           // - resourcemanager.project.delete on the project
-          async DeleteProject(req: arangodb.cloud.resourcemanager.v1.Project): Promise<void> {
+          async DeleteProject(req: arangodb.cloud.common.v1.IDOptions): Promise<void> {
             const path = `/api/resourcemanager/v1/projects/${req.id}`;
             const url = path + api.queryString(req, [`id`]);
             return api.delete(url, undefined);
@@ -626,7 +626,7 @@ export namespace arangodb {
           // and cannot be restored.
           // Required permissions:
           // - crypto.cacertificate.delete on the CA certificate
-          async DeleteCACertificate(req: arangodb.cloud.crypto.v1.CACertificate): Promise<void> {
+          async DeleteCACertificate(req: arangodb.cloud.common.v1.IDOptions): Promise<void> {
             const path = `/api/crypto/v1/cacertificates/${req.id}`;
             const url = path + api.queryString(req, [`id`]);
             return api.delete(url, undefined);
@@ -1070,7 +1070,7 @@ export namespace arangodb {
           // Delete a group
           // Required permissions:
           // - iam.group.delete on organization that owns the group
-          async DeleteGroup(req: arangodb.cloud.iam.v1.Group): Promise<void> {
+          async DeleteGroup(req: arangodb.cloud.common.v1.IDOptions): Promise<void> {
             const path = `/api/iam/v1/groups/${req.id}`;
             const url = path + api.queryString(req, [`id`]);
             return api.delete(url, undefined);
@@ -1148,7 +1148,7 @@ export namespace arangodb {
           // Delete a custom role
           // Required permissions:
           // - iam.role.delete on organization that owns the role
-          async DeleteRole(req: arangodb.cloud.iam.v1.Role): Promise<void> {
+          async DeleteRole(req: arangodb.cloud.common.v1.IDOptions): Promise<void> {
             const url = `/api/iam/v1/roles/${req.id}`;
             return api.delete(url, req);
           }
@@ -1462,7 +1462,7 @@ export namespace arangodb {
           // Once all their resources are removed the deployment itself is removed.
           // Required permissions:
           // - data.deployment.delete on the deployment
-          async DeleteDeployment(req: arangodb.cloud.data.v1.Deployment): Promise<void> {
+          async DeleteDeployment(req: arangodb.cloud.common.v1.IDOptions): Promise<void> {
             const path = `/api/data/v1/deployments/${req.id}`;
             const url = path + api.queryString(req, [`id`]);
             return api.delete(url, undefined);
