@@ -282,6 +282,8 @@ organization.
 | rejected_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The rejection timestamp of the invite This is a read-only value. |
 | user_id | [string](#string) |  | Identifier of the user that accepted or rejected this invite. This is a read-only value. |
 | created_by_id | [string](#string) |  | Identifier of the user that created this invite. |
+| organization_name | [string](#string) |  | Identifier of the organization that the human is invited to join. This is a read-only value. |
+| created_by_name | [string](#string) |  | Name of the user that created this invite. This is a read-only value. |
 
 
 
