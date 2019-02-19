@@ -443,7 +443,7 @@ export class ResourceManagerService {
   // Required permissions:
   // - resourcemanager.event.list on the organization identified by the given context ID
   async ListEvents(req: ListEventOptions): Promise<EventList> {
-    const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.options.context_id || '')}/events`;
+    const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent((req.options || {}).context_id || '')}/events`;
     const url = path + api.queryString(req, [`options.context_id`]);
     return api.get(url, undefined);
   }
