@@ -220,7 +220,7 @@ export class DataService {
   // Required permissions:
   // - data.deployment.list on the project identified by the given context ID
   async ListDeployments(req: arangodb_cloud_common_v1_ListOptions): Promise<DeploymentList> {
-    const path = `/api/data/v1/projects/${encodeURIComponent(req.context_id)}/deployments`;
+    const path = `/api/data/v1/projects/${encodeURIComponent(req.context_id || '')}/deployments`;
     const url = path + api.queryString(req, [`context_id`]);
     return api.get(url, undefined);
   }
@@ -229,7 +229,7 @@ export class DataService {
   // Required permissions:
   // - data.deployment.get on the deployment identified by the given ID
   async GetDeployment(req: arangodb_cloud_common_v1_IDOptions): Promise<Deployment> {
-    const path = `/api/data/v1/deployments/${encodeURIComponent(req.id)}`;
+    const path = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
@@ -238,7 +238,7 @@ export class DataService {
   // Required permissions:
   // - data.deployment.create on the project that owns the deployment
   async CreateDeployment(req: Deployment): Promise<Deployment> {
-    const url = `/api/data/v1/project/${encodeURIComponent(req.project_id)}/deployments`;
+    const url = `/api/data/v1/project/${encodeURIComponent(req.project_id || '')}/deployments`;
     return api.post(url, req);
   }
   
@@ -246,7 +246,7 @@ export class DataService {
   // Required permissions:
   // - data.deployment.update on the deployment
   async UpdateDeployment(req: Deployment): Promise<Deployment> {
-    const url = `/api/data/v1/deployments/${encodeURIComponent(req.id)}`;
+    const url = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}`;
     return api.patch(url, req);
   }
   
@@ -256,7 +256,7 @@ export class DataService {
   // Required permissions:
   // - data.deployment.delete on the deployment
   async DeleteDeployment(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
-    const path = `/api/data/v1/deployments/${encodeURIComponent(req.id)}`;
+    const path = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.delete(url, undefined);
   }
@@ -284,7 +284,7 @@ export class DataService {
   // Required permissions:
   // - data.limits.get on the requested project
   async GetServersSpecLimits(req: ServersSpecLimitsRequest): Promise<ServersSpecLimits> {
-    const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id)}/regions/${encodeURIComponent(req.region_id)}/limits`;
+    const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id || '')}/regions/${encodeURIComponent(req.region_id || '')}/limits`;
     const url = path + api.queryString(req, [`project_id`, `region_id`]);
     return api.get(url, undefined);
   }

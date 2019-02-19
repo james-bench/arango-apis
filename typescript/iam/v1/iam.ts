@@ -257,7 +257,7 @@ export class IAMService {
   // Required permissions:
   // - resourcemanager.organization.get on one of the organizations that the request user and authenticated user are both a member of
   async GetUser(req: arangodb_cloud_common_v1_IDOptions): Promise<User> {
-    const path = `/api/iam/v1/users/${encodeURIComponent(req.id)}`;
+    const path = `/api/iam/v1/users/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
@@ -266,7 +266,7 @@ export class IAMService {
   // Required permissions:
   // - iam.group.list on organization identified by given context ID.
   async ListGroups(req: arangodb_cloud_common_v1_ListOptions): Promise<GroupList> {
-    const path = `/api/iam/v1/organizations/${encodeURIComponent(req.context_id)}/groups`;
+    const path = `/api/iam/v1/organizations/${encodeURIComponent(req.context_id || '')}/groups`;
     const url = path + api.queryString(req, [`context_id`]);
     return api.get(url, undefined);
   }
@@ -275,7 +275,7 @@ export class IAMService {
   // Required permissions:
   // - iam.group.get on organization that owns the group
   async GetGroup(req: arangodb_cloud_common_v1_IDOptions): Promise<Group> {
-    const path = `/api/iam/v1/groups/${encodeURIComponent(req.id)}`;
+    const path = `/api/iam/v1/groups/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
@@ -284,7 +284,7 @@ export class IAMService {
   // Required permissions:
   // - iam.group.create on organization that owns the group
   async CreateGroup(req: Group): Promise<Group> {
-    const url = `/api/iam/v1/organizations/${encodeURIComponent(req.organization_id)}/groups`;
+    const url = `/api/iam/v1/organizations/${encodeURIComponent(req.organization_id || '')}/groups`;
     return api.post(url, req);
   }
   
@@ -292,7 +292,7 @@ export class IAMService {
   // Required permissions:
   // - iam.group.update on organization that owns the group
   async UpdateGroup(req: Group): Promise<Group> {
-    const url = `/api/iam/v1/groups/${encodeURIComponent(req.id)}`;
+    const url = `/api/iam/v1/groups/${encodeURIComponent(req.id || '')}`;
     return api.patch(url, req);
   }
   
@@ -300,7 +300,7 @@ export class IAMService {
   // Required permissions:
   // - iam.group.delete on organization that owns the group
   async DeleteGroup(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
-    const path = `/api/iam/v1/groups/${encodeURIComponent(req.id)}`;
+    const path = `/api/iam/v1/groups/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.delete(url, undefined);
   }
@@ -309,7 +309,7 @@ export class IAMService {
   // Required permissions:
   // - iam.group.get on organization that owns the group
   async ListGroupMembers(req: arangodb_cloud_common_v1_ListOptions): Promise<GroupMemberList> {
-    const path = `/api/iam/v1/groups/${encodeURIComponent(req.context_id)}/members`;
+    const path = `/api/iam/v1/groups/${encodeURIComponent(req.context_id || '')}/members`;
     const url = path + api.queryString(req, [`context_id`]);
     return api.get(url, undefined);
   }
@@ -318,7 +318,7 @@ export class IAMService {
   // Required permissions:
   // - iam.group.update on organization that owns the group
   async AddGroupMembers(req: GroupMembersRequest): Promise<Group> {
-    const url = `/api/iam/v1/groups/${encodeURIComponent(req.group_id)}/members`;
+    const url = `/api/iam/v1/groups/${encodeURIComponent(req.group_id || '')}/members`;
     return api.post(url, req);
   }
   
@@ -326,7 +326,7 @@ export class IAMService {
   // Required permissions:
   // - iam.group.update on organization that owns the group
   async DeleteGroupMembers(req: GroupMembersRequest): Promise<Group> {
-    const url = `/api/iam/v1/groups/${encodeURIComponent(req.group_id)}/members`;
+    const url = `/api/iam/v1/groups/${encodeURIComponent(req.group_id || '')}/members`;
     return api.delete(url, req);
   }
   
@@ -335,7 +335,7 @@ export class IAMService {
   // - iam.group.get on organization that owns the group, unless the requested user is identical to the authenticated user.
   // Note that if the identified group does not exist, no is returned.
   async IsMemberOfGroup(req: IsMemberOfGroupRequest): Promise<arangodb_cloud_common_v1_YesOrNo> {
-    const path = `/api/iam/v1/groups/${encodeURIComponent(req.group_id)}/members/${encodeURIComponent(req.user_id)}`;
+    const path = `/api/iam/v1/groups/${encodeURIComponent(req.group_id || '')}/members/${encodeURIComponent(req.user_id || '')}`;
     const url = path + api.queryString(req, [`group_id`, `user_id`]);
     return api.get(url, undefined);
   }
@@ -344,7 +344,7 @@ export class IAMService {
   // Required permissions:
   // - iam.role.list on organization identified by given context ID.
   async ListRoles(req: arangodb_cloud_common_v1_ListOptions): Promise<RoleList> {
-    const path = `/api/iam/v1/organizations/${encodeURIComponent(req.context_id)}/roles`;
+    const path = `/api/iam/v1/organizations/${encodeURIComponent(req.context_id || '')}/roles`;
     const url = path + api.queryString(req, [`context_id`]);
     return api.get(url, undefined);
   }
@@ -353,7 +353,7 @@ export class IAMService {
   // Required permissions:
   // - iam.role.get on organization that owns the role
   async GetRole(req: arangodb_cloud_common_v1_IDOptions): Promise<Role> {
-    const path = `/api/iam/v1/roles/${encodeURIComponent(req.id)}`;
+    const path = `/api/iam/v1/roles/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
@@ -362,7 +362,7 @@ export class IAMService {
   // Required permissions:
   // - iam.role.create on organization that owns the role
   async CreateRole(req: Role): Promise<Role> {
-    const url = `/api/iam/v1/organizations/${encodeURIComponent(req.organization_id)}/roles`;
+    const url = `/api/iam/v1/organizations/${encodeURIComponent(req.organization_id || '')}/roles`;
     return api.post(url, req);
   }
   
@@ -370,7 +370,7 @@ export class IAMService {
   // Required permissions:
   // - iam.role.update on organization that owns the role
   async UpdateRole(req: Role): Promise<Role> {
-    const url = `/api/iam/v1/roles/${encodeURIComponent(req.id)}`;
+    const url = `/api/iam/v1/roles/${encodeURIComponent(req.id || '')}`;
     return api.patch(url, req);
   }
   
@@ -378,7 +378,7 @@ export class IAMService {
   // Required permissions:
   // - iam.role.delete on organization that owns the role
   async DeleteRole(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
-    const url = `/api/iam/v1/roles/${encodeURIComponent(req.id)}`;
+    const url = `/api/iam/v1/roles/${encodeURIComponent(req.id || '')}`;
     return api.delete(url, req);
   }
   

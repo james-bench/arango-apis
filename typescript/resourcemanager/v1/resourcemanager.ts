@@ -319,7 +319,7 @@ export class ResourceManagerService {
   // Required permissions:
   // - None
   async GetOrganization(req: arangodb_cloud_common_v1_IDOptions): Promise<Organization> {
-    const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.id)}`;
+    const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
@@ -336,7 +336,7 @@ export class ResourceManagerService {
   // Required permissions:
   // - resourcemanager.organization.update on the organization
   async UpdateOrganization(req: Organization): Promise<Organization> {
-    const url = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.id)}`;
+    const url = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.id || '')}`;
     return api.patch(url, req);
   }
   
@@ -346,7 +346,7 @@ export class ResourceManagerService {
   // Required permissions:
   // - resourcemanager.organization.delete on the organization
   async DeleteOrganization(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
-    const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.id)}`;
+    const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.delete(url, undefined);
   }
@@ -355,7 +355,7 @@ export class ResourceManagerService {
   // Required permissions:
   // - resourcemanager.organization.get on the organization
   async ListOrganizationMembers(req: arangodb_cloud_common_v1_ListOptions): Promise<MemberList> {
-    const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.context_id)}/members`;
+    const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.context_id || '')}/members`;
     const url = path + api.queryString(req, [`context_id`]);
     return api.get(url, undefined);
   }
@@ -364,7 +364,7 @@ export class ResourceManagerService {
   // Required permissions:
   // - resourcemanager.organization.update on the organization
   async AddOrganizationMembers(req: OrganizationMembersRequest): Promise<void> {
-    const url = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.organization_id)}/members`;
+    const url = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.organization_id || '')}/members`;
     return api.post(url, req);
   }
   
@@ -372,7 +372,7 @@ export class ResourceManagerService {
   // Required permissions:
   // - resourcemanager.organization.update on the organization
   async DeleteOrganizationMembers(req: OrganizationMembersRequest): Promise<void> {
-    const url = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.organization_id)}/members`;
+    const url = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.organization_id || '')}/members`;
     return api.delete(url, req);
   }
   
@@ -382,7 +382,7 @@ export class ResourceManagerService {
   // - resourcemanager.organization.get on the organization, unless the requested user is identical to the authenticated user.
   // Note that if the identified user or organization does not exist, no is returned.
   async IsMemberOfOrganization(req: IsMemberOfOrganizationRequest): Promise<IsMemberOfOrganizationResponse> {
-    const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.organization_id)}/members/${encodeURIComponent(req.user_id)}`;
+    const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.organization_id || '')}/members/${encodeURIComponent(req.user_id || '')}`;
     const url = path + api.queryString(req, [`organization_id`, `user_id`]);
     return api.get(url, undefined);
   }
@@ -392,7 +392,7 @@ export class ResourceManagerService {
   // Required permissions:
   // - resourcemanager.project.list on the organization identified by the given context ID
   async ListProjects(req: arangodb_cloud_common_v1_ListOptions): Promise<ProjectList> {
-    const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.context_id)}/projects`;
+    const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.context_id || '')}/projects`;
     const url = path + api.queryString(req, [`context_id`]);
     return api.get(url, undefined);
   }
@@ -402,7 +402,7 @@ export class ResourceManagerService {
   // Required permissions:
   // - resourcemanager.project.get on the project identified by the given ID
   async GetProject(req: arangodb_cloud_common_v1_IDOptions): Promise<Project> {
-    const path = `/api/resourcemanager/v1/projects/${encodeURIComponent(req.id)}`;
+    const path = `/api/resourcemanager/v1/projects/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
@@ -412,7 +412,7 @@ export class ResourceManagerService {
   // Required permissions:
   // - resourcemanager.project.create on the organization that owns the project
   async CreateProject(req: Project): Promise<Project> {
-    const url = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.organization_id)}/projects`;
+    const url = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.organization_id || '')}/projects`;
     return api.post(url, req);
   }
   
@@ -421,7 +421,7 @@ export class ResourceManagerService {
   // Required permissions:
   // - resourcemanager.project.update on the project
   async UpdateProject(req: Project): Promise<Project> {
-    const url = `/api/resourcemanager/v1/projects/${encodeURIComponent(req.id)}`;
+    const url = `/api/resourcemanager/v1/projects/${encodeURIComponent(req.id || '')}`;
     return api.patch(url, req);
   }
   
@@ -433,7 +433,7 @@ export class ResourceManagerService {
   // Required permissions:
   // - resourcemanager.project.delete on the project
   async DeleteProject(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
-    const path = `/api/resourcemanager/v1/projects/${encodeURIComponent(req.id)}`;
+    const path = `/api/resourcemanager/v1/projects/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.delete(url, undefined);
   }
@@ -443,7 +443,7 @@ export class ResourceManagerService {
   // Required permissions:
   // - resourcemanager.event.list on the organization identified by the given context ID
   async ListEvents(req: ListEventOptions): Promise<EventList> {
-    const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.options.context_id)}/events`;
+    const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.options.context_id || '')}/events`;
     const url = path + api.queryString(req, [`options.context_id`]);
     return api.get(url, undefined);
   }
@@ -453,7 +453,7 @@ export class ResourceManagerService {
   // Required permissions:
   // - resourcemanager.organization-invite.list on the invite.
   async ListOrganizationInvites(req: arangodb_cloud_common_v1_ListOptions): Promise<OrganizationInviteList> {
-    const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.context_id)}/organization-invites`;
+    const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.context_id || '')}/organization-invites`;
     const url = path + api.queryString(req, [`context_id`]);
     return api.get(url, undefined);
   }
@@ -472,7 +472,7 @@ export class ResourceManagerService {
   // Required permissions:
   // - resourcemanager.organization-invite.get on the invite.
   async GetOrganizationInvite(req: arangodb_cloud_common_v1_IDOptions): Promise<OrganizationInvite> {
-    const path = `/api/resourcemanager/v1/organization-invites/${encodeURIComponent(req.id)}`;
+    const path = `/api/resourcemanager/v1/organization-invites/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
@@ -482,7 +482,7 @@ export class ResourceManagerService {
   // Required permissions:
   // - resourcemanager.organization-invite.create on the organization that the invite is for.
   async CreateOrganizationInvite(req: OrganizationInvite): Promise<OrganizationInvite> {
-    const url = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.organization_id)}/organization-invites`;
+    const url = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.organization_id || '')}/organization-invites`;
     return api.post(url, req);
   }
   
@@ -491,7 +491,7 @@ export class ResourceManagerService {
   // Required permissions:
   // - resourcemanager.organization-invite.delete on the invite
   async DeleteOrganizationInvite(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
-    const path = `/api/resourcemanager/v1/organization-invites/${encodeURIComponent(req.id)}`;
+    const path = `/api/resourcemanager/v1/organization-invites/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.delete(url, undefined);
   }
@@ -502,7 +502,7 @@ export class ResourceManagerService {
   // Required permissions:
   // - None
   async AcceptOrganizationInvite(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
-    const path = `/api/resourcemanager/v1/organization-invites/${encodeURIComponent(req.id)}/accept`;
+    const path = `/api/resourcemanager/v1/organization-invites/${encodeURIComponent(req.id || '')}/accept`;
     const url = path + api.queryString(req, [`id`]);
     return api.post(url, undefined);
   }
@@ -513,7 +513,7 @@ export class ResourceManagerService {
   // Required permissions:
   // - None
   async RejectOrganizationInvite(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
-    const path = `/api/resourcemanager/v1/organization-invites/${encodeURIComponent(req.id)}/reject`;
+    const path = `/api/resourcemanager/v1/organization-invites/${encodeURIComponent(req.id || '')}/reject`;
     const url = path + api.queryString(req, [`id`]);
     return api.post(url, undefined);
   }

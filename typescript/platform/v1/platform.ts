@@ -67,7 +67,7 @@ export class PlatformService {
   // Required permissions:
   // - None
   async GetProvider(req: arangodb_cloud_common_v1_IDOptions): Promise<Provider> {
-    const path = `/api/platform/v1/providers/${encodeURIComponent(req.id)}`;
+    const path = `/api/platform/v1/providers/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
@@ -76,7 +76,7 @@ export class PlatformService {
   // Required permissions:
   // - None
   async ListRegions(req: arangodb_cloud_common_v1_ListOptions): Promise<RegionList> {
-    const path = `/api/platform/v1/providers/${encodeURIComponent(req.context_id)}/regions`;
+    const path = `/api/platform/v1/providers/${encodeURIComponent(req.context_id || '')}/regions`;
     const url = path + api.queryString(req, [`context_id`]);
     return api.get(url, undefined);
   }
@@ -85,7 +85,7 @@ export class PlatformService {
   // Required permissions:
   // - None
   async GetRegion(req: arangodb_cloud_common_v1_IDOptions): Promise<Region> {
-    const path = `/api/platform/v1/regions/${encodeURIComponent(req.id)}`;
+    const path = `/api/platform/v1/regions/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
