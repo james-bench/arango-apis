@@ -218,7 +218,7 @@ service ResourceManagerService {
     // The authenticated user must be a member of the organization that the invite is for.
     // Required permissions:
     // - resourcemanager.organization-invite.delete on the invite
-    rpc DeleteOrganizationInvite(OrganizationInvite) returns (common.v1.Empty) {
+    rpc DeleteOrganizationInvite(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             delete: "/api/resourcemanager/v1/organization-invites/{id}"
         };
@@ -229,7 +229,7 @@ service ResourceManagerService {
     // the invite.
     // Required permissions:
     // - None
-    rpc AcceptOrganizationInvite(OrganizationInvite) returns (common.v1.Empty) {
+    rpc AcceptOrganizationInvite(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             post: "/api/resourcemanager/v1/organization-invites/{id}/accept"
         };
@@ -240,7 +240,7 @@ service ResourceManagerService {
     // the invite.
     // Required permissions:
     // - None
-    rpc RejectOrganizationInvite(OrganizationInvite) returns (common.v1.Empty) {
+    rpc RejectOrganizationInvite(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             post: "/api/resourcemanager/v1/organization-invites/{id}/reject"
         };

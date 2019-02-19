@@ -490,7 +490,7 @@ export class ResourceManagerService {
   // The authenticated user must be a member of the organization that the invite is for.
   // Required permissions:
   // - resourcemanager.organization-invite.delete on the invite
-  async DeleteOrganizationInvite(req: OrganizationInvite): Promise<void> {
+  async DeleteOrganizationInvite(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
     const path = `/api/resourcemanager/v1/organization-invites/${encodeURIComponent(req.id)}`;
     const url = path + api.queryString(req, [`id`]);
     return api.delete(url, undefined);
@@ -501,7 +501,7 @@ export class ResourceManagerService {
   // the invite.
   // Required permissions:
   // - None
-  async AcceptOrganizationInvite(req: OrganizationInvite): Promise<void> {
+  async AcceptOrganizationInvite(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
     const path = `/api/resourcemanager/v1/organization-invites/${encodeURIComponent(req.id)}/accept`;
     const url = path + api.queryString(req, [`id`]);
     return api.post(url, undefined);
@@ -512,7 +512,7 @@ export class ResourceManagerService {
   // the invite.
   // Required permissions:
   // - None
-  async RejectOrganizationInvite(req: OrganizationInvite): Promise<void> {
+  async RejectOrganizationInvite(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
     const path = `/api/resourcemanager/v1/organization-invites/${encodeURIComponent(req.id)}/reject`;
     const url = path + api.queryString(req, [`id`]);
     return api.post(url, undefined);
