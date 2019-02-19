@@ -16,7 +16,7 @@ export interface Empty {
 export interface IDOptions {
   // System identifier of the object to fetch.
   // string
-  id: string;
+  id?: string;
 }
 
 // Options for a list request.
@@ -24,26 +24,26 @@ export interface ListOptions {
   // Maximum number of items to return.
   // If not specified, all remaining items are returned.
   // number
-  page_size: number;
+  page_size?: number;
   
   // Page to start with (defaults to 0).
   // number
-  page: number;
+  page?: number;
   
   // Identifier of the resource in which the list request is made.
   // string
-  context_id: string;
+  context_id?: string;
 }
 
 // Options for a get-by-url request
 export interface URLOptions {
   // URL of the resource to fetch.
   // string
-  url: string;
+  url?: string;
 }
 
 // Response for single boolean.
 export interface YesOrNo {
   // boolean
-  result: boolean;
+  result?: boolean;
 }

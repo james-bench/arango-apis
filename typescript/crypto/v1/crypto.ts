@@ -16,61 +16,61 @@ export interface CACertificate {
   // System identifier of the CA certificate.
   // This is a read-only value.
   // string
-  id: string;
+  id?: string;
   
   // URL of this resource
   // This is a read-only value.
   // string
-  url: string;
+  url?: string;
   
   // Name of the CA certificate
   // string
-  name: string;
+  name?: string;
   
   // Description of the CA certificate
   // string
-  description: string;
+  description?: string;
   
   // Identifier of the project that owns this CA certificate.
   // This value cannot be changed after creation.
   // string
-  project_id: string;
+  project_id?: string;
   
   // Time from creation of the CA certificate to expiration.
   // This value cannot be changed after creation.
   // googleTypes.Duration
-  lifetime: googleTypes.Duration;
+  lifetime?: googleTypes.Duration;
   
   // The creation timestamp of the CA certificate
   // This is a read-only value.
   // googleTypes.Timestamp
-  created_at: googleTypes.Timestamp;
+  created_at?: googleTypes.Timestamp;
   
   // The deletion timestamp of the CA certificate
   // This is a read-only value.
   // googleTypes.Timestamp
-  deleted_at: googleTypes.Timestamp;
+  deleted_at?: googleTypes.Timestamp;
   
   // The expiration timestamp of the CA certificate
   // This is a read-only value.
   // googleTypes.Timestamp
-  expires_at: googleTypes.Timestamp;
+  expires_at?: googleTypes.Timestamp;
   
   // A PEM encoded representation of the public key of the CA certificate.
   // This is a read-only value.
   // string
-  certificate_pem: string;
+  certificate_pem?: string;
   
   // Set when this CA certificate is deleted.
   // This is a read-only value.
   // boolean
-  is_deleted: boolean;
+  is_deleted?: boolean;
 }
 
 // List of CACertificates.
 export interface CACertificateList {
   // CACertificate
-  items: CACertificate[];
+  items?: CACertificate[];
 }
 
 // CryptoService is the API used to configure various crypto objects.

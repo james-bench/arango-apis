@@ -16,101 +16,101 @@ export interface Event {
   // System identifier of the event.
   // This is a read-only value.
   // string
-  id: string;
+  id?: string;
   
   // URL of this resource
   // This is a read-only value and cannot be initialized.
   // string
-  url: string;
+  url?: string;
   
   // Identifier of the organization that owns this event.
   // This is a read-only value.
   // string
-  organization_id: string;
+  organization_id?: string;
   
   // Identifier of the subject of this event.
   // This is a read-only value.
   // If the subject of this event is an organization,
   // this value is a duplicate of organization_id.
   // string
-  subject_id: string;
+  subject_id?: string;
   
   // Type of the event.
   // string
-  type: string;
+  type?: string;
   
   // Payload of the event.
   // The fields used in the payload are specific
   // to the type of event.
   // Event_PayloadEntry
-  payload: Event_PayloadEntry[];
+  payload?: Event_PayloadEntry[];
   
   // The creation timestamp of the event
   // googleTypes.Timestamp
-  created_at: googleTypes.Timestamp;
+  created_at?: googleTypes.Timestamp;
   
   // URL of the subject of this event.
   // This is a read-only value.
   // string
-  subject_url: string;
+  subject_url?: string;
 }
 export interface Event_PayloadEntry {
   // string
-  key: string;
+  key?: string;
   
   // string
-  value: string;
+  value?: string;
 }
 
 // List of Events.
 export interface EventList {
   // Event
-  items: Event[];
+  items?: Event[];
 }
 
 // Request arguments for IsMemberOfOrganization.
 export interface IsMemberOfOrganizationRequest {
   // Identifier of the user
   // string
-  user_id: string;
+  user_id?: string;
   
   // Identifier of the organization
   // string
-  organization_id: string;
+  organization_id?: string;
 }
 
 // Response for IsMemberOfOrganization.
 export interface IsMemberOfOrganizationResponse {
   // Set if the requested user is a member of the requested organization.
   // boolean
-  member: boolean;
+  member?: boolean;
   
   // Set if the requested user is an owner of the requested organization.
   // boolean
-  owner: boolean;
+  owner?: boolean;
 }
 
 // Options for ListEvents
 export interface ListEventOptions {
   // Standard list options
   // arangodb.cloud.common.v1.ListOptions
-  options: arangodb_cloud_common_v1_ListOptions;
+  options?: arangodb_cloud_common_v1_ListOptions;
   
   // If set, filter on the subject_id of event
   // string
-  subject_ids: string[];
+  subject_ids?: string[];
   
   // If set, filter on the type of event
   // string
-  types: string[];
+  types?: string[];
   
   // If set, filter of events created after this timestamp
   // googleTypes.Timestamp
-  created_after: googleTypes.Timestamp;
+  created_after?: googleTypes.Timestamp;
   
   // If set, filter of events created before this timestamp
   // googleTypes.Timestamp
-  created_before: googleTypes.Timestamp;
+  created_before?: googleTypes.Timestamp;
 }
 
 // Member of an organization.
@@ -118,17 +118,17 @@ export interface ListEventOptions {
 export interface Member {
   // Identifier of the user
   // string
-  user_id: string;
+  user_id?: string;
   
   // Set if this user is owner of the organization
   // boolean
-  owner: boolean;
+  owner?: boolean;
 }
 
 // List of Members.
 export interface MemberList {
   // Member
-  items: Member[];
+  items?: Member[];
 }
 
 // An Organization is represents a real world organization such as a company.
@@ -136,33 +136,33 @@ export interface Organization {
   // System identifier of the organization.
   // This is a read-only value.
   // string
-  id: string;
+  id?: string;
   
   // URL of this resource
   // This is a read-only value and cannot be initialized.
   // string
-  url: string;
+  url?: string;
   
   // Name of the organization
   // string
-  name: string;
+  name?: string;
   
   // Description of the organization
   // string
-  description: string;
+  description?: string;
   
   // Set when this organization is deleted.
   // This is a read-only value.
   // boolean
-  is_deleted: boolean;
+  is_deleted?: boolean;
   
   // The creation timestamp of the organization
   // googleTypes.Timestamp
-  created_at: googleTypes.Timestamp;
+  created_at?: googleTypes.Timestamp;
   
   // The deletion timestamp of the organization
   // googleTypes.Timestamp
-  deleted_at: googleTypes.Timestamp;
+  deleted_at?: googleTypes.Timestamp;
 }
 
 // An OrganizationInvite represents an invite for a human to join an
@@ -171,91 +171,91 @@ export interface OrganizationInvite {
   // System identifier of the invite.
   // This is a read-only value.
   // string
-  id: string;
+  id?: string;
   
   // URL of this resource
   // This is a read-only value and cannot be initialized.
   // string
-  url: string;
+  url?: string;
   
   // Identifier of the organization that the human is invited to join.
   // This is a read-only value.
   // string
-  organization_id: string;
+  organization_id?: string;
   
   // Email address of the human who is invited.
   // string
-  email: string;
+  email?: string;
   
   // If set, the invitee accepted the invite.
   // This is a read-only value.
   // boolean
-  accepted: boolean;
+  accepted?: boolean;
   
   // If set, the invitee rejected the invite.
   // This is a read-only value.
   // boolean
-  rejected: boolean;
+  rejected?: boolean;
   
   // The creation timestamp of the invite
   // This is a read-only value.
   // googleTypes.Timestamp
-  created_at: googleTypes.Timestamp;
+  created_at?: googleTypes.Timestamp;
   
   // The acceptance timestamp of the invite
   // This is a read-only value.
   // googleTypes.Timestamp
-  accepted_at: googleTypes.Timestamp;
+  accepted_at?: googleTypes.Timestamp;
   
   // The rejection timestamp of the invite
   // This is a read-only value.
   // googleTypes.Timestamp
-  rejected_at: googleTypes.Timestamp;
+  rejected_at?: googleTypes.Timestamp;
   
   // Identifier of the user that accepted or rejected this invite.
   // This is a read-only value.
   // string
-  user_id: string;
+  user_id?: string;
   
   // Identifier of the user that created this invite.
   // string
-  created_by_id: string;
+  created_by_id?: string;
   
   // Identifier of the organization that the human is invited to join.
   // This is a read-only value.
   // string
-  organization_name: string;
+  organization_name?: string;
   
   // Name of the user that created this invite.
   // This is a read-only value.
   // string
-  created_by_name: string;
+  created_by_name?: string;
 }
 
 // List of OrganizationInvites.
 export interface OrganizationInviteList {
   // OrganizationInvite
-  items: OrganizationInvite[];
+  items?: OrganizationInvite[];
 }
 
 // List of organizations.
 export interface OrganizationList {
   // Organization
-  items: Organization[];
+  items?: Organization[];
 }
 
 // Request arguments for Add/DeleteOrganizationMembers.
 export interface OrganizationMembersRequest {
   // Identifier of the organization to add/remove a user from
   // string
-  organization_id: string;
+  organization_id?: string;
   
   // Users to add/remove.
   // For every user, an owner flag is provided as well.
   // If you add an existing user, the owner flag or the add request
   // will overwrite the value of the existing owner flag.
   // MemberList
-  members: MemberList;
+  members?: MemberList;
 }
 
 // A Project is represents a unit within an organization such as a department.
@@ -264,43 +264,43 @@ export interface Project {
   // This is a read-only value.
   // It can be set when creating the project.
   // string
-  id: string;
+  id?: string;
   
   // URL of this resource
   // This is a read-only value and cannot be initialized.
   // string
-  url: string;
+  url?: string;
   
   // Name of the project
   // string
-  name: string;
+  name?: string;
   
   // Description of the project
   // string
-  description: string;
+  description?: string;
   
   // Identifier of the organization that owns this project.
   // This is a read-only value.
   // string
-  organization_id: string;
+  organization_id?: string;
   
   // Set when this project is deleted
   // boolean
-  is_deleted: boolean;
+  is_deleted?: boolean;
   
   // The creation timestamp of the project
   // googleTypes.Timestamp
-  created_at: googleTypes.Timestamp;
+  created_at?: googleTypes.Timestamp;
   
   // The deletion timestamp of the project
   // googleTypes.Timestamp
-  deleted_at: googleTypes.Timestamp;
+  deleted_at?: googleTypes.Timestamp;
 }
 
 // List of Projects.
 export interface ProjectList {
   // Project
-  items: Project[];
+  items?: Project[];
 }
 
 // ResourceManagerService is the API used to configure basic resource objects.

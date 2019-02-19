@@ -18,105 +18,105 @@ export interface Group {
   // System identifier of the group.
   // This is a read-only value.
   // string
-  id: string;
+  id?: string;
   
   // Identifier of the organization that owns this group.
   // string
-  organization_id: string;
+  organization_id?: string;
   
   // Name of the group
   // string
-  name: string;
+  name?: string;
   
   // Description of the group
   // string
-  description: string;
+  description?: string;
   
   // The creation timestamp of the group
   // googleTypes.Timestamp
-  created_at: googleTypes.Timestamp;
+  created_at?: googleTypes.Timestamp;
   
   // The deletion timestamp of the group
   // googleTypes.Timestamp
-  deleted_at: googleTypes.Timestamp;
+  deleted_at?: googleTypes.Timestamp;
   
   // Set when this organization is deleted.
   // This is a read-only value.
   // boolean
-  is_deleted: boolean;
+  is_deleted?: boolean;
   
   // URL of this resource
   // This is a read-only value and cannot be initialized.
   // string
-  url: string;
+  url?: string;
   
   // Set if this group is virtual and managed by the system.
   // This is a read-only value.
   // boolean
-  is_virtual: boolean;
+  is_virtual?: boolean;
 }
 
 // List of groups.
 export interface GroupList {
   // Group
-  items: Group[];
+  items?: Group[];
 }
 
 // List of group members (user ID's)
 export interface GroupMemberList {
   // List of ID's of users that are member of the group.
   // string
-  items: string[];
+  items?: string[];
 }
 
 // Request arguments for Add/DeleteGroupMembers.
 export interface GroupMembersRequest {
   // ID of the group to add/remove members to/from.
   // string
-  group_id: string;
+  group_id?: string;
   
   // ID's of users to add/remove to/from the group.
   // string
-  user_ids: string[];
+  user_ids?: string[];
 }
 
 // Request arguments for HasPermissionsRequest.
 export interface HasPermissionsRequest {
   // URL of the resource to query permissions for.
   // string
-  url: string;
+  url?: string;
   
   // The list of permissions that are required.
   // string
-  permissions: string[];
+  permissions?: string[];
 }
 
 // Request arguments for IsMemberOfGroup.
 export interface IsMemberOfGroupRequest {
   // Identifier of the user
   // string
-  user_id: string;
+  user_id?: string;
   
   // Identifier of the group
   // string
-  group_id: string;
+  group_id?: string;
 }
 
 // List of permissions.
 export interface PermissionList {
   // string
-  items: string[];
+  items?: string[];
 }
 
 // Policy bindings members to roles for access to a resource.
 export interface Policy {
   // URL of the resource to which this policy applies.
   // string
-  resource_url: string;
+  resource_url?: string;
   
   // Role bindings to apply to the resource.
   // RoleBinding
-  bindings: RoleBinding[];
+  bindings?: RoleBinding[];
 }
 
 // A role is a list of permissions.
@@ -125,47 +125,47 @@ export interface Role {
   // System identifier of the role.
   // This is a read-only value.
   // string
-  id: string;
+  id?: string;
   
   // Identifier of the organization that owns this role.
   // This value is undefined for predefined roles.
   // string
-  organization_id: string;
+  organization_id?: string;
   
   // Name of the role
   // string
-  name: string;
+  name?: string;
   
   // Description of the role
   // string
-  description: string;
+  description?: string;
   
   // Permissions to grant when this role is bound.
   // string
-  permissions: string[];
+  permissions?: string[];
   
   // Set if this role is predefined.
   // This is a read-only value.
   // boolean
-  is_predefined: boolean;
+  is_predefined?: boolean;
   
   // The creation timestamp of the role
   // googleTypes.Timestamp
-  created_at: googleTypes.Timestamp;
+  created_at?: googleTypes.Timestamp;
   
   // The deletion timestamp of the role
   // googleTypes.Timestamp
-  deleted_at: googleTypes.Timestamp;
+  deleted_at?: googleTypes.Timestamp;
   
   // Set when this organization is deleted.
   // This is a read-only value.
   // boolean
-  is_deleted: boolean;
+  is_deleted?: boolean;
   
   // URL of this resource
   // This is a read-only value and cannot be initialized.
   // string
-  url: string;
+  url?: string;
 }
 
 // RoleBinding binds a Role to a member.
@@ -173,35 +173,35 @@ export interface RoleBinding {
   // System identifier of the role-binding.
   // This is a read-only value.
   // string
-  id: string;
+  id?: string;
   
   // Identifier of the member to bind a role to.
   // Member ID is formatted as:
   // - user:<user_id>
   // - group:<group_id>
   // string
-  member_id: string;
+  member_id?: string;
   
   // Identifier of the Role to grant to member
   // string
-  role_id: string;
+  role_id?: string;
 }
 
 // Request arguments for Add/DeleteRoleBindings.
 export interface RoleBindingsRequest {
   // URL of the resource to add/remove policy binding to/from.
   // string
-  resource_url: string;
+  resource_url?: string;
   
   // Role bindings to add/remove to the policy.
   // RoleBinding
-  bindings: RoleBinding[];
+  bindings?: RoleBinding[];
 }
 
 // List of roles.
 export interface RoleList {
   // Role
-  items: Role[];
+  items?: Role[];
 }
 
 // User represents an actual person.
@@ -209,37 +209,37 @@ export interface User {
   // Identifier of the user.
   // This is a read-only value.
   // string
-  id: string;
+  id?: string;
   
   // Primary email address of the user.
   // All emails send to this user will use this address.
   // string
-  email: string;
+  email?: string;
   
   // Name of the user.
   // This may be empty if not filled out by the user.
   // string
-  name: string;
+  name?: string;
   
   // Given name of the user.
   // This may be empty if not filled out by the user.
   // string
-  given_name: string;
+  given_name?: string;
   
   // Family name of the user.
   // This may be empty if not filled out by the user.
   // string
-  family_name: string;
+  family_name?: string;
   
   // The creation timestamp of the user.
   // googleTypes.Timestamp
-  created_at: googleTypes.Timestamp;
+  created_at?: googleTypes.Timestamp;
   
   // Additional email addresses of the user.
   // This will be filled in when the authentication provided
   // knows multiple email addresses for the user.
   // string
-  additional_emails: string[];
+  additional_emails?: string[];
 }
 
 // IAMService is the API used to configure IAM objects.

@@ -14,42 +14,42 @@ import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../commo
 export interface Provider {
   // System identifier of the provider.
   // string
-  id: string;
+  id?: string;
   
   // Name of the provider
   // string
-  name: string;
+  name?: string;
 }
 
 // List of providers.
 export interface ProviderList {
   // Provider
-  items: Provider[];
+  items?: Provider[];
 }
 
 // Region represents a geographical region in which deployments are run.
 export interface Region {
   // System identifier of the region.
   // string
-  id: string;
+  id?: string;
   
   // Identifier of the provider that hosts this region.
   // string
-  provider_id: string;
+  provider_id?: string;
   
   // Location of the region
   // string
-  location: string;
+  location?: string;
   
   // Is this region available for creating new deployments?
   // boolean
-  available: boolean;
+  available?: boolean;
 }
 
 // List of regions.
 export interface RegionList {
   // Region
-  items: Region[];
+  items?: Region[];
 }
 
 // PlatformService is the API used to query for cloud provider & regional info.
