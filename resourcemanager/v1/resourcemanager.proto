@@ -426,6 +426,12 @@ message OrganizationInvite {
     string user_id = 10;
     // Identifier of the user that created this invite.
     string created_by_id = 11;
+    // Identifier of the organization that the human is invited to join.
+    // This is a read-only value.
+    string organization_name = 12;
+    // Name of the user that created this invite.
+    // This is a read-only value.
+    string created_by_name = 13;
 }
 
 // List of OrganizationInvites.

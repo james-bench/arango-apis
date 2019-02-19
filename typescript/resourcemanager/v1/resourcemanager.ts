@@ -220,6 +220,16 @@ export interface OrganizationInvite {
   // Identifier of the user that created this invite.
   // string
   created_by_id: string;
+  
+  // Identifier of the organization that the human is invited to join.
+  // This is a read-only value.
+  // string
+  organization_name: string;
+  
+  // Name of the user that created this invite.
+  // This is a read-only value.
+  // string
+  created_by_name: string;
 }
 
 // List of OrganizationInvites.
