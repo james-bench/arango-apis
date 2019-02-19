@@ -14,42 +14,42 @@ import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../commo
 export interface Provider {
   // System identifier of the provider.
   // string
-  id: string;
+  id?: string;
   
   // Name of the provider
   // string
-  name: string;
+  name?: string;
 }
 
 // List of providers.
 export interface ProviderList {
   // Provider
-  items: Provider[];
+  items?: Provider[];
 }
 
 // Region represents a geographical region in which deployments are run.
 export interface Region {
   // System identifier of the region.
   // string
-  id: string;
+  id?: string;
   
   // Identifier of the provider that hosts this region.
   // string
-  provider_id: string;
+  provider_id?: string;
   
   // Location of the region
   // string
-  location: string;
+  location?: string;
   
   // Is this region available for creating new deployments?
   // boolean
-  available: boolean;
+  available?: boolean;
 }
 
 // List of regions.
 export interface RegionList {
   // Region
-  items: Region[];
+  items?: Region[];
 }
 
 // PlatformService is the API used to query for cloud provider & regional info.
@@ -67,7 +67,7 @@ export class PlatformService {
   // Required permissions:
   // - None
   async GetProvider(req: arangodb_cloud_common_v1_IDOptions): Promise<Provider> {
-    const path = `/api/platform/v1/providers/${encodeURIComponent(req.id)}`;
+    const path = `/api/platform/v1/providers/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
@@ -76,7 +76,7 @@ export class PlatformService {
   // Required permissions:
   // - None
   async ListRegions(req: arangodb_cloud_common_v1_ListOptions): Promise<RegionList> {
-    const path = `/api/platform/v1/providers/${encodeURIComponent(req.context_id)}/regions`;
+    const path = `/api/platform/v1/providers/${encodeURIComponent(req.context_id || '')}/regions`;
     const url = path + api.queryString(req, [`context_id`]);
     return api.get(url, undefined);
   }
@@ -85,7 +85,7 @@ export class PlatformService {
   // Required permissions:
   // - None
   async GetRegion(req: arangodb_cloud_common_v1_IDOptions): Promise<Region> {
-    const path = `/api/platform/v1/regions/${encodeURIComponent(req.id)}`;
+    const path = `/api/platform/v1/regions/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }

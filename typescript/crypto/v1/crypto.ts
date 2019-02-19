@@ -16,61 +16,61 @@ export interface CACertificate {
   // System identifier of the CA certificate.
   // This is a read-only value.
   // string
-  id: string;
+  id?: string;
   
   // URL of this resource
   // This is a read-only value.
   // string
-  url: string;
+  url?: string;
   
   // Name of the CA certificate
   // string
-  name: string;
+  name?: string;
   
   // Description of the CA certificate
   // string
-  description: string;
+  description?: string;
   
   // Identifier of the project that owns this CA certificate.
   // This value cannot be changed after creation.
   // string
-  project_id: string;
+  project_id?: string;
   
   // Time from creation of the CA certificate to expiration.
   // This value cannot be changed after creation.
   // googleTypes.Duration
-  lifetime: googleTypes.Duration;
+  lifetime?: googleTypes.Duration;
   
   // The creation timestamp of the CA certificate
   // This is a read-only value.
   // googleTypes.Timestamp
-  created_at: googleTypes.Timestamp;
+  created_at?: googleTypes.Timestamp;
   
   // The deletion timestamp of the CA certificate
   // This is a read-only value.
   // googleTypes.Timestamp
-  deleted_at: googleTypes.Timestamp;
+  deleted_at?: googleTypes.Timestamp;
   
   // The expiration timestamp of the CA certificate
   // This is a read-only value.
   // googleTypes.Timestamp
-  expires_at: googleTypes.Timestamp;
+  expires_at?: googleTypes.Timestamp;
   
   // A PEM encoded representation of the public key of the CA certificate.
   // This is a read-only value.
   // string
-  certificate_pem: string;
+  certificate_pem?: string;
   
   // Set when this CA certificate is deleted.
   // This is a read-only value.
   // boolean
-  is_deleted: boolean;
+  is_deleted?: boolean;
 }
 
 // List of CACertificates.
 export interface CACertificateList {
   // CACertificate
-  items: CACertificate[];
+  items?: CACertificate[];
 }
 
 // CryptoService is the API used to configure various crypto objects.
@@ -79,7 +79,7 @@ export class CryptoService {
   // Required permissions:
   // - crypto.cacertificate.list on the project identified by the given context ID
   async ListCACertificates(req: arangodb_cloud_common_v1_ListOptions): Promise<CACertificateList> {
-    const path = `/api/crypto/v1/projects/${encodeURIComponent(req.context_id)}/cacertificates`;
+    const path = `/api/crypto/v1/projects/${encodeURIComponent(req.context_id || '')}/cacertificates`;
     const url = path + api.queryString(req, [`context_id`]);
     return api.get(url, undefined);
   }
@@ -88,7 +88,7 @@ export class CryptoService {
   // Required permissions:
   // - crypto.cacertificate.get on the CA certificate identified by the given ID
   async GetCACertificate(req: arangodb_cloud_common_v1_IDOptions): Promise<CACertificate> {
-    const path = `/api/crypto/v1/cacertificates/${encodeURIComponent(req.id)}`;
+    const path = `/api/crypto/v1/cacertificates/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
@@ -97,7 +97,7 @@ export class CryptoService {
   // Required permissions:
   // - crypto.cacertificate.create on the project that owns the CA certificate
   async CreateCACertificate(req: CACertificate): Promise<CACertificate> {
-    const url = `/api/crypto/v1/projects/${encodeURIComponent(req.project_id)}/cacertificates`;
+    const url = `/api/crypto/v1/projects/${encodeURIComponent(req.project_id || '')}/cacertificates`;
     return api.post(url, req);
   }
   
@@ -105,7 +105,7 @@ export class CryptoService {
   // Required permissions:
   // - crypto.cacertificate.update on the CA certificate
   async UpdateCACertificate(req: CACertificate): Promise<CACertificate> {
-    const url = `/api/crypto/v1/cacertificates/${encodeURIComponent(req.id)}`;
+    const url = `/api/crypto/v1/cacertificates/${encodeURIComponent(req.id || '')}`;
     return api.patch(url, req);
   }
   
@@ -116,7 +116,7 @@ export class CryptoService {
   // Required permissions:
   // - crypto.cacertificate.delete on the CA certificate
   async DeleteCACertificate(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
-    const path = `/api/crypto/v1/cacertificates/${encodeURIComponent(req.id)}`;
+    const path = `/api/crypto/v1/cacertificates/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.delete(url, undefined);
   }

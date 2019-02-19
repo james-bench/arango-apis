@@ -16,45 +16,45 @@ export interface Deployment {
   // System identifier of the deployment.
   // This is a read-only value.
   // string
-  id: string;
+  id?: string;
   
   // URL of this resource
   // This is a read-only value.
   // string
-  url: string;
+  url?: string;
   
   // Name of the deployment
   // string
-  name: string;
+  name?: string;
   
   // Description of the deployment
   // string
-  description: string;
+  description?: string;
   
   // Identifier of the project that owns this deployment.
   // After creation, this value cannot be changed.
   // string
-  project_id: string;
+  project_id?: string;
   
   // Identifier of the region in which the deployment is created.
   // After creation, this value cannot be changed.
   // string
-  region_id: string;
+  region_id?: string;
   
   // The creation timestamp of the deployment
   // This is a read-only value.
   // googleTypes.Timestamp
-  created_at: googleTypes.Timestamp;
+  created_at?: googleTypes.Timestamp;
   
   // The deletion timestamp of the deployment
   // This is a read-only value.
   // googleTypes.Timestamp
-  deleted_at: googleTypes.Timestamp;
+  deleted_at?: googleTypes.Timestamp;
   
   // Set when this deployment is deleted.
   // This is a read-only value.
   // boolean
-  is_deleted: boolean;
+  is_deleted?: boolean;
   
   // ArangoDB version to use for this deployment.
   // See Version.version.
@@ -67,16 +67,16 @@ export interface Deployment {
   // Any attempt to change to a version that is not in the
   // list of available versions is considered an invalid request.
   // string
-  version: string;
+  version?: string;
   
   // Deployment_CertificateSpec
-  certificates: Deployment_CertificateSpec;
+  certificates?: Deployment_CertificateSpec;
   
   // Deployment_ServersSpec
-  servers: Deployment_ServersSpec;
+  servers?: Deployment_ServersSpec;
   
   // Deployment_Status
-  status: Deployment_Status;
+  status?: Deployment_Status;
 }
 export interface Deployment_CertificateSpec {
   // Identifier of the CACertificate used to sign TLS certificates for the deployment.
@@ -85,32 +85,32 @@ export interface Deployment_CertificateSpec {
   // If you change this value after the creation of the deployment a complete
   // rotation of the deployment is required, which will result in some downtime.
   // string
-  ca_certificate_id: string;
+  ca_certificate_id?: string;
   
   // Zero or more DNS names to include in the TLS certificate of the deployment.
   // string
-  alternate_dns_names: string[];
+  alternate_dns_names?: string[];
 }
 export interface Deployment_ServersSpec {
   // Number of coordinators of the deployment
   // number
-  coordinators: number;
+  coordinators?: number;
   
   // Amount of memory (in GB) to allocate for coordinators.
   // number
-  coordinator_memory_size: number;
+  coordinator_memory_size?: number;
   
   // Number of dbservers of the deployment
   // number
-  dbservers: number;
+  dbservers?: number;
   
   // Amount of memory (in GB) to allocate for dbservers.
   // number
-  dbserver_memory_size: number;
+  dbserver_memory_size?: number;
   
   // Amount of disk space (in GB) to allocate for dbservers.
   // number
-  dbserver_disk_size: number;
+  dbserver_disk_size?: number;
 }
 
 // Status of the deployment
@@ -119,99 +119,99 @@ export interface Deployment_Status {
   // Endpoint URL used to reach the deployment
   // This value will be empty during the creation of the deployment.
   // string
-  endpoint: string;
+  endpoint?: string;
   
   // Human readable description of the status of the deployment.
   // string
-  description: string;
+  description?: string;
   
   // Set once the deployment has been created.
   // boolean
-  created: boolean;
+  created?: boolean;
   
   // Set if the deployment is ready to be used.
   // If the deployment has downtime (e.g. because of changing a CA certificate)
   // this will go to false until the downtime is over.
   // boolean
-  ready: boolean;
+  ready?: boolean;
   
   // Set if the deployment is being upgraded.
   // boolean
-  upgrading: boolean;
+  upgrading?: boolean;
   
   // Versions of running servers
   // string
-  server_versions: string[];
+  server_versions?: string[];
 }
 
 // List of Deployments.
 export interface DeploymentList {
   // Deployment
-  items: Deployment[];
+  items?: Deployment[];
 }
 
 // Limits of allowed values for fields of Deployment.ServersSpec.
 export interface ServersSpecLimits {
   // Limits for the number of coordinators of the deployment
   // ServersSpecLimits_Limits
-  coordinators: ServersSpecLimits_Limits;
+  coordinators?: ServersSpecLimits_Limits;
   
   // Possible values for the amount of memory (in GB) to allocate
   // for coordinators.
   // ServersSpecLimits_Limits
-  coordinator_memory_size: ServersSpecLimits_Limits;
+  coordinator_memory_size?: ServersSpecLimits_Limits;
   
   // Limits for the number of dbservers of the deployment
   // ServersSpecLimits_Limits
-  dbservers: ServersSpecLimits_Limits;
+  dbservers?: ServersSpecLimits_Limits;
   
   // Possible values for the amount of memory (in GB) to allocate
   // for dbservers.
   // ServersSpecLimits_Limits
-  dbserver_memory_size: ServersSpecLimits_Limits;
+  dbserver_memory_size?: ServersSpecLimits_Limits;
   
   // Amount of disk space (in GB) to allocate for dbservers.
   // ServersSpecLimits_Limits
-  dbserver_disk_size: ServersSpecLimits_Limits;
+  dbserver_disk_size?: ServersSpecLimits_Limits;
 }
 export interface ServersSpecLimits_Limits {
   // Minimum value
   // number
-  min: number;
+  min?: number;
   
   // Maximum value
   // number
-  max: number;
+  max?: number;
   
   // Set of allowed values.
   // If this field is non-empty, only one of these values
   // is allowed.
   // number
-  allowed_values: number[];
+  allowed_values?: number[];
 }
 
 // Request arguments for GetServersSpecLimits
 export interface ServersSpecLimitsRequest {
   // Identifier of project that will own a deployment.
   // string
-  project_id: string;
+  project_id?: string;
   
   // Identifier of a region in which a deployment will be created.
   // string
-  region_id: string;
+  region_id?: string;
 }
 
 // Version of an ArangoDB release
 export interface Version {
   // Version in the format of major.minor.patch
   // string
-  version: string;
+  version?: string;
 }
 
 // List of Versions.
 export interface VersionList {
   // Version
-  items: Version[];
+  items?: Version[];
 }
 
 // DataService is the API used to configure data objects.
@@ -220,7 +220,7 @@ export class DataService {
   // Required permissions:
   // - data.deployment.list on the project identified by the given context ID
   async ListDeployments(req: arangodb_cloud_common_v1_ListOptions): Promise<DeploymentList> {
-    const path = `/api/data/v1/projects/${encodeURIComponent(req.context_id)}/deployments`;
+    const path = `/api/data/v1/projects/${encodeURIComponent(req.context_id || '')}/deployments`;
     const url = path + api.queryString(req, [`context_id`]);
     return api.get(url, undefined);
   }
@@ -229,7 +229,7 @@ export class DataService {
   // Required permissions:
   // - data.deployment.get on the deployment identified by the given ID
   async GetDeployment(req: arangodb_cloud_common_v1_IDOptions): Promise<Deployment> {
-    const path = `/api/data/v1/deployments/${encodeURIComponent(req.id)}`;
+    const path = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
@@ -238,7 +238,7 @@ export class DataService {
   // Required permissions:
   // - data.deployment.create on the project that owns the deployment
   async CreateDeployment(req: Deployment): Promise<Deployment> {
-    const url = `/api/data/v1/project/${encodeURIComponent(req.project_id)}/deployments`;
+    const url = `/api/data/v1/project/${encodeURIComponent(req.project_id || '')}/deployments`;
     return api.post(url, req);
   }
   
@@ -246,7 +246,7 @@ export class DataService {
   // Required permissions:
   // - data.deployment.update on the deployment
   async UpdateDeployment(req: Deployment): Promise<Deployment> {
-    const url = `/api/data/v1/deployments/${encodeURIComponent(req.id)}`;
+    const url = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}`;
     return api.patch(url, req);
   }
   
@@ -256,7 +256,7 @@ export class DataService {
   // Required permissions:
   // - data.deployment.delete on the deployment
   async DeleteDeployment(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
-    const path = `/api/data/v1/deployments/${encodeURIComponent(req.id)}`;
+    const path = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.delete(url, undefined);
   }
@@ -284,7 +284,7 @@ export class DataService {
   // Required permissions:
   // - data.limits.get on the requested project
   async GetServersSpecLimits(req: ServersSpecLimitsRequest): Promise<ServersSpecLimits> {
-    const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id)}/regions/${encodeURIComponent(req.region_id)}/limits`;
+    const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id || '')}/regions/${encodeURIComponent(req.region_id || '')}/limits`;
     const url = path + api.queryString(req, [`project_id`, `region_id`]);
     return api.get(url, undefined);
   }
