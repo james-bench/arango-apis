@@ -213,7 +213,7 @@ message ServersSpecPreset {
     // This is a read-only value.
     bool is_default = 2;
     // The ServersSpec associated for this name
-    Deployment.ServersSpec servers = 2;
+    Deployment.ServersSpec servers = 3;
 }
 
 // List of ServersSpecPreset.
