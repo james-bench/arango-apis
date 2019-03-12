@@ -190,8 +190,42 @@ export interface ServersSpecLimits_Limits {
   allowed_values?: number[];
 }
 
-// Request arguments for GetServersSpecLimits
+// Request arguments for ListServersSpecLimits
 export interface ServersSpecLimitsRequest {
+  // Identifier of project that will own a deployment.
+  // string
+  project_id?: string;
+  
+  // Identifier of a region in which a deployment will be created.
+  // string
+  region_id?: string;
+}
+
+// Specification of a ServersSpecPreset, which can be used to initialize a deployment.servers
+export interface ServersSpecPreset {
+  // Name of the ServersSpecPreset
+  // This is a read-only value.
+  // string
+  name?: string;
+  
+  // Set when this preset is the default.
+  // This is a read-only value.
+  // boolean
+  is_default?: boolean;
+  
+  // The ServersSpec associated for this name
+  // Deployment_ServersSpec
+  servers?: Deployment_ServersSpec;
+}
+
+// List of ServersSpecPreset.
+export interface ServersSpecPresetList {
+  // ServersSpecPreset
+  items?: ServersSpecPreset[];
+}
+
+// Request arguments for ListServersSpecPresets and GetDefaultServersSpecPreset
+export interface ServersSpecPresetsRequest {
   // Identifier of project that will own a deployment.
   // string
   project_id?: string;
@@ -285,6 +319,16 @@ export class DataService {
   // - data.limits.get on the requested project
   async GetServersSpecLimits(req: ServersSpecLimitsRequest): Promise<ServersSpecLimits> {
     const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id || '')}/regions/${encodeURIComponent(req.region_id || '')}/limits`;
+    const url = path + api.queryString(req, [`project_id`, `region_id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch the presets for server specifications for deployments
+  // owned by the given projected, created in the given region.
+  // Required permissions:
+  // - data.presets.list on the requested project
+  async ListServersSpecPresets(req: ServersSpecPresetsRequest): Promise<ServersSpecPresetList> {
+    const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id || '')}/regions/${encodeURIComponent(req.region_id || '')}/presets`;
     const url = path + api.queryString(req, [`project_id`, `region_id`]);
     return api.get(url, undefined);
   }

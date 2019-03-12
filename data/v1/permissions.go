@@ -29,3 +29,10 @@ const (
 	// PermissionLimitsGet is needed for fetching server spec limits in a project
 	PermissionLimitsGet = "data.limits.get"
 )
+
+const (
+	// ServerSpecPresets permissions
+
+	// PermissionPresetsList is needed for listing server spec presets in a project
+	PermissionPresetsList = "data.presets.list"
+)
