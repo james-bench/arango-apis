@@ -85,6 +85,9 @@
     - [ServersSpecLimits](#arangodb.cloud.data.v1.ServersSpecLimits)
     - [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits)
     - [ServersSpecLimitsRequest](#arangodb.cloud.data.v1.ServersSpecLimitsRequest)
+    - [ServersSpecPreset](#arangodb.cloud.data.v1.ServersSpecPreset)
+    - [ServersSpecPresetList](#arangodb.cloud.data.v1.ServersSpecPresetList)
+    - [ServersSpecPresetsRequest](#arangodb.cloud.data.v1.ServersSpecPresetsRequest)
     - [Version](#arangodb.cloud.data.v1.Version)
     - [VersionList](#arangodb.cloud.data.v1.VersionList)
   
@@ -1082,7 +1085,55 @@ Limits of allowed values for fields of Deployment.ServersSpec.
 <a name="arangodb.cloud.data.v1.ServersSpecLimitsRequest"></a>
 
 ### ServersSpecLimitsRequest
-Request arguments for GetServersSpecLimits
+Request arguments for ListServersSpecLimits
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| project_id | [string](#string) |  | Identifier of project that will own a deployment. |
+| region_id | [string](#string) |  | Identifier of a region in which a deployment will be created. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.ServersSpecPreset"></a>
+
+### ServersSpecPreset
+Specification of a ServersSpecPreset, which can be used to initialize a deployment.servers
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| name | [string](#string) |  | Name of the ServersSpecPreset This is a read-only value. |
+| is_default | [bool](#bool) |  | Set when this preset is the default. This is a read-only value. |
+| servers | [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  | The ServersSpec associated for this name |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.ServersSpecPresetList"></a>
+
+### ServersSpecPresetList
+List of ServersSpecPreset.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [ServersSpecPreset](#arangodb.cloud.data.v1.ServersSpecPreset) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.ServersSpecPresetsRequest"></a>
+
+### ServersSpecPresetsRequest
+Request arguments for ListServersSpecPresets and GetDefaultServersSpecPreset
 
 
 | Field | Type | Label | Description |
@@ -1146,6 +1197,7 @@ DataService is the API used to configure data objects.
 | ListVersions | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [VersionList](#arangodb.cloud.data.v1.VersionList) | Fetch all ArangoDB versions that are available for deployments. Required permissions: - None |
 | GetDefaultVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [Version](#arangodb.cloud.data.v1.Version) | Fetch the default ArangoDB version for new deployment. Required permissions: - None |
 | GetServersSpecLimits | [ServersSpecLimitsRequest](#arangodb.cloud.data.v1.ServersSpecLimitsRequest) | [ServersSpecLimits](#arangodb.cloud.data.v1.ServersSpecLimits) | Fetch the limits for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.limits.get on the requested project |
+| ListServersSpecPresets | [ServersSpecPresetsRequest](#arangodb.cloud.data.v1.ServersSpecPresetsRequest) | [ServersSpecPresetList](#arangodb.cloud.data.v1.ServersSpecPresetList) | Fetch the presets for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.presets.list on the requested project |
 
  
 
