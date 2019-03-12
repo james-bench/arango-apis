@@ -95,6 +95,26 @@ service DataService {
             get: "/api/data/v1/projects/{project_id}/regions/{region_id}/limits"
         };
     }
+
+    // Fetch the presets for server specifications for deployments
+    // owned by the given projected, created in the given region.
+    // Required permissions:
+    // - data.presets.get on the requested project
+    rpc ListServersSpecPresets(ServersSpecPresetsRequest) returns (ServersSpecPresetList) {
+        option (google.api.http) = {
+            get: "/api/data/v1/projects/{project_id}/regions/{region_id}/presets"
+        };
+    }
+
+    // Fetch the presets for server specifications for deployments
+    // owned by the given projected, created in the given region.
+    // Required permissions:
+    // - data.presets.get on the requested project
+    rpc GetDefaultServersSpecPreset(ServersSpecPresetsRequest) returns (ServersSpecPreset) {
+        option (google.api.http) = {
+            get: "/api/data/v1/projects/{project_id}/regions/{region_id}/presets/default"
+        };
+    }
 }
 
 // A Deployment is represents one deployment of an ArangoDB cluster.
@@ -186,6 +206,28 @@ message Deployment {
     Status status = 201;
 }
 
+// Request arguments for ListServersSpecPresets and GetDefaultServersSpecPreset
+message ServersSpecPresetsRequest {
+    // Identifier of project that will own a deployment.
+    string project_id = 1;
+    // Identifier of a region in which a deployment will be created.
+    string region_id = 2;
+}
+
+// Specification of a ServersSpecPreset, which can be used to initialize a deployment.servers
+message ServersSpecPreset {
+    // Name of the ServersSpecPreset
+    // This is a read-only value.
+    string name = 1;
+    // The ServersSpec associated for this name
+    Deployment.ServersSpec servers = 2;
+}
+
+// List of ServersSpecPreset.
+message ServersSpecPresetList {
+    repeated ServersSpecPreset items = 1;
+}
+
 // List of Deployments.
 message DeploymentList {
     repeated Deployment items = 1;
@@ -202,7 +244,7 @@ message VersionList {
     repeated Version items = 1;
 }
 
-// Request arguments for GetServersSpecLimits
+// Request arguments for ListServersSpecLimits
 message ServersSpecLimitsRequest {
     // Identifier of project that will own a deployment.
     string project_id = 1;
