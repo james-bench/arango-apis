@@ -96,7 +96,7 @@ service IAMService {
     // Add one or more members to the group identified by given ID.
     // Required permissions:
     // - iam.group.update on organization that owns the group
-    rpc AddGroupMembers(GroupMembersRequest) returns (Group) {
+    rpc AddGroupMembers(GroupMembersRequest) returns (common.v1.Empty) {
         option (google.api.http) = {
             post: "/api/iam/v1/groups/{group_id}/members"
             body: "*"
@@ -106,7 +106,7 @@ service IAMService {
     // Remove one or more members from the group identified by given ID.
     // Required permissions:
     // - iam.group.update on organization that owns the group
-    rpc DeleteGroupMembers(GroupMembersRequest) returns (Group) {
+    rpc DeleteGroupMembers(GroupMembersRequest) returns (common.v1.Empty) {
         option (google.api.http) = {
             delete: "/api/iam/v1/groups/{group_id}/members"
             body: "*"
@@ -167,7 +167,6 @@ service IAMService {
     rpc DeleteRole(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             delete: "/api/iam/v1/roles/{id}"
-            body: "*"
         };
     }
     

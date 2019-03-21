@@ -317,7 +317,7 @@ export class IAMService {
   // Add one or more members to the group identified by given ID.
   // Required permissions:
   // - iam.group.update on organization that owns the group
-  async AddGroupMembers(req: GroupMembersRequest): Promise<Group> {
+  async AddGroupMembers(req: GroupMembersRequest): Promise<void> {
     const url = `/api/iam/v1/groups/${encodeURIComponent(req.group_id || '')}/members`;
     return api.post(url, req);
   }
@@ -325,7 +325,7 @@ export class IAMService {
   // Remove one or more members from the group identified by given ID.
   // Required permissions:
   // - iam.group.update on organization that owns the group
-  async DeleteGroupMembers(req: GroupMembersRequest): Promise<Group> {
+  async DeleteGroupMembers(req: GroupMembersRequest): Promise<void> {
     const url = `/api/iam/v1/groups/${encodeURIComponent(req.group_id || '')}/members`;
     return api.delete(url, req);
   }
@@ -378,8 +378,9 @@ export class IAMService {
   // Required permissions:
   // - iam.role.delete on organization that owns the role
   async DeleteRole(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
-    const url = `/api/iam/v1/roles/${encodeURIComponent(req.id || '')}`;
-    return api.delete(url, req);
+    const path = `/api/iam/v1/roles/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.delete(url, undefined);
   }
   
   // Get the policy for a resource identified by given URL.

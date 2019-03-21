@@ -86,7 +86,7 @@ ts: $(CACHEVOL) $(MODVOL)
 	$(DOCKERENV) \
 		protoc -I.:vendor:vendor/googleapis/:vendor/github.com/gogo/protobuf/protobuf/ \
 			--ts_out=typescript $(PROTOSOURCES) \
-			--ts_opt=../..
+			--ts_opt=.
 
 .PHONY: test
 test:
