@@ -45,6 +45,19 @@
     - [PlatformService](#arangodb.cloud.platform.v1.PlatformService)
   
 
+- [usage/v1/usage.proto](#usage/v1/usage.proto)
+    - [ListUsageItemsRequest](#arangodb.cloud.usage.v1.ListUsageItemsRequest)
+    - [UsageItem](#arangodb.cloud.usage.v1.UsageItem)
+    - [UsageItem.DeploymentSize](#arangodb.cloud.usage.v1.UsageItem.DeploymentSize)
+    - [UsageItem.NetworkTransferSize](#arangodb.cloud.usage.v1.UsageItem.NetworkTransferSize)
+    - [UsageItem.Resource](#arangodb.cloud.usage.v1.UsageItem.Resource)
+    - [UsageItemList](#arangodb.cloud.usage.v1.UsageItemList)
+  
+  
+  
+    - [UsageService](#arangodb.cloud.usage.v1.UsageService)
+  
+
 - [common/v1/common.proto](#common/v1/common.proto)
     - [Budget](#arangodb.cloud.common.v1.Budget)
     - [Empty](#arangodb.cloud.common.v1.Empty)
@@ -578,6 +591,155 @@ PlatformService is the API used to query for cloud provider &amp; regional info.
 | GetProvider | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Provider](#arangodb.cloud.platform.v1.Provider) | Fetch a provider by its id. Required permissions: - None |
 | ListRegions | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [RegionList](#arangodb.cloud.platform.v1.RegionList) | Fetch all regions provided by the provided identified by the given context ID. Required permissions: - None |
 | GetRegion | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Region](#arangodb.cloud.platform.v1.Region) | Fetch a region by its id. Required permissions: - None |
+
+ 
+
+
+
+<a name="usage/v1/usage.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## usage/v1/usage.proto
+
+
+
+<a name="arangodb.cloud.usage.v1.ListUsageItemsRequest"></a>
+
+### ListUsageItemsRequest
+Request arguments for ListUsageItems
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| organization_id | [string](#string) |  | Request usage items for the organization with this id. This is a required field. |
+| from | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request usage items that overlaps in time with the time period that starts with this timestamp (inclusive). This is a required field. |
+| to | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request usage items that overlaps in time with the time period that ends with this timestamp (inclusive). This is a required field. |
+| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Standard list options This is an optional field. |
+| resource_url | [string](#string) |  | Limit to usage items for the resource with this URL. This is an optional field. |
+| resource_kind | [string](#string) |  | Limit to usage items for the resource with this kind. This is an optional field. |
+| project_id | [string](#string) |  | Limit to usage items for the project with this id. This is an optional field. |
+| deployment_id | [string](#string) |  | Limit to usage items for the deployment with this id. This is an optional field. |
+
+
+
+
+
+
+<a name="arangodb.cloud.usage.v1.UsageItem"></a>
+
+### UsageItem
+A UsageItem message contained usage tracking information for a tracked
+resource (usually deployment) in a specific time period.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the usage item. |
+| url | [string](#string) |  | URL of this resource |
+| kind | [string](#string) |  | Kind of usage item |
+| resource | [UsageItem.Resource](#arangodb.cloud.usage.v1.UsageItem.Resource) |  | Identification of the resource covered by this usage item |
+| starts_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | This usage item covers a time period that starts at this timestamp |
+| ends_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | This usage item covers a time period that ends at this timestamp. If the usage item has not yet ended, this field is is set to the current time. |
+| has_ended | [bool](#bool) |  | Set when this usage item has ended. |
+| deployment_size | [UsageItem.DeploymentSize](#arangodb.cloud.usage.v1.UsageItem.DeploymentSize) |  | Amount of (computer) resources used by the resource covered by this usage item. This field is only set when the usage item is of kind DeploymentSize. |
+| network_transfer_size | [UsageItem.NetworkTransferSize](#arangodb.cloud.usage.v1.UsageItem.NetworkTransferSize) |  | Amount of network traffic used by the resource covered by this usage item. This field is only set when the usage item is of kind NetworkTransferSize. |
+
+
+
+
+
+
+<a name="arangodb.cloud.usage.v1.UsageItem.DeploymentSize"></a>
+
+### UsageItem.DeploymentSize
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| coordinators | [int32](#int32) |  | Number of coordinators of the deployment |
+| coordinator_memory_size | [int32](#int32) |  | Amount of memory (in GB) allocated for each coordinator. |
+| dbservers | [int32](#int32) |  | Number of dbservers of the deployment |
+| dbserver_memory_size | [int32](#int32) |  | Amount of memory (in GB) allocated for each dbserver. |
+| dbserver_disk_size | [int32](#int32) |  | Amount of disk space (in GB) allocated for each dbserver. |
+| agents | [int32](#int32) |  | Number of agents of the deployment |
+| agent_memory_size | [int32](#int32) |  | Amount of memory (in GB) allocated for each agent. |
+| agent_disk_size | [int32](#int32) |  | Amount of disk space (in GB) allocated for each agent. |
+
+
+
+
+
+
+<a name="arangodb.cloud.usage.v1.UsageItem.NetworkTransferSize"></a>
+
+### UsageItem.NetworkTransferSize
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| transfer_size | [int64](#int64) |  | Amount of network traffic (in bytes) caused by the use of a deployment. |
+
+
+
+
+
+
+<a name="arangodb.cloud.usage.v1.UsageItem.Resource"></a>
+
+### UsageItem.Resource
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the resource that this usage item covers. |
+| url | [string](#string) |  | URL of the resource that this usage item covers |
+| kind | [string](#string) |  | Kind of resource that this usage item covers. |
+| description | [string](#string) |  | Human readable description of the resource that this usage item covers. |
+| organization_id | [string](#string) |  | Identifier of the organization that owns the resource that this usage item covers. |
+| organization_name | [string](#string) |  | Name of the organization that owns the resource that this usage item covers. |
+| project_id | [string](#string) |  | Identifier of the project that owns the resource that this usage item covers. |
+| project_name | [string](#string) |  | Name of the project that owns the resource that this usage item covers. |
+| deployment_id | [string](#string) |  | Identifier of the deployment that owns the resource that this usage item covers. |
+| deployment_name | [string](#string) |  | Name of the deployment that owns the resource that this usage item covers. |
+| deployment_member_name | [string](#string) |  | Name of the deployment member that owns the resource that this usage item covers. This field is only set when the usage item is specific for a member of the deployment (e.g. network transfer) |
+
+
+
+
+
+
+<a name="arangodb.cloud.usage.v1.UsageItemList"></a>
+
+### UsageItemList
+List of UsageItems.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [UsageItem](#arangodb.cloud.usage.v1.UsageItem) | repeated |  |
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+
+<a name="arangodb.cloud.usage.v1.UsageService"></a>
+
+### UsageService
+UsageService is the API used to fetch usage tracking information.
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+| ListUsageItems | [ListUsageItemsRequest](#arangodb.cloud.usage.v1.ListUsageItemsRequest) | [UsageItemList](#arangodb.cloud.usage.v1.UsageItemList) | Fetch all UsageItem resources in the organization identified by the given organization ID that match the given criteria. Required permissions: - usage.usageitem.list on the organization identified by the given organization ID |
 
  
 

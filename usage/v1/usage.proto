@@ -1,0 +1,144 @@
+// 
+// DISCLAIMER
+// 
+// Copyright 2019 ArangoDB Inc, Cologne, Germany
+// 
+// Author Ewout Prangsma
+// 
+
+syntax = "proto3";
+
+package arangodb.cloud.usage.v1;
+
+option go_package = "github.com/arangodb-managed/apis/usage/v1";
+
+import "common/v1/common.proto";
+
+import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
+import "google/api/annotations.proto";
+
+// UsageService is the API used to fetch usage tracking information.
+service UsageService {
+    // Fetch all UsageItem resources in the organization identified by the given
+    // organization ID that match the given criteria.
+    // Required permissions:
+    // - usage.usageitem.list on the organization identified by the given organization ID
+    rpc ListUsageItems(ListUsageItemsRequest) returns (UsageItemList) {
+        option (google.api.http) = {
+            get: "/api/usage/v1/organization/{organization_id}/usageitems"
+        };
+    }
+}
+
+// A UsageItem message contained usage tracking information for a tracked
+// resource (usually deployment) in a specific time period.
+message UsageItem {   
+    // System identifier of the usage item.
+    string id = 1;
+    // URL of this resource
+    string url = 2;
+    // Kind of usage item
+    string kind = 3;
+
+    message Resource {
+        // System identifier of the resource that this usage item covers.
+        string id = 1;
+        // URL of the resource that this usage item covers
+        string url = 2;
+        // Kind of resource that this usage item covers.
+        string kind = 3;
+        // Human readable description of the resource that this usage item covers.
+        string description = 4;
+        // Identifier of the organization that owns the resource that this usage item covers.
+        string organization_id = 5;
+        // Name of the organization that owns the resource that this usage item covers.
+        string organization_name = 6;
+        // Identifier of the project that owns the resource that this usage item covers.
+        string project_id = 7;
+        // Name of the project that owns the resource that this usage item covers.
+        string project_name = 8;
+        // Identifier of the deployment that owns the resource that this usage item covers.
+        string deployment_id = 9;
+        // Name of the deployment that owns the resource that this usage item covers.
+        string deployment_name = 10;
+        // Name of the deployment member that owns the resource that this usage item covers.
+        // This field is only set when the usage item is specific for a member of the deployment (e.g. network transfer)
+        string deployment_member_name = 11;
+    }
+    // Identification of the resource covered by this usage item 
+    Resource resource = 4;
+
+    // This usage item covers a time period that starts at this timestamp
+    google.protobuf.Timestamp starts_at = 5;
+    // This usage item covers a time period that ends at this timestamp.
+    // If the usage item has not yet ended, this field is is set to the current time.
+    google.protobuf.Timestamp ends_at = 6;
+    // Set when this usage item has ended.
+    bool has_ended = 7;
+
+    message DeploymentSize {
+        // Number of coordinators of the deployment
+        int32 coordinators = 1;
+        // Amount of memory (in GB) allocated for each coordinator.
+        int32 coordinator_memory_size = 2;
+
+        // Number of dbservers of the deployment
+        int32 dbservers = 11;
+        // Amount of memory (in GB) allocated for each dbserver.
+        int32 dbserver_memory_size = 12;
+        // Amount of disk space (in GB) allocated for each dbserver.
+        int32 dbserver_disk_size = 13;
+
+        // Number of agents of the deployment
+        int32 agents = 21;
+        // Amount of memory (in GB) allocated for each agent.
+        int32 agent_memory_size = 22;
+        // Amount of disk space (in GB) allocated for each agent.
+        int32 agent_disk_size = 23;
+    }
+    // Amount of (computer) resources used by the resource covered by this usage item.
+    // This field is only set when the usage item is of kind DeploymentSize.
+    DeploymentSize deployment_size = 101;
+
+    message NetworkTransferSize {
+        // Amount of network traffic (in bytes) caused by the use of a deployment.
+        int64 transfer_size = 1;
+    }
+    // Amount of network traffic used by the resource covered by this usage item.
+    // This field is only set when the usage item is of kind NetworkTransferSize.
+    NetworkTransferSize network_transfer_size = 102;
+}
+
+// List of UsageItems.
+message UsageItemList {
+    repeated UsageItem items = 1;
+}
+
+// Request arguments for ListUsageItems
+message ListUsageItemsRequest {
+    // Request usage items for the organization with this id.
+    // This is a required field.
+    string organization_id = 1;
+    // Request usage items that overlaps in time with the time period that starts with this timestamp (inclusive).
+    // This is a required field.
+    google.protobuf.Timestamp from = 2;
+    // Request usage items that overlaps in time with the time period that ends with this timestamp (inclusive).
+    // This is a required field.
+    google.protobuf.Timestamp to = 3;
+
+    // Standard list options
+    // This is an optional field.
+    common.v1.ListOptions options = 10;
+    // Limit to usage items for the resource with this URL.
+    // This is an optional field.
+    string resource_url = 11;
+    // Limit to usage items for the resource with this kind.
+    // This is an optional field.
+    string resource_kind = 12;
+    // Limit to usage items for the project with this id.
+    // This is an optional field.
+    string project_id = 13;
+    // Limit to usage items for the deployment with this id.
+    // This is an optional field.
+    string deployment_id = 14;
+}
