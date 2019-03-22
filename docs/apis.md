@@ -598,8 +598,8 @@ Budget for resources of a specific kind
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| used | [int32](#int32) |  | How many resources of the specific kind are in use |
-| available | [int32](#int32) |  | How many resources of the specific kind are still available. Note a value above 0 does not mean that the caller has permission to add those resources. |
+| used | [int64](#int64) |  | How many resources of the specific kind are in use |
+| available | [int64](#int64) |  | How many resources of the specific kind are still available. Note a value above 0 does not mean that the caller has permission to add those resources. |
 | unlimited | [bool](#bool) |  | If set, there is no limit to the number of resources of a specific kind that can be created. If set, available is 0. |
 
 
