@@ -4,6 +4,7 @@
 ///
 import api from '../../api'
 import * as googleTypes from '../../googleTypes'
+import { Budget as arangodb_cloud_common_v1_Budget } from '../../common/v1/common'
 import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1/common'
 import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
 
@@ -240,8 +241,13 @@ export interface OrganizationInviteList {
 
 // List of organizations.
 export interface OrganizationList {
+  // Actual organizations
   // Organization
   items?: Organization[];
+  
+  // Budget for organizations (owned by the caller)
+  // arangodb.cloud.common.v1.Budget
+  budget?: arangodb_cloud_common_v1_Budget;
 }
 
 // Request arguments for Add/DeleteOrganizationMembers.
@@ -299,8 +305,13 @@ export interface Project {
 
 // List of Projects.
 export interface ProjectList {
+  // Resulting projects
   // Project
   items?: Project[];
+  
+  // Budget for projects
+  // arangodb.cloud.common.v1.Budget
+  budget?: arangodb_cloud_common_v1_Budget;
 }
 
 // ResourceManagerService is the API used to configure basic resource objects.

@@ -223,7 +223,10 @@ message ServersSpecPresetList {
 
 // List of Deployments.
 message DeploymentList {
+    // Actual deployments
     repeated Deployment items = 1;
+    // Budget for deployments
+    common.v1.Budget budget = 2;
 }
 
 // Version of an ArangoDB release

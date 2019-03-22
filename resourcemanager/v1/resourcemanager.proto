@@ -270,7 +270,10 @@ message Organization {
 
 // List of organizations.
 message OrganizationList {
+    // Actual organizations
     repeated Organization items = 1;
+    // Budget for organizations (owned by the caller)
+    common.v1.Budget budget = 2;
 }
 
 // Member of an organization.
@@ -340,7 +343,10 @@ message Project {
 
 // List of Projects.
 message ProjectList {
+    // Resulting projects
     repeated Project items = 1;
+    // Budget for projects
+    common.v1.Budget budget = 2;
 }
 
 // An Event represents something that happened to an organization
