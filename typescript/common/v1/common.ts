@@ -8,6 +8,23 @@ import * as googleTypes from '../../googleTypes'
 // File: common/v1/common.proto
 // Package: arangodb.cloud.common.v1
 
+// Budget for resources of a specific kind
+export interface Budget {
+  // How many resources of the specific kind are in use
+  // number
+  used?: number;
+  
+  // How many resources of the specific kind are still available.
+  // Note a value above 0 does not mean that the caller has permission to add those resources.
+  // number
+  available?: number;
+  
+  // If set, there is no limit to the number of resources of a specific kind that can be created.
+  // If set, available is 0.
+  // boolean
+  unlimited?: boolean;
+}
+
 // Empty message
 export interface Empty {
 }

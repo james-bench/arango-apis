@@ -4,6 +4,7 @@
 ///
 import api from '../../api'
 import * as googleTypes from '../../googleTypes'
+import { Budget as arangodb_cloud_common_v1_Budget } from '../../common/v1/common'
 import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
 import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1/common'
 import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
@@ -146,8 +147,13 @@ export interface Deployment_Status {
 
 // List of Deployments.
 export interface DeploymentList {
+  // Actual deployments
   // Deployment
   items?: Deployment[];
+  
+  // Budget for deployments
+  // arangodb.cloud.common.v1.Budget
+  budget?: arangodb_cloud_common_v1_Budget;
 }
 
 // Limits of allowed values for fields of Deployment.ServersSpec.
