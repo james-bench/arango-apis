@@ -16,12 +16,12 @@ export interface ListUsageItemsRequest {
   // string
   organization_id?: string;
   
-  // Request usage items that overlaps in time with the time period that starts with this timestamp.
+  // Request usage items that overlaps in time with the time period that starts with this timestamp (inclusive).
   // This is a required field.
   // googleTypes.Timestamp
   from?: googleTypes.Timestamp;
   
-  // Request usage items that overlaps in time with the time period that ends with this timestamp.
+  // Request usage items that overlaps in time with the time period that ends with this timestamp (inclusive).
   // This is a required field.
   // googleTypes.Timestamp
   to?: googleTypes.Timestamp;
@@ -190,7 +190,7 @@ export class UsageService {
   // Fetch all UsageItem resources in the organization identified by the given
   // organization ID that match the given criteria.
   // Required permissions:
-  // - usage.usageitem.list on the organization identified by the given organizatin ID
+  // - usage.usageitem.list on the organization identified by the given organization ID
   async ListUsageItems(req: ListUsageItemsRequest): Promise<UsageItemList> {
     const path = `/api/usage/v1/organization/${encodeURIComponent(req.organization_id || '')}/usageitems`;
     const url = path + api.queryString(req, [`organization_id`]);

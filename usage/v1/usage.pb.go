@@ -502,10 +502,10 @@ type ListUsageItemsRequest struct {
 	// Request usage items for the organization with this id.
 	// This is a required field.
 	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
-	// Request usage items that overlaps in time with the time period that starts with this timestamp.
+	// Request usage items that overlaps in time with the time period that starts with this timestamp (inclusive).
 	// This is a required field.
 	From *types.Timestamp `protobuf:"bytes,2,opt,name=from,proto3" json:"from,omitempty"`
-	// Request usage items that overlaps in time with the time period that ends with this timestamp.
+	// Request usage items that overlaps in time with the time period that ends with this timestamp (inclusive).
 	// This is a required field.
 	To *types.Timestamp `protobuf:"bytes,3,opt,name=to,proto3" json:"to,omitempty"`
 	// Standard list options
@@ -705,7 +705,7 @@ type UsageServiceClient interface {
 	// Fetch all UsageItem resources in the organization identified by the given
 	// organization ID that match the given criteria.
 	// Required permissions:
-	// - usage.usageitem.list on the organization identified by the given organizatin ID
+	// - usage.usageitem.list on the organization identified by the given organization ID
 	ListUsageItems(ctx context.Context, in *ListUsageItemsRequest, opts ...grpc.CallOption) (*UsageItemList, error)
 }
 
@@ -731,7 +731,7 @@ type UsageServiceServer interface {
 	// Fetch all UsageItem resources in the organization identified by the given
 	// organization ID that match the given criteria.
 	// Required permissions:
-	// - usage.usageitem.list on the organization identified by the given organizatin ID
+	// - usage.usageitem.list on the organization identified by the given organization ID
 	ListUsageItems(context.Context, *ListUsageItemsRequest) (*UsageItemList, error)
 }
 

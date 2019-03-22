@@ -612,8 +612,8 @@ Request arguments for ListUsageItems
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | organization_id | [string](#string) |  | Request usage items for the organization with this id. This is a required field. |
-| from | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request usage items that overlaps in time with the time period that starts with this timestamp. This is a required field. |
-| to | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request usage items that overlaps in time with the time period that ends with this timestamp. This is a required field. |
+| from | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request usage items that overlaps in time with the time period that starts with this timestamp (inclusive). This is a required field. |
+| to | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request usage items that overlaps in time with the time period that ends with this timestamp (inclusive). This is a required field. |
 | options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Standard list options This is an optional field. |
 | resource_url | [string](#string) |  | Limit to usage items for the resource with this URL. This is an optional field. |
 | resource_kind | [string](#string) |  | Limit to usage items for the resource with this kind. This is an optional field. |
@@ -739,7 +739,7 @@ UsageService is the API used to fetch usage tracking information.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| ListUsageItems | [ListUsageItemsRequest](#arangodb.cloud.usage.v1.ListUsageItemsRequest) | [UsageItemList](#arangodb.cloud.usage.v1.UsageItemList) | Fetch all UsageItem resources in the organization identified by the given organization ID that match the given criteria. Required permissions: - usage.usageitem.list on the organization identified by the given organizatin ID |
+| ListUsageItems | [ListUsageItemsRequest](#arangodb.cloud.usage.v1.ListUsageItemsRequest) | [UsageItemList](#arangodb.cloud.usage.v1.UsageItemList) | Fetch all UsageItem resources in the organization identified by the given organization ID that match the given criteria. Required permissions: - usage.usageitem.list on the organization identified by the given organization ID |
 
  
 

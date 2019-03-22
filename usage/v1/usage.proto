@@ -22,7 +22,7 @@ service UsageService {
     // Fetch all UsageItem resources in the organization identified by the given
     // organization ID that match the given criteria.
     // Required permissions:
-    // - usage.usageitem.list on the organization identified by the given organizatin ID
+    // - usage.usageitem.list on the organization identified by the given organization ID
     rpc ListUsageItems(ListUsageItemsRequest) returns (UsageItemList) {
         option (google.api.http) = {
             get: "/api/usage/v1/organization/{organization_id}/usageitems"
@@ -119,10 +119,10 @@ message ListUsageItemsRequest {
     // Request usage items for the organization with this id.
     // This is a required field.
     string organization_id = 1;
-    // Request usage items that overlaps in time with the time period that starts with this timestamp.
+    // Request usage items that overlaps in time with the time period that starts with this timestamp (inclusive).
     // This is a required field.
     google.protobuf.Timestamp from = 2;
-    // Request usage items that overlaps in time with the time period that ends with this timestamp.
+    // Request usage items that overlaps in time with the time period that ends with this timestamp (inclusive).
     // This is a required field.
     google.protobuf.Timestamp to = 3;
 
