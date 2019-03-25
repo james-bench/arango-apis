@@ -100,6 +100,19 @@ func PermissionDenied(msg string, args ...interface{}) error {
 	return status.Error(codes.PermissionDenied, msg)
 }
 
+// IsPreconditionFailed returns true if the given error signals a precondition of the request has failed.
+func IsPreconditionFailed(err error) bool {
+	return status.Code(Cause(err)) == codes.FailedPrecondition
+}
+
+// PreconditionFailed creates a new error that signals a request that a precondition of the call has failed.
+func PreconditionFailed(msg string, args ...interface{}) error {
+	if len(args) > 0 {
+		return status.Errorf(codes.FailedPrecondition, msg, args...)
+	}
+	return status.Error(codes.FailedPrecondition, msg)
+}
+
 // IsUnauthenticated returns true if the given error signals an unauthenticated request.
 func IsUnauthenticated(err error) bool {
 	return status.Code(Cause(err)) == codes.Unauthenticated
