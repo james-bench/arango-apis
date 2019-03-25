@@ -164,6 +164,11 @@ export interface Organization {
   // The deletion timestamp of the organization
   // googleTypes.Timestamp
   deleted_at?: googleTypes.Timestamp;
+  
+  // Identifier of the tier used for this organization.
+  // This is a read-only value and cannot be initialized.
+  // string
+  tier_id?: string;
 }
 
 // An OrganizationInvite represents an invite for a human to join an
