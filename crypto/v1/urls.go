@@ -16,11 +16,12 @@ import (
 )
 
 const (
-	cacertKind = "CACertificate"
+	// KindCACertificate is a constants for the kind of CACertificate resources.
+	KindCACertificate = "CACertificate"
 )
 
 // CACertificateURL creates a resource URL for the CACertificate with given ID
 // in given context.
 func CACertificateURL(organizationID, projectID, cacertID string) string {
-	return path.Join(rm.ProjectURL(organizationID, projectID), cacertKind, url.PathEscape(cacertID))
+	return path.Join(rm.ProjectURL(organizationID, projectID), KindCACertificate, url.PathEscape(cacertID))
 }
