@@ -274,6 +274,7 @@ An Organization is represents a real world organization such as a company.
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the organization |
 | deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the organization |
 | tier_id | [string](#string) |  | Identifier of the tier used for this organization. This is a read-only value and cannot be initialized. |
+| tier_name | [string](#string) |  | Human readable name of the tier used for this organization. This is a read-only value and cannot be initialized. |
 
 
 

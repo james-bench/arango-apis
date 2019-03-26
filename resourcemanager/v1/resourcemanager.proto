@@ -269,6 +269,9 @@ message Organization {
     // Identifier of the tier used for this organization.
     // This is a read-only value and cannot be initialized.
     string tier_id = 8;
+    // Human readable name of the tier used for this organization.
+    // This is a read-only value and cannot be initialized.
+    string tier_name = 9;
 }
 
 // List of organizations.
