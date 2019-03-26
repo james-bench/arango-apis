@@ -198,8 +198,6 @@ func (m *Deployment) GetStatus() *Deployment_Status {
 
 type Deployment_CertificateSpec struct {
 	// Identifier of the CACertificate used to sign TLS certificates for the deployment.
-	// If this value is empty during creation of the deployment, a new CA certificate
-	// will be created for this deployment.
 	// If you change this value after the creation of the deployment a complete
 	// rotation of the deployment is required, which will result in some downtime.
 	CaCertificateId string `protobuf:"bytes,1,opt,name=ca_certificate_id,json=caCertificateId,proto3" json:"ca_certificate_id,omitempty"`
