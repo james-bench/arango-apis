@@ -169,6 +169,11 @@ export interface Organization {
   // This is a read-only value and cannot be initialized.
   // string
   tier_id?: string;
+  
+  // Human readable name of the tier used for this organization.
+  // This is a read-only value and cannot be initialized.
+  // string
+  tier_name?: string;
 }
 
 // An OrganizationInvite represents an invite for a human to join an
