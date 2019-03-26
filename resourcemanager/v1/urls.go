@@ -16,24 +16,27 @@ import (
 )
 
 const (
-	organizationKind       = "Organization"
-	projectKind            = "Project"
-	organizationInviteKind = "OrganizationInvite"
+	// KindOrganization is a constants for the kind of Organization resources.
+	KindOrganization = "Organization"
+	// KindProject is a constants for the kind of Project resources.
+	KindProject = "Project"
+	// KindOrganizationInvite is a constants for the kind of OrganizationInvite resources.
+	KindOrganizationInvite = "OrganizationInvite"
 )
 
 // OrganizationURL creates a resource URL for the organization with given ID.
 func OrganizationURL(organizationID string) string {
-	return path.Join("/", organizationKind, url.PathEscape(organizationID))
+	return path.Join("/", KindOrganization, url.PathEscape(organizationID))
 }
 
 // ProjectURL creates a resource URL for the project & organization with given IDs.
 func ProjectURL(organizationID, projectID string) string {
-	return path.Join(OrganizationURL(organizationID), projectKind, url.PathEscape(projectID))
+	return path.Join(OrganizationURL(organizationID), KindProject, url.PathEscape(projectID))
 }
 
 // OrganizationInviteURL creates a resource URL for the invite & organization with given IDs.
 func OrganizationInviteURL(organizationID, inviteID string) string {
-	return path.Join(OrganizationURL(organizationID), organizationInviteKind, url.PathEscape(inviteID))
+	return path.Join(OrganizationURL(organizationID), KindOrganizationInvite, url.PathEscape(inviteID))
 }
 
 // ResourceURL holds a parsed resource URL.
@@ -78,7 +81,7 @@ func (u ResourceURL) OrganizationChildID(kind ...string) string {
 // ProjectID returns the project ID of the given URL.
 // If the URL does not contain a project ID, an empty string is returned.
 func (u ResourceURL) ProjectID() string {
-	return u.OrganizationChildID(projectKind)
+	return u.OrganizationChildID(KindProject)
 }
 
 // ProjectChildID returns the ID of a child of the project in the given URL.
@@ -106,8 +109,8 @@ func (u ResourceURL) Validate() error {
 	if len(u) == 0 {
 		return fmt.Errorf("Empty resource URL")
 	}
-	if u[0].Kind != organizationKind {
-		return fmt.Errorf("Expected resource URL to start with '%s', got '%s'", organizationKind, u[0].Kind)
+	if u[0].Kind != KindOrganization {
+		return fmt.Errorf("Expected resource URL to start with '%s', got '%s'", KindOrganization, u[0].Kind)
 	}
 	for i, x := range u {
 		if x.Kind == "" {

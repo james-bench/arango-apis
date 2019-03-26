@@ -16,11 +16,12 @@ import (
 )
 
 const (
-	usageKind = "Usage"
+	// KindUsageItem is a constants for the kind of UsageItem resources.
+	KindUsageItem = "UsageItem"
 )
 
-// UsageURL creates a resource URL for the Usage with given ID
+// UsageItemURL creates a resource URL for the UsageItem with given ID
 // in given context.
-func UsageURL(organizationID, usageID string) string {
-	return path.Join(rm.OrganizationURL(organizationID), usageKind, url.PathEscape(usageID))
+func UsageItemURL(organizationID, usageItemID string) string {
+	return path.Join(rm.OrganizationURL(organizationID), KindUsageItem, url.PathEscape(usageItemID))
 }
