@@ -1167,7 +1167,7 @@ A Deployment is represents one deployment of an ArangoDB cluster.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| ca_certificate_id | [string](#string) |  | Identifier of the CACertificate used to sign TLS certificates for the deployment. If this value is empty during creation of the deployment, a new CA certificate will be created for this deployment. If you change this value after the creation of the deployment a complete rotation of the deployment is required, which will result in some downtime. |
+| ca_certificate_id | [string](#string) |  | Identifier of the CACertificate used to sign TLS certificates for the deployment. If you change this value after the creation of the deployment a complete rotation of the deployment is required, which will result in some downtime. |
 | alternate_dns_names | [string](#string) | repeated | Zero or more DNS names to include in the TLS certificate of the deployment. |
 
 

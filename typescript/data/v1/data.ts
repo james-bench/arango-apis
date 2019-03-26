@@ -81,8 +81,6 @@ export interface Deployment {
 }
 export interface Deployment_CertificateSpec {
   // Identifier of the CACertificate used to sign TLS certificates for the deployment.
-  // If this value is empty during creation of the deployment, a new CA certificate
-  // will be created for this deployment.
   // If you change this value after the creation of the deployment a complete
   // rotation of the deployment is required, which will result in some downtime.
   // string
