@@ -192,6 +192,24 @@ message Deployment {
         repeated string server_versions = 6;
     }
     Status status = 201;
+
+    // Expiration of the deployment.
+    // All members of this message are read-only.
+    message Expiration {
+        // The expiration timestamp of the deployment
+        // If not set, the deployment will not expire.
+        google.protobuf.Timestamp expires_at = 1;
+        // Human readable reason for why the deployment expires (or does not expire).
+        string reason = 2;
+        // The timestamp of when the last "this deployment will expire at" email was
+        // send.
+        // If not set, no such email has been send.
+        google.protobuf.Timestamp last_warning_email_send_at = 3;
+        // List of email addresses to which the last warning email has been send.
+        // Not send when no such email has been send.
+        repeated string last_warning_email_send_to = 4;
+    }
+    Expiration expiration = 301;
 }
 
 // Request arguments for ListServersSpecPresets and GetDefaultServersSpecPreset

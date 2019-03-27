@@ -78,6 +78,9 @@ export interface Deployment {
   
   // Deployment_Status
   status?: Deployment_Status;
+  
+  // Deployment_Expiration
+  expiration?: Deployment_Expiration;
 }
 export interface Deployment_CertificateSpec {
   // Identifier of the CACertificate used to sign TLS certificates for the deployment.
@@ -89,6 +92,30 @@ export interface Deployment_CertificateSpec {
   // Zero or more DNS names to include in the TLS certificate of the deployment.
   // string
   alternate_dns_names?: string[];
+}
+
+// Expiration of the deployment.
+// All members of this message are read-only.
+export interface Deployment_Expiration {
+  // The expiration timestamp of the deployment
+  // If not set, the deployment will not expire.
+  // googleTypes.Timestamp
+  expires_at?: googleTypes.Timestamp;
+  
+  // Human readable reason for why the deployment expires (or does not expire).
+  // string
+  reason?: string;
+  
+  // The timestamp of when the last "this deployment will expire at" email was
+  // send.
+  // If not set, no such email has been send.
+  // googleTypes.Timestamp
+  last_warning_email_send_at?: googleTypes.Timestamp;
+  
+  // List of email addresses to which the last warning email has been send.
+  // Not send when no such email has been send.
+  // string
+  last_warning_email_send_to?: string[];
 }
 export interface Deployment_ServersSpec {
   // Number of coordinators of the deployment
