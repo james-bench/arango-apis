@@ -93,6 +93,7 @@
 - [data/v1/data.proto](#data/v1/data.proto)
     - [Deployment](#arangodb.cloud.data.v1.Deployment)
     - [Deployment.CertificateSpec](#arangodb.cloud.data.v1.Deployment.CertificateSpec)
+    - [Deployment.Expiration](#arangodb.cloud.data.v1.Deployment.Expiration)
     - [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec)
     - [Deployment.Status](#arangodb.cloud.data.v1.Deployment.Status)
     - [DeploymentList](#arangodb.cloud.data.v1.DeploymentList)
@@ -1153,6 +1154,7 @@ A Deployment is represents one deployment of an ArangoDB cluster.
 | certificates | [Deployment.CertificateSpec](#arangodb.cloud.data.v1.Deployment.CertificateSpec) |  |  |
 | servers | [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  |  |
 | status | [Deployment.Status](#arangodb.cloud.data.v1.Deployment.Status) |  |  |
+| expiration | [Deployment.Expiration](#arangodb.cloud.data.v1.Deployment.Expiration) |  |  |
 
 
 
@@ -1169,6 +1171,25 @@ A Deployment is represents one deployment of an ArangoDB cluster.
 | ----- | ---- | ----- | ----------- |
 | ca_certificate_id | [string](#string) |  | Identifier of the CACertificate used to sign TLS certificates for the deployment. If you change this value after the creation of the deployment a complete rotation of the deployment is required, which will result in some downtime. |
 | alternate_dns_names | [string](#string) | repeated | Zero or more DNS names to include in the TLS certificate of the deployment. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.Deployment.Expiration"></a>
+
+### Deployment.Expiration
+Expiration of the deployment.
+All members of this message are read-only.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| expires_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The expiration timestamp of the deployment If not set, the deployment will not expire. |
+| reason | [string](#string) |  | Human readable reason for why the deployment expires (or does not expire). |
+| last_warning_email_send_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of when the last &#34;this deployment will expire at&#34; email was send. If not set, no such email has been send. |
+| last_warning_email_send_to | [string](#string) | repeated | List of email addresses to which the last warning email has been send. Not set when no such email has been send. |
 
 
 
@@ -1376,8 +1397,8 @@ DataService is the API used to configure data objects.
 | ----------- | ------------ | ------------- | ------------|
 | ListDeployments | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [DeploymentList](#arangodb.cloud.data.v1.DeploymentList) | Fetch all deployments in the project identified by the given context ID. Required permissions: - data.deployment.list on the project identified by the given context ID |
 | GetDeployment | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Fetch a deployment by its id. Required permissions: - data.deployment.get on the deployment identified by the given ID |
-| CreateDeployment | [Deployment](#arangodb.cloud.data.v1.Deployment) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Create a new deployment Required permissions: - data.deployment.create on the project that owns the deployment |
-| UpdateDeployment | [Deployment](#arangodb.cloud.data.v1.Deployment) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Update a deployment Required permissions: - data.deployment.update on the deployment |
+| CreateDeployment | [Deployment](#arangodb.cloud.data.v1.Deployment) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Create a new deployment Required permissions: - data.deployment.create on the project that owns the deployment Note that deployment.status &amp; deployment.expiration are ignored in this request. |
+| UpdateDeployment | [Deployment](#arangodb.cloud.data.v1.Deployment) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Update a deployment Required permissions: - data.deployment.update on the deployment Note that deployment.status &amp; deployment.expiration are ignored in this request. |
 | DeleteDeployment | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a deployment Note that deployments are initially only marked for deletion. Once all their resources are removed the deployment itself is removed. Required permissions: - data.deployment.delete on the deployment |
 | ListVersions | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [VersionList](#arangodb.cloud.data.v1.VersionList) | Fetch all ArangoDB versions that are available for deployments. Required permissions: - None |
 | GetDefaultVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [Version](#arangodb.cloud.data.v1.Version) | Fetch the default ArangoDB version for new deployment. Required permissions: - None |
