@@ -310,6 +310,8 @@ export class DataService {
   // Update a deployment
   // Required permissions:
   // - data.deployment.update on the deployment
+  // Note that deployment.status & deployment.expiration are ignored
+  // in this request.
   async UpdateDeployment(req: Deployment): Promise<Deployment> {
     const url = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}`;
     return api.patch(url, req);

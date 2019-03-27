@@ -1206,6 +1206,8 @@ type DataServiceClient interface {
 	// Update a deployment
 	// Required permissions:
 	// - data.deployment.update on the deployment
+	// Note that deployment.status & deployment.expiration are ignored
+	// in this request.
 	UpdateDeployment(ctx context.Context, in *Deployment, opts ...grpc.CallOption) (*Deployment, error)
 	// Delete a deployment
 	// Note that deployments are initially only marked for deletion.
@@ -1339,6 +1341,8 @@ type DataServiceServer interface {
 	// Update a deployment
 	// Required permissions:
 	// - data.deployment.update on the deployment
+	// Note that deployment.status & deployment.expiration are ignored
+	// in this request.
 	UpdateDeployment(context.Context, *Deployment) (*Deployment, error)
 	// Delete a deployment
 	// Note that deployments are initially only marked for deletion.
