@@ -40,6 +40,8 @@ service DataService {
     // Create a new deployment
     // Required permissions:
     // - data.deployment.create on the project that owns the deployment
+    // Note that deployment.status & deployment.expiration are ignored
+    // in this request.
     rpc CreateDeployment(Deployment) returns (Deployment) {
         option (google.api.http) = {
             post: "/api/data/v1/project/{project_id}/deployments"
@@ -208,7 +210,7 @@ message Deployment {
         // If not set, no such email has been send.
         google.protobuf.Timestamp last_warning_email_send_at = 3;
         // List of email addresses to which the last warning email has been send.
-        // Not send when no such email has been send.
+        // Not set when no such email has been send.
         repeated string last_warning_email_send_to = 4;
     }
     Expiration expiration = 301;

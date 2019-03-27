@@ -458,7 +458,7 @@ type Deployment_Expiration struct {
 	// If not set, no such email has been send.
 	LastWarningEmailSendAt *types.Timestamp `protobuf:"bytes,3,opt,name=last_warning_email_send_at,json=lastWarningEmailSendAt,proto3" json:"last_warning_email_send_at,omitempty"`
 	// List of email addresses to which the last warning email has been send.
-	// Not send when no such email has been send.
+	// Not set when no such email has been send.
 	LastWarningEmailSendTo []string `protobuf:"bytes,4,rep,name=last_warning_email_send_to,json=lastWarningEmailSendTo,proto3" json:"last_warning_email_send_to,omitempty"`
 	XXX_NoUnkeyedLiteral   struct{} `json:"-"`
 	XXX_unrecognized       []byte   `json:"-"`
@@ -1202,6 +1202,8 @@ type DataServiceClient interface {
 	// Create a new deployment
 	// Required permissions:
 	// - data.deployment.create on the project that owns the deployment
+	// Note that deployment.status & deployment.expiration are ignored
+	// in this request.
 	CreateDeployment(ctx context.Context, in *Deployment, opts ...grpc.CallOption) (*Deployment, error)
 	// Update a deployment
 	// Required permissions:
@@ -1337,6 +1339,8 @@ type DataServiceServer interface {
 	// Create a new deployment
 	// Required permissions:
 	// - data.deployment.create on the project that owns the deployment
+	// Note that deployment.status & deployment.expiration are ignored
+	// in this request.
 	CreateDeployment(context.Context, *Deployment) (*Deployment, error)
 	// Update a deployment
 	// Required permissions:

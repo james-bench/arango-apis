@@ -113,7 +113,7 @@ export interface Deployment_Expiration {
   last_warning_email_send_at?: googleTypes.Timestamp;
   
   // List of email addresses to which the last warning email has been send.
-  // Not send when no such email has been send.
+  // Not set when no such email has been send.
   // string
   last_warning_email_send_to?: string[];
 }
@@ -302,6 +302,8 @@ export class DataService {
   // Create a new deployment
   // Required permissions:
   // - data.deployment.create on the project that owns the deployment
+  // Note that deployment.status & deployment.expiration are ignored
+  // in this request.
   async CreateDeployment(req: Deployment): Promise<Deployment> {
     const url = `/api/data/v1/project/${encodeURIComponent(req.project_id || '')}/deployments`;
     return api.post(url, req);
