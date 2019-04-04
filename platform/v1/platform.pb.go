@@ -131,6 +131,66 @@ func (m *ProviderList) GetItems() []*Provider {
 	return nil
 }
 
+// Request arguments for ListProviders
+type ListProvidersRequest struct {
+	// Common list options
+	Options *v1.ListOptions `protobuf:"bytes,1,opt,name=options,proto3" json:"options,omitempty"`
+	// If set, the result includes all providers for that are available for the
+	// organization identified by this ID.
+	// If not set, only providers are returned that are available to all organizations.
+	OrganizationId       string   `protobuf:"bytes,2,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ListProvidersRequest) Reset()         { *m = ListProvidersRequest{} }
+func (m *ListProvidersRequest) String() string { return proto.CompactTextString(m) }
+func (*ListProvidersRequest) ProtoMessage()    {}
+func (*ListProvidersRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_918f3d50bfb447e4, []int{2}
+}
+func (m *ListProvidersRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ListProvidersRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ListProvidersRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ListProvidersRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListProvidersRequest.Merge(m, src)
+}
+func (m *ListProvidersRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *ListProvidersRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListProvidersRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListProvidersRequest proto.InternalMessageInfo
+
+func (m *ListProvidersRequest) GetOptions() *v1.ListOptions {
+	if m != nil {
+		return m.Options
+	}
+	return nil
+}
+
+func (m *ListProvidersRequest) GetOrganizationId() string {
+	if m != nil {
+		return m.OrganizationId
+	}
+	return ""
+}
+
 // Region represents a geographical region in which deployments are run.
 type Region struct {
 	// System identifier of the region.
@@ -150,7 +210,7 @@ func (m *Region) Reset()         { *m = Region{} }
 func (m *Region) String() string { return proto.CompactTextString(m) }
 func (*Region) ProtoMessage()    {}
 func (*Region) Descriptor() ([]byte, []int) {
-	return fileDescriptor_918f3d50bfb447e4, []int{2}
+	return fileDescriptor_918f3d50bfb447e4, []int{3}
 }
 func (m *Region) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -219,7 +279,7 @@ func (m *RegionList) Reset()         { *m = RegionList{} }
 func (m *RegionList) String() string { return proto.CompactTextString(m) }
 func (*RegionList) ProtoMessage()    {}
 func (*RegionList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_918f3d50bfb447e4, []int{3}
+	return fileDescriptor_918f3d50bfb447e4, []int{4}
 }
 func (m *RegionList) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -255,47 +315,122 @@ func (m *RegionList) GetItems() []*Region {
 	return nil
 }
 
+// Request arguments for ListRegions
+type ListRegionsRequest struct {
+	// Common list options
+	Options *v1.ListOptions `protobuf:"bytes,1,opt,name=options,proto3" json:"options,omitempty"`
+	// Required identifier of the provider to list regions for.
+	ProviderId string `protobuf:"bytes,2,opt,name=provider_id,json=providerId,proto3" json:"provider_id,omitempty"`
+	// If set, the result includes all regions for that are available for the
+	// organization identified by this ID.
+	// If not set, only regions are returned that are available to all organizations.
+	OrganizationId       string   `protobuf:"bytes,3,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ListRegionsRequest) Reset()         { *m = ListRegionsRequest{} }
+func (m *ListRegionsRequest) String() string { return proto.CompactTextString(m) }
+func (*ListRegionsRequest) ProtoMessage()    {}
+func (*ListRegionsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_918f3d50bfb447e4, []int{5}
+}
+func (m *ListRegionsRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ListRegionsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ListRegionsRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ListRegionsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListRegionsRequest.Merge(m, src)
+}
+func (m *ListRegionsRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *ListRegionsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListRegionsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListRegionsRequest proto.InternalMessageInfo
+
+func (m *ListRegionsRequest) GetOptions() *v1.ListOptions {
+	if m != nil {
+		return m.Options
+	}
+	return nil
+}
+
+func (m *ListRegionsRequest) GetProviderId() string {
+	if m != nil {
+		return m.ProviderId
+	}
+	return ""
+}
+
+func (m *ListRegionsRequest) GetOrganizationId() string {
+	if m != nil {
+		return m.OrganizationId
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*Provider)(nil), "arangodb.cloud.platform.v1.Provider")
 	proto.RegisterType((*ProviderList)(nil), "arangodb.cloud.platform.v1.ProviderList")
+	proto.RegisterType((*ListProvidersRequest)(nil), "arangodb.cloud.platform.v1.ListProvidersRequest")
 	proto.RegisterType((*Region)(nil), "arangodb.cloud.platform.v1.Region")
 	proto.RegisterType((*RegionList)(nil), "arangodb.cloud.platform.v1.RegionList")
+	proto.RegisterType((*ListRegionsRequest)(nil), "arangodb.cloud.platform.v1.ListRegionsRequest")
 }
 
 func init() { proto.RegisterFile("platform.proto", fileDescriptor_918f3d50bfb447e4) }
 
 var fileDescriptor_918f3d50bfb447e4 = []byte{
-	// 473 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x93, 0xcf, 0x8a, 0xd3, 0x40,
-	0x1c, 0xc7, 0x9d, 0x6e, 0x5d, 0xda, 0x5f, 0x75, 0x85, 0x39, 0x48, 0x08, 0xb5, 0xad, 0xa3, 0xab,
-	0x3d, 0x68, 0x86, 0xae, 0x07, 0xc5, 0x83, 0x07, 0x11, 0x97, 0x15, 0xc1, 0xa5, 0xde, 0xbc, 0x2c,
-	0x93, 0xcc, 0x18, 0x07, 0x92, 0x99, 0x90, 0xcc, 0x06, 0x61, 0xd9, 0x83, 0xe2, 0x1b, 0x88, 0xe0,
-	0x6b, 0xf8, 0x16, 0x1e, 0x05, 0x5f, 0x40, 0xaa, 0x0f, 0x22, 0x99, 0x4c, 0xe2, 0x9f, 0xa5, 0xdd,
-	0xdc, 0xa6, 0xf3, 0xfb, 0xf3, 0xfd, 0xcc, 0xf7, 0xdb, 0xc0, 0x4e, 0x96, 0x30, 0xf3, 0x5a, 0xe7,
-	0x69, 0x90, 0xe5, 0xda, 0x68, 0xec, 0xb3, 0x9c, 0xa9, 0x58, 0xf3, 0x30, 0x88, 0x12, 0x7d, 0xcc,
-	0x83, 0xb6, 0x5c, 0x2e, 0xfc, 0xab, 0x91, 0x4e, 0x53, 0xad, 0x68, 0xb9, 0xa0, 0xf5, 0xa9, 0x9e,
-	0xf1, 0xc7, 0xb1, 0xd6, 0x71, 0x22, 0x28, 0xcb, 0x24, 0x65, 0x4a, 0x69, 0xc3, 0x8c, 0xd4, 0xaa,
-	0xa8, 0xab, 0x24, 0x80, 0xc1, 0x61, 0xae, 0x4b, 0xc9, 0x45, 0x8e, 0x77, 0xa0, 0x27, 0xb9, 0x87,
-	0x66, 0x68, 0x3e, 0x5c, 0xf6, 0x24, 0xc7, 0x18, 0xfa, 0x8a, 0xa5, 0xc2, 0xeb, 0xd9, 0x1b, 0x7b,
-	0x26, 0xcf, 0xe0, 0x52, 0xd3, 0xff, 0x5c, 0x16, 0x06, 0x3f, 0x84, 0x8b, 0xd2, 0x88, 0xb4, 0xf0,
-	0xd0, 0x6c, 0x6b, 0x3e, 0xda, 0xbb, 0x19, 0xac, 0x27, 0x0c, 0x9a, 0xc1, 0x65, 0x3d, 0x42, 0x0a,
-	0xd8, 0x5e, 0x8a, 0x58, 0x6a, 0x75, 0x46, 0x79, 0x0a, 0xa3, 0xcc, 0x35, 0x1f, 0x49, 0xee, 0x00,
-	0xa0, 0xb9, 0x3a, 0xe0, 0xd8, 0x87, 0x41, 0xa2, 0x23, 0xfb, 0x12, 0x6f, 0xcb, 0x56, 0xdb, 0xdf,
-	0x78, 0x0c, 0x43, 0x56, 0x32, 0x99, 0xb0, 0x30, 0x11, 0x5e, 0x7f, 0x86, 0xe6, 0x83, 0xe5, 0x9f,
-	0x0b, 0xf2, 0x14, 0xa0, 0x16, 0xb5, 0xf8, 0x0f, 0xfe, 0xc5, 0x27, 0x9b, 0xf0, 0xeb, 0x31, 0x07,
-	0xbf, 0xf7, 0xa5, 0x0f, 0x57, 0x0e, 0x5d, 0xf5, 0xa5, 0xc8, 0x4b, 0x19, 0x09, 0xfc, 0x01, 0xc1,
-	0xe5, 0x6a, 0x6d, 0xf3, 0xd0, 0x02, 0xef, 0xfe, 0xbf, 0xd0, 0x45, 0x53, 0x2e, 0x82, 0xaa, 0xf1,
-	0x45, 0x66, 0xb3, 0xf0, 0xe7, 0x5d, 0x6c, 0xab, 0x06, 0x08, 0x79, 0xff, 0xfd, 0xd7, 0xc7, 0xde,
-	0x18, 0xfb, 0x36, 0xcf, 0xa6, 0xad, 0x0a, 0x3d, 0x6b, 0x45, 0xdf, 0x21, 0x18, 0xed, 0x8b, 0x96,
-	0x02, 0xdf, 0x58, 0x0f, 0x71, 0xf0, 0xa4, 0x41, 0xe8, 0x94, 0x1c, 0xb9, 0x6d, 0xe5, 0xaf, 0xe3,
-	0xe9, 0x7a, 0x79, 0x7a, 0x22, 0xf9, 0x29, 0xfe, 0x84, 0x60, 0x54, 0x01, 0xd7, 0xa6, 0x75, 0x36,
-	0xe2, 0xd6, 0xf9, 0x01, 0x58, 0x1b, 0xee, 0x5b, 0x8e, 0x05, 0xa6, 0x9b, 0x38, 0x22, 0xad, 0x8c,
-	0x78, 0x6b, 0x8e, 0x24, 0x3f, 0xa5, 0xb9, 0xe3, 0x38, 0x81, 0xe1, 0xbe, 0x70, 0x54, 0xdd, 0x8c,
-	0xe9, 0xf0, 0x9f, 0x20, 0xbb, 0x16, 0x67, 0x8a, 0xaf, 0x9d, 0xc1, 0x71, 0xba, 0xd6, 0x94, 0xc7,
-	0x8f, 0xbe, 0xae, 0x26, 0xe8, 0xdb, 0x6a, 0x82, 0x7e, 0xac, 0x26, 0xe8, 0xf3, 0xcf, 0xc9, 0x85,
-	0x57, 0x77, 0x62, 0x69, 0xde, 0x1c, 0x87, 0x95, 0x30, 0x6d, 0x64, 0xee, 0xa6, 0x4c, 0xb1, 0x58,
-	0xf0, 0x6a, 0x57, 0xf1, 0xf7, 0xb2, 0x70, 0xdb, 0x7e, 0xb3, 0xf7, 0x7e, 0x07, 0x00, 0x00, 0xff,
-	0xff, 0x17, 0x9e, 0x2d, 0xfb, 0x17, 0x04, 0x00, 0x00,
+	// 541 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x54, 0xcd, 0x6e, 0xd3, 0x4e,
+	0x10, 0xff, 0x6f, 0x92, 0x7f, 0x49, 0x26, 0x90, 0x4a, 0x23, 0x84, 0x22, 0x2b, 0x24, 0x61, 0xa1,
+	0x34, 0x07, 0xb0, 0x9b, 0x70, 0xa9, 0x38, 0x80, 0x84, 0x10, 0x55, 0x10, 0x12, 0x95, 0xb9, 0x71,
+	0x41, 0x9b, 0xec, 0x62, 0x56, 0xb2, 0xbd, 0xc6, 0x76, 0x7c, 0xa0, 0xaa, 0x04, 0xbc, 0x00, 0x07,
+	0x2e, 0xdc, 0xfa, 0x36, 0x88, 0x23, 0x12, 0x2f, 0x80, 0x02, 0x0f, 0x82, 0xbc, 0xb6, 0xd3, 0x84,
+	0xe6, 0xeb, 0xc0, 0x6d, 0x33, 0xbb, 0xbf, 0x8f, 0xf9, 0xcd, 0xc4, 0xd0, 0x08, 0x5c, 0x16, 0xbf,
+	0x56, 0xa1, 0x67, 0x06, 0xa1, 0x8a, 0x15, 0x1a, 0x2c, 0x64, 0xbe, 0xa3, 0xf8, 0xc8, 0x1c, 0xbb,
+	0x6a, 0xc2, 0xcd, 0xd9, 0x75, 0xd2, 0x37, 0xae, 0x8d, 0x95, 0xe7, 0x29, 0xdf, 0x4a, 0xfa, 0x56,
+	0x76, 0xca, 0x30, 0x46, 0xcb, 0x51, 0xca, 0x71, 0x85, 0xc5, 0x02, 0x69, 0x31, 0xdf, 0x57, 0x31,
+	0x8b, 0xa5, 0xf2, 0xa3, 0xec, 0x96, 0x9a, 0x50, 0x3d, 0x0e, 0x55, 0x22, 0xb9, 0x08, 0xb1, 0x01,
+	0x25, 0xc9, 0x9b, 0xa4, 0x4b, 0x7a, 0x35, 0xbb, 0x24, 0x39, 0x22, 0x54, 0x7c, 0xe6, 0x89, 0x66,
+	0x49, 0x57, 0xf4, 0x99, 0x3e, 0x85, 0xcb, 0xc5, 0xfb, 0x67, 0x32, 0x8a, 0xf1, 0x3e, 0xfc, 0x2f,
+	0x63, 0xe1, 0x45, 0x4d, 0xd2, 0x2d, 0xf7, 0xea, 0x83, 0x5b, 0xe6, 0x6a, 0x87, 0x66, 0x01, 0xb4,
+	0x33, 0x08, 0x7d, 0x4f, 0xe0, 0x6a, 0x4a, 0x52, 0xd4, 0x23, 0x5b, 0xbc, 0x9d, 0x88, 0x28, 0xc6,
+	0x87, 0x70, 0x49, 0x05, 0xda, 0xa5, 0x76, 0x53, 0x1f, 0xec, 0xfd, 0x4d, 0x9b, 0x77, 0x98, 0xf4,
+	0xcd, 0x94, 0xe0, 0x79, 0xf6, 0xd8, 0x2e, 0x50, 0xb8, 0x0f, 0xbb, 0x2a, 0x74, 0x98, 0x2f, 0xdf,
+	0xe9, 0x66, 0x5f, 0x49, 0x9e, 0x37, 0xd1, 0x98, 0x2f, 0x0f, 0x39, 0x8d, 0x60, 0xc7, 0x16, 0x8e,
+	0x54, 0xfe, 0x85, 0xe6, 0x3b, 0x50, 0x0f, 0x72, 0x5f, 0xe7, 0x70, 0x28, 0x4a, 0x43, 0x8e, 0x06,
+	0x54, 0x5d, 0x35, 0xd6, 0x44, 0xcd, 0xb2, 0xbe, 0x9d, 0xfd, 0xc6, 0x16, 0xd4, 0x58, 0xc2, 0xa4,
+	0xcb, 0x46, 0xae, 0x68, 0x56, 0xba, 0xa4, 0x57, 0xb5, 0xcf, 0x0b, 0xf4, 0x09, 0x40, 0x26, 0xaa,
+	0x13, 0x3c, 0x5c, 0x4c, 0x90, 0xae, 0x4b, 0x30, 0x83, 0x15, 0xf9, 0x9d, 0x11, 0xc0, 0x94, 0x22,
+	0xab, 0xfe, 0xbb, 0xf4, 0x36, 0xb6, 0xbe, 0x24, 0xde, 0xf2, 0xb2, 0x78, 0x07, 0x5f, 0x2b, 0xb0,
+	0x7b, 0x9c, 0xfb, 0x7f, 0x21, 0xc2, 0x44, 0x8e, 0x05, 0x7e, 0x22, 0x70, 0x65, 0x61, 0xea, 0x78,
+	0xb0, 0xae, 0xe5, 0x65, 0x0b, 0x62, 0xf4, 0xb6, 0x59, 0xb3, 0x14, 0x49, 0xe9, 0xc7, 0x1f, 0xbf,
+	0x3f, 0x97, 0x5a, 0x68, 0xe8, 0xfd, 0x2f, 0x9e, 0xa5, 0x7f, 0x92, 0x60, 0xa6, 0xff, 0x81, 0x40,
+	0xfd, 0x48, 0xcc, 0x54, 0xf0, 0xe6, 0xea, 0xbc, 0x86, 0x8f, 0xf3, 0xb4, 0x8c, 0xad, 0x36, 0x9d,
+	0xee, 0x6b, 0xf9, 0x1b, 0xd8, 0x59, 0x2d, 0x6f, 0x9d, 0x48, 0x7e, 0x8a, 0x67, 0x04, 0xea, 0x73,
+	0xb3, 0x44, 0x73, 0x53, 0x26, 0x8b, 0x43, 0x37, 0x6e, 0x6f, 0x5e, 0x1b, 0x9d, 0xc7, 0xa1, 0x36,
+	0x34, 0xc0, 0x83, 0x75, 0x86, 0xe6, 0xa6, 0x7f, 0x6a, 0x85, 0xb9, 0xa3, 0x13, 0xa8, 0x1d, 0x89,
+	0x5c, 0x76, 0xbb, 0x88, 0xb6, 0x58, 0x65, 0xba, 0xa7, 0xfd, 0x74, 0xf0, 0xfa, 0x05, 0x3f, 0xb9,
+	0xae, 0x8e, 0xe7, 0xd1, 0x83, 0x6f, 0xd3, 0x36, 0xf9, 0x3e, 0x6d, 0x93, 0x9f, 0xd3, 0x36, 0xf9,
+	0xf2, 0xab, 0xfd, 0xdf, 0xcb, 0x3b, 0x8e, 0x8c, 0xdf, 0x4c, 0x46, 0xa9, 0xb0, 0x55, 0xc8, 0xdc,
+	0xf5, 0x98, 0xcf, 0x1c, 0xc1, 0x53, 0xae, 0x68, 0x9e, 0x6c, 0xb4, 0xa3, 0xbf, 0x76, 0xf7, 0xfe,
+	0x04, 0x00, 0x00, 0xff, 0xff, 0x2a, 0xef, 0x55, 0x7f, 0x51, 0x05, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -313,15 +448,18 @@ type PlatformServiceClient interface {
 	// Fetch all providers that are supported by the ArangoDB cloud.
 	// Required permissions:
 	// - None
-	ListProviders(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*ProviderList, error)
+	ListProviders(ctx context.Context, in *ListProvidersRequest, opts ...grpc.CallOption) (*ProviderList, error)
 	// Fetch a provider by its id.
 	// Required permissions:
 	// - None
 	GetProvider(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*Provider, error)
 	// Fetch all regions provided by the provided identified by the given context ID.
+	// If the given context identifier contains a valid organization ID,
+	// the result includes all regions for that organization.
+	// Otherwise only regions are returned that are available to all organizations.
 	// Required permissions:
 	// - None
-	ListRegions(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*RegionList, error)
+	ListRegions(ctx context.Context, in *ListRegionsRequest, opts ...grpc.CallOption) (*RegionList, error)
 	// Fetch a region by its id.
 	// Required permissions:
 	// - None
@@ -336,7 +474,7 @@ func NewPlatformServiceClient(cc *grpc.ClientConn) PlatformServiceClient {
 	return &platformServiceClient{cc}
 }
 
-func (c *platformServiceClient) ListProviders(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*ProviderList, error) {
+func (c *platformServiceClient) ListProviders(ctx context.Context, in *ListProvidersRequest, opts ...grpc.CallOption) (*ProviderList, error) {
 	out := new(ProviderList)
 	err := c.cc.Invoke(ctx, "/arangodb.cloud.platform.v1.PlatformService/ListProviders", in, out, opts...)
 	if err != nil {
@@ -354,7 +492,7 @@ func (c *platformServiceClient) GetProvider(ctx context.Context, in *v1.IDOption
 	return out, nil
 }
 
-func (c *platformServiceClient) ListRegions(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*RegionList, error) {
+func (c *platformServiceClient) ListRegions(ctx context.Context, in *ListRegionsRequest, opts ...grpc.CallOption) (*RegionList, error) {
 	out := new(RegionList)
 	err := c.cc.Invoke(ctx, "/arangodb.cloud.platform.v1.PlatformService/ListRegions", in, out, opts...)
 	if err != nil {
@@ -377,15 +515,18 @@ type PlatformServiceServer interface {
 	// Fetch all providers that are supported by the ArangoDB cloud.
 	// Required permissions:
 	// - None
-	ListProviders(context.Context, *v1.ListOptions) (*ProviderList, error)
+	ListProviders(context.Context, *ListProvidersRequest) (*ProviderList, error)
 	// Fetch a provider by its id.
 	// Required permissions:
 	// - None
 	GetProvider(context.Context, *v1.IDOptions) (*Provider, error)
 	// Fetch all regions provided by the provided identified by the given context ID.
+	// If the given context identifier contains a valid organization ID,
+	// the result includes all regions for that organization.
+	// Otherwise only regions are returned that are available to all organizations.
 	// Required permissions:
 	// - None
-	ListRegions(context.Context, *v1.ListOptions) (*RegionList, error)
+	ListRegions(context.Context, *ListRegionsRequest) (*RegionList, error)
 	// Fetch a region by its id.
 	// Required permissions:
 	// - None
@@ -397,7 +538,7 @@ func RegisterPlatformServiceServer(s *grpc.Server, srv PlatformServiceServer) {
 }
 
 func _PlatformService_ListProviders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.ListOptions)
+	in := new(ListProvidersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -409,7 +550,7 @@ func _PlatformService_ListProviders_Handler(srv interface{}, ctx context.Context
 		FullMethod: "/arangodb.cloud.platform.v1.PlatformService/ListProviders",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PlatformServiceServer).ListProviders(ctx, req.(*v1.ListOptions))
+		return srv.(PlatformServiceServer).ListProviders(ctx, req.(*ListProvidersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -433,7 +574,7 @@ func _PlatformService_GetProvider_Handler(srv interface{}, ctx context.Context, 
 }
 
 func _PlatformService_ListRegions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.ListOptions)
+	in := new(ListRegionsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -445,7 +586,7 @@ func _PlatformService_ListRegions_Handler(srv interface{}, ctx context.Context, 
 		FullMethod: "/arangodb.cloud.platform.v1.PlatformService/ListRegions",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PlatformServiceServer).ListRegions(ctx, req.(*v1.ListOptions))
+		return srv.(PlatformServiceServer).ListRegions(ctx, req.(*ListRegionsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -559,6 +700,43 @@ func (m *ProviderList) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
+func (m *ListProvidersRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ListProvidersRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Options != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintPlatform(dAtA, i, uint64(m.Options.Size()))
+		n1, err := m.Options.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n1
+	}
+	if len(m.OrganizationId) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintPlatform(dAtA, i, uint64(len(m.OrganizationId)))
+		i += copy(dAtA[i:], m.OrganizationId)
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
 func (m *Region) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -641,6 +819,49 @@ func (m *RegionList) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
+func (m *ListRegionsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ListRegionsRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Options != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintPlatform(dAtA, i, uint64(m.Options.Size()))
+		n2, err := m.Options.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n2
+	}
+	if len(m.ProviderId) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintPlatform(dAtA, i, uint64(len(m.ProviderId)))
+		i += copy(dAtA[i:], m.ProviderId)
+	}
+	if len(m.OrganizationId) > 0 {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintPlatform(dAtA, i, uint64(len(m.OrganizationId)))
+		i += copy(dAtA[i:], m.OrganizationId)
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
 func encodeVarintPlatform(dAtA []byte, offset int, v uint64) int {
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
@@ -688,6 +909,26 @@ func (m *ProviderList) Size() (n int) {
 	return n
 }
 
+func (m *ListProvidersRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Options != nil {
+		l = m.Options.Size()
+		n += 1 + l + sovPlatform(uint64(l))
+	}
+	l = len(m.OrganizationId)
+	if l > 0 {
+		n += 1 + l + sovPlatform(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *Region) Size() (n int) {
 	if m == nil {
 		return 0
@@ -726,6 +967,30 @@ func (m *RegionList) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovPlatform(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *ListRegionsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Options != nil {
+		l = m.Options.Size()
+		n += 1 + l + sovPlatform(uint64(l))
+	}
+	l = len(m.ProviderId)
+	if l > 0 {
+		n += 1 + l + sovPlatform(uint64(l))
+	}
+	l = len(m.OrganizationId)
+	if l > 0 {
+		n += 1 + l + sovPlatform(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -926,6 +1191,128 @@ func (m *ProviderList) Unmarshal(dAtA []byte) error {
 			if err := m.Items[len(m.Items)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipPlatform(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthPlatform
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthPlatform
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ListProvidersRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowPlatform
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ListProvidersRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ListProvidersRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Options", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPlatform
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthPlatform
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthPlatform
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Options == nil {
+				m.Options = &v1.ListOptions{}
+			}
+			if err := m.Options.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OrganizationId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPlatform
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPlatform
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPlatform
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OrganizationId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -1184,6 +1571,160 @@ func (m *RegionList) Unmarshal(dAtA []byte) error {
 			if err := m.Items[len(m.Items)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipPlatform(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthPlatform
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthPlatform
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ListRegionsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowPlatform
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ListRegionsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ListRegionsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Options", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPlatform
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthPlatform
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthPlatform
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Options == nil {
+				m.Options = &v1.ListOptions{}
+			}
+			if err := m.Options.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ProviderId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPlatform
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPlatform
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPlatform
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ProviderId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OrganizationId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPlatform
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPlatform
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPlatform
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OrganizationId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

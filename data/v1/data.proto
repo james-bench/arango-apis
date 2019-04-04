@@ -75,7 +75,7 @@ service DataService {
     // Fetch all ArangoDB versions that are available for deployments.
     // Required permissions:
     // - None
-    rpc ListVersions(common.v1.ListOptions) returns (VersionList) {
+    rpc ListVersions(ListVersionsRequest) returns (VersionList) {
         option (google.api.http) = {
             get: "/api/data/v1/versions"
         };
@@ -258,6 +258,16 @@ message Version {
 // List of Versions.
 message VersionList {
     repeated Version items = 1;
+}
+
+// Request arguments for ListVersions.
+message ListVersionsRequest {
+    // Common list options
+    common.v1.ListOptions options = 1;
+    // If set, the result includes all versions for that are available for the
+    // organization identified by this ID.
+    // If not set, only versions are returned that are available to all organizations.
+    string organization_id = 2;    
 }
 
 // Request arguments for ListServersSpecLimits

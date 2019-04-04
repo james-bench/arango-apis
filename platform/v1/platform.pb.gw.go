@@ -34,7 +34,7 @@ var (
 )
 
 func request_PlatformService_ListProviders_0(ctx context.Context, marshaler runtime.Marshaler, client PlatformServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq v1.ListOptions
+	var protoReq ListProvidersRequest
 	var metadata runtime.ServerMetadata
 
 	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_PlatformService_ListProviders_0); err != nil {
@@ -74,11 +74,11 @@ func request_PlatformService_GetProvider_0(ctx context.Context, marshaler runtim
 }
 
 var (
-	filter_PlatformService_ListRegions_0 = &utilities.DoubleArray{Encoding: map[string]int{"context_id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+	filter_PlatformService_ListRegions_0 = &utilities.DoubleArray{Encoding: map[string]int{"provider_id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 )
 
 func request_PlatformService_ListRegions_0(ctx context.Context, marshaler runtime.Marshaler, client PlatformServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq v1.ListOptions
+	var protoReq ListRegionsRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -88,15 +88,15 @@ func request_PlatformService_ListRegions_0(ctx context.Context, marshaler runtim
 		_   = err
 	)
 
-	val, ok = pathParams["context_id"]
+	val, ok = pathParams["provider_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "context_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "provider_id")
 	}
 
-	protoReq.ContextId, err = runtime.String(val)
+	protoReq.ProviderId, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "context_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "provider_id", err)
 	}
 
 	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_PlatformService_ListRegions_0); err != nil {
@@ -261,7 +261,7 @@ var (
 
 	pattern_PlatformService_GetProvider_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "platform", "v1", "providers", "id"}, ""))
 
-	pattern_PlatformService_ListRegions_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "platform", "v1", "providers", "context_id", "regions"}, ""))
+	pattern_PlatformService_ListRegions_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "platform", "v1", "providers", "provider_id", "regions"}, ""))
 
 	pattern_PlatformService_GetRegion_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "platform", "v1", "regions", "id"}, ""))
 )

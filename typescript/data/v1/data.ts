@@ -181,6 +181,19 @@ export interface DeploymentList {
   budget?: arangodb_cloud_common_v1_Budget;
 }
 
+// Request arguments for ListVersions.
+export interface ListVersionsRequest {
+  // Common list options
+  // arangodb.cloud.common.v1.ListOptions
+  options?: arangodb_cloud_common_v1_ListOptions;
+  
+  // If set, the result includes all versions for that are available for the
+  // organization identified by this ID.
+  // If not set, only versions are returned that are available to all organizations.
+  // string
+  organization_id?: string;
+}
+
 // Limits of allowed values for fields of Deployment.ServersSpec.
 export interface ServersSpecLimits {
   // Limits for the number of coordinators of the deployment
@@ -333,7 +346,7 @@ export class DataService {
   // Fetch all ArangoDB versions that are available for deployments.
   // Required permissions:
   // - None
-  async ListVersions(req: arangodb_cloud_common_v1_ListOptions): Promise<VersionList> {
+  async ListVersions(req: ListVersionsRequest): Promise<VersionList> {
     const path = `/api/data/v1/versions`;
     const url = path + api.queryString(req, []);
     return api.get(url, undefined);
