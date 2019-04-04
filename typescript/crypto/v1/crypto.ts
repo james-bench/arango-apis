@@ -67,15 +67,11 @@ export interface CACertificate {
   is_deleted?: boolean;
 }
 
-// Instructions for installing CA certificates
+// Instructions for installing & uninstalling CA certificates
 export interface CACertificateInstructions {
-  // Per platform instructions for install of the CA certificate
+  // Per platform instructions for install/uninstall of the CA certificate
   // CACertificateInstructions_PlatformInstructions
-  install?: CACertificateInstructions_PlatformInstructions[];
-  
-  // Per platform instructions for uninstall of the CA certificate
-  // CACertificateInstructions_PlatformInstructions
-  uninstall?: CACertificateInstructions_PlatformInstructions[];
+  platforms?: CACertificateInstructions_PlatformInstructions[];
 }
 
 // Instructions for a specific platform
@@ -85,9 +81,13 @@ export interface CACertificateInstructions_PlatformInstructions {
   // string
   platform?: string;
   
-  // Steps needed to install/uninstall
+  // Steps needed to install
   // string
-  steps?: string[];
+  install_steps?: string[];
+  
+  // Steps needed to uninstall
+  // string
+  uninstall_steps?: string[];
 }
 
 // List of CACertificates.

@@ -122,19 +122,19 @@ message CACertificateList {
     repeated CACertificate items = 1;
 }
 
-// Instructions for installing CA certificates
+// Instructions for installing & uninstalling CA certificates
 message CACertificateInstructions {
     // Instructions for a specific platform
     message PlatformInstructions {
         // Human readable description of platform.
         // E.g. "MacOS"
         string platform = 1;
-        // Steps needed to install/uninstall
-        repeated string steps = 2;
+        // Steps needed to install
+        repeated string install_steps = 2;
+        // Steps needed to uninstall
+        repeated string uninstall_steps = 3;
     }
 
-    // Per platform instructions for install of the CA certificate
-    repeated PlatformInstructions install = 1;
-    // Per platform instructions for uninstall of the CA certificate
-    repeated PlatformInstructions uninstall = 2;
+    // Per platform instructions for install/uninstall of the CA certificate
+    repeated PlatformInstructions platforms = 1;
 }

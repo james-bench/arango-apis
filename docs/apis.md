@@ -473,13 +473,12 @@ TLS certificates for deployments &amp; client authentication.
 <a name="arangodb.cloud.crypto.v1.CACertificateInstructions"></a>
 
 ### CACertificateInstructions
-Instructions for installing CA certificates
+Instructions for installing &amp; uninstalling CA certificates
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| install | [CACertificateInstructions.PlatformInstructions](#arangodb.cloud.crypto.v1.CACertificateInstructions.PlatformInstructions) | repeated | Per platform instructions for install of the CA certificate |
-| uninstall | [CACertificateInstructions.PlatformInstructions](#arangodb.cloud.crypto.v1.CACertificateInstructions.PlatformInstructions) | repeated | Per platform instructions for uninstall of the CA certificate |
+| platforms | [CACertificateInstructions.PlatformInstructions](#arangodb.cloud.crypto.v1.CACertificateInstructions.PlatformInstructions) | repeated | Per platform instructions for install/uninstall of the CA certificate |
 
 
 
@@ -495,7 +494,8 @@ Instructions for a specific platform
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | platform | [string](#string) |  | Human readable description of platform. E.g. &#34;MacOS&#34; |
-| steps | [string](#string) | repeated | Steps needed to install/uninstall |
+| install_steps | [string](#string) | repeated | Steps needed to install |
+| uninstall_steps | [string](#string) | repeated | Steps needed to uninstall |
 
 
 
