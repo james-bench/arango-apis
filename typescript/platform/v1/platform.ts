@@ -10,6 +10,36 @@ import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../commo
 // File: platform/v1/platform.proto
 // Package: arangodb.cloud.platform.v1
 
+// Request arguments for ListProviders
+export interface ListProvidersRequest {
+  // Common list options
+  // arangodb.cloud.common.v1.ListOptions
+  options?: arangodb_cloud_common_v1_ListOptions;
+  
+  // If set, the result includes all providers for that are available for the
+  // organization identified by this ID.
+  // If not set, only providers are returned that are available to all organizations.
+  // string
+  organization_id?: string;
+}
+
+// Request arguments for ListRegions
+export interface ListRegionsRequest {
+  // Common list options
+  // arangodb.cloud.common.v1.ListOptions
+  options?: arangodb_cloud_common_v1_ListOptions;
+  
+  // Required identifier of the provider to list regions for.
+  // string
+  provider_id?: string;
+  
+  // If set, the result includes all regions for that are available for the
+  // organization identified by this ID.
+  // If not set, only regions are returned that are available to all organizations.
+  // string
+  organization_id?: string;
+}
+
 // Provider represents a specific cloud provider such as AWS or GCP.
 export interface Provider {
   // System identifier of the provider.
@@ -57,7 +87,7 @@ export class PlatformService {
   // Fetch all providers that are supported by the ArangoDB cloud.
   // Required permissions:
   // - None
-  async ListProviders(req: arangodb_cloud_common_v1_ListOptions): Promise<ProviderList> {
+  async ListProviders(req: ListProvidersRequest): Promise<ProviderList> {
     const path = `/api/platform/v1/providers`;
     const url = path + api.queryString(req, []);
     return api.get(url, undefined);
@@ -73,11 +103,14 @@ export class PlatformService {
   }
   
   // Fetch all regions provided by the provided identified by the given context ID.
+  // If the given context identifier contains a valid organization ID,
+  // the result includes all regions for that organization.
+  // Otherwise only regions are returned that are available to all organizations.
   // Required permissions:
   // - None
-  async ListRegions(req: arangodb_cloud_common_v1_ListOptions): Promise<RegionList> {
-    const path = `/api/platform/v1/providers/${encodeURIComponent(req.context_id || '')}/regions`;
-    const url = path + api.queryString(req, [`context_id`]);
+  async ListRegions(req: ListRegionsRequest): Promise<RegionList> {
+    const path = `/api/platform/v1/providers/${encodeURIComponent(req.provider_id || '')}/regions`;
+    const url = path + api.queryString(req, [`provider_id`]);
     return api.get(url, undefined);
   }
   

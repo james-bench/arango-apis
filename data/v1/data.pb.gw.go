@@ -193,7 +193,7 @@ var (
 )
 
 func request_DataService_ListVersions_0(ctx context.Context, marshaler runtime.Marshaler, client DataServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq v1.ListOptions
+	var protoReq ListVersionsRequest
 	var metadata runtime.ServerMetadata
 
 	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_DataService_ListVersions_0); err != nil {

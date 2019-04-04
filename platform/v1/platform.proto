@@ -21,7 +21,7 @@ service PlatformService {
     // Fetch all providers that are supported by the ArangoDB cloud.
     // Required permissions:
     // - None
-    rpc ListProviders(common.v1.ListOptions) returns (ProviderList) {
+    rpc ListProviders(ListProvidersRequest) returns (ProviderList) {
         option (google.api.http) = {
             get: "/api/platform/v1/providers"
         };
@@ -37,11 +37,14 @@ service PlatformService {
     }
 
     // Fetch all regions provided by the provided identified by the given context ID.
+    // If the given context identifier contains a valid organization ID,
+    // the result includes all regions for that organization.
+    // Otherwise only regions are returned that are available to all organizations.
     // Required permissions:
     // - None
-    rpc ListRegions(common.v1.ListOptions) returns (RegionList) {
+    rpc ListRegions(ListRegionsRequest) returns (RegionList) {
         option (google.api.http) = {
-            get: "/api/platform/v1/providers/{context_id}/regions"
+            get: "/api/platform/v1/providers/{provider_id}/regions"
         };
     }
 
@@ -68,6 +71,16 @@ message ProviderList {
     repeated Provider items = 1;
 }
 
+// Request arguments for ListProviders
+message ListProvidersRequest {
+    // Common list options
+    common.v1.ListOptions options = 1;
+    // If set, the result includes all providers for that are available for the
+    // organization identified by this ID.
+    // If not set, only providers are returned that are available to all organizations.
+    string organization_id = 2;
+}
+
 // Region represents a geographical region in which deployments are run.
 message Region {
     // System identifier of the region.
@@ -83,4 +96,16 @@ message Region {
 // List of regions.
 message RegionList {
     repeated Region items = 1;
+}
+
+// Request arguments for ListRegions
+message ListRegionsRequest {
+    // Common list options
+    common.v1.ListOptions options = 1;
+    // Required identifier of the provider to list regions for.
+    string provider_id = 2;
+    // If set, the result includes all regions for that are available for the
+    // organization identified by this ID.
+    // If not set, only regions are returned that are available to all organizations.
+    string organization_id = 3;
 }
