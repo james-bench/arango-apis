@@ -27,6 +27,8 @@
 
 - [crypto/v1/crypto.proto](#crypto/v1/crypto.proto)
     - [CACertificate](#arangodb.cloud.crypto.v1.CACertificate)
+    - [CACertificateInstructions](#arangodb.cloud.crypto.v1.CACertificateInstructions)
+    - [CACertificateInstructions.PlatformInstructions](#arangodb.cloud.crypto.v1.CACertificateInstructions.PlatformInstructions)
     - [CACertificateList](#arangodb.cloud.crypto.v1.CACertificateList)
   
   
@@ -468,6 +470,38 @@ TLS certificates for deployments &amp; client authentication.
 
 
 
+<a name="arangodb.cloud.crypto.v1.CACertificateInstructions"></a>
+
+### CACertificateInstructions
+Instructions for installing CA certificates
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| install | [CACertificateInstructions.PlatformInstructions](#arangodb.cloud.crypto.v1.CACertificateInstructions.PlatformInstructions) | repeated | Per platform instructions for install of the CA certificate |
+| uninstall | [CACertificateInstructions.PlatformInstructions](#arangodb.cloud.crypto.v1.CACertificateInstructions.PlatformInstructions) | repeated | Per platform instructions for uninstall of the CA certificate |
+
+
+
+
+
+
+<a name="arangodb.cloud.crypto.v1.CACertificateInstructions.PlatformInstructions"></a>
+
+### CACertificateInstructions.PlatformInstructions
+Instructions for a specific platform
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| platform | [string](#string) |  | Human readable description of platform. E.g. &#34;MacOS&#34; |
+| steps | [string](#string) | repeated | Steps needed to install/uninstall |
+
+
+
+
+
+
 <a name="arangodb.cloud.crypto.v1.CACertificateList"></a>
 
 ### CACertificateList
@@ -498,6 +532,7 @@ CryptoService is the API used to configure various crypto objects.
 | ----------- | ------------ | ------------- | ------------|
 | ListCACertificates | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [CACertificateList](#arangodb.cloud.crypto.v1.CACertificateList) | Fetch all CA certificates in the project identified by the given context ID. Required permissions: - crypto.cacertificate.list on the project identified by the given context ID |
 | GetCACertificate | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | Fetch a CA certificate by its id. Required permissions: - crypto.cacertificate.get on the CA certificate identified by the given ID |
+| GetCACertificateInstructionsList | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [CACertificateInstructions](#arangodb.cloud.crypto.v1.CACertificateInstructions) | Fetch instructions for installing a CA certificate identified by its id on various platforms. Required permissions: - crypto.cacertificate.get on the CA certificate identified by the given ID |
 | CreateCACertificate | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | Create a new CA certificate Required permissions: - crypto.cacertificate.create on the project that owns the CA certificate |
 | UpdateCACertificate | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | Update a CA certificate Required permissions: - crypto.cacertificate.update on the CA certificate |
 | DeleteCACertificate | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a CA certificate Note that CA certificate are initially only marked for deleted. Once all the resources that depend on it are removed the CA certificate itself is deleted and cannot be restored. Required permissions: - crypto.cacertificate.delete on the CA certificate |

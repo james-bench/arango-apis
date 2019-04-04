@@ -67,6 +67,29 @@ export interface CACertificate {
   is_deleted?: boolean;
 }
 
+// Instructions for installing CA certificates
+export interface CACertificateInstructions {
+  // Per platform instructions for install of the CA certificate
+  // CACertificateInstructions_PlatformInstructions
+  install?: CACertificateInstructions_PlatformInstructions[];
+  
+  // Per platform instructions for uninstall of the CA certificate
+  // CACertificateInstructions_PlatformInstructions
+  uninstall?: CACertificateInstructions_PlatformInstructions[];
+}
+
+// Instructions for a specific platform
+export interface CACertificateInstructions_PlatformInstructions {
+  // Human readable description of platform.
+  // E.g. "MacOS"
+  // string
+  platform?: string;
+  
+  // Steps needed to install/uninstall
+  // string
+  steps?: string[];
+}
+
 // List of CACertificates.
 export interface CACertificateList {
   // CACertificate
@@ -89,6 +112,16 @@ export class CryptoService {
   // - crypto.cacertificate.get on the CA certificate identified by the given ID
   async GetCACertificate(req: arangodb_cloud_common_v1_IDOptions): Promise<CACertificate> {
     const path = `/api/crypto/v1/cacertificates/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch instructions for installing a CA certificate identified by its id
+  // on various platforms.
+  // Required permissions:
+  // - crypto.cacertificate.get on the CA certificate identified by the given ID
+  async GetCACertificateInstructionsList(req: arangodb_cloud_common_v1_IDOptions): Promise<CACertificateInstructions> {
+    const path = `/api/crypto/v1/cacertificates/${encodeURIComponent(req.id || '')}/instructions`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
