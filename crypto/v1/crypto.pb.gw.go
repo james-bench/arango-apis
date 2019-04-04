@@ -91,7 +91,7 @@ func request_CryptoService_GetCACertificate_0(ctx context.Context, marshaler run
 
 }
 
-func request_CryptoService_GetCACertificateInstructionsList_0(ctx context.Context, marshaler runtime.Marshaler, client CryptoServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_CryptoService_GetCACertificateInstructions_0(ctx context.Context, marshaler runtime.Marshaler, client CryptoServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq v1.IDOptions
 	var metadata runtime.ServerMetadata
 
@@ -113,7 +113,7 @@ func request_CryptoService_GetCACertificateInstructionsList_0(ctx context.Contex
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
-	msg, err := client.GetCACertificateInstructionsList(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.GetCACertificateInstructions(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
@@ -293,7 +293,7 @@ func RegisterCryptoServiceHandlerClient(ctx context.Context, mux *runtime.ServeM
 
 	})
 
-	mux.Handle("GET", pattern_CryptoService_GetCACertificateInstructionsList_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_CryptoService_GetCACertificateInstructions_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -302,14 +302,14 @@ func RegisterCryptoServiceHandlerClient(ctx context.Context, mux *runtime.ServeM
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CryptoService_GetCACertificateInstructionsList_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CryptoService_GetCACertificateInstructions_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_CryptoService_GetCACertificateInstructionsList_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CryptoService_GetCACertificateInstructions_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -381,7 +381,7 @@ var (
 
 	pattern_CryptoService_GetCACertificate_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "crypto", "v1", "cacertificates", "id"}, ""))
 
-	pattern_CryptoService_GetCACertificateInstructionsList_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "crypto", "v1", "cacertificates", "id", "instructions"}, ""))
+	pattern_CryptoService_GetCACertificateInstructions_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "crypto", "v1", "cacertificates", "id", "instructions"}, ""))
 
 	pattern_CryptoService_CreateCACertificate_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "crypto", "v1", "projects", "project_id", "cacertificates"}, ""))
 
@@ -395,7 +395,7 @@ var (
 
 	forward_CryptoService_GetCACertificate_0 = runtime.ForwardResponseMessage
 
-	forward_CryptoService_GetCACertificateInstructionsList_0 = runtime.ForwardResponseMessage
+	forward_CryptoService_GetCACertificateInstructions_0 = runtime.ForwardResponseMessage
 
 	forward_CryptoService_CreateCACertificate_0 = runtime.ForwardResponseMessage
 

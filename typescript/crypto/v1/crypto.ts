@@ -116,11 +116,11 @@ export class CryptoService {
     return api.get(url, undefined);
   }
   
-  // Fetch instructions for installing a CA certificate identified by its id
+  // Fetch instructions for installing & unistalling a CA certificate identified by its id
   // on various platforms.
   // Required permissions:
   // - crypto.cacertificate.get on the CA certificate identified by the given ID
-  async GetCACertificateInstructionsList(req: arangodb_cloud_common_v1_IDOptions): Promise<CACertificateInstructions> {
+  async GetCACertificateInstructions(req: arangodb_cloud_common_v1_IDOptions): Promise<CACertificateInstructions> {
     const path = `/api/crypto/v1/cacertificates/${encodeURIComponent(req.id || '')}/instructions`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);

@@ -38,11 +38,11 @@ service CryptoService {
         };
     }
 
-    // Fetch instructions for installing a CA certificate identified by its id
+    // Fetch instructions for installing & unistalling a CA certificate identified by its id
     // on various platforms.
     // Required permissions:
     // - crypto.cacertificate.get on the CA certificate identified by the given ID
-    rpc GetCACertificateInstructionsList(common.v1.IDOptions) returns (CACertificateInstructions) {
+    rpc GetCACertificateInstructions(common.v1.IDOptions) returns (CACertificateInstructions) {
         option (google.api.http) = {
             get: "/api/crypto/v1/cacertificates/{id}/instructions"
         };
