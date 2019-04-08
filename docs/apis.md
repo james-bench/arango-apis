@@ -96,6 +96,7 @@
 
 - [data/v1/data.proto](#data/v1/data.proto)
     - [Deployment](#arangodb.cloud.data.v1.Deployment)
+    - [Deployment.AuthenticationSpec](#arangodb.cloud.data.v1.Deployment.AuthenticationSpec)
     - [Deployment.CertificateSpec](#arangodb.cloud.data.v1.Deployment.CertificateSpec)
     - [Deployment.Expiration](#arangodb.cloud.data.v1.Deployment.Expiration)
     - [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec)
@@ -1224,8 +1225,24 @@ A Deployment is represents one deployment of an ArangoDB cluster.
 | version | [string](#string) |  | ArangoDB version to use for this deployment. See Version.version. If you change this value to a higher version, the deployment will be upgraded. If you change this value to a lower patch value, the deployment will be downgraded. Any attempt to change to a lower minor or major version is considered an invalid request. Any attempt to change to a version that is not in the list of available versions is considered an invalid request. |
 | certificates | [Deployment.CertificateSpec](#arangodb.cloud.data.v1.Deployment.CertificateSpec) |  |  |
 | servers | [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  |  |
+| authentication | [Deployment.AuthenticationSpec](#arangodb.cloud.data.v1.Deployment.AuthenticationSpec) |  |  |
 | status | [Deployment.Status](#arangodb.cloud.data.v1.Deployment.Status) |  |  |
 | expiration | [Deployment.Expiration](#arangodb.cloud.data.v1.Deployment.Expiration) |  |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.Deployment.AuthenticationSpec"></a>
+
+### Deployment.AuthenticationSpec
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| root_password | [string](#string) |  | Password of the root user of the deployment. |
 
 
 

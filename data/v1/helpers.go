@@ -20,6 +20,14 @@ func DeploymentStatusEqual(a, b *Deployment_Status) bool {
 		strings.Join(a.GetServerVersions(), ",") == strings.Join(b.GetServerVersions(), ",")
 }
 
+// GetOrCreateAuthentication returns the Authentication field, creating it if needed.
+func (d *Deployment) GetOrCreateAuthentication() *Deployment_AuthenticationSpec {
+	if d.GetAuthentication() == nil {
+		d.Authentication = &Deployment_AuthenticationSpec{}
+	}
+	return d.GetAuthentication()
+}
+
 // GetOrCreateCertificates returns the Certificates field, creating it if needed.
 func (d *Deployment) GetOrCreateCertificates() *Deployment_CertificateSpec {
 	if d.GetCertificates() == nil {
