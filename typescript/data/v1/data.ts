@@ -76,11 +76,19 @@ export interface Deployment {
   // Deployment_ServersSpec
   servers?: Deployment_ServersSpec;
   
+  // Deployment_AuthenticationSpec
+  authentication?: Deployment_AuthenticationSpec;
+  
   // Deployment_Status
   status?: Deployment_Status;
   
   // Deployment_Expiration
   expiration?: Deployment_Expiration;
+}
+export interface Deployment_AuthenticationSpec {
+  // Password of the root user of the deployment.
+  // string
+  root_password?: string;
 }
 export interface Deployment_CertificateSpec {
   // Identifier of the CACertificate used to sign TLS certificates for the deployment.

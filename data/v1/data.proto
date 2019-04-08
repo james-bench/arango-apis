@@ -176,6 +176,12 @@ message Deployment {
     }
     ServersSpec servers = 103;
 
+    message AuthenticationSpec {
+        // Password of the root user of the deployment.
+        string root_password = 1;
+    }
+    AuthenticationSpec authentication = 104;
+
     // Status of the deployment
     // All members of this field are read-only.
     message Status {
