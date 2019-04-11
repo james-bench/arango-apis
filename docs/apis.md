@@ -99,6 +99,7 @@
     - [Deployment.AuthenticationSpec](#arangodb.cloud.data.v1.Deployment.AuthenticationSpec)
     - [Deployment.CertificateSpec](#arangodb.cloud.data.v1.Deployment.CertificateSpec)
     - [Deployment.Expiration](#arangodb.cloud.data.v1.Deployment.Expiration)
+    - [Deployment.ServerStatus](#arangodb.cloud.data.v1.Deployment.ServerStatus)
     - [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec)
     - [Deployment.Status](#arangodb.cloud.data.v1.Deployment.Status)
     - [DeploymentList](#arangodb.cloud.data.v1.DeploymentList)
@@ -1284,6 +1285,27 @@ All members of this message are read-only.
 
 
 
+<a name="arangodb.cloud.data.v1.Deployment.ServerStatus"></a>
+
+### Deployment.ServerStatus
+Status of a single server (of the ArangoDB cluster)
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | ID of the server |
+| type | [string](#string) |  | Type of server (agent|coordinator|dbserver) |
+| description | [string](#string) |  | Human readable description of the status of the deployment. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the server |
+| ready | [bool](#bool) |  | Set once the server is ready |
+| member_of_cluster | [bool](#bool) |  | Set once the server has been known to be a member of the cluster |
+| failed | [bool](#bool) |  | Set if the server is in a failed state |
+
+
+
+
+
+
 <a name="arangodb.cloud.data.v1.Deployment.ServersSpec"></a>
 
 ### Deployment.ServersSpec
@@ -1318,6 +1340,7 @@ All members of this field are read-only.
 | ready | [bool](#bool) |  | Set if the deployment is ready to be used. If the deployment has downtime (e.g. because of changing a CA certificate) this will go to false until the downtime is over. |
 | upgrading | [bool](#bool) |  | Set if the deployment is being upgraded. |
 | server_versions | [string](#string) | repeated | Versions of running servers |
+| servers | [Deployment.ServerStatus](#arangodb.cloud.data.v1.Deployment.ServerStatus) | repeated | Status of individual servers of the deployment |
 
 
 

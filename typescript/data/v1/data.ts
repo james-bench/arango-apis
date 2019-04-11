@@ -125,6 +125,37 @@ export interface Deployment_Expiration {
   // string
   last_warning_email_send_to?: string[];
 }
+
+// Status of a single server (of the ArangoDB cluster)
+export interface Deployment_ServerStatus {
+  // ID of the server
+  // string
+  id?: string;
+  
+  // Type of server (agent|coordinator|dbserver)
+  // string
+  type?: string;
+  
+  // Human readable description of the status of the deployment.
+  // string
+  description?: string;
+  
+  // The creation timestamp of the server
+  // googleTypes.Timestamp
+  created_at?: googleTypes.Timestamp;
+  
+  // Set once the server is ready
+  // boolean
+  ready?: boolean;
+  
+  // Set once the server has been known to be a member of the cluster
+  // boolean
+  member_of_cluster?: boolean;
+  
+  // Set if the server is in a failed state
+  // boolean
+  failed?: boolean;
+}
 export interface Deployment_ServersSpec {
   // Number of coordinators of the deployment
   // number
@@ -176,6 +207,10 @@ export interface Deployment_Status {
   // Versions of running servers
   // string
   server_versions?: string[];
+  
+  // Status of individual servers of the deployment
+  // Deployment_ServerStatus
+  servers?: Deployment_ServerStatus[];
 }
 
 // List of Deployments.
