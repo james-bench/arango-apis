@@ -182,6 +182,24 @@ message Deployment {
     }
     AuthenticationSpec authentication = 104;
 
+    // Status of a single server (of the ArangoDB cluster)
+    message ServerStatus {
+        // ID of the server
+        string id = 1;
+        // Type of server (agent|coordinator|dbserver)
+        string type = 2;
+        // Human readable description of the status of the deployment.
+        string description = 3;
+        // The creation timestamp of the server
+        google.protobuf.Timestamp created_at = 4;
+        // Set once the server is ready
+        bool ready = 5;
+        // Set once the server has been known to be a member of the cluster
+        bool member_of_cluster = 6;
+        // Set if the server is in a failed state
+        bool failed = 7;
+    }
+
     // Status of the deployment
     // All members of this field are read-only.
     message Status {
@@ -200,6 +218,8 @@ message Deployment {
         bool upgrading = 5;
         // Versions of running servers
         repeated string server_versions = 6;
+        // Status of individual servers of the deployment
+        repeated ServerStatus servers = 7;
     }
     Status status = 201;
 
