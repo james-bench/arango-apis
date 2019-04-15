@@ -88,6 +88,7 @@
     - [RoleBindingsRequest](#arangodb.cloud.iam.v1.RoleBindingsRequest)
     - [RoleList](#arangodb.cloud.iam.v1.RoleList)
     - [User](#arangodb.cloud.iam.v1.User)
+    - [VerifyUserMobilePhoneRequest](#arangodb.cloud.iam.v1.VerifyUserMobilePhoneRequest)
   
   
   
@@ -1147,12 +1148,33 @@ User represents an actual person.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | id | [string](#string) |  | Identifier of the user. This is a read-only value. |
-| email | [string](#string) |  | Primary email address of the user. All emails send to this user will use this address. |
+| email | [string](#string) |  | Primary email address of the user. All emails send to this user will use this address. This is a read-only value. |
 | name | [string](#string) |  | Name of the user. This may be empty if not filled out by the user. |
 | given_name | [string](#string) |  | Given name of the user. This may be empty if not filled out by the user. |
 | family_name | [string](#string) |  | Family name of the user. This may be empty if not filled out by the user. |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the user. |
-| additional_emails | [string](#string) | repeated | Additional email addresses of the user. This will be filled in when the authentication provided knows multiple email addresses for the user. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the user. This is a read-only value. |
+| additional_emails | [string](#string) | repeated | Additional email addresses of the user. This will be filled in when the authentication provided knows multiple email addresses for the user. This is a read-only value. |
+| mobile_phone | [string](#string) |  | Mobile phone number of the user. This value must be unique globally.
+
+This field will not be filled, unless: - The currently authenticated user is this user - The currently authenticated user has `iam.user.get-personal-data` permission on the organization that user is a member of.
+
+This value can only be changed to a non-empty value. If changed, the new number has to be verified again. |
+| mobile_phone_verified | [bool](#bool) |  | Set when the mobile phone number has been successfully verified. This is a read-only value. |
+
+
+
+
+
+
+<a name="arangodb.cloud.iam.v1.VerifyUserMobilePhoneRequest"></a>
+
+### VerifyUserMobilePhoneRequest
+Request arguments for VerifyUserMobilePhone
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| code | [string](#string) |  | Code that was send to the mobile phone number. |
 
 
 
@@ -1173,7 +1195,10 @@ IAMService is the API used to configure IAM objects.
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
 | GetThisUser | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [User](#arangodb.cloud.iam.v1.User) | Fetch all available information of the currently authenticated user. Required permissions: - None |
-| GetUser | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [User](#arangodb.cloud.iam.v1.User) | Fetch all available information of the user identified by the given ID. Required permissions: - resourcemanager.organization.get on one of the organizations that the request user and authenticated user are both a member of |
+| GetUser | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [User](#arangodb.cloud.iam.v1.User) | Fetch all available information of the user identified by the given ID. Required permissions: - resourcemanager.organization.get on one of the organizations that the requested user and authenticated user are both a member of |
+| UpdateUser | [User](#arangodb.cloud.iam.v1.User) | [User](#arangodb.cloud.iam.v1.User) | Update a user Required permissions: - None if the given user is the authenticated user. or - resourcemanager.organization.get on one of the organizations that the requested user and authenticated user are both a member of - iam.user.update on organization on one of the organizations that the requested user and authenticated user are both a member of |
+| VerifyUserMobilePhone | [VerifyUserMobilePhoneRequest](#arangodb.cloud.iam.v1.VerifyUserMobilePhoneRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Verify the mobile phone number of a user, by provided the unique code that was send to the number. If the code is valid an empty result is returned, otherwise an InvalidArgument error is returned. The authenticated user is always the subject of this request. |
+| ResendUserMobilePhoneVerification | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Resend a verification code to the mobile phone number listed for the authenticated user. |
 | ListGroups | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [GroupList](#arangodb.cloud.iam.v1.GroupList) | Fetch all groups of the organization identified by the given context ID. Required permissions: - iam.group.list on organization identified by given context ID. |
 | GetGroup | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Group](#arangodb.cloud.iam.v1.Group) | Fetch a group by its id. Required permissions: - iam.group.get on organization that owns the group |
 | CreateGroup | [Group](#arangodb.cloud.iam.v1.Group) | [Group](#arangodb.cloud.iam.v1.Group) | Create a group Required permissions: - iam.group.create on organization that owns the group |

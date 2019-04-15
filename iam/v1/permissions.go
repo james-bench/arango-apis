@@ -46,3 +46,14 @@ const (
 	// PermissionPolicyUpdate is needed for updating a policy on a resource
 	PermissionPolicyUpdate = "iam.policy.update"
 )
+
+const (
+	// User permissions
+
+	// PermissionUserGetPersonalData is needed for fetching a personal data such as
+	// mobile phone number for a user that is not the currently authenticated user.
+	PermissionUserGetPersonalData = "iam.user.get-personal-data"
+	// PermissionUserUpdate is needed to update the data of a user (other
+	// than the currently authenticated user).
+	PermissionUserUpdate = "iam.user.update"
+)
