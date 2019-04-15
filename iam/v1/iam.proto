@@ -54,6 +54,8 @@ service IAMService {
     // code that was send to the number.
     // If the code is valid an empty result is returned, otherwise an InvalidArgument error is returned.
     // The authenticated user is always the subject of this request.
+    // Required permissions:
+    // - None (since the subject is always the authenticated user).
     rpc VerifyUserMobilePhone(VerifyUserMobilePhoneRequest) returns (common.v1.Empty) {
         option (google.api.http) = {
             post: "/api/iam/v1/user-mobile-phone/verify"
@@ -63,6 +65,8 @@ service IAMService {
 
     // Resend a verification code to the mobile phone number listed for the
     // authenticated user.
+    // Required permissions:
+    // - None (since the subject is always the authenticated user).
     rpc ResendUserMobilePhoneVerification(common.v1.Empty) returns (common.v1.Empty) {
         option (google.api.http) = {
             post: "/api/iam/v1/user-mobile-phone/resend"
