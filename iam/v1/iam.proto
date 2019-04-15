@@ -30,10 +30,47 @@ service IAMService {
 
     // Fetch all available information of the user identified by the given ID.
     // Required permissions:
-    // - resourcemanager.organization.get on one of the organizations that the request user and authenticated user are both a member of
+    // - resourcemanager.organization.get on one of the organizations that the requested user and authenticated user are both a member of
     rpc GetUser(common.v1.IDOptions) returns (User) {
         option (google.api.http) = {
             get: "/api/iam/v1/users/{id}"
+        };
+    }
+
+    // Update a user
+    // Required permissions:
+    // - None if the given user is the authenticated user.
+    // or
+    // - resourcemanager.organization.get on one of the organizations that the requested user and authenticated user are both a member of and
+    // - iam.user.update on organization on one of the organizations that the requested user and authenticated user are both a member of
+    rpc UpdateUser(User) returns (User) {
+        option (google.api.http) = {
+            patch: "/api/iam/v1/users/{id}"
+            body: "*"
+        };
+    }
+
+    // Verify the mobile phone number of a user, by provided the unique
+    // code that was send to the number.
+    // If the code is valid an empty result is returned, otherwise an InvalidArgument error is returned.
+    // The authenticated user is always the subject of this request.
+    // Required permissions:
+    // - None (since the subject is always the authenticated user).
+    rpc VerifyUserMobilePhone(VerifyUserMobilePhoneRequest) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            post: "/api/iam/v1/user-mobile-phone/verify"
+            body: "*"
+        };
+    }
+
+    // Resend a verification code to the mobile phone number listed for the
+    // authenticated user.
+    // Required permissions:
+    // - None (since the subject is always the authenticated user).
+    rpc ResendUserMobilePhoneVerification(common.v1.Empty) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            post: "/api/iam/v1/user-mobile-phone/resend"
+            body: "*"
         };
     }
 
@@ -236,6 +273,7 @@ message User {
     string id = 1;
     // Primary email address of the user.
     // All emails send to this user will use this address.
+    // This is a read-only value.
     string email = 2;
     // Name of the user.
     // This may be empty if not filled out by the user.
@@ -247,11 +285,33 @@ message User {
     // This may be empty if not filled out by the user.
     string family_name = 5;
     // The creation timestamp of the user.
+    // This is a read-only value.
     google.protobuf.Timestamp created_at = 6;
     // Additional email addresses of the user.
     // This will be filled in when the authentication provided
     // knows multiple email addresses for the user.
+    // This is a read-only value.
     repeated string additional_emails = 7;
+    // Mobile phone number of the user.
+    // This value must be unique globally.
+    //
+    // This field will not be filled, unless:
+    // - The currently authenticated user is this user
+    // - The currently authenticated user has `iam.user.get-personal-data` permission 
+    //   on the organization that user is a member of.
+    // 
+    // This value can only be changed to a non-empty value.
+    // If changed, the new number has to be verified again.
+    string mobile_phone = 8;
+    // Set when the mobile phone number has been successfully verified.
+    // This is a read-only value.
+    bool mobile_phone_verified = 9;
+}
+
+// Request arguments for VerifyUserMobilePhone
+message VerifyUserMobilePhoneRequest {
+    // Code that was send to the mobile phone number.
+    string code = 1;
 }
 
 // Group of user accounts.

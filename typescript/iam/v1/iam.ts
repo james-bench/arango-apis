@@ -213,6 +213,7 @@ export interface User {
   
   // Primary email address of the user.
   // All emails send to this user will use this address.
+  // This is a read-only value.
   // string
   email?: string;
   
@@ -232,14 +233,39 @@ export interface User {
   family_name?: string;
   
   // The creation timestamp of the user.
+  // This is a read-only value.
   // googleTypes.Timestamp
   created_at?: googleTypes.Timestamp;
   
   // Additional email addresses of the user.
   // This will be filled in when the authentication provided
   // knows multiple email addresses for the user.
+  // This is a read-only value.
   // string
   additional_emails?: string[];
+  
+  // Mobile phone number of the user.
+  // This value must be unique globally.
+  // This field will not be filled, unless:
+  // - The currently authenticated user is this user
+  // - The currently authenticated user has `iam.user.get-personal-data` permission
+  // on the organization that user is a member of.
+  // This value can only be changed to a non-empty value.
+  // If changed, the new number has to be verified again.
+  // string
+  mobile_phone?: string;
+  
+  // Set when the mobile phone number has been successfully verified.
+  // This is a read-only value.
+  // boolean
+  mobile_phone_verified?: boolean;
+}
+
+// Request arguments for VerifyUserMobilePhone
+export interface VerifyUserMobilePhoneRequest {
+  // Code that was send to the mobile phone number.
+  // string
+  code?: string;
 }
 
 // IAMService is the API used to configure IAM objects.
@@ -255,11 +281,42 @@ export class IAMService {
   
   // Fetch all available information of the user identified by the given ID.
   // Required permissions:
-  // - resourcemanager.organization.get on one of the organizations that the request user and authenticated user are both a member of
+  // - resourcemanager.organization.get on one of the organizations that the requested user and authenticated user are both a member of
   async GetUser(req: arangodb_cloud_common_v1_IDOptions): Promise<User> {
     const path = `/api/iam/v1/users/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
+  }
+  
+  // Update a user
+  // Required permissions:
+  // - None if the given user is the authenticated user.
+  // or
+  // - resourcemanager.organization.get on one of the organizations that the requested user and authenticated user are both a member of and
+  // - iam.user.update on organization on one of the organizations that the requested user and authenticated user are both a member of
+  async UpdateUser(req: User): Promise<User> {
+    const url = `/api/iam/v1/users/${encodeURIComponent(req.id || '')}`;
+    return api.patch(url, req);
+  }
+  
+  // Verify the mobile phone number of a user, by provided the unique
+  // code that was send to the number.
+  // If the code is valid an empty result is returned, otherwise an InvalidArgument error is returned.
+  // The authenticated user is always the subject of this request.
+  // Required permissions:
+  // - None (since the subject is always the authenticated user).
+  async VerifyUserMobilePhone(req: VerifyUserMobilePhoneRequest): Promise<void> {
+    const url = `/api/iam/v1/user-mobile-phone/verify`;
+    return api.post(url, req);
+  }
+  
+  // Resend a verification code to the mobile phone number listed for the
+  // authenticated user.
+  // Required permissions:
+  // - None (since the subject is always the authenticated user).
+  async ResendUserMobilePhoneVerification(req?: arangodb_cloud_common_v1_Empty): Promise<void> {
+    const url = `/api/iam/v1/user-mobile-phone/resend`;
+    return api.post(url, req);
   }
   
   // Fetch all groups of the organization identified by the given context ID.
