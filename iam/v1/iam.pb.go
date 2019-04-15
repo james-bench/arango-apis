@@ -1173,16 +1173,20 @@ type IAMServiceClient interface {
 	// Required permissions:
 	// - None if the given user is the authenticated user.
 	// or
-	// - resourcemanager.organization.get on one of the organizations that the requested user and authenticated user are both a member of
+	// - resourcemanager.organization.get on one of the organizations that the requested user and authenticated user are both a member of and
 	// - iam.user.update on organization on one of the organizations that the requested user and authenticated user are both a member of
 	UpdateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*User, error)
 	// Verify the mobile phone number of a user, by provided the unique
 	// code that was send to the number.
 	// If the code is valid an empty result is returned, otherwise an InvalidArgument error is returned.
 	// The authenticated user is always the subject of this request.
+	// Required permissions:
+	// - None (since the subject is always the authenticated user).
 	VerifyUserMobilePhone(ctx context.Context, in *VerifyUserMobilePhoneRequest, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Resend a verification code to the mobile phone number listed for the
 	// authenticated user.
+	// Required permissions:
+	// - None (since the subject is always the authenticated user).
 	ResendUserMobilePhoneVerification(ctx context.Context, in *v1.Empty, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Fetch all groups of the organization identified by the given context ID.
 	// Required permissions:
@@ -1516,16 +1520,20 @@ type IAMServiceServer interface {
 	// Required permissions:
 	// - None if the given user is the authenticated user.
 	// or
-	// - resourcemanager.organization.get on one of the organizations that the requested user and authenticated user are both a member of
+	// - resourcemanager.organization.get on one of the organizations that the requested user and authenticated user are both a member of and
 	// - iam.user.update on organization on one of the organizations that the requested user and authenticated user are both a member of
 	UpdateUser(context.Context, *User) (*User, error)
 	// Verify the mobile phone number of a user, by provided the unique
 	// code that was send to the number.
 	// If the code is valid an empty result is returned, otherwise an InvalidArgument error is returned.
 	// The authenticated user is always the subject of this request.
+	// Required permissions:
+	// - None (since the subject is always the authenticated user).
 	VerifyUserMobilePhone(context.Context, *VerifyUserMobilePhoneRequest) (*v1.Empty, error)
 	// Resend a verification code to the mobile phone number listed for the
 	// authenticated user.
+	// Required permissions:
+	// - None (since the subject is always the authenticated user).
 	ResendUserMobilePhoneVerification(context.Context, *v1.Empty) (*v1.Empty, error)
 	// Fetch all groups of the organization identified by the given context ID.
 	// Required permissions:

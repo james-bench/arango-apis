@@ -292,7 +292,7 @@ export class IAMService {
   // Required permissions:
   // - None if the given user is the authenticated user.
   // or
-  // - resourcemanager.organization.get on one of the organizations that the requested user and authenticated user are both a member of
+  // - resourcemanager.organization.get on one of the organizations that the requested user and authenticated user are both a member of and
   // - iam.user.update on organization on one of the organizations that the requested user and authenticated user are both a member of
   async UpdateUser(req: User): Promise<User> {
     const url = `/api/iam/v1/users/${encodeURIComponent(req.id || '')}`;
@@ -303,6 +303,8 @@ export class IAMService {
   // code that was send to the number.
   // If the code is valid an empty result is returned, otherwise an InvalidArgument error is returned.
   // The authenticated user is always the subject of this request.
+  // Required permissions:
+  // - None (since the subject is always the authenticated user).
   async VerifyUserMobilePhone(req: VerifyUserMobilePhoneRequest): Promise<void> {
     const url = `/api/iam/v1/user-mobile-phone/verify`;
     return api.post(url, req);
@@ -310,6 +312,8 @@ export class IAMService {
   
   // Resend a verification code to the mobile phone number listed for the
   // authenticated user.
+  // Required permissions:
+  // - None (since the subject is always the authenticated user).
   async ResendUserMobilePhoneVerification(req?: arangodb_cloud_common_v1_Empty): Promise<void> {
     const url = `/api/iam/v1/user-mobile-phone/resend`;
     return api.post(url, req);

@@ -41,7 +41,7 @@ service IAMService {
     // Required permissions:
     // - None if the given user is the authenticated user.
     // or
-    // - resourcemanager.organization.get on one of the organizations that the requested user and authenticated user are both a member of
+    // - resourcemanager.organization.get on one of the organizations that the requested user and authenticated user are both a member of and
     // - iam.user.update on organization on one of the organizations that the requested user and authenticated user are both a member of
     rpc UpdateUser(User) returns (User) {
         option (google.api.http) = {
