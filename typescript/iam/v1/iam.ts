@@ -259,6 +259,11 @@ export interface User {
   // This is a read-only value.
   // boolean
   mobile_phone_verified?: boolean;
+  
+  // Company name of the user
+  // This may be empty if not filled out by the user.
+  // string
+  company_name?: string;
 }
 
 // Request arguments for VerifyUserMobilePhone
