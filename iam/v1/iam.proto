@@ -306,6 +306,9 @@ message User {
     // Set when the mobile phone number has been successfully verified.
     // This is a read-only value.
     bool mobile_phone_verified = 9;
+    // Company name of the user
+    // This may be empty if not filled out by the user.
+    string company_name = 10;
 }
 
 // Request arguments for VerifyUserMobilePhone
