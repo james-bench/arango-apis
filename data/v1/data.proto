@@ -166,6 +166,8 @@ message Deployment {
         int32 coordinators = 1;
         // Amount of memory (in GB) to allocate for coordinators.
         int32 coordinator_memory_size = 2;
+        // Custom command line arguments passed to all coordinators.
+        repeated string coordinator_args = 3;
 
         // Number of dbservers of the deployment
         int32 dbservers = 11;
@@ -173,6 +175,8 @@ message Deployment {
         int32 dbserver_memory_size = 12;
         // Amount of disk space (in GB) to allocate for dbservers.
         int32 dbserver_disk_size = 13;
+        // Custom command line arguments passed to all coordinators.
+        repeated string dbserver_args = 14;
     }
     ServersSpec servers = 103;
 

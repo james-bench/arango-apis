@@ -165,6 +165,10 @@ export interface Deployment_ServersSpec {
   // number
   coordinator_memory_size?: number;
   
+  // Custom command line arguments passed to all coordinators.
+  // string
+  coordinator_args?: string[];
+  
   // Number of dbservers of the deployment
   // number
   dbservers?: number;
@@ -176,6 +180,10 @@ export interface Deployment_ServersSpec {
   // Amount of disk space (in GB) to allocate for dbservers.
   // number
   dbserver_disk_size?: number;
+  
+  // Custom command line arguments passed to all coordinators.
+  // string
+  dbserver_args?: string[];
 }
 
 // Status of the deployment
