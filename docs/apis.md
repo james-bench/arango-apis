@@ -1401,6 +1401,7 @@ Request arguments for ListVersions.
 | ----- | ---- | ----- | ----------- |
 | options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Common list options |
 | organization_id | [string](#string) |  | If set, the result includes all versions for that are available for the organization identified by this ID. If not set, only versions are returned that are available to all organizations. |
+| current_version | [string](#string) |  | If set, only versions will be returned that are safe to upgrade to from this version. |
 
 
 
