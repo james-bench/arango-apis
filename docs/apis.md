@@ -3,6 +3,65 @@
 
 ## Table of Contents
 
+- [resourcemanager/v1/resourcemanager.proto](#resourcemanager/v1/resourcemanager.proto)
+    - [Event](#arangodb.cloud.resourcemanager.v1.Event)
+    - [Event.PayloadEntry](#arangodb.cloud.resourcemanager.v1.Event.PayloadEntry)
+    - [EventList](#arangodb.cloud.resourcemanager.v1.EventList)
+    - [IsMemberOfOrganizationRequest](#arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationRequest)
+    - [IsMemberOfOrganizationResponse](#arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationResponse)
+    - [ListEventOptions](#arangodb.cloud.resourcemanager.v1.ListEventOptions)
+    - [Member](#arangodb.cloud.resourcemanager.v1.Member)
+    - [MemberList](#arangodb.cloud.resourcemanager.v1.MemberList)
+    - [Organization](#arangodb.cloud.resourcemanager.v1.Organization)
+    - [OrganizationInvite](#arangodb.cloud.resourcemanager.v1.OrganizationInvite)
+    - [OrganizationInviteList](#arangodb.cloud.resourcemanager.v1.OrganizationInviteList)
+    - [OrganizationList](#arangodb.cloud.resourcemanager.v1.OrganizationList)
+    - [OrganizationMembersRequest](#arangodb.cloud.resourcemanager.v1.OrganizationMembersRequest)
+    - [Project](#arangodb.cloud.resourcemanager.v1.Project)
+    - [ProjectList](#arangodb.cloud.resourcemanager.v1.ProjectList)
+  
+  
+  
+    - [ResourceManagerService](#arangodb.cloud.resourcemanager.v1.ResourceManagerService)
+  
+
+- [crypto/v1/crypto.proto](#crypto/v1/crypto.proto)
+    - [CACertificate](#arangodb.cloud.crypto.v1.CACertificate)
+    - [CACertificateInstructions](#arangodb.cloud.crypto.v1.CACertificateInstructions)
+    - [CACertificateInstructions.PlatformInstructions](#arangodb.cloud.crypto.v1.CACertificateInstructions.PlatformInstructions)
+    - [CACertificateList](#arangodb.cloud.crypto.v1.CACertificateList)
+  
+  
+  
+    - [CryptoService](#arangodb.cloud.crypto.v1.CryptoService)
+  
+
+- [platform/v1/platform.proto](#platform/v1/platform.proto)
+    - [ListProvidersRequest](#arangodb.cloud.platform.v1.ListProvidersRequest)
+    - [ListRegionsRequest](#arangodb.cloud.platform.v1.ListRegionsRequest)
+    - [Provider](#arangodb.cloud.platform.v1.Provider)
+    - [ProviderList](#arangodb.cloud.platform.v1.ProviderList)
+    - [Region](#arangodb.cloud.platform.v1.Region)
+    - [RegionList](#arangodb.cloud.platform.v1.RegionList)
+  
+  
+  
+    - [PlatformService](#arangodb.cloud.platform.v1.PlatformService)
+  
+
+- [usage/v1/usage.proto](#usage/v1/usage.proto)
+    - [ListUsageItemsRequest](#arangodb.cloud.usage.v1.ListUsageItemsRequest)
+    - [UsageItem](#arangodb.cloud.usage.v1.UsageItem)
+    - [UsageItem.DeploymentSize](#arangodb.cloud.usage.v1.UsageItem.DeploymentSize)
+    - [UsageItem.NetworkTransferSize](#arangodb.cloud.usage.v1.UsageItem.NetworkTransferSize)
+    - [UsageItem.Resource](#arangodb.cloud.usage.v1.UsageItem.Resource)
+    - [UsageItemList](#arangodb.cloud.usage.v1.UsageItemList)
+  
+  
+  
+    - [UsageService](#arangodb.cloud.usage.v1.UsageService)
+  
+
 - [common/v1/common.proto](#common/v1/common.proto)
     - [Budget](#arangodb.cloud.common.v1.Budget)
     - [Empty](#arangodb.cloud.common.v1.Empty)
@@ -15,15 +74,25 @@
   
   
 
-- [crypto/v1/crypto.proto](#crypto/v1/crypto.proto)
-    - [CACertificate](#arangodb.cloud.crypto.v1.CACertificate)
-    - [CACertificateInstructions](#arangodb.cloud.crypto.v1.CACertificateInstructions)
-    - [CACertificateInstructions.PlatformInstructions](#arangodb.cloud.crypto.v1.CACertificateInstructions.PlatformInstructions)
-    - [CACertificateList](#arangodb.cloud.crypto.v1.CACertificateList)
+- [iam/v1/iam.proto](#iam/v1/iam.proto)
+    - [Group](#arangodb.cloud.iam.v1.Group)
+    - [GroupList](#arangodb.cloud.iam.v1.GroupList)
+    - [GroupMemberList](#arangodb.cloud.iam.v1.GroupMemberList)
+    - [GroupMembersRequest](#arangodb.cloud.iam.v1.GroupMembersRequest)
+    - [HasPermissionsRequest](#arangodb.cloud.iam.v1.HasPermissionsRequest)
+    - [IsMemberOfGroupRequest](#arangodb.cloud.iam.v1.IsMemberOfGroupRequest)
+    - [PermissionList](#arangodb.cloud.iam.v1.PermissionList)
+    - [Policy](#arangodb.cloud.iam.v1.Policy)
+    - [Role](#arangodb.cloud.iam.v1.Role)
+    - [RoleBinding](#arangodb.cloud.iam.v1.RoleBinding)
+    - [RoleBindingsRequest](#arangodb.cloud.iam.v1.RoleBindingsRequest)
+    - [RoleList](#arangodb.cloud.iam.v1.RoleList)
+    - [User](#arangodb.cloud.iam.v1.User)
+    - [VerifyUserMobilePhoneRequest](#arangodb.cloud.iam.v1.VerifyUserMobilePhoneRequest)
   
   
   
-    - [CryptoService](#arangodb.cloud.crypto.v1.CryptoService)
+    - [IAMService](#arangodb.cloud.iam.v1.IAMService)
   
 
 - [data/v1/data.proto](#data/v1/data.proto)
@@ -50,1046 +119,7 @@
     - [DataService](#arangodb.cloud.data.v1.DataService)
   
 
-- [iam/v1/iam.proto](#iam/v1/iam.proto)
-    - [Group](#arangodb.cloud.iam.v1.Group)
-    - [GroupList](#arangodb.cloud.iam.v1.GroupList)
-    - [GroupMemberList](#arangodb.cloud.iam.v1.GroupMemberList)
-    - [GroupMembersRequest](#arangodb.cloud.iam.v1.GroupMembersRequest)
-    - [HasPermissionsRequest](#arangodb.cloud.iam.v1.HasPermissionsRequest)
-    - [IsMemberOfGroupRequest](#arangodb.cloud.iam.v1.IsMemberOfGroupRequest)
-    - [PermissionList](#arangodb.cloud.iam.v1.PermissionList)
-    - [Policy](#arangodb.cloud.iam.v1.Policy)
-    - [Role](#arangodb.cloud.iam.v1.Role)
-    - [RoleBinding](#arangodb.cloud.iam.v1.RoleBinding)
-    - [RoleBindingsRequest](#arangodb.cloud.iam.v1.RoleBindingsRequest)
-    - [RoleList](#arangodb.cloud.iam.v1.RoleList)
-    - [User](#arangodb.cloud.iam.v1.User)
-    - [VerifyUserMobilePhoneRequest](#arangodb.cloud.iam.v1.VerifyUserMobilePhoneRequest)
-  
-  
-  
-    - [IAMService](#arangodb.cloud.iam.v1.IAMService)
-  
-
-- [platform/v1/platform.proto](#platform/v1/platform.proto)
-    - [ListProvidersRequest](#arangodb.cloud.platform.v1.ListProvidersRequest)
-    - [ListRegionsRequest](#arangodb.cloud.platform.v1.ListRegionsRequest)
-    - [Provider](#arangodb.cloud.platform.v1.Provider)
-    - [ProviderList](#arangodb.cloud.platform.v1.ProviderList)
-    - [Region](#arangodb.cloud.platform.v1.Region)
-    - [RegionList](#arangodb.cloud.platform.v1.RegionList)
-  
-  
-  
-    - [PlatformService](#arangodb.cloud.platform.v1.PlatformService)
-  
-
-- [resourcemanager/v1/resourcemanager.proto](#resourcemanager/v1/resourcemanager.proto)
-    - [Event](#arangodb.cloud.resourcemanager.v1.Event)
-    - [Event.PayloadEntry](#arangodb.cloud.resourcemanager.v1.Event.PayloadEntry)
-    - [EventList](#arangodb.cloud.resourcemanager.v1.EventList)
-    - [IsMemberOfOrganizationRequest](#arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationRequest)
-    - [IsMemberOfOrganizationResponse](#arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationResponse)
-    - [ListEventOptions](#arangodb.cloud.resourcemanager.v1.ListEventOptions)
-    - [Member](#arangodb.cloud.resourcemanager.v1.Member)
-    - [MemberList](#arangodb.cloud.resourcemanager.v1.MemberList)
-    - [Organization](#arangodb.cloud.resourcemanager.v1.Organization)
-    - [OrganizationInvite](#arangodb.cloud.resourcemanager.v1.OrganizationInvite)
-    - [OrganizationInviteList](#arangodb.cloud.resourcemanager.v1.OrganizationInviteList)
-    - [OrganizationList](#arangodb.cloud.resourcemanager.v1.OrganizationList)
-    - [OrganizationMembersRequest](#arangodb.cloud.resourcemanager.v1.OrganizationMembersRequest)
-    - [Project](#arangodb.cloud.resourcemanager.v1.Project)
-    - [ProjectList](#arangodb.cloud.resourcemanager.v1.ProjectList)
-  
-  
-  
-    - [ResourceManagerService](#arangodb.cloud.resourcemanager.v1.ResourceManagerService)
-  
-
-- [usage/v1/usage.proto](#usage/v1/usage.proto)
-    - [ListUsageItemsRequest](#arangodb.cloud.usage.v1.ListUsageItemsRequest)
-    - [UsageItem](#arangodb.cloud.usage.v1.UsageItem)
-    - [UsageItem.DeploymentSize](#arangodb.cloud.usage.v1.UsageItem.DeploymentSize)
-    - [UsageItem.NetworkTransferSize](#arangodb.cloud.usage.v1.UsageItem.NetworkTransferSize)
-    - [UsageItem.Resource](#arangodb.cloud.usage.v1.UsageItem.Resource)
-    - [UsageItemList](#arangodb.cloud.usage.v1.UsageItemList)
-  
-  
-  
-    - [UsageService](#arangodb.cloud.usage.v1.UsageService)
-  
-
 - [Scalar Value Types](#scalar-value-types)
-
-
-
-<a name="common/v1/common.proto"></a>
-<p align="right"><a href="#top">Top</a></p>
-
-## common/v1/common.proto
-
-
-
-<a name="arangodb.cloud.common.v1.Budget"></a>
-
-### Budget
-Budget for resources of a specific kind
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| used | [int64](#int64) |  | How many resources of the specific kind are in use |
-| available | [int64](#int64) |  | How many resources of the specific kind are still available. Note a value above 0 does not mean that the caller has permission to add those resources. |
-| unlimited | [bool](#bool) |  | If set, there is no limit to the number of resources of a specific kind that can be created. If set, available is 0. |
-
-
-
-
-
-
-<a name="arangodb.cloud.common.v1.Empty"></a>
-
-### Empty
-Empty message
-
-
-
-
-
-
-<a name="arangodb.cloud.common.v1.IDOptions"></a>
-
-### IDOptions
-Options for a get-by-id request
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the object to fetch. |
-
-
-
-
-
-
-<a name="arangodb.cloud.common.v1.ListOptions"></a>
-
-### ListOptions
-Options for a list request.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| page_size | [int32](#int32) |  | Maximum number of items to return. If not specified, all remaining items are returned. |
-| page | [int64](#int64) |  | Page to start with (defaults to 0). |
-| context_id | [string](#string) |  | Identifier of the resource in which the list request is made. |
-
-
-
-
-
-
-<a name="arangodb.cloud.common.v1.URLOptions"></a>
-
-### URLOptions
-Options for a get-by-url request
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| url | [string](#string) |  | URL of the resource to fetch. |
-
-
-
-
-
-
-<a name="arangodb.cloud.common.v1.YesOrNo"></a>
-
-### YesOrNo
-Response for single boolean.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| result | [bool](#bool) |  |  |
-
-
-
-
-
- 
-
- 
-
- 
-
- 
-
-
-
-<a name="crypto/v1/crypto.proto"></a>
-<p align="right"><a href="#top">Top</a></p>
-
-## crypto/v1/crypto.proto
-
-
-
-<a name="arangodb.cloud.crypto.v1.CACertificate"></a>
-
-### CACertificate
-A CACertificate is represents a self-signed certificate authority used to sign
-TLS certificates for deployments &amp; client authentication.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the CA certificate. This is a read-only value. |
-| url | [string](#string) |  | URL of this resource This is a read-only value. |
-| name | [string](#string) |  | Name of the CA certificate |
-| description | [string](#string) |  | Description of the CA certificate |
-| project_id | [string](#string) |  | Identifier of the project that owns this CA certificate. This value cannot be changed after creation. |
-| lifetime | [google.protobuf.Duration](#google.protobuf.Duration) |  | Time from creation of the CA certificate to expiration. This value cannot be changed after creation. |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the CA certificate This is a read-only value. |
-| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the CA certificate This is a read-only value. |
-| expires_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The expiration timestamp of the CA certificate This is a read-only value. |
-| certificate_pem | [string](#string) |  | A PEM encoded representation of the public key of the CA certificate. This is a read-only value. |
-| is_deleted | [bool](#bool) |  | Set when this CA certificate is deleted. This is a read-only value. |
-
-
-
-
-
-
-<a name="arangodb.cloud.crypto.v1.CACertificateInstructions"></a>
-
-### CACertificateInstructions
-Instructions for installing &amp; uninstalling CA certificates
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| platforms | [CACertificateInstructions.PlatformInstructions](#arangodb.cloud.crypto.v1.CACertificateInstructions.PlatformInstructions) | repeated | Per platform instructions for install/uninstall of the CA certificate |
-
-
-
-
-
-
-<a name="arangodb.cloud.crypto.v1.CACertificateInstructions.PlatformInstructions"></a>
-
-### CACertificateInstructions.PlatformInstructions
-Instructions for a specific platform
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| platform | [string](#string) |  | Human readable description of platform. E.g. &#34;MacOS&#34; |
-| install_steps | [string](#string) | repeated | Steps needed to install |
-| uninstall_steps | [string](#string) | repeated | Steps needed to uninstall |
-
-
-
-
-
-
-<a name="arangodb.cloud.crypto.v1.CACertificateList"></a>
-
-### CACertificateList
-List of CACertificates.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | repeated |  |
-
-
-
-
-
- 
-
- 
-
- 
-
-
-<a name="arangodb.cloud.crypto.v1.CryptoService"></a>
-
-### CryptoService
-CryptoService is the API used to configure various crypto objects.
-
-| Method Name | Request Type | Response Type | Description |
-| ----------- | ------------ | ------------- | ------------|
-| ListCACertificates | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [CACertificateList](#arangodb.cloud.crypto.v1.CACertificateList) | Fetch all CA certificates in the project identified by the given context ID. Required permissions: - crypto.cacertificate.list on the project identified by the given context ID |
-| GetCACertificate | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | Fetch a CA certificate by its id. Required permissions: - crypto.cacertificate.get on the CA certificate identified by the given ID |
-| GetCACertificateInstructions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [CACertificateInstructions](#arangodb.cloud.crypto.v1.CACertificateInstructions) | Fetch instructions for installing &amp; unistalling a CA certificate identified by its id on various platforms. Required permissions: - crypto.cacertificate.get on the CA certificate identified by the given ID |
-| CreateCACertificate | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | Create a new CA certificate Required permissions: - crypto.cacertificate.create on the project that owns the CA certificate |
-| UpdateCACertificate | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | Update a CA certificate Required permissions: - crypto.cacertificate.update on the CA certificate |
-| DeleteCACertificate | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a CA certificate Note that CA certificate are initially only marked for deleted. Once all the resources that depend on it are removed the CA certificate itself is deleted and cannot be restored. Required permissions: - crypto.cacertificate.delete on the CA certificate |
-
- 
-
-
-
-<a name="data/v1/data.proto"></a>
-<p align="right"><a href="#top">Top</a></p>
-
-## data/v1/data.proto
-
-
-
-<a name="arangodb.cloud.data.v1.Deployment"></a>
-
-### Deployment
-A Deployment is represents one deployment of an ArangoDB cluster.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the deployment. This is a read-only value. |
-| url | [string](#string) |  | URL of this resource This is a read-only value. |
-| name | [string](#string) |  | Name of the deployment |
-| description | [string](#string) |  | Description of the deployment |
-| project_id | [string](#string) |  | Identifier of the project that owns this deployment. After creation, this value cannot be changed. |
-| region_id | [string](#string) |  | Identifier of the region in which the deployment is created. After creation, this value cannot be changed. |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the deployment This is a read-only value. |
-| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the deployment This is a read-only value. |
-| is_deleted | [bool](#bool) |  | Set when this deployment is deleted. This is a read-only value. |
-| version | [string](#string) |  | ArangoDB version to use for this deployment. See Version.version. If you change this value to a higher version, the deployment will be upgraded. If you change this value to a lower patch value, the deployment will be downgraded. Any attempt to change to a lower minor or major version is considered an invalid request. Any attempt to change to a version that is not in the list of available versions is considered an invalid request. |
-| certificates | [Deployment.CertificateSpec](#arangodb.cloud.data.v1.Deployment.CertificateSpec) |  |  |
-| servers | [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  |  |
-| authentication | [Deployment.AuthenticationSpec](#arangodb.cloud.data.v1.Deployment.AuthenticationSpec) |  |  |
-| status | [Deployment.Status](#arangodb.cloud.data.v1.Deployment.Status) |  |  |
-| expiration | [Deployment.Expiration](#arangodb.cloud.data.v1.Deployment.Expiration) |  |  |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.Deployment.AuthenticationSpec"></a>
-
-### Deployment.AuthenticationSpec
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| root_password | [string](#string) |  | Password of the root user of the deployment. |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.Deployment.CertificateSpec"></a>
-
-### Deployment.CertificateSpec
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| ca_certificate_id | [string](#string) |  | Identifier of the CACertificate used to sign TLS certificates for the deployment. If you change this value after the creation of the deployment a complete rotation of the deployment is required, which will result in some downtime. |
-| alternate_dns_names | [string](#string) | repeated | Zero or more DNS names to include in the TLS certificate of the deployment. |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.Deployment.Expiration"></a>
-
-### Deployment.Expiration
-Expiration of the deployment.
-All members of this message are read-only.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| expires_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The expiration timestamp of the deployment If not set, the deployment will not expire. |
-| reason | [string](#string) |  | Human readable reason for why the deployment expires (or does not expire). |
-| last_warning_email_send_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of when the last &#34;this deployment will expire at&#34; email was send. If not set, no such email has been send. |
-| last_warning_email_send_to | [string](#string) | repeated | List of email addresses to which the last warning email has been send. Not set when no such email has been send. |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.Deployment.ServerStatus"></a>
-
-### Deployment.ServerStatus
-Status of a single server (of the ArangoDB cluster)
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | ID of the server |
-| type | [string](#string) |  | Type of server (agent|coordinator|dbserver) |
-| description | [string](#string) |  | Human readable description of the status of the deployment. |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the server |
-| ready | [bool](#bool) |  | Set once the server is ready |
-| member_of_cluster | [bool](#bool) |  | Set once the server has been known to be a member of the cluster |
-| failed | [bool](#bool) |  | Set if the server is in a failed state |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.Deployment.ServersSpec"></a>
-
-### Deployment.ServersSpec
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| coordinators | [int32](#int32) |  | Number of coordinators of the deployment |
-| coordinator_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for coordinators. |
-| dbservers | [int32](#int32) |  | Number of dbservers of the deployment |
-| dbserver_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for dbservers. |
-| dbserver_disk_size | [int32](#int32) |  | Amount of disk space (in GB) to allocate for dbservers. |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.Deployment.Status"></a>
-
-### Deployment.Status
-Status of the deployment
-All members of this field are read-only.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| endpoint | [string](#string) |  | Endpoint URL used to reach the deployment This value will be empty during the creation of the deployment. |
-| description | [string](#string) |  | Human readable description of the status of the deployment. |
-| created | [bool](#bool) |  | Set once the deployment has been created. |
-| ready | [bool](#bool) |  | Set if the deployment is ready to be used. If the deployment has downtime (e.g. because of changing a CA certificate) this will go to false until the downtime is over. |
-| upgrading | [bool](#bool) |  | Set if the deployment is being upgraded. |
-| server_versions | [string](#string) | repeated | Versions of running servers |
-| servers | [Deployment.ServerStatus](#arangodb.cloud.data.v1.Deployment.ServerStatus) | repeated | Status of individual servers of the deployment |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.DeploymentList"></a>
-
-### DeploymentList
-List of Deployments.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [Deployment](#arangodb.cloud.data.v1.Deployment) | repeated | Actual deployments |
-| budget | [arangodb.cloud.common.v1.Budget](#arangodb.cloud.common.v1.Budget) |  | Budget for deployments |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.ListVersionsRequest"></a>
-
-### ListVersionsRequest
-Request arguments for ListVersions.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Common list options |
-| organization_id | [string](#string) |  | If set, the result includes all versions for that are available for the organization identified by this ID. If not set, only versions are returned that are available to all organizations. |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.ServersSpecLimits"></a>
-
-### ServersSpecLimits
-Limits of allowed values for fields of Deployment.ServersSpec.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| coordinators | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Limits for the number of coordinators of the deployment |
-| coordinator_memory_size | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Possible values for the amount of memory (in GB) to allocate for coordinators. |
-| dbservers | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Limits for the number of dbservers of the deployment |
-| dbserver_memory_size | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Possible values for the amount of memory (in GB) to allocate for dbservers. |
-| dbserver_disk_size | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Amount of disk space (in GB) to allocate for dbservers. |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.ServersSpecLimits.Limits"></a>
-
-### ServersSpecLimits.Limits
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| min | [int32](#int32) |  | Minimum value |
-| max | [int32](#int32) |  | Maximum value |
-| allowed_values | [int32](#int32) | repeated | Set of allowed values. If this field is non-empty, only one of these values is allowed. |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.ServersSpecLimitsRequest"></a>
-
-### ServersSpecLimitsRequest
-Request arguments for ListServersSpecLimits
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| project_id | [string](#string) |  | Identifier of project that will own a deployment. |
-| region_id | [string](#string) |  | Identifier of a region in which a deployment will be created. |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.ServersSpecPreset"></a>
-
-### ServersSpecPreset
-Specification of a ServersSpecPreset, which can be used to initialize a deployment.servers
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| name | [string](#string) |  | Name of the ServersSpecPreset This is a read-only value. |
-| is_default | [bool](#bool) |  | Set when this preset is the default. This is a read-only value. |
-| servers | [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  | The ServersSpec associated for this name |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.ServersSpecPresetList"></a>
-
-### ServersSpecPresetList
-List of ServersSpecPreset.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [ServersSpecPreset](#arangodb.cloud.data.v1.ServersSpecPreset) | repeated |  |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.ServersSpecPresetsRequest"></a>
-
-### ServersSpecPresetsRequest
-Request arguments for ListServersSpecPresets and GetDefaultServersSpecPreset
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| project_id | [string](#string) |  | Identifier of project that will own a deployment. |
-| region_id | [string](#string) |  | Identifier of a region in which a deployment will be created. |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.Version"></a>
-
-### Version
-Version of an ArangoDB release
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| version | [string](#string) |  | Version in the format of major.minor.patch |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.VersionList"></a>
-
-### VersionList
-List of Versions.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [Version](#arangodb.cloud.data.v1.Version) | repeated |  |
-
-
-
-
-
- 
-
- 
-
- 
-
-
-<a name="arangodb.cloud.data.v1.DataService"></a>
-
-### DataService
-DataService is the API used to configure data objects.
-
-| Method Name | Request Type | Response Type | Description |
-| ----------- | ------------ | ------------- | ------------|
-| ListDeployments | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [DeploymentList](#arangodb.cloud.data.v1.DeploymentList) | Fetch all deployments in the project identified by the given context ID. Required permissions: - data.deployment.list on the project identified by the given context ID |
-| GetDeployment | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Fetch a deployment by its id. Required permissions: - data.deployment.get on the deployment identified by the given ID |
-| CreateDeployment | [Deployment](#arangodb.cloud.data.v1.Deployment) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Create a new deployment Required permissions: - data.deployment.create on the project that owns the deployment Note that deployment.status &amp; deployment.expiration are ignored in this request. |
-| UpdateDeployment | [Deployment](#arangodb.cloud.data.v1.Deployment) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Update a deployment Required permissions: - data.deployment.update on the deployment Note that deployment.status &amp; deployment.expiration are ignored in this request. |
-| DeleteDeployment | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a deployment Note that deployments are initially only marked for deletion. Once all their resources are removed the deployment itself is removed. Required permissions: - data.deployment.delete on the deployment |
-| ListVersions | [ListVersionsRequest](#arangodb.cloud.data.v1.ListVersionsRequest) | [VersionList](#arangodb.cloud.data.v1.VersionList) | Fetch all ArangoDB versions that are available for deployments. Required permissions: - None |
-| GetDefaultVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [Version](#arangodb.cloud.data.v1.Version) | Fetch the default ArangoDB version for new deployment. Required permissions: - None |
-| GetServersSpecLimits | [ServersSpecLimitsRequest](#arangodb.cloud.data.v1.ServersSpecLimitsRequest) | [ServersSpecLimits](#arangodb.cloud.data.v1.ServersSpecLimits) | Fetch the limits for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.limits.get on the requested project |
-| ListServersSpecPresets | [ServersSpecPresetsRequest](#arangodb.cloud.data.v1.ServersSpecPresetsRequest) | [ServersSpecPresetList](#arangodb.cloud.data.v1.ServersSpecPresetList) | Fetch the presets for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.presets.list on the requested project |
-
- 
-
-
-
-<a name="iam/v1/iam.proto"></a>
-<p align="right"><a href="#top">Top</a></p>
-
-## iam/v1/iam.proto
-
-
-
-<a name="arangodb.cloud.iam.v1.Group"></a>
-
-### Group
-Group of user accounts.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the group. This is a read-only value. |
-| organization_id | [string](#string) |  | Identifier of the organization that owns this group. |
-| name | [string](#string) |  | Name of the group |
-| description | [string](#string) |  | Description of the group |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the group |
-| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the group |
-| is_deleted | [bool](#bool) |  | Set when this organization is deleted. This is a read-only value. |
-| url | [string](#string) |  | URL of this resource This is a read-only value and cannot be initialized. |
-| is_virtual | [bool](#bool) |  | Set if this group is virtual and managed by the system. This is a read-only value. |
-
-
-
-
-
-
-<a name="arangodb.cloud.iam.v1.GroupList"></a>
-
-### GroupList
-List of groups.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [Group](#arangodb.cloud.iam.v1.Group) | repeated |  |
-
-
-
-
-
-
-<a name="arangodb.cloud.iam.v1.GroupMemberList"></a>
-
-### GroupMemberList
-List of group members (user ID&#39;s)
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [string](#string) | repeated | List of ID&#39;s of users that are member of the group. |
-
-
-
-
-
-
-<a name="arangodb.cloud.iam.v1.GroupMembersRequest"></a>
-
-### GroupMembersRequest
-Request arguments for Add/DeleteGroupMembers.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| group_id | [string](#string) |  | ID of the group to add/remove members to/from. |
-| user_ids | [string](#string) | repeated | ID&#39;s of users to add/remove to/from the group. |
-
-
-
-
-
-
-<a name="arangodb.cloud.iam.v1.HasPermissionsRequest"></a>
-
-### HasPermissionsRequest
-Request arguments for HasPermissionsRequest.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| url | [string](#string) |  | URL of the resource to query permissions for. |
-| permissions | [string](#string) | repeated | The list of permissions that are required. |
-
-
-
-
-
-
-<a name="arangodb.cloud.iam.v1.IsMemberOfGroupRequest"></a>
-
-### IsMemberOfGroupRequest
-Request arguments for IsMemberOfGroup.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| user_id | [string](#string) |  | Identifier of the user |
-| group_id | [string](#string) |  | Identifier of the group |
-
-
-
-
-
-
-<a name="arangodb.cloud.iam.v1.PermissionList"></a>
-
-### PermissionList
-List of permissions.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [string](#string) | repeated |  |
-
-
-
-
-
-
-<a name="arangodb.cloud.iam.v1.Policy"></a>
-
-### Policy
-Policy bindings members to roles for access to a resource.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| resource_url | [string](#string) |  | URL of the resource to which this policy applies. |
-| bindings | [RoleBinding](#arangodb.cloud.iam.v1.RoleBinding) | repeated | Role bindings to apply to the resource. |
-
-
-
-
-
-
-<a name="arangodb.cloud.iam.v1.Role"></a>
-
-### Role
-A role is a list of permissions.
-Roles can be bound to resources for members.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the role. This is a read-only value. |
-| organization_id | [string](#string) |  | Identifier of the organization that owns this role. This value is undefined for predefined roles. |
-| name | [string](#string) |  | Name of the role |
-| description | [string](#string) |  | Description of the role |
-| permissions | [string](#string) | repeated | Permissions to grant when this role is bound. |
-| is_predefined | [bool](#bool) |  | Set if this role is predefined. This is a read-only value. |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the role |
-| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the role |
-| is_deleted | [bool](#bool) |  | Set when this organization is deleted. This is a read-only value. |
-| url | [string](#string) |  | URL of this resource This is a read-only value and cannot be initialized. |
-
-
-
-
-
-
-<a name="arangodb.cloud.iam.v1.RoleBinding"></a>
-
-### RoleBinding
-RoleBinding binds a Role to a member.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the role-binding. This is a read-only value. |
-| member_id | [string](#string) |  | Identifier of the member to bind a role to. Member ID is formatted as: - user:&lt;user_id&gt; - group:&lt;group_id&gt; |
-| role_id | [string](#string) |  | Identifier of the Role to grant to member |
-
-
-
-
-
-
-<a name="arangodb.cloud.iam.v1.RoleBindingsRequest"></a>
-
-### RoleBindingsRequest
-Request arguments for Add/DeleteRoleBindings.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| resource_url | [string](#string) |  | URL of the resource to add/remove policy binding to/from. |
-| bindings | [RoleBinding](#arangodb.cloud.iam.v1.RoleBinding) | repeated | Role bindings to add/remove to the policy. |
-
-
-
-
-
-
-<a name="arangodb.cloud.iam.v1.RoleList"></a>
-
-### RoleList
-List of roles.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [Role](#arangodb.cloud.iam.v1.Role) | repeated |  |
-
-
-
-
-
-
-<a name="arangodb.cloud.iam.v1.User"></a>
-
-### User
-User represents an actual person.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | Identifier of the user. This is a read-only value. |
-| email | [string](#string) |  | Primary email address of the user. All emails send to this user will use this address. This is a read-only value. |
-| name | [string](#string) |  | Name of the user. This may be empty if not filled out by the user. |
-| given_name | [string](#string) |  | Given name of the user. This may be empty if not filled out by the user. |
-| family_name | [string](#string) |  | Family name of the user. This may be empty if not filled out by the user. |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the user. This is a read-only value. |
-| additional_emails | [string](#string) | repeated | Additional email addresses of the user. This will be filled in when the authentication provided knows multiple email addresses for the user. This is a read-only value. |
-| mobile_phone | [string](#string) |  | Mobile phone number of the user. This value must be unique globally.
-
-This field will not be filled, unless: - The currently authenticated user is this user - The currently authenticated user has `iam.user.get-personal-data` permission on the organization that user is a member of.
-
-This value can only be changed to a non-empty value. If changed, the new number has to be verified again. |
-| mobile_phone_verified | [bool](#bool) |  | Set when the mobile phone number has been successfully verified. This is a read-only value. |
-| company_name | [string](#string) |  | Company name of the user This may be empty if not filled out by the user. |
-
-
-
-
-
-
-<a name="arangodb.cloud.iam.v1.VerifyUserMobilePhoneRequest"></a>
-
-### VerifyUserMobilePhoneRequest
-Request arguments for VerifyUserMobilePhone
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| code | [string](#string) |  | Code that was send to the mobile phone number. |
-
-
-
-
-
- 
-
- 
-
- 
-
-
-<a name="arangodb.cloud.iam.v1.IAMService"></a>
-
-### IAMService
-IAMService is the API used to configure IAM objects.
-
-| Method Name | Request Type | Response Type | Description |
-| ----------- | ------------ | ------------- | ------------|
-| GetThisUser | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [User](#arangodb.cloud.iam.v1.User) | Fetch all available information of the currently authenticated user. Required permissions: - None |
-| GetUser | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [User](#arangodb.cloud.iam.v1.User) | Fetch all available information of the user identified by the given ID. Required permissions: - resourcemanager.organization.get on one of the organizations that the requested user and authenticated user are both a member of |
-| UpdateUser | [User](#arangodb.cloud.iam.v1.User) | [User](#arangodb.cloud.iam.v1.User) | Update a user Required permissions: - None if the given user is the authenticated user. or - resourcemanager.organization.get on one of the organizations that the requested user and authenticated user are both a member of and - iam.user.update on organization on one of the organizations that the requested user and authenticated user are both a member of |
-| VerifyUserMobilePhone | [VerifyUserMobilePhoneRequest](#arangodb.cloud.iam.v1.VerifyUserMobilePhoneRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Verify the mobile phone number of a user, by provided the unique code that was send to the number. If the code is valid an empty result is returned, otherwise an InvalidArgument error is returned. The authenticated user is always the subject of this request. Required permissions: - None (since the subject is always the authenticated user). |
-| ResendUserMobilePhoneVerification | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Resend a verification code to the mobile phone number listed for the authenticated user. Required permissions: - None (since the subject is always the authenticated user). |
-| ListGroups | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [GroupList](#arangodb.cloud.iam.v1.GroupList) | Fetch all groups of the organization identified by the given context ID. Required permissions: - iam.group.list on organization identified by given context ID. |
-| GetGroup | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Group](#arangodb.cloud.iam.v1.Group) | Fetch a group by its id. Required permissions: - iam.group.get on organization that owns the group |
-| CreateGroup | [Group](#arangodb.cloud.iam.v1.Group) | [Group](#arangodb.cloud.iam.v1.Group) | Create a group Required permissions: - iam.group.create on organization that owns the group |
-| UpdateGroup | [Group](#arangodb.cloud.iam.v1.Group) | [Group](#arangodb.cloud.iam.v1.Group) | Update a group Required permissions: - iam.group.update on organization that owns the group |
-| DeleteGroup | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a group Required permissions: - iam.group.delete on organization that owns the group |
-| ListGroupMembers | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [GroupMemberList](#arangodb.cloud.iam.v1.GroupMemberList) | List of members of the group identified by the given context ID. Required permissions: - iam.group.get on organization that owns the group |
-| AddGroupMembers | [GroupMembersRequest](#arangodb.cloud.iam.v1.GroupMembersRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Add one or more members to the group identified by given ID. Required permissions: - iam.group.update on organization that owns the group |
-| DeleteGroupMembers | [GroupMembersRequest](#arangodb.cloud.iam.v1.GroupMembersRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Remove one or more members from the group identified by given ID. Required permissions: - iam.group.update on organization that owns the group |
-| IsMemberOfGroup | [IsMemberOfGroupRequest](#arangodb.cloud.iam.v1.IsMemberOfGroupRequest) | [.arangodb.cloud.common.v1.YesOrNo](#arangodb.cloud.common.v1.YesOrNo) | Is the user identified by the given user ID a member of the group identified by the given group ID. Required permissions: - iam.group.get on organization that owns the group, unless the requested user is identical to the authenticated user. Note that if the identified group does not exist, no is returned. |
-| ListRoles | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [RoleList](#arangodb.cloud.iam.v1.RoleList) | Fetch all roles in the organization identified by the given context ID. Required permissions: - iam.role.list on organization identified by given context ID. |
-| GetRole | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Role](#arangodb.cloud.iam.v1.Role) | Fetch a role by its id. Required permissions: - iam.role.get on organization that owns the role |
-| CreateRole | [Role](#arangodb.cloud.iam.v1.Role) | [Role](#arangodb.cloud.iam.v1.Role) | Create a custom role Required permissions: - iam.role.create on organization that owns the role |
-| UpdateRole | [Role](#arangodb.cloud.iam.v1.Role) | [Role](#arangodb.cloud.iam.v1.Role) | Update a custom role Required permissions: - iam.role.update on organization that owns the role |
-| DeleteRole | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a custom role Required permissions: - iam.role.delete on organization that owns the role |
-| GetPolicy | [.arangodb.cloud.common.v1.URLOptions](#arangodb.cloud.common.v1.URLOptions) | [Policy](#arangodb.cloud.iam.v1.Policy) | Get the policy for a resource identified by given URL. Required permissions: - iam.policy.get on resource identified by the url |
-| AddRoleBindings | [RoleBindingsRequest](#arangodb.cloud.iam.v1.RoleBindingsRequest) | [Policy](#arangodb.cloud.iam.v1.Policy) | Add one or more RoleBindings to the policy of a resource identified by given URL. Required permissions: - iam.policy.update on resource identified by the url |
-| DeleteRoleBindings | [RoleBindingsRequest](#arangodb.cloud.iam.v1.RoleBindingsRequest) | [Policy](#arangodb.cloud.iam.v1.Policy) | Remove one or more RoleBindings from the policy of a resource identified by given URL. Required permissions: - iam.policy.update on resource identified by the url |
-| GetEffectivePermissions | [.arangodb.cloud.common.v1.URLOptions](#arangodb.cloud.common.v1.URLOptions) | [PermissionList](#arangodb.cloud.iam.v1.PermissionList) | Return the list of permissions that are available to the currently authenticated used for actions on the resource identified by the given URL. Required permissions: - None |
-| HasPermissions | [HasPermissionsRequest](#arangodb.cloud.iam.v1.HasPermissionsRequest) | [.arangodb.cloud.common.v1.YesOrNo](#arangodb.cloud.common.v1.YesOrNo) | Does the authenticated user have all of the requested permissions for the resource identified by the given URL? Required permissions: - None |
-| ListPermissions | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [PermissionList](#arangodb.cloud.iam.v1.PermissionList) | List all known permissions. Required permissions: - None |
-
- 
-
-
-
-<a name="platform/v1/platform.proto"></a>
-<p align="right"><a href="#top">Top</a></p>
-
-## platform/v1/platform.proto
-
-
-
-<a name="arangodb.cloud.platform.v1.ListProvidersRequest"></a>
-
-### ListProvidersRequest
-Request arguments for ListProviders
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Common list options |
-| organization_id | [string](#string) |  | If set, the result includes all providers for that are available for the organization identified by this ID. If not set, only providers are returned that are available to all organizations. |
-
-
-
-
-
-
-<a name="arangodb.cloud.platform.v1.ListRegionsRequest"></a>
-
-### ListRegionsRequest
-Request arguments for ListRegions
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Common list options |
-| provider_id | [string](#string) |  | Required identifier of the provider to list regions for. |
-| organization_id | [string](#string) |  | If set, the result includes all regions for that are available for the organization identified by this ID. If not set, only regions are returned that are available to all organizations. |
-
-
-
-
-
-
-<a name="arangodb.cloud.platform.v1.Provider"></a>
-
-### Provider
-Provider represents a specific cloud provider such as AWS or GCP.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the provider. |
-| name | [string](#string) |  | Name of the provider |
-
-
-
-
-
-
-<a name="arangodb.cloud.platform.v1.ProviderList"></a>
-
-### ProviderList
-List of providers.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [Provider](#arangodb.cloud.platform.v1.Provider) | repeated |  |
-
-
-
-
-
-
-<a name="arangodb.cloud.platform.v1.Region"></a>
-
-### Region
-Region represents a geographical region in which deployments are run.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the region. |
-| provider_id | [string](#string) |  | Identifier of the provider that hosts this region. |
-| location | [string](#string) |  | Location of the region |
-| available | [bool](#bool) |  | Is this region available for creating new deployments? |
-
-
-
-
-
-
-<a name="arangodb.cloud.platform.v1.RegionList"></a>
-
-### RegionList
-List of regions.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [Region](#arangodb.cloud.platform.v1.Region) | repeated |  |
-
-
-
-
-
- 
-
- 
-
- 
-
-
-<a name="arangodb.cloud.platform.v1.PlatformService"></a>
-
-### PlatformService
-PlatformService is the API used to query for cloud provider &amp; regional info.
-
-| Method Name | Request Type | Response Type | Description |
-| ----------- | ------------ | ------------- | ------------|
-| ListProviders | [ListProvidersRequest](#arangodb.cloud.platform.v1.ListProvidersRequest) | [ProviderList](#arangodb.cloud.platform.v1.ProviderList) | Fetch all providers that are supported by the ArangoDB cloud. Required permissions: - None |
-| GetProvider | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Provider](#arangodb.cloud.platform.v1.Provider) | Fetch a provider by its id. Required permissions: - None |
-| ListRegions | [ListRegionsRequest](#arangodb.cloud.platform.v1.ListRegionsRequest) | [RegionList](#arangodb.cloud.platform.v1.RegionList) | Fetch all regions provided by the provided identified by the given context ID. If the given context identifier contains a valid organization ID, the result includes all regions for that organization. Otherwise only regions are returned that are available to all organizations. Required permissions: - None |
-| GetRegion | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Region](#arangodb.cloud.platform.v1.Region) | Fetch a region by its id. Required permissions: - None |
-
- 
 
 
 
@@ -1413,6 +443,236 @@ ResourceManagerService is the API used to configure basic resource objects.
 
 
 
+<a name="crypto/v1/crypto.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## crypto/v1/crypto.proto
+
+
+
+<a name="arangodb.cloud.crypto.v1.CACertificate"></a>
+
+### CACertificate
+A CACertificate is represents a self-signed certificate authority used to sign
+TLS certificates for deployments &amp; client authentication.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the CA certificate. This is a read-only value. |
+| url | [string](#string) |  | URL of this resource This is a read-only value. |
+| name | [string](#string) |  | Name of the CA certificate |
+| description | [string](#string) |  | Description of the CA certificate |
+| project_id | [string](#string) |  | Identifier of the project that owns this CA certificate. This value cannot be changed after creation. |
+| lifetime | [google.protobuf.Duration](#google.protobuf.Duration) |  | Time from creation of the CA certificate to expiration. This value cannot be changed after creation. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the CA certificate This is a read-only value. |
+| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the CA certificate This is a read-only value. |
+| expires_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The expiration timestamp of the CA certificate This is a read-only value. |
+| certificate_pem | [string](#string) |  | A PEM encoded representation of the public key of the CA certificate. This is a read-only value. |
+| is_deleted | [bool](#bool) |  | Set when this CA certificate is deleted. This is a read-only value. |
+
+
+
+
+
+
+<a name="arangodb.cloud.crypto.v1.CACertificateInstructions"></a>
+
+### CACertificateInstructions
+Instructions for installing &amp; uninstalling CA certificates
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| platforms | [CACertificateInstructions.PlatformInstructions](#arangodb.cloud.crypto.v1.CACertificateInstructions.PlatformInstructions) | repeated | Per platform instructions for install/uninstall of the CA certificate |
+
+
+
+
+
+
+<a name="arangodb.cloud.crypto.v1.CACertificateInstructions.PlatformInstructions"></a>
+
+### CACertificateInstructions.PlatformInstructions
+Instructions for a specific platform
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| platform | [string](#string) |  | Human readable description of platform. E.g. &#34;MacOS&#34; |
+| install_steps | [string](#string) | repeated | Steps needed to install |
+| uninstall_steps | [string](#string) | repeated | Steps needed to uninstall |
+
+
+
+
+
+
+<a name="arangodb.cloud.crypto.v1.CACertificateList"></a>
+
+### CACertificateList
+List of CACertificates.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | repeated |  |
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+
+<a name="arangodb.cloud.crypto.v1.CryptoService"></a>
+
+### CryptoService
+CryptoService is the API used to configure various crypto objects.
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+| ListCACertificates | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [CACertificateList](#arangodb.cloud.crypto.v1.CACertificateList) | Fetch all CA certificates in the project identified by the given context ID. Required permissions: - crypto.cacertificate.list on the project identified by the given context ID |
+| GetCACertificate | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | Fetch a CA certificate by its id. Required permissions: - crypto.cacertificate.get on the CA certificate identified by the given ID |
+| GetCACertificateInstructions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [CACertificateInstructions](#arangodb.cloud.crypto.v1.CACertificateInstructions) | Fetch instructions for installing &amp; unistalling a CA certificate identified by its id on various platforms. Required permissions: - crypto.cacertificate.get on the CA certificate identified by the given ID |
+| CreateCACertificate | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | Create a new CA certificate Required permissions: - crypto.cacertificate.create on the project that owns the CA certificate |
+| UpdateCACertificate | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | Update a CA certificate Required permissions: - crypto.cacertificate.update on the CA certificate |
+| DeleteCACertificate | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a CA certificate Note that CA certificate are initially only marked for deleted. Once all the resources that depend on it are removed the CA certificate itself is deleted and cannot be restored. Required permissions: - crypto.cacertificate.delete on the CA certificate |
+
+ 
+
+
+
+<a name="platform/v1/platform.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## platform/v1/platform.proto
+
+
+
+<a name="arangodb.cloud.platform.v1.ListProvidersRequest"></a>
+
+### ListProvidersRequest
+Request arguments for ListProviders
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Common list options |
+| organization_id | [string](#string) |  | If set, the result includes all providers for that are available for the organization identified by this ID. If not set, only providers are returned that are available to all organizations. |
+
+
+
+
+
+
+<a name="arangodb.cloud.platform.v1.ListRegionsRequest"></a>
+
+### ListRegionsRequest
+Request arguments for ListRegions
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Common list options |
+| provider_id | [string](#string) |  | Required identifier of the provider to list regions for. |
+| organization_id | [string](#string) |  | If set, the result includes all regions for that are available for the organization identified by this ID. If not set, only regions are returned that are available to all organizations. |
+
+
+
+
+
+
+<a name="arangodb.cloud.platform.v1.Provider"></a>
+
+### Provider
+Provider represents a specific cloud provider such as AWS or GCP.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the provider. |
+| name | [string](#string) |  | Name of the provider |
+
+
+
+
+
+
+<a name="arangodb.cloud.platform.v1.ProviderList"></a>
+
+### ProviderList
+List of providers.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Provider](#arangodb.cloud.platform.v1.Provider) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.platform.v1.Region"></a>
+
+### Region
+Region represents a geographical region in which deployments are run.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the region. |
+| provider_id | [string](#string) |  | Identifier of the provider that hosts this region. |
+| location | [string](#string) |  | Location of the region |
+| available | [bool](#bool) |  | Is this region available for creating new deployments? |
+
+
+
+
+
+
+<a name="arangodb.cloud.platform.v1.RegionList"></a>
+
+### RegionList
+List of regions.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Region](#arangodb.cloud.platform.v1.Region) | repeated |  |
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+
+<a name="arangodb.cloud.platform.v1.PlatformService"></a>
+
+### PlatformService
+PlatformService is the API used to query for cloud provider &amp; regional info.
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+| ListProviders | [ListProvidersRequest](#arangodb.cloud.platform.v1.ListProvidersRequest) | [ProviderList](#arangodb.cloud.platform.v1.ProviderList) | Fetch all providers that are supported by the ArangoDB cloud. Required permissions: - None |
+| GetProvider | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Provider](#arangodb.cloud.platform.v1.Provider) | Fetch a provider by its id. Required permissions: - None |
+| ListRegions | [ListRegionsRequest](#arangodb.cloud.platform.v1.ListRegionsRequest) | [RegionList](#arangodb.cloud.platform.v1.RegionList) | Fetch all regions provided by the provided identified by the given context ID. If the given context identifier contains a valid organization ID, the result includes all regions for that organization. Otherwise only regions are returned that are available to all organizations. Required permissions: - None |
+| GetRegion | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Region](#arangodb.cloud.platform.v1.Region) | Fetch a region by its id. Required permissions: - None |
+
+ 
+
+
+
 <a name="usage/v1/usage.proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
@@ -1557,6 +817,748 @@ UsageService is the API used to fetch usage tracking information.
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
 | ListUsageItems | [ListUsageItemsRequest](#arangodb.cloud.usage.v1.ListUsageItemsRequest) | [UsageItemList](#arangodb.cloud.usage.v1.UsageItemList) | Fetch all UsageItem resources in the organization identified by the given organization ID that match the given criteria. Required permissions: - usage.usageitem.list on the organization identified by the given organization ID |
+
+ 
+
+
+
+<a name="common/v1/common.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## common/v1/common.proto
+
+
+
+<a name="arangodb.cloud.common.v1.Budget"></a>
+
+### Budget
+Budget for resources of a specific kind
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| used | [int64](#int64) |  | How many resources of the specific kind are in use |
+| available | [int64](#int64) |  | How many resources of the specific kind are still available. Note a value above 0 does not mean that the caller has permission to add those resources. |
+| unlimited | [bool](#bool) |  | If set, there is no limit to the number of resources of a specific kind that can be created. If set, available is 0. |
+
+
+
+
+
+
+<a name="arangodb.cloud.common.v1.Empty"></a>
+
+### Empty
+Empty message
+
+
+
+
+
+
+<a name="arangodb.cloud.common.v1.IDOptions"></a>
+
+### IDOptions
+Options for a get-by-id request
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the object to fetch. |
+
+
+
+
+
+
+<a name="arangodb.cloud.common.v1.ListOptions"></a>
+
+### ListOptions
+Options for a list request.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| page_size | [int32](#int32) |  | Maximum number of items to return. If not specified, all remaining items are returned. |
+| page | [int64](#int64) |  | Page to start with (defaults to 0). |
+| context_id | [string](#string) |  | Identifier of the resource in which the list request is made. |
+
+
+
+
+
+
+<a name="arangodb.cloud.common.v1.URLOptions"></a>
+
+### URLOptions
+Options for a get-by-url request
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| url | [string](#string) |  | URL of the resource to fetch. |
+
+
+
+
+
+
+<a name="arangodb.cloud.common.v1.YesOrNo"></a>
+
+### YesOrNo
+Response for single boolean.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| result | [bool](#bool) |  |  |
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+<a name="iam/v1/iam.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## iam/v1/iam.proto
+
+
+
+<a name="arangodb.cloud.iam.v1.Group"></a>
+
+### Group
+Group of user accounts.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the group. This is a read-only value. |
+| organization_id | [string](#string) |  | Identifier of the organization that owns this group. |
+| name | [string](#string) |  | Name of the group |
+| description | [string](#string) |  | Description of the group |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the group |
+| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the group |
+| is_deleted | [bool](#bool) |  | Set when this organization is deleted. This is a read-only value. |
+| url | [string](#string) |  | URL of this resource This is a read-only value and cannot be initialized. |
+| is_virtual | [bool](#bool) |  | Set if this group is virtual and managed by the system. This is a read-only value. |
+
+
+
+
+
+
+<a name="arangodb.cloud.iam.v1.GroupList"></a>
+
+### GroupList
+List of groups.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Group](#arangodb.cloud.iam.v1.Group) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.iam.v1.GroupMemberList"></a>
+
+### GroupMemberList
+List of group members (user ID&#39;s)
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [string](#string) | repeated | List of ID&#39;s of users that are member of the group. |
+
+
+
+
+
+
+<a name="arangodb.cloud.iam.v1.GroupMembersRequest"></a>
+
+### GroupMembersRequest
+Request arguments for Add/DeleteGroupMembers.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| group_id | [string](#string) |  | ID of the group to add/remove members to/from. |
+| user_ids | [string](#string) | repeated | ID&#39;s of users to add/remove to/from the group. |
+
+
+
+
+
+
+<a name="arangodb.cloud.iam.v1.HasPermissionsRequest"></a>
+
+### HasPermissionsRequest
+Request arguments for HasPermissionsRequest.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| url | [string](#string) |  | URL of the resource to query permissions for. |
+| permissions | [string](#string) | repeated | The list of permissions that are required. |
+
+
+
+
+
+
+<a name="arangodb.cloud.iam.v1.IsMemberOfGroupRequest"></a>
+
+### IsMemberOfGroupRequest
+Request arguments for IsMemberOfGroup.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| user_id | [string](#string) |  | Identifier of the user |
+| group_id | [string](#string) |  | Identifier of the group |
+
+
+
+
+
+
+<a name="arangodb.cloud.iam.v1.PermissionList"></a>
+
+### PermissionList
+List of permissions.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [string](#string) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.iam.v1.Policy"></a>
+
+### Policy
+Policy bindings members to roles for access to a resource.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| resource_url | [string](#string) |  | URL of the resource to which this policy applies. |
+| bindings | [RoleBinding](#arangodb.cloud.iam.v1.RoleBinding) | repeated | Role bindings to apply to the resource. |
+
+
+
+
+
+
+<a name="arangodb.cloud.iam.v1.Role"></a>
+
+### Role
+A role is a list of permissions.
+Roles can be bound to resources for members.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the role. This is a read-only value. |
+| organization_id | [string](#string) |  | Identifier of the organization that owns this role. This value is undefined for predefined roles. |
+| name | [string](#string) |  | Name of the role |
+| description | [string](#string) |  | Description of the role |
+| permissions | [string](#string) | repeated | Permissions to grant when this role is bound. |
+| is_predefined | [bool](#bool) |  | Set if this role is predefined. This is a read-only value. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the role |
+| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the role |
+| is_deleted | [bool](#bool) |  | Set when this organization is deleted. This is a read-only value. |
+| url | [string](#string) |  | URL of this resource This is a read-only value and cannot be initialized. |
+
+
+
+
+
+
+<a name="arangodb.cloud.iam.v1.RoleBinding"></a>
+
+### RoleBinding
+RoleBinding binds a Role to a member.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the role-binding. This is a read-only value. |
+| member_id | [string](#string) |  | Identifier of the member to bind a role to. Member ID is formatted as: - user:&lt;user_id&gt; - group:&lt;group_id&gt; |
+| role_id | [string](#string) |  | Identifier of the Role to grant to member |
+
+
+
+
+
+
+<a name="arangodb.cloud.iam.v1.RoleBindingsRequest"></a>
+
+### RoleBindingsRequest
+Request arguments for Add/DeleteRoleBindings.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| resource_url | [string](#string) |  | URL of the resource to add/remove policy binding to/from. |
+| bindings | [RoleBinding](#arangodb.cloud.iam.v1.RoleBinding) | repeated | Role bindings to add/remove to the policy. |
+
+
+
+
+
+
+<a name="arangodb.cloud.iam.v1.RoleList"></a>
+
+### RoleList
+List of roles.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Role](#arangodb.cloud.iam.v1.Role) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.iam.v1.User"></a>
+
+### User
+User represents an actual person.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | Identifier of the user. This is a read-only value. |
+| email | [string](#string) |  | Primary email address of the user. All emails send to this user will use this address. This is a read-only value. |
+| name | [string](#string) |  | Name of the user. This may be empty if not filled out by the user. |
+| given_name | [string](#string) |  | Given name of the user. This may be empty if not filled out by the user. |
+| family_name | [string](#string) |  | Family name of the user. This may be empty if not filled out by the user. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the user. This is a read-only value. |
+| additional_emails | [string](#string) | repeated | Additional email addresses of the user. This will be filled in when the authentication provided knows multiple email addresses for the user. This is a read-only value. |
+| mobile_phone | [string](#string) |  | Mobile phone number of the user. This value must be unique globally.
+
+This field will not be filled, unless: - The currently authenticated user is this user - The currently authenticated user has `iam.user.get-personal-data` permission on the organization that user is a member of.
+
+This value can only be changed to a non-empty value. If changed, the new number has to be verified again. |
+| mobile_phone_verified | [bool](#bool) |  | Set when the mobile phone number has been successfully verified. This is a read-only value. |
+| company_name | [string](#string) |  | Company name of the user This may be empty if not filled out by the user. |
+
+
+
+
+
+
+<a name="arangodb.cloud.iam.v1.VerifyUserMobilePhoneRequest"></a>
+
+### VerifyUserMobilePhoneRequest
+Request arguments for VerifyUserMobilePhone
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| code | [string](#string) |  | Code that was send to the mobile phone number. |
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+
+<a name="arangodb.cloud.iam.v1.IAMService"></a>
+
+### IAMService
+IAMService is the API used to configure IAM objects.
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+| GetThisUser | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [User](#arangodb.cloud.iam.v1.User) | Fetch all available information of the currently authenticated user. Required permissions: - None |
+| GetUser | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [User](#arangodb.cloud.iam.v1.User) | Fetch all available information of the user identified by the given ID. Required permissions: - resourcemanager.organization.get on one of the organizations that the requested user and authenticated user are both a member of |
+| UpdateUser | [User](#arangodb.cloud.iam.v1.User) | [User](#arangodb.cloud.iam.v1.User) | Update a user Required permissions: - None if the given user is the authenticated user. or - resourcemanager.organization.get on one of the organizations that the requested user and authenticated user are both a member of and - iam.user.update on organization on one of the organizations that the requested user and authenticated user are both a member of |
+| VerifyUserMobilePhone | [VerifyUserMobilePhoneRequest](#arangodb.cloud.iam.v1.VerifyUserMobilePhoneRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Verify the mobile phone number of a user, by provided the unique code that was send to the number. If the code is valid an empty result is returned, otherwise an InvalidArgument error is returned. The authenticated user is always the subject of this request. Required permissions: - None (since the subject is always the authenticated user). |
+| ResendUserMobilePhoneVerification | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Resend a verification code to the mobile phone number listed for the authenticated user. Required permissions: - None (since the subject is always the authenticated user). |
+| ListGroups | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [GroupList](#arangodb.cloud.iam.v1.GroupList) | Fetch all groups of the organization identified by the given context ID. Required permissions: - iam.group.list on organization identified by given context ID. |
+| GetGroup | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Group](#arangodb.cloud.iam.v1.Group) | Fetch a group by its id. Required permissions: - iam.group.get on organization that owns the group |
+| CreateGroup | [Group](#arangodb.cloud.iam.v1.Group) | [Group](#arangodb.cloud.iam.v1.Group) | Create a group Required permissions: - iam.group.create on organization that owns the group |
+| UpdateGroup | [Group](#arangodb.cloud.iam.v1.Group) | [Group](#arangodb.cloud.iam.v1.Group) | Update a group Required permissions: - iam.group.update on organization that owns the group |
+| DeleteGroup | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a group Required permissions: - iam.group.delete on organization that owns the group |
+| ListGroupMembers | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [GroupMemberList](#arangodb.cloud.iam.v1.GroupMemberList) | List of members of the group identified by the given context ID. Required permissions: - iam.group.get on organization that owns the group |
+| AddGroupMembers | [GroupMembersRequest](#arangodb.cloud.iam.v1.GroupMembersRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Add one or more members to the group identified by given ID. Required permissions: - iam.group.update on organization that owns the group |
+| DeleteGroupMembers | [GroupMembersRequest](#arangodb.cloud.iam.v1.GroupMembersRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Remove one or more members from the group identified by given ID. Required permissions: - iam.group.update on organization that owns the group |
+| IsMemberOfGroup | [IsMemberOfGroupRequest](#arangodb.cloud.iam.v1.IsMemberOfGroupRequest) | [.arangodb.cloud.common.v1.YesOrNo](#arangodb.cloud.common.v1.YesOrNo) | Is the user identified by the given user ID a member of the group identified by the given group ID. Required permissions: - iam.group.get on organization that owns the group, unless the requested user is identical to the authenticated user. Note that if the identified group does not exist, no is returned. |
+| ListRoles | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [RoleList](#arangodb.cloud.iam.v1.RoleList) | Fetch all roles in the organization identified by the given context ID. Required permissions: - iam.role.list on organization identified by given context ID. |
+| GetRole | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Role](#arangodb.cloud.iam.v1.Role) | Fetch a role by its id. Required permissions: - iam.role.get on organization that owns the role |
+| CreateRole | [Role](#arangodb.cloud.iam.v1.Role) | [Role](#arangodb.cloud.iam.v1.Role) | Create a custom role Required permissions: - iam.role.create on organization that owns the role |
+| UpdateRole | [Role](#arangodb.cloud.iam.v1.Role) | [Role](#arangodb.cloud.iam.v1.Role) | Update a custom role Required permissions: - iam.role.update on organization that owns the role |
+| DeleteRole | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a custom role Required permissions: - iam.role.delete on organization that owns the role |
+| GetPolicy | [.arangodb.cloud.common.v1.URLOptions](#arangodb.cloud.common.v1.URLOptions) | [Policy](#arangodb.cloud.iam.v1.Policy) | Get the policy for a resource identified by given URL. Required permissions: - iam.policy.get on resource identified by the url |
+| AddRoleBindings | [RoleBindingsRequest](#arangodb.cloud.iam.v1.RoleBindingsRequest) | [Policy](#arangodb.cloud.iam.v1.Policy) | Add one or more RoleBindings to the policy of a resource identified by given URL. Required permissions: - iam.policy.update on resource identified by the url |
+| DeleteRoleBindings | [RoleBindingsRequest](#arangodb.cloud.iam.v1.RoleBindingsRequest) | [Policy](#arangodb.cloud.iam.v1.Policy) | Remove one or more RoleBindings from the policy of a resource identified by given URL. Required permissions: - iam.policy.update on resource identified by the url |
+| GetEffectivePermissions | [.arangodb.cloud.common.v1.URLOptions](#arangodb.cloud.common.v1.URLOptions) | [PermissionList](#arangodb.cloud.iam.v1.PermissionList) | Return the list of permissions that are available to the currently authenticated used for actions on the resource identified by the given URL. Required permissions: - None |
+| HasPermissions | [HasPermissionsRequest](#arangodb.cloud.iam.v1.HasPermissionsRequest) | [.arangodb.cloud.common.v1.YesOrNo](#arangodb.cloud.common.v1.YesOrNo) | Does the authenticated user have all of the requested permissions for the resource identified by the given URL? Required permissions: - None |
+| ListPermissions | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [PermissionList](#arangodb.cloud.iam.v1.PermissionList) | List all known permissions. Required permissions: - None |
+
+ 
+
+
+
+<a name="data/v1/data.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## data/v1/data.proto
+
+
+
+<a name="arangodb.cloud.data.v1.Deployment"></a>
+
+### Deployment
+A Deployment is represents one deployment of an ArangoDB cluster.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the deployment. This is a read-only value. |
+| url | [string](#string) |  | URL of this resource This is a read-only value. |
+| name | [string](#string) |  | Name of the deployment |
+| description | [string](#string) |  | Description of the deployment |
+| project_id | [string](#string) |  | Identifier of the project that owns this deployment. After creation, this value cannot be changed. |
+| region_id | [string](#string) |  | Identifier of the region in which the deployment is created. After creation, this value cannot be changed. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the deployment This is a read-only value. |
+| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the deployment This is a read-only value. |
+| is_deleted | [bool](#bool) |  | Set when this deployment is deleted. This is a read-only value. |
+| version | [string](#string) |  | ArangoDB version to use for this deployment. See Version.version. If you change this value to a higher version, the deployment will be upgraded. If you change this value to a lower patch value, the deployment will be downgraded. Any attempt to change to a lower minor or major version is considered an invalid request. Any attempt to change to a version that is not in the list of available versions is considered an invalid request. |
+| certificates | [Deployment.CertificateSpec](#arangodb.cloud.data.v1.Deployment.CertificateSpec) |  |  |
+| servers | [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  |  |
+| authentication | [Deployment.AuthenticationSpec](#arangodb.cloud.data.v1.Deployment.AuthenticationSpec) |  |  |
+| status | [Deployment.Status](#arangodb.cloud.data.v1.Deployment.Status) |  |  |
+| expiration | [Deployment.Expiration](#arangodb.cloud.data.v1.Deployment.Expiration) |  |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.Deployment.AuthenticationSpec"></a>
+
+### Deployment.AuthenticationSpec
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| root_password | [string](#string) |  | Password of the root user of the deployment. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.Deployment.CertificateSpec"></a>
+
+### Deployment.CertificateSpec
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ca_certificate_id | [string](#string) |  | Identifier of the CACertificate used to sign TLS certificates for the deployment. If you change this value after the creation of the deployment a complete rotation of the deployment is required, which will result in some downtime. |
+| alternate_dns_names | [string](#string) | repeated | Zero or more DNS names to include in the TLS certificate of the deployment. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.Deployment.Expiration"></a>
+
+### Deployment.Expiration
+Expiration of the deployment.
+All members of this message are read-only.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| expires_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The expiration timestamp of the deployment If not set, the deployment will not expire. |
+| reason | [string](#string) |  | Human readable reason for why the deployment expires (or does not expire). |
+| last_warning_email_send_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of when the last &#34;this deployment will expire at&#34; email was send. If not set, no such email has been send. |
+| last_warning_email_send_to | [string](#string) | repeated | List of email addresses to which the last warning email has been send. Not set when no such email has been send. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.Deployment.ServerStatus"></a>
+
+### Deployment.ServerStatus
+Status of a single server (of the ArangoDB cluster)
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | ID of the server |
+| type | [string](#string) |  | Type of server (agent|coordinator|dbserver) |
+| description | [string](#string) |  | Human readable description of the status of the deployment. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the server |
+| ready | [bool](#bool) |  | Set once the server is ready |
+| member_of_cluster | [bool](#bool) |  | Set once the server has been known to be a member of the cluster |
+| failed | [bool](#bool) |  | Set if the server is in a failed state |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.Deployment.ServersSpec"></a>
+
+### Deployment.ServersSpec
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| coordinators | [int32](#int32) |  | Number of coordinators of the deployment |
+| coordinator_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for coordinators. |
+| coordinator_args | [string](#string) | repeated | Custom command line arguments passed to all coordinators. |
+| dbservers | [int32](#int32) |  | Number of dbservers of the deployment |
+| dbserver_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for dbservers. |
+| dbserver_disk_size | [int32](#int32) |  | Amount of disk space (in GB) to allocate for dbservers. |
+| dbserver_args | [string](#string) | repeated | Custom command line arguments passed to all dbservers. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.Deployment.Status"></a>
+
+### Deployment.Status
+Status of the deployment
+All members of this field are read-only.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| endpoint | [string](#string) |  | Endpoint URL used to reach the deployment This value will be empty during the creation of the deployment. |
+| description | [string](#string) |  | Human readable description of the status of the deployment. |
+| created | [bool](#bool) |  | Set once the deployment has been created. |
+| ready | [bool](#bool) |  | Set if the deployment is ready to be used. If the deployment has downtime (e.g. because of changing a CA certificate) this will go to false until the downtime is over. |
+| upgrading | [bool](#bool) |  | Set if the deployment is being upgraded. |
+| server_versions | [string](#string) | repeated | Versions of running servers |
+| servers | [Deployment.ServerStatus](#arangodb.cloud.data.v1.Deployment.ServerStatus) | repeated | Status of individual servers of the deployment |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.DeploymentList"></a>
+
+### DeploymentList
+List of Deployments.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Deployment](#arangodb.cloud.data.v1.Deployment) | repeated | Actual deployments |
+| budget | [arangodb.cloud.common.v1.Budget](#arangodb.cloud.common.v1.Budget) |  | Budget for deployments |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.ListVersionsRequest"></a>
+
+### ListVersionsRequest
+Request arguments for ListVersions.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Common list options |
+| organization_id | [string](#string) |  | If set, the result includes all versions for that are available for the organization identified by this ID. If not set, only versions are returned that are available to all organizations. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.ServersSpecLimits"></a>
+
+### ServersSpecLimits
+Limits of allowed values for fields of Deployment.ServersSpec.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| coordinators | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Limits for the number of coordinators of the deployment |
+| coordinator_memory_size | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Possible values for the amount of memory (in GB) to allocate for coordinators. |
+| dbservers | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Limits for the number of dbservers of the deployment |
+| dbserver_memory_size | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Possible values for the amount of memory (in GB) to allocate for dbservers. |
+| dbserver_disk_size | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Amount of disk space (in GB) to allocate for dbservers. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.ServersSpecLimits.Limits"></a>
+
+### ServersSpecLimits.Limits
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| min | [int32](#int32) |  | Minimum value |
+| max | [int32](#int32) |  | Maximum value |
+| allowed_values | [int32](#int32) | repeated | Set of allowed values. If this field is non-empty, only one of these values is allowed. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.ServersSpecLimitsRequest"></a>
+
+### ServersSpecLimitsRequest
+Request arguments for ListServersSpecLimits
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| project_id | [string](#string) |  | Identifier of project that will own a deployment. |
+| region_id | [string](#string) |  | Identifier of a region in which a deployment will be created. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.ServersSpecPreset"></a>
+
+### ServersSpecPreset
+Specification of a ServersSpecPreset, which can be used to initialize a deployment.servers
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| name | [string](#string) |  | Name of the ServersSpecPreset This is a read-only value. |
+| is_default | [bool](#bool) |  | Set when this preset is the default. This is a read-only value. |
+| servers | [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  | The ServersSpec associated for this name |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.ServersSpecPresetList"></a>
+
+### ServersSpecPresetList
+List of ServersSpecPreset.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [ServersSpecPreset](#arangodb.cloud.data.v1.ServersSpecPreset) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.ServersSpecPresetsRequest"></a>
+
+### ServersSpecPresetsRequest
+Request arguments for ListServersSpecPresets and GetDefaultServersSpecPreset
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| project_id | [string](#string) |  | Identifier of project that will own a deployment. |
+| region_id | [string](#string) |  | Identifier of a region in which a deployment will be created. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.Version"></a>
+
+### Version
+Version of an ArangoDB release
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| version | [string](#string) |  | Version in the format of major.minor.patch |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.VersionList"></a>
+
+### VersionList
+List of Versions.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Version](#arangodb.cloud.data.v1.Version) | repeated |  |
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+
+<a name="arangodb.cloud.data.v1.DataService"></a>
+
+### DataService
+DataService is the API used to configure data objects.
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+| ListDeployments | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [DeploymentList](#arangodb.cloud.data.v1.DeploymentList) | Fetch all deployments in the project identified by the given context ID. Required permissions: - data.deployment.list on the project identified by the given context ID |
+| GetDeployment | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Fetch a deployment by its id. Required permissions: - data.deployment.get on the deployment identified by the given ID |
+| CreateDeployment | [Deployment](#arangodb.cloud.data.v1.Deployment) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Create a new deployment Required permissions: - data.deployment.create on the project that owns the deployment Note that deployment.status &amp; deployment.expiration are ignored in this request. |
+| UpdateDeployment | [Deployment](#arangodb.cloud.data.v1.Deployment) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Update a deployment Required permissions: - data.deployment.update on the deployment Note that deployment.status &amp; deployment.expiration are ignored in this request. |
+| DeleteDeployment | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a deployment Note that deployments are initially only marked for deletion. Once all their resources are removed the deployment itself is removed. Required permissions: - data.deployment.delete on the deployment |
+| ListVersions | [ListVersionsRequest](#arangodb.cloud.data.v1.ListVersionsRequest) | [VersionList](#arangodb.cloud.data.v1.VersionList) | Fetch all ArangoDB versions that are available for deployments. Required permissions: - None |
+| GetDefaultVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [Version](#arangodb.cloud.data.v1.Version) | Fetch the default ArangoDB version for new deployment. Required permissions: - None |
+| GetServersSpecLimits | [ServersSpecLimitsRequest](#arangodb.cloud.data.v1.ServersSpecLimitsRequest) | [ServersSpecLimits](#arangodb.cloud.data.v1.ServersSpecLimits) | Fetch the limits for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.limits.get on the requested project |
+| ListServersSpecPresets | [ServersSpecPresetsRequest](#arangodb.cloud.data.v1.ServersSpecPresetsRequest) | [ServersSpecPresetList](#arangodb.cloud.data.v1.ServersSpecPresetList) | Fetch the presets for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.presets.list on the requested project |
 
  
 
