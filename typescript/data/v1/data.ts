@@ -181,7 +181,7 @@ export interface Deployment_ServersSpec {
   // number
   dbserver_disk_size?: number;
   
-  // Custom command line arguments passed to all coordinators.
+  // Custom command line arguments passed to all dbservers.
   // string
   dbserver_args?: string[];
 }

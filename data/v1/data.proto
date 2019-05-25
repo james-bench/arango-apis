@@ -175,7 +175,7 @@ message Deployment {
         int32 dbserver_memory_size = 12;
         // Amount of disk space (in GB) to allocate for dbservers.
         int32 dbserver_disk_size = 13;
-        // Custom command line arguments passed to all coordinators.
+        // Custom command line arguments passed to all dbservers.
         repeated string dbserver_args = 14;
     }
     ServersSpec servers = 103;

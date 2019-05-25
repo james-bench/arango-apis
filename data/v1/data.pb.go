@@ -284,7 +284,7 @@ type Deployment_ServersSpec struct {
 	DbserverMemorySize int32 `protobuf:"varint,12,opt,name=dbserver_memory_size,json=dbserverMemorySize,proto3" json:"dbserver_memory_size,omitempty"`
 	// Amount of disk space (in GB) to allocate for dbservers.
 	DbserverDiskSize int32 `protobuf:"varint,13,opt,name=dbserver_disk_size,json=dbserverDiskSize,proto3" json:"dbserver_disk_size,omitempty"`
-	// Custom command line arguments passed to all coordinators.
+	// Custom command line arguments passed to all dbservers.
 	DbserverArgs         []string `protobuf:"bytes,14,rep,name=dbserver_args,json=dbserverArgs,proto3" json:"dbserver_args,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`

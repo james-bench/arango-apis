@@ -1346,7 +1346,7 @@ Status of a single server (of the ArangoDB cluster)
 | dbservers | [int32](#int32) |  | Number of dbservers of the deployment |
 | dbserver_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for dbservers. |
 | dbserver_disk_size | [int32](#int32) |  | Amount of disk space (in GB) to allocate for dbservers. |
-| dbserver_args | [string](#string) | repeated | Custom command line arguments passed to all coordinators. |
+| dbserver_args | [string](#string) | repeated | Custom command line arguments passed to all dbservers. |
 
 
 
