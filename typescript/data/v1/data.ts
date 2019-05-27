@@ -243,6 +243,10 @@ export interface ListVersionsRequest {
   // If not set, only versions are returned that are available to all organizations.
   // string
   organization_id?: string;
+  
+  // If set, only versions will be returned that are safe to upgrade to from this version.
+  // string
+  current_version?: string;
 }
 
 // Limits of allowed values for fields of Deployment.ServersSpec.

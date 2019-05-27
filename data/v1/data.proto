@@ -297,7 +297,9 @@ message ListVersionsRequest {
     // If set, the result includes all versions for that are available for the
     // organization identified by this ID.
     // If not set, only versions are returned that are available to all organizations.
-    string organization_id = 2;    
+    string organization_id = 2;
+    // If set, only versions will be returned that are safe to upgrade to from this version.    
+    string current_version = 3;
 }
 
 // Request arguments for ListServersSpecLimits
