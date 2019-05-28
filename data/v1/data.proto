@@ -138,6 +138,9 @@ message Deployment {
     // Set when this deployment is deleted.
     // This is a read-only value.
     bool is_deleted = 9;
+    // Identifier of the support plan selected for this deployment.
+    // After creation, this value cannot be changed.
+    string support_plan_id = 10;
 
     // ArangoDB version to use for this deployment.
     // See Version.version.
