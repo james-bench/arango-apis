@@ -1317,7 +1317,7 @@ A Deployment is represents one deployment of an ArangoDB cluster.
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the deployment This is a read-only value. |
 | deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the deployment This is a read-only value. |
 | is_deleted | [bool](#bool) |  | Set when this deployment is deleted. This is a read-only value. |
-| support_plan_id | [string](#string) |  | Identifier of the support plan selected for this deployment. After creation, this value cannot be changed. |
+| support_plan_id | [string](#string) |  | Optional identifier of the support plan selected for this deployment. After creation, this value cannot be changed. If no support plan identifier is set, the default support plan is used. |
 | version | [string](#string) |  | ArangoDB version to use for this deployment. See Version.version. If you change this value to a higher version, the deployment will be upgraded. If you change this value to a lower patch value, the deployment will be downgraded. Any attempt to change to a lower minor or major version is considered an invalid request. Any attempt to change to a version that is not in the list of available versions is considered an invalid request. |
 | certificates | [Deployment.CertificateSpec](#arangodb.cloud.data.v1.Deployment.CertificateSpec) |  |  |
 | servers | [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  |  |

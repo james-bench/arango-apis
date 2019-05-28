@@ -57,8 +57,9 @@ export interface Deployment {
   // boolean
   is_deleted?: boolean;
   
-  // Identifier of the support plan selected for this deployment.
+  // Optional identifier of the support plan selected for this deployment.
   // After creation, this value cannot be changed.
+  // If no support plan identifier is set, the default support plan is used.
   // string
   support_plan_id?: string;
   

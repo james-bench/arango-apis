@@ -53,8 +53,9 @@ type Deployment struct {
 	// Set when this deployment is deleted.
 	// This is a read-only value.
 	IsDeleted bool `protobuf:"varint,9,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
-	// Identifier of the support plan selected for this deployment.
+	// Optional identifier of the support plan selected for this deployment.
 	// After creation, this value cannot be changed.
+	// If no support plan identifier is set, the default support plan is used.
 	SupportPlanId string `protobuf:"bytes,10,opt,name=support_plan_id,json=supportPlanId,proto3" json:"support_plan_id,omitempty"`
 	// ArangoDB version to use for this deployment.
 	// See Version.version.
