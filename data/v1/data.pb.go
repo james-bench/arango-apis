@@ -546,7 +546,7 @@ type Deployment_Status struct {
 	Servers []*Deployment_ServerStatus `protobuf:"bytes,7,rep,name=servers,proto3" json:"servers,omitempty"`
 	// Set if the ready boolean is transitioned to true for the very first time.
 	BootstrappedAt *types.Timestamp `protobuf:"bytes,8,opt,name=bootstrapped_at,json=bootstrappedAt,proto3" json:"bootstrapped_at,omitempty"`
-	// Set if bootstrapped_at has a value, othewise false.
+	// Set if bootstrapped_at has a value, otherwise false.
 	Bootstrapped         bool     `protobuf:"varint,9,opt,name=bootstrapped,proto3" json:"bootstrapped,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`

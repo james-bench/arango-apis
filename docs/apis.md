@@ -477,7 +477,7 @@ All members of this field are read-only.
 | server_versions | [string](#string) | repeated | Versions of running servers |
 | servers | [Deployment.ServerStatus](#arangodb.cloud.data.v1.Deployment.ServerStatus) | repeated | Status of individual servers of the deployment |
 | bootstrapped_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Set if the ready boolean is transitioned to true for the very first time. |
-| bootstrapped | [bool](#bool) |  | Set if bootstrapped_at has a value, othewise false. |
+| bootstrapped | [bool](#bool) |  | Set if bootstrapped_at has a value, otherwise false. |
 
 
 

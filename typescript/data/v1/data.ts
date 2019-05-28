@@ -224,7 +224,7 @@ export interface Deployment_Status {
   // googleTypes.Timestamp
   bootstrapped_at?: googleTypes.Timestamp;
   
-  // Set if bootstrapped_at has a value, othewise false.
+  // Set if bootstrapped_at has a value, otherwise false.
   // boolean
   bootstrapped?: boolean;
 }
