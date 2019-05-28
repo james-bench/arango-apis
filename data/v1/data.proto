@@ -224,6 +224,10 @@ message Deployment {
         repeated string server_versions = 6;
         // Status of individual servers of the deployment
         repeated ServerStatus servers = 7;
+        // Set if the ready boolean is transitioned to true for the very first time.
+        google.protobuf.Timestamp bootstrapped_at = 8;
+        // Set if bootstrapped_at has a value, otherwise false.
+        bool bootstrapped = 9;
     }
     Status status = 201;
 
