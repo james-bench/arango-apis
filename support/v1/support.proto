@@ -1,0 +1,53 @@
+// 
+// DISCLAIMER
+// 
+// Copyright 2019 ArangoDB Inc, Cologne, Germany
+// 
+// Author Ewout Prangsma
+// 
+
+syntax = "proto3";
+
+package arangodb.cloud.support.v1;
+
+option go_package = "github.com/arangodb-managed/apis/support/v1";
+
+import "common/v1/common.proto";
+
+import "google/api/annotations.proto";
+
+// SupportService is the API used to query for support.
+service SupportService {
+    // Fetch all support plans that are supported by the ArangoDB cloud.
+    // Required permissions:
+    // - None
+    rpc ListPlans(common.v1.ListOptions) returns (PlanList) {
+        option (google.api.http) = {
+            get: "/api/support/v1/plans"
+        };
+    }
+    
+    // Fetch a support plan by its id.
+    // Required permissions:
+    // - None
+    rpc GetPlan(common.v1.IDOptions) returns (Plan) {
+        option (google.api.http) = {
+            get: "/api/support/v1/plans/{id}"
+        };
+    }
+}
+
+// Plan represents a specific support plan such as Bronze, Silver or Gold.
+message Plan {
+    // System identifier of the plan.
+    string id = 1;
+    // Name of the plan.
+    string name = 2; 
+    // If set, this plan is the default support plan.
+    bool is_default = 3;
+}
+
+// List of plans.
+message PlanList {
+    repeated Plan items = 1;
+}

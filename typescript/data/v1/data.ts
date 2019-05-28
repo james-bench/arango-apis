@@ -57,6 +57,12 @@ export interface Deployment {
   // boolean
   is_deleted?: boolean;
   
+  // Optional identifier of the support plan selected for this deployment.
+  // After creation, this value cannot be changed.
+  // If no support plan identifier is set, the default support plan is used.
+  // string
+  support_plan_id?: string;
+  
   // ArangoDB version to use for this deployment.
   // See Version.version.
   // If you change this value to a higher version,
