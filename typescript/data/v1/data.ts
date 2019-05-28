@@ -219,6 +219,14 @@ export interface Deployment_Status {
   // Status of individual servers of the deployment
   // Deployment_ServerStatus
   servers?: Deployment_ServerStatus[];
+  
+  // Set if the ready boolean is transitioned to true for the very first time.
+  // googleTypes.Timestamp
+  bootstrapped_at?: googleTypes.Timestamp;
+  
+  // Set if bootstrapped_at has a value, othewise false.
+  // boolean
+  bootstrapped?: boolean;
 }
 
 // List of Deployments.
