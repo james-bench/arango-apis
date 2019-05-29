@@ -45,6 +45,8 @@ message Plan {
     string name = 2; 
     // If set, this plan is the default support plan.
     bool is_default = 3;
+    // Human readable description of the plan
+    string description = 4;
 }
 
 // List of plans.

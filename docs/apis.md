@@ -1252,6 +1252,7 @@ Plan represents a specific support plan such as Bronze, Silver or Gold.
 | id | [string](#string) |  | System identifier of the plan. |
 | name | [string](#string) |  | Name of the plan. |
 | is_default | [bool](#bool) |  | If set, this plan is the default support plan. |
+| description | [string](#string) |  | Human readable description of the plan |
 
 
 
