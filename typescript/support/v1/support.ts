@@ -23,6 +23,10 @@ export interface Plan {
   // If set, this plan is the default support plan.
   // boolean
   is_default?: boolean;
+  
+  // Human readable description of the plan
+  // string
+  description?: string;
 }
 
 // List of plans.
