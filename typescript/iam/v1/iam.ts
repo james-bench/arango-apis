@@ -264,6 +264,16 @@ export interface User {
   // This may be empty if not filled out by the user.
   // string
   company_name?: string;
+  
+  // If set, this user is denied access to the dashboard.
+  // This is a read-only value.
+  // boolean
+  dashboard_access_denied?: boolean;
+  
+  // If set, this field describes the reason why this user is denied access to the dashboard.
+  // This is a read-only value.
+  // string
+  dashboard_access_denied_reason?: string;
 }
 
 // Request arguments for VerifyUserMobilePhone
