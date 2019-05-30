@@ -48,7 +48,7 @@ message Plan {
     // Human readable description of the plan
     string description = 4;
     // If set, this plan is shown, but not selectable.
-    bool unavailable = 5;
+    bool is_unavailable = 5;
 }
 
 // List of plans.

@@ -41,7 +41,7 @@ export interface Plan {
   
   // If set, this plan is shown, but not selectable.
   // boolean
-  unavailable?: boolean;
+  is_unavailable?: boolean;
 }
 
 // List of plans.
