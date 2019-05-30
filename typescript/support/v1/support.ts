@@ -10,6 +10,17 @@ import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../commo
 // File: support/v1/support.proto
 // Package: arangodb.cloud.support.v1
 
+// Arguments for a ListPlans request
+export interface ListPlansRequest {
+  // Common list options
+  // arangodb.cloud.common.v1.ListOptions
+  options?: arangodb_cloud_common_v1_ListOptions;
+  
+  // If set, list plans as they are available for the organization identified by this ID.
+  // string
+  organization_id?: string;
+}
+
 // Plan represents a specific support plan such as Bronze, Silver or Gold.
 export interface Plan {
   // System identifier of the plan.
@@ -27,6 +38,10 @@ export interface Plan {
   // Human readable description of the plan
   // string
   description?: string;
+  
+  // If set, this plan is shown, but not selectable.
+  // boolean
+  unavailable?: boolean;
 }
 
 // List of plans.
@@ -40,7 +55,7 @@ export class SupportService {
   // Fetch all support plans that are supported by the ArangoDB cloud.
   // Required permissions:
   // - None
-  async ListPlans(req: arangodb_cloud_common_v1_ListOptions): Promise<PlanList> {
+  async ListPlans(req: ListPlansRequest): Promise<PlanList> {
     const path = `/api/support/v1/plans`;
     const url = path + api.queryString(req, []);
     return api.get(url, undefined);

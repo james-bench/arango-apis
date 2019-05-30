@@ -96,6 +96,7 @@
   
 
 - [support/v1/support.proto](#support/v1/support.proto)
+    - [ListPlansRequest](#arangodb.cloud.support.v1.ListPlansRequest)
     - [Plan](#arangodb.cloud.support.v1.Plan)
     - [PlanList](#arangodb.cloud.support.v1.PlanList)
   
@@ -1242,6 +1243,22 @@ IAMService is the API used to configure IAM objects.
 
 
 
+<a name="arangodb.cloud.support.v1.ListPlansRequest"></a>
+
+### ListPlansRequest
+Arguments for a ListPlans request
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Common list options |
+| organization_id | [string](#string) |  | If set, list plans as they are available for the organization identified by this ID. |
+
+
+
+
+
+
 <a name="arangodb.cloud.support.v1.Plan"></a>
 
 ### Plan
@@ -1254,6 +1271,7 @@ Plan represents a specific support plan such as Bronze, Silver or Gold.
 | name | [string](#string) |  | Name of the plan. |
 | is_default | [bool](#bool) |  | If set, this plan is the default support plan. |
 | description | [string](#string) |  | Human readable description of the plan |
+| unavailable | [bool](#bool) |  | If set, this plan is shown, but not selectable. |
 
 
 
@@ -1288,7 +1306,7 @@ SupportService is the API used to query for support.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| ListPlans | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [PlanList](#arangodb.cloud.support.v1.PlanList) | Fetch all support plans that are supported by the ArangoDB cloud. Required permissions: - None |
+| ListPlans | [ListPlansRequest](#arangodb.cloud.support.v1.ListPlansRequest) | [PlanList](#arangodb.cloud.support.v1.PlanList) | Fetch all support plans that are supported by the ArangoDB cloud. Required permissions: - None |
 | GetPlan | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Plan](#arangodb.cloud.support.v1.Plan) | Fetch a support plan by its id. Required permissions: - None |
 
  

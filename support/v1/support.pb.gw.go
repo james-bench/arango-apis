@@ -34,7 +34,7 @@ var (
 )
 
 func request_SupportService_ListPlans_0(ctx context.Context, marshaler runtime.Marshaler, client SupportServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq v1.ListOptions
+	var protoReq ListPlansRequest
 	var metadata runtime.ServerMetadata
 
 	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_SupportService_ListPlans_0); err != nil {
