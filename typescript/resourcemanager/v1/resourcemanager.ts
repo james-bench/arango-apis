@@ -165,15 +165,10 @@ export interface Organization {
   // googleTypes.Timestamp
   deleted_at?: googleTypes.Timestamp;
   
-  // Identifier of the tier used for this organization.
+  // Tier used for this organization.
   // This is a read-only value and cannot be initialized.
-  // string
-  tier_id?: string;
-  
-  // Human readable name of the tier used for this organization.
-  // This is a read-only value and cannot be initialized.
-  // string
-  tier_name?: string;
+  // Tier
+  tier?: Tier;
 }
 
 // An OrganizationInvite represents an invite for a human to join an
@@ -322,6 +317,24 @@ export interface ProjectList {
   // Budget for projects
   // arangodb.cloud.common.v1.Budget
   budget?: arangodb_cloud_common_v1_Budget;
+}
+
+// Tier of an organization.
+export interface Tier {
+  // Identifier of the tier.
+  // This is a read-only value and cannot be initialized.
+  // string
+  id?: string;
+  
+  // Human readable name of the tier.
+  // This is a read-only value and cannot be initialized.
+  // string
+  name?: string;
+  
+  // If set the tier has support plans.
+  // This is a read-only value and cannot be initialized.
+  // boolean
+  has_support_plans?: boolean;
 }
 
 // ResourceManagerService is the API used to configure basic resource objects.

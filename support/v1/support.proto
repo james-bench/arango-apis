@@ -21,7 +21,7 @@ service SupportService {
     // Fetch all support plans that are supported by the ArangoDB cloud.
     // Required permissions:
     // - None
-    rpc ListPlans(common.v1.ListOptions) returns (PlanList) {
+    rpc ListPlans(ListPlansRequest) returns (PlanList) {
         option (google.api.http) = {
             get: "/api/support/v1/plans"
         };
@@ -47,9 +47,19 @@ message Plan {
     bool is_default = 3;
     // Human readable description of the plan
     string description = 4;
+    // If set, this plan is shown, but not selectable.
+    bool is_unavailable = 5;
 }
 
 // List of plans.
 message PlanList {
     repeated Plan items = 1;
+}
+
+// Arguments for a ListPlans request
+message ListPlansRequest {
+    // Common list options
+    common.v1.ListOptions options = 1;
+    // If set, list plans as they are available for the organization identified by this ID.
+    string organization_id = 2;
 }

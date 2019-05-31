@@ -266,12 +266,9 @@ message Organization {
     google.protobuf.Timestamp created_at = 6;
     // The deletion timestamp of the organization
     google.protobuf.Timestamp deleted_at = 7;
-    // Identifier of the tier used for this organization.
+    // Tier used for this organization.
     // This is a read-only value and cannot be initialized.
-    string tier_id = 8;
-    // Human readable name of the tier used for this organization.
-    // This is a read-only value and cannot be initialized.
-    string tier_name = 9;
+    Tier tier = 8;
 }
 
 // List of organizations.
@@ -280,6 +277,19 @@ message OrganizationList {
     repeated Organization items = 1;
     // Budget for organizations (owned by the caller)
     common.v1.Budget budget = 2;
+}
+
+// Tier of an organization.
+message Tier {
+    // Identifier of the tier.
+    // This is a read-only value and cannot be initialized.
+    string id = 1;
+    // Human readable name of the tier.
+    // This is a read-only value and cannot be initialized.
+    string name = 2;
+    // If set the tier has support plans.
+    // This is a read-only value and cannot be initialized.
+    bool has_support_plans = 3;
 }
 
 // Member of an organization.
