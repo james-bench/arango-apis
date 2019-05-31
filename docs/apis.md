@@ -1188,6 +1188,8 @@ This field will not be filled, unless: - The currently authenticated user is thi
 This value can only be changed to a non-empty value. If changed, the new number has to be verified again. |
 | mobile_phone_verified | [bool](#bool) |  | Set when the mobile phone number has been successfully verified. This is a read-only value. |
 | company_name | [string](#string) |  | Company name of the user This may be empty if not filled out by the user. |
+| dashboard_access_denied | [bool](#bool) |  | If set, this user is denied access to the dashboard. This is a read-only value. |
+| dashboard_access_denied_reason | [string](#string) |  | If set, this field describes the reason why this user is denied access to the dashboard. This is a read-only value. |
 
 
 
