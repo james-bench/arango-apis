@@ -19,6 +19,7 @@
     - [OrganizationMembersRequest](#arangodb.cloud.resourcemanager.v1.OrganizationMembersRequest)
     - [Project](#arangodb.cloud.resourcemanager.v1.Project)
     - [ProjectList](#arangodb.cloud.resourcemanager.v1.ProjectList)
+    - [Tier](#arangodb.cloud.resourcemanager.v1.Tier)
   
   
   
@@ -292,9 +293,7 @@ An Organization is represents a real world organization such as a company.
 | is_deleted | [bool](#bool) |  | Set when this organization is deleted. This is a read-only value. |
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the organization |
 | deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the organization |
-| tier_id | [string](#string) |  | Identifier of the tier used for this organization. This is a read-only value and cannot be initialized. |
-| tier_name | [string](#string) |  | Human readable name of the tier used for this organization. This is a read-only value and cannot be initialized. |
-| tier_has_support_plans | [bool](#bool) |  | If set the tier used for this organization has support plans. This is a read-only value and cannot be initialized. |
+| tier | [Tier](#arangodb.cloud.resourcemanager.v1.Tier) |  | Tier used for this organization. This is a read-only value and cannot be initialized. |
 
 
 
@@ -408,6 +407,23 @@ List of Projects.
 | ----- | ---- | ----- | ----------- |
 | items | [Project](#arangodb.cloud.resourcemanager.v1.Project) | repeated | Resulting projects |
 | budget | [arangodb.cloud.common.v1.Budget](#arangodb.cloud.common.v1.Budget) |  | Budget for projects |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.Tier"></a>
+
+### Tier
+Tier of an organization.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | Identifier of the tier. This is a read-only value and cannot be initialized. |
+| name | [string](#string) |  | Human readable name of the tier. This is a read-only value and cannot be initialized. |
+| has_support_plans | [bool](#bool) |  | If set the tier has support plans. This is a read-only value and cannot be initialized. |
 
 
 
