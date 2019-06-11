@@ -809,6 +809,8 @@ resource (usually deployment) in a specific time period.
 | deployment_id | [string](#string) |  | Identifier of the deployment that owns the resource that this usage item covers. |
 | deployment_name | [string](#string) |  | Name of the deployment that owns the resource that this usage item covers. |
 | deployment_member_name | [string](#string) |  | Name of the deployment member that owns the resource that this usage item covers. This field is only set when the usage item is specific for a member of the deployment (e.g. network transfer) |
+| cloud_provider_id | [string](#string) |  | Identifier of the cloud provider that is used to run the deployment. |
+| cloud_region_id | [string](#string) |  | Identifier of the cloud region that is used to run the deployment. |
 
 
 

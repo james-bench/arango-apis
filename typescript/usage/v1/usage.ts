@@ -177,6 +177,14 @@ export interface UsageItem_Resource {
   // This field is only set when the usage item is specific for a member of the deployment (e.g. network transfer)
   // string
   deployment_member_name?: string;
+  
+  // Identifier of the cloud provider that is used to run the deployment.
+  // string
+  cloud_provider_id?: string;
+  
+  // Identifier of the cloud region that is used to run the deployment.
+  // string
+  cloud_region_id?: string;
 }
 
 // List of UsageItems.
