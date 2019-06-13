@@ -142,6 +142,9 @@ message Deployment {
     // After creation, this value cannot be changed.
     // If no support plan identifier is set, the default support plan is used.
     string support_plan_id = 10;
+    // Identifier of the user who created this deployment.
+    // This is a read-only value.
+    string created_by_id = 11;
 
     // ArangoDB version to use for this deployment.
     // See Version.version.
