@@ -63,6 +63,11 @@ export interface Deployment {
   // string
   support_plan_id?: string;
   
+  // Identifier of the user who created this deployment.
+  // This is a read-only value.
+  // string
+  created_by_id?: string;
+  
   // ArangoDB version to use for this deployment.
   // See Version.version.
   // If you change this value to a higher version,
