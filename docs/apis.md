@@ -599,6 +599,7 @@ IPWhitelist represents a list of CIDR ranges from which a deployment is accessib
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | id | [string](#string) |  | System identifier of the whitelist. This is a read-only value. |
+| url | [string](#string) |  | URL of the whitelist. This is a read-only value. |
 | name | [string](#string) |  | Name of the whitelist. |
 | description | [string](#string) |  | Description of the whitelist. |
 | project_id | [string](#string) |  | Identifier of the project that contains this whitelist. |
