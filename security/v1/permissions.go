@@ -11,14 +11,14 @@ package v1
 const (
 	// IPWhitelist permissions
 
-	// PermissionIPWhitelistList is needed for listing deployments in a project
+	// PermissionIPWhitelistList is needed for listing IP whitelists in a project
 	PermissionIPWhitelistList = "security.ipwhitelist.list"
-	// PermissionIPWhitelistGet is needed for fetching an individual deployments in a project
+	// PermissionIPWhitelistGet is needed for fetching an individual IP whitelists in a project
 	PermissionIPWhitelistGet = "security.ipwhitelist.get"
-	// PermissionIPWhitelistCreate is needed for create a deployment
+	// PermissionIPWhitelistCreate is needed for create an IP whitelist
 	PermissionIPWhitelistCreate = "security.ipwhitelist.create"
-	// PermissionIPWhitelistUpdate is needed for updating a deployment
+	// PermissionIPWhitelistUpdate is needed for updating an IP whitelist
 	PermissionIPWhitelistUpdate = "security.ipwhitelist.update"
-	// PermissionIPWhitelistDelete is needed for deleting a deployment
+	// PermissionIPWhitelistDelete is needed for deleting an IP whitelist
 	PermissionIPWhitelistDelete = "security.ipwhitelist.delete"
 )
