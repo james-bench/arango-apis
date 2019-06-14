@@ -600,6 +600,7 @@ IPWhitelist represents a list of CIDR ranges from which a deployment is accessib
 | ----- | ---- | ----- | ----------- |
 | id | [string](#string) |  | System identifier of the whitelist. This is a read-only value. |
 | name | [string](#string) |  | Name of the whitelist. |
+| description | [string](#string) |  | Description of the whitelist. |
 | project_id | [string](#string) |  | Identifier of the project that contains this whitelist. |
 | cidr_ranges | [string](#string) | repeated | List of CIDR ranges. Values must follow format as defined in RFC 4632 and RFC 4291. |
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of this whitelist. This is a read-only value. |
