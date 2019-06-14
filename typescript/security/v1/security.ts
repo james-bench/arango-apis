@@ -17,6 +17,11 @@ export interface IPWhitelist {
   // string
   id?: string;
   
+  // URL of the whitelist.
+  // This is a read-only value.
+  // string
+  url?: string;
+  
   // Name of the whitelist.
   // string
   name?: string;
