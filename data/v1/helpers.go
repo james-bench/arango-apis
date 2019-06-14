@@ -17,7 +17,31 @@ func DeploymentStatusEqual(a, b *Deployment_Status) bool {
 		a.GetCreated() == b.GetCreated() &&
 		a.GetReady() == b.GetReady() &&
 		a.GetUpgrading() == b.GetUpgrading() &&
-		strings.Join(a.GetServerVersions(), ",") == strings.Join(b.GetServerVersions(), ",")
+		strings.Join(a.GetServerVersions(), ",") == strings.Join(b.GetServerVersions(), ",") &&
+		DeploymentServerStatusListEqual(a.GetServers(), b.GetServers())
+}
+
+// DeploymentServerStatusListEqual returns true when the elements of a & b are equal.
+func DeploymentServerStatusListEqual(a, b []*Deployment_ServerStatus) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i, x := range a {
+		if !DeploymentServerStatusEqual(x, b[i]) {
+			return false
+		}
+	}
+	return true
+}
+
+// DeploymentServerStatusEqual returns true when the fields of a & b are equal.
+func DeploymentServerStatusEqual(a, b *Deployment_ServerStatus) bool {
+	return a.GetId() == b.GetId() &&
+		a.GetType() == b.GetType() &&
+		a.GetDescription() == b.GetDescription() &&
+		a.GetReady() == b.GetReady() &&
+		a.GetMemberOfCluster() == b.GetMemberOfCluster() &&
+		a.GetFailed() == b.GetFailed()
 }
 
 // GetOrCreateAuthentication returns the Authentication field, creating it if needed.
