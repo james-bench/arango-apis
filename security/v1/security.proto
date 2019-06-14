@@ -78,23 +78,25 @@ message IPWhitelist {
     string id = 1;
     // Name of the whitelist.
     string name = 2; 
+    // Description of the whitelist.
+    string description = 3; 
     // Identifier of the project that contains this whitelist.
-    string project_id = 3;
+    string project_id = 4;
     // List of CIDR ranges.
     // Values must follow format as defined in RFC 4632 and RFC 4291.
-    repeated string cidr_ranges = 4;
+    repeated string cidr_ranges = 5;
     // The creation timestamp of this whitelist.
     // This is a read-only value.
-    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp created_at = 6;
     // The deletion timestamp of the whitelist
     // This is a read-only value.
-    google.protobuf.Timestamp deleted_at = 6;
+    google.protobuf.Timestamp deleted_at = 7;
     // Set when this whitelist is deleted.
     // This is a read-only value.
-    bool is_deleted = 7;
+    bool is_deleted = 8;
     // Identifier of the user who created this whitelist.
     // This is a read-only value.
-    string created_by_id = 8;
+    string created_by_id = 9;
 }
 
 // List of IP whitelists.

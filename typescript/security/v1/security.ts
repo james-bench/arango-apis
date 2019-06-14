@@ -21,6 +21,10 @@ export interface IPWhitelist {
   // string
   name?: string;
   
+  // Description of the whitelist.
+  // string
+  description?: string;
+  
   // Identifier of the project that contains this whitelist.
   // string
   project_id?: string;
