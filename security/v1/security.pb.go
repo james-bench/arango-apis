@@ -29,12 +29,14 @@ const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 // IPWhitelist represents a list of CIDR ranges from which a deployment is accessible.
 type IPWhitelist struct {
 	// System identifier of the whitelist.
+	// This is a read-only value.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Name of the whitelist.
 	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	// Identifier of the project that contains this whitelist.
 	ProjectId string `protobuf:"bytes,3,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
 	// List of CIDR ranges.
+	// Values must follow format as defined in RFC 4632 and RFC 4291.
 	CidrRanges []string `protobuf:"bytes,4,rep,name=cidr_ranges,json=cidrRanges,proto3" json:"cidr_ranges,omitempty"`
 	// The creation timestamp of this whitelist.
 	// This is a read-only value.

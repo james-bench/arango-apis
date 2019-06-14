@@ -598,10 +598,10 @@ IPWhitelist represents a list of CIDR ranges from which a deployment is accessib
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the whitelist. |
+| id | [string](#string) |  | System identifier of the whitelist. This is a read-only value. |
 | name | [string](#string) |  | Name of the whitelist. |
 | project_id | [string](#string) |  | Identifier of the project that contains this whitelist. |
-| cidr_ranges | [string](#string) | repeated | List of CIDR ranges. |
+| cidr_ranges | [string](#string) | repeated | List of CIDR ranges. Values must follow format as defined in RFC 4632 and RFC 4291. |
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of this whitelist. This is a read-only value. |
 | deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the whitelist This is a read-only value. |
 | is_deleted | [bool](#bool) |  | Set when this whitelist is deleted. This is a read-only value. |

@@ -13,6 +13,7 @@ import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../commo
 // IPWhitelist represents a list of CIDR ranges from which a deployment is accessible.
 export interface IPWhitelist {
   // System identifier of the whitelist.
+  // This is a read-only value.
   // string
   id?: string;
   
@@ -25,6 +26,7 @@ export interface IPWhitelist {
   project_id?: string;
   
   // List of CIDR ranges.
+  // Values must follow format as defined in RFC 4632 and RFC 4291.
   // string
   cidr_ranges?: string[];
   

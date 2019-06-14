@@ -74,12 +74,14 @@ service SecurityService {
 // IPWhitelist represents a list of CIDR ranges from which a deployment is accessible.
 message IPWhitelist {
     // System identifier of the whitelist.
+    // This is a read-only value.
     string id = 1;
     // Name of the whitelist.
     string name = 2; 
     // Identifier of the project that contains this whitelist.
     string project_id = 3;
     // List of CIDR ranges.
+    // Values must follow format as defined in RFC 4632 and RFC 4291.
     repeated string cidr_ranges = 4;
     // The creation timestamp of this whitelist.
     // This is a read-only value.
