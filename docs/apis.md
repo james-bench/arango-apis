@@ -37,6 +37,15 @@
     - [CryptoService](#arangodb.cloud.crypto.v1.CryptoService)
   
 
+- [security/v1/security.proto](#security/v1/security.proto)
+    - [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist)
+    - [IPWhitelistList](#arangodb.cloud.security.v1.IPWhitelistList)
+  
+  
+  
+    - [SecurityService](#arangodb.cloud.security.v1.SecurityService)
+  
+
 - [platform/v1/platform.proto](#platform/v1/platform.proto)
     - [ListProvidersRequest](#arangodb.cloud.platform.v1.ListProvidersRequest)
     - [ListRegionsRequest](#arangodb.cloud.platform.v1.ListRegionsRequest)
@@ -569,6 +578,73 @@ CryptoService is the API used to configure various crypto objects.
 | CreateCACertificate | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | Create a new CA certificate Required permissions: - crypto.cacertificate.create on the project that owns the CA certificate |
 | UpdateCACertificate | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | Update a CA certificate Required permissions: - crypto.cacertificate.update on the CA certificate |
 | DeleteCACertificate | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a CA certificate Note that CA certificate are initially only marked for deleted. Once all the resources that depend on it are removed the CA certificate itself is deleted and cannot be restored. Required permissions: - crypto.cacertificate.delete on the CA certificate |
+
+ 
+
+
+
+<a name="security/v1/security.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## security/v1/security.proto
+
+
+
+<a name="arangodb.cloud.security.v1.IPWhitelist"></a>
+
+### IPWhitelist
+IPWhitelist represents a list of CIDR ranges from which a deployment is accessible.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the whitelist. |
+| name | [string](#string) |  | Name of the whitelist. |
+| project_id | [string](#string) |  | Identifier of the project that contains this whitelist. |
+| cidr_ranges | [string](#string) | repeated | List of CIDR ranges. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of this whitelist. This is a read-only value. |
+| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the whitelist This is a read-only value. |
+| is_deleted | [bool](#bool) |  | Set when this whitelist is deleted. This is a read-only value. |
+| created_by_id | [string](#string) |  | Identifier of the user who created this whitelist. This is a read-only value. |
+
+
+
+
+
+
+<a name="arangodb.cloud.security.v1.IPWhitelistList"></a>
+
+### IPWhitelistList
+List of IP whitelists.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | repeated |  |
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+
+<a name="arangodb.cloud.security.v1.SecurityService"></a>
+
+### SecurityService
+SecurityService is the API used to access security entities.
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+| ListIPWhitelists | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [IPWhitelistList](#arangodb.cloud.security.v1.IPWhitelistList) | Fetch all IP whitelists that belong to the project identified by the given context ID. Required permissions: - security.ipwhitelist.list on the project identified by the given context ID. |
+| GetWhitelist | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | Fetch an IP whitelist by its id. Required permissions: - security.ipwhitelist.get on the IP whitelist |
+| CreateIPWhitelist | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | Create a new IP whitelist Required permissions: - security.ipwhitelist.create on the project that owns the IP whitelist. |
+| UpdateIPWhitelist | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | Update an IP whitelist Required permissions: - security.ipwhitelist.update on the IP whitelist |
+| DeleteDeployment | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete an IP whitelist. Note that IP whitelists are initially only marked for deletion. Once all their dependent deployments are removed, the whitelist is removed. Required permissions: - security.ipwhitelist.delete on the IP whitelist |
 
  
 

@@ -1,0 +1,101 @@
+// 
+// DISCLAIMER
+// 
+// Copyright 2019 ArangoDB Inc, Cologne, Germany
+// 
+// Author Ewout Prangsma
+// 
+
+syntax = "proto3";
+
+package arangodb.cloud.security.v1;
+
+option go_package = "github.com/arangodb-managed/apis/security/v1";
+
+import "common/v1/common.proto";
+
+import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
+import "google/api/annotations.proto";
+
+// SecurityService is the API used to access security entities.
+service SecurityService {
+    // Fetch all IP whitelists that belong to the project identified by the given
+    // context ID.
+    // Required permissions:
+    // - security.ipwhitelist.list on the project identified by the given context ID.
+    rpc ListIPWhitelists(common.v1.ListOptions) returns (IPWhitelistList) {
+        option (google.api.http) = {
+            get: "/api/data/v1/projects/{context_id}/ipwhitelists"
+        };
+    }
+    
+    // Fetch an IP whitelist by its id.
+    // Required permissions:
+    // - security.ipwhitelist.get on the IP whitelist
+    rpc GetWhitelist(common.v1.IDOptions) returns (IPWhitelist) {
+        option (google.api.http) = {
+            get: "/api/security/v1/ipwhitelists/{id}"
+        };
+    }
+
+    // Create a new IP whitelist
+    // Required permissions:
+    // - security.ipwhitelist.create on the project that owns the IP whitelist.
+    rpc CreateIPWhitelist(IPWhitelist) returns (IPWhitelist) {
+        option (google.api.http) = {
+            post: "/api/security/v1/project/{project_id}/ipwhitelists"
+            body: "*"
+        };
+    }
+
+    // Update an IP whitelist
+    // Required permissions:
+    // - security.ipwhitelist.update on the IP whitelist
+    rpc UpdateIPWhitelist(IPWhitelist) returns (IPWhitelist) {
+        option (google.api.http) = {
+            patch: "/api/security/v1/ipwhitelists/{id}"
+            body: "*"
+        };
+    }
+
+    // Delete an IP whitelist.
+    // Note that IP whitelists are initially only marked for deletion.
+    // Once all their dependent deployments are removed, the whitelist is removed.
+    // Required permissions:
+    // - security.ipwhitelist.delete on the IP whitelist
+    rpc DeleteDeployment(common.v1.IDOptions) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            delete: "/api/security/v1/ipwhitelists/{id}"
+        };
+    }
+
+}
+
+// IPWhitelist represents a list of CIDR ranges from which a deployment is accessible.
+message IPWhitelist {
+    // System identifier of the whitelist.
+    string id = 1;
+    // Name of the whitelist.
+    string name = 2; 
+    // Identifier of the project that contains this whitelist.
+    string project_id = 3;
+    // List of CIDR ranges.
+    repeated string cidr_ranges = 4;
+    // The creation timestamp of this whitelist.
+    // This is a read-only value.
+    google.protobuf.Timestamp created_at = 5;
+    // The deletion timestamp of the whitelist
+    // This is a read-only value.
+    google.protobuf.Timestamp deleted_at = 6;
+    // Set when this whitelist is deleted.
+    // This is a read-only value.
+    bool is_deleted = 7;
+    // Identifier of the user who created this whitelist.
+    // This is a read-only value.
+    string created_by_id = 8;
+}
+
+// List of IP whitelists.
+message IPWhitelistList {
+    repeated IPWhitelist items = 1;
+}
