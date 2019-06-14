@@ -63,7 +63,7 @@ service SecurityService {
     // Once all their dependent deployments are removed, the whitelist is removed.
     // Required permissions:
     // - security.ipwhitelist.delete on the IP whitelist
-    rpc DeleteDeployment(common.v1.IDOptions) returns (common.v1.Empty) {
+    rpc DeleteIPWhitelist(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             delete: "/api/security/v1/ipwhitelists/{id}"
         };

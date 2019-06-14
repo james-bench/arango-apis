@@ -97,7 +97,7 @@ export class SecurityService {
   // Once all their dependent deployments are removed, the whitelist is removed.
   // Required permissions:
   // - security.ipwhitelist.delete on the IP whitelist
-  async DeleteDeployment(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
+  async DeleteIPWhitelist(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
     const path = `/api/security/v1/ipwhitelists/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.delete(url, undefined);
