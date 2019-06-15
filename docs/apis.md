@@ -13,6 +13,7 @@
     - [Member](#arangodb.cloud.resourcemanager.v1.Member)
     - [MemberList](#arangodb.cloud.resourcemanager.v1.MemberList)
     - [Organization](#arangodb.cloud.resourcemanager.v1.Organization)
+    - [Organization.TotalDeploymentsEntry](#arangodb.cloud.resourcemanager.v1.Organization.TotalDeploymentsEntry)
     - [OrganizationInvite](#arangodb.cloud.resourcemanager.v1.OrganizationInvite)
     - [OrganizationInviteList](#arangodb.cloud.resourcemanager.v1.OrganizationInviteList)
     - [OrganizationList](#arangodb.cloud.resourcemanager.v1.OrganizationList)
@@ -303,7 +304,23 @@ An Organization is represents a real world organization such as a company.
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the organization |
 | deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the organization |
 | tier | [Tier](#arangodb.cloud.resourcemanager.v1.Tier) |  | Tier used for this organization. This is a read-only value and cannot be initialized. |
-| total_free_deployments | [int32](#int32) |  | Total number of free deployments created in this organization throughout its entire lifetime. This is a read-only value. |
+| total_deployments | [Organization.TotalDeploymentsEntry](#arangodb.cloud.resourcemanager.v1.Organization.TotalDeploymentsEntry) | repeated | Total number of deployments created in this organization throughout its entire lifetime per tier-id. This is a read-only value. |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.Organization.TotalDeploymentsEntry"></a>
+
+### Organization.TotalDeploymentsEntry
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | [string](#string) |  |  |
+| value | [int32](#int32) |  |  |
 
 
 

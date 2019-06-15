@@ -170,11 +170,18 @@ export interface Organization {
   // Tier
   tier?: Tier;
   
-  // Total number of free deployments created in this organization throughout
-  // its entire lifetime.
+  // Total number of deployments created in this organization throughout
+  // its entire lifetime per tier-id.
   // This is a read-only value.
+  // Organization_TotalDeploymentsEntry
+  total_deployments?: Organization_TotalDeploymentsEntry[];
+}
+export interface Organization_TotalDeploymentsEntry {
+  // string
+  key?: string;
+  
   // number
-  total_free_deployments?: number;
+  value?: number;
 }
 
 // An OrganizationInvite represents an invite for a human to join an
