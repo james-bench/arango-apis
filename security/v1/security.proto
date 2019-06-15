@@ -32,7 +32,7 @@ service SecurityService {
     // Fetch an IP whitelist by its id.
     // Required permissions:
     // - security.ipwhitelist.get on the IP whitelist
-    rpc GetWhitelist(common.v1.IDOptions) returns (IPWhitelist) {
+    rpc GetIPWhitelist(common.v1.IDOptions) returns (IPWhitelist) {
         option (google.api.http) = {
             get: "/api/security/v1/ipwhitelists/{id}"
         };
