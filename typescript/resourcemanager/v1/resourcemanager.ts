@@ -169,6 +169,12 @@ export interface Organization {
   // This is a read-only value and cannot be initialized.
   // Tier
   tier?: Tier;
+  
+  // Total number of free deployments created in this organization throughout
+  // its entire lifetime.
+  // This is a read-only value.
+  // number
+  total_free_deployments?: number;
 }
 
 // An OrganizationInvite represents an invite for a human to join an

@@ -269,6 +269,10 @@ message Organization {
     // Tier used for this organization.
     // This is a read-only value and cannot be initialized.
     Tier tier = 8;
+    // Total number of free deployments created in this organization throughout
+    // its entire lifetime.
+    // This is a read-only value.
+    int32 total_free_deployments = 9;
 }
 
 // List of organizations.

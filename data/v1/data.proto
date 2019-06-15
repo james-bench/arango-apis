@@ -193,6 +193,9 @@ message Deployment {
     }
     AuthenticationSpec authentication = 104;
 
+    // Optional identifier of IP whitelist to use for this deployment.
+    string ipwhitelist_id = 105;
+
     // Status of a single server (of the ArangoDB cluster)
     message ServerStatus {
         // ID of the server

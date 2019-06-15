@@ -303,6 +303,7 @@ An Organization is represents a real world organization such as a company.
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the organization |
 | deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the organization |
 | tier | [Tier](#arangodb.cloud.resourcemanager.v1.Tier) |  | Tier used for this organization. This is a read-only value and cannot be initialized. |
+| total_free_deployments | [int32](#int32) |  | Total number of free deployments created in this organization throughout its entire lifetime. This is a read-only value. |
 
 
 
@@ -1441,6 +1442,7 @@ A Deployment is represents one deployment of an ArangoDB cluster.
 | certificates | [Deployment.CertificateSpec](#arangodb.cloud.data.v1.Deployment.CertificateSpec) |  |  |
 | servers | [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  |  |
 | authentication | [Deployment.AuthenticationSpec](#arangodb.cloud.data.v1.Deployment.AuthenticationSpec) |  |  |
+| ipwhitelist_id | [string](#string) |  | Optional identifier of IP whitelist to use for this deployment. |
 | status | [Deployment.Status](#arangodb.cloud.data.v1.Deployment.Status) |  |  |
 | expiration | [Deployment.Expiration](#arangodb.cloud.data.v1.Deployment.Expiration) |  |  |
 
