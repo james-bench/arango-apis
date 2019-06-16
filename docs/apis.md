@@ -10,6 +10,7 @@
     - [IsMemberOfOrganizationRequest](#arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationRequest)
     - [IsMemberOfOrganizationResponse](#arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationResponse)
     - [ListEventOptions](#arangodb.cloud.resourcemanager.v1.ListEventOptions)
+    - [ListQuotasRequest](#arangodb.cloud.resourcemanager.v1.ListQuotasRequest)
     - [Member](#arangodb.cloud.resourcemanager.v1.Member)
     - [MemberList](#arangodb.cloud.resourcemanager.v1.MemberList)
     - [Organization](#arangodb.cloud.resourcemanager.v1.Organization)
@@ -20,6 +21,10 @@
     - [OrganizationMembersRequest](#arangodb.cloud.resourcemanager.v1.OrganizationMembersRequest)
     - [Project](#arangodb.cloud.resourcemanager.v1.Project)
     - [ProjectList](#arangodb.cloud.resourcemanager.v1.ProjectList)
+    - [Quota](#arangodb.cloud.resourcemanager.v1.Quota)
+    - [QuotaDescription](#arangodb.cloud.resourcemanager.v1.QuotaDescription)
+    - [QuotaDescriptionList](#arangodb.cloud.resourcemanager.v1.QuotaDescriptionList)
+    - [QuotaList](#arangodb.cloud.resourcemanager.v1.QuotaList)
     - [Tier](#arangodb.cloud.resourcemanager.v1.Tier)
   
   
@@ -256,6 +261,22 @@ Options for ListEvents
 
 
 
+<a name="arangodb.cloud.resourcemanager.v1.ListQuotasRequest"></a>
+
+### ListQuotasRequest
+Request arguments for ListXyzQuotas
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Common list options |
+| kinds | [string](#string) | repeated | If set, limit the returned list of quota&#39;s to these kinds. |
+
+
+
+
+
+
 <a name="arangodb.cloud.resourcemanager.v1.Member"></a>
 
 ### Member
@@ -440,6 +461,71 @@ List of Projects.
 
 
 
+<a name="arangodb.cloud.resourcemanager.v1.Quota"></a>
+
+### Quota
+Quota limit
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| kind | [string](#string) |  | Kind of quota |
+| description | [string](#string) |  | Human readable description of the quota |
+| limit | [int64](#int64) |  | Current limit of the quota. A value of 0 means unlimited. |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.QuotaDescription"></a>
+
+### QuotaDescription
+Description of a kind of quota&#39;s
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| kind | [string](#string) |  | Kind of the quota |
+| description | [string](#string) |  | Human readable description |
+| for_organizations | [bool](#bool) |  | If set, this kind of quota is valid at organization level |
+| for_projects | [bool](#bool) |  | If set, this kind of quota is valid at project level |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.QuotaDescriptionList"></a>
+
+### QuotaDescriptionList
+List of QuotaDescription&#39;s
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [QuotaDescription](#arangodb.cloud.resourcemanager.v1.QuotaDescription) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.QuotaList"></a>
+
+### QuotaList
+List of Quota&#39;s
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Quota](#arangodb.cloud.resourcemanager.v1.Quota) | repeated |  |
+
+
+
+
+
+
 <a name="arangodb.cloud.resourcemanager.v1.Tier"></a>
 
 ### Tier
@@ -479,11 +565,13 @@ ResourceManagerService is the API used to configure basic resource objects.
 | AddOrganizationMembers | [OrganizationMembersRequest](#arangodb.cloud.resourcemanager.v1.OrganizationMembersRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Add one or more members to an organization. Required permissions: - resourcemanager.organization.update on the organization |
 | DeleteOrganizationMembers | [OrganizationMembersRequest](#arangodb.cloud.resourcemanager.v1.OrganizationMembersRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Remove one or more members from an organization. Required permissions: - resourcemanager.organization.update on the organization |
 | IsMemberOfOrganization | [IsMemberOfOrganizationRequest](#arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationRequest) | [IsMemberOfOrganizationResponse](#arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationResponse) | Is the user identified by the given user ID a member of the organization identified by the given organization ID. Required permissions: - resourcemanager.organization.get on the organization, unless the requested user is identical to the authenticated user. Note that if the identified user or organization does not exist, no is returned. |
+| ListOrganizationQuotas | [ListQuotasRequest](#arangodb.cloud.resourcemanager.v1.ListQuotasRequest) | [QuotaList](#arangodb.cloud.resourcemanager.v1.QuotaList) | Get a list of quota values for the organization identified by the given context ID. Required permissions: - resourcemanager.organization.get on the organization |
 | ListProjects | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [ProjectList](#arangodb.cloud.resourcemanager.v1.ProjectList) | Fetch all projects in the organization identified by the given context ID. The authenticated user must be a member of the organization identifier by the given context ID. Required permissions: - resourcemanager.project.list on the organization identified by the given context ID |
 | GetProject | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Project](#arangodb.cloud.resourcemanager.v1.Project) | Fetch a project by its id. The authenticated user must be a member of the organization that owns the project. Required permissions: - resourcemanager.project.get on the project identified by the given ID |
 | CreateProject | [Project](#arangodb.cloud.resourcemanager.v1.Project) | [Project](#arangodb.cloud.resourcemanager.v1.Project) | Create a new project The authenticated user must be a member of the organization that owns the project. Required permissions: - resourcemanager.project.create on the organization that owns the project |
 | UpdateProject | [Project](#arangodb.cloud.resourcemanager.v1.Project) | [Project](#arangodb.cloud.resourcemanager.v1.Project) | Update a project The authenticated user must be a member of the organization that owns the project. Required permissions: - resourcemanager.project.update on the project |
 | DeleteProject | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a project Note that project are initially only marked for deleted. Once all their resources are removed the project itself is deleted and cannot be restored. The authenticated user must be a member of the organization that owns the project. Required permissions: - resourcemanager.project.delete on the project |
+| ListProjectQuotas | [ListQuotasRequest](#arangodb.cloud.resourcemanager.v1.ListQuotasRequest) | [QuotaList](#arangodb.cloud.resourcemanager.v1.QuotaList) | Get a list of quota values for the project identified by the given context ID. Required permissions: - resourcemanager.project.get on the project |
 | ListEvents | [ListEventOptions](#arangodb.cloud.resourcemanager.v1.ListEventOptions) | [EventList](#arangodb.cloud.resourcemanager.v1.EventList) | Fetch all events in the organization identified by the given context ID. The authenticated user must be a member of the organization identifier by the given context ID. Required permissions: - resourcemanager.event.list on the organization identified by the given context ID |
 | ListOrganizationInvites | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [OrganizationInviteList](#arangodb.cloud.resourcemanager.v1.OrganizationInviteList) | Fetch all organization invites in the organization identified by the given context ID. The authenticated user must be a member of the organization identifier by the given context ID. Required permissions: - resourcemanager.organization-invite.list on the invite. |
 | ListMyOrganizationInvites | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [OrganizationInviteList](#arangodb.cloud.resourcemanager.v1.OrganizationInviteList) | Fetch all organization invites for the email address of the authenticated user. Required permissions: - None |
@@ -492,6 +580,7 @@ ResourceManagerService is the API used to configure basic resource objects.
 | DeleteOrganizationInvite | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete an organization invite The authenticated user must be a member of the organization that the invite is for. Required permissions: - resourcemanager.organization-invite.delete on the invite |
 | AcceptOrganizationInvite | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Accept an organization invite The authenticated user&#39;s email address must match the email address specified in the invite. Required permissions: - None |
 | RejectOrganizationInvite | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Reject an organization invite The authenticated user&#39;s email address must match the email address specified in the invite. Required permissions: - None |
+| ListQuotaDescriptions | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [QuotaDescriptionList](#arangodb.cloud.resourcemanager.v1.QuotaDescriptionList) | Fetch descriptions for all quota kinds know by the platform. Required permissions: - None |
 
  
 
