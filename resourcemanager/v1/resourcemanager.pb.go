@@ -1712,6 +1712,8 @@ type ResourceManagerServiceClient interface {
 	// Note that if the identified user or organization does not exist, no is returned.
 	IsMemberOfOrganization(ctx context.Context, in *IsMemberOfOrganizationRequest, opts ...grpc.CallOption) (*IsMemberOfOrganizationResponse, error)
 	// Get a list of quota values for the organization identified by the given context ID.
+	// If a quota is not specified on organization level, a (potentially tier specific) default
+	// value is returned.
 	// Required permissions:
 	// - resourcemanager.organization.get on the organization
 	ListOrganizationQuotas(ctx context.Context, in *ListQuotasRequest, opts ...grpc.CallOption) (*QuotaList, error)
@@ -1744,6 +1746,8 @@ type ResourceManagerServiceClient interface {
 	// - resourcemanager.project.delete on the project
 	DeleteProject(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Get a list of quota values for the project identified by the given context ID.
+	// If a quota is not specified on project level, a value from organization level
+	// is returned.
 	// Required permissions:
 	// - resourcemanager.project.get on the project
 	ListProjectQuotas(ctx context.Context, in *ListQuotasRequest, opts ...grpc.CallOption) (*QuotaList, error)
@@ -2071,6 +2075,8 @@ type ResourceManagerServiceServer interface {
 	// Note that if the identified user or organization does not exist, no is returned.
 	IsMemberOfOrganization(context.Context, *IsMemberOfOrganizationRequest) (*IsMemberOfOrganizationResponse, error)
 	// Get a list of quota values for the organization identified by the given context ID.
+	// If a quota is not specified on organization level, a (potentially tier specific) default
+	// value is returned.
 	// Required permissions:
 	// - resourcemanager.organization.get on the organization
 	ListOrganizationQuotas(context.Context, *ListQuotasRequest) (*QuotaList, error)
@@ -2103,6 +2109,8 @@ type ResourceManagerServiceServer interface {
 	// - resourcemanager.project.delete on the project
 	DeleteProject(context.Context, *v1.IDOptions) (*v1.Empty, error)
 	// Get a list of quota values for the project identified by the given context ID.
+	// If a quota is not specified on project level, a value from organization level
+	// is returned.
 	// Required permissions:
 	// - resourcemanager.project.get on the project
 	ListProjectQuotas(context.Context, *ListQuotasRequest) (*QuotaList, error)

@@ -494,6 +494,8 @@ export class ResourceManagerService {
   }
   
   // Get a list of quota values for the organization identified by the given context ID.
+  // If a quota is not specified on organization level, a (potentially tier specific) default
+  // value is returned.
   // Required permissions:
   // - resourcemanager.organization.get on the organization
   async ListOrganizationQuotas(req: ListQuotasRequest): Promise<QuotaList> {
@@ -554,6 +556,8 @@ export class ResourceManagerService {
   }
   
   // Get a list of quota values for the project identified by the given context ID.
+  // If a quota is not specified on project level, a value from organization level
+  // is returned.
   // Required permissions:
   // - resourcemanager.project.get on the project
   async ListProjectQuotas(req: ListQuotasRequest): Promise<QuotaList> {
