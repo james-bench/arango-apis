@@ -12,6 +12,29 @@ import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../commo
 // File: data/v1/data.proto
 // Package: arangodb.cloud.data.v1
 
+// Request arguments for CalculateDeploymentSize
+export interface CalculateDeploymentSizeRequest {
+  // Number of coordinators of the deployment
+  // number
+  coordinators?: number;
+  
+  // Amount of memory (in GB) to allocate for coordinators.
+  // number
+  coordinator_memory_size?: number;
+  
+  // Number of dbservers of the deployment
+  // number
+  dbservers?: number;
+  
+  // Amount of memory (in GB) to allocate for dbservers.
+  // number
+  dbserver_memory_size?: number;
+  
+  // Amount of disk space (in GB) to allocate for dbservers.
+  // number
+  dbserver_disk_size?: number;
+}
+
 // A Deployment is represents one deployment of an ArangoDB cluster.
 export interface Deployment {
   // System identifier of the deployment.
@@ -96,6 +119,11 @@ export interface Deployment {
   
   // Deployment_Status
   status?: Deployment_Status;
+  
+  // Detailed size of the deployment
+  // This is a read-only field.
+  // DeploymentSize
+  size?: DeploymentSize;
   
   // Deployment_Expiration
   expiration?: Deployment_Expiration;
@@ -253,6 +281,29 @@ export interface DeploymentList {
   // Budget for deployments
   // arangodb.cloud.common.v1.Budget
   budget?: arangodb_cloud_common_v1_Budget;
+}
+
+// Result of CalculateDeploymentSize
+export interface DeploymentSize {
+  // Number of agents
+  // number
+  agents?: number;
+  
+  // Amount of memory (in GB) to allocate for agents.
+  // number
+  agent_memory_size?: number;
+  
+  // Amount of disk space (in GB) to allocate for agents.
+  // number
+  agent_disk_size?: number;
+  
+  // Total amount of memory (in GB) used by all servers
+  // number
+  total_memory_size?: number;
+  
+  // Total amount of disk space (in GB) used by all servers
+  // number
+  total_disk_size?: number;
 }
 
 // Request arguments for ListVersions.
@@ -456,6 +507,15 @@ export class DataService {
   async ListServersSpecPresets(req: ServersSpecPresetsRequest): Promise<ServersSpecPresetList> {
     const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id || '')}/regions/${encodeURIComponent(req.region_id || '')}/presets`;
     const url = path + api.queryString(req, [`project_id`, `region_id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Calculate the total size of a deployment with given arguments.
+  // Required permissions:
+  // - none
+  async CalculateDeploymentSize(req: CalculateDeploymentSizeRequest): Promise<DeploymentSize> {
+    const path = `/api/data/v1/deployment-size/calculate`;
+    const url = path + api.queryString(req, []);
     return api.get(url, undefined);
   }
 }
