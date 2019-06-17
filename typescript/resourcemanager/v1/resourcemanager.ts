@@ -183,6 +183,7 @@ export interface Organization {
   
   // Total number of deployments created in this organization throughout
   // its entire lifetime per tier-id.
+  // map: tier-id -> count
   // This is a read-only value.
   // Organization_TotalDeploymentsEntry
   total_deployments?: Organization_TotalDeploymentsEntry[];
