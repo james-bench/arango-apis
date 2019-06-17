@@ -122,6 +122,7 @@
   
 
 - [data/v1/data.proto](#data/v1/data.proto)
+    - [CalculateDeploymentSizeRequest](#arangodb.cloud.data.v1.CalculateDeploymentSizeRequest)
     - [Deployment](#arangodb.cloud.data.v1.Deployment)
     - [Deployment.AuthenticationSpec](#arangodb.cloud.data.v1.Deployment.AuthenticationSpec)
     - [Deployment.CertificateSpec](#arangodb.cloud.data.v1.Deployment.CertificateSpec)
@@ -130,6 +131,7 @@
     - [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec)
     - [Deployment.Status](#arangodb.cloud.data.v1.Deployment.Status)
     - [DeploymentList](#arangodb.cloud.data.v1.DeploymentList)
+    - [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize)
     - [ListVersionsRequest](#arangodb.cloud.data.v1.ListVersionsRequest)
     - [ServersSpecLimits](#arangodb.cloud.data.v1.ServersSpecLimits)
     - [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits)
@@ -1525,6 +1527,25 @@ SupportService is the API used to query for support.
 
 
 
+<a name="arangodb.cloud.data.v1.CalculateDeploymentSizeRequest"></a>
+
+### CalculateDeploymentSizeRequest
+Request arguments for CalculateDeploymentSize
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| coordinators | [int32](#int32) |  | Number of coordinators of the deployment |
+| coordinator_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for each coordinator. |
+| dbservers | [int32](#int32) |  | Number of dbservers of the deployment |
+| dbserver_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for each dbserver. |
+| dbserver_disk_size | [int32](#int32) |  | Amount of disk space (in GB) to allocate for each dbserver. |
+
+
+
+
+
+
 <a name="arangodb.cloud.data.v1.Deployment"></a>
 
 ### Deployment
@@ -1550,6 +1571,7 @@ A Deployment is represents one deployment of an ArangoDB cluster.
 | authentication | [Deployment.AuthenticationSpec](#arangodb.cloud.data.v1.Deployment.AuthenticationSpec) |  |  |
 | ipwhitelist_id | [string](#string) |  | Optional identifier of IP whitelist to use for this deployment. |
 | status | [Deployment.Status](#arangodb.cloud.data.v1.Deployment.Status) |  |  |
+| size | [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize) |  | Detailed size of the deployment This is a read-only field. |
 | expiration | [Deployment.Expiration](#arangodb.cloud.data.v1.Deployment.Expiration) |  |  |
 
 
@@ -1683,6 +1705,25 @@ List of Deployments.
 | ----- | ---- | ----- | ----------- |
 | items | [Deployment](#arangodb.cloud.data.v1.Deployment) | repeated | Actual deployments |
 | budget | [arangodb.cloud.common.v1.Budget](#arangodb.cloud.common.v1.Budget) |  | Budget for deployments |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.DeploymentSize"></a>
+
+### DeploymentSize
+Result of CalculateDeploymentSize
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| agents | [int32](#int32) |  | Number of agents |
+| agent_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for each agent. |
+| agent_disk_size | [int32](#int32) |  | Amount of disk space (in GB) to allocate for each agent. |
+| total_memory_size | [int32](#int32) |  | Total (combined) amount of memory (in GB) used by all servers (agents, coordinators &amp; dbservers) |
+| total_disk_size | [int32](#int32) |  | Total (combined) amount of disk space (in GB) used by all servers (agents &amp; dbservers) |
 
 
 
@@ -1858,6 +1899,7 @@ DataService is the API used to configure data objects.
 | GetDefaultVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [Version](#arangodb.cloud.data.v1.Version) | Fetch the default ArangoDB version for new deployment. Required permissions: - None |
 | GetServersSpecLimits | [ServersSpecLimitsRequest](#arangodb.cloud.data.v1.ServersSpecLimitsRequest) | [ServersSpecLimits](#arangodb.cloud.data.v1.ServersSpecLimits) | Fetch the limits for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.limits.get on the requested project |
 | ListServersSpecPresets | [ServersSpecPresetsRequest](#arangodb.cloud.data.v1.ServersSpecPresetsRequest) | [ServersSpecPresetList](#arangodb.cloud.data.v1.ServersSpecPresetList) | Fetch the presets for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.presets.list on the requested project |
+| CalculateDeploymentSize | [CalculateDeploymentSizeRequest](#arangodb.cloud.data.v1.CalculateDeploymentSizeRequest) | [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize) | Calculate the total size of a deployment with given arguments. Required permissions: - none |
 
  
 

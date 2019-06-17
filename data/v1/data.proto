@@ -109,6 +109,15 @@ service DataService {
             get: "/api/data/v1/projects/{project_id}/regions/{region_id}/presets"
         };
     }
+
+    // Calculate the total size of a deployment with given arguments.
+    // Required permissions:
+    // - none
+    rpc CalculateDeploymentSize(CalculateDeploymentSizeRequest) returns (DeploymentSize) {
+        option (google.api.http) = {
+            get: "/api/data/v1/deployment-size/calculate"
+        };
+    }
 }
 
 // A Deployment is represents one deployment of an ArangoDB cluster.
@@ -241,6 +250,10 @@ message Deployment {
     }
     Status status = 201;
 
+    // Detailed size of the deployment
+    // This is a read-only field.
+    DeploymentSize size = 202;
+
     // Expiration of the deployment.
     // All members of this message are read-only.
     message Expiration {
@@ -349,4 +362,33 @@ message ServersSpecLimits {
     Limits dbserver_memory_size = 12;
     // Amount of disk space (in GB) to allocate for dbservers.
     Limits dbserver_disk_size = 13;
+}
+
+// Request arguments for CalculateDeploymentSize
+message CalculateDeploymentSizeRequest {
+    // Number of coordinators of the deployment
+    int32 coordinators = 1;
+    // Amount of memory (in GB) to allocate for each coordinator.
+    int32 coordinator_memory_size = 2;
+
+    // Number of dbservers of the deployment
+    int32 dbservers = 11;
+    // Amount of memory (in GB) to allocate for each dbserver.
+    int32 dbserver_memory_size = 12;
+    // Amount of disk space (in GB) to allocate for each dbserver.
+    int32 dbserver_disk_size = 13;
+}
+
+// Result of CalculateDeploymentSize
+message DeploymentSize {
+    // Number of agents
+    int32 agents = 1;
+    // Amount of memory (in GB) to allocate for each agent.
+    int32 agent_memory_size = 2;
+    // Amount of disk space (in GB) to allocate for each agent.
+    int32 agent_disk_size = 3;
+    // Total (combined) amount of memory (in GB) used by all servers (agents, coordinators & dbservers)
+    int32 total_memory_size = 11; 
+    // Total (combined) amount of disk space (in GB) used by all servers (agents & dbservers)
+    int32 total_disk_size = 12; 
 }
