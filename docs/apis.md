@@ -1536,10 +1536,10 @@ Request arguments for CalculateDeploymentSize
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | coordinators | [int32](#int32) |  | Number of coordinators of the deployment |
-| coordinator_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for coordinators. |
+| coordinator_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for each coordinator. |
 | dbservers | [int32](#int32) |  | Number of dbservers of the deployment |
-| dbserver_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for dbservers. |
-| dbserver_disk_size | [int32](#int32) |  | Amount of disk space (in GB) to allocate for dbservers. |
+| dbserver_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for each dbserver. |
+| dbserver_disk_size | [int32](#int32) |  | Amount of disk space (in GB) to allocate for each dbserver. |
 
 
 
@@ -1720,10 +1720,10 @@ Result of CalculateDeploymentSize
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | agents | [int32](#int32) |  | Number of agents |
-| agent_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for agents. |
-| agent_disk_size | [int32](#int32) |  | Amount of disk space (in GB) to allocate for agents. |
-| total_memory_size | [int32](#int32) |  | Total amount of memory (in GB) used by all servers |
-| total_disk_size | [int32](#int32) |  | Total amount of disk space (in GB) used by all servers |
+| agent_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for each agent. |
+| agent_disk_size | [int32](#int32) |  | Amount of disk space (in GB) to allocate for each agent. |
+| total_memory_size | [int32](#int32) |  | Total (combined) amount of memory (in GB) used by all servers (agents, coordinators &amp; dbservers) |
+| total_disk_size | [int32](#int32) |  | Total (combined) amount of disk space (in GB) used by all servers (agents &amp; dbservers) |
 
 
 

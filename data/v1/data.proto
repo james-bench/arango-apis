@@ -368,14 +368,14 @@ message ServersSpecLimits {
 message CalculateDeploymentSizeRequest {
     // Number of coordinators of the deployment
     int32 coordinators = 1;
-    // Amount of memory (in GB) to allocate for coordinators.
+    // Amount of memory (in GB) to allocate for each coordinator.
     int32 coordinator_memory_size = 2;
 
     // Number of dbservers of the deployment
     int32 dbservers = 11;
-    // Amount of memory (in GB) to allocate for dbservers.
+    // Amount of memory (in GB) to allocate for each dbserver.
     int32 dbserver_memory_size = 12;
-    // Amount of disk space (in GB) to allocate for dbservers.
+    // Amount of disk space (in GB) to allocate for each dbserver.
     int32 dbserver_disk_size = 13;
 }
 
@@ -383,12 +383,12 @@ message CalculateDeploymentSizeRequest {
 message DeploymentSize {
     // Number of agents
     int32 agents = 1;
-    // Amount of memory (in GB) to allocate for agents.
+    // Amount of memory (in GB) to allocate for each agent.
     int32 agent_memory_size = 2;
-    // Amount of disk space (in GB) to allocate for agents.
+    // Amount of disk space (in GB) to allocate for each agent.
     int32 agent_disk_size = 3;
-    // Total amount of memory (in GB) used by all servers
+    // Total (combined) amount of memory (in GB) used by all servers (agents, coordinators & dbservers)
     int32 total_memory_size = 11; 
-    // Total amount of disk space (in GB) used by all servers
+    // Total (combined) amount of disk space (in GB) used by all servers (agents & dbservers)
     int32 total_disk_size = 12; 
 }

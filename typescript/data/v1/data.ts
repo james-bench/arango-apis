@@ -18,7 +18,7 @@ export interface CalculateDeploymentSizeRequest {
   // number
   coordinators?: number;
   
-  // Amount of memory (in GB) to allocate for coordinators.
+  // Amount of memory (in GB) to allocate for each coordinator.
   // number
   coordinator_memory_size?: number;
   
@@ -26,11 +26,11 @@ export interface CalculateDeploymentSizeRequest {
   // number
   dbservers?: number;
   
-  // Amount of memory (in GB) to allocate for dbservers.
+  // Amount of memory (in GB) to allocate for each dbserver.
   // number
   dbserver_memory_size?: number;
   
-  // Amount of disk space (in GB) to allocate for dbservers.
+  // Amount of disk space (in GB) to allocate for each dbserver.
   // number
   dbserver_disk_size?: number;
 }
@@ -289,19 +289,19 @@ export interface DeploymentSize {
   // number
   agents?: number;
   
-  // Amount of memory (in GB) to allocate for agents.
+  // Amount of memory (in GB) to allocate for each agent.
   // number
   agent_memory_size?: number;
   
-  // Amount of disk space (in GB) to allocate for agents.
+  // Amount of disk space (in GB) to allocate for each agent.
   // number
   agent_disk_size?: number;
   
-  // Total amount of memory (in GB) used by all servers
+  // Total (combined) amount of memory (in GB) used by all servers (agents, coordinators & dbservers)
   // number
   total_memory_size?: number;
   
-  // Total amount of disk space (in GB) used by all servers
+  // Total (combined) amount of disk space (in GB) used by all servers (agents & dbservers)
   // number
   total_disk_size?: number;
 }

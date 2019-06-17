@@ -1386,13 +1386,13 @@ func (m *ServersSpecLimits_Limits) GetAllowedValues() []int32 {
 type CalculateDeploymentSizeRequest struct {
 	// Number of coordinators of the deployment
 	Coordinators int32 `protobuf:"varint,1,opt,name=coordinators,proto3" json:"coordinators,omitempty"`
-	// Amount of memory (in GB) to allocate for coordinators.
+	// Amount of memory (in GB) to allocate for each coordinator.
 	CoordinatorMemorySize int32 `protobuf:"varint,2,opt,name=coordinator_memory_size,json=coordinatorMemorySize,proto3" json:"coordinator_memory_size,omitempty"`
 	// Number of dbservers of the deployment
 	Dbservers int32 `protobuf:"varint,11,opt,name=dbservers,proto3" json:"dbservers,omitempty"`
-	// Amount of memory (in GB) to allocate for dbservers.
+	// Amount of memory (in GB) to allocate for each dbserver.
 	DbserverMemorySize int32 `protobuf:"varint,12,opt,name=dbserver_memory_size,json=dbserverMemorySize,proto3" json:"dbserver_memory_size,omitempty"`
-	// Amount of disk space (in GB) to allocate for dbservers.
+	// Amount of disk space (in GB) to allocate for each dbserver.
 	DbserverDiskSize     int32    `protobuf:"varint,13,opt,name=dbserver_disk_size,json=dbserverDiskSize,proto3" json:"dbserver_disk_size,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -1471,13 +1471,13 @@ func (m *CalculateDeploymentSizeRequest) GetDbserverDiskSize() int32 {
 type DeploymentSize struct {
 	// Number of agents
 	Agents int32 `protobuf:"varint,1,opt,name=agents,proto3" json:"agents,omitempty"`
-	// Amount of memory (in GB) to allocate for agents.
+	// Amount of memory (in GB) to allocate for each agent.
 	AgentMemorySize int32 `protobuf:"varint,2,opt,name=agent_memory_size,json=agentMemorySize,proto3" json:"agent_memory_size,omitempty"`
-	// Amount of disk space (in GB) to allocate for agents.
+	// Amount of disk space (in GB) to allocate for each agent.
 	AgentDiskSize int32 `protobuf:"varint,3,opt,name=agent_disk_size,json=agentDiskSize,proto3" json:"agent_disk_size,omitempty"`
-	// Total amount of memory (in GB) used by all servers
+	// Total (combined) amount of memory (in GB) used by all servers (agents, coordinators & dbservers)
 	TotalMemorySize int32 `protobuf:"varint,11,opt,name=total_memory_size,json=totalMemorySize,proto3" json:"total_memory_size,omitempty"`
-	// Total amount of disk space (in GB) used by all servers
+	// Total (combined) amount of disk space (in GB) used by all servers (agents & dbservers)
 	TotalDiskSize        int32    `protobuf:"varint,12,opt,name=total_disk_size,json=totalDiskSize,proto3" json:"total_disk_size,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
