@@ -169,6 +169,20 @@ export interface Organization {
   // This is a read-only value and cannot be initialized.
   // Tier
   tier?: Tier;
+  
+  // Total number of deployments created in this organization throughout
+  // its entire lifetime per tier-id.
+  // map: tier-id -> count
+  // This is a read-only value.
+  // Organization_TotalDeploymentsEntry
+  total_deployments?: Organization_TotalDeploymentsEntry[];
+}
+export interface Organization_TotalDeploymentsEntry {
+  // string
+  key?: string;
+  
+  // number
+  value?: number;
 }
 
 // An OrganizationInvite represents an invite for a human to join an

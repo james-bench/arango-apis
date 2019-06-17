@@ -90,6 +90,10 @@ export interface Deployment {
   // Deployment_AuthenticationSpec
   authentication?: Deployment_AuthenticationSpec;
   
+  // Optional identifier of IP whitelist to use for this deployment.
+  // string
+  ipwhitelist_id?: string;
+  
   // Deployment_Status
   status?: Deployment_Status;
   

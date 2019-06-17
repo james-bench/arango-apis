@@ -13,6 +13,7 @@
     - [Member](#arangodb.cloud.resourcemanager.v1.Member)
     - [MemberList](#arangodb.cloud.resourcemanager.v1.MemberList)
     - [Organization](#arangodb.cloud.resourcemanager.v1.Organization)
+    - [Organization.TotalDeploymentsEntry](#arangodb.cloud.resourcemanager.v1.Organization.TotalDeploymentsEntry)
     - [OrganizationInvite](#arangodb.cloud.resourcemanager.v1.OrganizationInvite)
     - [OrganizationInviteList](#arangodb.cloud.resourcemanager.v1.OrganizationInviteList)
     - [OrganizationList](#arangodb.cloud.resourcemanager.v1.OrganizationList)
@@ -303,6 +304,23 @@ An Organization is represents a real world organization such as a company.
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the organization |
 | deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the organization |
 | tier | [Tier](#arangodb.cloud.resourcemanager.v1.Tier) |  | Tier used for this organization. This is a read-only value and cannot be initialized. |
+| total_deployments | [Organization.TotalDeploymentsEntry](#arangodb.cloud.resourcemanager.v1.Organization.TotalDeploymentsEntry) | repeated | Total number of deployments created in this organization throughout its entire lifetime per tier-id. map: tier-id -&gt; count This is a read-only value. |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.Organization.TotalDeploymentsEntry"></a>
+
+### Organization.TotalDeploymentsEntry
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | [string](#string) |  |  |
+| value | [int32](#int32) |  |  |
 
 
 
@@ -643,7 +661,7 @@ SecurityService is the API used to access security entities.
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
 | ListIPWhitelists | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [IPWhitelistList](#arangodb.cloud.security.v1.IPWhitelistList) | Fetch all IP whitelists that belong to the project identified by the given context ID. Required permissions: - security.ipwhitelist.list on the project identified by the given context ID. |
-| GetWhitelist | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | Fetch an IP whitelist by its id. Required permissions: - security.ipwhitelist.get on the IP whitelist |
+| GetIPWhitelist | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | Fetch an IP whitelist by its id. Required permissions: - security.ipwhitelist.get on the IP whitelist |
 | CreateIPWhitelist | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | Create a new IP whitelist Required permissions: - security.ipwhitelist.create on the project that owns the IP whitelist. |
 | UpdateIPWhitelist | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | Update an IP whitelist Required permissions: - security.ipwhitelist.update on the IP whitelist |
 | DeleteIPWhitelist | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete an IP whitelist. Note that IP whitelists are initially only marked for deletion. Once all their dependent deployments are removed, the whitelist is removed. Required permissions: - security.ipwhitelist.delete on the IP whitelist |
@@ -1441,6 +1459,7 @@ A Deployment is represents one deployment of an ArangoDB cluster.
 | certificates | [Deployment.CertificateSpec](#arangodb.cloud.data.v1.Deployment.CertificateSpec) |  |  |
 | servers | [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  |  |
 | authentication | [Deployment.AuthenticationSpec](#arangodb.cloud.data.v1.Deployment.AuthenticationSpec) |  |  |
+| ipwhitelist_id | [string](#string) |  | Optional identifier of IP whitelist to use for this deployment. |
 | status | [Deployment.Status](#arangodb.cloud.data.v1.Deployment.Status) |  |  |
 | expiration | [Deployment.Expiration](#arangodb.cloud.data.v1.Deployment.Expiration) |  |  |
 

@@ -81,7 +81,7 @@ export class SecurityService {
   // Fetch an IP whitelist by its id.
   // Required permissions:
   // - security.ipwhitelist.get on the IP whitelist
-  async GetWhitelist(req: arangodb_cloud_common_v1_IDOptions): Promise<IPWhitelist> {
+  async GetIPWhitelist(req: arangodb_cloud_common_v1_IDOptions): Promise<IPWhitelist> {
     const path = `/api/security/v1/ipwhitelists/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
