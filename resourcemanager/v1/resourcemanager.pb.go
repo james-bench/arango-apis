@@ -50,6 +50,7 @@ type Organization struct {
 	Tier *Tier `protobuf:"bytes,8,opt,name=tier,proto3" json:"tier,omitempty"`
 	// Total number of deployments created in this organization throughout
 	// its entire lifetime per tier-id.
+	// map: tier-id -> count
 	// This is a read-only value.
 	TotalDeployments     map[string]int32 `protobuf:"bytes,9,rep,name=total_deployments,json=totalDeployments,proto3" json:"total_deployments,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
 	XXX_NoUnkeyedLiteral struct{}         `json:"-"`

@@ -271,6 +271,7 @@ message Organization {
     Tier tier = 8;
     // Total number of deployments created in this organization throughout
     // its entire lifetime per tier-id.
+    // map: tier-id -> count
     // This is a read-only value.
     map<string, int32> total_deployments = 9;
 }
