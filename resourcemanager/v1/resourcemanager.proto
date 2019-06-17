@@ -109,6 +109,17 @@ service ResourceManagerService {
         };
     }
 
+    // Get a list of quota values for the organization identified by the given context ID.
+    // If a quota is not specified on organization level, a (potentially tier specific) default
+    // value is returned.
+    // Required permissions:
+    // - resourcemanager.organization.get on the organization
+    rpc ListOrganizationQuotas(ListQuotasRequest) returns (QuotaList) {
+        option (google.api.http) = {
+            get: "/api/resourcemanager/v1/organizations/{options.context_id}/quotas"
+        };
+    }
+
     // Fetch all projects in the organization identified by the given context ID.
     // The authenticated user must be a member of the organization identifier by the given context ID.
     // Required permissions:
@@ -161,6 +172,17 @@ service ResourceManagerService {
     rpc DeleteProject(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             delete: "/api/resourcemanager/v1/projects/{id}"
+        };
+    }
+
+    // Get a list of quota values for the project identified by the given context ID.
+    // If a quota is not specified on project level, a value from organization level
+    // is returned.
+    // Required permissions:
+    // - resourcemanager.project.get on the project
+    rpc ListProjectQuotas(ListQuotasRequest) returns (QuotaList) {
+        option (google.api.http) = {
+            get: "/api/resourcemanager/v1/projects/{options.context_id}/quotas"
         };
     }
 
@@ -243,6 +265,15 @@ service ResourceManagerService {
     rpc RejectOrganizationInvite(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             post: "/api/resourcemanager/v1/organization-invites/{id}/reject"
+        };
+    }
+
+    // Fetch descriptions for all quota kinds know by the platform.
+    // Required permissions:
+    // - None
+    rpc ListQuotaDescriptions(common.v1.ListOptions) returns (QuotaDescriptionList) {
+        option (google.api.http) = {
+            get: "/api/resourcemanager/v1/quotas/descriptions"
         };
     }
 }
@@ -464,4 +495,45 @@ message OrganizationInvite {
 // List of OrganizationInvites.
 message OrganizationInviteList {
     repeated OrganizationInvite items = 1;
+}
+
+// Description of a kind of quota's
+message QuotaDescription {
+    // Kind of the quota
+    string kind = 1;
+    // Human readable description
+    string description = 2;
+    // If set, this kind of quota is valid at organization level
+    bool for_organizations = 3;
+    // If set, this kind of quota is valid at project level
+    bool for_projects = 4;
+}
+
+// List of QuotaDescription's
+message QuotaDescriptionList {
+    repeated QuotaDescription items = 1;
+}
+
+// Quota limit
+message Quota {
+    // Kind of quota
+    string kind = 1;
+    // Human readable description of the quota
+    string description = 2;
+    // Current limit of the quota.
+    // A value of 0 means unlimited.
+    int64 limit = 3;
+}
+
+// List of Quota's
+message QuotaList {
+    repeated Quota items = 1;
+}
+
+// Request arguments for ListXyzQuotas
+message ListQuotasRequest {
+    // Common list options
+    common.v1.ListOptions options = 1;
+    // If set, limit the returned list of quota's to these kinds.
+    repeated string kinds = 2;
 }

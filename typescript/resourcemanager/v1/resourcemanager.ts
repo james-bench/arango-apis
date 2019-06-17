@@ -114,6 +114,17 @@ export interface ListEventOptions {
   created_before?: googleTypes.Timestamp;
 }
 
+// Request arguments for ListXyzQuotas
+export interface ListQuotasRequest {
+  // Common list options
+  // arangodb.cloud.common.v1.ListOptions
+  options?: arangodb_cloud_common_v1_ListOptions;
+  
+  // If set, limit the returned list of quota's to these kinds.
+  // string
+  kinds?: string[];
+}
+
 // Member of an organization.
 // A member is always a user.
 export interface Member {
@@ -333,6 +344,53 @@ export interface ProjectList {
   budget?: arangodb_cloud_common_v1_Budget;
 }
 
+// Quota limit
+export interface Quota {
+  // Kind of quota
+  // string
+  kind?: string;
+  
+  // Human readable description of the quota
+  // string
+  description?: string;
+  
+  // Current limit of the quota.
+  // A value of 0 means unlimited.
+  // number
+  limit?: number;
+}
+
+// Description of a kind of quota's
+export interface QuotaDescription {
+  // Kind of the quota
+  // string
+  kind?: string;
+  
+  // Human readable description
+  // string
+  description?: string;
+  
+  // If set, this kind of quota is valid at organization level
+  // boolean
+  for_organizations?: boolean;
+  
+  // If set, this kind of quota is valid at project level
+  // boolean
+  for_projects?: boolean;
+}
+
+// List of QuotaDescription's
+export interface QuotaDescriptionList {
+  // QuotaDescription
+  items?: QuotaDescription[];
+}
+
+// List of Quota's
+export interface QuotaList {
+  // Quota
+  items?: Quota[];
+}
+
 // Tier of an organization.
 export interface Tier {
   // Identifier of the tier.
@@ -435,6 +493,17 @@ export class ResourceManagerService {
     return api.get(url, undefined);
   }
   
+  // Get a list of quota values for the organization identified by the given context ID.
+  // If a quota is not specified on organization level, a (potentially tier specific) default
+  // value is returned.
+  // Required permissions:
+  // - resourcemanager.organization.get on the organization
+  async ListOrganizationQuotas(req: ListQuotasRequest): Promise<QuotaList> {
+    const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent((req.options || {}).context_id || '')}/quotas`;
+    const url = path + api.queryString(req, [`options.context_id`]);
+    return api.get(url, undefined);
+  }
+  
   // Fetch all projects in the organization identified by the given context ID.
   // The authenticated user must be a member of the organization identifier by the given context ID.
   // Required permissions:
@@ -484,6 +553,17 @@ export class ResourceManagerService {
     const path = `/api/resourcemanager/v1/projects/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.delete(url, undefined);
+  }
+  
+  // Get a list of quota values for the project identified by the given context ID.
+  // If a quota is not specified on project level, a value from organization level
+  // is returned.
+  // Required permissions:
+  // - resourcemanager.project.get on the project
+  async ListProjectQuotas(req: ListQuotasRequest): Promise<QuotaList> {
+    const path = `/api/resourcemanager/v1/projects/${encodeURIComponent((req.options || {}).context_id || '')}/quotas`;
+    const url = path + api.queryString(req, [`options.context_id`]);
+    return api.get(url, undefined);
   }
   
   // Fetch all events in the organization identified by the given context ID.
@@ -564,5 +644,14 @@ export class ResourceManagerService {
     const path = `/api/resourcemanager/v1/organization-invites/${encodeURIComponent(req.id || '')}/reject`;
     const url = path + api.queryString(req, [`id`]);
     return api.post(url, undefined);
+  }
+  
+  // Fetch descriptions for all quota kinds know by the platform.
+  // Required permissions:
+  // - None
+  async ListQuotaDescriptions(req: arangodb_cloud_common_v1_ListOptions): Promise<QuotaDescriptionList> {
+    const path = `/api/resourcemanager/v1/quotas/descriptions`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
   }
 }
