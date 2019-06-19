@@ -1643,7 +1643,10 @@ Status of a single server (of the ArangoDB cluster)
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the server |
 | ready | [bool](#bool) |  | Set once the server is ready |
 | member_of_cluster | [bool](#bool) |  | Set once the server has been known to be a member of the cluster |
-| failed | [bool](#bool) |  | Set if the server is in a failed state |
+| failed | [bool](#bool) |  | Set if the server is in a failed state Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading. |
+| creating | [bool](#bool) |  | Set if the server is still being created Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading. |
+| ok | [bool](#bool) |  | Set if the server is in the ok state. Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading. |
+| upgrading | [bool](#bool) |  | Set if the server is still being upgraded Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading. |
 
 
 
