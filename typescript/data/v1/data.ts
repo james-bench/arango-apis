@@ -196,8 +196,24 @@ export interface Deployment_ServerStatus {
   member_of_cluster?: boolean;
   
   // Set if the server is in a failed state
+  // Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading.
   // boolean
   failed?: boolean;
+  
+  // Set if the server is still being created
+  // Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading.
+  // boolean
+  creating?: boolean;
+  
+  // Set if the server is in the ok state.
+  // Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading.
+  // boolean
+  ok?: boolean;
+  
+  // Set if the server is still being upgraded
+  // Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading.
+  // boolean
+  upgrading?: boolean;
 }
 export interface Deployment_ServersSpec {
   // Number of coordinators of the deployment

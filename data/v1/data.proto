@@ -220,7 +220,17 @@ message Deployment {
         // Set once the server has been known to be a member of the cluster
         bool member_of_cluster = 6;
         // Set if the server is in a failed state
+        // Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading.
         bool failed = 7;
+        // Set if the server is still being created
+        // Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading.
+        bool creating = 8;
+        // Set if the server is in the ok state.
+        // Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading.
+        bool ok = 9;
+        // Set if the server is still being upgraded
+        // Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading.
+        bool upgrading = 10;
     }
 
     // Status of the deployment
