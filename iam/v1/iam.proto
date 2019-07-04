@@ -563,8 +563,11 @@ message APIKey {
     // The expiration timestamp of the key
     google.protobuf.Timestamp expires_at = 7;
     // Set when this key is expired.
-    // This is a read-only value.
     bool is_expired = 8;
+    // The revocation timestamp of the key (if any)
+    google.protobuf.Timestamp revoked_at = 9;
+    // Set when this key is explicitly revoked.
+    bool is_revoked = 10;
 }
 
 // List of APIKey's

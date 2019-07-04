@@ -44,9 +44,16 @@ export interface APIKey {
   expires_at?: googleTypes.Timestamp;
   
   // Set when this key is expired.
-  // This is a read-only value.
   // boolean
   is_expired?: boolean;
+  
+  // The revocation timestamp of the key (if any)
+  // googleTypes.Timestamp
+  revoked_at?: googleTypes.Timestamp;
+  
+  // Set when this key is explicitly revoked.
+  // boolean
+  is_revoked?: boolean;
 }
 
 // List of APIKey's

@@ -1174,7 +1174,9 @@ API Keys are authentication &#34;keys&#34; intended to be used for scripting.
 | is_readonly | [bool](#bool) |  | If set, this key only grants access to read-only API&#39;s (List..., Get...) |
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the key |
 | expires_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The expiration timestamp of the key |
-| is_expired | [bool](#bool) |  | Set when this key is expired. This is a read-only value. |
+| is_expired | [bool](#bool) |  | Set when this key is expired. |
+| revoked_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The revocation timestamp of the key (if any) |
+| is_revoked | [bool](#bool) |  | Set when this key is explicitly revoked. |
 
 
 
