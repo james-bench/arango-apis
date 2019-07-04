@@ -25,3 +25,15 @@ func TestRoleURL(t *testing.T) {
 	assert.Equal(t, "/Organization/123%2F567/Role/c2%2F3", RoleURL("123/567", "c2/3"))
 	assert.Equal(t, "/Organization/123%2F567/Role/e%25f", RoleURL("123/567", "e%f"))
 }
+
+func TestUserURL(t *testing.T) {
+	assert.Equal(t, "/User/c1", UserURL("c1"))
+	assert.Equal(t, "/User/123%2F567", UserURL("123/567"))
+	assert.Equal(t, "/User/e%25f", UserURL("e%f"))
+}
+
+func TestAPIKeyURL(t *testing.T) {
+	assert.Equal(t, "/User/123/APIKey/c1", APIKeyURL("123", "c1"))
+	assert.Equal(t, "/User/123%2F567/APIKey/c2%2F3", APIKeyURL("123/567", "c2/3"))
+	assert.Equal(t, "/User/123%2F567/APIKey/e%25f", APIKeyURL("123/567", "e%f"))
+}

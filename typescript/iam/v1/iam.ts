@@ -19,6 +19,10 @@ export interface APIKey {
   // string
   id?: string;
   
+  // URL of this key.
+  // string
+  url?: string;
+  
   // User represented by this key
   // string
   user_id?: string;

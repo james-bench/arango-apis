@@ -550,19 +550,21 @@ message RoleBindingsRequest {
 message APIKey {
     // Identifier of this key
     string id = 1;
+    // URL of this key.
+    string url = 2;
     // User represented by this key
-    string user_id = 2;
+    string user_id = 3;
     // If set, this key only grants access to this organization.
-    string organization_id = 3;
+    string organization_id = 4;
     // If set, this key only grants access to read-only API's (List..., Get...)
-    bool is_readonly = 4;
+    bool is_readonly = 5;
     // The creation timestamp of the key
-    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp created_at = 6;
     // The expiration timestamp of the key
-    google.protobuf.Timestamp expires_at = 6;
+    google.protobuf.Timestamp expires_at = 7;
     // Set when this key is expired.
     // This is a read-only value.
-    bool is_expired = 7;
+    bool is_expired = 8;
 }
 
 // List of APIKey's

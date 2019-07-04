@@ -1168,6 +1168,7 @@ API Keys are authentication &#34;keys&#34; intended to be used for scripting.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | id | [string](#string) |  | Identifier of this key |
+| url | [string](#string) |  | URL of this key. |
 | user_id | [string](#string) |  | User represented by this key |
 | organization_id | [string](#string) |  | If set, this key only grants access to this organization. |
 | is_readonly | [bool](#bool) |  | If set, this key only grants access to read-only API&#39;s (List..., Get...) |
