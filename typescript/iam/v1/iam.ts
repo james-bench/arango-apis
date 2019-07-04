@@ -102,7 +102,8 @@ export interface CreateAPIKeyRequest {
   // string
   organization_id?: string;
   
-  // If set, the created key only grants access to read-only API's (List..., Get...)
+  // If set, the created key only grants access to read-only API's (List..., Get...).
+  // If not set, the created key grants access to all API's (that the user has access to).
   // boolean
   readonly?: boolean;
   
@@ -694,7 +695,7 @@ export class IAMService {
   
   // Authenticate using an API key.
   // If authentication succeeds, this function returns a bearer token.
-  // Tkat token must be used to authenticate all other API requests.
+  // That token must be used to authenticate all other API requests.
   // If the given API key identifier is invalid or expired, or an incorrect secret
   // is given, this function will return an unauthenticated error.
   // Required permissions:

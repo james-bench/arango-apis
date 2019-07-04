@@ -1235,7 +1235,8 @@ func (m *APIKeyList) GetItems() []*APIKey {
 type CreateAPIKeyRequest struct {
 	// If set, the created key only grants access to this organization.
 	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
-	// If set, the created key only grants access to read-only API's (List..., Get...)
+	// If set, the created key only grants access to read-only API's (List..., Get...).
+	// If not set, the created key grants access to all API's (that the user has access to).
 	Readonly bool `protobuf:"varint,2,opt,name=readonly,proto3" json:"readonly,omitempty"`
 	// Duration between now and the expiration date of the created key.
 	// A value of 0 means that the API key will not expire.
@@ -1959,7 +1960,7 @@ type IAMServiceClient interface {
 	DeleteAPIKey(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Authenticate using an API key.
 	// If authentication succeeds, this function returns a bearer token.
-	// Tkat token must be used to authenticate all other API requests.
+	// That token must be used to authenticate all other API requests.
 	// If the given API key identifier is invalid or expired, or an incorrect secret
 	// is given, this function will return an unauthenticated error.
 	// Required permissions:
@@ -2424,7 +2425,7 @@ type IAMServiceServer interface {
 	DeleteAPIKey(context.Context, *v1.IDOptions) (*v1.Empty, error)
 	// Authenticate using an API key.
 	// If authentication succeeds, this function returns a bearer token.
-	// Tkat token must be used to authenticate all other API requests.
+	// That token must be used to authenticate all other API requests.
 	// If the given API key identifier is invalid or expired, or an incorrect secret
 	// is given, this function will return an unauthenticated error.
 	// Required permissions:

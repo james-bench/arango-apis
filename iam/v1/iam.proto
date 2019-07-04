@@ -319,7 +319,7 @@ service IAMService {
 
     // Authenticate using an API key.
     // If authentication succeeds, this function returns a bearer token.
-    // Tkat token must be used to authenticate all other API requests.
+    // That token must be used to authenticate all other API requests.
     // If the given API key identifier is invalid or expired, or an incorrect secret 
     // is given, this function will return an unauthenticated error.
     // Required permissions:
@@ -576,7 +576,8 @@ message APIKeyList {
 message CreateAPIKeyRequest {
     // If set, the created key only grants access to this organization.
     string organization_id = 1;
-    // If set, the created key only grants access to read-only API's (List..., Get...)
+    // If set, the created key only grants access to read-only API's (List..., Get...).
+    // If not set, the created key grants access to all API's (that the user has access to).
     bool readonly = 2;
     // Duration between now and the expiration date of the created key.
     // A value of 0 means that the API key will not expire.
