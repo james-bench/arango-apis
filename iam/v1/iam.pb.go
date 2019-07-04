@@ -9,7 +9,6 @@ import (
 	v1 "github.com/arangodb-managed/apis/common/v1"
 	types "github.com/gogo/protobuf/types"
 	proto "github.com/golang/protobuf/proto"
-	duration "github.com/golang/protobuf/ptypes/duration"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
 	io "io"
@@ -1232,10 +1231,10 @@ type CreateAPIKeyRequest struct {
 	// Duration between now and the expiration date of the created key.
 	// A value of 0 means that the API key will not expire.
 	// You can still use RevokeAPIKey to revoke such API keys.
-	TimeToLive           *duration.Duration `protobuf:"bytes,3,opt,name=time_to_live,json=timeToLive,proto3" json:"time_to_live,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
-	XXX_unrecognized     []byte             `json:"-"`
-	XXX_sizecache        int32              `json:"-"`
+	TimeToLive           *types.Duration `protobuf:"bytes,3,opt,name=time_to_live,json=timeToLive,proto3" json:"time_to_live,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
 }
 
 func (m *CreateAPIKeyRequest) Reset()         { *m = CreateAPIKeyRequest{} }
@@ -1285,7 +1284,7 @@ func (m *CreateAPIKeyRequest) GetReadonly() bool {
 	return false
 }
 
-func (m *CreateAPIKeyRequest) GetTimeToLive() *duration.Duration {
+func (m *CreateAPIKeyRequest) GetTimeToLive() *types.Duration {
 	if m != nil {
 		return m.TimeToLive
 	}
@@ -1361,10 +1360,10 @@ type AuthenticateAPIKeyRequest struct {
 	// If set, then this TTL is used reduce the default TTL
 	// of an authentication token. It cannot be used to increase the default
 	// lifetime of a token.
-	TimeToLive           *duration.Duration `protobuf:"bytes,3,opt,name=time_to_live,json=timeToLive,proto3" json:"time_to_live,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
-	XXX_unrecognized     []byte             `json:"-"`
-	XXX_sizecache        int32              `json:"-"`
+	TimeToLive           *types.Duration `protobuf:"bytes,3,opt,name=time_to_live,json=timeToLive,proto3" json:"time_to_live,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
 }
 
 func (m *AuthenticateAPIKeyRequest) Reset()         { *m = AuthenticateAPIKeyRequest{} }
@@ -1414,7 +1413,7 @@ func (m *AuthenticateAPIKeyRequest) GetSecret() string {
 	return ""
 }
 
-func (m *AuthenticateAPIKeyRequest) GetTimeToLive() *duration.Duration {
+func (m *AuthenticateAPIKeyRequest) GetTimeToLive() *types.Duration {
 	if m != nil {
 		return m.TimeToLive
 	}
@@ -1426,10 +1425,10 @@ type AuthenticateAPIKeyResponse struct {
 	// Bearer token
 	Token string `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
 	// Actual life time of the token.
-	TimeToLive           *duration.Duration `protobuf:"bytes,2,opt,name=time_to_live,json=timeToLive,proto3" json:"time_to_live,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
-	XXX_unrecognized     []byte             `json:"-"`
-	XXX_sizecache        int32              `json:"-"`
+	TimeToLive           *types.Duration `protobuf:"bytes,2,opt,name=time_to_live,json=timeToLive,proto3" json:"time_to_live,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
 }
 
 func (m *AuthenticateAPIKeyResponse) Reset()         { *m = AuthenticateAPIKeyResponse{} }
@@ -1472,7 +1471,7 @@ func (m *AuthenticateAPIKeyResponse) GetToken() string {
 	return ""
 }
 
-func (m *AuthenticateAPIKeyResponse) GetTimeToLive() *duration.Duration {
+func (m *AuthenticateAPIKeyResponse) GetTimeToLive() *types.Duration {
 	if m != nil {
 		return m.TimeToLive
 	}
@@ -1489,10 +1488,10 @@ type RenewAPIKeyTokenRequest struct {
 	// If this field is set, then this TTL is used reduce the default TTL
 	// of the renewed token. It cannot be used to increase the default
 	// lifetime of the renewed token.
-	TimeToLive           *duration.Duration `protobuf:"bytes,2,opt,name=time_to_live,json=timeToLive,proto3" json:"time_to_live,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
-	XXX_unrecognized     []byte             `json:"-"`
-	XXX_sizecache        int32              `json:"-"`
+	TimeToLive           *types.Duration `protobuf:"bytes,2,opt,name=time_to_live,json=timeToLive,proto3" json:"time_to_live,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
 }
 
 func (m *RenewAPIKeyTokenRequest) Reset()         { *m = RenewAPIKeyTokenRequest{} }
@@ -1535,7 +1534,7 @@ func (m *RenewAPIKeyTokenRequest) GetToken() string {
 	return ""
 }
 
-func (m *RenewAPIKeyTokenRequest) GetTimeToLive() *duration.Duration {
+func (m *RenewAPIKeyTokenRequest) GetTimeToLive() *types.Duration {
 	if m != nil {
 		return m.TimeToLive
 	}
@@ -1545,10 +1544,10 @@ func (m *RenewAPIKeyTokenRequest) GetTimeToLive() *duration.Duration {
 // Response for RenewAPIKeyToken.
 type RenewAPIKeyTokenResponse struct {
 	// Actual life time of the token.
-	TimeToLive           *duration.Duration `protobuf:"bytes,1,opt,name=time_to_live,json=timeToLive,proto3" json:"time_to_live,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
-	XXX_unrecognized     []byte             `json:"-"`
-	XXX_sizecache        int32              `json:"-"`
+	TimeToLive           *types.Duration `protobuf:"bytes,1,opt,name=time_to_live,json=timeToLive,proto3" json:"time_to_live,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
 }
 
 func (m *RenewAPIKeyTokenResponse) Reset()         { *m = RenewAPIKeyTokenResponse{} }
@@ -1584,7 +1583,7 @@ func (m *RenewAPIKeyTokenResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_RenewAPIKeyTokenResponse proto.InternalMessageInfo
 
-func (m *RenewAPIKeyTokenResponse) GetTimeToLive() *duration.Duration {
+func (m *RenewAPIKeyTokenResponse) GetTimeToLive() *types.Duration {
 	if m != nil {
 		return m.TimeToLive
 	}
@@ -7630,7 +7629,7 @@ func (m *CreateAPIKeyRequest) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.TimeToLive == nil {
-				m.TimeToLive = &duration.Duration{}
+				m.TimeToLive = &types.Duration{}
 			}
 			if err := m.TimeToLive.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -7902,7 +7901,7 @@ func (m *AuthenticateAPIKeyRequest) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.TimeToLive == nil {
-				m.TimeToLive = &duration.Duration{}
+				m.TimeToLive = &types.Duration{}
 			}
 			if err := m.TimeToLive.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -8024,7 +8023,7 @@ func (m *AuthenticateAPIKeyResponse) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.TimeToLive == nil {
-				m.TimeToLive = &duration.Duration{}
+				m.TimeToLive = &types.Duration{}
 			}
 			if err := m.TimeToLive.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -8146,7 +8145,7 @@ func (m *RenewAPIKeyTokenRequest) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.TimeToLive == nil {
-				m.TimeToLive = &duration.Duration{}
+				m.TimeToLive = &types.Duration{}
 			}
 			if err := m.TimeToLive.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -8236,7 +8235,7 @@ func (m *RenewAPIKeyTokenResponse) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.TimeToLive == nil {
-				m.TimeToLive = &duration.Duration{}
+				m.TimeToLive = &types.Duration{}
 			}
 			if err := m.TimeToLive.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
