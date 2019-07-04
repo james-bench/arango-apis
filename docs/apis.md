@@ -1170,6 +1170,7 @@ API Keys are authentication &#34;keys&#34; intended to be used for scripting.
 | id | [string](#string) |  | Identifier of this key |
 | user_id | [string](#string) |  | User represented by this key |
 | organization_id | [string](#string) |  | If set, this key only grants access to this organization. |
+| is_readonly | [bool](#bool) |  | If set, this key only grants access to read-only API&#39;s (List..., Get...) |
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the key |
 | expires_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The expiration timestamp of the key |
 | is_expired | [bool](#bool) |  | Set when this key is expired. This is a read-only value. |
@@ -1253,7 +1254,8 @@ Request arguments for CreateAPIKey.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | organization_id | [string](#string) |  | If set, the created key only grants access to this organization. |
-| time_to_live | [google.protobuf.Duration](#google.protobuf.Duration) |  | Duration between now and the expiration date of the created key. |
+| readonly | [bool](#bool) |  | If set, the created key only grants access to read-only API&#39;s (List..., Get...) |
+| time_to_live | [google.protobuf.Duration](#google.protobuf.Duration) |  | Duration between now and the expiration date of the created key. A value of 0 means that the API key will not expire. You can still use RevokeAPIKey to revoke such API keys. |
 
 
 

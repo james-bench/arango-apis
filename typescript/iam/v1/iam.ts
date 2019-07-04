@@ -27,6 +27,10 @@ export interface APIKey {
   // string
   organization_id?: string;
   
+  // If set, this key only grants access to read-only API's (List..., Get...)
+  // boolean
+  is_readonly?: boolean;
+  
   // The creation timestamp of the key
   // googleTypes.Timestamp
   created_at?: googleTypes.Timestamp;
@@ -94,7 +98,13 @@ export interface CreateAPIKeyRequest {
   // string
   organization_id?: string;
   
+  // If set, the created key only grants access to read-only API's (List..., Get...)
+  // boolean
+  readonly?: boolean;
+  
   // Duration between now and the expiration date of the created key.
+  // A value of 0 means that the API key will not expire.
+  // You can still use RevokeAPIKey to revoke such API keys.
   // googleTypes.Duration
   time_to_live?: googleTypes.Duration;
 }

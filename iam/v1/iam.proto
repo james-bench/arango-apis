@@ -554,13 +554,15 @@ message APIKey {
     string user_id = 2;
     // If set, this key only grants access to this organization.
     string organization_id = 3;
+    // If set, this key only grants access to read-only API's (List..., Get...)
+    bool is_readonly = 4;
     // The creation timestamp of the key
-    google.protobuf.Timestamp created_at = 4;
+    google.protobuf.Timestamp created_at = 5;
     // The expiration timestamp of the key
-    google.protobuf.Timestamp expires_at = 5;
+    google.protobuf.Timestamp expires_at = 6;
     // Set when this key is expired.
     // This is a read-only value.
-    bool is_expired = 6;
+    bool is_expired = 7;
 }
 
 // List of APIKey's
@@ -572,8 +574,12 @@ message APIKeyList {
 message CreateAPIKeyRequest {
     // If set, the created key only grants access to this organization.
     string organization_id = 1;
+    // If set, the created key only grants access to read-only API's (List..., Get...)
+    bool readonly = 2;
     // Duration between now and the expiration date of the created key.
-    google.protobuf.Duration time_to_live = 2;
+    // A value of 0 means that the API key will not expire.
+    // You can still use RevokeAPIKey to revoke such API keys.
+    google.protobuf.Duration time_to_live = 3;
 }
 
 // API key secrets are used once to inform the users of the secret
