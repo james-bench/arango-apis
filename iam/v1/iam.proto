@@ -15,6 +15,7 @@ option go_package = "github.com/arangodb-managed/apis/iam/v1";
 import "common/v1/common.proto";
 
 import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
+import "github.com/golang/protobuf/ptypes/duration/duration.proto";
 import "google/api/annotations.proto";
 
 // IAMService is the API used to configure IAM objects.
@@ -264,7 +265,96 @@ service IAMService {
             get: "/api/iam/v1/permissions"
         };
     }
+
+    // Fetch all API keys owned by the authenticated caller.
+    // Required permissions:
+    // - None
+    rpc ListAPIKeys(common.v1.ListOptions) returns (APIKeyList) {
+        option (google.api.http) = {
+            get: "/api/iam/v1/apikeys"
+        };
+    }
+
+    // Fetch an API key by its id.
+    // The API key must be owned by the authenticated caller.
+    // Required permissions:
+    // - None
+    rpc GetAPIKey(common.v1.IDOptions) returns (APIKey) {
+        option (google.api.http) = {
+            get: "/api/iam/v1/apikeys/{id}"
+        };
+    }
+
+    // Create a new API key.
+    // The API key will be owned by the authenticated caller.
+    // Required permissions:
+    // - None
+    rpc CreateAPIKey(CreateAPIKeyRequest) returns (APIKeySecret) {
+        option (google.api.http) = {
+            post: "/api/iam/v1/apikeys"
+            body: "*"
+        };
+    }
+
+    // Ensure that the expiration date of the API key identified by given ID
+    // is either in the past or set to now.
+    // The API key must be owned by the authenticated caller.
+    // Required permissions:
+    // - None
+    rpc RevokeAPIKey(common.v1.IDOptions) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            post: "/api/iam/v1/apikeys/{id}/revoke"
+        };
+    }
+
+    // Delete the API key identified by given ID
+    // The API key must be owned by the authenticated caller.
+    // Required permissions:
+    // - None
+    rpc DeleteAPIKey(common.v1.IDOptions) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            delete: "/api/iam/v1/apikeys/{id}"
+        };
+    }
+
+    // Authenticate using an API key.
+    // If authentication succeeds, this function returns a bearer token.
+    // That token must be used to authenticate all other API requests.
+    // If the given API key identifier is invalid or expired, or an incorrect secret 
+    // is given, this function will return an unauthenticated error.
+    // Required permissions:
+    // - None
+    rpc AuthenticateAPIKey(AuthenticateAPIKeyRequest) returns (AuthenticateAPIKeyResponse) {
+        option (google.api.http) = {
+            post: "/api/iam/v1/apikeys/{id}/authenticate"
+        };
+    }
+
+    // Renew a non-expired API key authentication token.
+    // This allows to extend the lifetime of a token created by AuthenticateAPIKey.
+    // If the given token is invalid or expired, or the underlying API key is expired
+    // this function will return an unauthenticated error.
+    // Required permissions:
+    // - None
+    rpc RenewAPIKeyToken(RenewAPIKeyTokenRequest) returns (RenewAPIKeyTokenResponse) {
+        option (google.api.http) = {
+            post: "/api/iam/v1/tokens/{token}/renew"
+        };
+    }
+
+    // Revoke an API key authentication token.
+    // This function will return a non-error response, even if the given token
+    // is invalid or already expired.
+    // Required permissions:
+    // - None
+    rpc RevokeAPIKeyToken(RevokeAPIKeyTokenRequest) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            post: "/api/iam/v1/tokens/{token}/revoke"
+        };
+    }
 }
+
+
 
 // User represents an actual person.
 message User {
@@ -315,6 +405,8 @@ message User {
     // If set, this field describes the reason why this user is denied access to the dashboard.
     // This is a read-only value.
     string dashboard_access_denied_reason = 12;
+    // If set, this user is currently being authenticated using an API key (identified by this ID)
+    string apikey_id = 13;
 }
 
 // Request arguments for VerifyUserMobilePhone
@@ -452,4 +544,101 @@ message RoleBindingsRequest {
     string resource_url = 1;
     // Role bindings to add/remove to the policy.
     repeated RoleBinding bindings = 2;    
+}
+
+// API Keys are authentication "keys" intended to be used for scripting.
+message APIKey {
+    // Identifier of this key
+    string id = 1;
+    // URL of this key.
+    string url = 2;
+    // User represented by this key
+    string user_id = 3;
+    // If set, this key only grants access to this organization.
+    string organization_id = 4;
+    // If set, this key only grants access to read-only API's (List..., Get...)
+    bool is_readonly = 5;
+    // The creation timestamp of the key
+    google.protobuf.Timestamp created_at = 6;
+    // The expiration timestamp of the key
+    google.protobuf.Timestamp expires_at = 7;
+    // Set when this key is expired.
+    bool is_expired = 8;
+    // The revocation timestamp of the key (if any)
+    google.protobuf.Timestamp revoked_at = 9;
+    // Set when this key is explicitly revoked.
+    bool is_revoked = 10;
+}
+
+// List of APIKey's
+message APIKeyList {
+    repeated APIKey items = 1;
+}
+
+// Request arguments for CreateAPIKey.
+message CreateAPIKeyRequest {
+    // If set, the created key only grants access to this organization.
+    string organization_id = 1;
+    // If set, the created key only grants access to read-only API's (List..., Get...).
+    // If not set, the created key grants access to all API's (that the user has access to).
+    bool readonly = 2;
+    // Duration between now and the expiration date of the created key.
+    // A value of 0 means that the API key will not expire.
+    // You can still use RevokeAPIKey to revoke such API keys.
+    google.protobuf.Duration time_to_live = 3;
+}
+
+// API key secrets are used once to inform the users of the secret
+// for an API key.
+message APIKeySecret {
+    // ID of the API key
+    string id = 1;
+    // Secret of the API key
+    string secret = 2;
+}
+
+// Request arguments for AuthenticateAPIKey
+message AuthenticateAPIKeyRequest {
+    // API key id
+    string id = 1;
+    // Secret of the API key
+    string secret = 2;
+    // Life time of the token.
+    // If set, then this TTL is used reduce the default TTL 
+    // of an authentication token. It cannot be used to increase the default
+    // lifetime of a token.
+    google.protobuf.Duration time_to_live = 3;
+}
+
+// Response for AuthenticateAPIKey
+message AuthenticateAPIKeyResponse {
+    // Bearer token 
+    string token = 1;
+    // Actual life time of the token.
+    google.protobuf.Duration time_to_live = 2;
+}
+
+// Request arguments for RenewAPIKeyToken.
+message RenewAPIKeyTokenRequest {
+    // Bearer token 
+    string token = 1;
+    // Extended life time of the token.
+    // By default, a renewed token will have a default lifetime from the moment
+    // of the renew call.
+    // If this field is set, then this TTL is used reduce the default TTL 
+    // of the renewed token. It cannot be used to increase the default
+    // lifetime of the renewed token.
+    google.protobuf.Duration time_to_live = 2;
+}
+
+// Response for RenewAPIKeyToken.
+message RenewAPIKeyTokenResponse {
+    // Actual life time of the token.
+    google.protobuf.Duration time_to_live = 1;
+}
+
+// Request arguments for RevokeAPIKeyToken.
+message RevokeAPIKeyTokenRequest {
+    // Bearer token 
+    string token = 1;
 }

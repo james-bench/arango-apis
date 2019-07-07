@@ -91,6 +91,12 @@
   
 
 - [iam/v1/iam.proto](#iam/v1/iam.proto)
+    - [APIKey](#arangodb.cloud.iam.v1.APIKey)
+    - [APIKeyList](#arangodb.cloud.iam.v1.APIKeyList)
+    - [APIKeySecret](#arangodb.cloud.iam.v1.APIKeySecret)
+    - [AuthenticateAPIKeyRequest](#arangodb.cloud.iam.v1.AuthenticateAPIKeyRequest)
+    - [AuthenticateAPIKeyResponse](#arangodb.cloud.iam.v1.AuthenticateAPIKeyResponse)
+    - [CreateAPIKeyRequest](#arangodb.cloud.iam.v1.CreateAPIKeyRequest)
     - [Group](#arangodb.cloud.iam.v1.Group)
     - [GroupList](#arangodb.cloud.iam.v1.GroupList)
     - [GroupMemberList](#arangodb.cloud.iam.v1.GroupMemberList)
@@ -99,6 +105,9 @@
     - [IsMemberOfGroupRequest](#arangodb.cloud.iam.v1.IsMemberOfGroupRequest)
     - [PermissionList](#arangodb.cloud.iam.v1.PermissionList)
     - [Policy](#arangodb.cloud.iam.v1.Policy)
+    - [RenewAPIKeyTokenRequest](#arangodb.cloud.iam.v1.RenewAPIKeyTokenRequest)
+    - [RenewAPIKeyTokenResponse](#arangodb.cloud.iam.v1.RenewAPIKeyTokenResponse)
+    - [RevokeAPIKeyTokenRequest](#arangodb.cloud.iam.v1.RevokeAPIKeyTokenRequest)
     - [Role](#arangodb.cloud.iam.v1.Role)
     - [RoleBinding](#arangodb.cloud.iam.v1.RoleBinding)
     - [RoleBindingsRequest](#arangodb.cloud.iam.v1.RoleBindingsRequest)
@@ -1150,6 +1159,112 @@ Response for single boolean.
 
 
 
+<a name="arangodb.cloud.iam.v1.APIKey"></a>
+
+### APIKey
+API Keys are authentication &#34;keys&#34; intended to be used for scripting.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | Identifier of this key |
+| url | [string](#string) |  | URL of this key. |
+| user_id | [string](#string) |  | User represented by this key |
+| organization_id | [string](#string) |  | If set, this key only grants access to this organization. |
+| is_readonly | [bool](#bool) |  | If set, this key only grants access to read-only API&#39;s (List..., Get...) |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the key |
+| expires_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The expiration timestamp of the key |
+| is_expired | [bool](#bool) |  | Set when this key is expired. |
+| revoked_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The revocation timestamp of the key (if any) |
+| is_revoked | [bool](#bool) |  | Set when this key is explicitly revoked. |
+
+
+
+
+
+
+<a name="arangodb.cloud.iam.v1.APIKeyList"></a>
+
+### APIKeyList
+List of APIKey&#39;s
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [APIKey](#arangodb.cloud.iam.v1.APIKey) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.iam.v1.APIKeySecret"></a>
+
+### APIKeySecret
+API key secrets are used once to inform the users of the secret
+for an API key.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | ID of the API key |
+| secret | [string](#string) |  | Secret of the API key |
+
+
+
+
+
+
+<a name="arangodb.cloud.iam.v1.AuthenticateAPIKeyRequest"></a>
+
+### AuthenticateAPIKeyRequest
+Request arguments for AuthenticateAPIKey
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | API key id |
+| secret | [string](#string) |  | Secret of the API key |
+| time_to_live | [google.protobuf.Duration](#google.protobuf.Duration) |  | Life time of the token. If set, then this TTL is used reduce the default TTL of an authentication token. It cannot be used to increase the default lifetime of a token. |
+
+
+
+
+
+
+<a name="arangodb.cloud.iam.v1.AuthenticateAPIKeyResponse"></a>
+
+### AuthenticateAPIKeyResponse
+Response for AuthenticateAPIKey
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| token | [string](#string) |  | Bearer token |
+| time_to_live | [google.protobuf.Duration](#google.protobuf.Duration) |  | Actual life time of the token. |
+
+
+
+
+
+
+<a name="arangodb.cloud.iam.v1.CreateAPIKeyRequest"></a>
+
+### CreateAPIKeyRequest
+Request arguments for CreateAPIKey.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| organization_id | [string](#string) |  | If set, the created key only grants access to this organization. |
+| readonly | [bool](#bool) |  | If set, the created key only grants access to read-only API&#39;s (List..., Get...). If not set, the created key grants access to all API&#39;s (that the user has access to). |
+| time_to_live | [google.protobuf.Duration](#google.protobuf.Duration) |  | Duration between now and the expiration date of the created key. A value of 0 means that the API key will not expire. You can still use RevokeAPIKey to revoke such API keys. |
+
+
+
+
+
+
 <a name="arangodb.cloud.iam.v1.Group"></a>
 
 ### Group
@@ -1282,6 +1397,52 @@ Policy bindings members to roles for access to a resource.
 
 
 
+<a name="arangodb.cloud.iam.v1.RenewAPIKeyTokenRequest"></a>
+
+### RenewAPIKeyTokenRequest
+Request arguments for RenewAPIKeyToken.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| token | [string](#string) |  | Bearer token |
+| time_to_live | [google.protobuf.Duration](#google.protobuf.Duration) |  | Extended life time of the token. By default, a renewed token will have a default lifetime from the moment of the renew call. If this field is set, then this TTL is used reduce the default TTL of the renewed token. It cannot be used to increase the default lifetime of the renewed token. |
+
+
+
+
+
+
+<a name="arangodb.cloud.iam.v1.RenewAPIKeyTokenResponse"></a>
+
+### RenewAPIKeyTokenResponse
+Response for RenewAPIKeyToken.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| time_to_live | [google.protobuf.Duration](#google.protobuf.Duration) |  | Actual life time of the token. |
+
+
+
+
+
+
+<a name="arangodb.cloud.iam.v1.RevokeAPIKeyTokenRequest"></a>
+
+### RevokeAPIKeyTokenRequest
+Request arguments for RevokeAPIKeyToken.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| token | [string](#string) |  | Bearer token |
+
+
+
+
+
+
 <a name="arangodb.cloud.iam.v1.Role"></a>
 
 ### Role
@@ -1379,6 +1540,7 @@ This value can only be changed to a non-empty value. If changed, the new number 
 | company_name | [string](#string) |  | Company name of the user This may be empty if not filled out by the user. |
 | dashboard_access_denied | [bool](#bool) |  | If set, this user is denied access to the dashboard. This is a read-only value. |
 | dashboard_access_denied_reason | [string](#string) |  | If set, this field describes the reason why this user is denied access to the dashboard. This is a read-only value. |
+| apikey_id | [string](#string) |  | If set, this user is currently being authenticated using an API key (identified by this ID) |
 
 
 
@@ -1438,6 +1600,14 @@ IAMService is the API used to configure IAM objects.
 | GetEffectivePermissions | [.arangodb.cloud.common.v1.URLOptions](#arangodb.cloud.common.v1.URLOptions) | [PermissionList](#arangodb.cloud.iam.v1.PermissionList) | Return the list of permissions that are available to the currently authenticated used for actions on the resource identified by the given URL. Required permissions: - None |
 | HasPermissions | [HasPermissionsRequest](#arangodb.cloud.iam.v1.HasPermissionsRequest) | [.arangodb.cloud.common.v1.YesOrNo](#arangodb.cloud.common.v1.YesOrNo) | Does the authenticated user have all of the requested permissions for the resource identified by the given URL? Required permissions: - None |
 | ListPermissions | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [PermissionList](#arangodb.cloud.iam.v1.PermissionList) | List all known permissions. Required permissions: - None |
+| ListAPIKeys | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [APIKeyList](#arangodb.cloud.iam.v1.APIKeyList) | Fetch all API keys owned by the authenticated caller. Required permissions: - None |
+| GetAPIKey | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [APIKey](#arangodb.cloud.iam.v1.APIKey) | Fetch an API key by its id. The API key must be owned by the authenticated caller. Required permissions: - None |
+| CreateAPIKey | [CreateAPIKeyRequest](#arangodb.cloud.iam.v1.CreateAPIKeyRequest) | [APIKeySecret](#arangodb.cloud.iam.v1.APIKeySecret) | Create a new API key. The API key will be owned by the authenticated caller. Required permissions: - None |
+| RevokeAPIKey | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Ensure that the expiration date of the API key identified by given ID is either in the past or set to now. The API key must be owned by the authenticated caller. Required permissions: - None |
+| DeleteAPIKey | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete the API key identified by given ID The API key must be owned by the authenticated caller. Required permissions: - None |
+| AuthenticateAPIKey | [AuthenticateAPIKeyRequest](#arangodb.cloud.iam.v1.AuthenticateAPIKeyRequest) | [AuthenticateAPIKeyResponse](#arangodb.cloud.iam.v1.AuthenticateAPIKeyResponse) | Authenticate using an API key. If authentication succeeds, this function returns a bearer token. That token must be used to authenticate all other API requests. If the given API key identifier is invalid or expired, or an incorrect secret is given, this function will return an unauthenticated error. Required permissions: - None |
+| RenewAPIKeyToken | [RenewAPIKeyTokenRequest](#arangodb.cloud.iam.v1.RenewAPIKeyTokenRequest) | [RenewAPIKeyTokenResponse](#arangodb.cloud.iam.v1.RenewAPIKeyTokenResponse) | Renew a non-expired API key authentication token. This allows to extend the lifetime of a token created by AuthenticateAPIKey. If the given token is invalid or expired, or the underlying API key is expired this function will return an unauthenticated error. Required permissions: - None |
+| RevokeAPIKeyToken | [RevokeAPIKeyTokenRequest](#arangodb.cloud.iam.v1.RevokeAPIKeyTokenRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Revoke an API key authentication token. This function will return a non-error response, even if the given token is invalid or already expired. Required permissions: - None |
 
  
 

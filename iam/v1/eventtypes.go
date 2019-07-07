@@ -50,3 +50,17 @@ const (
 	// SubjectID contains the URL of the policy.
 	EventTypePolicyUpdated = "iam.policy.updated"
 )
+
+const (
+	// APIKey event types
+
+	// EventTypeAPIKeyCreated is the type of event fired after an API key has been created.
+	// SubjectID contains the ID of the api key.
+	EventTypeAPIKeyCreated = "iam.apikey.created"
+	// EventTypeAPIKeyRevoked is the type of event fired after an API key has been revoked.
+	// SubjectID contains the ID of the api key.
+	EventTypeAPIKeyRevoked = "iam.apikey.revoked"
+	// EventTypeAPIKeyDeleted is the type of event fired after an API key has been deleted.
+	// SubjectID contains the ID of the api key.
+	EventTypeAPIKeyDeleted = "iam.apikey.deleted"
+)

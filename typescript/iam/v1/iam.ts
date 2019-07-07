@@ -13,6 +13,114 @@ import { YesOrNo as arangodb_cloud_common_v1_YesOrNo } from '../../common/v1/com
 // File: iam/v1/iam.proto
 // Package: arangodb.cloud.iam.v1
 
+// API Keys are authentication "keys" intended to be used for scripting.
+export interface APIKey {
+  // Identifier of this key
+  // string
+  id?: string;
+  
+  // URL of this key.
+  // string
+  url?: string;
+  
+  // User represented by this key
+  // string
+  user_id?: string;
+  
+  // If set, this key only grants access to this organization.
+  // string
+  organization_id?: string;
+  
+  // If set, this key only grants access to read-only API's (List..., Get...)
+  // boolean
+  is_readonly?: boolean;
+  
+  // The creation timestamp of the key
+  // googleTypes.Timestamp
+  created_at?: googleTypes.Timestamp;
+  
+  // The expiration timestamp of the key
+  // googleTypes.Timestamp
+  expires_at?: googleTypes.Timestamp;
+  
+  // Set when this key is expired.
+  // boolean
+  is_expired?: boolean;
+  
+  // The revocation timestamp of the key (if any)
+  // googleTypes.Timestamp
+  revoked_at?: googleTypes.Timestamp;
+  
+  // Set when this key is explicitly revoked.
+  // boolean
+  is_revoked?: boolean;
+}
+
+// List of APIKey's
+export interface APIKeyList {
+  // APIKey
+  items?: APIKey[];
+}
+
+// API key secrets are used once to inform the users of the secret
+// for an API key.
+export interface APIKeySecret {
+  // ID of the API key
+  // string
+  id?: string;
+  
+  // Secret of the API key
+  // string
+  secret?: string;
+}
+
+// Request arguments for AuthenticateAPIKey
+export interface AuthenticateAPIKeyRequest {
+  // API key id
+  // string
+  id?: string;
+  
+  // Secret of the API key
+  // string
+  secret?: string;
+  
+  // Life time of the token.
+  // If set, then this TTL is used reduce the default TTL
+  // of an authentication token. It cannot be used to increase the default
+  // lifetime of a token.
+  // googleTypes.Duration
+  time_to_live?: googleTypes.Duration;
+}
+
+// Response for AuthenticateAPIKey
+export interface AuthenticateAPIKeyResponse {
+  // Bearer token
+  // string
+  token?: string;
+  
+  // Actual life time of the token.
+  // googleTypes.Duration
+  time_to_live?: googleTypes.Duration;
+}
+
+// Request arguments for CreateAPIKey.
+export interface CreateAPIKeyRequest {
+  // If set, the created key only grants access to this organization.
+  // string
+  organization_id?: string;
+  
+  // If set, the created key only grants access to read-only API's (List..., Get...).
+  // If not set, the created key grants access to all API's (that the user has access to).
+  // boolean
+  readonly?: boolean;
+  
+  // Duration between now and the expiration date of the created key.
+  // A value of 0 means that the API key will not expire.
+  // You can still use RevokeAPIKey to revoke such API keys.
+  // googleTypes.Duration
+  time_to_live?: googleTypes.Duration;
+}
+
 // Group of user accounts.
 export interface Group {
   // System identifier of the group.
@@ -117,6 +225,36 @@ export interface Policy {
   // Role bindings to apply to the resource.
   // RoleBinding
   bindings?: RoleBinding[];
+}
+
+// Request arguments for RenewAPIKeyToken.
+export interface RenewAPIKeyTokenRequest {
+  // Bearer token
+  // string
+  token?: string;
+  
+  // Extended life time of the token.
+  // By default, a renewed token will have a default lifetime from the moment
+  // of the renew call.
+  // If this field is set, then this TTL is used reduce the default TTL
+  // of the renewed token. It cannot be used to increase the default
+  // lifetime of the renewed token.
+  // googleTypes.Duration
+  time_to_live?: googleTypes.Duration;
+}
+
+// Response for RenewAPIKeyToken.
+export interface RenewAPIKeyTokenResponse {
+  // Actual life time of the token.
+  // googleTypes.Duration
+  time_to_live?: googleTypes.Duration;
+}
+
+// Request arguments for RevokeAPIKeyToken.
+export interface RevokeAPIKeyTokenRequest {
+  // Bearer token
+  // string
+  token?: string;
 }
 
 // A role is a list of permissions.
@@ -274,6 +412,10 @@ export interface User {
   // This is a read-only value.
   // string
   dashboard_access_denied_reason?: string;
+  
+  // If set, this user is currently being authenticated using an API key (identified by this ID)
+  // string
+  apikey_id?: string;
 }
 
 // Request arguments for VerifyUserMobilePhone
@@ -507,5 +649,90 @@ export class IAMService {
     const path = `/api/iam/v1/permissions`;
     const url = path + api.queryString(req, []);
     return api.get(url, undefined);
+  }
+  
+  // Fetch all API keys owned by the authenticated caller.
+  // Required permissions:
+  // - None
+  async ListAPIKeys(req: arangodb_cloud_common_v1_ListOptions): Promise<APIKeyList> {
+    const path = `/api/iam/v1/apikeys`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch an API key by its id.
+  // The API key must be owned by the authenticated caller.
+  // Required permissions:
+  // - None
+  async GetAPIKey(req: arangodb_cloud_common_v1_IDOptions): Promise<APIKey> {
+    const path = `/api/iam/v1/apikeys/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Create a new API key.
+  // The API key will be owned by the authenticated caller.
+  // Required permissions:
+  // - None
+  async CreateAPIKey(req: CreateAPIKeyRequest): Promise<APIKeySecret> {
+    const url = `/api/iam/v1/apikeys`;
+    return api.post(url, req);
+  }
+  
+  // Ensure that the expiration date of the API key identified by given ID
+  // is either in the past or set to now.
+  // The API key must be owned by the authenticated caller.
+  // Required permissions:
+  // - None
+  async RevokeAPIKey(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
+    const path = `/api/iam/v1/apikeys/${encodeURIComponent(req.id || '')}/revoke`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.post(url, undefined);
+  }
+  
+  // Delete the API key identified by given ID
+  // The API key must be owned by the authenticated caller.
+  // Required permissions:
+  // - None
+  async DeleteAPIKey(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
+    const path = `/api/iam/v1/apikeys/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.delete(url, undefined);
+  }
+  
+  // Authenticate using an API key.
+  // If authentication succeeds, this function returns a bearer token.
+  // That token must be used to authenticate all other API requests.
+  // If the given API key identifier is invalid or expired, or an incorrect secret
+  // is given, this function will return an unauthenticated error.
+  // Required permissions:
+  // - None
+  async AuthenticateAPIKey(req: AuthenticateAPIKeyRequest): Promise<AuthenticateAPIKeyResponse> {
+    const path = `/api/iam/v1/apikeys/${encodeURIComponent(req.id || '')}/authenticate`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.post(url, undefined);
+  }
+  
+  // Renew a non-expired API key authentication token.
+  // This allows to extend the lifetime of a token created by AuthenticateAPIKey.
+  // If the given token is invalid or expired, or the underlying API key is expired
+  // this function will return an unauthenticated error.
+  // Required permissions:
+  // - None
+  async RenewAPIKeyToken(req: RenewAPIKeyTokenRequest): Promise<RenewAPIKeyTokenResponse> {
+    const path = `/api/iam/v1/tokens/${encodeURIComponent(req.token || '')}/renew`;
+    const url = path + api.queryString(req, [`token`]);
+    return api.post(url, undefined);
+  }
+  
+  // Revoke an API key authentication token.
+  // This function will return a non-error response, even if the given token
+  // is invalid or already expired.
+  // Required permissions:
+  // - None
+  async RevokeAPIKeyToken(req: RevokeAPIKeyTokenRequest): Promise<void> {
+    const path = `/api/iam/v1/tokens/${encodeURIComponent(req.token || '')}/revoke`;
+    const url = path + api.queryString(req, [`token`]);
+    return api.post(url, undefined);
   }
 }

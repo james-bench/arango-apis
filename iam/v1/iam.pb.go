@@ -74,10 +74,12 @@ type User struct {
 	DashboardAccessDenied bool `protobuf:"varint,11,opt,name=dashboard_access_denied,json=dashboardAccessDenied,proto3" json:"dashboard_access_denied,omitempty"`
 	// If set, this field describes the reason why this user is denied access to the dashboard.
 	// This is a read-only value.
-	DashboardAccessDeniedReason string   `protobuf:"bytes,12,opt,name=dashboard_access_denied_reason,json=dashboardAccessDeniedReason,proto3" json:"dashboard_access_denied_reason,omitempty"`
-	XXX_NoUnkeyedLiteral        struct{} `json:"-"`
-	XXX_unrecognized            []byte   `json:"-"`
-	XXX_sizecache               int32    `json:"-"`
+	DashboardAccessDeniedReason string `protobuf:"bytes,12,opt,name=dashboard_access_denied_reason,json=dashboardAccessDeniedReason,proto3" json:"dashboard_access_denied_reason,omitempty"`
+	// If set, this user is currently being authenticated using an API key (identified by this ID)
+	ApikeyId             string   `protobuf:"bytes,13,opt,name=apikey_id,json=apikeyId,proto3" json:"apikey_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *User) Reset()         { *m = User{} }
@@ -193,6 +195,13 @@ func (m *User) GetDashboardAccessDenied() bool {
 func (m *User) GetDashboardAccessDeniedReason() string {
 	if m != nil {
 		return m.DashboardAccessDeniedReason
+	}
+	return ""
+}
+
+func (m *User) GetApikeyId() string {
+	if m != nil {
+		return m.ApikeyId
 	}
 	return ""
 }
@@ -1061,6 +1070,602 @@ func (m *RoleBindingsRequest) GetBindings() []*RoleBinding {
 	return nil
 }
 
+// API Keys are authentication "keys" intended to be used for scripting.
+type APIKey struct {
+	// Identifier of this key
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// URL of this key.
+	Url string `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty"`
+	// User represented by this key
+	UserId string `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	// If set, this key only grants access to this organization.
+	OrganizationId string `protobuf:"bytes,4,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	// If set, this key only grants access to read-only API's (List..., Get...)
+	IsReadonly bool `protobuf:"varint,5,opt,name=is_readonly,json=isReadonly,proto3" json:"is_readonly,omitempty"`
+	// The creation timestamp of the key
+	CreatedAt *types.Timestamp `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	// The expiration timestamp of the key
+	ExpiresAt *types.Timestamp `protobuf:"bytes,7,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
+	// Set when this key is expired.
+	IsExpired bool `protobuf:"varint,8,opt,name=is_expired,json=isExpired,proto3" json:"is_expired,omitempty"`
+	// The revocation timestamp of the key (if any)
+	RevokedAt *types.Timestamp `protobuf:"bytes,9,opt,name=revoked_at,json=revokedAt,proto3" json:"revoked_at,omitempty"`
+	// Set when this key is explicitly revoked.
+	IsRevoked            bool     `protobuf:"varint,10,opt,name=is_revoked,json=isRevoked,proto3" json:"is_revoked,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *APIKey) Reset()         { *m = APIKey{} }
+func (m *APIKey) String() string { return proto.CompactTextString(m) }
+func (*APIKey) ProtoMessage()    {}
+func (*APIKey) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0a2c201915207782, []int{14}
+}
+func (m *APIKey) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *APIKey) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_APIKey.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *APIKey) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_APIKey.Merge(m, src)
+}
+func (m *APIKey) XXX_Size() int {
+	return m.Size()
+}
+func (m *APIKey) XXX_DiscardUnknown() {
+	xxx_messageInfo_APIKey.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_APIKey proto.InternalMessageInfo
+
+func (m *APIKey) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *APIKey) GetUrl() string {
+	if m != nil {
+		return m.Url
+	}
+	return ""
+}
+
+func (m *APIKey) GetUserId() string {
+	if m != nil {
+		return m.UserId
+	}
+	return ""
+}
+
+func (m *APIKey) GetOrganizationId() string {
+	if m != nil {
+		return m.OrganizationId
+	}
+	return ""
+}
+
+func (m *APIKey) GetIsReadonly() bool {
+	if m != nil {
+		return m.IsReadonly
+	}
+	return false
+}
+
+func (m *APIKey) GetCreatedAt() *types.Timestamp {
+	if m != nil {
+		return m.CreatedAt
+	}
+	return nil
+}
+
+func (m *APIKey) GetExpiresAt() *types.Timestamp {
+	if m != nil {
+		return m.ExpiresAt
+	}
+	return nil
+}
+
+func (m *APIKey) GetIsExpired() bool {
+	if m != nil {
+		return m.IsExpired
+	}
+	return false
+}
+
+func (m *APIKey) GetRevokedAt() *types.Timestamp {
+	if m != nil {
+		return m.RevokedAt
+	}
+	return nil
+}
+
+func (m *APIKey) GetIsRevoked() bool {
+	if m != nil {
+		return m.IsRevoked
+	}
+	return false
+}
+
+// List of APIKey's
+type APIKeyList struct {
+	Items                []*APIKey `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *APIKeyList) Reset()         { *m = APIKeyList{} }
+func (m *APIKeyList) String() string { return proto.CompactTextString(m) }
+func (*APIKeyList) ProtoMessage()    {}
+func (*APIKeyList) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0a2c201915207782, []int{15}
+}
+func (m *APIKeyList) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *APIKeyList) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_APIKeyList.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *APIKeyList) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_APIKeyList.Merge(m, src)
+}
+func (m *APIKeyList) XXX_Size() int {
+	return m.Size()
+}
+func (m *APIKeyList) XXX_DiscardUnknown() {
+	xxx_messageInfo_APIKeyList.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_APIKeyList proto.InternalMessageInfo
+
+func (m *APIKeyList) GetItems() []*APIKey {
+	if m != nil {
+		return m.Items
+	}
+	return nil
+}
+
+// Request arguments for CreateAPIKey.
+type CreateAPIKeyRequest struct {
+	// If set, the created key only grants access to this organization.
+	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	// If set, the created key only grants access to read-only API's (List..., Get...).
+	// If not set, the created key grants access to all API's (that the user has access to).
+	Readonly bool `protobuf:"varint,2,opt,name=readonly,proto3" json:"readonly,omitempty"`
+	// Duration between now and the expiration date of the created key.
+	// A value of 0 means that the API key will not expire.
+	// You can still use RevokeAPIKey to revoke such API keys.
+	TimeToLive           *types.Duration `protobuf:"bytes,3,opt,name=time_to_live,json=timeToLive,proto3" json:"time_to_live,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *CreateAPIKeyRequest) Reset()         { *m = CreateAPIKeyRequest{} }
+func (m *CreateAPIKeyRequest) String() string { return proto.CompactTextString(m) }
+func (*CreateAPIKeyRequest) ProtoMessage()    {}
+func (*CreateAPIKeyRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0a2c201915207782, []int{16}
+}
+func (m *CreateAPIKeyRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *CreateAPIKeyRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_CreateAPIKeyRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *CreateAPIKeyRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreateAPIKeyRequest.Merge(m, src)
+}
+func (m *CreateAPIKeyRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *CreateAPIKeyRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_CreateAPIKeyRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CreateAPIKeyRequest proto.InternalMessageInfo
+
+func (m *CreateAPIKeyRequest) GetOrganizationId() string {
+	if m != nil {
+		return m.OrganizationId
+	}
+	return ""
+}
+
+func (m *CreateAPIKeyRequest) GetReadonly() bool {
+	if m != nil {
+		return m.Readonly
+	}
+	return false
+}
+
+func (m *CreateAPIKeyRequest) GetTimeToLive() *types.Duration {
+	if m != nil {
+		return m.TimeToLive
+	}
+	return nil
+}
+
+// API key secrets are used once to inform the users of the secret
+// for an API key.
+type APIKeySecret struct {
+	// ID of the API key
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Secret of the API key
+	Secret               string   `protobuf:"bytes,2,opt,name=secret,proto3" json:"secret,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *APIKeySecret) Reset()         { *m = APIKeySecret{} }
+func (m *APIKeySecret) String() string { return proto.CompactTextString(m) }
+func (*APIKeySecret) ProtoMessage()    {}
+func (*APIKeySecret) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0a2c201915207782, []int{17}
+}
+func (m *APIKeySecret) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *APIKeySecret) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_APIKeySecret.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *APIKeySecret) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_APIKeySecret.Merge(m, src)
+}
+func (m *APIKeySecret) XXX_Size() int {
+	return m.Size()
+}
+func (m *APIKeySecret) XXX_DiscardUnknown() {
+	xxx_messageInfo_APIKeySecret.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_APIKeySecret proto.InternalMessageInfo
+
+func (m *APIKeySecret) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *APIKeySecret) GetSecret() string {
+	if m != nil {
+		return m.Secret
+	}
+	return ""
+}
+
+// Request arguments for AuthenticateAPIKey
+type AuthenticateAPIKeyRequest struct {
+	// API key id
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Secret of the API key
+	Secret string `protobuf:"bytes,2,opt,name=secret,proto3" json:"secret,omitempty"`
+	// Life time of the token.
+	// If set, then this TTL is used reduce the default TTL
+	// of an authentication token. It cannot be used to increase the default
+	// lifetime of a token.
+	TimeToLive           *types.Duration `protobuf:"bytes,3,opt,name=time_to_live,json=timeToLive,proto3" json:"time_to_live,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *AuthenticateAPIKeyRequest) Reset()         { *m = AuthenticateAPIKeyRequest{} }
+func (m *AuthenticateAPIKeyRequest) String() string { return proto.CompactTextString(m) }
+func (*AuthenticateAPIKeyRequest) ProtoMessage()    {}
+func (*AuthenticateAPIKeyRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0a2c201915207782, []int{18}
+}
+func (m *AuthenticateAPIKeyRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthenticateAPIKeyRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthenticateAPIKeyRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthenticateAPIKeyRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthenticateAPIKeyRequest.Merge(m, src)
+}
+func (m *AuthenticateAPIKeyRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthenticateAPIKeyRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthenticateAPIKeyRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_AuthenticateAPIKeyRequest proto.InternalMessageInfo
+
+func (m *AuthenticateAPIKeyRequest) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *AuthenticateAPIKeyRequest) GetSecret() string {
+	if m != nil {
+		return m.Secret
+	}
+	return ""
+}
+
+func (m *AuthenticateAPIKeyRequest) GetTimeToLive() *types.Duration {
+	if m != nil {
+		return m.TimeToLive
+	}
+	return nil
+}
+
+// Response for AuthenticateAPIKey
+type AuthenticateAPIKeyResponse struct {
+	// Bearer token
+	Token string `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	// Actual life time of the token.
+	TimeToLive           *types.Duration `protobuf:"bytes,2,opt,name=time_to_live,json=timeToLive,proto3" json:"time_to_live,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *AuthenticateAPIKeyResponse) Reset()         { *m = AuthenticateAPIKeyResponse{} }
+func (m *AuthenticateAPIKeyResponse) String() string { return proto.CompactTextString(m) }
+func (*AuthenticateAPIKeyResponse) ProtoMessage()    {}
+func (*AuthenticateAPIKeyResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0a2c201915207782, []int{19}
+}
+func (m *AuthenticateAPIKeyResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthenticateAPIKeyResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthenticateAPIKeyResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthenticateAPIKeyResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthenticateAPIKeyResponse.Merge(m, src)
+}
+func (m *AuthenticateAPIKeyResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthenticateAPIKeyResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthenticateAPIKeyResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_AuthenticateAPIKeyResponse proto.InternalMessageInfo
+
+func (m *AuthenticateAPIKeyResponse) GetToken() string {
+	if m != nil {
+		return m.Token
+	}
+	return ""
+}
+
+func (m *AuthenticateAPIKeyResponse) GetTimeToLive() *types.Duration {
+	if m != nil {
+		return m.TimeToLive
+	}
+	return nil
+}
+
+// Request arguments for RenewAPIKeyToken.
+type RenewAPIKeyTokenRequest struct {
+	// Bearer token
+	Token string `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	// Extended life time of the token.
+	// By default, a renewed token will have a default lifetime from the moment
+	// of the renew call.
+	// If this field is set, then this TTL is used reduce the default TTL
+	// of the renewed token. It cannot be used to increase the default
+	// lifetime of the renewed token.
+	TimeToLive           *types.Duration `protobuf:"bytes,2,opt,name=time_to_live,json=timeToLive,proto3" json:"time_to_live,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *RenewAPIKeyTokenRequest) Reset()         { *m = RenewAPIKeyTokenRequest{} }
+func (m *RenewAPIKeyTokenRequest) String() string { return proto.CompactTextString(m) }
+func (*RenewAPIKeyTokenRequest) ProtoMessage()    {}
+func (*RenewAPIKeyTokenRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0a2c201915207782, []int{20}
+}
+func (m *RenewAPIKeyTokenRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *RenewAPIKeyTokenRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_RenewAPIKeyTokenRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *RenewAPIKeyTokenRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RenewAPIKeyTokenRequest.Merge(m, src)
+}
+func (m *RenewAPIKeyTokenRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *RenewAPIKeyTokenRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_RenewAPIKeyTokenRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RenewAPIKeyTokenRequest proto.InternalMessageInfo
+
+func (m *RenewAPIKeyTokenRequest) GetToken() string {
+	if m != nil {
+		return m.Token
+	}
+	return ""
+}
+
+func (m *RenewAPIKeyTokenRequest) GetTimeToLive() *types.Duration {
+	if m != nil {
+		return m.TimeToLive
+	}
+	return nil
+}
+
+// Response for RenewAPIKeyToken.
+type RenewAPIKeyTokenResponse struct {
+	// Actual life time of the token.
+	TimeToLive           *types.Duration `protobuf:"bytes,1,opt,name=time_to_live,json=timeToLive,proto3" json:"time_to_live,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *RenewAPIKeyTokenResponse) Reset()         { *m = RenewAPIKeyTokenResponse{} }
+func (m *RenewAPIKeyTokenResponse) String() string { return proto.CompactTextString(m) }
+func (*RenewAPIKeyTokenResponse) ProtoMessage()    {}
+func (*RenewAPIKeyTokenResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0a2c201915207782, []int{21}
+}
+func (m *RenewAPIKeyTokenResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *RenewAPIKeyTokenResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_RenewAPIKeyTokenResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *RenewAPIKeyTokenResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RenewAPIKeyTokenResponse.Merge(m, src)
+}
+func (m *RenewAPIKeyTokenResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *RenewAPIKeyTokenResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_RenewAPIKeyTokenResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RenewAPIKeyTokenResponse proto.InternalMessageInfo
+
+func (m *RenewAPIKeyTokenResponse) GetTimeToLive() *types.Duration {
+	if m != nil {
+		return m.TimeToLive
+	}
+	return nil
+}
+
+// Request arguments for RevokeAPIKeyToken.
+type RevokeAPIKeyTokenRequest struct {
+	// Bearer token
+	Token                string   `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *RevokeAPIKeyTokenRequest) Reset()         { *m = RevokeAPIKeyTokenRequest{} }
+func (m *RevokeAPIKeyTokenRequest) String() string { return proto.CompactTextString(m) }
+func (*RevokeAPIKeyTokenRequest) ProtoMessage()    {}
+func (*RevokeAPIKeyTokenRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0a2c201915207782, []int{22}
+}
+func (m *RevokeAPIKeyTokenRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *RevokeAPIKeyTokenRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_RevokeAPIKeyTokenRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *RevokeAPIKeyTokenRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RevokeAPIKeyTokenRequest.Merge(m, src)
+}
+func (m *RevokeAPIKeyTokenRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *RevokeAPIKeyTokenRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_RevokeAPIKeyTokenRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RevokeAPIKeyTokenRequest proto.InternalMessageInfo
+
+func (m *RevokeAPIKeyTokenRequest) GetToken() string {
+	if m != nil {
+		return m.Token
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*User)(nil), "arangodb.cloud.iam.v1.User")
 	proto.RegisterType((*VerifyUserMobilePhoneRequest)(nil), "arangodb.cloud.iam.v1.VerifyUserMobilePhoneRequest")
@@ -1076,111 +1681,152 @@ func init() {
 	proto.RegisterType((*RoleBinding)(nil), "arangodb.cloud.iam.v1.RoleBinding")
 	proto.RegisterType((*Policy)(nil), "arangodb.cloud.iam.v1.Policy")
 	proto.RegisterType((*RoleBindingsRequest)(nil), "arangodb.cloud.iam.v1.RoleBindingsRequest")
+	proto.RegisterType((*APIKey)(nil), "arangodb.cloud.iam.v1.APIKey")
+	proto.RegisterType((*APIKeyList)(nil), "arangodb.cloud.iam.v1.APIKeyList")
+	proto.RegisterType((*CreateAPIKeyRequest)(nil), "arangodb.cloud.iam.v1.CreateAPIKeyRequest")
+	proto.RegisterType((*APIKeySecret)(nil), "arangodb.cloud.iam.v1.APIKeySecret")
+	proto.RegisterType((*AuthenticateAPIKeyRequest)(nil), "arangodb.cloud.iam.v1.AuthenticateAPIKeyRequest")
+	proto.RegisterType((*AuthenticateAPIKeyResponse)(nil), "arangodb.cloud.iam.v1.AuthenticateAPIKeyResponse")
+	proto.RegisterType((*RenewAPIKeyTokenRequest)(nil), "arangodb.cloud.iam.v1.RenewAPIKeyTokenRequest")
+	proto.RegisterType((*RenewAPIKeyTokenResponse)(nil), "arangodb.cloud.iam.v1.RenewAPIKeyTokenResponse")
+	proto.RegisterType((*RevokeAPIKeyTokenRequest)(nil), "arangodb.cloud.iam.v1.RevokeAPIKeyTokenRequest")
 }
 
 func init() { proto.RegisterFile("iam.proto", fileDescriptor_0a2c201915207782) }
 
 var fileDescriptor_0a2c201915207782 = []byte{
-	// 1576 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x58, 0x5b, 0x8f, 0x1b, 0xc5,
-	0x12, 0x3e, 0xb3, 0x37, 0xdb, 0xe5, 0x9c, 0xdd, 0x9c, 0x4e, 0x76, 0xd7, 0xd9, 0xab, 0x77, 0x72,
-	0xd9, 0x3d, 0x3e, 0x59, 0xcf, 0x59, 0x07, 0x12, 0x05, 0x08, 0x68, 0x73, 0xd1, 0x62, 0x91, 0xcb,
-	0xca, 0xc9, 0x46, 0x82, 0x17, 0x6b, 0x3c, 0xdd, 0xf6, 0x36, 0x99, 0x8b, 0x99, 0x1e, 0x5b, 0xd9,
-	0x44, 0x79, 0x41, 0x08, 0x11, 0xc1, 0x03, 0x22, 0x12, 0x42, 0x08, 0xf1, 0x4b, 0xf8, 0x01, 0x3c,
-	0x22, 0xf1, 0x03, 0x80, 0x84, 0x1f, 0x82, 0xba, 0x7a, 0x6c, 0xcf, 0x3a, 0x33, 0xb6, 0x93, 0x10,
-	0xde, 0x3c, 0x55, 0x35, 0xf5, 0x7d, 0xdd, 0xf5, 0x75, 0x57, 0x8d, 0x21, 0xc3, 0x4d, 0xa7, 0xd8,
-	0xf4, 0xbd, 0xc0, 0x23, 0xb3, 0xa6, 0x6f, 0xba, 0x0d, 0x8f, 0xd6, 0x8a, 0x96, 0xed, 0xb5, 0x68,
-	0x51, 0x7a, 0xda, 0x5b, 0x0b, 0x73, 0x96, 0xe7, 0x38, 0x9e, 0x6b, 0xb4, 0xb7, 0x0c, 0xf5, 0x4b,
-	0x85, 0x2f, 0xbc, 0xdd, 0xe0, 0xc1, 0x7e, 0xab, 0x56, 0xb4, 0x3c, 0xc7, 0x68, 0x78, 0xb6, 0xe9,
-	0x36, 0x0c, 0x74, 0xd4, 0x5a, 0x75, 0xa3, 0x19, 0x1c, 0x34, 0x99, 0x30, 0x02, 0xee, 0x30, 0x11,
-	0x98, 0x4e, 0xb3, 0xf7, 0x2b, 0x7c, 0x79, 0xa9, 0xe1, 0x79, 0x0d, 0x9b, 0x19, 0x66, 0x93, 0x1b,
-	0xa6, 0xeb, 0x7a, 0x81, 0x19, 0x70, 0xcf, 0x15, 0xca, 0xab, 0xff, 0x36, 0x0e, 0x13, 0x7b, 0x82,
-	0xf9, 0x64, 0x1a, 0xc6, 0x38, 0xcd, 0x69, 0x79, 0x6d, 0x23, 0x53, 0x19, 0xe3, 0x94, 0x1c, 0x87,
-	0x49, 0xe6, 0x98, 0xdc, 0xce, 0x8d, 0xa1, 0x49, 0x3d, 0x10, 0x02, 0x13, 0xae, 0xe9, 0xb0, 0xdc,
-	0x38, 0x1a, 0xf1, 0x37, 0x59, 0x06, 0x68, 0xf0, 0x36, 0x73, 0xab, 0xe8, 0x99, 0x40, 0x4f, 0x06,
-	0x2d, 0x37, 0xa5, 0x7b, 0x15, 0xb2, 0x75, 0xd3, 0xe1, 0xf6, 0x81, 0xf2, 0x4f, 0xa2, 0x1f, 0x94,
-	0x09, 0x03, 0x2e, 0x02, 0x58, 0x3e, 0x33, 0x03, 0x46, 0xab, 0x66, 0x90, 0x9b, 0xca, 0x6b, 0x1b,
-	0xd9, 0xd2, 0x42, 0x51, 0xb1, 0x2e, 0x76, 0xd6, 0x59, 0xbc, 0xd3, 0x59, 0x56, 0x25, 0x13, 0x46,
-	0x6f, 0x07, 0xe4, 0x7f, 0xf0, 0x1f, 0x93, 0x52, 0x2e, 0x17, 0x64, 0xda, 0x55, 0xa4, 0x28, 0x72,
-	0xa9, 0xfc, 0xf8, 0x46, 0xa6, 0x72, 0xb4, 0xe7, 0xb8, 0x86, 0x76, 0xb2, 0x06, 0x47, 0x1c, 0xaf,
-	0xc6, 0x6d, 0x56, 0x6d, 0xee, 0x7b, 0x2e, 0xcb, 0xa5, 0x91, 0x49, 0x56, 0xd9, 0x76, 0xa5, 0x89,
-	0x94, 0x60, 0x36, 0x1a, 0x52, 0x6d, 0x33, 0x9f, 0xd7, 0x39, 0xa3, 0xb9, 0x4c, 0x5e, 0xdb, 0x48,
-	0x57, 0x8e, 0x45, 0x62, 0xef, 0x86, 0x2e, 0x99, 0xd6, 0xf2, 0x9c, 0xa6, 0xe9, 0x86, 0x0b, 0x04,
-	0x95, 0x36, 0xb4, 0xe1, 0x0a, 0xcf, 0xc3, 0x3c, 0x35, 0xc5, 0x7e, 0xcd, 0x33, 0x7d, 0x5a, 0x35,
-	0x2d, 0x8b, 0x09, 0x51, 0xa5, 0xcc, 0x95, 0x89, 0xb3, 0x98, 0x78, 0xb6, 0xeb, 0xde, 0x46, 0xef,
-	0x55, 0x74, 0x92, 0x2b, 0xb0, 0x92, 0xf0, 0x5e, 0xd5, 0x67, 0xa6, 0xf0, 0xdc, 0xdc, 0x11, 0x04,
-	0x5b, 0x8c, 0x7d, 0xbd, 0x82, 0x21, 0x7a, 0x09, 0x96, 0x90, 0xeb, 0x81, 0x2c, 0xf3, 0x8d, 0xde,
-	0x02, 0x2a, 0xec, 0x93, 0x16, 0x13, 0x81, 0x2c, 0xa9, 0xe5, 0x51, 0x16, 0x96, 0x1e, 0x7f, 0xeb,
-	0x3f, 0x8d, 0xc1, 0xe4, 0x8e, 0xef, 0xb5, 0x9a, 0xcf, 0xc9, 0x62, 0x1d, 0x66, 0x3c, 0xbf, 0x61,
-	0xba, 0xfc, 0x01, 0xca, 0xa8, 0xca, 0x69, 0x28, 0x90, 0xe9, 0xa8, 0xb9, 0x4c, 0x63, 0x95, 0x92,
-	0x87, 0x2c, 0x65, 0xc2, 0xf2, 0x79, 0x53, 0x06, 0x85, 0x52, 0x89, 0x9a, 0xfa, 0xb4, 0x30, 0xf9,
-	0x22, 0x5a, 0xb8, 0x08, 0x40, 0x99, 0xcd, 0x46, 0x97, 0x51, 0x18, 0xbd, 0x1d, 0x48, 0x05, 0x73,
-	0xb9, 0xb3, 0xf8, 0x9c, 0x4b, 0x61, 0x49, 0x32, 0x5c, 0x5c, 0x55, 0x06, 0x72, 0x14, 0xc6, 0x5b,
-	0xbe, 0x1d, 0xea, 0x45, 0xfe, 0x0c, 0x5f, 0x68, 0x73, 0x3f, 0x68, 0x99, 0x76, 0x28, 0x8e, 0x0c,
-	0x17, 0x77, 0x95, 0x41, 0x7f, 0x0f, 0x32, 0xb8, 0x7b, 0xd7, 0xb9, 0x08, 0x48, 0x09, 0x26, 0x79,
-	0xc0, 0x1c, 0x91, 0xd3, 0xf2, 0xe3, 0x1b, 0xd9, 0xd2, 0x52, 0x31, 0xf6, 0xec, 0x17, 0xf1, 0x85,
-	0x8a, 0x0a, 0xd5, 0xaf, 0xc3, 0x5c, 0x59, 0xdc, 0x60, 0x4e, 0x8d, 0xf9, 0xb7, 0xea, 0xca, 0x13,
-	0x56, 0x6b, 0x1e, 0x52, 0x2d, 0xc1, 0xfc, 0x6a, 0xb7, 0x28, 0x53, 0xf2, 0xb1, 0x4c, 0xc9, 0x09,
-	0x48, 0x37, 0x64, 0x60, 0xaf, 0x22, 0x29, 0x7c, 0x2e, 0x53, 0x7d, 0x1d, 0x66, 0x30, 0x87, 0x4a,
-	0x88, 0xa4, 0x8e, 0x47, 0x49, 0x65, 0x3a, 0xb0, 0x1f, 0xc0, 0xb1, 0x48, 0xa0, 0xe8, 0x60, 0x46,
-	0x53, 0x6b, 0x87, 0x52, 0x4b, 0x57, 0x48, 0x47, 0xe4, 0xc6, 0x30, 0x55, 0x4a, 0xf1, 0x11, 0xfa,
-	0x19, 0x98, 0xde, 0x65, 0xbe, 0xc3, 0x85, 0xe0, 0x9e, 0x3b, 0x10, 0x74, 0xf6, 0x7d, 0x53, 0xf4,
-	0x42, 0xbb, 0xb0, 0xe1, 0xb6, 0x6b, 0xbd, 0x6d, 0xcf, 0x43, 0xb6, 0xd9, 0x8b, 0x0b, 0x01, 0xa3,
-	0x26, 0xfd, 0xd9, 0x18, 0x4c, 0x54, 0x3c, 0x9b, 0xfd, 0xd3, 0xba, 0xed, 0x63, 0x36, 0xf9, 0x1c,
-	0x33, 0x72, 0x12, 0xfe, 0xcd, 0x45, 0xb5, 0xe9, 0x33, 0xca, 0xea, 0xdc, 0x65, 0x14, 0x15, 0x9a,
-	0xae, 0x1c, 0xe1, 0x62, 0xb7, 0x6b, 0xeb, 0x93, 0x7f, 0xea, 0xe5, 0xe5, 0x9f, 0x7e, 0x79, 0xf9,
-	0x67, 0x12, 0xe4, 0x0f, 0xdd, 0x3a, 0xe8, 0x97, 0x20, 0x2d, 0x37, 0x19, 0x8b, 0xba, 0x75, 0x58,
-	0xde, 0x8b, 0x09, 0xf2, 0x96, 0xf1, 0x9d, 0x8a, 0xdf, 0x86, 0xac, 0x7c, 0xbc, 0xcc, 0x5d, 0xca,
-	0xdd, 0xc6, 0x73, 0xa5, 0x5a, 0x84, 0x8c, 0x83, 0x02, 0xec, 0x15, 0x29, 0xad, 0x0c, 0x65, 0x2a,
-	0xf5, 0xef, 0x7b, 0x36, 0x93, 0x2e, 0x55, 0xa1, 0x29, 0xf9, 0x58, 0xa6, 0xfa, 0x3d, 0x98, 0xda,
-	0xf5, 0x6c, 0x6e, 0x1d, 0xc8, 0x0b, 0xd9, 0x67, 0xc2, 0x6b, 0xf9, 0x16, 0xab, 0xf6, 0x04, 0x94,
-	0xed, 0xd8, 0xf6, 0x7c, 0x9b, 0xbc, 0x0b, 0xe9, 0x9a, 0x42, 0x57, 0x2a, 0xca, 0x96, 0xf4, 0x01,
-	0xbc, 0x43, 0xa2, 0x95, 0xee, 0x3b, 0xfa, 0x7d, 0x38, 0x16, 0x71, 0x74, 0x15, 0xfb, 0xfa, 0x91,
-	0x4b, 0x7f, 0x9c, 0x00, 0x28, 0x6f, 0xdf, 0xb8, 0xcd, 0xfc, 0x36, 0xb7, 0x18, 0xf9, 0x18, 0xb2,
-	0x3b, 0x2c, 0xb8, 0xb3, 0xcf, 0x05, 0x36, 0xf1, 0xd5, 0xfe, 0x5c, 0xe1, 0x18, 0xd1, 0xde, 0x2a,
-	0x5e, 0x73, 0x9a, 0xc1, 0xc1, 0x42, 0x52, 0x79, 0xe4, 0xdb, 0xfa, 0xf2, 0xa7, 0xbf, 0xfe, 0xf9,
-	0x64, 0x6c, 0x9e, 0xcc, 0xe2, 0xac, 0xc0, 0x4d, 0x47, 0x0e, 0x22, 0x82, 0xd9, 0x75, 0x43, 0x9e,
-	0x69, 0x72, 0x0f, 0x52, 0x3b, 0x2c, 0x40, 0x9c, 0x93, 0xc9, 0x38, 0xe5, 0xab, 0xb7, 0xf0, 0x48,
-	0x88, 0xc1, 0x58, 0x2b, 0x88, 0x95, 0x23, 0x73, 0x51, 0x2c, 0x09, 0x23, 0x8c, 0x87, 0x9c, 0x3e,
-	0x22, 0x1c, 0x60, 0xaf, 0x49, 0xcd, 0x80, 0x21, 0xde, 0xa0, 0x54, 0x83, 0x71, 0xd6, 0x10, 0x67,
-	0xb1, 0x94, 0x80, 0xf3, 0x96, 0x56, 0x20, 0x3f, 0x6a, 0x30, 0x1b, 0xdb, 0x21, 0xc9, 0xb9, 0x84,
-	0xcc, 0x83, 0xfa, 0xe9, 0xc2, 0xb0, 0x1a, 0xe8, 0x06, 0x52, 0xfa, 0xaf, 0x7e, 0xaa, 0x9f, 0xd2,
-	0xa6, 0x1a, 0x2f, 0x36, 0x71, 0xf6, 0x30, 0x70, 0xf6, 0x38, 0x90, 0x04, 0xbf, 0xd5, 0x60, 0xad,
-	0xc2, 0x04, 0x73, 0x69, 0x1f, 0xa4, 0x9a, 0x41, 0x2c, 0xbc, 0xba, 0x86, 0xd7, 0xfe, 0xef, 0x22,
-	0xe6, 0x23, 0x15, 0x49, 0xec, 0x2b, 0x0d, 0x40, 0x5e, 0x02, 0xd8, 0x34, 0x04, 0x39, 0x9d, 0x0c,
-	0x20, 0xa3, 0x3a, 0xba, 0xc8, 0x0f, 0xea, 0x80, 0x32, 0x50, 0x7f, 0x13, 0x89, 0x18, 0x64, 0x33,
-	0x4a, 0x24, 0x7a, 0x4f, 0x0b, 0xe3, 0xa1, 0xe5, 0xb9, 0x01, 0xbb, 0x1f, 0x54, 0x39, 0x7d, 0x64,
-	0x34, 0x14, 0xbe, 0x0b, 0xe9, 0x1d, 0xa6, 0xc8, 0x8c, 0xa6, 0xd0, 0x81, 0xbd, 0x58, 0x5f, 0x45,
-	0x16, 0x27, 0xc8, 0x7c, 0x94, 0x85, 0x82, 0x52, 0x1a, 0xfd, 0x42, 0x83, 0xec, 0x15, 0xbc, 0x80,
-	0x15, 0xe6, 0xc0, 0x74, 0x43, 0xc0, 0x2e, 0x21, 0xd8, 0x05, 0xbd, 0x34, 0x60, 0xc9, 0x7d, 0x0d,
-	0xac, 0xb3, 0x6e, 0x59, 0x09, 0x07, 0xb2, 0xea, 0xb8, 0xbc, 0x3a, 0x13, 0x1d, 0x99, 0x2c, 0x95,
-	0x92, 0x96, 0x2d, 0xe1, 0x02, 0xc8, 0xaa, 0xee, 0xf0, 0x02, 0x9b, 0x3d, 0x54, 0x7e, 0xe1, 0x7e,
-	0x17, 0x12, 0xf7, 0xfb, 0x1b, 0x0d, 0x8e, 0x76, 0xe5, 0x16, 0xce, 0x28, 0xa3, 0x8a, 0xee, 0xcc,
-	0xa0, 0x35, 0xf7, 0x06, 0xa3, 0xce, 0x19, 0x20, 0xeb, 0x71, 0x24, 0xa2, 0x9a, 0x73, 0x42, 0xfc,
-	0xaf, 0x35, 0x98, 0xd9, 0xa6, 0xf4, 0x10, 0xa7, 0xc2, 0x70, 0x30, 0x31, 0xf2, 0x75, 0xf1, 0x7f,
-	0x64, 0x54, 0xd0, 0x4f, 0xc7, 0x31, 0xea, 0xcc, 0x65, 0x5d, 0x3e, 0xb2, 0x3a, 0x4f, 0x34, 0x20,
-	0x91, 0xf2, 0xbc, 0x4e, 0x56, 0x85, 0xd1, 0x59, 0xfd, 0xa0, 0xc1, 0x4c, 0xdf, 0x50, 0x4b, 0x36,
-	0x13, 0x28, 0xc5, 0x0f, 0xbf, 0x0b, 0x6b, 0xc9, 0xac, 0x3e, 0x64, 0xe2, 0x96, 0x7f, 0xd3, 0xd3,
-	0x2f, 0x20, 0xaf, 0x2d, 0x62, 0x8c, 0xc4, 0xcb, 0x78, 0x18, 0x4e, 0xaf, 0x8f, 0xc8, 0x63, 0x0d,
-	0x32, 0x52, 0x01, 0xb2, 0xed, 0x8e, 0xac, 0xaa, 0xd5, 0x01, 0xbd, 0x1b, 0xe5, 0xf4, 0x06, 0xd2,
-	0x29, 0x92, 0xb3, 0x23, 0xde, 0x64, 0x3e, 0xa2, 0xab, 0x4e, 0x8b, 0x73, 0xec, 0x2b, 0x75, 0x5a,
-	0x99, 0x21, 0xbe, 0xd3, 0x22, 0x8e, 0x3a, 0x55, 0x9f, 0x69, 0x00, 0xea, 0x16, 0x43, 0xc0, 0x41,
-	0xb9, 0x06, 0x03, 0xbd, 0x83, 0x40, 0xe7, 0xf5, 0xad, 0x17, 0xb9, 0xc2, 0x90, 0x88, 0x94, 0x47,
-	0xb7, 0xe1, 0xbf, 0x22, 0x8b, 0xd8, 0x86, 0xdf, 0x5b, 0xae, 0x84, 0xf2, 0x01, 0xd4, 0xf1, 0x18,
-	0x7d, 0x87, 0x87, 0x9e, 0x87, 0x70, 0x97, 0x0b, 0x49, 0xbb, 0xec, 0x42, 0x66, 0x87, 0x05, 0xe1,
-	0x84, 0x7a, 0x2a, 0x39, 0xdb, 0x5e, 0xe5, 0x7a, 0x07, 0x73, 0x39, 0x61, 0x99, 0x2a, 0x89, 0xbe,
-	0x84, 0x88, 0x73, 0xe4, 0x78, 0x14, 0xb1, 0x29, 0x7d, 0x9c, 0x09, 0xf2, 0xb9, 0xba, 0x96, 0xa2,
-	0x53, 0x6a, 0xe2, 0x05, 0x10, 0x33, 0xca, 0x0e, 0x03, 0xdf, 0x40, 0x70, 0x5d, 0x5f, 0x8e, 0x03,
-	0x37, 0x3a, 0xd3, 0xaa, 0xdc, 0xec, 0xc7, 0xdd, 0xcb, 0xe8, 0x35, 0x73, 0x29, 0x0c, 0xe7, 0xf2,
-	0xbd, 0x06, 0xf3, 0x3b, 0x2c, 0xb8, 0x56, 0xaf, 0x33, 0x2b, 0xe0, 0x6d, 0x16, 0xf9, 0xe8, 0x1c,
-	0xb1, 0x26, 0xa7, 0x93, 0xa8, 0x1c, 0xfa, 0xd2, 0xd5, 0x4b, 0x48, 0xe9, 0x2c, 0x29, 0xc4, 0x52,
-	0x62, 0x1d, 0xfc, 0xcd, 0xe8, 0x07, 0xe2, 0x97, 0x1a, 0x4c, 0x1f, 0xfe, 0x10, 0x26, 0x67, 0x13,
-	0xd0, 0x62, 0xbf, 0x97, 0x47, 0xb9, 0x1d, 0xc3, 0xad, 0x22, 0xf9, 0x58, 0x5e, 0x51, 0x36, 0x0f,
-	0x60, 0x46, 0xae, 0x24, 0xca, 0x66, 0xe8, 0x80, 0x39, 0xe2, 0xe6, 0xc4, 0xce, 0x55, 0x11, 0xec,
-	0xcb, 0x17, 0x7f, 0x7e, 0xba, 0xa2, 0xfd, 0xf2, 0x74, 0x45, 0xfb, 0xfd, 0xe9, 0x8a, 0xf6, 0xdd,
-	0xb3, 0x95, 0x7f, 0x7d, 0xb4, 0x1e, 0xf9, 0x03, 0xb4, 0x83, 0xb1, 0xe9, 0x98, 0xae, 0xd9, 0x60,
-	0x54, 0x66, 0x11, 0x61, 0x9a, 0xda, 0x14, 0x7e, 0xe9, 0x9e, 0xfb, 0x2b, 0x00, 0x00, 0xff, 0xff,
-	0x48, 0xd1, 0x25, 0x5a, 0x6c, 0x15, 0x00, 0x00,
+	// 2087 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x59, 0xdd, 0x6e, 0x1b, 0xc7,
+	0x15, 0xee, 0x52, 0x7f, 0xe4, 0xa1, 0x62, 0x39, 0x23, 0x4b, 0xa2, 0x29, 0x59, 0xa2, 0xd6, 0x71,
+	0xa4, 0xa8, 0x16, 0xd7, 0xa2, 0x5b, 0x07, 0x6a, 0x9a, 0x16, 0x4a, 0x6c, 0xa8, 0x44, 0xec, 0x58,
+	0xa0, 0xed, 0x14, 0xed, 0x0d, 0xb1, 0xe2, 0x8e, 0xa8, 0xa9, 0xb8, 0xbb, 0xcc, 0xce, 0x92, 0x31,
+	0x63, 0x18, 0x2d, 0x8a, 0xa2, 0x68, 0xd0, 0x5e, 0x14, 0x0d, 0xd0, 0x16, 0x45, 0x5b, 0xf4, 0xb2,
+	0x0f, 0xd1, 0x07, 0xe8, 0x65, 0x81, 0xbe, 0x40, 0xe1, 0xf4, 0x31, 0x72, 0x11, 0xcc, 0x99, 0x59,
+	0x72, 0x49, 0xee, 0x2e, 0x57, 0x91, 0x9d, 0x2b, 0x71, 0xe7, 0xe7, 0x7c, 0xdf, 0x9c, 0xf3, 0xcd,
+	0x99, 0x39, 0x23, 0xc8, 0x31, 0xd3, 0x2e, 0xb7, 0x3d, 0xd7, 0x77, 0xc9, 0x92, 0xe9, 0x99, 0x4e,
+	0xd3, 0xb5, 0x8e, 0xcb, 0x8d, 0x96, 0xdb, 0xb1, 0xca, 0xa2, 0xa7, 0xbb, 0x57, 0x5c, 0x6e, 0xb8,
+	0xb6, 0xed, 0x3a, 0x46, 0x77, 0xcf, 0x90, 0xbf, 0xe4, 0xf0, 0xe2, 0x3b, 0x4d, 0xe6, 0x9f, 0x76,
+	0x8e, 0xcb, 0x0d, 0xd7, 0x36, 0x9a, 0x6e, 0xcb, 0x74, 0x9a, 0x06, 0x76, 0x1c, 0x77, 0x4e, 0x8c,
+	0xb6, 0xdf, 0x6b, 0x53, 0x6e, 0xf8, 0xcc, 0xa6, 0xdc, 0x37, 0xed, 0xf6, 0xe0, 0x97, 0x9a, 0xbc,
+	0x3f, 0x79, 0xb2, 0xd5, 0xf1, 0x4c, 0x9f, 0xb9, 0x4e, 0xff, 0x87, 0x9a, 0xba, 0xd6, 0x74, 0xdd,
+	0x66, 0x8b, 0x1a, 0x66, 0x9b, 0x19, 0xa6, 0xe3, 0xb8, 0x3e, 0x76, 0x72, 0xd9, 0xab, 0x7f, 0x39,
+	0x05, 0xd3, 0x4f, 0x38, 0xf5, 0xc8, 0x25, 0xc8, 0x30, 0xab, 0xa0, 0x95, 0xb4, 0xed, 0x5c, 0x2d,
+	0xc3, 0x2c, 0x72, 0x05, 0x66, 0xa8, 0x6d, 0xb2, 0x56, 0x21, 0x83, 0x4d, 0xf2, 0x83, 0x10, 0x98,
+	0x76, 0x4c, 0x9b, 0x16, 0xa6, 0xb0, 0x11, 0x7f, 0x93, 0x6b, 0x00, 0x4d, 0xd6, 0xa5, 0x4e, 0x1d,
+	0x7b, 0xa6, 0xb1, 0x27, 0x87, 0x2d, 0x1f, 0x8a, 0xee, 0x0d, 0xc8, 0x9f, 0x98, 0x36, 0x6b, 0xf5,
+	0x64, 0xff, 0x0c, 0xf6, 0x83, 0x6c, 0xc2, 0x01, 0xfb, 0x00, 0x0d, 0x8f, 0x9a, 0x3e, 0xb5, 0xea,
+	0xa6, 0x5f, 0x98, 0x2d, 0x69, 0xdb, 0xf9, 0x4a, 0xb1, 0x2c, 0x59, 0x97, 0x83, 0x55, 0x96, 0x1f,
+	0x07, 0x1e, 0xa9, 0xe5, 0xd4, 0xe8, 0x03, 0x9f, 0x7c, 0x1b, 0x5e, 0x37, 0x2d, 0x8b, 0x89, 0x05,
+	0x99, 0xad, 0x3a, 0x52, 0xe4, 0x85, 0xb9, 0xd2, 0xd4, 0x76, 0xae, 0x76, 0x79, 0xd0, 0x71, 0x0f,
+	0xdb, 0xc9, 0x26, 0xcc, 0xdb, 0xee, 0x31, 0x6b, 0xd1, 0x7a, 0xfb, 0xd4, 0x75, 0x68, 0x21, 0x8b,
+	0x4c, 0xf2, 0xb2, 0xed, 0x48, 0x34, 0x91, 0x0a, 0x2c, 0x85, 0x87, 0xd4, 0xbb, 0xd4, 0x63, 0x27,
+	0x8c, 0x5a, 0x85, 0x5c, 0x49, 0xdb, 0xce, 0xd6, 0x16, 0x43, 0x63, 0x3f, 0x52, 0x5d, 0xc2, 0x6c,
+	0xc3, 0xb5, 0xdb, 0xa6, 0xa3, 0x16, 0x08, 0xd2, 0xac, 0x6a, 0xc3, 0x15, 0xde, 0x81, 0x15, 0xcb,
+	0xe4, 0xa7, 0xc7, 0xae, 0xe9, 0x59, 0x75, 0xb3, 0xd1, 0xa0, 0x9c, 0xd7, 0x2d, 0xea, 0x08, 0xc3,
+	0x79, 0x34, 0xbc, 0xd4, 0xef, 0x3e, 0xc0, 0xde, 0xbb, 0xd8, 0x49, 0xde, 0x87, 0xf5, 0x98, 0x79,
+	0x75, 0x8f, 0x9a, 0xdc, 0x75, 0x0a, 0xf3, 0x08, 0xb6, 0x1a, 0x39, 0xbd, 0x86, 0x43, 0xc8, 0x2a,
+	0xe4, 0xcc, 0x36, 0x3b, 0xa3, 0xbd, 0x3a, 0xb3, 0x0a, 0xaf, 0xe1, 0xf8, 0xac, 0x6c, 0xa8, 0x5a,
+	0x7a, 0x05, 0xd6, 0x70, 0x21, 0x3d, 0xa1, 0x81, 0x07, 0x83, 0xd5, 0xd5, 0xe8, 0xc7, 0x1d, 0xca,
+	0x7d, 0x11, 0xef, 0x86, 0x6b, 0x51, 0xa5, 0x0b, 0xfc, 0xad, 0xff, 0x2b, 0x03, 0x33, 0x87, 0x9e,
+	0xdb, 0x69, 0x8f, 0x69, 0x66, 0x0b, 0x16, 0x5c, 0xaf, 0x69, 0x3a, 0xec, 0x53, 0xd4, 0x98, 0x00,
+	0x94, 0xea, 0xb9, 0x14, 0x6e, 0xae, 0x5a, 0x91, 0x32, 0x2a, 0x41, 0xde, 0xa2, 0xbc, 0xe1, 0xb1,
+	0xb6, 0x18, 0xa4, 0x74, 0x14, 0x6e, 0x1a, 0x11, 0xca, 0xcc, 0x79, 0x84, 0xb2, 0x0f, 0x60, 0xd1,
+	0x16, 0x4d, 0xaf, 0x31, 0x35, 0xfa, 0xc0, 0x17, 0xf2, 0x66, 0xc2, 0xed, 0xf8, 0x5d, 0x98, 0xc3,
+	0x78, 0xe5, 0x18, 0xbf, 0x2b, 0x1b, 0xc8, 0x65, 0x98, 0xea, 0x78, 0x2d, 0x25, 0x26, 0xf1, 0x53,
+	0x4d, 0xe8, 0x32, 0xcf, 0xef, 0x98, 0x2d, 0xa5, 0x9c, 0x1c, 0xe3, 0x1f, 0xc9, 0x06, 0xfd, 0x87,
+	0x90, 0x43, 0xef, 0xdd, 0x67, 0xdc, 0x27, 0x15, 0x98, 0x61, 0x3e, 0xb5, 0x79, 0x41, 0x2b, 0x4d,
+	0x6d, 0xe7, 0x2b, 0x6b, 0xe5, 0xc8, 0x9c, 0x52, 0xc6, 0x09, 0x35, 0x39, 0x54, 0xbf, 0x0f, 0xcb,
+	0x55, 0xfe, 0x80, 0xda, 0xc7, 0xd4, 0x7b, 0x78, 0x22, 0x7b, 0x54, 0xb4, 0x56, 0x60, 0xae, 0xc3,
+	0xa9, 0x57, 0xef, 0x07, 0x65, 0x56, 0x7c, 0x56, 0x2d, 0x72, 0x15, 0xb2, 0x4d, 0x31, 0x70, 0x10,
+	0x91, 0x39, 0xfc, 0xae, 0x5a, 0xfa, 0x16, 0x2c, 0xa0, 0x0d, 0x69, 0x10, 0x49, 0x5d, 0x09, 0x93,
+	0xca, 0x05, 0xb0, 0x1f, 0xc0, 0x62, 0x68, 0x20, 0x0f, 0x30, 0xc3, 0xa6, 0xb5, 0x21, 0xd3, 0xa2,
+	0x4b, 0xd1, 0xe1, 0x85, 0x0c, 0x9a, 0x9a, 0x93, 0x7c, 0xb8, 0xfe, 0x26, 0x5c, 0x3a, 0xa2, 0x9e,
+	0xcd, 0x38, 0x67, 0xae, 0x93, 0x08, 0xba, 0xf4, 0x23, 0x93, 0x0f, 0x86, 0xf6, 0x61, 0x95, 0xdb,
+	0xb5, 0x81, 0xdb, 0x4b, 0x90, 0x6f, 0x0f, 0xc6, 0x29, 0xc0, 0x70, 0x93, 0xfe, 0x45, 0x06, 0xa6,
+	0x6b, 0x6e, 0x8b, 0x7e, 0xd3, 0xba, 0x1d, 0x61, 0x36, 0x33, 0xc6, 0x8c, 0x5c, 0x87, 0xd7, 0x18,
+	0xaf, 0xb7, 0x3d, 0x6a, 0xd1, 0x13, 0xe6, 0x50, 0x0b, 0x15, 0x9a, 0xad, 0xcd, 0x33, 0x7e, 0xd4,
+	0x6f, 0x1b, 0x91, 0xff, 0xdc, 0xd7, 0x97, 0x7f, 0xf6, 0xeb, 0xcb, 0x3f, 0x17, 0x23, 0x7f, 0xe8,
+	0xc7, 0x41, 0x7f, 0x17, 0xb2, 0xc2, 0xc9, 0x18, 0xd4, 0xbd, 0x61, 0x79, 0xaf, 0xc6, 0xc8, 0x5b,
+	0x8c, 0x0f, 0x22, 0xfe, 0x08, 0xf2, 0xe2, 0xf3, 0x3d, 0xe6, 0x58, 0xcc, 0x69, 0x8e, 0x85, 0x6a,
+	0x15, 0x72, 0x36, 0x0a, 0x70, 0x10, 0xa4, 0xac, 0x6c, 0xa8, 0x5a, 0x42, 0xff, 0x9e, 0xdb, 0xa2,
+	0xa2, 0x4b, 0x46, 0x68, 0x56, 0x7c, 0x56, 0x2d, 0xfd, 0x0c, 0x66, 0x8f, 0xdc, 0x16, 0x6b, 0xf4,
+	0x44, 0xb6, 0xf6, 0x28, 0x77, 0x3b, 0x5e, 0x83, 0xd6, 0x07, 0x02, 0xca, 0x07, 0x6d, 0x4f, 0xbc,
+	0x16, 0xf9, 0x01, 0x64, 0x8f, 0x25, 0xba, 0x54, 0x51, 0xbe, 0xa2, 0x27, 0xf0, 0x56, 0x44, 0x6b,
+	0xfd, 0x39, 0xfa, 0x53, 0x58, 0x0c, 0x75, 0xf4, 0x15, 0xfb, 0x0d, 0x20, 0x7f, 0x99, 0x81, 0xd9,
+	0x83, 0xa3, 0xea, 0x07, 0xb4, 0x37, 0xe6, 0x37, 0x15, 0xa7, 0xcc, 0x60, 0xbf, 0x84, 0x92, 0xc5,
+	0xd4, 0x50, 0xb2, 0x88, 0xd8, 0x0d, 0xd3, 0x91, 0xbb, 0x61, 0x03, 0xf2, 0x8c, 0x8b, 0x93, 0xc8,
+	0x72, 0x9d, 0x56, 0x0f, 0x13, 0x72, 0xb6, 0x06, 0x8c, 0xd7, 0x54, 0xcb, 0x45, 0x4e, 0xf6, 0x7d,
+	0x00, 0xfa, 0xb4, 0xcd, 0x3c, 0xca, 0x53, 0x8a, 0x5d, 0x8d, 0xee, 0x2b, 0x56, 0x7e, 0x5b, 0x28,
+	0x76, 0x54, 0xec, 0x3d, 0xd9, 0x20, 0x2c, 0x7b, 0xb4, 0xeb, 0x9e, 0x49, 0x52, 0xb9, 0xc9, 0x96,
+	0xd5, 0xe8, 0xbe, 0x65, 0xf5, 0x8d, 0x9a, 0x47, 0xcb, 0x35, 0xd9, 0xa0, 0x1f, 0x00, 0x48, 0xef,
+	0xa3, 0xf6, 0x6f, 0x0f, 0x6b, 0xff, 0x5a, 0x4c, 0x24, 0xe5, 0x8c, 0x40, 0xfd, 0x7f, 0xd2, 0x60,
+	0xf1, 0x7d, 0x74, 0x82, 0x6a, 0x57, 0xe2, 0x89, 0x88, 0x89, 0x16, 0x19, 0x93, 0x22, 0x64, 0xfb,
+	0x01, 0xc9, 0x20, 0xc1, 0xfe, 0x37, 0x79, 0x07, 0xe6, 0xc5, 0xbd, 0xb2, 0xee, 0xbb, 0xf5, 0x16,
+	0xeb, 0xca, 0x2c, 0x96, 0xaf, 0x5c, 0x1d, 0x5b, 0xfb, 0x5d, 0x75, 0x81, 0xac, 0x81, 0x18, 0xfe,
+	0xd8, 0xbd, 0xcf, 0xba, 0x54, 0xbf, 0x03, 0xf3, 0x92, 0xd2, 0x23, 0xda, 0xf0, 0xa8, 0x3f, 0x26,
+	0xb0, 0x65, 0x98, 0xe5, 0xd8, 0xa3, 0x34, 0xa6, 0xbe, 0xf4, 0x5f, 0x68, 0x70, 0xf5, 0xa0, 0xe3,
+	0x9f, 0x52, 0xc7, 0x67, 0x8d, 0xb1, 0x75, 0xa5, 0xb4, 0x72, 0x31, 0xea, 0x2e, 0x14, 0xa3, 0x18,
+	0xf0, 0xb6, 0xeb, 0x70, 0x2a, 0x0e, 0x1e, 0xdf, 0x3d, 0xa3, 0x8e, 0x62, 0x21, 0x3f, 0xc6, 0x00,
+	0x33, 0xe7, 0x01, 0x6c, 0xc1, 0x4a, 0x8d, 0x3a, 0xf4, 0x13, 0x89, 0xf4, 0x58, 0x18, 0x0c, 0x16,
+	0xfc, 0x0a, 0xd0, 0x7e, 0x0c, 0x85, 0x71, 0x34, 0xb5, 0xb8, 0x51, 0xc3, 0xda, 0x79, 0x0c, 0xdf,
+	0x12, 0x86, 0x85, 0xb4, 0xd3, 0xae, 0xa3, 0xf2, 0x0f, 0x1d, 0xa0, 0x7a, 0xf0, 0xe0, 0x11, 0xf5,
+	0xba, 0xac, 0x41, 0xc9, 0xcf, 0x20, 0x7f, 0x48, 0xfd, 0xc7, 0xa7, 0x8c, 0x63, 0x89, 0xb1, 0x31,
+	0xba, 0x05, 0x54, 0x7d, 0xd4, 0xdd, 0x2b, 0xdf, 0xb3, 0xdb, 0x7e, 0xaf, 0x18, 0x77, 0x3e, 0x88,
+	0xd9, 0xfa, 0xb5, 0x5f, 0xfe, 0xf7, 0xff, 0x9f, 0x67, 0x56, 0xc8, 0x12, 0x56, 0x32, 0xcc, 0xb4,
+	0x45, 0x85, 0xc5, 0x69, 0xeb, 0xc4, 0x10, 0x79, 0x8b, 0x9c, 0xc1, 0xdc, 0x21, 0xf5, 0x11, 0xe7,
+	0x7a, 0x3c, 0x4e, 0xf5, 0xee, 0x43, 0x3c, 0x93, 0x79, 0x32, 0xd6, 0x3a, 0x62, 0x15, 0xc8, 0x72,
+	0x18, 0x4b, 0xc0, 0x70, 0xe3, 0x19, 0xb3, 0x9e, 0x13, 0x06, 0xf0, 0xa4, 0x6d, 0x99, 0x3e, 0x45,
+	0xbc, 0x24, 0x53, 0xc9, 0x38, 0x9b, 0x88, 0xb3, 0x5a, 0x89, 0xc1, 0xf9, 0x9e, 0xb6, 0x43, 0xfe,
+	0xae, 0xc1, 0x52, 0xe4, 0x15, 0x9d, 0xdc, 0x8e, 0xb1, 0x9c, 0x74, 0xa1, 0x2f, 0x4e, 0x8a, 0x81,
+	0x6e, 0x20, 0xa5, 0xb7, 0xf4, 0x37, 0x46, 0x29, 0xed, 0xca, 0xe2, 0x67, 0x17, 0x2b, 0x23, 0x03,
+	0x2b, 0xa3, 0x9e, 0x20, 0xf8, 0x47, 0x0d, 0x36, 0x6b, 0x94, 0x53, 0xc7, 0x1a, 0x81, 0x94, 0x15,
+	0x52, 0x03, 0x75, 0x35, 0x39, 0xf6, 0x2f, 0x8b, 0x98, 0x87, 0x54, 0x04, 0xb1, 0xdf, 0x69, 0x00,
+	0x22, 0x13, 0xe3, 0xad, 0x95, 0x93, 0x1b, 0xf1, 0x00, 0x62, 0x54, 0xa0, 0x8b, 0x52, 0xd2, 0x15,
+	0x5c, 0x0c, 0xd4, 0xbf, 0x8b, 0x44, 0x0c, 0xb2, 0x1b, 0x26, 0x12, 0x4e, 0xc3, 0xdc, 0x78, 0xd6,
+	0x70, 0x1d, 0x9f, 0x3e, 0xf5, 0xeb, 0xcc, 0x7a, 0x6e, 0x34, 0x25, 0xbe, 0x03, 0xd9, 0x43, 0x2a,
+	0xc9, 0xa4, 0x53, 0x68, 0x62, 0x31, 0xa0, 0x6f, 0x20, 0x8b, 0xab, 0x64, 0x25, 0xcc, 0x42, 0x42,
+	0x49, 0x8d, 0xfe, 0x46, 0x83, 0xbc, 0x3c, 0x4a, 0x24, 0x66, 0xa2, 0xb9, 0x09, 0x60, 0xef, 0x22,
+	0xd8, 0xdb, 0x7a, 0x25, 0x61, 0xc9, 0x23, 0xe7, 0x53, 0xb0, 0x6e, 0x11, 0x09, 0x1b, 0xf2, 0x72,
+	0xbb, 0x5c, 0x9c, 0x89, 0x8e, 0x4c, 0xd6, 0x2a, 0x71, 0xcb, 0x16, 0x70, 0x3e, 0xe4, 0xe5, 0xf5,
+	0xf4, 0x1c, 0xce, 0x9e, 0x28, 0x3f, 0xe5, 0xef, 0x9d, 0x58, 0x7f, 0xff, 0x41, 0x83, 0xcb, 0x7d,
+	0xb9, 0xa9, 0x22, 0x29, 0xad, 0xe8, 0xde, 0x4c, 0x5a, 0xf3, 0xa0, 0x32, 0x0b, 0xf6, 0x00, 0xd9,
+	0x8a, 0x22, 0x11, 0xd6, 0x9c, 0xad, 0xf0, 0x7f, 0xaf, 0xc1, 0xc2, 0x81, 0x65, 0x0d, 0x71, 0xda,
+	0x99, 0x0c, 0xc6, 0x53, 0xa7, 0x8b, 0x5b, 0xc8, 0x68, 0x47, 0xbf, 0x11, 0xc5, 0x28, 0x28, 0x0c,
+	0xfb, 0x7c, 0x44, 0x74, 0x3e, 0xd7, 0x80, 0x84, 0xc2, 0xf3, 0x2a, 0x59, 0xed, 0xa4, 0x67, 0xf5,
+	0x57, 0x0d, 0x16, 0x46, 0xaa, 0x6a, 0xb2, 0x1b, 0x43, 0x29, 0xba, 0xfa, 0x2e, 0x6e, 0xc6, 0xb3,
+	0xfa, 0x09, 0xe5, 0x0f, 0xbd, 0x0f, 0x5d, 0xfd, 0x6d, 0xe4, 0xb5, 0x47, 0x8c, 0x54, 0xbc, 0x8c,
+	0x67, 0xea, 0x82, 0xfe, 0x9c, 0x7c, 0xa6, 0x41, 0x4e, 0x28, 0x40, 0xdc, 0xfb, 0x53, 0xab, 0x6a,
+	0x23, 0xa1, 0x78, 0x40, 0x39, 0x7d, 0x07, 0xe9, 0x94, 0xc9, 0xcd, 0x94, 0x99, 0xcc, 0x43, 0x74,
+	0x79, 0xd2, 0x62, 0x21, 0x7d, 0xa1, 0x93, 0x56, 0x58, 0x88, 0x3e, 0x69, 0x11, 0x47, 0xee, 0xaa,
+	0x5f, 0x69, 0x00, 0x32, 0x8b, 0x21, 0x60, 0x92, 0xad, 0x64, 0xa0, 0xef, 0x23, 0xd0, 0x1d, 0x7d,
+	0xef, 0x3c, 0x29, 0x0c, 0x89, 0x08, 0x79, 0xf4, 0x0f, 0xfc, 0x0b, 0xb2, 0x88, 0x3c, 0xf0, 0x07,
+	0xcb, 0x15, 0x50, 0x1e, 0x80, 0xdc, 0x1e, 0xe9, 0x3d, 0x3c, 0x71, 0x3f, 0x28, 0x2f, 0xef, 0xc4,
+	0x79, 0xd9, 0x81, 0xdc, 0x21, 0xf5, 0x55, 0x89, 0xfc, 0x46, 0xbc, 0xb5, 0x27, 0xb5, 0xfb, 0x01,
+	0x66, 0x5c, 0x3d, 0x23, 0x8d, 0xe8, 0x6b, 0x88, 0xb8, 0x4c, 0xae, 0x84, 0x11, 0xdb, 0xa2, 0x8f,
+	0x51, 0x4e, 0x7e, 0x2d, 0xd3, 0x52, 0xb8, 0x4c, 0x8e, 0x4d, 0x00, 0x11, 0xb5, 0xf4, 0x24, 0xf0,
+	0x6d, 0x04, 0xd7, 0xf5, 0x6b, 0x51, 0xe0, 0x46, 0x50, 0x2e, 0x0b, 0x67, 0x7f, 0xd6, 0x4f, 0x46,
+	0xaf, 0x98, 0xcb, 0xce, 0x64, 0x2e, 0x7f, 0xd1, 0x60, 0xe5, 0x90, 0xfa, 0xf7, 0x4e, 0x4e, 0x68,
+	0xc3, 0x67, 0x5d, 0x1a, 0x7a, 0xf5, 0x4a, 0x19, 0x93, 0x1b, 0x71, 0x54, 0x86, 0x9e, 0xda, 0xf4,
+	0x0a, 0x52, 0xba, 0x49, 0x76, 0x22, 0x29, 0xd1, 0x00, 0x7f, 0x37, 0xfc, 0x42, 0xf5, 0x5b, 0x0d,
+	0x2e, 0x0d, 0xbf, 0xc4, 0x91, 0x9b, 0x31, 0x68, 0x91, 0x0f, 0x76, 0x69, 0xb2, 0xa3, 0x72, 0x15,
+	0x29, 0x45, 0xf2, 0x0a, 0xb3, 0xf9, 0x14, 0x16, 0xc4, 0x4a, 0xc2, 0x6c, 0x26, 0x5e, 0x30, 0x53,
+	0x3a, 0x27, 0xf2, 0x5e, 0x15, 0xc6, 0xf6, 0x21, 0x2f, 0x06, 0xca, 0x9a, 0x28, 0x75, 0x2e, 0xde,
+	0x4c, 0x2c, 0xff, 0x11, 0x79, 0x15, 0x91, 0x97, 0xc8, 0x62, 0x18, 0x59, 0xbe, 0xd4, 0x73, 0xf2,
+	0x31, 0xee, 0x50, 0xf5, 0xb8, 0x93, 0x2a, 0x29, 0x24, 0x3f, 0x38, 0xe8, 0x25, 0x44, 0x2b, 0x92,
+	0x42, 0x04, 0x9a, 0x4c, 0x0a, 0x3f, 0x87, 0xf9, 0xf0, 0x53, 0x44, 0xec, 0xa6, 0x88, 0x78, 0xaf,
+	0x28, 0x5e, 0x4f, 0x04, 0x97, 0x4f, 0x08, 0x41, 0x56, 0xd2, 0xa3, 0x16, 0x2c, 0x36, 0xc4, 0x73,
+	0x98, 0x0f, 0xd7, 0x9f, 0x2f, 0x29, 0x17, 0x6e, 0x21, 0xea, 0xa6, 0xbe, 0x11, 0xb7, 0x70, 0x43,
+	0x3e, 0xf0, 0x90, 0x2e, 0xcc, 0xcb, 0xd4, 0xf0, 0x52, 0xe1, 0x95, 0xdf, 0x77, 0xe2, 0xfd, 0xfe,
+	0x4f, 0x0d, 0xc8, 0xf8, 0x7b, 0x05, 0xb9, 0x15, 0xe7, 0xd2, 0xb8, 0xc7, 0x95, 0xe2, 0xde, 0x39,
+	0x66, 0xc8, 0xf7, 0x02, 0x7d, 0x17, 0xd9, 0x6d, 0x0d, 0x5f, 0xe7, 0x86, 0x9c, 0x63, 0x86, 0x26,
+	0x93, 0xbf, 0x69, 0x70, 0x79, 0xf4, 0xed, 0x81, 0x94, 0xe3, 0x92, 0x67, 0xf4, 0x93, 0x48, 0xd1,
+	0x48, 0x3d, 0x5e, 0x91, 0x0c, 0xd2, 0xfb, 0x50, 0x9e, 0xc0, 0x07, 0x08, 0x6e, 0x3c, 0xc3, 0xbf,
+	0x22, 0x86, 0x0e, 0xfd, 0x44, 0x5c, 0x7f, 0x5f, 0x1f, 0x7b, 0xc2, 0x20, 0xf1, 0x80, 0xd1, 0x8f,
+	0x1d, 0x93, 0x83, 0xfa, 0x16, 0x32, 0xba, 0xae, 0x6f, 0x26, 0x32, 0x12, 0xd6, 0xdf, 0xdb, 0xff,
+	0xf7, 0x8b, 0x75, 0xed, 0x3f, 0x2f, 0xd6, 0xb5, 0xff, 0xbd, 0x58, 0xd7, 0xfe, 0xfc, 0xc5, 0xfa,
+	0xb7, 0x7e, 0xba, 0x15, 0xfa, 0xdf, 0x6e, 0x80, 0xb3, 0x6b, 0x9b, 0x8e, 0xd9, 0xa4, 0x96, 0xb0,
+	0xc7, 0x95, 0xc1, 0xe3, 0x59, 0x7c, 0xae, 0xb9, 0xfd, 0x55, 0x00, 0x00, 0x00, 0xff, 0xff, 0x17,
+	0x57, 0x39, 0xfb, 0x84, 0x1e, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1305,6 +1951,52 @@ type IAMServiceClient interface {
 	// Required permissions:
 	// - None
 	ListPermissions(ctx context.Context, in *v1.Empty, opts ...grpc.CallOption) (*PermissionList, error)
+	// Fetch all API keys owned by the authenticated caller.
+	// Required permissions:
+	// - None
+	ListAPIKeys(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*APIKeyList, error)
+	// Fetch an API key by its id.
+	// The API key must be owned by the authenticated caller.
+	// Required permissions:
+	// - None
+	GetAPIKey(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*APIKey, error)
+	// Create a new API key.
+	// The API key will be owned by the authenticated caller.
+	// Required permissions:
+	// - None
+	CreateAPIKey(ctx context.Context, in *CreateAPIKeyRequest, opts ...grpc.CallOption) (*APIKeySecret, error)
+	// Ensure that the expiration date of the API key identified by given ID
+	// is either in the past or set to now.
+	// The API key must be owned by the authenticated caller.
+	// Required permissions:
+	// - None
+	RevokeAPIKey(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
+	// Delete the API key identified by given ID
+	// The API key must be owned by the authenticated caller.
+	// Required permissions:
+	// - None
+	DeleteAPIKey(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
+	// Authenticate using an API key.
+	// If authentication succeeds, this function returns a bearer token.
+	// That token must be used to authenticate all other API requests.
+	// If the given API key identifier is invalid or expired, or an incorrect secret
+	// is given, this function will return an unauthenticated error.
+	// Required permissions:
+	// - None
+	AuthenticateAPIKey(ctx context.Context, in *AuthenticateAPIKeyRequest, opts ...grpc.CallOption) (*AuthenticateAPIKeyResponse, error)
+	// Renew a non-expired API key authentication token.
+	// This allows to extend the lifetime of a token created by AuthenticateAPIKey.
+	// If the given token is invalid or expired, or the underlying API key is expired
+	// this function will return an unauthenticated error.
+	// Required permissions:
+	// - None
+	RenewAPIKeyToken(ctx context.Context, in *RenewAPIKeyTokenRequest, opts ...grpc.CallOption) (*RenewAPIKeyTokenResponse, error)
+	// Revoke an API key authentication token.
+	// This function will return a non-error response, even if the given token
+	// is invalid or already expired.
+	// Required permissions:
+	// - None
+	RevokeAPIKeyToken(ctx context.Context, in *RevokeAPIKeyTokenRequest, opts ...grpc.CallOption) (*v1.Empty, error)
 }
 
 type iAMServiceClient struct {
@@ -1540,6 +2232,78 @@ func (c *iAMServiceClient) ListPermissions(ctx context.Context, in *v1.Empty, op
 	return out, nil
 }
 
+func (c *iAMServiceClient) ListAPIKeys(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*APIKeyList, error) {
+	out := new(APIKeyList)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.iam.v1.IAMService/ListAPIKeys", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iAMServiceClient) GetAPIKey(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*APIKey, error) {
+	out := new(APIKey)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.iam.v1.IAMService/GetAPIKey", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iAMServiceClient) CreateAPIKey(ctx context.Context, in *CreateAPIKeyRequest, opts ...grpc.CallOption) (*APIKeySecret, error) {
+	out := new(APIKeySecret)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.iam.v1.IAMService/CreateAPIKey", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iAMServiceClient) RevokeAPIKey(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error) {
+	out := new(v1.Empty)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.iam.v1.IAMService/RevokeAPIKey", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iAMServiceClient) DeleteAPIKey(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error) {
+	out := new(v1.Empty)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.iam.v1.IAMService/DeleteAPIKey", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iAMServiceClient) AuthenticateAPIKey(ctx context.Context, in *AuthenticateAPIKeyRequest, opts ...grpc.CallOption) (*AuthenticateAPIKeyResponse, error) {
+	out := new(AuthenticateAPIKeyResponse)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.iam.v1.IAMService/AuthenticateAPIKey", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iAMServiceClient) RenewAPIKeyToken(ctx context.Context, in *RenewAPIKeyTokenRequest, opts ...grpc.CallOption) (*RenewAPIKeyTokenResponse, error) {
+	out := new(RenewAPIKeyTokenResponse)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.iam.v1.IAMService/RenewAPIKeyToken", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iAMServiceClient) RevokeAPIKeyToken(ctx context.Context, in *RevokeAPIKeyTokenRequest, opts ...grpc.CallOption) (*v1.Empty, error) {
+	out := new(v1.Empty)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.iam.v1.IAMService/RevokeAPIKeyToken", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IAMServiceServer is the server API for IAMService service.
 type IAMServiceServer interface {
 	// Fetch all available information of the currently authenticated user.
@@ -1652,6 +2416,52 @@ type IAMServiceServer interface {
 	// Required permissions:
 	// - None
 	ListPermissions(context.Context, *v1.Empty) (*PermissionList, error)
+	// Fetch all API keys owned by the authenticated caller.
+	// Required permissions:
+	// - None
+	ListAPIKeys(context.Context, *v1.ListOptions) (*APIKeyList, error)
+	// Fetch an API key by its id.
+	// The API key must be owned by the authenticated caller.
+	// Required permissions:
+	// - None
+	GetAPIKey(context.Context, *v1.IDOptions) (*APIKey, error)
+	// Create a new API key.
+	// The API key will be owned by the authenticated caller.
+	// Required permissions:
+	// - None
+	CreateAPIKey(context.Context, *CreateAPIKeyRequest) (*APIKeySecret, error)
+	// Ensure that the expiration date of the API key identified by given ID
+	// is either in the past or set to now.
+	// The API key must be owned by the authenticated caller.
+	// Required permissions:
+	// - None
+	RevokeAPIKey(context.Context, *v1.IDOptions) (*v1.Empty, error)
+	// Delete the API key identified by given ID
+	// The API key must be owned by the authenticated caller.
+	// Required permissions:
+	// - None
+	DeleteAPIKey(context.Context, *v1.IDOptions) (*v1.Empty, error)
+	// Authenticate using an API key.
+	// If authentication succeeds, this function returns a bearer token.
+	// That token must be used to authenticate all other API requests.
+	// If the given API key identifier is invalid or expired, or an incorrect secret
+	// is given, this function will return an unauthenticated error.
+	// Required permissions:
+	// - None
+	AuthenticateAPIKey(context.Context, *AuthenticateAPIKeyRequest) (*AuthenticateAPIKeyResponse, error)
+	// Renew a non-expired API key authentication token.
+	// This allows to extend the lifetime of a token created by AuthenticateAPIKey.
+	// If the given token is invalid or expired, or the underlying API key is expired
+	// this function will return an unauthenticated error.
+	// Required permissions:
+	// - None
+	RenewAPIKeyToken(context.Context, *RenewAPIKeyTokenRequest) (*RenewAPIKeyTokenResponse, error)
+	// Revoke an API key authentication token.
+	// This function will return a non-error response, even if the given token
+	// is invalid or already expired.
+	// Required permissions:
+	// - None
+	RevokeAPIKeyToken(context.Context, *RevokeAPIKeyTokenRequest) (*v1.Empty, error)
 }
 
 func RegisterIAMServiceServer(s *grpc.Server, srv IAMServiceServer) {
@@ -2108,6 +2918,150 @@ func _IAMService_ListPermissions_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _IAMService_ListAPIKeys_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.ListOptions)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IAMServiceServer).ListAPIKeys(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.iam.v1.IAMService/ListAPIKeys",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IAMServiceServer).ListAPIKeys(ctx, req.(*v1.ListOptions))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IAMService_GetAPIKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.IDOptions)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IAMServiceServer).GetAPIKey(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.iam.v1.IAMService/GetAPIKey",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IAMServiceServer).GetAPIKey(ctx, req.(*v1.IDOptions))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IAMService_CreateAPIKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateAPIKeyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IAMServiceServer).CreateAPIKey(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.iam.v1.IAMService/CreateAPIKey",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IAMServiceServer).CreateAPIKey(ctx, req.(*CreateAPIKeyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IAMService_RevokeAPIKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.IDOptions)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IAMServiceServer).RevokeAPIKey(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.iam.v1.IAMService/RevokeAPIKey",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IAMServiceServer).RevokeAPIKey(ctx, req.(*v1.IDOptions))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IAMService_DeleteAPIKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.IDOptions)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IAMServiceServer).DeleteAPIKey(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.iam.v1.IAMService/DeleteAPIKey",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IAMServiceServer).DeleteAPIKey(ctx, req.(*v1.IDOptions))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IAMService_AuthenticateAPIKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AuthenticateAPIKeyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IAMServiceServer).AuthenticateAPIKey(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.iam.v1.IAMService/AuthenticateAPIKey",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IAMServiceServer).AuthenticateAPIKey(ctx, req.(*AuthenticateAPIKeyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IAMService_RenewAPIKeyToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RenewAPIKeyTokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IAMServiceServer).RenewAPIKeyToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.iam.v1.IAMService/RenewAPIKeyToken",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IAMServiceServer).RenewAPIKeyToken(ctx, req.(*RenewAPIKeyTokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IAMService_RevokeAPIKeyToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RevokeAPIKeyTokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IAMServiceServer).RevokeAPIKeyToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.iam.v1.IAMService/RevokeAPIKeyToken",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IAMServiceServer).RevokeAPIKeyToken(ctx, req.(*RevokeAPIKeyTokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _IAMService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "arangodb.cloud.iam.v1.IAMService",
 	HandlerType: (*IAMServiceServer)(nil),
@@ -2211,6 +3165,38 @@ var _IAMService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListPermissions",
 			Handler:    _IAMService_ListPermissions_Handler,
+		},
+		{
+			MethodName: "ListAPIKeys",
+			Handler:    _IAMService_ListAPIKeys_Handler,
+		},
+		{
+			MethodName: "GetAPIKey",
+			Handler:    _IAMService_GetAPIKey_Handler,
+		},
+		{
+			MethodName: "CreateAPIKey",
+			Handler:    _IAMService_CreateAPIKey_Handler,
+		},
+		{
+			MethodName: "RevokeAPIKey",
+			Handler:    _IAMService_RevokeAPIKey_Handler,
+		},
+		{
+			MethodName: "DeleteAPIKey",
+			Handler:    _IAMService_DeleteAPIKey_Handler,
+		},
+		{
+			MethodName: "AuthenticateAPIKey",
+			Handler:    _IAMService_AuthenticateAPIKey_Handler,
+		},
+		{
+			MethodName: "RenewAPIKeyToken",
+			Handler:    _IAMService_RenewAPIKeyToken_Handler,
+		},
+		{
+			MethodName: "RevokeAPIKeyToken",
+			Handler:    _IAMService_RevokeAPIKeyToken_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -2324,6 +3310,12 @@ func (m *User) MarshalTo(dAtA []byte) (int, error) {
 		i++
 		i = encodeVarintIam(dAtA, i, uint64(len(m.DashboardAccessDeniedReason)))
 		i += copy(dAtA[i:], m.DashboardAccessDeniedReason)
+	}
+	if len(m.ApikeyId) > 0 {
+		dAtA[i] = 0x6a
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(len(m.ApikeyId)))
+		i += copy(dAtA[i:], m.ApikeyId)
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -2927,6 +3919,399 @@ func (m *RoleBindingsRequest) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
+func (m *APIKey) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *APIKey) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Id) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Id)))
+		i += copy(dAtA[i:], m.Id)
+	}
+	if len(m.Url) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Url)))
+		i += copy(dAtA[i:], m.Url)
+	}
+	if len(m.UserId) > 0 {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(len(m.UserId)))
+		i += copy(dAtA[i:], m.UserId)
+	}
+	if len(m.OrganizationId) > 0 {
+		dAtA[i] = 0x22
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(len(m.OrganizationId)))
+		i += copy(dAtA[i:], m.OrganizationId)
+	}
+	if m.IsReadonly {
+		dAtA[i] = 0x28
+		i++
+		if m.IsReadonly {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i++
+	}
+	if m.CreatedAt != nil {
+		dAtA[i] = 0x32
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(m.CreatedAt.Size()))
+		n6, err := m.CreatedAt.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n6
+	}
+	if m.ExpiresAt != nil {
+		dAtA[i] = 0x3a
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(m.ExpiresAt.Size()))
+		n7, err := m.ExpiresAt.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n7
+	}
+	if m.IsExpired {
+		dAtA[i] = 0x40
+		i++
+		if m.IsExpired {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i++
+	}
+	if m.RevokedAt != nil {
+		dAtA[i] = 0x4a
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(m.RevokedAt.Size()))
+		n8, err := m.RevokedAt.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n8
+	}
+	if m.IsRevoked {
+		dAtA[i] = 0x50
+		i++
+		if m.IsRevoked {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i++
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *APIKeyList) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *APIKeyList) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Items) > 0 {
+		for _, msg := range m.Items {
+			dAtA[i] = 0xa
+			i++
+			i = encodeVarintIam(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *CreateAPIKeyRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CreateAPIKeyRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.OrganizationId) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(len(m.OrganizationId)))
+		i += copy(dAtA[i:], m.OrganizationId)
+	}
+	if m.Readonly {
+		dAtA[i] = 0x10
+		i++
+		if m.Readonly {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i++
+	}
+	if m.TimeToLive != nil {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(m.TimeToLive.Size()))
+		n9, err := m.TimeToLive.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n9
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *APIKeySecret) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *APIKeySecret) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Id) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Id)))
+		i += copy(dAtA[i:], m.Id)
+	}
+	if len(m.Secret) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Secret)))
+		i += copy(dAtA[i:], m.Secret)
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *AuthenticateAPIKeyRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *AuthenticateAPIKeyRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Id) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Id)))
+		i += copy(dAtA[i:], m.Id)
+	}
+	if len(m.Secret) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Secret)))
+		i += copy(dAtA[i:], m.Secret)
+	}
+	if m.TimeToLive != nil {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(m.TimeToLive.Size()))
+		n10, err := m.TimeToLive.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n10
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *AuthenticateAPIKeyResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *AuthenticateAPIKeyResponse) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Token) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Token)))
+		i += copy(dAtA[i:], m.Token)
+	}
+	if m.TimeToLive != nil {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(m.TimeToLive.Size()))
+		n11, err := m.TimeToLive.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n11
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *RenewAPIKeyTokenRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *RenewAPIKeyTokenRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Token) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Token)))
+		i += copy(dAtA[i:], m.Token)
+	}
+	if m.TimeToLive != nil {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(m.TimeToLive.Size()))
+		n12, err := m.TimeToLive.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n12
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *RenewAPIKeyTokenResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *RenewAPIKeyTokenResponse) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.TimeToLive != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(m.TimeToLive.Size()))
+		n13, err := m.TimeToLive.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n13
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *RevokeAPIKeyTokenRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *RevokeAPIKeyTokenRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Token) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Token)))
+		i += copy(dAtA[i:], m.Token)
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
 func encodeVarintIam(dAtA []byte, offset int, v uint64) int {
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
@@ -2987,6 +4372,10 @@ func (m *User) Size() (n int) {
 		n += 2
 	}
 	l = len(m.DashboardAccessDeniedReason)
+	if l > 0 {
+		n += 1 + l + sovIam(uint64(l))
+	}
+	l = len(m.ApikeyId)
 	if l > 0 {
 		n += 1 + l + sovIam(uint64(l))
 	}
@@ -3307,6 +4696,212 @@ func (m *RoleBindingsRequest) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovIam(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *APIKey) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovIam(uint64(l))
+	}
+	l = len(m.Url)
+	if l > 0 {
+		n += 1 + l + sovIam(uint64(l))
+	}
+	l = len(m.UserId)
+	if l > 0 {
+		n += 1 + l + sovIam(uint64(l))
+	}
+	l = len(m.OrganizationId)
+	if l > 0 {
+		n += 1 + l + sovIam(uint64(l))
+	}
+	if m.IsReadonly {
+		n += 2
+	}
+	if m.CreatedAt != nil {
+		l = m.CreatedAt.Size()
+		n += 1 + l + sovIam(uint64(l))
+	}
+	if m.ExpiresAt != nil {
+		l = m.ExpiresAt.Size()
+		n += 1 + l + sovIam(uint64(l))
+	}
+	if m.IsExpired {
+		n += 2
+	}
+	if m.RevokedAt != nil {
+		l = m.RevokedAt.Size()
+		n += 1 + l + sovIam(uint64(l))
+	}
+	if m.IsRevoked {
+		n += 2
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *APIKeyList) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Items) > 0 {
+		for _, e := range m.Items {
+			l = e.Size()
+			n += 1 + l + sovIam(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *CreateAPIKeyRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.OrganizationId)
+	if l > 0 {
+		n += 1 + l + sovIam(uint64(l))
+	}
+	if m.Readonly {
+		n += 2
+	}
+	if m.TimeToLive != nil {
+		l = m.TimeToLive.Size()
+		n += 1 + l + sovIam(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *APIKeySecret) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovIam(uint64(l))
+	}
+	l = len(m.Secret)
+	if l > 0 {
+		n += 1 + l + sovIam(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *AuthenticateAPIKeyRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovIam(uint64(l))
+	}
+	l = len(m.Secret)
+	if l > 0 {
+		n += 1 + l + sovIam(uint64(l))
+	}
+	if m.TimeToLive != nil {
+		l = m.TimeToLive.Size()
+		n += 1 + l + sovIam(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *AuthenticateAPIKeyResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Token)
+	if l > 0 {
+		n += 1 + l + sovIam(uint64(l))
+	}
+	if m.TimeToLive != nil {
+		l = m.TimeToLive.Size()
+		n += 1 + l + sovIam(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *RenewAPIKeyTokenRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Token)
+	if l > 0 {
+		n += 1 + l + sovIam(uint64(l))
+	}
+	if m.TimeToLive != nil {
+		l = m.TimeToLive.Size()
+		n += 1 + l + sovIam(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *RenewAPIKeyTokenResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.TimeToLive != nil {
+		l = m.TimeToLive.Size()
+		n += 1 + l + sovIam(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *RevokeAPIKeyTokenRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Token)
+	if l > 0 {
+		n += 1 + l + sovIam(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -3719,6 +5314,38 @@ func (m *User) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.DashboardAccessDeniedReason = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 13:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ApikeyId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthIam
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ApikeyId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -5581,6 +7208,1278 @@ func (m *RoleBindingsRequest) Unmarshal(dAtA []byte) error {
 			if err := m.Bindings[len(m.Bindings)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipIam(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *APIKey) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowIam
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: APIKey: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: APIKey: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthIam
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Url", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthIam
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Url = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UserId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthIam
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.UserId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OrganizationId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthIam
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OrganizationId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field IsReadonly", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.IsReadonly = bool(v != 0)
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthIam
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.CreatedAt == nil {
+				m.CreatedAt = &types.Timestamp{}
+			}
+			if err := m.CreatedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ExpiresAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthIam
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.ExpiresAt == nil {
+				m.ExpiresAt = &types.Timestamp{}
+			}
+			if err := m.ExpiresAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 8:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field IsExpired", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.IsExpired = bool(v != 0)
+		case 9:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RevokedAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthIam
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.RevokedAt == nil {
+				m.RevokedAt = &types.Timestamp{}
+			}
+			if err := m.RevokedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 10:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field IsRevoked", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.IsRevoked = bool(v != 0)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipIam(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *APIKeyList) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowIam
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: APIKeyList: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: APIKeyList: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Items", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthIam
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Items = append(m.Items, &APIKey{})
+			if err := m.Items[len(m.Items)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipIam(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *CreateAPIKeyRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowIam
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CreateAPIKeyRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CreateAPIKeyRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OrganizationId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthIam
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OrganizationId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Readonly", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Readonly = bool(v != 0)
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TimeToLive", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthIam
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.TimeToLive == nil {
+				m.TimeToLive = &types.Duration{}
+			}
+			if err := m.TimeToLive.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipIam(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *APIKeySecret) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowIam
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: APIKeySecret: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: APIKeySecret: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthIam
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Secret", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthIam
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Secret = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipIam(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *AuthenticateAPIKeyRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowIam
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: AuthenticateAPIKeyRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: AuthenticateAPIKeyRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthIam
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Secret", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthIam
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Secret = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TimeToLive", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthIam
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.TimeToLive == nil {
+				m.TimeToLive = &types.Duration{}
+			}
+			if err := m.TimeToLive.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipIam(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *AuthenticateAPIKeyResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowIam
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: AuthenticateAPIKeyResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: AuthenticateAPIKeyResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Token", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthIam
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Token = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TimeToLive", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthIam
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.TimeToLive == nil {
+				m.TimeToLive = &types.Duration{}
+			}
+			if err := m.TimeToLive.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipIam(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *RenewAPIKeyTokenRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowIam
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RenewAPIKeyTokenRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RenewAPIKeyTokenRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Token", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthIam
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Token = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TimeToLive", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthIam
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.TimeToLive == nil {
+				m.TimeToLive = &types.Duration{}
+			}
+			if err := m.TimeToLive.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipIam(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *RenewAPIKeyTokenResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowIam
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RenewAPIKeyTokenResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RenewAPIKeyTokenResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TimeToLive", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthIam
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.TimeToLive == nil {
+				m.TimeToLive = &types.Duration{}
+			}
+			if err := m.TimeToLive.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipIam(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthIam
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *RevokeAPIKeyTokenRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowIam
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RevokeAPIKeyTokenRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RevokeAPIKeyTokenRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Token", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowIam
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthIam
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthIam
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Token = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
