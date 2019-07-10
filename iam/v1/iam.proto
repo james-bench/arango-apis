@@ -528,6 +528,9 @@ message RoleBinding {
     string member_id = 2;
     // Identifier of the Role to grant to member
     string role_id = 3;
+    // If set, this this role-binding cannot be deleted  
+    // This is a read-only value.
+    bool delete_not_allowed = 4;
 }
 
 // Policy bindings members to roles for access to a resource.

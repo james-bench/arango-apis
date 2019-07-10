@@ -323,6 +323,11 @@ export interface RoleBinding {
   // Identifier of the Role to grant to member
   // string
   role_id?: string;
+  
+  // If set, this this role-binding cannot be deleted
+  // This is a read-only value.
+  // boolean
+  delete_not_allowed?: boolean;
 }
 
 // Request arguments for Add/DeleteRoleBindings.
