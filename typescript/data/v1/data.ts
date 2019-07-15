@@ -35,6 +35,25 @@ export interface CalculateDeploymentSizeRequest {
   dbserver_disk_size?: number;
 }
 
+// DataVolumeInfo provides information about a data volume
+export interface DataVolumeInfo {
+  // The total number of bytes of the data volume.
+  // number
+  total_bytes?: number;
+  
+  // The number of bytes used on the data volume.
+  // number
+  used_bytes?: number;
+  
+  // The number of bytes available on the data volume.
+  // number
+  available_bytes?: number;
+  
+  // When this info has been measused
+  // googleTypes.Timestamp
+  measured_at?: googleTypes.Timestamp;
+}
+
 // A Deployment is represents one deployment of an ArangoDB cluster.
 export interface Deployment {
   // System identifier of the deployment.
@@ -214,6 +233,10 @@ export interface Deployment_ServerStatus {
   // Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading.
   // boolean
   upgrading?: boolean;
+  
+  // Information about the data volume used to store the data
+  // DataVolumeInfo
+  data_volume_info?: DataVolumeInfo;
 }
 export interface Deployment_ServersSpec {
   // Number of coordinators of the deployment

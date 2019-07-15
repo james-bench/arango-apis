@@ -28,6 +28,7 @@
 
 - [data/v1/data.proto](#data/v1/data.proto)
     - [CalculateDeploymentSizeRequest](#arangodb.cloud.data.v1.CalculateDeploymentSizeRequest)
+    - [DataVolumeInfo](#arangodb.cloud.data.v1.DataVolumeInfo)
     - [Deployment](#arangodb.cloud.data.v1.Deployment)
     - [Deployment.AuthenticationSpec](#arangodb.cloud.data.v1.Deployment.AuthenticationSpec)
     - [Deployment.CertificateSpec](#arangodb.cloud.data.v1.Deployment.CertificateSpec)
@@ -395,6 +396,24 @@ Request arguments for CalculateDeploymentSize
 
 
 
+<a name="arangodb.cloud.data.v1.DataVolumeInfo"></a>
+
+### DataVolumeInfo
+DataVolumeInfo provides information about a data volume
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| total_bytes | [int64](#int64) |  | The total number of bytes of the data volume. |
+| used_bytes | [int64](#int64) |  | The number of bytes used on the data volume. |
+| available_bytes | [int64](#int64) |  | The number of bytes available on the data volume. |
+| measured_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | When this info has been measused |
+
+
+
+
+
+
 <a name="arangodb.cloud.data.v1.Deployment"></a>
 
 ### Deployment
@@ -496,6 +515,7 @@ Status of a single server (of the ArangoDB cluster)
 | creating | [bool](#bool) |  | Set if the server is still being created Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading. |
 | ok | [bool](#bool) |  | Set if the server is in the ok state. Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading. |
 | upgrading | [bool](#bool) |  | Set if the server is still being upgraded Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading. |
+| data_volume_info | [DataVolumeInfo](#arangodb.cloud.data.v1.DataVolumeInfo) |  | Information about the data volume used to store the data |
 
 
 
