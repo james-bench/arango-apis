@@ -231,6 +231,8 @@ message Deployment {
         // Set if the server is still being upgraded
         // Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading.
         bool upgrading = 10;
+        // Information about the data volume used to store the data
+        DataVolumeInfo data_volume_info = 20;
     }
 
     // Status of the deployment
@@ -401,4 +403,16 @@ message DeploymentSize {
     int32 total_memory_size = 11; 
     // Total (combined) amount of disk space (in GB) used by all servers (agents & dbservers)
     int32 total_disk_size = 12; 
+}
+
+// DataVolumeInfo provides information about a data volume
+message DataVolumeInfo {
+    // The total number of bytes of the data volume.
+    int64 total_bytes = 1;
+    // The number of bytes used on the data volume.
+    int64 used_bytes = 2;
+    // The number of bytes available on the data volume.
+    int64 available_bytes = 3;
+    // When this info has been measused
+    google.protobuf.Timestamp measured_at = 10;
 }
