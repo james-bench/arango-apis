@@ -41,7 +41,16 @@ func DeploymentServerStatusEqual(a, b *Deployment_ServerStatus) bool {
 		a.GetDescription() == b.GetDescription() &&
 		a.GetReady() == b.GetReady() &&
 		a.GetMemberOfCluster() == b.GetMemberOfCluster() &&
-		a.GetFailed() == b.GetFailed()
+		a.GetFailed() == b.GetFailed() &&
+		DataVolumeInfoEqual(a.GetDataVolumeInfo(), b.GetDataVolumeInfo())
+}
+
+// DataVolumeInfoEqual returns true when the fields of a & b are equal.
+func DataVolumeInfoEqual(a, b *DataVolumeInfo) bool {
+	return a.GetAvailableBytes() == b.GetAvailableBytes() &&
+		a.GetMeasuredAt() == b.GetMeasuredAt() &&
+		a.GetTotalBytes() == b.GetTotalBytes() &&
+		a.GetUsedBytes() == b.GetUsedBytes()
 }
 
 // GetOrCreateAuthentication returns the Authentication field, creating it if needed.
