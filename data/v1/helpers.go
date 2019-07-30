@@ -10,6 +10,38 @@ package v1
 
 import "strings"
 
+// SpecEquals returns true when source & other have the same specification values
+func (source *Deployment) SpecEquals(other *Deployment) bool {
+	return source.GetVersion() == other.GetVersion() &&
+		source.GetRegionId() == other.GetRegionId() &&
+		source.GetIpwhitelistId() == other.GetIpwhitelistId() &&
+		source.GetCertificates().Equals(other.GetCertificates()) &&
+		source.GetServers().Equals(other.GetServers()) &&
+		source.GetAuthentication().Equals(other.GetAuthentication())
+}
+
+// Equals returns true when source & other have the same values
+func (source *Deployment_CertificateSpec) Equals(other *Deployment_CertificateSpec) bool {
+	return source.GetCaCertificateId() == other.GetCaCertificateId() &&
+		strings.Join(source.GetAlternateDnsNames(), ",") == strings.Join(other.GetAlternateDnsNames(), ",")
+}
+
+// Equals returns true when source & other have the same values
+func (source *Deployment_ServersSpec) Equals(other *Deployment_ServersSpec) bool {
+	return source.GetCoordinators() == other.GetCoordinators() &&
+		source.GetCoordinatorMemorySize() == other.GetCoordinatorMemorySize() &&
+		strings.Join(source.GetCoordinatorArgs(), ",") == strings.Join(other.GetCoordinatorArgs(), ",") &&
+		source.GetDbservers() == other.GetDbservers() &&
+		source.GetDbserverDiskSize() == other.GetDbserverDiskSize() &&
+		source.GetDbserverMemorySize() == other.GetDbserverMemorySize() &&
+		strings.Join(source.GetDbserverArgs(), ",") == strings.Join(other.GetDbserverArgs(), ",")
+}
+
+// Equals returns true when source & other have the same values
+func (source *Deployment_AuthenticationSpec) Equals(other *Deployment_AuthenticationSpec) bool {
+	return source.GetRootPassword() == other.GetRootPassword()
+}
+
 // DeploymentStatusEqual returns true when the fields of a & b are equal.
 func DeploymentStatusEqual(a, b *Deployment_Status, ignoreTimestamps bool) bool {
 	return a.GetEndpoint() == b.GetEndpoint() &&
