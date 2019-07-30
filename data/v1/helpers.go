@@ -11,23 +11,23 @@ package v1
 import "strings"
 
 // DeploymentStatusEqual returns true when the fields of a & b are equal.
-func DeploymentStatusEqual(a, b *Deployment_Status) bool {
+func DeploymentStatusEqual(a, b *Deployment_Status, ignoreTimestamps bool) bool {
 	return a.GetEndpoint() == b.GetEndpoint() &&
 		a.GetDescription() == b.GetDescription() &&
 		a.GetCreated() == b.GetCreated() &&
 		a.GetReady() == b.GetReady() &&
 		a.GetUpgrading() == b.GetUpgrading() &&
 		strings.Join(a.GetServerVersions(), ",") == strings.Join(b.GetServerVersions(), ",") &&
-		DeploymentServerStatusListEqual(a.GetServers(), b.GetServers())
+		DeploymentServerStatusListEqual(a.GetServers(), b.GetServers(), ignoreTimestamps)
 }
 
 // DeploymentServerStatusListEqual returns true when the elements of a & b are equal.
-func DeploymentServerStatusListEqual(a, b []*Deployment_ServerStatus) bool {
+func DeploymentServerStatusListEqual(a, b []*Deployment_ServerStatus, ignoreTimestamps bool) bool {
 	if len(a) != len(b) {
 		return false
 	}
 	for i, x := range a {
-		if !DeploymentServerStatusEqual(x, b[i]) {
+		if !DeploymentServerStatusEqual(x, b[i], ignoreTimestamps) {
 			return false
 		}
 	}
@@ -35,20 +35,20 @@ func DeploymentServerStatusListEqual(a, b []*Deployment_ServerStatus) bool {
 }
 
 // DeploymentServerStatusEqual returns true when the fields of a & b are equal.
-func DeploymentServerStatusEqual(a, b *Deployment_ServerStatus) bool {
+func DeploymentServerStatusEqual(a, b *Deployment_ServerStatus, ignoreTimestamps bool) bool {
 	return a.GetId() == b.GetId() &&
 		a.GetType() == b.GetType() &&
 		a.GetDescription() == b.GetDescription() &&
 		a.GetReady() == b.GetReady() &&
 		a.GetMemberOfCluster() == b.GetMemberOfCluster() &&
 		a.GetFailed() == b.GetFailed() &&
-		DataVolumeInfoEqual(a.GetDataVolumeInfo(), b.GetDataVolumeInfo())
+		DataVolumeInfoEqual(a.GetDataVolumeInfo(), b.GetDataVolumeInfo(), ignoreTimestamps)
 }
 
 // DataVolumeInfoEqual returns true when the fields of a & b are equal.
-func DataVolumeInfoEqual(a, b *DataVolumeInfo) bool {
+func DataVolumeInfoEqual(a, b *DataVolumeInfo, ignoreTimestamps bool) bool {
 	return a.GetAvailableBytes() == b.GetAvailableBytes() &&
-		a.GetMeasuredAt() == b.GetMeasuredAt() &&
+		(ignoreTimestamps || (a.GetMeasuredAt() == b.GetMeasuredAt())) &&
 		a.GetTotalBytes() == b.GetTotalBytes() &&
 		a.GetUsedBytes() == b.GetUsedBytes()
 }
