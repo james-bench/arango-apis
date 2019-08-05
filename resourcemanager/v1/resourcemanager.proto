@@ -429,6 +429,9 @@ message Event {
     // URL of the subject of this event.
     // This is a read-only value.
     string subject_url = 8;
+    // If set, this event is not persisted.
+    // This is a read-only value.
+    bool volatile = 9;
 }
 
 // List of Events.
