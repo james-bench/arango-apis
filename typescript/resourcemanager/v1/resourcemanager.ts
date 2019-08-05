@@ -54,6 +54,11 @@ export interface Event {
   // This is a read-only value.
   // string
   subject_url?: string;
+  
+  // If set, this event is not persisted.
+  // This is a read-only value.
+  // boolean
+  volatile?: boolean;
 }
 export interface Event_PayloadEntry {
   // string
