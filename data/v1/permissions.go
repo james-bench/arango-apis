@@ -24,6 +24,13 @@ const (
 )
 
 const (
+	// DeploymentCredentials permissions
+
+	// PermissionDeploymentCredentialsGet is needed for fetching credentials of an individual deployments in a project
+	PermissionDeploymentCredentialsGet = "data.deploymentcredentials.get"
+)
+
+const (
 	// ServerSpecLimits permissions
 
 	// PermissionLimitsGet is needed for fetching server spec limits in a project
