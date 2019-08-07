@@ -74,6 +74,7 @@ service DataService {
 
     // Fetch credentials for accessing deployment by its id.
     // Required permissions:
+    // - data.deployment.get on the deployment identified by the given ID
     // - data.deploymentcredentials.get on the deployment identified by the given ID
     rpc GetDeploymentCredentials(DeploymentCredentialsRequest) returns (DeploymentCredentials) {
         option (google.api.http) = {

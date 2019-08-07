@@ -538,6 +538,7 @@ export class DataService {
   
   // Fetch credentials for accessing deployment by its id.
   // Required permissions:
+  // - data.deployment.get on the deployment identified by the given ID
   // - data.deploymentcredentials.get on the deployment identified by the given ID
   async GetDeploymentCredentials(req: DeploymentCredentialsRequest): Promise<DeploymentCredentials> {
     const path = `/api/data/v1/deploymentcredentialss/${encodeURIComponent(req.deployment_id || '')}`;

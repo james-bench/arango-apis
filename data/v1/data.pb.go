@@ -1989,6 +1989,7 @@ type DataServiceClient interface {
 	DeleteDeployment(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Fetch credentials for accessing deployment by its id.
 	// Required permissions:
+	// - data.deployment.get on the deployment identified by the given ID
 	// - data.deploymentcredentials.get on the deployment identified by the given ID
 	GetDeploymentCredentials(ctx context.Context, in *DeploymentCredentialsRequest, opts ...grpc.CallOption) (*DeploymentCredentials, error)
 	// Fetch all ArangoDB versions that are available for deployments.
@@ -2153,6 +2154,7 @@ type DataServiceServer interface {
 	DeleteDeployment(context.Context, *v1.IDOptions) (*v1.Empty, error)
 	// Fetch credentials for accessing deployment by its id.
 	// Required permissions:
+	// - data.deployment.get on the deployment identified by the given ID
 	// - data.deploymentcredentials.get on the deployment identified by the given ID
 	GetDeploymentCredentials(context.Context, *DeploymentCredentialsRequest) (*DeploymentCredentials, error)
 	// Fetch all ArangoDB versions that are available for deployments.
