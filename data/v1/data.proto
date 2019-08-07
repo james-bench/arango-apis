@@ -94,6 +94,7 @@ service DataService {
     // owned by the given projected, created in the given region.
     // Required permissions:
     // - data.limits.get on the requested project
+    // - data.deployment.get on the specified deployment (if deployment_id is set)
     rpc GetServersSpecLimits(ServersSpecLimitsRequest) returns (ServersSpecLimits) {
         option (google.api.http) = {
             get: "/api/data/v1/projects/{project_id}/regions/{region_id}/limits"
@@ -347,6 +348,8 @@ message ServersSpecLimitsRequest {
     string project_id = 1;
     // Identifier of a region in which a deployment will be created.
     string region_id = 2;
+    // Optional identifier of a deployment for which compatible server specifications are request.
+    string deployment_id = 3;
 }
 
 // Limits of allowed values for fields of Deployment.ServersSpec.
