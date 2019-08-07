@@ -541,7 +541,7 @@ export class DataService {
   // - data.deployment.get on the deployment identified by the given ID
   // - data.deploymentcredentials.get on the deployment identified by the given ID
   async GetDeploymentCredentials(req: DeploymentCredentialsRequest): Promise<DeploymentCredentials> {
-    const path = `/api/data/v1/deploymentcredentialss/${encodeURIComponent(req.deployment_id || '')}`;
+    const path = `/api/data/v1/deploymentcredentials/${encodeURIComponent(req.deployment_id || '')}`;
     const url = path + api.queryString(req, [`deployment_id`]);
     return api.get(url, undefined);
   }

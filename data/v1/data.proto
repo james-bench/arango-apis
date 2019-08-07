@@ -78,7 +78,7 @@ service DataService {
     // - data.deploymentcredentials.get on the deployment identified by the given ID
     rpc GetDeploymentCredentials(DeploymentCredentialsRequest) returns (DeploymentCredentials) {
         option (google.api.http) = {
-            get: "/api/data/v1/deploymentcredentialss/{deployment_id}"
+            get: "/api/data/v1/deploymentcredentials/{deployment_id}"
         };
     }
 
