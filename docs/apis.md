@@ -140,6 +140,8 @@
     - [Deployment.ServerStatus](#arangodb.cloud.data.v1.Deployment.ServerStatus)
     - [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec)
     - [Deployment.Status](#arangodb.cloud.data.v1.Deployment.Status)
+    - [DeploymentCredentials](#arangodb.cloud.data.v1.DeploymentCredentials)
+    - [DeploymentCredentialsRequest](#arangodb.cloud.data.v1.DeploymentCredentialsRequest)
     - [DeploymentList](#arangodb.cloud.data.v1.DeploymentList)
     - [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize)
     - [ListVersionsRequest](#arangodb.cloud.data.v1.ListVersionsRequest)
@@ -1773,7 +1775,7 @@ A Deployment is represents one deployment of an ArangoDB cluster.
 <a name="arangodb.cloud.data.v1.Deployment.AuthenticationSpec"></a>
 
 ### Deployment.AuthenticationSpec
-
+Obsolete, use GetDeploymentCredentials instead.
 
 
 | Field | Type | Label | Description |
@@ -1884,6 +1886,37 @@ All members of this field are read-only.
 | servers | [Deployment.ServerStatus](#arangodb.cloud.data.v1.Deployment.ServerStatus) | repeated | Status of individual servers of the deployment |
 | bootstrapped_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Set if the ready boolean is transitioned to true for the very first time. |
 | bootstrapped | [bool](#bool) |  | Set if bootstrapped_at has a value, otherwise false. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.DeploymentCredentials"></a>
+
+### DeploymentCredentials
+Result for GetDeploymentCredentials
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| username | [string](#string) |  | Name of the user for which credentials were asked. Default to username of root user. |
+| password | [string](#string) |  | Password of the user for which credentials were asked. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.DeploymentCredentialsRequest"></a>
+
+### DeploymentCredentialsRequest
+Request arguments for GetDeploymentCredentials
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| deployment_id | [string](#string) |  | Identifier of deployment to request credentials for. |
 
 
 
@@ -2091,6 +2124,7 @@ DataService is the API used to configure data objects.
 | CreateDeployment | [Deployment](#arangodb.cloud.data.v1.Deployment) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Create a new deployment Required permissions: - data.deployment.create on the project that owns the deployment Note that deployment.status &amp; deployment.expiration are ignored in this request. |
 | UpdateDeployment | [Deployment](#arangodb.cloud.data.v1.Deployment) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Update a deployment Required permissions: - data.deployment.update on the deployment Note that deployment.status &amp; deployment.expiration are ignored in this request. |
 | DeleteDeployment | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a deployment Note that deployments are initially only marked for deletion. Once all their resources are removed the deployment itself is removed. Required permissions: - data.deployment.delete on the deployment |
+| GetDeploymentCredentials | [DeploymentCredentialsRequest](#arangodb.cloud.data.v1.DeploymentCredentialsRequest) | [DeploymentCredentials](#arangodb.cloud.data.v1.DeploymentCredentials) | Fetch credentials for accessing deployment by its id. Required permissions: - data.deployment.get on the deployment identified by the given ID - data.deploymentcredentials.get on the deployment identified by the given ID |
 | ListVersions | [ListVersionsRequest](#arangodb.cloud.data.v1.ListVersionsRequest) | [VersionList](#arangodb.cloud.data.v1.VersionList) | Fetch all ArangoDB versions that are available for deployments. Required permissions: - None |
 | GetDefaultVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [Version](#arangodb.cloud.data.v1.Version) | Fetch the default ArangoDB version for new deployment. Required permissions: - None |
 | GetServersSpecLimits | [ServersSpecLimitsRequest](#arangodb.cloud.data.v1.ServersSpecLimitsRequest) | [ServersSpecLimits](#arangodb.cloud.data.v1.ServersSpecLimits) | Fetch the limits for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.limits.get on the requested project - data.deployment.get on the specified deployment (if deployment_id is set) |

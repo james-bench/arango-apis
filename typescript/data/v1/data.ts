@@ -147,6 +147,8 @@ export interface Deployment {
   // Deployment_Expiration
   expiration?: Deployment_Expiration;
 }
+
+// Obsolete, use GetDeploymentCredentials instead.
 export interface Deployment_AuthenticationSpec {
   // Password of the root user of the deployment.
   // string
@@ -309,6 +311,25 @@ export interface Deployment_Status {
   // Set if bootstrapped_at has a value, otherwise false.
   // boolean
   bootstrapped?: boolean;
+}
+
+// Result for GetDeploymentCredentials
+export interface DeploymentCredentials {
+  // Name of the user for which credentials were asked.
+  // Default to username of root user.
+  // string
+  username?: string;
+  
+  // Password of the user for which credentials were asked.
+  // string
+  password?: string;
+}
+
+// Request arguments for GetDeploymentCredentials
+export interface DeploymentCredentialsRequest {
+  // Identifier of deployment to request credentials for.
+  // string
+  deployment_id?: string;
 }
 
 // List of Deployments.
@@ -513,6 +534,16 @@ export class DataService {
     const path = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.delete(url, undefined);
+  }
+  
+  // Fetch credentials for accessing deployment by its id.
+  // Required permissions:
+  // - data.deployment.get on the deployment identified by the given ID
+  // - data.deploymentcredentials.get on the deployment identified by the given ID
+  async GetDeploymentCredentials(req: DeploymentCredentialsRequest): Promise<DeploymentCredentials> {
+    const path = `/api/data/v1/deploymentcredentials/${encodeURIComponent(req.deployment_id || '')}`;
+    const url = path + api.queryString(req, [`deployment_id`]);
+    return api.get(url, undefined);
   }
   
   // Fetch all ArangoDB versions that are available for deployments.

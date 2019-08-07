@@ -72,6 +72,16 @@ service DataService {
         };
     }
 
+    // Fetch credentials for accessing deployment by its id.
+    // Required permissions:
+    // - data.deployment.get on the deployment identified by the given ID
+    // - data.deploymentcredentials.get on the deployment identified by the given ID
+    rpc GetDeploymentCredentials(DeploymentCredentialsRequest) returns (DeploymentCredentials) {
+        option (google.api.http) = {
+            get: "/api/data/v1/deploymentcredentials/{deployment_id}"
+        };
+    }
+
     // Fetch all ArangoDB versions that are available for deployments.
     // Required permissions:
     // - None
@@ -197,11 +207,12 @@ message Deployment {
     }
     ServersSpec servers = 103;
 
+    // Obsolete, use GetDeploymentCredentials instead.
     message AuthenticationSpec {
         // Password of the root user of the deployment.
-        string root_password = 1;
+        string root_password = 1 [deprecated = true];
     }
-    AuthenticationSpec authentication = 104;
+    AuthenticationSpec authentication = 104 [deprecated = true];
 
     // Optional identifier of IP whitelist to use for this deployment.
     string ipwhitelist_id = 105;
@@ -309,6 +320,21 @@ message ServersSpecPreset {
 // List of ServersSpecPreset.
 message ServersSpecPresetList {
     repeated ServersSpecPreset items = 1;
+}
+
+// Request arguments for GetDeploymentCredentials
+message DeploymentCredentialsRequest {
+    // Identifier of deployment to request credentials for.
+    string deployment_id = 1;
+}
+
+// Result for GetDeploymentCredentials
+message DeploymentCredentials {
+    // Name of the user for which credentials were asked.
+    // Default to username of root user.
+    string username = 1;
+    // Password of the user for which credentials were asked.
+    string password = 2;
 }
 
 // List of Deployments.
