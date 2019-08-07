@@ -411,6 +411,10 @@ export interface ServersSpecLimitsRequest {
   // Identifier of a region in which a deployment will be created.
   // string
   region_id?: string;
+  
+  // Optional identifier of a deployment for which compatible server specifications are request.
+  // string
+  deployment_id?: string;
 }
 
 // Specification of a ServersSpecPreset, which can be used to initialize a deployment.servers
@@ -533,6 +537,7 @@ export class DataService {
   // owned by the given projected, created in the given region.
   // Required permissions:
   // - data.limits.get on the requested project
+  // - data.deployment.get on the specified deployment (if deployment_id is set)
   async GetServersSpecLimits(req: ServersSpecLimitsRequest): Promise<ServersSpecLimits> {
     const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id || '')}/regions/${encodeURIComponent(req.region_id || '')}/limits`;
     const url = path + api.queryString(req, [`project_id`, `region_id`]);

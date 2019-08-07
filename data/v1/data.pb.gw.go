@@ -214,6 +214,10 @@ func request_DataService_GetDefaultVersion_0(ctx context.Context, marshaler runt
 
 }
 
+var (
+	filter_DataService_GetServersSpecLimits_0 = &utilities.DoubleArray{Encoding: map[string]int{"project_id": 0, "region_id": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+)
+
 func request_DataService_GetServersSpecLimits_0(ctx context.Context, marshaler runtime.Marshaler, client DataServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ServersSpecLimitsRequest
 	var metadata runtime.ServerMetadata
@@ -245,6 +249,10 @@ func request_DataService_GetServersSpecLimits_0(ctx context.Context, marshaler r
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "region_id", err)
+	}
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_DataService_GetServersSpecLimits_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.GetServersSpecLimits(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
