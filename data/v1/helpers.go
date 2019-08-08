@@ -16,8 +16,7 @@ func (source *Deployment) SpecEquals(other *Deployment) bool {
 		source.GetRegionId() == other.GetRegionId() &&
 		source.GetIpwhitelistId() == other.GetIpwhitelistId() &&
 		source.GetCertificates().Equals(other.GetCertificates()) &&
-		source.GetServers().Equals(other.GetServers()) &&
-		source.GetAuthentication().Equals(other.GetAuthentication())
+		source.GetServers().Equals(other.GetServers())
 }
 
 // Equals returns true when source & other have the same values
@@ -35,11 +34,6 @@ func (source *Deployment_ServersSpec) Equals(other *Deployment_ServersSpec) bool
 		source.GetDbserverDiskSize() == other.GetDbserverDiskSize() &&
 		source.GetDbserverMemorySize() == other.GetDbserverMemorySize() &&
 		strings.Join(source.GetDbserverArgs(), ",") == strings.Join(other.GetDbserverArgs(), ",")
-}
-
-// Equals returns true when source & other have the same values
-func (source *Deployment_AuthenticationSpec) Equals(other *Deployment_AuthenticationSpec) bool {
-	return source.GetRootPassword() == other.GetRootPassword()
 }
 
 // DeploymentStatusEqual returns true when the fields of a & b are equal.
@@ -83,14 +77,6 @@ func DataVolumeInfoEqual(a, b *DataVolumeInfo, ignoreTimestamps bool) bool {
 		(ignoreTimestamps || (a.GetMeasuredAt().Equal(b.GetMeasuredAt()))) &&
 		a.GetTotalBytes() == b.GetTotalBytes() &&
 		a.GetUsedBytes() == b.GetUsedBytes()
-}
-
-// GetOrCreateAuthentication returns the Authentication field, creating it if needed.
-func (d *Deployment) GetOrCreateAuthentication() *Deployment_AuthenticationSpec {
-	if d.GetAuthentication() == nil {
-		d.Authentication = &Deployment_AuthenticationSpec{}
-	}
-	return d.GetAuthentication()
 }
 
 // GetOrCreateCertificates returns the Certificates field, creating it if needed.

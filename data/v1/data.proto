@@ -216,13 +216,6 @@ message Deployment {
     }
     ServersSpec servers = 103;
 
-    // Obsolete, use GetDeploymentCredentials instead.
-    message AuthenticationSpec {
-        // Password of the root user of the deployment.
-        string root_password = 1 [deprecated = true];
-    }
-    AuthenticationSpec authentication = 104 [deprecated = true];
-
     // Optional identifier of IP whitelist to use for this deployment.
     string ipwhitelist_id = 105;
 
