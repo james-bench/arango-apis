@@ -1749,6 +1749,7 @@ Instructions for a specific driver
 | name | [string](#string) |  | Human readable name of the driver. E.g. &#34;ArangoDB Go driver&#34; |
 | code | [string](#string) | repeated | Lines of code |
 | remarks | [string](#string) | repeated | Human readable remarks |
+| driver_url | [string](#string) |  | URL for getting more information on the driver. |
 
 
 

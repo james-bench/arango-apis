@@ -56,6 +56,10 @@ export interface ConnectDriverInstructions_DriverInstructions {
   // Human readable remarks
   // string
   remarks?: string[];
+  
+  // URL for getting more information on the driver.
+  // string
+  driver_url?: string;
 }
 
 // DataVolumeInfo provides information about a data volume
