@@ -466,6 +466,8 @@ message ConnectDriverInstructions {
         repeated string code = 2;
         // Human readable remarks
         repeated string remarks = 3;
+        // URL for getting more information on the driver.
+        string driver_url = 4;
     }
 
     // Per driver instructions for connecting to a deployment
