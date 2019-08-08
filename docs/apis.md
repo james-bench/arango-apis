@@ -132,6 +132,8 @@
 
 - [data/v1/data.proto](#data/v1/data.proto)
     - [CalculateDeploymentSizeRequest](#arangodb.cloud.data.v1.CalculateDeploymentSizeRequest)
+    - [ConnectDriverInstructions](#arangodb.cloud.data.v1.ConnectDriverInstructions)
+    - [ConnectDriverInstructions.DriverInstructions](#arangodb.cloud.data.v1.ConnectDriverInstructions.DriverInstructions)
     - [DataVolumeInfo](#arangodb.cloud.data.v1.DataVolumeInfo)
     - [Deployment](#arangodb.cloud.data.v1.Deployment)
     - [Deployment.AuthenticationSpec](#arangodb.cloud.data.v1.Deployment.AuthenticationSpec)
@@ -1721,6 +1723,38 @@ Request arguments for CalculateDeploymentSize
 
 
 
+<a name="arangodb.cloud.data.v1.ConnectDriverInstructions"></a>
+
+### ConnectDriverInstructions
+Instructions for connecting a driver to a deployment
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| drivers | [ConnectDriverInstructions.DriverInstructions](#arangodb.cloud.data.v1.ConnectDriverInstructions.DriverInstructions) | repeated | Per driver instructions for connecting to a deployment |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.ConnectDriverInstructions.DriverInstructions"></a>
+
+### ConnectDriverInstructions.DriverInstructions
+Instructions for a specific driver
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| name | [string](#string) |  | Human readable name of the driver. E.g. &#34;ArangoDB Go driver&#34; |
+| code | [string](#string) | repeated | Lines of code |
+| remarks | [string](#string) | repeated | Human readable remarks |
+
+
+
+
+
+
 <a name="arangodb.cloud.data.v1.DataVolumeInfo"></a>
 
 ### DataVolumeInfo
@@ -2130,6 +2164,7 @@ DataService is the API used to configure data objects.
 | GetServersSpecLimits | [ServersSpecLimitsRequest](#arangodb.cloud.data.v1.ServersSpecLimitsRequest) | [ServersSpecLimits](#arangodb.cloud.data.v1.ServersSpecLimits) | Fetch the limits for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.limits.get on the requested project - data.deployment.get on the specified deployment (if deployment_id is set) |
 | ListServersSpecPresets | [ServersSpecPresetsRequest](#arangodb.cloud.data.v1.ServersSpecPresetsRequest) | [ServersSpecPresetList](#arangodb.cloud.data.v1.ServersSpecPresetList) | Fetch the presets for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.presets.list on the requested project |
 | CalculateDeploymentSize | [CalculateDeploymentSizeRequest](#arangodb.cloud.data.v1.CalculateDeploymentSizeRequest) | [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize) | Calculate the total size of a deployment with given arguments. Required permissions: - none |
+| GetConnectDriverInstructions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [ConnectDriverInstructions](#arangodb.cloud.data.v1.ConnectDriverInstructions) | Fetch instructions for connecting drivers to the deployment identified by the given id. Required permissions: - data.deployment.get on the deployment identified by the given ID |
 
  
 

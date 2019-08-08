@@ -129,6 +129,15 @@ service DataService {
             get: "/api/data/v1/deployment-size/calculate"
         };
     }
+
+    // Fetch instructions for connecting drivers to the deployment identified by the given id.
+    // Required permissions:
+    // - data.deployment.get on the deployment identified by the given ID
+    rpc GetConnectDriverInstructions(common.v1.IDOptions) returns (ConnectDriverInstructions) {
+        option (google.api.http) = {
+            get: "/api/data/v1/deployments/{id}/connect-driver-instructions"
+        };
+    }
 }
 
 // A Deployment is represents one deployment of an ArangoDB cluster.
@@ -444,4 +453,21 @@ message DataVolumeInfo {
     int64 available_bytes = 3;
     // When this info has been measused
     google.protobuf.Timestamp measured_at = 10;
+}
+
+// Instructions for connecting a driver to a deployment
+message ConnectDriverInstructions {
+    // Instructions for a specific driver
+    message DriverInstructions {
+        // Human readable name of the driver.
+        // E.g. "ArangoDB Go driver"
+        string name = 1;
+        // Lines of code
+        repeated string code = 2;
+        // Human readable remarks
+        repeated string remarks = 3;
+    }
+
+    // Per driver instructions for connecting to a deployment
+    repeated DriverInstructions drivers = 1;
 }

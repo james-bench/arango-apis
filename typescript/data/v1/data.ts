@@ -35,6 +35,29 @@ export interface CalculateDeploymentSizeRequest {
   dbserver_disk_size?: number;
 }
 
+// Instructions for connecting a driver to a deployment
+export interface ConnectDriverInstructions {
+  // Per driver instructions for connecting to a deployment
+  // ConnectDriverInstructions_DriverInstructions
+  drivers?: ConnectDriverInstructions_DriverInstructions[];
+}
+
+// Instructions for a specific driver
+export interface ConnectDriverInstructions_DriverInstructions {
+  // Human readable name of the driver.
+  // E.g. "ArangoDB Go driver"
+  // string
+  name?: string;
+  
+  // Lines of code
+  // string
+  code?: string[];
+  
+  // Human readable remarks
+  // string
+  remarks?: string[];
+}
+
 // DataVolumeInfo provides information about a data volume
 export interface DataVolumeInfo {
   // The total number of bytes of the data volume.
@@ -591,6 +614,15 @@ export class DataService {
   async CalculateDeploymentSize(req: CalculateDeploymentSizeRequest): Promise<DeploymentSize> {
     const path = `/api/data/v1/deployment-size/calculate`;
     const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch instructions for connecting drivers to the deployment identified by the given id.
+  // Required permissions:
+  // - data.deployment.get on the deployment identified by the given ID
+  async GetConnectDriverInstructions(req: arangodb_cloud_common_v1_IDOptions): Promise<ConnectDriverInstructions> {
+    const path = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}/connect-driver-instructions`;
+    const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
 }
