@@ -73,7 +73,7 @@ export class SecurityService {
   // Required permissions:
   // - security.ipwhitelist.list on the project identified by the given context ID.
   async ListIPWhitelists(req: arangodb_cloud_common_v1_ListOptions): Promise<IPWhitelistList> {
-    const path = `/api/data/v1/projects/${encodeURIComponent(req.context_id || '')}/ipwhitelists`;
+    const path = `/api/security/v1/projects/${encodeURIComponent(req.context_id || '')}/ipwhitelists`;
     const url = path + api.queryString(req, [`context_id`]);
     return api.get(url, undefined);
   }
