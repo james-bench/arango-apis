@@ -1858,6 +1858,7 @@ Status of a single server (of the ArangoDB cluster)
 | creating | [bool](#bool) |  | Set if the server is still being created Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading. |
 | ok | [bool](#bool) |  | Set if the server is in the ok state. Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading. |
 | upgrading | [bool](#bool) |  | Set if the server is still being upgraded Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading. |
+| version | [string](#string) |  | Latest known ArangoDB version used by this server. Initially this field is empty. |
 | data_volume_info | [DataVolumeInfo](#arangodb.cloud.data.v1.DataVolumeInfo) |  | Information about the data volume used to store the data |
 
 
