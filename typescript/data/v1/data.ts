@@ -253,6 +253,11 @@ export interface Deployment_ServerStatus {
   // boolean
   upgrading?: boolean;
   
+  // Latest known ArangoDB version used by this server.
+  // Initially this field is empty.
+  // string
+  version?: string;
+  
   // Information about the data volume used to store the data
   // DataVolumeInfo
   data_volume_info?: DataVolumeInfo;
