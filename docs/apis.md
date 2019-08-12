@@ -1547,6 +1547,7 @@ This value can only be changed to a non-empty value. If changed, the new number 
 | dashboard_access_denied | [bool](#bool) |  | If set, this user is denied access to the dashboard. This is a read-only value. |
 | dashboard_access_denied_reason | [string](#string) |  | If set, this field describes the reason why this user is denied access to the dashboard. This is a read-only value. |
 | apikey_id | [string](#string) |  | If set, this user is currently being authenticated using an API key (identified by this ID) |
+| slack_name | [string](#string) |  | If set, contains Slack name of this user in the arangodb-community slack. |
 
 
 

@@ -421,6 +421,10 @@ export interface User {
   // If set, this user is currently being authenticated using an API key (identified by this ID)
   // string
   apikey_id?: string;
+  
+  // If set, contains Slack name of this user in the arangodb-community slack.
+  // string
+  slack_name?: string;
 }
 
 // Request arguments for VerifyUserMobilePhone
