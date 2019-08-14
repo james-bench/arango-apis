@@ -79,11 +79,25 @@ service ResourceManagerService {
     }
 
     // Add one or more members to an organization.
+    // If there are members (in the request arguments) that are already member of the
+    // organization an AlreadyExists error is returned.
     // Required permissions:
     // - resourcemanager.organization.update on the organization
     rpc AddOrganizationMembers(OrganizationMembersRequest) returns (common.v1.Empty) {
         option (google.api.http) = {
             post: "/api/resourcemanager/v1/organizations/{organization_id}/members"
+            body: "*"
+        };
+    }
+
+    // Update the ownership flag of one or more members of an organization.
+    // If there are members (in the request arguments) that are not yet member of
+    // the organization, an InvalidArgument error is returned.
+    // Required permissions:
+    // - resourcemanager.organization.update on the organization
+    rpc UpdateOrganizationMembers(OrganizationMembersRequest) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            patch: "/api/resourcemanager/v1/organizations/{organization_id}/members"
             body: "*"
         };
     }
