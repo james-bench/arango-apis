@@ -484,6 +484,8 @@ export class ResourceManagerService {
   // Update the ownership flag of one or more members of an organization.
   // If there are members (in the request arguments) that are not yet member of
   // the organization, an InvalidArgument error is returned.
+  // If the request would result in the last owner no longer being an owner,
+  // an InvalidArgument error is returned.
   // Required permissions:
   // - resourcemanager.organization.update on the organization
   async UpdateOrganizationMembers(req: OrganizationMembersRequest): Promise<void> {
@@ -492,6 +494,8 @@ export class ResourceManagerService {
   }
   
   // Remove one or more members from an organization.
+  // If the request would result in the last owner being removed as member
+  // of the organization, an InvalidArgument error is returned.
   // Required permissions:
   // - resourcemanager.organization.update on the organization
   async DeleteOrganizationMembers(req: OrganizationMembersRequest): Promise<void> {
