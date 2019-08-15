@@ -27,6 +27,10 @@ const (
 	// EventTypeOrganizationMemberRemoved is the type of event fired after a member has been removed from an organization.
 	// SubjectID contains the ID of the removed member.
 	EventTypeOrganizationMemberRemoved = "resourcemanager.organization-member.removed"
+	// EventTypeOrganizationMemberUpdated is the type of event fired after a member has been updated in an organization
+	// from owner to non-owner or from non-owner to owner.
+	// SubjectID contains the ID of the updated member.
+	EventTypeOrganizationMemberUpdated = "resourcemanager.organization-member.updated"
 )
 
 const (

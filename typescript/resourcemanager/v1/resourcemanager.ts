@@ -472,6 +472,8 @@ export class ResourceManagerService {
   }
   
   // Add one or more members to an organization.
+  // If there are members (in the request arguments) that are already member of the
+  // organization an AlreadyExists error is returned.
   // Required permissions:
   // - resourcemanager.organization.update on the organization
   async AddOrganizationMembers(req: OrganizationMembersRequest): Promise<void> {
@@ -479,7 +481,21 @@ export class ResourceManagerService {
     return api.post(url, req);
   }
   
+  // Update the ownership flag of one or more members of an organization.
+  // If there are members (in the request arguments) that are not yet member of
+  // the organization, an InvalidArgument error is returned.
+  // If the request would result in the last owner no longer being an owner,
+  // an InvalidArgument error is returned.
+  // Required permissions:
+  // - resourcemanager.organization.update on the organization
+  async UpdateOrganizationMembers(req: OrganizationMembersRequest): Promise<void> {
+    const url = `/api/resourcemanager/v1/organizations/${encodeURIComponent(req.organization_id || '')}/members`;
+    return api.patch(url, req);
+  }
+  
   // Remove one or more members from an organization.
+  // If the request would result in the last owner being removed as member
+  // of the organization, an InvalidArgument error is returned.
   // Required permissions:
   // - resourcemanager.organization.update on the organization
   async DeleteOrganizationMembers(req: OrganizationMembersRequest): Promise<void> {
