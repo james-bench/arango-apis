@@ -65,6 +65,16 @@ export interface CACertificate {
   // This is a read-only value.
   // boolean
   is_deleted?: boolean;
+  
+  // Set when this CA certificate has expired.
+  // This is a read-only value.
+  // boolean
+  is_expired?: boolean;
+  
+  // Set when this CA certificate will expire in the next month.
+  // This is a read-only value.
+  // boolean
+  will_expire_soon?: boolean;
 }
 
 // Instructions for installing & uninstalling CA certificates

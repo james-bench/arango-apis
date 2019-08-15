@@ -630,6 +630,8 @@ TLS certificates for deployments &amp; client authentication.
 | expires_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The expiration timestamp of the CA certificate This is a read-only value. |
 | certificate_pem | [string](#string) |  | A PEM encoded representation of the public key of the CA certificate. This is a read-only value. |
 | is_deleted | [bool](#bool) |  | Set when this CA certificate is deleted. This is a read-only value. |
+| is_expired | [bool](#bool) |  | Set when this CA certificate has expired. This is a read-only value. |
+| will_expire_soon | [bool](#bool) |  | Set when this CA certificate will expire in the next month. This is a read-only value. |
 
 
 

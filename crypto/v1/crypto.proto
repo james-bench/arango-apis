@@ -115,6 +115,12 @@ message CACertificate {
     // Set when this CA certificate is deleted.
     // This is a read-only value.
     bool is_deleted = 11;
+    // Set when this CA certificate has expired.
+    // This is a read-only value.
+    bool is_expired = 12;
+    // Set when this CA certificate will expire in the next month.
+    // This is a read-only value.
+    bool will_expire_soon = 13;
 }
 
 // List of CACertificates.
