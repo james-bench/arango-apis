@@ -84,6 +84,10 @@ export interface UsageItem {
   // boolean
   has_ended?: boolean;
   
+  // Identifier of the tier the organization was using at the start of this usage period.
+  // string
+  tier_id?: string;
+  
   // Amount of (computer) resources used by the resource covered by this usage item.
   // This field is only set when the usage item is of kind DeploymentSize.
   // UsageItem_DeploymentSize

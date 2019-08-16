@@ -79,6 +79,8 @@ message UsageItem {
     google.protobuf.Timestamp ends_at = 6;
     // Set when this usage item has ended.
     bool has_ended = 7;
+    // Identifier of the tier the organization was using at the start of this usage period.
+    string tier_id = 8;
 
     message DeploymentSize {
         // Number of coordinators of the deployment
