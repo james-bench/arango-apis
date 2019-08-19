@@ -1,0 +1,119 @@
+// 
+// DISCLAIMER
+// 
+// Copyright 2019 ArangoDB Inc, Cologne, Germany
+// 
+// Author Ewout Prangsma
+// 
+
+syntax = "proto3";
+
+package arangodb.cloud.billing.v1;
+
+option go_package = "github.com/arangodb-managed/apis/billing/v1";
+
+import "common/v1/common.proto";
+
+import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
+import "google/api/annotations.proto";
+
+// BillingService is the API used to fetch billing information.
+service BillingService {
+    // Fetch all Invoice resources for the organization identified by the given
+    // organization ID that match the given criteria.
+    // Required permissions:
+    // - billing.invoice.list on the organization identified by the given organization ID
+    rpc ListInvoices(ListInvoicesRequest) returns (InvoiceList) {
+        option (google.api.http) = {
+            get: "/api/billing/v1/organization/{organization_id}/invoices"
+        };
+    }
+
+    // Fetch a specific Invoice identified by the given ID.
+    // Required permissions:
+    // - billing.invoice.get on the organization that owns the invoice
+    //   with given ID.
+    rpc GetInvoice(common.v1.IDOptions) returns (Invoice) {
+        option (google.api.http) = {
+            get: "/api/billing/v1/invoices/{id}"
+        };
+    }
+}
+
+// An Invoice message describes a transaction for usage of ArangoDB Oasis.
+message Invoice {   
+    // System identifier of the invoice.
+    string id = 1;
+    // URL of this resource
+    string url = 2;
+    // Identifier of the organization that is responsible for the payment of this invoice.
+    string organization_id = 3;
+    // Name of the organization that is responsible for the payment of this invoice.
+    string organization_name = 4;
+    // Identifier of the legal entity that is the sender of this invoice.
+    string entity_id = 5;
+    // Name of the legal entity that is the sender of this invoice.
+    string entity_name = 6;
+
+    // The creation date of the invoice
+    google.protobuf.Timestamp created_at = 10;
+
+    // A single item of the invoice
+    message Item {
+        // Identifier of the UsageItem that this item covers.
+        string usageitem_id = 1;
+        // Amount of money (ex VAT) for this item
+        float amount = 2;
+        // Human readable description of this item
+        string description = 3;
+    }
+    // All items of the invoice
+    repeated Item items = 100;
+
+    // Currency for all amounts
+    string currency_id = 110;
+    // Sum all amount for all items
+    float total_amount_ex_vat = 111;
+    // VAT amount for all items
+    float total_vat = 112;
+    // Sum of total_amount_ex_vat + total_vat.
+    // This is the amount that the customer will be charged for.
+    float total_amount_including_vat = 113;
+
+    // Status of the invoice
+    message Status {
+        // If set, this invoice is still being processed.
+        bool is_pending = 1;
+        // If set, this invoice has been payed for succesfully.
+        bool is_completed = 2;
+        // If set, payment for this invoice has been rejected.
+        bool is_rejected = 3;
+        // The timestamp of succesfull completion of the payment.
+        google.protobuf.Timestamp completed_at = 10;
+        // The timestamp of rejected completion of the payment.
+        google.protobuf.Timestamp rejected_at = 11;
+    }
+    Status status = 200;
+}
+
+// List of Invoices.
+message InvoiceList {
+    repeated Invoice items = 1;
+}
+
+// Request arguments for ListInvoices
+message ListInvoicesRequest {
+    // Request invoices for the organization with this id.
+    // This is a required field.
+    string organization_id = 1;
+    // Request invoices that are created at or after this timestamp.
+    // This is an optional field.
+    google.protobuf.Timestamp from = 2;
+    // Request invoices that are created before this timestamp.
+    // This is a required field.
+    google.protobuf.Timestamp to = 3;
+
+    // Standard list options
+    // This is an optional field.
+    common.v1.ListOptions options = 10;
+}
