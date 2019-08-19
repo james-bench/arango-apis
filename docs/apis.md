@@ -160,6 +160,16 @@
     - [DataService](#arangodb.cloud.data.v1.DataService)
   
 
+- [currency/v1/currency.proto](#currency/v1/currency.proto)
+    - [Currency](#arangodb.cloud.currency.v1.Currency)
+    - [CurrencyList](#arangodb.cloud.currency.v1.CurrencyList)
+    - [GetDefaultCurrencyRequest](#arangodb.cloud.currency.v1.GetDefaultCurrencyRequest)
+  
+  
+  
+    - [CurrencyService](#arangodb.cloud.currency.v1.CurrencyService)
+  
+
 - [Scalar Value Types](#scalar-value-types)
 
 
@@ -2155,6 +2165,81 @@ DataService is the API used to configure data objects.
 | ListServersSpecPresets | [ServersSpecPresetsRequest](#arangodb.cloud.data.v1.ServersSpecPresetsRequest) | [ServersSpecPresetList](#arangodb.cloud.data.v1.ServersSpecPresetList) | Fetch the presets for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.presets.list on the requested project |
 | CalculateDeploymentSize | [CalculateDeploymentSizeRequest](#arangodb.cloud.data.v1.CalculateDeploymentSizeRequest) | [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize) | Calculate the total size of a deployment with given arguments. Required permissions: - none |
 | GetConnectDriverInstructions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [ConnectDriverInstructions](#arangodb.cloud.data.v1.ConnectDriverInstructions) | Fetch instructions for connecting drivers to the deployment identified by the given id. Required permissions: - data.deployment.get on the deployment identified by the given ID |
+
+ 
+
+
+
+<a name="currency/v1/currency.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## currency/v1/currency.proto
+
+
+
+<a name="arangodb.cloud.currency.v1.Currency"></a>
+
+### Currency
+Currency represents a specific monetary currency.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the currency. E.g. &#34;eur&#34; or &#34;usd&#34; |
+| name | [string](#string) |  | Human readable name of the currency E.g. &#34;US Dollar&#34; |
+| sign | [string](#string) |  | Human readable sign for the currency. E.g. &#34;$&#34; |
+
+
+
+
+
+
+<a name="arangodb.cloud.currency.v1.CurrencyList"></a>
+
+### CurrencyList
+List of currencies.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Currency](#arangodb.cloud.currency.v1.Currency) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.currency.v1.GetDefaultCurrencyRequest"></a>
+
+### GetDefaultCurrencyRequest
+Request arguments for GetDefaultCurrency.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| organization_id | [string](#string) |  | Optional identifier for the organization to request the default currency for. |
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+
+<a name="arangodb.cloud.currency.v1.CurrencyService"></a>
+
+### CurrencyService
+CurrencyService is the API used to query for supported currencies.
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+| ListCurrencies | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [CurrencyList](#arangodb.cloud.currency.v1.CurrencyList) | Fetch all providers that are supported by the ArangoDB cloud. Required permissions: - None |
+| GetCurrency | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Currency](#arangodb.cloud.currency.v1.Currency) | Fetch a currency by its id. Required permissions: - None |
+| GetDefaultCurrency | [GetDefaultCurrencyRequest](#arangodb.cloud.currency.v1.GetDefaultCurrencyRequest) | [Currency](#arangodb.cloud.currency.v1.Currency) | Fetch the default currency for a given (optional) organization. Required permissions: - resourcemanager.organization.get On the organization identified by given id. - None In case no organization identifier was given. |
 
  
 
