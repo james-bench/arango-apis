@@ -50,7 +50,7 @@ export interface Invoice {
   
   // Sum all amount for all items
   // number
-  total_amount_ex_vat?: number;
+  total_amount_excl_vat?: number;
   
   // VAT amount for all items
   // number
@@ -59,10 +59,14 @@ export interface Invoice {
   // Sum of total_amount_ex_vat + total_vat.
   // This is the amount that the customer will be charged for.
   // number
-  total_amount_including_vat?: number;
+  total_amount_incl_vat?: number;
   
   // Invoice_Status
   status?: Invoice_Status;
+  
+  // All payment attempts for this invoice, ordered by created_at.
+  // Invoice_Payment
+  payments?: Invoice_Payment[];
 }
 
 // A single item of the invoice
@@ -80,17 +84,29 @@ export interface Invoice_Item {
   description?: string;
 }
 
-// Status of the invoice
-export interface Invoice_Status {
-  // If set, this invoice is still being processed.
+// Payment (attempt) of the invoice
+export interface Invoice_Payment {
+  // The timestamp of the start of the payment attempt.
+  // googleTypes.Timestamp
+  created_at?: googleTypes.Timestamp;
+  
+  // Identifier of the payment provider that is used for this payment.
+  // string
+  payment_provider_id?: string;
+  
+  // Identifier of this payment (created by payment provider)
+  // string
+  payment_id?: string;
+  
+  // If set, this payment is still being processed.
   // boolean
   is_pending?: boolean;
   
-  // If set, this invoice has been payed for succesfully.
+  // If set, this payment has been payed for succesfully.
   // boolean
   is_completed?: boolean;
   
-  // If set, payment for this invoice has been rejected.
+  // If set, this payment has been rejected.
   // boolean
   is_rejected?: boolean;
   
@@ -99,6 +115,37 @@ export interface Invoice_Status {
   completed_at?: googleTypes.Timestamp;
   
   // The timestamp of rejected completion of the payment.
+  // googleTypes.Timestamp
+  rejected_at?: googleTypes.Timestamp;
+  
+  // Human readable reason for the rejection.
+  // string
+  rejection_reason?: string;
+}
+
+// Status of the invoice
+export interface Invoice_Status {
+  // If set, this invoice is still being processed.
+  // boolean
+  is_pending?: boolean;
+  
+  // If set, a successful payment has been made for this invoice.
+  // boolean
+  is_completed?: boolean;
+  
+  // If set, all payment attempts for this invoice have been rejected.
+  // boolean
+  is_rejected?: boolean;
+  
+  // The timestamp of succesfull completion of the payment.
+  // This field equals the completed_at field of the last payment if
+  // that payment succeeded, nil otherwise.
+  // googleTypes.Timestamp
+  completed_at?: googleTypes.Timestamp;
+  
+  // The timestamp of rejected completion of the payment.
+  // This field equals the rejected_at field of the last payment if
+  // that payment failed, nil otherwise.
   // googleTypes.Timestamp
   rejected_at?: googleTypes.Timestamp;
 }
@@ -122,7 +169,7 @@ export interface ListInvoicesRequest {
   from?: googleTypes.Timestamp;
   
   // Request invoices that are created before this timestamp.
-  // This is a required field.
+  // This is an optional field.
   // googleTypes.Timestamp
   to?: googleTypes.Timestamp;
   

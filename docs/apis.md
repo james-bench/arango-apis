@@ -173,6 +173,7 @@
 - [billing/v1/billing.proto](#billing/v1/billing.proto)
     - [Invoice](#arangodb.cloud.billing.v1.Invoice)
     - [Invoice.Item](#arangodb.cloud.billing.v1.Invoice.Item)
+    - [Invoice.Payment](#arangodb.cloud.billing.v1.Invoice.Payment)
     - [Invoice.Status](#arangodb.cloud.billing.v1.Invoice.Status)
     - [InvoiceList](#arangodb.cloud.billing.v1.InvoiceList)
     - [ListInvoicesRequest](#arangodb.cloud.billing.v1.ListInvoicesRequest)
@@ -2281,10 +2282,11 @@ An Invoice message describes a transaction for usage of ArangoDB Oasis.
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation date of the invoice |
 | items | [Invoice.Item](#arangodb.cloud.billing.v1.Invoice.Item) | repeated | All items of the invoice |
 | currency_id | [string](#string) |  | Currency for all amounts |
-| total_amount_ex_vat | [float](#float) |  | Sum all amount for all items |
+| total_amount_excl_vat | [float](#float) |  | Sum all amount for all items |
 | total_vat | [float](#float) |  | VAT amount for all items |
-| total_amount_including_vat | [float](#float) |  | Sum of total_amount_ex_vat &#43; total_vat. This is the amount that the customer will be charged for. |
+| total_amount_incl_vat | [float](#float) |  | Sum of total_amount_ex_vat &#43; total_vat. This is the amount that the customer will be charged for. |
 | status | [Invoice.Status](#arangodb.cloud.billing.v1.Invoice.Status) |  |  |
+| payments | [Invoice.Payment](#arangodb.cloud.billing.v1.Invoice.Payment) | repeated | All payment attempts for this invoice, ordered by created_at. |
 
 
 
@@ -2308,6 +2310,29 @@ A single item of the invoice
 
 
 
+<a name="arangodb.cloud.billing.v1.Invoice.Payment"></a>
+
+### Invoice.Payment
+Payment (attempt) of the invoice
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of the start of the payment attempt. |
+| payment_provider_id | [string](#string) |  | Identifier of the payment provider that is used for this payment. |
+| payment_id | [string](#string) |  | Identifier of this payment (created by payment provider) |
+| is_pending | [bool](#bool) |  | If set, this payment is still being processed. |
+| is_completed | [bool](#bool) |  | If set, this payment has been payed for succesfully. |
+| is_rejected | [bool](#bool) |  | If set, this payment has been rejected. |
+| completed_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of succesfull completion of the payment. |
+| rejected_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of rejected completion of the payment. |
+| rejection_reason | [string](#string) |  | Human readable reason for the rejection. |
+
+
+
+
+
+
 <a name="arangodb.cloud.billing.v1.Invoice.Status"></a>
 
 ### Invoice.Status
@@ -2317,10 +2342,10 @@ Status of the invoice
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | is_pending | [bool](#bool) |  | If set, this invoice is still being processed. |
-| is_completed | [bool](#bool) |  | If set, this invoice has been payed for succesfully. |
-| is_rejected | [bool](#bool) |  | If set, payment for this invoice has been rejected. |
-| completed_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of succesfull completion of the payment. |
-| rejected_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of rejected completion of the payment. |
+| is_completed | [bool](#bool) |  | If set, a successful payment has been made for this invoice. |
+| is_rejected | [bool](#bool) |  | If set, all payment attempts for this invoice have been rejected. |
+| completed_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of succesfull completion of the payment. This field equals the completed_at field of the last payment if that payment succeeded, nil otherwise. |
+| rejected_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of rejected completion of the payment. This field equals the rejected_at field of the last payment if that payment failed, nil otherwise. |
 
 
 
@@ -2352,7 +2377,7 @@ Request arguments for ListInvoices
 | ----- | ---- | ----- | ----------- |
 | organization_id | [string](#string) |  | Request invoices for the organization with this id. This is a required field. |
 | from | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request invoices that are created at or after this timestamp. This is an optional field. |
-| to | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request invoices that are created before this timestamp. This is a required field. |
+| to | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request invoices that are created before this timestamp. This is an optional field. |
 | options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Standard list options This is an optional field. |
 
 

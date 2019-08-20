@@ -73,27 +73,55 @@ message Invoice {
     // Currency for all amounts
     string currency_id = 110;
     // Sum all amount for all items
-    float total_amount_ex_vat = 111;
+    float total_amount_excl_vat = 111;
     // VAT amount for all items
     float total_vat = 112;
     // Sum of total_amount_ex_vat + total_vat.
     // This is the amount that the customer will be charged for.
-    float total_amount_including_vat = 113;
+    float total_amount_incl_vat = 113;
 
     // Status of the invoice
     message Status {
         // If set, this invoice is still being processed.
         bool is_pending = 1;
-        // If set, this invoice has been payed for succesfully.
+        // If set, a successful payment has been made for this invoice.
         bool is_completed = 2;
-        // If set, payment for this invoice has been rejected.
+        // If set, all payment attempts for this invoice have been rejected.
         bool is_rejected = 3;
         // The timestamp of succesfull completion of the payment.
+        // This field equals the completed_at field of the last payment if
+        // that payment succeeded, nil otherwise.
         google.protobuf.Timestamp completed_at = 10;
         // The timestamp of rejected completion of the payment.
+        // This field equals the rejected_at field of the last payment if
+        // that payment failed, nil otherwise.
         google.protobuf.Timestamp rejected_at = 11;
     }
     Status status = 200;
+
+    // Payment (attempt) of the invoice
+    message Payment {
+        // The timestamp of the start of the payment attempt.
+        google.protobuf.Timestamp created_at = 1;
+        // Identifier of the payment provider that is used for this payment.
+        string payment_provider_id = 2;
+        // Identifier of this payment (created by payment provider)
+        string payment_id = 3;
+        // If set, this payment is still being processed.
+        bool is_pending = 10;
+        // If set, this payment has been payed for succesfully.
+        bool is_completed = 11;
+        // If set, this payment has been rejected.
+        bool is_rejected = 12;
+        // The timestamp of succesfull completion of the payment.
+        google.protobuf.Timestamp completed_at = 20;
+        // The timestamp of rejected completion of the payment.
+        google.protobuf.Timestamp rejected_at = 21;
+        // Human readable reason for the rejection.
+        string rejection_reason = 22;
+    }
+    // All payment attempts for this invoice, ordered by created_at.
+    repeated Payment payments = 201;
 }
 
 // List of Invoices.
@@ -110,7 +138,7 @@ message ListInvoicesRequest {
     // This is an optional field.
     google.protobuf.Timestamp from = 2;
     // Request invoices that are created before this timestamp.
-    // This is a required field.
+    // This is an optional field.
     google.protobuf.Timestamp to = 3;
 
     // Standard list options
