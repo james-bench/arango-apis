@@ -170,6 +170,19 @@
     - [CurrencyService](#arangodb.cloud.currency.v1.CurrencyService)
   
 
+- [billing/v1/billing.proto](#billing/v1/billing.proto)
+    - [Invoice](#arangodb.cloud.billing.v1.Invoice)
+    - [Invoice.Item](#arangodb.cloud.billing.v1.Invoice.Item)
+    - [Invoice.Payment](#arangodb.cloud.billing.v1.Invoice.Payment)
+    - [Invoice.Status](#arangodb.cloud.billing.v1.Invoice.Status)
+    - [InvoiceList](#arangodb.cloud.billing.v1.InvoiceList)
+    - [ListInvoicesRequest](#arangodb.cloud.billing.v1.ListInvoicesRequest)
+  
+  
+  
+    - [BillingService](#arangodb.cloud.billing.v1.BillingService)
+  
+
 - [Scalar Value Types](#scalar-value-types)
 
 
@@ -2240,6 +2253,153 @@ CurrencyService is the API used to query for supported currencies.
 | ListCurrencies | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [CurrencyList](#arangodb.cloud.currency.v1.CurrencyList) | Fetch all providers that are supported by the ArangoDB cloud. Required permissions: - None |
 | GetCurrency | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Currency](#arangodb.cloud.currency.v1.Currency) | Fetch a currency by its id. Required permissions: - None |
 | GetDefaultCurrency | [GetDefaultCurrencyRequest](#arangodb.cloud.currency.v1.GetDefaultCurrencyRequest) | [Currency](#arangodb.cloud.currency.v1.Currency) | Fetch the default currency for a given (optional) organization. Required permissions: - resourcemanager.organization.get On the organization identified by given id. - None In case no organization identifier was given. |
+
+ 
+
+
+
+<a name="billing/v1/billing.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## billing/v1/billing.proto
+
+
+
+<a name="arangodb.cloud.billing.v1.Invoice"></a>
+
+### Invoice
+An Invoice message describes a transaction for usage of ArangoDB Oasis.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the invoice. |
+| url | [string](#string) |  | URL of this resource |
+| organization_id | [string](#string) |  | Identifier of the organization that is responsible for the payment of this invoice. |
+| organization_name | [string](#string) |  | Name of the organization that is responsible for the payment of this invoice. |
+| entity_id | [string](#string) |  | Identifier of the legal entity that is the sender of this invoice. |
+| entity_name | [string](#string) |  | Name of the legal entity that is the sender of this invoice. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation date of the invoice |
+| items | [Invoice.Item](#arangodb.cloud.billing.v1.Invoice.Item) | repeated | All items of the invoice |
+| currency_id | [string](#string) |  | Currency for all amounts |
+| total_amount_excl_vat | [float](#float) |  | Sum all amount for all items |
+| total_vat | [float](#float) |  | VAT amount for all items |
+| total_amount_incl_vat | [float](#float) |  | Sum of total_amount_ex_vat &#43; total_vat. This is the amount that the customer will be charged for. |
+| status | [Invoice.Status](#arangodb.cloud.billing.v1.Invoice.Status) |  |  |
+| payments | [Invoice.Payment](#arangodb.cloud.billing.v1.Invoice.Payment) | repeated | All payment attempts for this invoice, ordered by created_at. |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.Invoice.Item"></a>
+
+### Invoice.Item
+A single item of the invoice
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| usageitem_id | [string](#string) |  | Identifier of the UsageItem that this item covers. |
+| amount | [float](#float) |  | Amount of money (ex VAT) for this item |
+| description | [string](#string) |  | Human readable description of this item |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.Invoice.Payment"></a>
+
+### Invoice.Payment
+Payment (attempt) of the invoice
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of the start of the payment attempt. |
+| payment_provider_id | [string](#string) |  | Identifier of the payment provider that is used for this payment. |
+| payment_id | [string](#string) |  | Identifier of this payment (created by payment provider) |
+| is_pending | [bool](#bool) |  | If set, this payment is still being processed. |
+| is_completed | [bool](#bool) |  | If set, this payment has been payed for succesfully. |
+| is_rejected | [bool](#bool) |  | If set, this payment has been rejected. |
+| completed_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of succesfull completion of the payment. |
+| rejected_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of rejected completion of the payment. |
+| rejection_reason | [string](#string) |  | Human readable reason for the rejection. |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.Invoice.Status"></a>
+
+### Invoice.Status
+Status of the invoice
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| is_pending | [bool](#bool) |  | If set, this invoice is still being processed. |
+| is_completed | [bool](#bool) |  | If set, a successful payment has been made for this invoice. |
+| is_rejected | [bool](#bool) |  | If set, all payment attempts for this invoice have been rejected. |
+| completed_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of succesfull completion of the payment. This field equals the completed_at field of the last payment if that payment succeeded, nil otherwise. |
+| rejected_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of rejected completion of the payment. This field equals the rejected_at field of the last payment if that payment failed, nil otherwise. |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.InvoiceList"></a>
+
+### InvoiceList
+List of Invoices.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Invoice](#arangodb.cloud.billing.v1.Invoice) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.ListInvoicesRequest"></a>
+
+### ListInvoicesRequest
+Request arguments for ListInvoices
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| organization_id | [string](#string) |  | Request invoices for the organization with this id. This is a required field. |
+| from | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request invoices that are created at or after this timestamp. This is an optional field. |
+| to | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request invoices that are created before this timestamp. This is an optional field. |
+| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Standard list options This is an optional field. |
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+
+<a name="arangodb.cloud.billing.v1.BillingService"></a>
+
+### BillingService
+BillingService is the API used to fetch billing information.
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+| ListInvoices | [ListInvoicesRequest](#arangodb.cloud.billing.v1.ListInvoicesRequest) | [InvoiceList](#arangodb.cloud.billing.v1.InvoiceList) | Fetch all Invoice resources for the organization identified by the given organization ID that match the given criteria. Required permissions: - billing.invoice.list on the organization identified by the given organization ID |
+| GetInvoice | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Invoice](#arangodb.cloud.billing.v1.Invoice) | Fetch a specific Invoice identified by the given ID. Required permissions: - billing.invoice.get on the organization that owns the invoice with given ID. |
 
  
 
