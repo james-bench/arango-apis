@@ -8,7 +8,47 @@
 
 package v1
 
-import "strings"
+import (
+	"strings"
+
+	common "github.com/arangodb-managed/apis/common/v1"
+)
+
+// Clone creates a deep clone of the given source
+func (s *Deployment_Status) Clone() *Deployment_Status {
+	if s == nil {
+		return nil
+	}
+	clone := *s
+	clone.ServerVersions = append([]string{}, s.GetServerVersions()...)
+	clone.BootstrappedAt = common.CloneTimestamp(s.GetBootstrappedAt())
+	s.Servers = make([]*Deployment_ServerStatus, 0, len(s.GetServers()))
+	for _, x := range s.GetServers() {
+		s.Servers = append(s.Servers, x.Clone())
+	}
+	return &clone
+}
+
+// Clone creates a deep clone of the given source
+func (s *Deployment_ServerStatus) Clone() *Deployment_ServerStatus {
+	if s == nil {
+		return nil
+	}
+	clone := *s
+	clone.CreatedAt = common.CloneTimestamp(s.GetCreatedAt())
+	clone.DataVolumeInfo = s.GetDataVolumeInfo().Clone()
+	return &clone
+}
+
+// Clone creates a deep clone of the given source
+func (s *DataVolumeInfo) Clone() *DataVolumeInfo {
+	if s == nil {
+		return nil
+	}
+	clone := *s
+	clone.MeasuredAt = common.CloneTimestamp(s.GetMeasuredAt())
+	return &clone
+}
 
 // SpecEquals returns true when source & other have the same specification values
 func (source *Deployment) SpecEquals(other *Deployment) bool {
