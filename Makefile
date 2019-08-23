@@ -24,7 +24,7 @@ else
 endif
 
 .PHONY: all
-all: generate ts docs
+all: generate build check ts docs
 
 # Build docker builder image
 .PHONY: build-image
@@ -70,6 +70,16 @@ generate: $(CACHEVOL) $(MODVOL)
 	$(DOCKERENV) \
 		go generate ./...
 
+# Build go code 
+.PHONY: build
+build: generate
+	go build ./...
+
+# Check go code 
+.PHONY: check
+check: 
+	zutano go check ./...
+
 # Generate API docs
 .PHONY: docs
 docs: $(CACHEVOL) $(MODVOL)
@@ -96,4 +106,5 @@ test:
 	go tool cover -html=bin/test/coverage.out -o bin/test/coverage.html
 
 bootstrap:
+	go get github.com/arangodb-managed/zutano
 	go get github.com/jstemmer/go-junit-report
