@@ -61,6 +61,12 @@ export interface Backup {
   // Backup_DeploymentInfo
   deployment_info?: Backup_DeploymentInfo;
   
+  // Upload the backup, created by the backup policy, to an external source.
+  // Setting or unsetting this fields after the backup has been created will upload/delete the backup from the external source.
+  // Setting this field when status.available = false will result in an error
+  // boolean
+  upload?: boolean;
+  
   // Status of the actual backup
   // Backup_Status
   status?: Backup_Status;
@@ -82,9 +88,7 @@ export interface Backup_DeploymentInfo {
 // All members of this field are read-only.
 export interface Backup_Status {
   // The id of the backup
-  // string
-  id?: string;
-  
+  // TODO move to internal-api: string id = 1;
   // The creation timestamp of the backup
   // googleTypes.Timestamp
   created_at?: googleTypes.Timestamp;
@@ -94,9 +98,13 @@ export interface Backup_Status {
   version?: string;
   
   // The state of the backup
-  // Will be one of the following: "Pending|...|Failed"
+  // Will be one of the following: "Pending|Scheduled|Download|DownloadError|Downloading|Create|Upload|Uploading|UploadError|Ready|Deleted|Failed"
   // string
   state?: string;
+  
+  // Set when the backup is failed
+  // boolean
+  is_failed?: boolean;
   
   // State message
   // string
@@ -214,11 +222,6 @@ export interface BackupPolicy_Schedule {
   // This is applicable for Monthly type only, ignored for Hourly and Daily
   // BackupPolicy_Schedule_MonthlySchedule
   schedule_monthly?: BackupPolicy_Schedule_MonthlySchedule;
-  
-  // The resulting cron notation of this schedule used by the system
-  // This is a read-only value.
-  // string
-  cronSchedule?: string;
 }
 
 // Status of the backup policy
@@ -257,6 +260,16 @@ export interface ListBackupsRequest {
   // Common list options, the context_id should refer to a deployment_id
   // arangodb.cloud.common.v1.ListOptions
   options?: arangodb_cloud_common_v1_ListOptions;
+  
+  // Request backups that are created at or after this timestamp.
+  // This is an optional field.
+  // googleTypes.Timestamp
+  from?: googleTypes.Timestamp;
+  
+  // Request backups that are created before this timestamp.
+  // This is an optional field.
+  // googleTypes.Timestamp
+  to?: googleTypes.Timestamp;
 }
 
 // BackupService is the API used to configure backup objects.
@@ -338,6 +351,15 @@ export class BackupService {
   async UpdateBackup(req: Backup): Promise<Backup> {
     const url = `/api/backup/v1/backup/${encodeURIComponent(req.id || '')}`;
     return api.patch(url, req);
+  }
+  
+  // Download a backup
+  // Required permissions:
+  // -  backup.backup.download on the backup
+  async DownloadBackup(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
+    const path = `/api/backup/v1/backup/${encodeURIComponent(req.id || '')}/download`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.post(url, undefined);
   }
   
   // Restore (or recover) a backup

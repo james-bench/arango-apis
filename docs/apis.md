@@ -232,6 +232,7 @@ Backup represents a single backup for a deployment.
 | is_deleted | [bool](#bool) |  | Set when this backup is deleted. This is a read-only value. |
 | auto_deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp that this backup will be automatically removed |
 | deployment_info | [Backup.DeploymentInfo](#arangodb.cloud.backup.v1.Backup.DeploymentInfo) |  | Information about the deployment during backup |
+| upload | [bool](#bool) |  | Upload the backup, created by the backup policy, to an external source. Setting or unsetting this fields after the backup has been created will upload/delete the backup from the external source. Setting this field when status.available = false will result in an error |
 | status | [Backup.Status](#arangodb.cloud.backup.v1.Backup.Status) |  | Status of the actual backup |
 
 
@@ -265,10 +266,10 @@ All members of this field are read-only.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | The id of the backup |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the backup |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The id of the backup TODO move to internal-api: string id = 1; The creation timestamp of the backup |
 | version | [string](#string) |  | ArangoDB version of the backup |
-| state | [string](#string) |  | The state of the backup Will be one of the following: &#34;Pending|...|Failed&#34; |
+| state | [string](#string) |  | The state of the backup Will be one of the following: &#34;Pending|Scheduled|Download|DownloadError|Downloading|Create|Upload|Uploading|UploadError|Ready|Deleted|Failed&#34; |
+| is_failed | [bool](#bool) |  | Set when the backup is failed |
 | message | [string](#string) |  | State message |
 | progress | [string](#string) |  | Progesss of the backup |
 | size_bytes | [int32](#int32) |  | Size of the backup (in bytes) |
@@ -335,7 +336,6 @@ BackupPolicy represents a single backup policy for a deployment.
 | schedule_hourly | [BackupPolicy.Schedule.HourlySchedule](#arangodb.cloud.backup.v1.BackupPolicy.Schedule.HourlySchedule) |  | Schedule applies to the selected day of the week This is applicable for Daily type only, ignored for Hourly and Monthly |
 | schedule_daily | [BackupPolicy.Schedule.DailySchedule](#arangodb.cloud.backup.v1.BackupPolicy.Schedule.DailySchedule) |  | Schedule applies to the selected day of the week This is applicable for Daily type only, ignored for Hourly and Monthly |
 | schedule_monthly | [BackupPolicy.Schedule.MonthlySchedule](#arangodb.cloud.backup.v1.BackupPolicy.Schedule.MonthlySchedule) |  | Schedule applies to the selected day of the month This is applicable for Monthly type only, ignored for Hourly and Daily |
-| cronSchedule | [string](#string) |  | The resulting cron notation of this schedule used by the system This is a read-only value. |
 
 
 
@@ -454,6 +454,8 @@ Request arguments for ListBackups
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Common list options, the context_id should refer to a deployment_id |
+| from | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request backups that are created at or after this timestamp. This is an optional field. |
+| to | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request backups that are created before this timestamp. This is an optional field. |
 
 
 
@@ -482,6 +484,7 @@ BackupService is the API used to configure backup objects.
 | GetBackup | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Backup](#arangodb.cloud.backup.v1.Backup) | Fetch a backup by its id. Required permissions: - backup.backup.get on the backup policy |
 | CreateBackup | [Backup](#arangodb.cloud.backup.v1.Backup) | [Backup](#arangodb.cloud.backup.v1.Backup) | Create a new backup Required permissions: - backup.backup.create on the deployment that owns the backup. |
 | UpdateBackup | [Backup](#arangodb.cloud.backup.v1.Backup) | [Backup](#arangodb.cloud.backup.v1.Backup) | Update a backup Required permissions: - backup.backup.update on the backup |
+| DownloadBackup | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Download a backup Required permissions: - backup.backup.download on the backup |
 | RestoreBackup | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Restore (or recover) a backup Required permissions: - backup.backup.restore on the backup |
 | DeleteBackup | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a backup Note that the backup are initially only marked for deletion. Once all their dependent backup in the cloud are removed, the backup is removed. Required permissions: - backup.backup.delete on the backup |
 

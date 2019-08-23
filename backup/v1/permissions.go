@@ -32,8 +32,10 @@ const (
 	PermissionBackupGet = "backup.backup.get"
 	// PermissionBackupCreate is needed for create a backup
 	PermissionBackupCreate = "backup.backup.create"
-	// PermissionBackupUpdate is needed for updating a backup (this includes upload and download)
+	// PermissionBackupUpdate is needed for updating a backup (this includes upload a backup)
 	PermissionBackupUpdate = "backup.backup.update"
+	// PermissionBackupDownload is needed for downloading a backup
+	PermissionBackupDownload = "backup.backup.download"
 	// PermissionBackupRestore is needed for restoring a backup
 	PermissionBackupRestore = "backup.backup.restore"
 	// PermissionBackupDelete is needed for deleting a backup

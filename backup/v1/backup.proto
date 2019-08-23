@@ -109,6 +109,15 @@ service BackupService {
         };
     }
 
+    // Download a backup 
+    // Required permissions:
+    // -  backup.backup.download on the backup 
+    rpc DownloadBackup(common.v1.IDOptions) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            post: "/api/backup/v1/backup/{id}/download"
+        };
+    }
+
     // Restore (or recover) a backup 
     // Required permissions:
     // -  backup.backup.restore on the backup 
@@ -132,7 +141,7 @@ service BackupService {
 
 // BackupPolicy represents a single backup policy for a deployment.
 message BackupPolicy {
-     // System identifier of the backup policy.
+    // System identifier of the backup policy.
     // This is a read-only value.
     string id = 1;
     // URL of this resource
@@ -214,7 +223,7 @@ message BackupPolicy {
 
         // The resulting cron notation of this schedule used by the system
         // This is a read-only value.
-        string cronSchedule = 10; 
+        // TODO move to internal-api: string cronSchedule = 10; 
     }
     // The schedule for this backup policy 
     Schedule schedule = 9;
@@ -299,30 +308,37 @@ message Backup {
     // Information about the deployment during backup 
     DeploymentInfo deployment_info = 10;
 
+    // Upload the backup, created by the backup policy, to an external source.
+    // Setting or unsetting this fields after the backup has been created will upload/delete the backup from the external source.
+    // Setting this field when status.available = false will result in an error
+    bool upload = 11;
+
     // Status of the actual backup
     // All members of this field are read-only.
     message Status {
         // The id of the backup 
-        string id = 1;
+        // TODO move to internal-api: string id = 1;
         // The creation timestamp of the backup 
         google.protobuf.Timestamp created_at = 2;
         // ArangoDB version of the backup 
         string version = 3;
         // The state of the backup
-        // Will be one of the following: "Pending|...|Failed"
+        // Will be one of the following: "Pending|Scheduled|Download|DownloadError|Downloading|Create|Upload|Uploading|UploadError|Ready|Deleted|Failed"  
         string state = 4;
+        // Set when the backup is failed
+        bool is_failed = 5;
         // State message  
-        string message = 5;
+        string message = 6;
         // Progesss of the backup
-        string progress = 6;
+        string progress = 7;
         // Size of the backup (in bytes)
-        int32 size_bytes = 7;
+        int32 size_bytes = 8;
         // Set when the backup has been fully uploaded
-        bool uploaded = 8;
+        bool uploaded = 9;
         // Set when the backup has been fully downloaded
-        bool downloaded = 9;
+        bool downloaded = 10;
         // Set when the backup is available to restore to / recover from
-        bool available = 10;
+        bool available = 11;
     }
     // Status of the actual backup
     Status status = 100;
@@ -337,6 +353,10 @@ message BackupList {
 message ListBackupsRequest {
     // Common list options, the context_id should refer to a deployment_id
     common.v1.ListOptions options = 1;
-    
-    // TODO: Date-Range
+    // Request backups that are created at or after this timestamp.
+    // This is an optional field.
+    google.protobuf.Timestamp from = 2;
+    // Request backups that are created before this timestamp.
+    // This is an optional field.
+    google.protobuf.Timestamp to = 3;
 }
