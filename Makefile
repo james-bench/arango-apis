@@ -24,7 +24,7 @@ else
 endif
 
 .PHONY: all
-all: generate build ts docs
+all: generate build check ts docs
 
 # Build docker builder image
 .PHONY: build-image
@@ -74,6 +74,11 @@ generate: $(CACHEVOL) $(MODVOL)
 .PHONY: build
 build: generate
 	go build ./...
+
+# Check go code 
+.PHONY: check
+check: 
+	zutano go check ./...
 
 # Generate API docs
 .PHONY: docs
