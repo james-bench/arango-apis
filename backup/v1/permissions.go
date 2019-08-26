@@ -30,9 +30,9 @@ const (
 	PermissionBackupList = "backup.backup.list"
 	// PermissionBackupGet is needed for getting indivual backup in a deployment
 	PermissionBackupGet = "backup.backup.get"
-	// PermissionBackupCreate is needed for create a backup
+	// PermissionBackupCreate is needed for create a manual backup (this includes backup upload to cloud)
 	PermissionBackupCreate = "backup.backup.create"
-	// PermissionBackupUpdate is needed for updating a backup (this includes upload a backup)
+	// PermissionBackupUpdate is needed for updating a (manual or created by policy) backup (this includes backup upload/removal from cloud)
 	PermissionBackupUpdate = "backup.backup.update"
 	// PermissionBackupDownload is needed for downloading a backup
 	PermissionBackupDownload = "backup.backup.download"

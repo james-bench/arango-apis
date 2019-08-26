@@ -690,7 +690,7 @@ type Backup struct {
 	Url string `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty"`
 	// Description of the backup
 	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	// Identifier of the deployment that owns this backup policy.
+	// Identifier of the deployment that owns this backup.
 	// After creation, this value cannot be changed.
 	DeploymentId string `protobuf:"bytes,4,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
 	// Identifier of the backup policy that triggered this backup
@@ -707,6 +707,8 @@ type Backup struct {
 	// This is a read-only value.
 	IsDeleted bool `protobuf:"varint,8,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
 	// The timestamp that this backup will be automatically removed
+	// You cannot provide a value in the past,
+	// If the field is not set, the backup will not be automatically removed.
 	AutoDeletedAt *types.Timestamp `protobuf:"bytes,9,opt,name=auto_deleted_at,json=autoDeletedAt,proto3" json:"auto_deleted_at,omitempty"`
 	// Information about the deployment during backup
 	DeploymentInfo *Backup_DeploymentInfo `protobuf:"bytes,10,opt,name=deployment_info,json=deploymentInfo,proto3" json:"deployment_info,omitempty"`
@@ -913,7 +915,7 @@ type Backup_Status struct {
 	IsFailed bool `protobuf:"varint,5,opt,name=is_failed,json=isFailed,proto3" json:"is_failed,omitempty"`
 	// State message
 	Message string `protobuf:"bytes,6,opt,name=message,proto3" json:"message,omitempty"`
-	// Progesss of the backup
+	// Progress of the backup (upload or download)
 	Progress string `protobuf:"bytes,7,opt,name=progress,proto3" json:"progress,omitempty"`
 	// Size of the backup (in bytes)
 	SizeBytes int32 `protobuf:"varint,8,opt,name=size_bytes,json=sizeBytes,proto3" json:"size_bytes,omitempty"`
@@ -1308,9 +1310,10 @@ type BackupServiceClient interface {
 	ListBackups(ctx context.Context, in *ListBackupsRequest, opts ...grpc.CallOption) (*BackupList, error)
 	// Fetch a backup by its id.
 	// Required permissions:
-	// - backup.backup.get on the backup policy
+	// - backup.backup.get on the backup
 	GetBackup(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*Backup, error)
-	// Create a new backup
+	// Create a new manual backup
+	// Setting the backup_policy_id field in the backup is not allowed
 	// Required permissions:
 	// -  backup.backup.create on the deployment that owns the backup.
 	CreateBackup(ctx context.Context, in *Backup, opts ...grpc.CallOption) (*Backup, error)
@@ -1319,10 +1322,13 @@ type BackupServiceClient interface {
 	// -  backup.backup.update on the backup
 	UpdateBackup(ctx context.Context, in *Backup, opts ...grpc.CallOption) (*Backup, error)
 	// Download a backup
+	// If this backup was already be downloaded, another download will be done.
+	// If the backup is still available on the cluster there is no need to explicitly download the backup before restoring.
 	// Required permissions:
 	// -  backup.backup.download on the backup
 	DownloadBackup(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Restore (or recover) a backup
+	// This operation can only be executed on backups where status.available is set
 	// Required permissions:
 	// -  backup.backup.restore on the backup
 	RestoreBackup(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
@@ -1480,9 +1486,10 @@ type BackupServiceServer interface {
 	ListBackups(context.Context, *ListBackupsRequest) (*BackupList, error)
 	// Fetch a backup by its id.
 	// Required permissions:
-	// - backup.backup.get on the backup policy
+	// - backup.backup.get on the backup
 	GetBackup(context.Context, *v1.IDOptions) (*Backup, error)
-	// Create a new backup
+	// Create a new manual backup
+	// Setting the backup_policy_id field in the backup is not allowed
 	// Required permissions:
 	// -  backup.backup.create on the deployment that owns the backup.
 	CreateBackup(context.Context, *Backup) (*Backup, error)
@@ -1491,10 +1498,13 @@ type BackupServiceServer interface {
 	// -  backup.backup.update on the backup
 	UpdateBackup(context.Context, *Backup) (*Backup, error)
 	// Download a backup
+	// If this backup was already be downloaded, another download will be done.
+	// If the backup is still available on the cluster there is no need to explicitly download the backup before restoring.
 	// Required permissions:
 	// -  backup.backup.download on the backup
 	DownloadBackup(context.Context, *v1.IDOptions) (*v1.Empty, error)
 	// Restore (or recover) a backup
+	// This operation can only be executed on backups where status.available is set
 	// Required permissions:
 	// -  backup.backup.restore on the backup
 	RestoreBackup(context.Context, *v1.IDOptions) (*v1.Empty, error)

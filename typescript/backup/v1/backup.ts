@@ -27,7 +27,7 @@ export interface Backup {
   // string
   description?: string;
   
-  // Identifier of the deployment that owns this backup policy.
+  // Identifier of the deployment that owns this backup.
   // After creation, this value cannot be changed.
   // string
   deployment_id?: string;
@@ -54,6 +54,8 @@ export interface Backup {
   is_deleted?: boolean;
   
   // The timestamp that this backup will be automatically removed
+  // You cannot provide a value in the past,
+  // If the field is not set, the backup will not be automatically removed.
   // googleTypes.Timestamp
   auto_deleted_at?: googleTypes.Timestamp;
   
@@ -110,7 +112,7 @@ export interface Backup_Status {
   // string
   message?: string;
   
-  // Progesss of the backup
+  // Progress of the backup (upload or download)
   // string
   progress?: string;
   
@@ -330,14 +332,15 @@ export class BackupService {
   
   // Fetch a backup by its id.
   // Required permissions:
-  // - backup.backup.get on the backup policy
+  // - backup.backup.get on the backup
   async GetBackup(req: arangodb_cloud_common_v1_IDOptions): Promise<Backup> {
     const path = `/api/backup/v1/backup/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
   
-  // Create a new backup
+  // Create a new manual backup
+  // Setting the backup_policy_id field in the backup is not allowed
   // Required permissions:
   // -  backup.backup.create on the deployment that owns the backup.
   async CreateBackup(req: Backup): Promise<Backup> {
@@ -354,6 +357,8 @@ export class BackupService {
   }
   
   // Download a backup
+  // If this backup was already be downloaded, another download will be done.
+  // If the backup is still available on the cluster there is no need to explicitly download the backup before restoring.
   // Required permissions:
   // -  backup.backup.download on the backup
   async DownloadBackup(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
@@ -363,6 +368,7 @@ export class BackupService {
   }
   
   // Restore (or recover) a backup
+  // This operation can only be executed on backups where status.available is set
   // Required permissions:
   // -  backup.backup.restore on the backup
   async RestoreBackup(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
