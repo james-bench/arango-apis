@@ -338,10 +338,11 @@ export interface Deployment_Status {
   // boolean
   restoring_backup?: boolean;
   
-  // Any of the following strings: "<empty>|Restoring|Restored|Failed"
+  // Status of the restore backup operation.
+  // Enum of the following values: "<empty>|Restoring|Restored|Failed"
   // The discription will be used for a human readable status
   // string
-  restore_backup__status?: string;
+  restore_backup_status?: string;
 }
 
 // Result for GetDeploymentCredentials

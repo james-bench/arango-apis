@@ -278,9 +278,10 @@ message Deployment {
         bool bootstrapped = 9;
         // Set if the deployment is restoring a backup
         bool restoring_backup = 10;
-        // Any of the following strings: "<empty>|Restoring|Restored|Failed"
+        // Status of the restore backup operation.
+        // Enum of the following values: "<empty>|Restoring|Restored|Failed"
         // The discription will be used for a human readable status
-        string restore_backup__status = 11;
+        string restore_backup_status = 11;
     }
     Status status = 201;
 
