@@ -1134,6 +1134,8 @@ All members of this field are read-only.
 | servers | [Deployment.ServerStatus](#arangodb.cloud.data.v1.Deployment.ServerStatus) | repeated | Status of individual servers of the deployment |
 | bootstrapped_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Set if the ready boolean is transitioned to true for the very first time. |
 | bootstrapped | [bool](#bool) |  | Set if bootstrapped_at has a value, otherwise false. |
+| restoring_backup | [bool](#bool) |  | Set if the deployment is restoring a backup |
+| restore_backup__status | [string](#string) |  | Any of the following strings: &#34;&lt;empty&gt;|Restoring|Restored|Failed&#34; The discription will be used for a human readable status |
 
 
 

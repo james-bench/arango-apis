@@ -276,12 +276,21 @@ message Deployment {
         google.protobuf.Timestamp bootstrapped_at = 8;
         // Set if bootstrapped_at has a value, otherwise false.
         bool bootstrapped = 9;
+        // Set if the deployment is restoring a backup
+        bool restoring_backup = 10;
+        // Any of the following strings: "<empty>|Restoring|Restored|Failed"
+        // The discription will be used for a human readable status
+        string restore_backup__status = 11;
     }
     Status status = 201;
 
     // Detailed size of the deployment
     // This is a read-only field.
     DeploymentSize size = 202;
+
+    // Restore to a Backup
+    // If this id is set to a backup-id the deployment will be restored to that backup
+    // TODO: move to internal-api string backup_restore_id = 203;
 
     // Expiration of the deployment.
     // All members of this message are read-only.
