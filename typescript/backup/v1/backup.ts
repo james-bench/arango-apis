@@ -23,6 +23,10 @@ export interface Backup {
   // string
   url?: string;
   
+  // Name of the backup
+  // string
+  name?: string;
+  
   // Description of the backup
   // string
   description?: string;
@@ -82,6 +86,8 @@ export interface Backup_DeploymentInfo {
   version?: string;
   
   // Servers spec of the deployment during backup.
+  // The id of the encryption key
+  // TODO move to internal-api: encryption_key_id = x;
   // arangodb.cloud.data.v1.Deployment.ServersSpec
   servers?: arangodb_cloud_data_v1_Deployment_ServersSpec;
 }
@@ -90,7 +96,7 @@ export interface Backup_DeploymentInfo {
 // All members of this field are read-only.
 export interface Backup_Status {
   // The id of the backup
-  // TODO move to internal-api: string id = 1;
+  // TODO move to internal-api: string id = x;
   // The creation timestamp of the backup
   // googleTypes.Timestamp
   created_at?: googleTypes.Timestamp;
@@ -252,15 +258,8 @@ export interface BackupPolicy_HourlySchedule {
 
 // Note: Nested types inside nested types is not supported by the typescript generator
 export interface BackupPolicy_MonthlySchedule {
-  // Run the backup on the first day of the month
-  // boolean
-  first?: boolean;
-  
-  // Run the backup on the last day of the month
-  // boolean
-  last?: boolean;
-  
   // Run the backup on the specified day of the month (1-31)
+  // Note: Specifying a number larger than some months have days will result in no backup for those months (e.g. 29 for February (unless leap year)).
   // number
   day_of_month?: number;
   
@@ -347,7 +346,7 @@ export interface ListBackupsRequest {
   options?: arangodb_cloud_common_v1_ListOptions;
 }
 
-// TimeOfDay describes a specific moment on a day (expressed in UTC)
+// TimeOfDay describes a specific moment on a day
 export interface TimeOfDay {
   // Hours part of the time of day (0-23)
   // number
@@ -356,13 +355,17 @@ export interface TimeOfDay {
   // Minutes part of the time of day (0-59)
   // number
   minutes?: number;
+  
+  // The time-zone this time of day applies to (empty means UTC).
+  // string
+  time_zone?: string;
 }
 
 // BackupService is the API used to configure backup objects.
 export class BackupService {
   // Fetch all backup policies for a specific deployment.
   // Required permissions:
-  // - backup.backuppolicy.list on the deployment identified by the given context ID.
+  // - backup.backuppolicy.list on the deployment that owns the backup policies and is identified by the given ID.
   async ListBackupPolicies(req: ListBackupPoliciesRequest): Promise<BackupPolicyList> {
     const path = `/api/backup/v1/deployment/${encodeURIComponent((req.options || {}).context_id || '')}/backuppolicies`;
     const url = path + api.queryString(req, [`options.context_id`]);
@@ -371,7 +374,7 @@ export class BackupService {
   
   // Fetch a backup policy identified by the given ID.
   // Required permissions:
-  // - backup.backuppolicy.get on the backup policy
+  // - backup.backuppolicy.get on the backup policy identified by the given ID.
   async GetBackupPolicy(req: arangodb_cloud_common_v1_IDOptions): Promise<BackupPolicy> {
     const path = `/api/backup/v1/backuppolicies/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
@@ -380,7 +383,7 @@ export class BackupService {
   
   // Create a new backup policy
   // Required permissions:
-  // -  backup.backuppolicy.create on the deployment that owns the backup policy.
+  // -  backup.backuppolicy.create on the deployment that owns the backup policy and is identified by the given ID..
   async CreateBackupPolicy(req: BackupPolicy): Promise<BackupPolicy> {
     const url = `/api/backup/v1/deployment/${encodeURIComponent(req.deployment_id || '')}/backuppolicies`;
     return api.post(url, req);
@@ -388,7 +391,7 @@ export class BackupService {
   
   // Update a backup policy
   // Required permissions:
-  // -  backup.backuppolicy.update on the backup policy
+  // -  backup.backuppolicy.update on the backup policy identified by the given ID.
   async UpdateBackupPolicy(req: BackupPolicy): Promise<BackupPolicy> {
     const url = `/api/backup/v1/backuppolicies/${encodeURIComponent(req.id || '')}`;
     return api.patch(url, req);
@@ -398,7 +401,7 @@ export class BackupService {
   // Note that the backup policy are initially only marked for deletion, no backups will be deleted with this operation.
   // Once all their dependent backups are removed, the backup policy is removed.
   // Required permissions:
-  // -  backup.backuppolicy.delete on the backup policy
+  // -  backup.backuppolicy.delete on the backup policy identified by the given ID.
   async DeleteBackupPolicy(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
     const path = `/api/backup/v1/backuppolicies/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
@@ -407,7 +410,7 @@ export class BackupService {
   
   // Fetch all backups for a specific deployment.
   // Required permissions:
-  // - backup.backup.list on the deployment identified by the given context ID.
+  // - backup.backup.list on the deployment that owns the backup and is identified by the given ID.
   async ListBackups(req: ListBackupsRequest): Promise<BackupList> {
     const path = `/api/backup/v1/deployment/${encodeURIComponent((req.options || {}).context_id || '')}/backups`;
     const url = path + api.queryString(req, [`options.context_id`]);
@@ -416,7 +419,7 @@ export class BackupService {
   
   // Fetch a backup identified by the given ID.
   // Required permissions:
-  // - backup.backup.get on the backup
+  // - backup.backup.get on the backup identified by the given ID.
   async GetBackup(req: arangodb_cloud_common_v1_IDOptions): Promise<Backup> {
     const path = `/api/backup/v1/backup/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
@@ -426,7 +429,7 @@ export class BackupService {
   // Create a new manual backup
   // Setting the backup_policy_id field in the backup is not allowed
   // Required permissions:
-  // -  backup.backup.create on the deployment that owns the backup.
+  // -  backup.backup.create on the deployment that owns the backup and is identified by the given ID.
   async CreateBackup(req: Backup): Promise<Backup> {
     const url = `/api/backup/v1/deployment/${encodeURIComponent(req.deployment_id || '')}/backup`;
     return api.post(url, req);
@@ -434,7 +437,7 @@ export class BackupService {
   
   // Update a backup
   // Required permissions:
-  // -  backup.backup.update on the backup
+  // -  backup.backup.update on the backup identified by the given ID.
   async UpdateBackup(req: Backup): Promise<Backup> {
     const url = `/api/backup/v1/backup/${encodeURIComponent(req.id || '')}`;
     return api.patch(url, req);
@@ -446,7 +449,7 @@ export class BackupService {
   // This function will return immediately.
   // To track status, please invoke GetBackup and check the .status field inside the returned backup object
   // Required permissions:
-  // -  backup.backup.download on the backup
+  // -  backup.backup.download on the backup identified by the given ID.
   async DownloadBackup(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
     const path = `/api/backup/v1/backup/${encodeURIComponent(req.id || '')}/download`;
     const url = path + api.queryString(req, [`id`]);
@@ -458,9 +461,9 @@ export class BackupService {
   // This function will return immediately.
   // To track status, please invoke GetDeployment on the data API and check the
   // .status.restoring_backup and .status.restore_backup_status fields inside the returned deployment object
-  // Required permissions:
-  // -  backup.backup.restore on the backup
-  // -  data.deployment.restore-backup on the deployment
+  // Required permissions (both are needed):
+  // -  backup.backup.restore on the backup identified by the given ID.
+  // -  data.deployment.restore-backup on the deployment that this backup owns
   async RestoreBackup(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
     const path = `/api/backup/v1/backup/${encodeURIComponent(req.id || '')}/restore`;
     const url = path + api.queryString(req, [`id`]);
@@ -471,7 +474,7 @@ export class BackupService {
   // Note that the backup are initially only marked for deletion.
   // Once all remote storage for the backup has been removed, the backup itself is removed.
   // Required permissions:
-  // -  backup.backup.delete on the backup
+  // -  backup.backup.delete on the backup identified by the given ID.
   async DeleteBackup(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
     const path = `/api/backup/v1/backup/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);

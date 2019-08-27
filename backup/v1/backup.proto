@@ -24,7 +24,7 @@ service BackupService {
 
     // Fetch all backup policies for a specific deployment.
     // Required permissions:
-    // - backup.backuppolicy.list on the deployment identified by the given context ID.
+    // - backup.backuppolicy.list on the deployment that owns the backup policies and is identified by the given ID.
     rpc ListBackupPolicies(ListBackupPoliciesRequest) returns (BackupPolicyList) {
         option (google.api.http) = {
             get: "/api/backup/v1/deployment/{options.context_id}/backuppolicies"
@@ -33,7 +33,7 @@ service BackupService {
     
     // Fetch a backup policy identified by the given ID.
     // Required permissions:
-    // - backup.backuppolicy.get on the backup policy
+    // - backup.backuppolicy.get on the backup policy identified by the given ID.
     rpc GetBackupPolicy(common.v1.IDOptions) returns (BackupPolicy) {
         option (google.api.http) = {
             get: "/api/backup/v1/backuppolicies/{id}"
@@ -42,7 +42,7 @@ service BackupService {
 
     // Create a new backup policy
     // Required permissions:
-    // -  backup.backuppolicy.create on the deployment that owns the backup policy.
+    // -  backup.backuppolicy.create on the deployment that owns the backup policy and is identified by the given ID..
     rpc CreateBackupPolicy(BackupPolicy) returns (BackupPolicy) {
         option (google.api.http) = {
             post: "/api/backup/v1/deployment/{deployment_id}/backuppolicies"
@@ -52,7 +52,7 @@ service BackupService {
 
     // Update a backup policy
     // Required permissions:
-    // -  backup.backuppolicy.update on the backup policy
+    // -  backup.backuppolicy.update on the backup policy identified by the given ID.
     rpc UpdateBackupPolicy(BackupPolicy) returns (BackupPolicy) {
         option (google.api.http) = {
             patch: "/api/backup/v1/backuppolicies/{id}"
@@ -64,7 +64,7 @@ service BackupService {
     // Note that the backup policy are initially only marked for deletion, no backups will be deleted with this operation.
     // Once all their dependent backups are removed, the backup policy is removed.
     // Required permissions:
-    // -  backup.backuppolicy.delete on the backup policy
+    // -  backup.backuppolicy.delete on the backup policy identified by the given ID.
     rpc DeleteBackupPolicy(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             delete: "/api/backup/v1/backuppolicies/{id}"
@@ -73,7 +73,7 @@ service BackupService {
    
     // Fetch all backups for a specific deployment.
     // Required permissions:
-    // - backup.backup.list on the deployment identified by the given context ID.
+    // - backup.backup.list on the deployment that owns the backup and is identified by the given ID.
     rpc ListBackups(ListBackupsRequest) returns (BackupList) {
         option (google.api.http) = {
             get: "/api/backup/v1/deployment/{options.context_id}/backups"
@@ -82,7 +82,7 @@ service BackupService {
 
     // Fetch a backup identified by the given ID.
     // Required permissions:
-    // - backup.backup.get on the backup 
+    // - backup.backup.get on the backup identified by the given ID.
     rpc GetBackup(common.v1.IDOptions) returns (Backup) {
         option (google.api.http) = {
             get: "/api/backup/v1/backup/{id}"
@@ -92,7 +92,7 @@ service BackupService {
     // Create a new manual backup 
     // Setting the backup_policy_id field in the backup is not allowed 
     // Required permissions:
-    // -  backup.backup.create on the deployment that owns the backup.
+    // -  backup.backup.create on the deployment that owns the backup and is identified by the given ID.
     rpc CreateBackup(Backup) returns (Backup) {
         option (google.api.http) = {
             post: "/api/backup/v1/deployment/{deployment_id}/backup"
@@ -102,7 +102,7 @@ service BackupService {
 
     // Update a backup 
     // Required permissions:
-    // -  backup.backup.update on the backup 
+    // -  backup.backup.update on the backup identified by the given ID.
     rpc UpdateBackup(Backup) returns (Backup) {
         option (google.api.http) = {
             patch: "/api/backup/v1/backup/{id}"
@@ -116,7 +116,7 @@ service BackupService {
     // This function will return immediately. 
     // To track status, please invoke GetBackup and check the .status field inside the returned backup object
     // Required permissions:
-    // -  backup.backup.download on the backup 
+    // -  backup.backup.download on the backup identified by the given ID.
     rpc DownloadBackup(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             post: "/api/backup/v1/backup/{id}/download"
@@ -128,9 +128,9 @@ service BackupService {
     // This function will return immediately. 
     // To track status, please invoke GetDeployment on the data API and check the 
     // .status.restoring_backup and .status.restore_backup_status fields inside the returned deployment object
-    // Required permissions:
-    // -  backup.backup.restore on the backup 
-    // -  data.deployment.restore-backup on the deployment
+    // Required permissions (both are needed):
+    // -  backup.backup.restore on the backup identified by the given ID. 
+    // -  data.deployment.restore-backup on the deployment that this backup owns
     rpc RestoreBackup(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             post: "/api/backup/v1/backup/{id}/restore"
@@ -143,7 +143,7 @@ service BackupService {
     // Note that the backup are initially only marked for deletion.
     // Once all remote storage for the backup has been removed, the backup itself is removed.
     // Required permissions:
-    // -  backup.backup.delete on the backup 
+    // -  backup.backup.delete on the backup identified by the given ID.
     rpc DeleteBackup(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             delete: "/api/backup/v1/backup/{id}"
@@ -226,17 +226,14 @@ message BackupPolicy {
         // If set, a backup will be created on Sundays.
         bool sunday = 7;
          // The (target) time of the schedule
-         TimeOfDay schedule_at = 10;
+        TimeOfDay schedule_at = 10;
     }
 
     // Note: Nested types inside nested types is not supported by the typescript generator
     message MonthlySchedule{
-        // Run the backup on the first day of the month
-        bool first = 1;
-        // Run the backup on the last day of the month
-        bool last = 2;
         // Run the backup on the specified day of the month (1-31)
-        int32 day_of_month = 3;
+        // Note: Specifying a number larger than some months have days will result in no backup for those months (e.g. 29 for February (unless leap year)).
+        int32 day_of_month = 1;
         // The (target) time of the schedule
         TimeOfDay schedule_at = 10;
     }
@@ -268,12 +265,14 @@ message BackupPolicy {
 
 }
 
-// TimeOfDay describes a specific moment on a day (expressed in UTC)
+// TimeOfDay describes a specific moment on a day 
 message TimeOfDay {
     // Hours part of the time of day (0-23)
     int32 hours = 1;
     // Minutes part of the time of day (0-59)
     int32 minutes = 2;
+    // The time-zone this time of day applies to (empty means UTC).
+    string time_zone = 3;
 }
 
 // List of backup policies.
@@ -301,29 +300,31 @@ message Backup {
     // URL of this resource
     // This is a read-only value.
     string url = 2;
+    // Name of the backup 
+    string name = 3; 
     // Description of the backup 
-    string description = 3; 
+    string description = 4; 
     // Identifier of the deployment that owns this backup.
     // After creation, this value cannot be changed.
-    string deployment_id = 4;
+    string deployment_id = 5;
     // Identifier of the backup policy that triggered this backup
     // After creation, this value cannot be changed.
     // If this field is empty, this is a manual backup
-    string backup_policy_id = 5;
+    string backup_policy_id = 6;
     // The creation timestamp of the backup (database object)
     // This is a read-only value.
-    google.protobuf.Timestamp created_at = 6;
+    google.protobuf.Timestamp created_at = 7;
     // The deletion timestamp of the backup 
     // This is a read-only value.
-    google.protobuf.Timestamp deleted_at = 7;
+    google.protobuf.Timestamp deleted_at = 8;
     // Set when this backup is deleted.
     // This is a read-only value.
-    bool is_deleted = 8;
+    bool is_deleted = 9;
 
     // The timestamp that this backup will be automatically removed
     // You cannot provide a value in the past, 
     // If the field is not set, the backup will not be automatically removed.  
-    google.protobuf.Timestamp auto_deleted_at = 9;
+    google.protobuf.Timestamp auto_deleted_at = 10;
 
     // Information about the deployment during backup 
     // All members of this field are read-only.
@@ -331,42 +332,44 @@ message Backup {
         // ArangoDB version of the deployment during backup.
         string version = 1;
         // Servers spec of the deployment during backup.
-        data.v1.Deployment.ServersSpec  servers = 2;
+        data.v1.Deployment.ServersSpec servers = 2;
+        // The id of the encryption key
+        // TODO move to internal-api: encryption_key_id = x;
     }
     // Information about the deployment during backup 
-    DeploymentInfo deployment_info = 10;
+    DeploymentInfo deployment_info = 11;
 
     // Upload the backup, created by the backup policy, to an external source.
     // Setting or unsetting this fields after the backup has been created will upload/delete the backup from the external source.
     // Setting this field when status.available = false will result in an error
-    bool upload = 11;
+    bool upload = 12;
 
     // Status of the actual backup
     // All members of this field are read-only.
     message Status {
         // The id of the backup 
-        // TODO move to internal-api: string id = 1;
+        // TODO move to internal-api: string id = x;
         // The creation timestamp of the backup 
-        google.protobuf.Timestamp created_at = 2;
+        google.protobuf.Timestamp created_at = 1;
         // ArangoDB version of the backup 
-        string version = 3;
+        string version = 2;
         // The state of the backup
         // Will be one of the following: "Pending|Scheduled|Download|DownloadError|Downloading|Create|Upload|Uploading|UploadError|Ready|Deleted|Failed"  
-        string state = 4;
+        string state = 3;
         // Set when the backup is failed
-        bool is_failed = 5;
+        bool is_failed = 4;
         // State message  
-        string message = 6;
+        string message = 5;
         // Progress of the backup (upload or download)
-        string progress = 7;
+        string progress = 6;
         // Size of the backup (in bytes)
-        int64 size_bytes = 8;
+        int64 size_bytes = 7;
         // Set when the backup has been fully uploaded
-        bool uploaded = 9;
+        bool uploaded = 8;
         // Set when the backup has been fully downloaded
-        bool downloaded = 10;
+        bool downloaded = 9;
         // Set when the backup is available to restore to / recover from
-        bool available = 11;
+        bool available = 10;
     }
     // Status of the actual backup
     Status status = 100;
