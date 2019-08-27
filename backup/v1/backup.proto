@@ -31,7 +31,7 @@ service BackupService {
         };
     }
     
-    // Fetch a backup policy by its id.
+    // Fetch a backup policy identified by the given ID.
     // Required permissions:
     // - backup.backuppolicy.get on the backup policy
     rpc GetBackupPolicy(common.v1.IDOptions) returns (BackupPolicy) {
@@ -60,8 +60,8 @@ service BackupService {
         };
     }
 
-    // Delete a backup policy.
-    // Note that the backup policy are initially only marked for deletion.
+    // Delete a backup policy identified by the given ID.
+    // Note that the backup policy are initially only marked for deletion, no backups will be deleted with this operation.
     // Once all their dependent backups are removed, the backup policy is removed.
     // Required permissions:
     // -  backup.backuppolicy.delete on the backup policy
@@ -80,7 +80,7 @@ service BackupService {
         };
     }
 
-    // Fetch a backup by its id.
+    // Fetch a backup identified by the given ID.
     // Required permissions:
     // - backup.backup.get on the backup 
     rpc GetBackup(common.v1.IDOptions) returns (Backup) {
@@ -110,9 +110,11 @@ service BackupService {
         };
     }
 
-    // Download a backup 
+    // Download a backup identified by the given ID from remote storage to the volumes of the servers of the deployment
     // If this backup was already be downloaded, another download will be done.
     // If the backup is still available on the cluster there is no need to explicitly download the backup before restoring.
+    // This function will return immediately. 
+    // To track status, please invoke GetBackup and check the .status field inside the returned backup object
     // Required permissions:
     // -  backup.backup.download on the backup 
     rpc DownloadBackup(common.v1.IDOptions) returns (common.v1.Empty) {
@@ -121,10 +123,14 @@ service BackupService {
         };
     }
 
-    // Restore (or recover) a backup 
+    // Restore (or recover) a backup identified by the given ID
     // This operation can only be executed on backups where status.available is set
+    // This function will return immediately. 
+    // To track status, please invoke GetDeployment on the data API and check the 
+    // .status.restoring_backup and .status.restore_backup_status fields inside the returned deployment object
     // Required permissions:
     // -  backup.backup.restore on the backup 
+    // -  data.deployment.restore-backup on the deployment
     rpc RestoreBackup(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             post: "/api/backup/v1/backup/{id}/restore"
@@ -133,9 +139,9 @@ service BackupService {
 
     // TODO: Add functionality to restore to new deployment
 
-    // Delete a backup
+    // Delete a backup identified by the given ID, after which removal of any remote storage of the backup is started.
     // Note that the backup are initially only marked for deletion.
-    // Once all their dependent backup in the cloud are removed, the backup is removed.
+    // Once all remote storage for the backup has been removed, the backup itself is removed.
     // Required permissions:
     // -  backup.backup.delete on the backup 
     rpc DeleteBackup(common.v1.IDOptions) returns (common.v1.Empty) {
@@ -155,22 +161,24 @@ message BackupPolicy {
     string url = 2;
     // Name of the backup policy
     string name = 3; 
+    // Description of the backup policy
+    string description = 4; 
     // Identifier of the deployment that owns this backup policy.
     // After creation, this value cannot be changed.
-    string deployment_id = 4;
+    string deployment_id = 5;
     // The creation timestamp of the backup policy
     // This is a read-only value.
-    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp created_at = 6;
     // The deletion timestamp of the backup policy
     // This is a read-only value.
-    google.protobuf.Timestamp deleted_at = 6;
+    google.protobuf.Timestamp deleted_at = 7;
     // Set when this backup policy is deleted.
     // This is a read-only value.
-    bool is_deleted = 7;
+    bool is_deleted = 8;
      // Pause this backup policy.
-     // When a backup policy is paused, the backup policy will not result in new backups.
+     // If a backup policy is paused, the backup policy will not result in new backups.
      // The backup policy isn't deleted, unsetting this field will resume the creation of backups again.
-    bool is_paused = 8;
+    bool is_paused = 9;
 
     message Schedule{
         // Schedule type should be one of the following string: "Hourly|Daily|Monthly"
@@ -178,72 +186,74 @@ message BackupPolicy {
         // Setting multiple fields, or inconsistent with this field result in an error during create/update
         string schedule_type = 1;
 
-        message HourlySchedule{
-            // Schedule should run with an interval of the specified hours
-            // This is applicable for Hourly type only, ignored for Daily and Monthly
-            int32 schedule_every_interval_hours = 1;
-        }
+        // Schedule applies to the selected day of the week
+        // This is applicable for Hourly type only, ignored for Daily and Monthly
+        HourlySchedule hourly_schedule = 2;
+
         // Schedule applies to the selected day of the week
         // This is applicable for Daily type only, ignored for Hourly and Monthly
-        HourlySchedule schedule_hourly = 2;
+        DailySchedule daily_schedule = 3;
 
-        message DailySchedule{
-            // Run the backup on Monday
-            bool monday = 1;
-            // Run the backup on Tuesday
-            bool tuesday = 2;
-            // Run the backup on Wednesday
-            bool wednesday = 3;
-            // Run the backup on Thursday
-            bool thursday = 4;
-            // Run the backup on Friday
-            bool friday = 5;
-            // Run the backup on Saturday
-            bool saturday = 6;
-            // Run the backup on Sunday
-            bool sunday = 7;
-            // The (target) time of the schedule
-            // We ignore the date part, and concidering the time part (including time-zone) only.
-            // TODO: Better type...
-            google.protobuf.Timestamp schedule_at = 10;
-        }
-        // Schedule applies to the selected day of the week
-        // This is applicable for Daily type only, ignored for Hourly and Monthly
-        DailySchedule schedule_daily = 3;
-
-        message MonthlySchedule{
-            // Run the backup on the first day of the month
-            bool first = 1;
-            // Run the backup on the last day of the month
-            bool last = 2;
-            // Run the backup on the specified day of the month
-            int32 day_of_month = 3;
-            // The (target) time of the schedule
-            // We ignore the date part, and concidering the time part (including time-zone) only.
-            // TODO: Better type...
-            google.protobuf.Timestamp schedule_at = 10;
-        }
         // Schedule applies to the selected day of the month
         // This is applicable for Monthly type only, ignored for Hourly and Daily
-        MonthlySchedule schedule_monthly = 4;
+        MonthlySchedule monthly_schedule = 4;
 
         // The resulting cron notation of this schedule used by the system
         // This is a read-only value.
         // TODO move to internal-api: string cronSchedule = 10; 
     }
+
+    // Note: Nested types inside nested types is not supported by the typescript generator 
+    message HourlySchedule{
+        // Schedule should run with an interval of the specified hours (1-23)
+        int32 schedule_every_interval_hours = 1;
+    }
+
+    // Note: Nested types inside nested types is not supported by the typescript generator 
+    message DailySchedule{
+        // If set, a backup will be created on Mondays.
+        bool monday = 1;
+        // If set, a backup will be created on Tuesdays.
+        bool tuesday = 2;
+        // If set, a backup will be created on Wednesdays.
+        bool wednesday = 3;
+        // If set, a backup will be created on Thursdays.
+        bool thursday = 4;
+        // If set, a backup will be created on Fridays.
+        bool friday = 5;
+        // If set, a backup will be created on Saturdays.
+        bool saturday = 6;
+        // If set, a backup will be created on Sundays.
+        bool sunday = 7;
+         // The (target) time of the schedule
+         TimeOfDay schedule_at = 10;
+    }
+
+    // Note: Nested types inside nested types is not supported by the typescript generator
+    message MonthlySchedule{
+        // Run the backup on the first day of the month
+        bool first = 1;
+        // Run the backup on the last day of the month
+        bool last = 2;
+        // Run the backup on the specified day of the month (1-31)
+        int32 day_of_month = 3;
+        // The (target) time of the schedule
+        TimeOfDay schedule_at = 10;
+    }
+
     // The schedule for this backup policy 
-    Schedule schedule = 9;
+    Schedule schedule = 10;
     
     // Upload the backup, created by the backup policy, to an external source.
-    bool upload = 10;
+    bool upload = 11;
    
-    // Backups created by this policy will be automatically deleted after the specified duration 
+    // Backups created by this policy will be automatically deleted after the specified retention period 
     // A value of 0 means that backup will never be deleted.
-    google.protobuf.Duration auto_delete_after = 11;
+    google.protobuf.Duration retention_period = 12;
 
     // The owners of the organization can be notified by email
     // This field support the following values: "None|FailureOnly|Always"
-    string email_notification = 12;
+    string email_notification = 13;
 
     // Status of the backup policy
     // All members of this field are read-only.
@@ -258,6 +268,14 @@ message BackupPolicy {
 
 }
 
+// TimeOfDay describes a specific moment on a day (expressed in UTC)
+message TimeOfDay {
+    // Hours part of the time of day (0-23)
+    int32 hours = 1;
+    // Minutes part of the time of day (0-59)
+    int32 minutes = 2;
+}
+
 // List of backup policies.
 message BackupPolicyList {
     repeated BackupPolicy items = 1;
@@ -265,15 +283,17 @@ message BackupPolicyList {
 
 // Request arguments for ListBackupPolicies
 message ListBackupPoliciesRequest {
-    // Common list options, the context_id should refer to a deployment_id
-    common.v1.ListOptions options = 1;
-    // If set, the result includes all backup providers, including those who set to deleted, 
-    // however are not removed from the systemare available for the
-    // If not set, only backup providers not indicated as delted are returne.
+    // Identifier of the deployment to request the backup policies for.
+    string deployment_id = 1;
+    // If set, the result includes all backup policies, including those who set to deleted, 
+    // however are not removed from the system currently.
+    // If not set, only backup policies not indicated as deleted are returned.
     bool include_deleted = 2;
+    // Optional common list options, the context_id is ignored
+    common.v1.ListOptions options = 10;
 }
 
-// Backup represents a single backup for a deployment.
+// Backup represents a single backup of a deployment.
 message Backup {
     // System identifier of the backup.
     // This is a read-only value.
@@ -340,7 +360,7 @@ message Backup {
         // Progress of the backup (upload or download)
         string progress = 7;
         // Size of the backup (in bytes)
-        int32 size_bytes = 8;
+        int64 size_bytes = 8;
         // Set when the backup has been fully uploaded
         bool uploaded = 9;
         // Set when the backup has been fully downloaded
@@ -359,12 +379,14 @@ message BackupList {
 
 // Request arguments for ListBackups
 message ListBackupsRequest {
-    // Common list options, the context_id should refer to a deployment_id
-    common.v1.ListOptions options = 1;
+    // Identifier of the deployment to request the backups for.
+    string deployment_id = 1;
     // Request backups that are created at or after this timestamp.
     // This is an optional field.
     google.protobuf.Timestamp from = 2;
     // Request backups that are created before this timestamp.
     // This is an optional field.
     google.protobuf.Timestamp to = 3;
+    // Optional common list options, the context_id is ignored
+    common.v1.ListOptions options = 10;
 }

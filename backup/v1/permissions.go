@@ -13,7 +13,7 @@ const (
 
 	// PermissionBackupPolicyList is needed for listing backup policies in a deployment
 	PermissionBackupPolicyList = "backup.backuppolicy.list"
-	// PermissionBackupPolicyGet is needed for getting indivual backup policy in a deployment
+	// PermissionBackupPolicyGet is needed for getting individual backup policy in a deployment
 	PermissionBackupPolicyGet = "backup.backuppolicy.get"
 	// PermissionBackupPolicyCreate is needed for create a backup policy
 	PermissionBackupPolicyCreate = "backup.backuppolicy.create"
@@ -28,7 +28,7 @@ const (
 
 	// PermissionBackupList is needed for listing backups in a deployment
 	PermissionBackupList = "backup.backup.list"
-	// PermissionBackupGet is needed for getting indivual backup in a deployment
+	// PermissionBackupGet is needed for getting individual backup in a deployment
 	PermissionBackupGet = "backup.backup.get"
 	// PermissionBackupCreate is needed for create a manual backup (this includes backup upload to cloud)
 	PermissionBackupCreate = "backup.backup.create"

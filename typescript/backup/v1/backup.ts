@@ -11,7 +11,7 @@ import { Deployment_ServersSpec as arangodb_cloud_data_v1_Deployment_ServersSpec
 // File: backup/v1/backup.proto
 // Package: arangodb.cloud.backup.v1
 
-// Backup represents a single backup for a deployment.
+// Backup represents a single backup of a deployment.
 export interface Backup {
   // System identifier of the backup.
   // This is a read-only value.
@@ -155,6 +155,10 @@ export interface BackupPolicy {
   // string
   name?: string;
   
+  // Description of the backup policy
+  // string
+  description?: string;
+  
   // Identifier of the deployment that owns this backup policy.
   // After creation, this value cannot be changed.
   // string
@@ -176,7 +180,7 @@ export interface BackupPolicy {
   is_deleted?: boolean;
   
   // Pause this backup policy.
-  // When a backup policy is paused, the backup policy will not result in new backups.
+  // If a backup policy is paused, the backup policy will not result in new backups.
   // The backup policy isn't deleted, unsetting this field will resume the creation of backups again.
   // boolean
   is_paused?: boolean;
@@ -189,10 +193,10 @@ export interface BackupPolicy {
   // boolean
   upload?: boolean;
   
-  // Backups created by this policy will be automatically deleted after the specified duration
+  // Backups created by this policy will be automatically deleted after the specified retention period
   // A value of 0 means that backup will never be deleted.
   // googleTypes.Duration
-  auto_delete_after?: googleTypes.Duration;
+  retention_period?: googleTypes.Duration;
   
   // The owners of the organization can be notified by email
   // This field support the following values: "None|FailureOnly|Always"
@@ -203,6 +207,67 @@ export interface BackupPolicy {
   // BackupPolicy_Status
   status?: BackupPolicy_Status;
 }
+
+// Note: Nested types inside nested types is not supported by the typescript generator
+export interface BackupPolicy_DailySchedule {
+  // If set, a backup will be created on Mondays.
+  // boolean
+  monday?: boolean;
+  
+  // If set, a backup will be created on Tuesdays.
+  // boolean
+  tuesday?: boolean;
+  
+  // If set, a backup will be created on Wednesdays.
+  // boolean
+  wednesday?: boolean;
+  
+  // If set, a backup will be created on Thursdays.
+  // boolean
+  thursday?: boolean;
+  
+  // If set, a backup will be created on Fridays.
+  // boolean
+  friday?: boolean;
+  
+  // If set, a backup will be created on Saturdays.
+  // boolean
+  saturday?: boolean;
+  
+  // If set, a backup will be created on Sundays.
+  // boolean
+  sunday?: boolean;
+  
+  // The (target) time of the schedule
+  // TimeOfDay
+  schedule_at?: TimeOfDay;
+}
+
+// Note: Nested types inside nested types is not supported by the typescript generator
+export interface BackupPolicy_HourlySchedule {
+  // Schedule should run with an interval of the specified hours (1-23)
+  // number
+  schedule_every_interval_hours?: number;
+}
+
+// Note: Nested types inside nested types is not supported by the typescript generator
+export interface BackupPolicy_MonthlySchedule {
+  // Run the backup on the first day of the month
+  // boolean
+  first?: boolean;
+  
+  // Run the backup on the last day of the month
+  // boolean
+  last?: boolean;
+  
+  // Run the backup on the specified day of the month (1-31)
+  // number
+  day_of_month?: number;
+  
+  // The (target) time of the schedule
+  // TimeOfDay
+  schedule_at?: TimeOfDay;
+}
 export interface BackupPolicy_Schedule {
   // Schedule type should be one of the following string: "Hourly|Daily|Monthly"
   // The schedule_hourly, schedule_daily or schedule_montly field should be set
@@ -211,19 +276,19 @@ export interface BackupPolicy_Schedule {
   schedule_type?: string;
   
   // Schedule applies to the selected day of the week
-  // This is applicable for Daily type only, ignored for Hourly and Monthly
-  // BackupPolicy_Schedule_HourlySchedule
-  schedule_hourly?: BackupPolicy_Schedule_HourlySchedule;
+  // This is applicable for Hourly type only, ignored for Daily and Monthly
+  // BackupPolicy_HourlySchedule
+  hourly_schedule?: BackupPolicy_HourlySchedule;
   
   // Schedule applies to the selected day of the week
   // This is applicable for Daily type only, ignored for Hourly and Monthly
-  // BackupPolicy_Schedule_DailySchedule
-  schedule_daily?: BackupPolicy_Schedule_DailySchedule;
+  // BackupPolicy_DailySchedule
+  daily_schedule?: BackupPolicy_DailySchedule;
   
   // Schedule applies to the selected day of the month
   // This is applicable for Monthly type only, ignored for Hourly and Daily
-  // BackupPolicy_Schedule_MonthlySchedule
-  schedule_monthly?: BackupPolicy_Schedule_MonthlySchedule;
+  // BackupPolicy_MonthlySchedule
+  monthly_schedule?: BackupPolicy_MonthlySchedule;
 }
 
 // Status of the backup policy
@@ -246,22 +311,26 @@ export interface BackupPolicyList {
 
 // Request arguments for ListBackupPolicies
 export interface ListBackupPoliciesRequest {
-  // Common list options, the context_id should refer to a deployment_id
-  // arangodb.cloud.common.v1.ListOptions
-  options?: arangodb_cloud_common_v1_ListOptions;
+  // Identifier of the deployment to request the backup policies for.
+  // string
+  deployment_id?: string;
   
-  // If set, the result includes all backup providers, including those who set to deleted,
-  // however are not removed from the systemare available for the
-  // If not set, only backup providers not indicated as delted are returne.
+  // If set, the result includes all backup policies, including those who set to deleted,
+  // however are not removed from the system currently.
+  // If not set, only backup policies not indicated as deleted are returned.
   // boolean
   include_deleted?: boolean;
+  
+  // Optional common list options, the context_id is ignored
+  // arangodb.cloud.common.v1.ListOptions
+  options?: arangodb_cloud_common_v1_ListOptions;
 }
 
 // Request arguments for ListBackups
 export interface ListBackupsRequest {
-  // Common list options, the context_id should refer to a deployment_id
-  // arangodb.cloud.common.v1.ListOptions
-  options?: arangodb_cloud_common_v1_ListOptions;
+  // Identifier of the deployment to request the backups for.
+  // string
+  deployment_id?: string;
   
   // Request backups that are created at or after this timestamp.
   // This is an optional field.
@@ -272,6 +341,21 @@ export interface ListBackupsRequest {
   // This is an optional field.
   // googleTypes.Timestamp
   to?: googleTypes.Timestamp;
+  
+  // Optional common list options, the context_id is ignored
+  // arangodb.cloud.common.v1.ListOptions
+  options?: arangodb_cloud_common_v1_ListOptions;
+}
+
+// TimeOfDay describes a specific moment on a day (expressed in UTC)
+export interface TimeOfDay {
+  // Hours part of the time of day (0-23)
+  // number
+  hours?: number;
+  
+  // Minutes part of the time of day (0-59)
+  // number
+  minutes?: number;
 }
 
 // BackupService is the API used to configure backup objects.
@@ -285,7 +369,7 @@ export class BackupService {
     return api.get(url, undefined);
   }
   
-  // Fetch a backup policy by its id.
+  // Fetch a backup policy identified by the given ID.
   // Required permissions:
   // - backup.backuppolicy.get on the backup policy
   async GetBackupPolicy(req: arangodb_cloud_common_v1_IDOptions): Promise<BackupPolicy> {
@@ -310,8 +394,8 @@ export class BackupService {
     return api.patch(url, req);
   }
   
-  // Delete a backup policy.
-  // Note that the backup policy are initially only marked for deletion.
+  // Delete a backup policy identified by the given ID.
+  // Note that the backup policy are initially only marked for deletion, no backups will be deleted with this operation.
   // Once all their dependent backups are removed, the backup policy is removed.
   // Required permissions:
   // -  backup.backuppolicy.delete on the backup policy
@@ -330,7 +414,7 @@ export class BackupService {
     return api.get(url, undefined);
   }
   
-  // Fetch a backup by its id.
+  // Fetch a backup identified by the given ID.
   // Required permissions:
   // - backup.backup.get on the backup
   async GetBackup(req: arangodb_cloud_common_v1_IDOptions): Promise<Backup> {
@@ -356,9 +440,11 @@ export class BackupService {
     return api.patch(url, req);
   }
   
-  // Download a backup
+  // Download a backup identified by the given ID from remote storage to the volumes of the servers of the deployment
   // If this backup was already be downloaded, another download will be done.
   // If the backup is still available on the cluster there is no need to explicitly download the backup before restoring.
+  // This function will return immediately.
+  // To track status, please invoke GetBackup and check the .status field inside the returned backup object
   // Required permissions:
   // -  backup.backup.download on the backup
   async DownloadBackup(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
@@ -367,19 +453,23 @@ export class BackupService {
     return api.post(url, undefined);
   }
   
-  // Restore (or recover) a backup
+  // Restore (or recover) a backup identified by the given ID
   // This operation can only be executed on backups where status.available is set
+  // This function will return immediately.
+  // To track status, please invoke GetDeployment on the data API and check the
+  // .status.restoring_backup and .status.restore_backup_status fields inside the returned deployment object
   // Required permissions:
   // -  backup.backup.restore on the backup
+  // -  data.deployment.restore-backup on the deployment
   async RestoreBackup(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
     const path = `/api/backup/v1/backup/${encodeURIComponent(req.id || '')}/restore`;
     const url = path + api.queryString(req, [`id`]);
     return api.post(url, undefined);
   }
   
-  // Delete a backup
+  // Delete a backup identified by the given ID, after which removal of any remote storage of the backup is started.
   // Note that the backup are initially only marked for deletion.
-  // Once all their dependent backup in the cloud are removed, the backup is removed.
+  // Once all remote storage for the backup has been removed, the backup itself is removed.
   // Required permissions:
   // -  backup.backup.delete on the backup
   async DeleteBackup(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
