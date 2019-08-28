@@ -177,6 +177,13 @@
     - [Invoice.Status](#arangodb.cloud.billing.v1.Invoice.Status)
     - [InvoiceList](#arangodb.cloud.billing.v1.InvoiceList)
     - [ListInvoicesRequest](#arangodb.cloud.billing.v1.ListInvoicesRequest)
+    - [ListPaymentMethodsRequest](#arangodb.cloud.billing.v1.ListPaymentMethodsRequest)
+    - [ListPaymentProvidersRequest](#arangodb.cloud.billing.v1.ListPaymentProvidersRequest)
+    - [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod)
+    - [PaymentMethodList](#arangodb.cloud.billing.v1.PaymentMethodList)
+    - [PaymentProvider](#arangodb.cloud.billing.v1.PaymentProvider)
+    - [PaymentProviderList](#arangodb.cloud.billing.v1.PaymentProviderList)
+    - [SetDefaultPaymentMethodRequest](#arangodb.cloud.billing.v1.SetDefaultPaymentMethodRequest)
   
   
   
@@ -2321,6 +2328,7 @@ Payment (attempt) of the invoice
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of the start of the payment attempt. |
 | payment_provider_id | [string](#string) |  | Identifier of the payment provider that is used for this payment. |
 | payment_id | [string](#string) |  | Identifier of this payment (created by payment provider) |
+| payment_method_id | [string](#string) |  | Identifier of the payment method that is used for this payment. |
 | is_pending | [bool](#bool) |  | If set, this payment is still being processed. |
 | is_completed | [bool](#bool) |  | If set, this payment has been payed for succesfully. |
 | is_rejected | [bool](#bool) |  | If set, this payment has been rejected. |
@@ -2384,6 +2392,125 @@ Request arguments for ListInvoices
 
 
 
+
+<a name="arangodb.cloud.billing.v1.ListPaymentMethodsRequest"></a>
+
+### ListPaymentMethodsRequest
+Request arguments for ListPaymentMethods
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| organization_id | [string](#string) |  | Identifier of the organization for which payment methods are requested. |
+| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Common list options. (Context ID is ignored) |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.ListPaymentProvidersRequest"></a>
+
+### ListPaymentProvidersRequest
+Request arguments for ListPaymentProviders
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| organization_id | [string](#string) |  | Identifier of the organization for which payment providers are requested. |
+| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Common list options. (Context ID is ignored) |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.PaymentMethod"></a>
+
+### PaymentMethod
+Payment methods are specific methods for paying at a specific payment provider
+such as a specific credit card.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of this payment method. |
+| name | [string](#string) |  | Name of the payment method |
+| description | [string](#string) |  | Description of the payment method |
+| payment_provider_id | [string](#string) |  | Identifier of the payment provider used for this payment method |
+| organization_id | [string](#string) |  | Identifier of the organization that owns this payment method |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Creation timestamp of this payment method |
+| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Deletion timestamp of this payment method |
+| is_deleted | [bool](#bool) |  | Set if the payment method is deleted. |
+| valid_until | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | If set, this timestamp specifies when the payment method is no longer valid. If not set, there is no (known) end date for this payment method. |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.PaymentMethodList"></a>
+
+### PaymentMethodList
+List of Payment methods
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.PaymentProvider"></a>
+
+### PaymentProvider
+Payment providers are services that handle payments.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of this payment provider. |
+| name | [string](#string) |  | Name of the payment provider |
+| description | [string](#string) |  | Description of the payment provider |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.PaymentProviderList"></a>
+
+### PaymentProviderList
+List of Payment providers
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [PaymentProvider](#arangodb.cloud.billing.v1.PaymentProvider) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.SetDefaultPaymentMethodRequest"></a>
+
+### SetDefaultPaymentMethodRequest
+Request argument for SetDefaultPaymentMethod
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| organization_id | [string](#string) |  | Identifier of the organization for which the default payment method will be set. |
+| payment_method_id | [string](#string) |  | Identifier of the new default payment method for the organization. |
+
+
+
+
+
  
 
  
@@ -2400,6 +2527,13 @@ BillingService is the API used to fetch billing information.
 | ----------- | ------------ | ------------- | ------------|
 | ListInvoices | [ListInvoicesRequest](#arangodb.cloud.billing.v1.ListInvoicesRequest) | [InvoiceList](#arangodb.cloud.billing.v1.InvoiceList) | Fetch all Invoice resources for the organization identified by the given organization ID that match the given criteria. Required permissions: - billing.invoice.list on the organization identified by the given organization ID |
 | GetInvoice | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Invoice](#arangodb.cloud.billing.v1.Invoice) | Fetch a specific Invoice identified by the given ID. Required permissions: - billing.invoice.get on the organization that owns the invoice with given ID. |
+| ListPaymentProviders | [ListPaymentProvidersRequest](#arangodb.cloud.billing.v1.ListPaymentProvidersRequest) | [PaymentProviderList](#arangodb.cloud.billing.v1.PaymentProviderList) | Fetch all payment providers that are usable for the organization identified by the given context ID. Required permissions: - billing.paymentprovider.list on the organization identified by the given context ID |
+| GetPaymentProvider | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [PaymentProvider](#arangodb.cloud.billing.v1.PaymentProvider) | Fetch a specific PaymentProvider identified by the given ID. Required permissions: - None |
+| ListPaymentMethods | [ListPaymentMethodsRequest](#arangodb.cloud.billing.v1.ListPaymentMethodsRequest) | [PaymentMethodList](#arangodb.cloud.billing.v1.PaymentMethodList) | Fetch all payment methods that are configured for the organization identified by the given context ID. Required permissions: - billing.paymentmethod.list on the organization identified by the given context ID |
+| GetPaymentMethod | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | Fetch a specific PaymentMethod identified by the given ID. Required permissions: - billing.paymentmethod.get on the organization that owns the payment method which is identified by the given ID |
+| DeletePaymentMethod | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a specific PaymentMethod identified by the given ID. Required permissions: - billing.paymentmethod.delete on the organization that owns the given payment method. |
+| GetDefaultPaymentMethod | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | Fetch the default PaymentMethod for an organization identified by the given ID. Required permissions: - billing.paymentmethod.get-default on the organization that is identified by the given ID |
+| SetDefaultPaymentMethod | [SetDefaultPaymentMethodRequest](#arangodb.cloud.billing.v1.SetDefaultPaymentMethodRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Update the default PaymentMethod for an organization identifier by the given organization ID, to the payment method identified by the given payment method ID. Required permissions: - billing.paymentmethod.set-default on the organization identified by the given organization ID |
 
  
 
