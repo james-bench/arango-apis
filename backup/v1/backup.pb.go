@@ -568,7 +568,8 @@ type TimeOfDay struct {
 	Hours int32 `protobuf:"varint,1,opt,name=hours,proto3" json:"hours,omitempty"`
 	// Minutes part of the time of day (0-59)
 	Minutes int32 `protobuf:"varint,2,opt,name=minutes,proto3" json:"minutes,omitempty"`
-	// The time-zone this time of day applies to (empty means UTC).
+	// The time-zone this time of day applies to (empty means UTC)
+	// Names MUST be exactly as defined in RFC-822.
 	TimeZone             string   `protobuf:"bytes,3,opt,name=time_zone,json=timeZone,proto3" json:"time_zone,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -977,8 +978,6 @@ func (m *Backup_DeploymentInfo) GetServers() *v11.Deployment_ServersSpec {
 // Status of the actual backup
 // All members of this field are read-only.
 type Backup_Status struct {
-	// The id of the backup
-	// TODO move to internal-api: string id = x;
 	// The creation timestamp of the backup
 	CreatedAt *types.Timestamp `protobuf:"bytes,1,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	// ArangoDB version of the backup
@@ -1423,7 +1422,7 @@ type BackupServiceClient interface {
 	// .status.restoring_backup and .status.restore_backup_status fields inside the returned deployment object
 	// Required permissions (both are needed):
 	// -  backup.backup.restore on the backup identified by the given ID.
-	// -  data.deployment.restore-backup on the deployment that this backup owns
+	// -  data.deployment.restore-backup on the deployment that owns this backup
 	RestoreBackup(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Delete a backup identified by the given ID, after which removal of any remote storage of the backup is started.
 	// Note that the backup are initially only marked for deletion.
@@ -1605,7 +1604,7 @@ type BackupServiceServer interface {
 	// .status.restoring_backup and .status.restore_backup_status fields inside the returned deployment object
 	// Required permissions (both are needed):
 	// -  backup.backup.restore on the backup identified by the given ID.
-	// -  data.deployment.restore-backup on the deployment that this backup owns
+	// -  data.deployment.restore-backup on the deployment that owns this backup
 	RestoreBackup(context.Context, *v1.IDOptions) (*v1.Empty, error)
 	// Delete a backup identified by the given ID, after which removal of any remote storage of the backup is started.
 	// Note that the backup are initially only marked for deletion.

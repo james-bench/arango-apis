@@ -130,7 +130,7 @@ service BackupService {
     // .status.restoring_backup and .status.restore_backup_status fields inside the returned deployment object
     // Required permissions (both are needed):
     // -  backup.backup.restore on the backup identified by the given ID. 
-    // -  data.deployment.restore-backup on the deployment that this backup owns
+    // -  data.deployment.restore-backup on the deployment that owns this backup 
     rpc RestoreBackup(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             post: "/api/backup/v1/backup/{id}/restore"
@@ -197,10 +197,6 @@ message BackupPolicy {
         // Schedule applies to the selected day of the month
         // This is applicable for Monthly type only, ignored for Hourly and Daily
         MonthlySchedule monthly_schedule = 4;
-
-        // The resulting cron notation of this schedule used by the system
-        // This is a read-only value.
-        // TODO move to internal-api: string cronSchedule = 10; 
     }
 
     // Note: Nested types inside nested types is not supported by the typescript generator 
@@ -271,7 +267,8 @@ message TimeOfDay {
     int32 hours = 1;
     // Minutes part of the time of day (0-59)
     int32 minutes = 2;
-    // The time-zone this time of day applies to (empty means UTC).
+    // The time-zone this time of day applies to (empty means UTC) 
+    // Names MUST be exactly as defined in RFC-822.
     string time_zone = 3;
 }
 
@@ -333,8 +330,6 @@ message Backup {
         string version = 1;
         // Servers spec of the deployment during backup.
         data.v1.Deployment.ServersSpec servers = 2;
-        // The id of the encryption key
-        // TODO move to internal-api: encryption_key_id = x;
     }
     // Information about the deployment during backup 
     DeploymentInfo deployment_info = 11;
@@ -347,8 +342,6 @@ message Backup {
     // Status of the actual backup
     // All members of this field are read-only.
     message Status {
-        // The id of the backup 
-        // TODO move to internal-api: string id = x;
         // The creation timestamp of the backup 
         google.protobuf.Timestamp created_at = 1;
         // ArangoDB version of the backup 

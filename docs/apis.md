@@ -252,9 +252,7 @@ All members of this field are read-only.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | version | [string](#string) |  | ArangoDB version of the deployment during backup. |
-| servers | [arangodb.cloud.data.v1.Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  | Servers spec of the deployment during backup.
-
-The id of the encryption key TODO move to internal-api: encryption_key_id = x; |
+| servers | [arangodb.cloud.data.v1.Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  | Servers spec of the deployment during backup. |
 
 
 
@@ -270,7 +268,7 @@ All members of this field are read-only.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The id of the backup TODO move to internal-api: string id = x; The creation timestamp of the backup |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the backup |
 | version | [string](#string) |  | ArangoDB version of the backup |
 | state | [string](#string) |  | The state of the backup Will be one of the following: &#34;Pending|Scheduled|Download|DownloadError|Downloading|Create|Upload|Uploading|UploadError|Ready|Deleted|Failed&#34; |
 | is_failed | [bool](#bool) |  | Set when the backup is failed |
@@ -477,7 +475,7 @@ TimeOfDay describes a specific moment on a day
 | ----- | ---- | ----- | ----------- |
 | hours | [int32](#int32) |  | Hours part of the time of day (0-23) |
 | minutes | [int32](#int32) |  | Minutes part of the time of day (0-59) |
-| time_zone | [string](#string) |  | The time-zone this time of day applies to (empty means UTC). |
+| time_zone | [string](#string) |  | The time-zone this time of day applies to (empty means UTC) Names MUST be exactly as defined in RFC-822. |
 
 
 
@@ -507,7 +505,7 @@ BackupService is the API used to configure backup objects.
 | CreateBackup | [Backup](#arangodb.cloud.backup.v1.Backup) | [Backup](#arangodb.cloud.backup.v1.Backup) | Create a new manual backup Setting the backup_policy_id field in the backup is not allowed Required permissions: - backup.backup.create on the deployment that owns the backup and is identified by the given ID. |
 | UpdateBackup | [Backup](#arangodb.cloud.backup.v1.Backup) | [Backup](#arangodb.cloud.backup.v1.Backup) | Update a backup Required permissions: - backup.backup.update on the backup identified by the given ID. |
 | DownloadBackup | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Download a backup identified by the given ID from remote storage to the volumes of the servers of the deployment If this backup was already be downloaded, another download will be done. If the backup is still available on the cluster there is no need to explicitly download the backup before restoring. This function will return immediately. To track status, please invoke GetBackup and check the .status field inside the returned backup object Required permissions: - backup.backup.download on the backup identified by the given ID. |
-| RestoreBackup | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Restore (or recover) a backup identified by the given ID This operation can only be executed on backups where status.available is set This function will return immediately. To track status, please invoke GetDeployment on the data API and check the .status.restoring_backup and .status.restore_backup_status fields inside the returned deployment object Required permissions (both are needed): - backup.backup.restore on the backup identified by the given ID. - data.deployment.restore-backup on the deployment that this backup owns |
+| RestoreBackup | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Restore (or recover) a backup identified by the given ID This operation can only be executed on backups where status.available is set This function will return immediately. To track status, please invoke GetDeployment on the data API and check the .status.restoring_backup and .status.restore_backup_status fields inside the returned deployment object Required permissions (both are needed): - backup.backup.restore on the backup identified by the given ID. - data.deployment.restore-backup on the deployment that owns this backup |
 | DeleteBackup | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a backup identified by the given ID, after which removal of any remote storage of the backup is started. Note that the backup are initially only marked for deletion. Once all remote storage for the backup has been removed, the backup itself is removed. Required permissions: - backup.backup.delete on the backup identified by the given ID. |
 
  

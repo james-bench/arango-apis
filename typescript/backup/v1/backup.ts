@@ -86,8 +86,6 @@ export interface Backup_DeploymentInfo {
   version?: string;
   
   // Servers spec of the deployment during backup.
-  // The id of the encryption key
-  // TODO move to internal-api: encryption_key_id = x;
   // arangodb.cloud.data.v1.Deployment.ServersSpec
   servers?: arangodb_cloud_data_v1_Deployment_ServersSpec;
 }
@@ -95,8 +93,6 @@ export interface Backup_DeploymentInfo {
 // Status of the actual backup
 // All members of this field are read-only.
 export interface Backup_Status {
-  // The id of the backup
-  // TODO move to internal-api: string id = x;
   // The creation timestamp of the backup
   // googleTypes.Timestamp
   created_at?: googleTypes.Timestamp;
@@ -356,7 +352,8 @@ export interface TimeOfDay {
   // number
   minutes?: number;
   
-  // The time-zone this time of day applies to (empty means UTC).
+  // The time-zone this time of day applies to (empty means UTC)
+  // Names MUST be exactly as defined in RFC-822.
   // string
   time_zone?: string;
 }
@@ -463,7 +460,7 @@ export class BackupService {
   // .status.restoring_backup and .status.restore_backup_status fields inside the returned deployment object
   // Required permissions (both are needed):
   // -  backup.backup.restore on the backup identified by the given ID.
-  // -  data.deployment.restore-backup on the deployment that this backup owns
+  // -  data.deployment.restore-backup on the deployment that owns this backup
   async RestoreBackup(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
     const path = `/api/backup/v1/backup/${encodeURIComponent(req.id || '')}/restore`;
     const url = path + api.queryString(req, [`id`]);
