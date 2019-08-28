@@ -49,7 +49,7 @@ service BillingService {
         };
     }
 
-    // Fetch a specific PaymentProvider identified by the given ID.
+    // Fetch a specific payment provider identified by the given ID.
     // Required permissions:
     // - None
     rpc GetPaymentProvider(common.v1.IDOptions) returns (PaymentProvider) {
@@ -68,7 +68,7 @@ service BillingService {
         };
     }
 
-    // Fetch a specific PaymentMethod identified by the given ID.
+    // Fetch a specific payment method identified by the given ID.
     // Required permissions:
     // - billing.paymentmethod.get on the organization that owns the payment method
     //   which is identified by the given ID
@@ -78,10 +78,22 @@ service BillingService {
         };
     }
 
-    // Delete a specific PaymentMethod identified by the given ID.
+    // Update a specific payment method.
+    // Note that only name, description & valid period are updated.
     // Required permissions:
-    // - billing.paymentmethod.delete on the organization that owns the given payment method.
-    rpc DeletePaymentMethod(PaymentMethod) returns (common.v1.Empty) {
+    // - billing.paymentmethod.update on the organization that owns the given payment method.
+    rpc UpdatePaymentMethod(PaymentMethod) returns (PaymentMethod) {
+        option (google.api.http) = {
+            put: "/api/billing/v1/paymentmethods/{id}"
+            body: "*"
+        };
+    }
+
+    // Delete a specific payment method identified by the given ID.
+    // Required permissions:
+    // - billing.paymentmethod.delete on the organization that owns the given payment method
+    //   which is identified by the given ID.
+    rpc DeletePaymentMethod(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             delete: "/api/billing/v1/paymentmethods/{id}"
         };
@@ -235,7 +247,7 @@ message PaymentProviderList {
 message ListPaymentProvidersRequest {
     // Identifier of the organization for which payment providers are requested.
     string organization_id = 1;
-    // Common list options. (Context ID is ignored)
+    // Optional common list options. (Context ID is ignored)
     common.v1.ListOptions options = 2;
 }
 
@@ -249,14 +261,19 @@ message PaymentMethod {
     // Description of the payment method
     string description = 3;
     // Identifier of the payment provider used for this payment method
+    // This is a read-only field.
     string payment_provider_id = 4;
     // Identifier of the organization that owns this payment method
+    // This is a read-only field.
     string organization_id = 5;
     // Creation timestamp of this payment method
+    // This is a read-only field.
     google.protobuf.Timestamp created_at = 10;
     // Deletion timestamp of this payment method
+    // This is a read-only field.
     google.protobuf.Timestamp deleted_at = 11;
     // Set if the payment method is deleted.
+    // This is a read-only field.
     bool is_deleted = 12;
     // If set, this timestamp specifies when the payment method is no longer valid.
     // If not set, there is no (known) end date for this payment method.
@@ -272,7 +289,7 @@ message PaymentMethodList {
 message ListPaymentMethodsRequest {
     // Identifier of the organization for which payment methods are requested.
     string organization_id = 1;
-    // Common list options. (Context ID is ignored)
+    // Optional common list options. (Context ID is ignored)
     common.v1.ListOptions options = 2;
 }
 

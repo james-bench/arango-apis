@@ -189,7 +189,7 @@ export interface ListPaymentMethodsRequest {
   // string
   organization_id?: string;
   
-  // Common list options. (Context ID is ignored)
+  // Optional common list options. (Context ID is ignored)
   // arangodb.cloud.common.v1.ListOptions
   options?: arangodb_cloud_common_v1_ListOptions;
 }
@@ -200,7 +200,7 @@ export interface ListPaymentProvidersRequest {
   // string
   organization_id?: string;
   
-  // Common list options. (Context ID is ignored)
+  // Optional common list options. (Context ID is ignored)
   // arangodb.cloud.common.v1.ListOptions
   options?: arangodb_cloud_common_v1_ListOptions;
 }
@@ -221,22 +221,27 @@ export interface PaymentMethod {
   description?: string;
   
   // Identifier of the payment provider used for this payment method
+  // This is a read-only field.
   // string
   payment_provider_id?: string;
   
   // Identifier of the organization that owns this payment method
+  // This is a read-only field.
   // string
   organization_id?: string;
   
   // Creation timestamp of this payment method
+  // This is a read-only field.
   // googleTypes.Timestamp
   created_at?: googleTypes.Timestamp;
   
   // Deletion timestamp of this payment method
+  // This is a read-only field.
   // googleTypes.Timestamp
   deleted_at?: googleTypes.Timestamp;
   
   // Set if the payment method is deleted.
+  // This is a read-only field.
   // boolean
   is_deleted?: boolean;
   
@@ -316,7 +321,7 @@ export class BillingService {
     return api.get(url, undefined);
   }
   
-  // Fetch a specific PaymentProvider identified by the given ID.
+  // Fetch a specific payment provider identified by the given ID.
   // Required permissions:
   // - None
   async GetPaymentProvider(req: arangodb_cloud_common_v1_IDOptions): Promise<PaymentProvider> {
@@ -335,7 +340,7 @@ export class BillingService {
     return api.get(url, undefined);
   }
   
-  // Fetch a specific PaymentMethod identified by the given ID.
+  // Fetch a specific payment method identified by the given ID.
   // Required permissions:
   // - billing.paymentmethod.get on the organization that owns the payment method
   // which is identified by the given ID
@@ -345,10 +350,20 @@ export class BillingService {
     return api.get(url, undefined);
   }
   
-  // Delete a specific PaymentMethod identified by the given ID.
+  // Update a specific payment method.
+  // Note that only name, description & valid period are updated.
   // Required permissions:
-  // - billing.paymentmethod.delete on the organization that owns the given payment method.
-  async DeletePaymentMethod(req: PaymentMethod): Promise<void> {
+  // - billing.paymentmethod.update on the organization that owns the given payment method.
+  async UpdatePaymentMethod(req: PaymentMethod): Promise<PaymentMethod> {
+    const url = `/api/billing/v1/paymentmethods/${encodeURIComponent(req.id || '')}`;
+    return api.put(url, req);
+  }
+  
+  // Delete a specific payment method identified by the given ID.
+  // Required permissions:
+  // - billing.paymentmethod.delete on the organization that owns the given payment method
+  // which is identified by the given ID.
+  async DeletePaymentMethod(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
     const path = `/api/billing/v1/paymentmethods/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.delete(url, undefined);
