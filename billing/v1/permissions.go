@@ -33,6 +33,8 @@ const (
 	PermissionPaymentMethodGet = "billing.paymentmethod.get"
 	// PermissionPaymentMethodDelete is needed for deleting individual payment methods
 	PermissionPaymentMethodDelete = "billing.paymentmethod.delete"
+	// PermissionPaymentMethodCreate is needed for creating individual payment methods
+	PermissionPaymentMethodCreate = "billing.paymentmethod.create"
 	// PermissionPaymentMethodUpdate is needed for updating individual payment methods
 	PermissionPaymentMethodUpdate = "billing.paymentmethod.update"
 	// PermissionPaymentMethodGetDefault is needed for getting the default payment method for an organization

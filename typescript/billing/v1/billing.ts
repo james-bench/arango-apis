@@ -249,6 +249,11 @@ export interface PaymentMethod {
   // If not set, there is no (known) end date for this payment method.
   // googleTypes.Timestamp
   valid_until?: googleTypes.Timestamp;
+  
+  // Token for this payment method, provided by the payment provider.
+  // This is a read-only field.
+  // string
+  token?: string;
 }
 
 // List of Payment methods
@@ -348,6 +353,14 @@ export class BillingService {
     const path = `/api/billing/v1/paymentmethods/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
+  }
+  
+  // Create a new payment method.
+  // Required permissions:
+  // - billing.paymentmethod.create on the organization that owns the given payment method.
+  async CreatePaymentMethod(req: PaymentMethod): Promise<PaymentMethod> {
+    const url = `/api/billing/v1/paymentmethods`;
+    return api.post(url, req);
   }
   
   // Update a specific payment method.

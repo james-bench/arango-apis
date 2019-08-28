@@ -78,6 +78,16 @@ service BillingService {
         };
     }
 
+    // Create a new payment method.
+    // Required permissions:
+    // - billing.paymentmethod.create on the organization that owns the given payment method.
+    rpc CreatePaymentMethod(PaymentMethod) returns (PaymentMethod) {
+        option (google.api.http) = {
+            post: "/api/billing/v1/paymentmethods"
+            body: "*"
+        };
+    }
+
     // Update a specific payment method.
     // Note that only name, description & valid period are updated.
     // Required permissions:
@@ -278,6 +288,9 @@ message PaymentMethod {
     // If set, this timestamp specifies when the payment method is no longer valid.
     // If not set, there is no (known) end date for this payment method.
     google.protobuf.Timestamp valid_until = 13;
+    // Token for this payment method, provided by the payment provider.
+    // This is a read-only field.
+    string token = 14;
 }
 
 // List of Payment methods

@@ -2770,6 +2770,7 @@ such as a specific credit card.
 | deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Deletion timestamp of this payment method This is a read-only field. |
 | is_deleted | [bool](#bool) |  | Set if the payment method is deleted. This is a read-only field. |
 | valid_until | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | If set, this timestamp specifies when the payment method is no longer valid. If not set, there is no (known) end date for this payment method. |
+| token | [string](#string) |  | Token for this payment method, provided by the payment provider. This is a read-only field. |
 
 
 
@@ -2858,6 +2859,7 @@ BillingService is the API used to fetch billing information.
 | GetPaymentProvider | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [PaymentProvider](#arangodb.cloud.billing.v1.PaymentProvider) | Fetch a specific payment provider identified by the given ID. Required permissions: - None |
 | ListPaymentMethods | [ListPaymentMethodsRequest](#arangodb.cloud.billing.v1.ListPaymentMethodsRequest) | [PaymentMethodList](#arangodb.cloud.billing.v1.PaymentMethodList) | Fetch all payment methods that are configured for the organization identified by the given context ID. Required permissions: - billing.paymentmethod.list on the organization identified by the given context ID |
 | GetPaymentMethod | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | Fetch a specific payment method identified by the given ID. Required permissions: - billing.paymentmethod.get on the organization that owns the payment method which is identified by the given ID |
+| CreatePaymentMethod | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | Create a new payment method. Required permissions: - billing.paymentmethod.create on the organization that owns the given payment method. |
 | UpdatePaymentMethod | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | Update a specific payment method. Note that only name, description &amp; valid period are updated. Required permissions: - billing.paymentmethod.update on the organization that owns the given payment method. |
 | DeletePaymentMethod | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a specific payment method identified by the given ID. Required permissions: - billing.paymentmethod.delete on the organization that owns the given payment method which is identified by the given ID. |
 | GetDefaultPaymentMethod | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | Fetch the default PaymentMethod for an organization identified by the given ID. Required permissions: - billing.paymentmethod.get-default on the organization that is identified by the given ID |
