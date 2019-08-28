@@ -357,6 +357,8 @@ type Invoice_Payment struct {
 	PaymentProviderId string `protobuf:"bytes,2,opt,name=payment_provider_id,json=paymentProviderId,proto3" json:"payment_provider_id,omitempty"`
 	// Identifier of this payment (created by payment provider)
 	PaymentId string `protobuf:"bytes,3,opt,name=payment_id,json=paymentId,proto3" json:"payment_id,omitempty"`
+	// Identifier of the payment method that is used for this payment.
+	PaymentMethodId string `protobuf:"bytes,4,opt,name=payment_method_id,json=paymentMethodId,proto3" json:"payment_method_id,omitempty"`
 	// If set, this payment is still being processed.
 	IsPending bool `protobuf:"varint,10,opt,name=is_pending,json=isPending,proto3" json:"is_pending,omitempty"`
 	// If set, this payment has been payed for succesfully.
@@ -424,6 +426,13 @@ func (m *Invoice_Payment) GetPaymentProviderId() string {
 func (m *Invoice_Payment) GetPaymentId() string {
 	if m != nil {
 		return m.PaymentId
+	}
+	return ""
+}
+
+func (m *Invoice_Payment) GetPaymentMethodId() string {
+	if m != nil {
+		return m.PaymentMethodId
 	}
 	return ""
 }
@@ -598,6 +607,481 @@ func (m *ListInvoicesRequest) GetOptions() *v1.ListOptions {
 	return nil
 }
 
+// Payment providers are services that handle payments.
+type PaymentProvider struct {
+	// System identifier of this payment provider.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Name of the payment provider
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// Description of the payment provider
+	Description          string   `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *PaymentProvider) Reset()         { *m = PaymentProvider{} }
+func (m *PaymentProvider) String() string { return proto.CompactTextString(m) }
+func (*PaymentProvider) ProtoMessage()    {}
+func (*PaymentProvider) Descriptor() ([]byte, []int) {
+	return fileDescriptor_958db8ba491a6b57, []int{3}
+}
+func (m *PaymentProvider) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PaymentProvider) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PaymentProvider.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PaymentProvider) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PaymentProvider.Merge(m, src)
+}
+func (m *PaymentProvider) XXX_Size() int {
+	return m.Size()
+}
+func (m *PaymentProvider) XXX_DiscardUnknown() {
+	xxx_messageInfo_PaymentProvider.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PaymentProvider proto.InternalMessageInfo
+
+func (m *PaymentProvider) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *PaymentProvider) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *PaymentProvider) GetDescription() string {
+	if m != nil {
+		return m.Description
+	}
+	return ""
+}
+
+// List of Payment providers
+type PaymentProviderList struct {
+	Items                []*PaymentProvider `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
+	XXX_sizecache        int32              `json:"-"`
+}
+
+func (m *PaymentProviderList) Reset()         { *m = PaymentProviderList{} }
+func (m *PaymentProviderList) String() string { return proto.CompactTextString(m) }
+func (*PaymentProviderList) ProtoMessage()    {}
+func (*PaymentProviderList) Descriptor() ([]byte, []int) {
+	return fileDescriptor_958db8ba491a6b57, []int{4}
+}
+func (m *PaymentProviderList) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PaymentProviderList) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PaymentProviderList.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PaymentProviderList) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PaymentProviderList.Merge(m, src)
+}
+func (m *PaymentProviderList) XXX_Size() int {
+	return m.Size()
+}
+func (m *PaymentProviderList) XXX_DiscardUnknown() {
+	xxx_messageInfo_PaymentProviderList.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PaymentProviderList proto.InternalMessageInfo
+
+func (m *PaymentProviderList) GetItems() []*PaymentProvider {
+	if m != nil {
+		return m.Items
+	}
+	return nil
+}
+
+// Request arguments for ListPaymentProviders
+type ListPaymentProvidersRequest struct {
+	// Identifier of the organization for which payment providers are requested.
+	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	// Optional common list options. (Context ID is ignored)
+	Options              *v1.ListOptions `protobuf:"bytes,2,opt,name=options,proto3" json:"options,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *ListPaymentProvidersRequest) Reset()         { *m = ListPaymentProvidersRequest{} }
+func (m *ListPaymentProvidersRequest) String() string { return proto.CompactTextString(m) }
+func (*ListPaymentProvidersRequest) ProtoMessage()    {}
+func (*ListPaymentProvidersRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_958db8ba491a6b57, []int{5}
+}
+func (m *ListPaymentProvidersRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ListPaymentProvidersRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ListPaymentProvidersRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ListPaymentProvidersRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListPaymentProvidersRequest.Merge(m, src)
+}
+func (m *ListPaymentProvidersRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *ListPaymentProvidersRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListPaymentProvidersRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListPaymentProvidersRequest proto.InternalMessageInfo
+
+func (m *ListPaymentProvidersRequest) GetOrganizationId() string {
+	if m != nil {
+		return m.OrganizationId
+	}
+	return ""
+}
+
+func (m *ListPaymentProvidersRequest) GetOptions() *v1.ListOptions {
+	if m != nil {
+		return m.Options
+	}
+	return nil
+}
+
+// Payment methods are specific methods for paying at a specific payment provider
+// such as a specific credit card.
+type PaymentMethod struct {
+	// System identifier of this payment method.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Name of the payment method
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// Description of the payment method
+	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	// Identifier of the payment provider used for this payment method
+	// This is a read-only field.
+	PaymentProviderId string `protobuf:"bytes,4,opt,name=payment_provider_id,json=paymentProviderId,proto3" json:"payment_provider_id,omitempty"`
+	// Identifier of the organization that owns this payment method
+	// This is a read-only field.
+	OrganizationId string `protobuf:"bytes,5,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	// Creation timestamp of this payment method
+	// This is a read-only field.
+	CreatedAt *types.Timestamp `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	// Deletion timestamp of this payment method
+	// This is a read-only field.
+	DeletedAt *types.Timestamp `protobuf:"bytes,11,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`
+	// Set if the payment method is deleted.
+	// This is a read-only field.
+	IsDeleted bool `protobuf:"varint,12,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
+	// If set, this timestamp specifies when the payment method is no longer valid.
+	// If not set, there is no (known) end date for this payment method.
+	ValidUntil *types.Timestamp `protobuf:"bytes,13,opt,name=valid_until,json=validUntil,proto3" json:"valid_until,omitempty"`
+	// Token for this payment method, provided by the payment provider.
+	// This is a read-only field.
+	Token                string   `protobuf:"bytes,14,opt,name=token,proto3" json:"token,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *PaymentMethod) Reset()         { *m = PaymentMethod{} }
+func (m *PaymentMethod) String() string { return proto.CompactTextString(m) }
+func (*PaymentMethod) ProtoMessage()    {}
+func (*PaymentMethod) Descriptor() ([]byte, []int) {
+	return fileDescriptor_958db8ba491a6b57, []int{6}
+}
+func (m *PaymentMethod) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PaymentMethod) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PaymentMethod.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PaymentMethod) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PaymentMethod.Merge(m, src)
+}
+func (m *PaymentMethod) XXX_Size() int {
+	return m.Size()
+}
+func (m *PaymentMethod) XXX_DiscardUnknown() {
+	xxx_messageInfo_PaymentMethod.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PaymentMethod proto.InternalMessageInfo
+
+func (m *PaymentMethod) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *PaymentMethod) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *PaymentMethod) GetDescription() string {
+	if m != nil {
+		return m.Description
+	}
+	return ""
+}
+
+func (m *PaymentMethod) GetPaymentProviderId() string {
+	if m != nil {
+		return m.PaymentProviderId
+	}
+	return ""
+}
+
+func (m *PaymentMethod) GetOrganizationId() string {
+	if m != nil {
+		return m.OrganizationId
+	}
+	return ""
+}
+
+func (m *PaymentMethod) GetCreatedAt() *types.Timestamp {
+	if m != nil {
+		return m.CreatedAt
+	}
+	return nil
+}
+
+func (m *PaymentMethod) GetDeletedAt() *types.Timestamp {
+	if m != nil {
+		return m.DeletedAt
+	}
+	return nil
+}
+
+func (m *PaymentMethod) GetIsDeleted() bool {
+	if m != nil {
+		return m.IsDeleted
+	}
+	return false
+}
+
+func (m *PaymentMethod) GetValidUntil() *types.Timestamp {
+	if m != nil {
+		return m.ValidUntil
+	}
+	return nil
+}
+
+func (m *PaymentMethod) GetToken() string {
+	if m != nil {
+		return m.Token
+	}
+	return ""
+}
+
+// List of Payment methods
+type PaymentMethodList struct {
+	Items                []*PaymentMethod `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
+}
+
+func (m *PaymentMethodList) Reset()         { *m = PaymentMethodList{} }
+func (m *PaymentMethodList) String() string { return proto.CompactTextString(m) }
+func (*PaymentMethodList) ProtoMessage()    {}
+func (*PaymentMethodList) Descriptor() ([]byte, []int) {
+	return fileDescriptor_958db8ba491a6b57, []int{7}
+}
+func (m *PaymentMethodList) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PaymentMethodList) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PaymentMethodList.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PaymentMethodList) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PaymentMethodList.Merge(m, src)
+}
+func (m *PaymentMethodList) XXX_Size() int {
+	return m.Size()
+}
+func (m *PaymentMethodList) XXX_DiscardUnknown() {
+	xxx_messageInfo_PaymentMethodList.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PaymentMethodList proto.InternalMessageInfo
+
+func (m *PaymentMethodList) GetItems() []*PaymentMethod {
+	if m != nil {
+		return m.Items
+	}
+	return nil
+}
+
+// Request arguments for ListPaymentMethods
+type ListPaymentMethodsRequest struct {
+	// Identifier of the organization for which payment methods are requested.
+	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	// Optional common list options. (Context ID is ignored)
+	Options              *v1.ListOptions `protobuf:"bytes,2,opt,name=options,proto3" json:"options,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *ListPaymentMethodsRequest) Reset()         { *m = ListPaymentMethodsRequest{} }
+func (m *ListPaymentMethodsRequest) String() string { return proto.CompactTextString(m) }
+func (*ListPaymentMethodsRequest) ProtoMessage()    {}
+func (*ListPaymentMethodsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_958db8ba491a6b57, []int{8}
+}
+func (m *ListPaymentMethodsRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ListPaymentMethodsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ListPaymentMethodsRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ListPaymentMethodsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListPaymentMethodsRequest.Merge(m, src)
+}
+func (m *ListPaymentMethodsRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *ListPaymentMethodsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListPaymentMethodsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListPaymentMethodsRequest proto.InternalMessageInfo
+
+func (m *ListPaymentMethodsRequest) GetOrganizationId() string {
+	if m != nil {
+		return m.OrganizationId
+	}
+	return ""
+}
+
+func (m *ListPaymentMethodsRequest) GetOptions() *v1.ListOptions {
+	if m != nil {
+		return m.Options
+	}
+	return nil
+}
+
+// Request argument for SetDefaultPaymentMethod
+type SetDefaultPaymentMethodRequest struct {
+	// Identifier of the organization for which the default payment method will be set.
+	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	// Identifier of the new default payment method for the organization.
+	PaymentMethodId      string   `protobuf:"bytes,2,opt,name=payment_method_id,json=paymentMethodId,proto3" json:"payment_method_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *SetDefaultPaymentMethodRequest) Reset()         { *m = SetDefaultPaymentMethodRequest{} }
+func (m *SetDefaultPaymentMethodRequest) String() string { return proto.CompactTextString(m) }
+func (*SetDefaultPaymentMethodRequest) ProtoMessage()    {}
+func (*SetDefaultPaymentMethodRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_958db8ba491a6b57, []int{9}
+}
+func (m *SetDefaultPaymentMethodRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SetDefaultPaymentMethodRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SetDefaultPaymentMethodRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SetDefaultPaymentMethodRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SetDefaultPaymentMethodRequest.Merge(m, src)
+}
+func (m *SetDefaultPaymentMethodRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *SetDefaultPaymentMethodRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_SetDefaultPaymentMethodRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SetDefaultPaymentMethodRequest proto.InternalMessageInfo
+
+func (m *SetDefaultPaymentMethodRequest) GetOrganizationId() string {
+	if m != nil {
+		return m.OrganizationId
+	}
+	return ""
+}
+
+func (m *SetDefaultPaymentMethodRequest) GetPaymentMethodId() string {
+	if m != nil {
+		return m.PaymentMethodId
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*Invoice)(nil), "arangodb.cloud.billing.v1.Invoice")
 	proto.RegisterType((*Invoice_Item)(nil), "arangodb.cloud.billing.v1.Invoice.Item")
@@ -605,69 +1089,104 @@ func init() {
 	proto.RegisterType((*Invoice_Payment)(nil), "arangodb.cloud.billing.v1.Invoice.Payment")
 	proto.RegisterType((*InvoiceList)(nil), "arangodb.cloud.billing.v1.InvoiceList")
 	proto.RegisterType((*ListInvoicesRequest)(nil), "arangodb.cloud.billing.v1.ListInvoicesRequest")
+	proto.RegisterType((*PaymentProvider)(nil), "arangodb.cloud.billing.v1.PaymentProvider")
+	proto.RegisterType((*PaymentProviderList)(nil), "arangodb.cloud.billing.v1.PaymentProviderList")
+	proto.RegisterType((*ListPaymentProvidersRequest)(nil), "arangodb.cloud.billing.v1.ListPaymentProvidersRequest")
+	proto.RegisterType((*PaymentMethod)(nil), "arangodb.cloud.billing.v1.PaymentMethod")
+	proto.RegisterType((*PaymentMethodList)(nil), "arangodb.cloud.billing.v1.PaymentMethodList")
+	proto.RegisterType((*ListPaymentMethodsRequest)(nil), "arangodb.cloud.billing.v1.ListPaymentMethodsRequest")
+	proto.RegisterType((*SetDefaultPaymentMethodRequest)(nil), "arangodb.cloud.billing.v1.SetDefaultPaymentMethodRequest")
 }
 
 func init() { proto.RegisterFile("billing.proto", fileDescriptor_958db8ba491a6b57) }
 
 var fileDescriptor_958db8ba491a6b57 = []byte{
-	// 903 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x56, 0x4f, 0x6f, 0xdc, 0x44,
-	0x14, 0xc7, 0xbb, 0xe9, 0x66, 0xf7, 0x39, 0xa4, 0xe9, 0x94, 0x46, 0x66, 0xa1, 0xe9, 0xb2, 0xa8,
-	0x34, 0x6d, 0x85, 0xad, 0x84, 0x03, 0x54, 0x55, 0x54, 0x25, 0x80, 0x22, 0x4b, 0x08, 0x22, 0x17,
-	0x71, 0xe0, 0x62, 0xcd, 0x7a, 0xa6, 0x66, 0x90, 0x3d, 0xe3, 0x7a, 0xc6, 0xab, 0x86, 0xd2, 0x0b,
-	0x5f, 0x81, 0x0b, 0x17, 0xce, 0x7c, 0x05, 0x3e, 0x42, 0xb9, 0x21, 0x71, 0x42, 0x5c, 0x50, 0x40,
-	0xe2, 0x6b, 0xa0, 0xf9, 0xe3, 0x65, 0x59, 0xd2, 0x6c, 0x22, 0x6e, 0xde, 0xdf, 0xfb, 0xbd, 0xdf,
-	0xcc, 0xfb, 0xbd, 0x79, 0x33, 0x0b, 0x2f, 0x4f, 0x58, 0x51, 0x30, 0x9e, 0x87, 0x55, 0x2d, 0x94,
-	0x40, 0xaf, 0xe2, 0x1a, 0xf3, 0x5c, 0x90, 0x49, 0x98, 0x15, 0xa2, 0x21, 0x61, 0x1b, 0x9d, 0xee,
-	0x0c, 0x37, 0x33, 0x51, 0x96, 0x82, 0x47, 0xd3, 0x9d, 0xc8, 0x7e, 0xd9, 0x94, 0xe1, 0xfd, 0x9c,
-	0xa9, 0x2f, 0x9a, 0x49, 0x98, 0x89, 0x32, 0xca, 0x45, 0x81, 0x79, 0x1e, 0x99, 0xc0, 0xa4, 0x79,
-	0x14, 0x55, 0xea, 0xb8, 0xa2, 0x32, 0x52, 0xac, 0xa4, 0x52, 0xe1, 0xb2, 0xfa, 0xe7, 0xcb, 0x25,
-	0xbf, 0x9e, 0x0b, 0x91, 0x17, 0x34, 0xc2, 0x15, 0x8b, 0x30, 0xe7, 0x42, 0x61, 0xc5, 0x04, 0x97,
-	0x36, 0x3a, 0xfe, 0x15, 0x60, 0x35, 0xe6, 0x53, 0xc1, 0x32, 0x8a, 0xd6, 0xa1, 0xc3, 0x48, 0xe0,
-	0x8d, 0xbc, 0xed, 0x41, 0xd2, 0x61, 0x04, 0x6d, 0x40, 0xb7, 0xa9, 0x8b, 0xa0, 0x63, 0x00, 0xfd,
-	0x89, 0x6e, 0xc1, 0x65, 0x51, 0xe7, 0x98, 0xb3, 0xaf, 0x8c, 0x48, 0xca, 0x48, 0xd0, 0x35, 0xd1,
-	0xf5, 0x79, 0x38, 0x26, 0xe8, 0x2e, 0x5c, 0xf9, 0x17, 0x91, 0xe3, 0x92, 0x06, 0x2b, 0x86, 0xba,
-	0x31, 0x1f, 0xf8, 0x18, 0x97, 0x14, 0xbd, 0x06, 0x03, 0xca, 0x15, 0x53, 0xc7, 0x5a, 0xef, 0x92,
-	0x21, 0xf5, 0x2d, 0x10, 0x13, 0x74, 0x03, 0x7c, 0x17, 0x34, 0x1a, 0x3d, 0x13, 0x06, 0x0b, 0x99,
-	0xec, 0x7b, 0x00, 0x59, 0x4d, 0xb1, 0xa2, 0x24, 0xc5, 0x2a, 0x80, 0x91, 0xb7, 0xed, 0xef, 0x0e,
-	0x43, 0x5b, 0x74, 0xd8, 0xda, 0x14, 0x7e, 0xda, 0xba, 0x92, 0x0c, 0x1c, 0x7b, 0x5f, 0xa1, 0x3d,
-	0xb8, 0xc4, 0x14, 0x2d, 0x65, 0x40, 0x46, 0xdd, 0x6d, 0x7f, 0xf7, 0x56, 0xf8, 0xc2, 0xd6, 0x84,
-	0xce, 0xa3, 0x30, 0x56, 0xb4, 0x4c, 0x6c, 0x96, 0xde, 0x5a, 0xd6, 0xd4, 0x35, 0xe5, 0x99, 0xd9,
-	0x39, 0xb7, 0x5b, 0x6b, 0xa1, 0x98, 0xa0, 0x1d, 0xb8, 0xa6, 0x84, 0xc2, 0x45, 0x8a, 0x4b, 0xd1,
-	0x70, 0x95, 0xd2, 0x27, 0x59, 0x91, 0x4e, 0xb1, 0x0a, 0xc4, 0xc8, 0xdb, 0xee, 0x24, 0xc8, 0x04,
-	0xf7, 0x4d, 0xec, 0xc3, 0x27, 0x59, 0xf1, 0x19, 0x56, 0xda, 0x0b, 0x9b, 0xa2, 0x69, 0x95, 0xa1,
-	0xf5, 0x0d, 0xa0, 0x83, 0x8b, 0x7a, 0x8c, 0x3b, 0xbd, 0xc7, 0xff, 0xd1, 0x8b, 0xb9, 0xd5, 0x3b,
-	0x80, 0x9e, 0x54, 0x58, 0x35, 0x32, 0x78, 0xee, 0x19, 0x6b, 0x6e, 0x9f, 0xa3, 0xc8, 0x87, 0x26,
-	0x23, 0x71, 0x99, 0xe8, 0x10, 0xfa, 0x15, 0x3e, 0x2e, 0x29, 0x57, 0x32, 0xf8, 0xc9, 0x33, 0x56,
-	0xdd, 0x39, 0x87, 0xca, 0x91, 0xcd, 0x49, 0x66, 0xc9, 0xc3, 0x0c, 0x56, 0xb4, 0x7f, 0xe8, 0x0d,
-	0x58, 0x6b, 0x24, 0xce, 0xa9, 0xb6, 0x31, 0x9d, 0x1d, 0x39, 0x7f, 0x86, 0xc5, 0x04, 0x6d, 0x42,
-	0xcf, 0x16, 0x69, 0x8e, 0x5f, 0x27, 0x71, 0xbf, 0xd0, 0x08, 0x7c, 0x42, 0x65, 0x56, 0xb3, 0x4a,
-	0x1f, 0x1f, 0x77, 0xfa, 0xe6, 0xa1, 0xe1, 0x5f, 0x1e, 0xf4, 0x6c, 0x01, 0xe8, 0x3a, 0x00, 0x93,
-	0x69, 0x45, 0x39, 0x61, 0x3c, 0x37, 0xab, 0xf4, 0x93, 0x01, 0x93, 0x47, 0x16, 0xd0, 0xdb, 0x60,
-	0x32, 0xcd, 0x44, 0x59, 0x15, 0x54, 0x51, 0x62, 0x56, 0xea, 0x27, 0x3e, 0x93, 0xef, 0xb7, 0x90,
-	0x6e, 0x31, 0x93, 0x69, 0x4d, 0xbf, 0xa4, 0x99, 0x66, 0x74, 0x0d, 0x03, 0x98, 0x4c, 0x1c, 0x82,
-	0xf6, 0x60, 0x6d, 0x26, 0x70, 0xbe, 0xf3, 0xe7, 0xcf, 0xf8, 0xfb, 0x0a, 0xdd, 0x07, 0xbf, 0x15,
-	0xd7, 0xd9, 0xfe, 0xd2, 0x6c, 0x68, 0xe9, 0xfb, 0x6a, 0xf8, 0x7d, 0x17, 0x56, 0x9d, 0xc9, 0x0b,
-	0x53, 0xe0, 0x5d, 0x64, 0x0a, 0x42, 0xb8, 0xea, 0x3a, 0x94, 0x56, 0xb5, 0x98, 0x32, 0x42, 0x6b,
-	0xdd, 0x14, 0x3b, 0xf6, 0x57, 0x5c, 0xe8, 0xc8, 0x45, 0x62, 0xa2, 0x5d, 0x6d, 0xf9, 0xb3, 0xf9,
-	0x1f, 0x38, 0xc4, 0x86, 0xe7, 0x4c, 0x87, 0x65, 0xa6, 0xfb, 0x4b, 0x4d, 0x5f, 0x5b, 0x6a, 0xfa,
-	0x2b, 0xff, 0xcb, 0xf4, 0x6b, 0x17, 0x31, 0x1d, 0xdd, 0x86, 0x0d, 0xfb, 0x4b, 0x5f, 0x6b, 0x35,
-	0xc5, 0x52, 0xf0, 0x60, 0xd3, 0x78, 0x70, 0x79, 0x86, 0x27, 0x06, 0x1e, 0x1f, 0x82, 0xef, 0x66,
-	0xe1, 0x23, 0x26, 0x15, 0x7a, 0xaf, 0xbd, 0x6d, 0xec, 0x08, 0x8d, 0x97, 0x8f, 0x90, 0xbb, 0x68,
-	0xc6, 0xbf, 0x79, 0x70, 0x55, 0x4b, 0x38, 0x58, 0x26, 0xf4, 0x71, 0x43, 0xa5, 0x3a, 0xed, 0x3a,
-	0xf6, 0x4e, 0xbd, 0x8e, 0x43, 0x58, 0x79, 0x54, 0x8b, 0xd2, 0xf4, 0xf4, 0xec, 0x52, 0x0d, 0x0f,
-	0xdd, 0x81, 0x8e, 0x12, 0xa6, 0xb5, 0x67, 0xb3, 0x3b, 0x4a, 0xa0, 0x07, 0xb0, 0x2a, 0xcc, 0xe4,
-	0x49, 0x77, 0xf8, 0x6f, 0x2e, 0x16, 0xe6, 0xde, 0xb2, 0xe9, 0x4e, 0xa8, 0x8b, 0xf8, 0xc4, 0x92,
-	0x93, 0x36, 0x6b, 0xf7, 0xc7, 0x0e, 0xac, 0x1f, 0xd8, 0xda, 0x1f, 0xd2, 0x7a, 0xaa, 0x5f, 0xa2,
-	0x1f, 0x3c, 0x58, 0x9b, 0x2f, 0x18, 0x85, 0x67, 0x98, 0x75, 0x8a, 0x33, 0xc3, 0xb7, 0x96, 0x9b,
-	0xab, 0xd3, 0xc6, 0x0f, 0xbe, 0xf9, 0xe5, 0xcf, 0x6f, 0x3b, 0xf7, 0xd0, 0xbb, 0xe6, 0x79, 0x74,
-	0x24, 0xfd, 0xfe, 0xce, 0x1b, 0x18, 0x3d, 0x5d, 0x70, 0xf9, 0x59, 0xc4, 0xda, 0x8d, 0x7d, 0x0d,
-	0x70, 0x48, 0xdb, 0xe5, 0xd1, 0x9b, 0x2f, 0x2e, 0x3d, 0xfe, 0xc0, 0x15, 0x3e, 0x3c, 0x47, 0xe3,
-	0xc7, 0x37, 0xcd, 0xbe, 0x6e, 0xa0, 0xeb, 0x8b, 0xfb, 0x6a, 0x17, 0x8e, 0x9e, 0x32, 0xf2, 0xec,
-	0x60, 0xef, 0xf9, 0xc9, 0x96, 0xf7, 0xf3, 0xc9, 0x96, 0xf7, 0xfb, 0xc9, 0x96, 0xf7, 0xdd, 0x1f,
-	0x5b, 0x2f, 0x7d, 0x7e, 0x77, 0xee, 0xaf, 0x42, 0xbb, 0xcc, 0xdb, 0x25, 0xe6, 0x38, 0xa7, 0x44,
-	0x6b, 0xc9, 0x39, 0xb1, 0x49, 0xcf, 0xb4, 0xf4, 0x9d, 0xbf, 0x03, 0x00, 0x00, 0xff, 0xff, 0xce,
-	0x45, 0xf4, 0x03, 0xa2, 0x08, 0x00, 0x00,
+	// 1357 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x58, 0xcb, 0x6f, 0x1b, 0x45,
+	0x18, 0x67, 0x9c, 0x47, 0xe3, 0xcf, 0x69, 0x9a, 0x4e, 0xfa, 0x70, 0x5d, 0x9a, 0x06, 0x57, 0xa1,
+	0x69, 0x4a, 0xd7, 0x4a, 0x41, 0x40, 0x5a, 0x85, 0x90, 0x36, 0x55, 0x64, 0x09, 0x68, 0xb4, 0xa1,
+	0x54, 0xe2, 0x62, 0x4d, 0x76, 0xa6, 0xee, 0xc0, 0xee, 0xce, 0x76, 0x77, 0x6c, 0x35, 0x94, 0x5e,
+	0x90, 0x2a, 0x38, 0x71, 0xa1, 0x42, 0x70, 0xe2, 0x88, 0xf8, 0x2b, 0xb8, 0x41, 0x7b, 0x43, 0xe2,
+	0xc8, 0x05, 0x15, 0x24, 0xfe, 0x0d, 0x34, 0x8f, 0x75, 0x6d, 0xd7, 0x8f, 0x75, 0x5a, 0xc1, 0xcd,
+	0xfb, 0xbd, 0xf6, 0x37, 0xbf, 0xef, 0xfb, 0x7e, 0xb3, 0x32, 0x1c, 0xdc, 0xe5, 0xbe, 0xcf, 0xc3,
+	0xba, 0x13, 0xc5, 0x42, 0x0a, 0x7c, 0x82, 0xc4, 0x24, 0xac, 0x0b, 0xba, 0xeb, 0x78, 0xbe, 0x68,
+	0x50, 0x27, 0xf5, 0x36, 0x57, 0x4a, 0xc7, 0x3c, 0x11, 0x04, 0x22, 0xac, 0x34, 0x57, 0x2a, 0xe6,
+	0x97, 0x49, 0x29, 0x5d, 0xae, 0x73, 0x79, 0xbb, 0xb1, 0xeb, 0x78, 0x22, 0xa8, 0xd4, 0x85, 0x4f,
+	0xc2, 0x7a, 0x45, 0x3b, 0x76, 0x1b, 0xb7, 0x2a, 0x91, 0xdc, 0x8b, 0x58, 0x52, 0x91, 0x3c, 0x60,
+	0x89, 0x24, 0x41, 0xf4, 0xf4, 0x97, 0x4d, 0x7e, 0xb9, 0x2e, 0x44, 0xdd, 0x67, 0x15, 0x12, 0xf1,
+	0x0a, 0x09, 0x43, 0x21, 0x89, 0xe4, 0x22, 0x4c, 0x8c, 0xb7, 0xfc, 0xa0, 0x00, 0x07, 0xaa, 0x61,
+	0x53, 0x70, 0x8f, 0xe1, 0x19, 0xc8, 0x71, 0x5a, 0x44, 0x0b, 0x68, 0x29, 0xef, 0xe6, 0x38, 0xc5,
+	0xb3, 0x30, 0xd6, 0x88, 0xfd, 0x62, 0x4e, 0x1b, 0xd4, 0x4f, 0x7c, 0x16, 0x0e, 0x89, 0xb8, 0x4e,
+	0x42, 0xfe, 0x99, 0x2e, 0x52, 0xe3, 0xb4, 0x38, 0xa6, 0xbd, 0x33, 0xed, 0xe6, 0x2a, 0xc5, 0xe7,
+	0xe1, 0x70, 0x47, 0x60, 0x48, 0x02, 0x56, 0x1c, 0xd7, 0xa1, 0xb3, 0xed, 0x8e, 0x0f, 0x48, 0xc0,
+	0xf0, 0x49, 0xc8, 0xb3, 0x50, 0x72, 0xb9, 0xa7, 0xea, 0x4d, 0xe8, 0xa0, 0x29, 0x63, 0xa8, 0x52,
+	0x7c, 0x1a, 0x0a, 0xd6, 0xa9, 0x6b, 0x4c, 0x6a, 0x37, 0x18, 0x93, 0xce, 0x5e, 0x05, 0xf0, 0x62,
+	0x46, 0x24, 0xa3, 0x35, 0x22, 0x8b, 0xb0, 0x80, 0x96, 0x0a, 0x17, 0x4b, 0x8e, 0x39, 0xb4, 0x93,
+	0xd2, 0xe4, 0x7c, 0x98, 0xb2, 0xe2, 0xe6, 0x6d, 0xf4, 0x86, 0xc4, 0x6b, 0x30, 0xc1, 0x25, 0x0b,
+	0x92, 0x22, 0x5d, 0x18, 0x5b, 0x2a, 0x5c, 0x3c, 0xeb, 0xf4, 0x6d, 0x8d, 0x63, 0x39, 0x72, 0xaa,
+	0x92, 0x05, 0xae, 0xc9, 0x52, 0xd0, 0xbc, 0x46, 0x1c, 0xb3, 0xd0, 0xd3, 0xc8, 0x43, 0x03, 0x2d,
+	0x35, 0x55, 0x29, 0x5e, 0x81, 0xa3, 0x52, 0x48, 0xe2, 0xd7, 0x48, 0x20, 0x1a, 0xa1, 0xac, 0xb1,
+	0xbb, 0x9e, 0x5f, 0x6b, 0x12, 0x59, 0x14, 0x0b, 0x68, 0x29, 0xe7, 0x62, 0xed, 0xdc, 0xd0, 0xbe,
+	0x6b, 0x77, 0x3d, 0xff, 0x23, 0x22, 0x15, 0x17, 0x26, 0x45, 0x85, 0x45, 0x3a, 0x6c, 0x4a, 0x1b,
+	0x94, 0xb3, 0xbb, 0x1e, 0x0f, 0x6d, 0xbd, 0x3b, 0xcf, 0xd4, 0xab, 0x86, 0xa6, 0xde, 0x15, 0x98,
+	0x4c, 0x24, 0x91, 0x8d, 0xa4, 0xf8, 0x08, 0x69, 0x6a, 0xce, 0x65, 0x38, 0xe4, 0x8e, 0xce, 0x70,
+	0x6d, 0x26, 0xde, 0x82, 0xa9, 0x88, 0xec, 0x05, 0x2c, 0x94, 0x49, 0xf1, 0x31, 0xd2, 0x54, 0x2d,
+	0x67, 0xa8, 0xb2, 0x6d, 0x72, 0xdc, 0x56, 0x72, 0xc9, 0x83, 0x71, 0xc5, 0x1f, 0x7e, 0x05, 0xa6,
+	0x1b, 0x09, 0xa9, 0x33, 0x45, 0x63, 0xad, 0x35, 0x72, 0x85, 0x96, 0xad, 0x4a, 0xf1, 0x31, 0x98,
+	0x34, 0x87, 0xd4, 0xe3, 0x97, 0x73, 0xed, 0x13, 0x5e, 0x80, 0x02, 0x65, 0x89, 0x17, 0xf3, 0x48,
+	0x8d, 0x8f, 0x9d, 0xbe, 0x76, 0x53, 0xe9, 0x1f, 0x04, 0x93, 0xe6, 0x00, 0xf8, 0x14, 0x00, 0x4f,
+	0x6a, 0x11, 0x0b, 0x29, 0x0f, 0xeb, 0xfa, 0x2d, 0x53, 0x6e, 0x9e, 0x27, 0xdb, 0xc6, 0xa0, 0x60,
+	0xf0, 0xa4, 0xe6, 0x89, 0x20, 0xf2, 0x99, 0x64, 0x54, 0xbf, 0x69, 0xca, 0x2d, 0xf0, 0xe4, 0x6a,
+	0x6a, 0x52, 0x2d, 0xe6, 0x49, 0x2d, 0x66, 0x9f, 0x30, 0x4f, 0x45, 0x8c, 0xe9, 0x08, 0xe0, 0x89,
+	0x6b, 0x2d, 0x78, 0x0d, 0xa6, 0x5b, 0x05, 0xb2, 0xcd, 0x5f, 0xa1, 0x15, 0xbf, 0x21, 0xf1, 0x65,
+	0x28, 0xa4, 0xc5, 0x55, 0x76, 0x61, 0x68, 0x36, 0xa4, 0xe1, 0x1b, 0xb2, 0xf4, 0x78, 0x0c, 0x0e,
+	0x58, 0x92, 0xbb, 0xb6, 0x00, 0x8d, 0xb2, 0x05, 0x0e, 0xcc, 0xd9, 0x0e, 0xd5, 0xa2, 0x58, 0x34,
+	0x39, 0x65, 0xb1, 0x6a, 0x8a, 0x59, 0xfb, 0xc3, 0xd6, 0xb5, 0x6d, 0x3d, 0x55, 0xaa, 0x58, 0x4d,
+	0xe3, 0x5b, 0xfb, 0x9f, 0xb7, 0x96, 0x2a, 0xc5, 0xcb, 0x90, 0xe6, 0xd4, 0x02, 0x26, 0x6f, 0x0b,
+	0xaa, 0xa2, 0xcc, 0xea, 0x1f, 0xb2, 0x8e, 0xf7, 0xb5, 0xdd, 0x94, 0x6a, 0x6b, 0x10, 0x0c, 0x6b,
+	0x50, 0x61, 0x68, 0x83, 0xa6, 0x87, 0x36, 0xe8, 0xc8, 0x73, 0x35, 0xe8, 0xe8, 0x28, 0x0d, 0xc2,
+	0xe7, 0x60, 0xd6, 0x3c, 0x29, 0x09, 0x8c, 0x19, 0x49, 0x44, 0x58, 0x3c, 0x66, 0x98, 0x68, 0xd9,
+	0x5d, 0x6d, 0x2e, 0x6f, 0x41, 0xc1, 0xee, 0xcd, 0x7b, 0x3c, 0x91, 0xf8, 0xed, 0x54, 0x99, 0xcc,
+	0xba, 0x95, 0x87, 0xaf, 0x9b, 0x15, 0xa5, 0xf2, 0x1f, 0x08, 0xe6, 0x54, 0x09, 0x6b, 0x4e, 0x5c,
+	0x76, 0xa7, 0xc1, 0x12, 0xd9, 0x4b, 0xba, 0x51, 0x4f, 0xe9, 0x76, 0x60, 0xfc, 0x56, 0x2c, 0x02,
+	0xdd, 0xff, 0xc1, 0x47, 0xd5, 0x71, 0x78, 0x19, 0x72, 0x52, 0xe8, 0x31, 0x18, 0x1c, 0x9d, 0x93,
+	0x02, 0xaf, 0xc3, 0x01, 0xa1, 0xb7, 0x34, 0xb1, 0x8b, 0xb2, 0xd8, 0x7d, 0x30, 0x7b, 0xef, 0x35,
+	0x57, 0x1c, 0x75, 0x88, 0xeb, 0x26, 0xd8, 0x4d, 0xb3, 0xca, 0x37, 0xe1, 0xd0, 0x76, 0xe7, 0x40,
+	0x3e, 0x73, 0x6b, 0x61, 0x18, 0xd7, 0x37, 0x85, 0x99, 0x5f, 0xfd, 0x7b, 0xb8, 0x6a, 0x94, 0x6f,
+	0xc2, 0x5c, 0x57, 0x61, 0xdd, 0x87, 0x77, 0x3b, 0xfb, 0x30, 0x48, 0xf6, 0xba, 0xd2, 0xd3, 0x7e,
+	0x7c, 0x89, 0xe0, 0xa4, 0x2a, 0xd5, 0xe5, 0x1e, 0xbd, 0x2f, 0x6d, 0xdc, 0xe5, 0xf6, 0xc5, 0xdd,
+	0xb7, 0x63, 0x70, 0x70, 0xbb, 0x7d, 0x01, 0x5f, 0x0c, 0x75, 0xfd, 0xf4, 0x63, 0xbc, 0x9f, 0x7e,
+	0xf4, 0x38, 0xf1, 0x44, 0xcf, 0x13, 0x3f, 0xc7, 0xcd, 0xbe, 0x0a, 0x40, 0x59, 0x6b, 0xe7, 0x87,
+	0xcb, 0x6a, 0xde, 0x46, 0x6f, 0x48, 0xab, 0x49, 0xf6, 0xd9, 0x0a, 0x4a, 0x9e, 0x27, 0x9b, 0xc6,
+	0xa0, 0x04, 0xa1, 0x49, 0x7c, 0x4e, 0x6b, 0x8d, 0x50, 0x72, 0xbf, 0x78, 0x70, 0xb8, 0x20, 0xe8,
+	0xf0, 0x1b, 0x2a, 0x1a, 0x1f, 0x81, 0x09, 0x29, 0x3e, 0x65, 0x61, 0x71, 0x46, 0x1f, 0xd8, 0x3c,
+	0x94, 0x77, 0xe0, 0x70, 0x47, 0x5f, 0xf4, 0xe4, 0xbd, 0xd3, 0x39, 0x79, 0x4b, 0xc3, 0x27, 0xcf,
+	0x24, 0xa7, 0x73, 0xf7, 0x00, 0xc1, 0x89, 0xb6, 0xb9, 0x33, 0xce, 0xff, 0x61, 0xea, 0x1a, 0x30,
+	0xbf, 0xc3, 0xe4, 0x26, 0xbb, 0x45, 0x1a, 0x7e, 0x27, 0x98, 0x91, 0xb1, 0xf4, 0xbc, 0x59, 0x72,
+	0x3d, 0x6f, 0x96, 0x8b, 0x3f, 0xcc, 0xc0, 0xcc, 0x15, 0x43, 0xd1, 0x0e, 0x8b, 0x9b, 0xea, 0xf3,
+	0xf6, 0x47, 0x04, 0xd3, 0xed, 0xca, 0x88, 0x9d, 0x01, 0x9c, 0xf6, 0x90, 0xd0, 0xd2, 0xab, 0xc3,
+	0x55, 0x58, 0xa5, 0x95, 0xd7, 0xbf, 0xf8, 0xfd, 0xef, 0x6f, 0x72, 0xab, 0xf8, 0x2d, 0xfd, 0xcd,
+	0x6d, 0x83, 0xd4, 0x47, 0x7d, 0xfb, 0x79, 0x2a, 0xf7, 0xba, 0x0e, 0x7d, 0xbf, 0xc2, 0x53, 0x60,
+	0x9f, 0x03, 0x6c, 0xb1, 0xf4, 0xf5, 0xf8, 0x4c, 0x7f, 0xc6, 0xab, 0x9b, 0x96, 0xef, 0x52, 0x86,
+	0x1b, 0xa2, 0xbc, 0xa8, 0x71, 0x9d, 0xc6, 0xa7, 0xba, 0x71, 0xa5, 0x2f, 0xae, 0xdc, 0xe3, 0xf4,
+	0x3e, 0xfe, 0x15, 0xc1, 0x91, 0x5e, 0x8a, 0x85, 0xdf, 0x1c, 0xc2, 0x57, 0x1f, 0x89, 0x2b, 0x39,
+	0xd9, 0x55, 0x53, 0xf3, 0xb7, 0xa5, 0x71, 0x6e, 0xe0, 0xf5, 0x11, 0xf9, 0xb3, 0x33, 0x10, 0xb5,
+	0x00, 0x3f, 0x44, 0x80, 0xb7, 0x58, 0x37, 0xae, 0x6c, 0x84, 0x8e, 0x20, 0xf5, 0xe5, 0x0b, 0x1a,
+	0xf0, 0x59, 0xbc, 0xd8, 0x0d, 0xb8, 0x1b, 0x91, 0x21, 0xf8, 0x67, 0x04, 0xf8, 0xd9, 0xd5, 0xc4,
+	0x6f, 0x64, 0xa3, 0xb7, 0x73, 0x93, 0x4b, 0xaf, 0x65, 0x15, 0x06, 0x4d, 0xed, 0x35, 0x8d, 0x74,
+	0x1d, 0xaf, 0xed, 0x8f, 0xda, 0xc0, 0x42, 0xfd, 0x1a, 0xc1, 0xec, 0x53, 0x62, 0xed, 0x6d, 0x92,
+	0x89, 0xd6, 0xcc, 0x3a, 0x56, 0x3e, 0xaf, 0xa1, 0x2e, 0xe2, 0x33, 0x7d, 0x48, 0xb5, 0x58, 0x0c,
+	0xa5, 0x0f, 0x11, 0xcc, 0x5d, 0xd5, 0xea, 0xdf, 0x89, 0x29, 0xf3, 0xeb, 0x46, 0x00, 0x76, 0x4e,
+	0x03, 0x3b, 0x53, 0x9e, 0x1f, 0x0c, 0xec, 0x12, 0x5a, 0xc6, 0xdf, 0x23, 0x98, 0xbb, 0x11, 0xd1,
+	0xff, 0x04, 0x96, 0xa3, 0x61, 0x2d, 0x95, 0xb2, 0xf0, 0xa5, 0xb0, 0x7d, 0x85, 0x60, 0xce, 0x5c,
+	0x6a, 0xfb, 0x68, 0xe3, 0xe9, 0xfe, 0x41, 0xd7, 0x82, 0x48, 0xee, 0xa5, 0xdd, 0x5b, 0xce, 0xd4,
+	0xbd, 0x9f, 0x10, 0x1c, 0xdf, 0xea, 0x7d, 0x49, 0xbc, 0xe8, 0xa9, 0xca, 0xa8, 0xcd, 0x6a, 0xe6,
+	0xa9, 0x81, 0x73, 0xa1, 0x03, 0x31, 0xfe, 0x05, 0xc1, 0xf1, 0x3e, 0x17, 0x1a, 0x5e, 0x1d, 0x00,
+	0x63, 0xf0, 0x25, 0x38, 0x9c, 0xd0, 0xeb, 0x1a, 0x78, 0xb5, 0xb4, 0x39, 0xe2, 0xe6, 0xf6, 0x3c,
+	0xc5, 0x25, 0xb4, 0x7c, 0x65, 0xed, 0xd1, 0x93, 0x79, 0xf4, 0xdb, 0x93, 0x79, 0xf4, 0xe7, 0x93,
+	0x79, 0xf4, 0xdd, 0x5f, 0xf3, 0x2f, 0x7d, 0x7c, 0xbe, 0xed, 0x6f, 0xa6, 0x14, 0xcd, 0x85, 0x80,
+	0x84, 0xa4, 0xce, 0xa8, 0x7a, 0x6b, 0xd2, 0xf6, 0xda, 0xdd, 0x49, 0xfd, 0xa9, 0xf3, 0xfa, 0xbf,
+	0x01, 0x00, 0x00, 0xff, 0xff, 0x32, 0xe9, 0x5b, 0xae, 0xde, 0x12, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -692,6 +1211,48 @@ type BillingServiceClient interface {
 	// - billing.invoice.get on the organization that owns the invoice
 	//   with given ID.
 	GetInvoice(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*Invoice, error)
+	// Fetch all payment providers that are usable for the organization identified
+	// by the given context ID.
+	// Required permissions:
+	// - billing.paymentprovider.list on the organization identified by the given context ID
+	ListPaymentProviders(ctx context.Context, in *ListPaymentProvidersRequest, opts ...grpc.CallOption) (*PaymentProviderList, error)
+	// Fetch a specific payment provider identified by the given ID.
+	// Required permissions:
+	// - None
+	GetPaymentProvider(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*PaymentProvider, error)
+	// Fetch all payment methods that are configured for the organization identified
+	// by the given context ID.
+	// Required permissions:
+	// - billing.paymentmethod.list on the organization identified by the given context ID
+	ListPaymentMethods(ctx context.Context, in *ListPaymentMethodsRequest, opts ...grpc.CallOption) (*PaymentMethodList, error)
+	// Fetch a specific payment method identified by the given ID.
+	// Required permissions:
+	// - billing.paymentmethod.get on the organization that owns the payment method
+	//   which is identified by the given ID
+	GetPaymentMethod(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*PaymentMethod, error)
+	// Create a new payment method.
+	// Required permissions:
+	// - billing.paymentmethod.create on the organization that owns the given payment method.
+	CreatePaymentMethod(ctx context.Context, in *PaymentMethod, opts ...grpc.CallOption) (*PaymentMethod, error)
+	// Update a specific payment method.
+	// Note that only name, description & valid period are updated.
+	// Required permissions:
+	// - billing.paymentmethod.update on the organization that owns the given payment method.
+	UpdatePaymentMethod(ctx context.Context, in *PaymentMethod, opts ...grpc.CallOption) (*PaymentMethod, error)
+	// Delete a specific payment method identified by the given ID.
+	// Required permissions:
+	// - billing.paymentmethod.delete on the organization that owns the given payment method
+	//   which is identified by the given ID.
+	DeletePaymentMethod(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
+	// Fetch the default PaymentMethod for an organization identified by the given ID.
+	// Required permissions:
+	// - billing.paymentmethod.get-default on the organization that is identified by the given ID
+	GetDefaultPaymentMethod(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*PaymentMethod, error)
+	// Update the default PaymentMethod for an organization identifier by the
+	// given organization ID, to the payment method identified by the given payment method ID.
+	// Required permissions:
+	// - billing.paymentmethod.set-default on the organization identified by the given organization ID
+	SetDefaultPaymentMethod(ctx context.Context, in *SetDefaultPaymentMethodRequest, opts ...grpc.CallOption) (*v1.Empty, error)
 }
 
 type billingServiceClient struct {
@@ -720,6 +1281,87 @@ func (c *billingServiceClient) GetInvoice(ctx context.Context, in *v1.IDOptions,
 	return out, nil
 }
 
+func (c *billingServiceClient) ListPaymentProviders(ctx context.Context, in *ListPaymentProvidersRequest, opts ...grpc.CallOption) (*PaymentProviderList, error) {
+	out := new(PaymentProviderList)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.billing.v1.BillingService/ListPaymentProviders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) GetPaymentProvider(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*PaymentProvider, error) {
+	out := new(PaymentProvider)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.billing.v1.BillingService/GetPaymentProvider", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) ListPaymentMethods(ctx context.Context, in *ListPaymentMethodsRequest, opts ...grpc.CallOption) (*PaymentMethodList, error) {
+	out := new(PaymentMethodList)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.billing.v1.BillingService/ListPaymentMethods", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) GetPaymentMethod(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*PaymentMethod, error) {
+	out := new(PaymentMethod)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.billing.v1.BillingService/GetPaymentMethod", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) CreatePaymentMethod(ctx context.Context, in *PaymentMethod, opts ...grpc.CallOption) (*PaymentMethod, error) {
+	out := new(PaymentMethod)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.billing.v1.BillingService/CreatePaymentMethod", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) UpdatePaymentMethod(ctx context.Context, in *PaymentMethod, opts ...grpc.CallOption) (*PaymentMethod, error) {
+	out := new(PaymentMethod)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.billing.v1.BillingService/UpdatePaymentMethod", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) DeletePaymentMethod(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error) {
+	out := new(v1.Empty)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.billing.v1.BillingService/DeletePaymentMethod", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) GetDefaultPaymentMethod(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*PaymentMethod, error) {
+	out := new(PaymentMethod)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.billing.v1.BillingService/GetDefaultPaymentMethod", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) SetDefaultPaymentMethod(ctx context.Context, in *SetDefaultPaymentMethodRequest, opts ...grpc.CallOption) (*v1.Empty, error) {
+	out := new(v1.Empty)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.billing.v1.BillingService/SetDefaultPaymentMethod", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BillingServiceServer is the server API for BillingService service.
 type BillingServiceServer interface {
 	// Fetch all Invoice resources for the organization identified by the given
@@ -732,6 +1374,48 @@ type BillingServiceServer interface {
 	// - billing.invoice.get on the organization that owns the invoice
 	//   with given ID.
 	GetInvoice(context.Context, *v1.IDOptions) (*Invoice, error)
+	// Fetch all payment providers that are usable for the organization identified
+	// by the given context ID.
+	// Required permissions:
+	// - billing.paymentprovider.list on the organization identified by the given context ID
+	ListPaymentProviders(context.Context, *ListPaymentProvidersRequest) (*PaymentProviderList, error)
+	// Fetch a specific payment provider identified by the given ID.
+	// Required permissions:
+	// - None
+	GetPaymentProvider(context.Context, *v1.IDOptions) (*PaymentProvider, error)
+	// Fetch all payment methods that are configured for the organization identified
+	// by the given context ID.
+	// Required permissions:
+	// - billing.paymentmethod.list on the organization identified by the given context ID
+	ListPaymentMethods(context.Context, *ListPaymentMethodsRequest) (*PaymentMethodList, error)
+	// Fetch a specific payment method identified by the given ID.
+	// Required permissions:
+	// - billing.paymentmethod.get on the organization that owns the payment method
+	//   which is identified by the given ID
+	GetPaymentMethod(context.Context, *v1.IDOptions) (*PaymentMethod, error)
+	// Create a new payment method.
+	// Required permissions:
+	// - billing.paymentmethod.create on the organization that owns the given payment method.
+	CreatePaymentMethod(context.Context, *PaymentMethod) (*PaymentMethod, error)
+	// Update a specific payment method.
+	// Note that only name, description & valid period are updated.
+	// Required permissions:
+	// - billing.paymentmethod.update on the organization that owns the given payment method.
+	UpdatePaymentMethod(context.Context, *PaymentMethod) (*PaymentMethod, error)
+	// Delete a specific payment method identified by the given ID.
+	// Required permissions:
+	// - billing.paymentmethod.delete on the organization that owns the given payment method
+	//   which is identified by the given ID.
+	DeletePaymentMethod(context.Context, *v1.IDOptions) (*v1.Empty, error)
+	// Fetch the default PaymentMethod for an organization identified by the given ID.
+	// Required permissions:
+	// - billing.paymentmethod.get-default on the organization that is identified by the given ID
+	GetDefaultPaymentMethod(context.Context, *v1.IDOptions) (*PaymentMethod, error)
+	// Update the default PaymentMethod for an organization identifier by the
+	// given organization ID, to the payment method identified by the given payment method ID.
+	// Required permissions:
+	// - billing.paymentmethod.set-default on the organization identified by the given organization ID
+	SetDefaultPaymentMethod(context.Context, *SetDefaultPaymentMethodRequest) (*v1.Empty, error)
 }
 
 func RegisterBillingServiceServer(s *grpc.Server, srv BillingServiceServer) {
@@ -774,6 +1458,168 @@ func _BillingService_GetInvoice_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BillingService_ListPaymentProviders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPaymentProvidersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).ListPaymentProviders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.billing.v1.BillingService/ListPaymentProviders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).ListPaymentProviders(ctx, req.(*ListPaymentProvidersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_GetPaymentProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.IDOptions)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).GetPaymentProvider(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.billing.v1.BillingService/GetPaymentProvider",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).GetPaymentProvider(ctx, req.(*v1.IDOptions))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_ListPaymentMethods_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPaymentMethodsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).ListPaymentMethods(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.billing.v1.BillingService/ListPaymentMethods",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).ListPaymentMethods(ctx, req.(*ListPaymentMethodsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_GetPaymentMethod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.IDOptions)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).GetPaymentMethod(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.billing.v1.BillingService/GetPaymentMethod",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).GetPaymentMethod(ctx, req.(*v1.IDOptions))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_CreatePaymentMethod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PaymentMethod)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).CreatePaymentMethod(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.billing.v1.BillingService/CreatePaymentMethod",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).CreatePaymentMethod(ctx, req.(*PaymentMethod))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_UpdatePaymentMethod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PaymentMethod)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).UpdatePaymentMethod(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.billing.v1.BillingService/UpdatePaymentMethod",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).UpdatePaymentMethod(ctx, req.(*PaymentMethod))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_DeletePaymentMethod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.IDOptions)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).DeletePaymentMethod(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.billing.v1.BillingService/DeletePaymentMethod",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).DeletePaymentMethod(ctx, req.(*v1.IDOptions))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_GetDefaultPaymentMethod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.IDOptions)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).GetDefaultPaymentMethod(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.billing.v1.BillingService/GetDefaultPaymentMethod",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).GetDefaultPaymentMethod(ctx, req.(*v1.IDOptions))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_SetDefaultPaymentMethod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetDefaultPaymentMethodRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).SetDefaultPaymentMethod(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.billing.v1.BillingService/SetDefaultPaymentMethod",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).SetDefaultPaymentMethod(ctx, req.(*SetDefaultPaymentMethodRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _BillingService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "arangodb.cloud.billing.v1.BillingService",
 	HandlerType: (*BillingServiceServer)(nil),
@@ -785,6 +1631,42 @@ var _BillingService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetInvoice",
 			Handler:    _BillingService_GetInvoice_Handler,
+		},
+		{
+			MethodName: "ListPaymentProviders",
+			Handler:    _BillingService_ListPaymentProviders_Handler,
+		},
+		{
+			MethodName: "GetPaymentProvider",
+			Handler:    _BillingService_GetPaymentProvider_Handler,
+		},
+		{
+			MethodName: "ListPaymentMethods",
+			Handler:    _BillingService_ListPaymentMethods_Handler,
+		},
+		{
+			MethodName: "GetPaymentMethod",
+			Handler:    _BillingService_GetPaymentMethod_Handler,
+		},
+		{
+			MethodName: "CreatePaymentMethod",
+			Handler:    _BillingService_CreatePaymentMethod_Handler,
+		},
+		{
+			MethodName: "UpdatePaymentMethod",
+			Handler:    _BillingService_UpdatePaymentMethod_Handler,
+		},
+		{
+			MethodName: "DeletePaymentMethod",
+			Handler:    _BillingService_DeletePaymentMethod_Handler,
+		},
+		{
+			MethodName: "GetDefaultPaymentMethod",
+			Handler:    _BillingService_GetDefaultPaymentMethod_Handler,
+		},
+		{
+			MethodName: "SetDefaultPaymentMethod",
+			Handler:    _BillingService_SetDefaultPaymentMethod_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -1077,6 +1959,12 @@ func (m *Invoice_Payment) MarshalTo(dAtA []byte) (int, error) {
 		i = encodeVarintBilling(dAtA, i, uint64(len(m.PaymentId)))
 		i += copy(dAtA[i:], m.PaymentId)
 	}
+	if len(m.PaymentMethodId) > 0 {
+		dAtA[i] = 0x22
+		i++
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.PaymentMethodId)))
+		i += copy(dAtA[i:], m.PaymentMethodId)
+	}
 	if m.IsPending {
 		dAtA[i] = 0x50
 		i++
@@ -1235,6 +2123,315 @@ func (m *ListInvoicesRequest) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
+func (m *PaymentProvider) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PaymentProvider) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Id) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.Id)))
+		i += copy(dAtA[i:], m.Id)
+	}
+	if len(m.Name) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.Name)))
+		i += copy(dAtA[i:], m.Name)
+	}
+	if len(m.Description) > 0 {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.Description)))
+		i += copy(dAtA[i:], m.Description)
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *PaymentProviderList) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PaymentProviderList) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Items) > 0 {
+		for _, msg := range m.Items {
+			dAtA[i] = 0xa
+			i++
+			i = encodeVarintBilling(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *ListPaymentProvidersRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ListPaymentProvidersRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.OrganizationId) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.OrganizationId)))
+		i += copy(dAtA[i:], m.OrganizationId)
+	}
+	if m.Options != nil {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintBilling(dAtA, i, uint64(m.Options.Size()))
+		n11, err := m.Options.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n11
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *PaymentMethod) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PaymentMethod) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Id) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.Id)))
+		i += copy(dAtA[i:], m.Id)
+	}
+	if len(m.Name) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.Name)))
+		i += copy(dAtA[i:], m.Name)
+	}
+	if len(m.Description) > 0 {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.Description)))
+		i += copy(dAtA[i:], m.Description)
+	}
+	if len(m.PaymentProviderId) > 0 {
+		dAtA[i] = 0x22
+		i++
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.PaymentProviderId)))
+		i += copy(dAtA[i:], m.PaymentProviderId)
+	}
+	if len(m.OrganizationId) > 0 {
+		dAtA[i] = 0x2a
+		i++
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.OrganizationId)))
+		i += copy(dAtA[i:], m.OrganizationId)
+	}
+	if m.CreatedAt != nil {
+		dAtA[i] = 0x52
+		i++
+		i = encodeVarintBilling(dAtA, i, uint64(m.CreatedAt.Size()))
+		n12, err := m.CreatedAt.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n12
+	}
+	if m.DeletedAt != nil {
+		dAtA[i] = 0x5a
+		i++
+		i = encodeVarintBilling(dAtA, i, uint64(m.DeletedAt.Size()))
+		n13, err := m.DeletedAt.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n13
+	}
+	if m.IsDeleted {
+		dAtA[i] = 0x60
+		i++
+		if m.IsDeleted {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i++
+	}
+	if m.ValidUntil != nil {
+		dAtA[i] = 0x6a
+		i++
+		i = encodeVarintBilling(dAtA, i, uint64(m.ValidUntil.Size()))
+		n14, err := m.ValidUntil.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n14
+	}
+	if len(m.Token) > 0 {
+		dAtA[i] = 0x72
+		i++
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.Token)))
+		i += copy(dAtA[i:], m.Token)
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *PaymentMethodList) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PaymentMethodList) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Items) > 0 {
+		for _, msg := range m.Items {
+			dAtA[i] = 0xa
+			i++
+			i = encodeVarintBilling(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *ListPaymentMethodsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ListPaymentMethodsRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.OrganizationId) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.OrganizationId)))
+		i += copy(dAtA[i:], m.OrganizationId)
+	}
+	if m.Options != nil {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintBilling(dAtA, i, uint64(m.Options.Size()))
+		n15, err := m.Options.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n15
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *SetDefaultPaymentMethodRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SetDefaultPaymentMethodRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.OrganizationId) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.OrganizationId)))
+		i += copy(dAtA[i:], m.OrganizationId)
+	}
+	if len(m.PaymentMethodId) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.PaymentMethodId)))
+		i += copy(dAtA[i:], m.PaymentMethodId)
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
 func encodeVarintBilling(dAtA []byte, offset int, v uint64) int {
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
@@ -1383,6 +2580,10 @@ func (m *Invoice_Payment) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovBilling(uint64(l))
 	}
+	l = len(m.PaymentMethodId)
+	if l > 0 {
+		n += 1 + l + sovBilling(uint64(l))
+	}
 	if m.IsPending {
 		n += 2
 	}
@@ -1448,6 +2649,177 @@ func (m *ListInvoicesRequest) Size() (n int) {
 	}
 	if m.Options != nil {
 		l = m.Options.Size()
+		n += 1 + l + sovBilling(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *PaymentProvider) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovBilling(uint64(l))
+	}
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovBilling(uint64(l))
+	}
+	l = len(m.Description)
+	if l > 0 {
+		n += 1 + l + sovBilling(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *PaymentProviderList) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Items) > 0 {
+		for _, e := range m.Items {
+			l = e.Size()
+			n += 1 + l + sovBilling(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *ListPaymentProvidersRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.OrganizationId)
+	if l > 0 {
+		n += 1 + l + sovBilling(uint64(l))
+	}
+	if m.Options != nil {
+		l = m.Options.Size()
+		n += 1 + l + sovBilling(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *PaymentMethod) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovBilling(uint64(l))
+	}
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovBilling(uint64(l))
+	}
+	l = len(m.Description)
+	if l > 0 {
+		n += 1 + l + sovBilling(uint64(l))
+	}
+	l = len(m.PaymentProviderId)
+	if l > 0 {
+		n += 1 + l + sovBilling(uint64(l))
+	}
+	l = len(m.OrganizationId)
+	if l > 0 {
+		n += 1 + l + sovBilling(uint64(l))
+	}
+	if m.CreatedAt != nil {
+		l = m.CreatedAt.Size()
+		n += 1 + l + sovBilling(uint64(l))
+	}
+	if m.DeletedAt != nil {
+		l = m.DeletedAt.Size()
+		n += 1 + l + sovBilling(uint64(l))
+	}
+	if m.IsDeleted {
+		n += 2
+	}
+	if m.ValidUntil != nil {
+		l = m.ValidUntil.Size()
+		n += 1 + l + sovBilling(uint64(l))
+	}
+	l = len(m.Token)
+	if l > 0 {
+		n += 1 + l + sovBilling(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *PaymentMethodList) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Items) > 0 {
+		for _, e := range m.Items {
+			l = e.Size()
+			n += 1 + l + sovBilling(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *ListPaymentMethodsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.OrganizationId)
+	if l > 0 {
+		n += 1 + l + sovBilling(uint64(l))
+	}
+	if m.Options != nil {
+		l = m.Options.Size()
+		n += 1 + l + sovBilling(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *SetDefaultPaymentMethodRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.OrganizationId)
+	if l > 0 {
+		n += 1 + l + sovBilling(uint64(l))
+	}
+	l = len(m.PaymentMethodId)
+	if l > 0 {
 		n += 1 + l + sovBilling(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
@@ -2364,6 +3736,38 @@ func (m *Invoice_Payment) Unmarshal(dAtA []byte) error {
 			}
 			m.PaymentId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PaymentMethodId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBilling
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBilling
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PaymentMethodId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		case 10:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field IsPending", wireType)
@@ -2809,6 +4213,1068 @@ func (m *ListInvoicesRequest) Unmarshal(dAtA []byte) error {
 			if err := m.Options.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBilling(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *PaymentProvider) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBilling
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: PaymentProvider: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: PaymentProvider: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBilling
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBilling
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBilling
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBilling
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBilling
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBilling
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Description = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBilling(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *PaymentProviderList) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBilling
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: PaymentProviderList: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: PaymentProviderList: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Items", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBilling
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthBilling
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Items = append(m.Items, &PaymentProvider{})
+			if err := m.Items[len(m.Items)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBilling(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ListPaymentProvidersRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBilling
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ListPaymentProvidersRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ListPaymentProvidersRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OrganizationId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBilling
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBilling
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OrganizationId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Options", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBilling
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthBilling
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Options == nil {
+				m.Options = &v1.ListOptions{}
+			}
+			if err := m.Options.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBilling(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *PaymentMethod) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBilling
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: PaymentMethod: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: PaymentMethod: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBilling
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBilling
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBilling
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBilling
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBilling
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBilling
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Description = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PaymentProviderId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBilling
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBilling
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PaymentProviderId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OrganizationId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBilling
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBilling
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OrganizationId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 10:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBilling
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthBilling
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.CreatedAt == nil {
+				m.CreatedAt = &types.Timestamp{}
+			}
+			if err := m.CreatedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 11:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DeletedAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBilling
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthBilling
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.DeletedAt == nil {
+				m.DeletedAt = &types.Timestamp{}
+			}
+			if err := m.DeletedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 12:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field IsDeleted", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBilling
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.IsDeleted = bool(v != 0)
+		case 13:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ValidUntil", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBilling
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthBilling
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.ValidUntil == nil {
+				m.ValidUntil = &types.Timestamp{}
+			}
+			if err := m.ValidUntil.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 14:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Token", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBilling
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBilling
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Token = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBilling(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *PaymentMethodList) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBilling
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: PaymentMethodList: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: PaymentMethodList: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Items", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBilling
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthBilling
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Items = append(m.Items, &PaymentMethod{})
+			if err := m.Items[len(m.Items)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBilling(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ListPaymentMethodsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBilling
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ListPaymentMethodsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ListPaymentMethodsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OrganizationId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBilling
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBilling
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OrganizationId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Options", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBilling
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthBilling
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Options == nil {
+				m.Options = &v1.ListOptions{}
+			}
+			if err := m.Options.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBilling(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SetDefaultPaymentMethodRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBilling
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SetDefaultPaymentMethodRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SetDefaultPaymentMethodRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OrganizationId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBilling
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBilling
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OrganizationId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PaymentMethodId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBilling
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBilling
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBilling
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PaymentMethodId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

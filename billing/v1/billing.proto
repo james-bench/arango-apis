@@ -38,6 +38,96 @@ service BillingService {
             get: "/api/billing/v1/invoices/{id}"
         };
     }
+
+    // Fetch all payment providers that are usable for the organization identified
+    // by the given context ID.
+    // Required permissions:
+    // - billing.paymentprovider.list on the organization identified by the given context ID
+    rpc ListPaymentProviders(ListPaymentProvidersRequest) returns (PaymentProviderList) {
+        option (google.api.http) = {
+            get: "/api/billing/v1/organization/{organization_id}/paymentproviders"
+        };
+    }
+
+    // Fetch a specific payment provider identified by the given ID.
+    // Required permissions:
+    // - None
+    rpc GetPaymentProvider(common.v1.IDOptions) returns (PaymentProvider) {
+        option (google.api.http) = {
+            get: "/api/billing/v1/paymentproviders/{id}"
+        };
+    }
+
+    // Fetch all payment methods that are configured for the organization identified
+    // by the given context ID.
+    // Required permissions:
+    // - billing.paymentmethod.list on the organization identified by the given context ID
+    rpc ListPaymentMethods(ListPaymentMethodsRequest) returns (PaymentMethodList) {
+        option (google.api.http) = {
+            get: "/api/billing/v1/organization/{organization_id}/paymentmethods"
+        };
+    }
+
+    // Fetch a specific payment method identified by the given ID.
+    // Required permissions:
+    // - billing.paymentmethod.get on the organization that owns the payment method
+    //   which is identified by the given ID
+    rpc GetPaymentMethod(common.v1.IDOptions) returns (PaymentMethod) {
+        option (google.api.http) = {
+            get: "/api/billing/v1/paymentmethods/{id}"
+        };
+    }
+
+    // Create a new payment method.
+    // Required permissions:
+    // - billing.paymentmethod.create on the organization that owns the given payment method.
+    rpc CreatePaymentMethod(PaymentMethod) returns (PaymentMethod) {
+        option (google.api.http) = {
+            post: "/api/billing/v1/paymentmethods"
+            body: "*"
+        };
+    }
+
+    // Update a specific payment method.
+    // Note that only name, description & valid period are updated.
+    // Required permissions:
+    // - billing.paymentmethod.update on the organization that owns the given payment method.
+    rpc UpdatePaymentMethod(PaymentMethod) returns (PaymentMethod) {
+        option (google.api.http) = {
+            put: "/api/billing/v1/paymentmethods/{id}"
+            body: "*"
+        };
+    }
+
+    // Delete a specific payment method identified by the given ID.
+    // Required permissions:
+    // - billing.paymentmethod.delete on the organization that owns the given payment method
+    //   which is identified by the given ID.
+    rpc DeletePaymentMethod(common.v1.IDOptions) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            delete: "/api/billing/v1/paymentmethods/{id}"
+        };
+    }
+
+    // Fetch the default PaymentMethod for an organization identified by the given ID.
+    // Required permissions:
+    // - billing.paymentmethod.get-default on the organization that is identified by the given ID
+    rpc GetDefaultPaymentMethod(common.v1.IDOptions) returns (PaymentMethod) {
+        option (google.api.http) = {
+            get: "/api/billing/v1/organization/{id}/default-paymentmethod"
+        };
+    }
+
+    // Update the default PaymentMethod for an organization identifier by the
+    // given organization ID, to the payment method identified by the given payment method ID.
+    // Required permissions:
+    // - billing.paymentmethod.set-default on the organization identified by the given organization ID
+    rpc SetDefaultPaymentMethod(SetDefaultPaymentMethodRequest) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            put: "/api/billing/v1/organization/{organization_id}/default-paymentmethod"
+            body: "*"
+        };
+    }
 }
 
 // An Invoice message describes a transaction for usage of ArangoDB Oasis.
@@ -107,6 +197,8 @@ message Invoice {
         string payment_provider_id = 2;
         // Identifier of this payment (created by payment provider)
         string payment_id = 3;
+        // Identifier of the payment method that is used for this payment.
+        string payment_method_id = 4;
         // If set, this payment is still being processed.
         bool is_pending = 10;
         // If set, this payment has been payed for succesfully.
@@ -144,4 +236,80 @@ message ListInvoicesRequest {
     // Standard list options
     // This is an optional field.
     common.v1.ListOptions options = 10;
+}
+
+// Payment providers are services that handle payments.
+message PaymentProvider {
+    // System identifier of this payment provider.
+    string id = 1;
+    // Name of the payment provider
+    string name = 2;
+    // Description of the payment provider
+    string description = 3;
+}
+
+// List of Payment providers
+message PaymentProviderList {
+    repeated PaymentProvider items = 1;
+}
+
+// Request arguments for ListPaymentProviders
+message ListPaymentProvidersRequest {
+    // Identifier of the organization for which payment providers are requested.
+    string organization_id = 1;
+    // Optional common list options. (Context ID is ignored)
+    common.v1.ListOptions options = 2;
+}
+
+// Payment methods are specific methods for paying at a specific payment provider
+// such as a specific credit card.
+message PaymentMethod {
+    // System identifier of this payment method.
+    string id = 1;
+    // Name of the payment method
+    string name = 2;
+    // Description of the payment method
+    string description = 3;
+    // Identifier of the payment provider used for this payment method
+    // This is a read-only field.
+    string payment_provider_id = 4;
+    // Identifier of the organization that owns this payment method
+    // This is a read-only field.
+    string organization_id = 5;
+    // Creation timestamp of this payment method
+    // This is a read-only field.
+    google.protobuf.Timestamp created_at = 10;
+    // Deletion timestamp of this payment method
+    // This is a read-only field.
+    google.protobuf.Timestamp deleted_at = 11;
+    // Set if the payment method is deleted.
+    // This is a read-only field.
+    bool is_deleted = 12;
+    // If set, this timestamp specifies when the payment method is no longer valid.
+    // If not set, there is no (known) end date for this payment method.
+    google.protobuf.Timestamp valid_until = 13;
+    // Token for this payment method, provided by the payment provider.
+    // This is a read-only field.
+    string token = 14;
+}
+
+// List of Payment methods
+message PaymentMethodList {
+    repeated PaymentMethod items = 1;
+}
+
+// Request arguments for ListPaymentMethods
+message ListPaymentMethodsRequest {
+    // Identifier of the organization for which payment methods are requested.
+    string organization_id = 1;
+    // Optional common list options. (Context ID is ignored)
+    common.v1.ListOptions options = 2;
+}
+
+// Request argument for SetDefaultPaymentMethod
+message SetDefaultPaymentMethodRequest {
+    // Identifier of the organization for which the default payment method will be set.
+    string organization_id = 1;
+    // Identifier of the new default payment method for the organization.
+    string payment_method_id = 2;
 }

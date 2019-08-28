@@ -98,6 +98,10 @@ export interface Invoice_Payment {
   // string
   payment_id?: string;
   
+  // Identifier of the payment method that is used for this payment.
+  // string
+  payment_method_id?: string;
+  
   // If set, this payment is still being processed.
   // boolean
   is_pending?: boolean;
@@ -179,6 +183,117 @@ export interface ListInvoicesRequest {
   options?: arangodb_cloud_common_v1_ListOptions;
 }
 
+// Request arguments for ListPaymentMethods
+export interface ListPaymentMethodsRequest {
+  // Identifier of the organization for which payment methods are requested.
+  // string
+  organization_id?: string;
+  
+  // Optional common list options. (Context ID is ignored)
+  // arangodb.cloud.common.v1.ListOptions
+  options?: arangodb_cloud_common_v1_ListOptions;
+}
+
+// Request arguments for ListPaymentProviders
+export interface ListPaymentProvidersRequest {
+  // Identifier of the organization for which payment providers are requested.
+  // string
+  organization_id?: string;
+  
+  // Optional common list options. (Context ID is ignored)
+  // arangodb.cloud.common.v1.ListOptions
+  options?: arangodb_cloud_common_v1_ListOptions;
+}
+
+// Payment methods are specific methods for paying at a specific payment provider
+// such as a specific credit card.
+export interface PaymentMethod {
+  // System identifier of this payment method.
+  // string
+  id?: string;
+  
+  // Name of the payment method
+  // string
+  name?: string;
+  
+  // Description of the payment method
+  // string
+  description?: string;
+  
+  // Identifier of the payment provider used for this payment method
+  // This is a read-only field.
+  // string
+  payment_provider_id?: string;
+  
+  // Identifier of the organization that owns this payment method
+  // This is a read-only field.
+  // string
+  organization_id?: string;
+  
+  // Creation timestamp of this payment method
+  // This is a read-only field.
+  // googleTypes.Timestamp
+  created_at?: googleTypes.Timestamp;
+  
+  // Deletion timestamp of this payment method
+  // This is a read-only field.
+  // googleTypes.Timestamp
+  deleted_at?: googleTypes.Timestamp;
+  
+  // Set if the payment method is deleted.
+  // This is a read-only field.
+  // boolean
+  is_deleted?: boolean;
+  
+  // If set, this timestamp specifies when the payment method is no longer valid.
+  // If not set, there is no (known) end date for this payment method.
+  // googleTypes.Timestamp
+  valid_until?: googleTypes.Timestamp;
+  
+  // Token for this payment method, provided by the payment provider.
+  // This is a read-only field.
+  // string
+  token?: string;
+}
+
+// List of Payment methods
+export interface PaymentMethodList {
+  // PaymentMethod
+  items?: PaymentMethod[];
+}
+
+// Payment providers are services that handle payments.
+export interface PaymentProvider {
+  // System identifier of this payment provider.
+  // string
+  id?: string;
+  
+  // Name of the payment provider
+  // string
+  name?: string;
+  
+  // Description of the payment provider
+  // string
+  description?: string;
+}
+
+// List of Payment providers
+export interface PaymentProviderList {
+  // PaymentProvider
+  items?: PaymentProvider[];
+}
+
+// Request argument for SetDefaultPaymentMethod
+export interface SetDefaultPaymentMethodRequest {
+  // Identifier of the organization for which the default payment method will be set.
+  // string
+  organization_id?: string;
+  
+  // Identifier of the new default payment method for the organization.
+  // string
+  payment_method_id?: string;
+}
+
 // BillingService is the API used to fetch billing information.
 export class BillingService {
   // Fetch all Invoice resources for the organization identified by the given
@@ -199,5 +314,89 @@ export class BillingService {
     const path = `/api/billing/v1/invoices/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
+  }
+  
+  // Fetch all payment providers that are usable for the organization identified
+  // by the given context ID.
+  // Required permissions:
+  // - billing.paymentprovider.list on the organization identified by the given context ID
+  async ListPaymentProviders(req: ListPaymentProvidersRequest): Promise<PaymentProviderList> {
+    const path = `/api/billing/v1/organization/${encodeURIComponent(req.organization_id || '')}/paymentproviders`;
+    const url = path + api.queryString(req, [`organization_id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch a specific payment provider identified by the given ID.
+  // Required permissions:
+  // - None
+  async GetPaymentProvider(req: arangodb_cloud_common_v1_IDOptions): Promise<PaymentProvider> {
+    const path = `/api/billing/v1/paymentproviders/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch all payment methods that are configured for the organization identified
+  // by the given context ID.
+  // Required permissions:
+  // - billing.paymentmethod.list on the organization identified by the given context ID
+  async ListPaymentMethods(req: ListPaymentMethodsRequest): Promise<PaymentMethodList> {
+    const path = `/api/billing/v1/organization/${encodeURIComponent(req.organization_id || '')}/paymentmethods`;
+    const url = path + api.queryString(req, [`organization_id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch a specific payment method identified by the given ID.
+  // Required permissions:
+  // - billing.paymentmethod.get on the organization that owns the payment method
+  // which is identified by the given ID
+  async GetPaymentMethod(req: arangodb_cloud_common_v1_IDOptions): Promise<PaymentMethod> {
+    const path = `/api/billing/v1/paymentmethods/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Create a new payment method.
+  // Required permissions:
+  // - billing.paymentmethod.create on the organization that owns the given payment method.
+  async CreatePaymentMethod(req: PaymentMethod): Promise<PaymentMethod> {
+    const url = `/api/billing/v1/paymentmethods`;
+    return api.post(url, req);
+  }
+  
+  // Update a specific payment method.
+  // Note that only name, description & valid period are updated.
+  // Required permissions:
+  // - billing.paymentmethod.update on the organization that owns the given payment method.
+  async UpdatePaymentMethod(req: PaymentMethod): Promise<PaymentMethod> {
+    const url = `/api/billing/v1/paymentmethods/${encodeURIComponent(req.id || '')}`;
+    return api.put(url, req);
+  }
+  
+  // Delete a specific payment method identified by the given ID.
+  // Required permissions:
+  // - billing.paymentmethod.delete on the organization that owns the given payment method
+  // which is identified by the given ID.
+  async DeletePaymentMethod(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
+    const path = `/api/billing/v1/paymentmethods/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.delete(url, undefined);
+  }
+  
+  // Fetch the default PaymentMethod for an organization identified by the given ID.
+  // Required permissions:
+  // - billing.paymentmethod.get-default on the organization that is identified by the given ID
+  async GetDefaultPaymentMethod(req: arangodb_cloud_common_v1_IDOptions): Promise<PaymentMethod> {
+    const path = `/api/billing/v1/organization/${encodeURIComponent(req.id || '')}/default-paymentmethod`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Update the default PaymentMethod for an organization identifier by the
+  // given organization ID, to the payment method identified by the given payment method ID.
+  // Required permissions:
+  // - billing.paymentmethod.set-default on the organization identified by the given organization ID
+  async SetDefaultPaymentMethod(req: SetDefaultPaymentMethodRequest): Promise<void> {
+    const url = `/api/billing/v1/organization/${encodeURIComponent(req.organization_id || '')}/default-paymentmethod`;
+    return api.put(url, req);
   }
 }
