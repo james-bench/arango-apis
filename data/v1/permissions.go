@@ -21,6 +21,8 @@ const (
 	PermissionDeploymentUpdate = "data.deployment.update"
 	// PermissionDeploymentDelete is needed for deleting a deployment
 	PermissionDeploymentDelete = "data.deployment.delete"
+	// PermissionDeploymentRestoreBackup is needed for restoring a backup of a deployment
+	PermissionDeploymentRestoreBackup = "data.deployment.restore-backup"
 )
 
 const (

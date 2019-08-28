@@ -333,6 +333,16 @@ export interface Deployment_Status {
   // Set if bootstrapped_at has a value, otherwise false.
   // boolean
   bootstrapped?: boolean;
+  
+  // Set if the deployment is restoring a backup
+  // boolean
+  restoring_backup?: boolean;
+  
+  // Status of the restore backup operation.
+  // Enum of the following values: "<empty>|Restoring|Restored|Failed"
+  // The discription will be used for a human readable status
+  // string
+  restore_backup_status?: string;
 }
 
 // Result for GetDeploymentCredentials
