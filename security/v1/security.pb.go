@@ -11,8 +11,11 @@ import (
 	proto "github.com/golang/protobuf/proto"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 	io "io"
 	math "math"
+	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -24,7 +27,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // IPWhitelist represents a list of CIDR ranges from which a deployment is accessible.
 type IPWhitelist struct {
@@ -74,7 +77,7 @@ func (m *IPWhitelist) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) 
 		return xxx_messageInfo_IPWhitelist.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -185,7 +188,7 @@ func (m *IPWhitelistList) XXX_Marshal(b []byte, deterministic bool) ([]byte, err
 		return xxx_messageInfo_IPWhitelistList.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -378,6 +381,26 @@ type SecurityServiceServer interface {
 	DeleteIPWhitelist(context.Context, *v1.IDOptions) (*v1.Empty, error)
 }
 
+// UnimplementedSecurityServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedSecurityServiceServer struct {
+}
+
+func (*UnimplementedSecurityServiceServer) ListIPWhitelists(ctx context.Context, req *v1.ListOptions) (*IPWhitelistList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListIPWhitelists not implemented")
+}
+func (*UnimplementedSecurityServiceServer) GetIPWhitelist(ctx context.Context, req *v1.IDOptions) (*IPWhitelist, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetIPWhitelist not implemented")
+}
+func (*UnimplementedSecurityServiceServer) CreateIPWhitelist(ctx context.Context, req *IPWhitelist) (*IPWhitelist, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateIPWhitelist not implemented")
+}
+func (*UnimplementedSecurityServiceServer) UpdateIPWhitelist(ctx context.Context, req *IPWhitelist) (*IPWhitelist, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateIPWhitelist not implemented")
+}
+func (*UnimplementedSecurityServiceServer) DeleteIPWhitelist(ctx context.Context, req *v1.IDOptions) (*v1.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteIPWhitelist not implemented")
+}
+
 func RegisterSecurityServiceServer(s *grpc.Server, srv SecurityServiceServer) {
 	s.RegisterService(&_SecurityService_serviceDesc, srv)
 }
@@ -504,7 +527,7 @@ var _SecurityService_serviceDesc = grpc.ServiceDesc{
 func (m *IPWhitelist) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -512,101 +535,111 @@ func (m *IPWhitelist) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *IPWhitelist) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *IPWhitelist) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Id) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintSecurity(dAtA, i, uint64(len(m.Id)))
-		i += copy(dAtA[i:], m.Id)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.Url) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintSecurity(dAtA, i, uint64(len(m.Url)))
-		i += copy(dAtA[i:], m.Url)
-	}
-	if len(m.Name) > 0 {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintSecurity(dAtA, i, uint64(len(m.Name)))
-		i += copy(dAtA[i:], m.Name)
-	}
-	if len(m.Description) > 0 {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintSecurity(dAtA, i, uint64(len(m.Description)))
-		i += copy(dAtA[i:], m.Description)
-	}
-	if len(m.ProjectId) > 0 {
-		dAtA[i] = 0x2a
-		i++
-		i = encodeVarintSecurity(dAtA, i, uint64(len(m.ProjectId)))
-		i += copy(dAtA[i:], m.ProjectId)
-	}
-	if len(m.CidrRanges) > 0 {
-		for _, s := range m.CidrRanges {
-			dAtA[i] = 0x32
-			i++
-			l = len(s)
-			for l >= 1<<7 {
-				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
-				l >>= 7
-				i++
-			}
-			dAtA[i] = uint8(l)
-			i++
-			i += copy(dAtA[i:], s)
-		}
-	}
-	if m.CreatedAt != nil {
-		dAtA[i] = 0x3a
-		i++
-		i = encodeVarintSecurity(dAtA, i, uint64(m.CreatedAt.Size()))
-		n1, err := m.CreatedAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n1
-	}
-	if m.DeletedAt != nil {
-		dAtA[i] = 0x42
-		i++
-		i = encodeVarintSecurity(dAtA, i, uint64(m.DeletedAt.Size()))
-		n2, err := m.DeletedAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n2
+	if len(m.CreatedById) > 0 {
+		i -= len(m.CreatedById)
+		copy(dAtA[i:], m.CreatedById)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.CreatedById)))
+		i--
+		dAtA[i] = 0x52
 	}
 	if m.IsDeleted {
-		dAtA[i] = 0x48
-		i++
+		i--
 		if m.IsDeleted {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x48
 	}
-	if len(m.CreatedById) > 0 {
-		dAtA[i] = 0x52
-		i++
-		i = encodeVarintSecurity(dAtA, i, uint64(len(m.CreatedById)))
-		i += copy(dAtA[i:], m.CreatedById)
+	if m.DeletedAt != nil {
+		{
+			size, err := m.DeletedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSecurity(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x42
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.CreatedAt != nil {
+		{
+			size, err := m.CreatedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSecurity(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x3a
 	}
-	return i, nil
+	if len(m.CidrRanges) > 0 {
+		for iNdEx := len(m.CidrRanges) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.CidrRanges[iNdEx])
+			copy(dAtA[i:], m.CidrRanges[iNdEx])
+			i = encodeVarintSecurity(dAtA, i, uint64(len(m.CidrRanges[iNdEx])))
+			i--
+			dAtA[i] = 0x32
+		}
+	}
+	if len(m.ProjectId) > 0 {
+		i -= len(m.ProjectId)
+		copy(dAtA[i:], m.ProjectId)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.ProjectId)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.Description) > 0 {
+		i -= len(m.Description)
+		copy(dAtA[i:], m.Description)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.Description)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Url) > 0 {
+		i -= len(m.Url)
+		copy(dAtA[i:], m.Url)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.Url)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *IPWhitelistList) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -614,36 +647,46 @@ func (m *IPWhitelistList) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *IPWhitelistList) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *IPWhitelistList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
-		for _, msg := range m.Items {
-			dAtA[i] = 0xa
-			i++
-			i = encodeVarintSecurity(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
+		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Items[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintSecurity(dAtA, i, uint64(size))
 			}
-			i += n
+			i--
+			dAtA[i] = 0xa
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func encodeVarintSecurity(dAtA []byte, offset int, v uint64) int {
+	offset -= sovSecurity(v)
+	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return offset + 1
+	return base
 }
 func (m *IPWhitelist) Size() (n int) {
 	if m == nil {
@@ -717,14 +760,7 @@ func (m *IPWhitelistList) Size() (n int) {
 }
 
 func sovSecurity(x uint64) (n int) {
-	for {
-		n++
-		x >>= 7
-		if x == 0 {
-			break
-		}
-	}
-	return n
+	return (math_bits.Len64(x|1) + 6) / 7
 }
 func sozSecurity(x uint64) (n int) {
 	return sovSecurity(uint64((x << 1) ^ uint64((int64(x) >> 63))))

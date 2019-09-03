@@ -12,8 +12,11 @@ import (
 	proto "github.com/golang/protobuf/proto"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 	io "io"
 	math "math"
+	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -25,7 +28,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // An Invoice message describes a transaction for usage of ArangoDB Oasis.
 type Invoice struct {
@@ -76,7 +79,7 @@ func (m *Invoice) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_Invoice.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -220,7 +223,7 @@ func (m *Invoice_Item) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)
 		return xxx_messageInfo_Invoice_Item.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -295,7 +298,7 @@ func (m *Invoice_Status) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return xxx_messageInfo_Invoice_Status.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -390,7 +393,7 @@ func (m *Invoice_Payment) XXX_Marshal(b []byte, deterministic bool) ([]byte, err
 		return xxx_messageInfo_Invoice_Payment.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -501,7 +504,7 @@ func (m *InvoiceList) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) 
 		return xxx_messageInfo_InvoiceList.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -560,7 +563,7 @@ func (m *ListInvoicesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte,
 		return xxx_messageInfo_ListInvoicesRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -634,7 +637,7 @@ func (m *PaymentProvider) XXX_Marshal(b []byte, deterministic bool) ([]byte, err
 		return xxx_messageInfo_PaymentProvider.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -696,7 +699,7 @@ func (m *PaymentProviderList) XXX_Marshal(b []byte, deterministic bool) ([]byte,
 		return xxx_messageInfo_PaymentProviderList.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -747,7 +750,7 @@ func (m *ListPaymentProvidersRequest) XXX_Marshal(b []byte, deterministic bool) 
 		return xxx_messageInfo_ListPaymentProvidersRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -829,7 +832,7 @@ func (m *PaymentMethod) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return xxx_messageInfo_PaymentMethod.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -940,7 +943,7 @@ func (m *PaymentMethodList) XXX_Marshal(b []byte, deterministic bool) ([]byte, e
 		return xxx_messageInfo_PaymentMethodList.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -991,7 +994,7 @@ func (m *ListPaymentMethodsRequest) XXX_Marshal(b []byte, deterministic bool) ([
 		return xxx_messageInfo_ListPaymentMethodsRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1049,7 +1052,7 @@ func (m *SetDefaultPaymentMethodRequest) XXX_Marshal(b []byte, deterministic boo
 		return xxx_messageInfo_SetDefaultPaymentMethodRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1418,6 +1421,44 @@ type BillingServiceServer interface {
 	SetDefaultPaymentMethod(context.Context, *SetDefaultPaymentMethodRequest) (*v1.Empty, error)
 }
 
+// UnimplementedBillingServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedBillingServiceServer struct {
+}
+
+func (*UnimplementedBillingServiceServer) ListInvoices(ctx context.Context, req *ListInvoicesRequest) (*InvoiceList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListInvoices not implemented")
+}
+func (*UnimplementedBillingServiceServer) GetInvoice(ctx context.Context, req *v1.IDOptions) (*Invoice, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetInvoice not implemented")
+}
+func (*UnimplementedBillingServiceServer) ListPaymentProviders(ctx context.Context, req *ListPaymentProvidersRequest) (*PaymentProviderList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPaymentProviders not implemented")
+}
+func (*UnimplementedBillingServiceServer) GetPaymentProvider(ctx context.Context, req *v1.IDOptions) (*PaymentProvider, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPaymentProvider not implemented")
+}
+func (*UnimplementedBillingServiceServer) ListPaymentMethods(ctx context.Context, req *ListPaymentMethodsRequest) (*PaymentMethodList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPaymentMethods not implemented")
+}
+func (*UnimplementedBillingServiceServer) GetPaymentMethod(ctx context.Context, req *v1.IDOptions) (*PaymentMethod, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPaymentMethod not implemented")
+}
+func (*UnimplementedBillingServiceServer) CreatePaymentMethod(ctx context.Context, req *PaymentMethod) (*PaymentMethod, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreatePaymentMethod not implemented")
+}
+func (*UnimplementedBillingServiceServer) UpdatePaymentMethod(ctx context.Context, req *PaymentMethod) (*PaymentMethod, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdatePaymentMethod not implemented")
+}
+func (*UnimplementedBillingServiceServer) DeletePaymentMethod(ctx context.Context, req *v1.IDOptions) (*v1.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeletePaymentMethod not implemented")
+}
+func (*UnimplementedBillingServiceServer) GetDefaultPaymentMethod(ctx context.Context, req *v1.IDOptions) (*PaymentMethod, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDefaultPaymentMethod not implemented")
+}
+func (*UnimplementedBillingServiceServer) SetDefaultPaymentMethod(ctx context.Context, req *SetDefaultPaymentMethodRequest) (*v1.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetDefaultPaymentMethod not implemented")
+}
+
 func RegisterBillingServiceServer(s *grpc.Server, srv BillingServiceServer) {
 	s.RegisterService(&_BillingService_serviceDesc, srv)
 }
@@ -1676,7 +1717,7 @@ var _BillingService_serviceDesc = grpc.ServiceDesc{
 func (m *Invoice) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1684,138 +1725,159 @@ func (m *Invoice) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Invoice) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Invoice) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Id) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.Id)))
-		i += copy(dAtA[i:], m.Id)
-	}
-	if len(m.Url) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.Url)))
-		i += copy(dAtA[i:], m.Url)
-	}
-	if len(m.OrganizationId) > 0 {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.OrganizationId)))
-		i += copy(dAtA[i:], m.OrganizationId)
-	}
-	if len(m.OrganizationName) > 0 {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.OrganizationName)))
-		i += copy(dAtA[i:], m.OrganizationName)
-	}
-	if len(m.EntityId) > 0 {
-		dAtA[i] = 0x2a
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.EntityId)))
-		i += copy(dAtA[i:], m.EntityId)
-	}
-	if len(m.EntityName) > 0 {
-		dAtA[i] = 0x32
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.EntityName)))
-		i += copy(dAtA[i:], m.EntityName)
-	}
-	if m.CreatedAt != nil {
-		dAtA[i] = 0x52
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(m.CreatedAt.Size()))
-		n1, err := m.CreatedAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n1
-	}
-	if len(m.Items) > 0 {
-		for _, msg := range m.Items {
-			dAtA[i] = 0xa2
-			i++
-			dAtA[i] = 0x6
-			i++
-			i = encodeVarintBilling(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
-			}
-			i += n
-		}
-	}
-	if len(m.CurrencyId) > 0 {
-		dAtA[i] = 0xf2
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.CurrencyId)))
-		i += copy(dAtA[i:], m.CurrencyId)
-	}
-	if m.TotalAmountExclVat != 0 {
-		dAtA[i] = 0xfd
-		i++
-		dAtA[i] = 0x6
-		i++
-		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.TotalAmountExclVat))))
-		i += 4
-	}
-	if m.TotalVat != 0 {
-		dAtA[i] = 0x85
-		i++
-		dAtA[i] = 0x7
-		i++
-		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.TotalVat))))
-		i += 4
-	}
-	if m.TotalAmountInclVat != 0 {
-		dAtA[i] = 0x8d
-		i++
-		dAtA[i] = 0x7
-		i++
-		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.TotalAmountInclVat))))
-		i += 4
-	}
-	if m.Status != nil {
-		dAtA[i] = 0xc2
-		i++
-		dAtA[i] = 0xc
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(m.Status.Size()))
-		n2, err := m.Status.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n2
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Payments) > 0 {
-		for _, msg := range m.Payments {
-			dAtA[i] = 0xca
-			i++
+		for iNdEx := len(m.Payments) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Payments[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintBilling(dAtA, i, uint64(size))
+			}
+			i--
 			dAtA[i] = 0xc
-			i++
-			i = encodeVarintBilling(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
+			i--
+			dAtA[i] = 0xca
+		}
+	}
+	if m.Status != nil {
+		{
+			size, err := m.Status.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
-			i += n
+			i -= size
+			i = encodeVarintBilling(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xc
+		i--
+		dAtA[i] = 0xc2
+	}
+	if m.TotalAmountInclVat != 0 {
+		i -= 4
+		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.TotalAmountInclVat))))
+		i--
+		dAtA[i] = 0x7
+		i--
+		dAtA[i] = 0x8d
+	}
+	if m.TotalVat != 0 {
+		i -= 4
+		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.TotalVat))))
+		i--
+		dAtA[i] = 0x7
+		i--
+		dAtA[i] = 0x85
+	}
+	if m.TotalAmountExclVat != 0 {
+		i -= 4
+		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.TotalAmountExclVat))))
+		i--
+		dAtA[i] = 0x6
+		i--
+		dAtA[i] = 0xfd
+	}
+	if len(m.CurrencyId) > 0 {
+		i -= len(m.CurrencyId)
+		copy(dAtA[i:], m.CurrencyId)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.CurrencyId)))
+		i--
+		dAtA[i] = 0x6
+		i--
+		dAtA[i] = 0xf2
+	}
+	if len(m.Items) > 0 {
+		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Items[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintBilling(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x6
+			i--
+			dAtA[i] = 0xa2
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.CreatedAt != nil {
+		{
+			size, err := m.CreatedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBilling(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x52
 	}
-	return i, nil
+	if len(m.EntityName) > 0 {
+		i -= len(m.EntityName)
+		copy(dAtA[i:], m.EntityName)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.EntityName)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if len(m.EntityId) > 0 {
+		i -= len(m.EntityId)
+		copy(dAtA[i:], m.EntityId)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.EntityId)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.OrganizationName) > 0 {
+		i -= len(m.OrganizationName)
+		copy(dAtA[i:], m.OrganizationName)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.OrganizationName)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.OrganizationId) > 0 {
+		i -= len(m.OrganizationId)
+		copy(dAtA[i:], m.OrganizationId)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.OrganizationId)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Url) > 0 {
+		i -= len(m.Url)
+		copy(dAtA[i:], m.Url)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.Url)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *Invoice_Item) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1823,38 +1885,46 @@ func (m *Invoice_Item) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Invoice_Item) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Invoice_Item) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.UsageitemId) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.UsageitemId)))
-		i += copy(dAtA[i:], m.UsageitemId)
-	}
-	if m.Amount != 0 {
-		dAtA[i] = 0x15
-		i++
-		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.Amount))))
-		i += 4
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Description) > 0 {
-		dAtA[i] = 0x1a
-		i++
+		i -= len(m.Description)
+		copy(dAtA[i:], m.Description)
 		i = encodeVarintBilling(dAtA, i, uint64(len(m.Description)))
-		i += copy(dAtA[i:], m.Description)
+		i--
+		dAtA[i] = 0x1a
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Amount != 0 {
+		i -= 4
+		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.Amount))))
+		i--
+		dAtA[i] = 0x15
 	}
-	return i, nil
+	if len(m.UsageitemId) > 0 {
+		i -= len(m.UsageitemId)
+		copy(dAtA[i:], m.UsageitemId)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.UsageitemId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *Invoice_Status) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1862,70 +1932,80 @@ func (m *Invoice_Status) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Invoice_Status) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Invoice_Status) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.IsPending {
-		dAtA[i] = 0x8
-		i++
-		if m.IsPending {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i++
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if m.IsCompleted {
-		dAtA[i] = 0x10
-		i++
-		if m.IsCompleted {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
+	if m.RejectedAt != nil {
+		{
+			size, err := m.RejectedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBilling(dAtA, i, uint64(size))
 		}
-		i++
+		i--
+		dAtA[i] = 0x5a
+	}
+	if m.CompletedAt != nil {
+		{
+			size, err := m.CompletedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBilling(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x52
 	}
 	if m.IsRejected {
-		dAtA[i] = 0x18
-		i++
+		i--
 		if m.IsRejected {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x18
 	}
-	if m.CompletedAt != nil {
-		dAtA[i] = 0x52
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(m.CompletedAt.Size()))
-		n3, err := m.CompletedAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+	if m.IsCompleted {
+		i--
+		if m.IsCompleted {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
 		}
-		i += n3
+		i--
+		dAtA[i] = 0x10
 	}
-	if m.RejectedAt != nil {
-		dAtA[i] = 0x5a
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(m.RejectedAt.Size()))
-		n4, err := m.RejectedAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+	if m.IsPending {
+		i--
+		if m.IsPending {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
 		}
-		i += n4
+		i--
+		dAtA[i] = 0x8
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *Invoice_Payment) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1933,110 +2013,126 @@ func (m *Invoice_Payment) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Invoice_Payment) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Invoice_Payment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.CreatedAt != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(m.CreatedAt.Size()))
-		n5, err := m.CreatedAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.RejectionReason) > 0 {
+		i -= len(m.RejectionReason)
+		copy(dAtA[i:], m.RejectionReason)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.RejectionReason)))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xb2
+	}
+	if m.RejectedAt != nil {
+		{
+			size, err := m.RejectedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBilling(dAtA, i, uint64(size))
 		}
-		i += n5
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xaa
 	}
-	if len(m.PaymentProviderId) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.PaymentProviderId)))
-		i += copy(dAtA[i:], m.PaymentProviderId)
-	}
-	if len(m.PaymentId) > 0 {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.PaymentId)))
-		i += copy(dAtA[i:], m.PaymentId)
-	}
-	if len(m.PaymentMethodId) > 0 {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.PaymentMethodId)))
-		i += copy(dAtA[i:], m.PaymentMethodId)
-	}
-	if m.IsPending {
-		dAtA[i] = 0x50
-		i++
-		if m.IsPending {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
+	if m.CompletedAt != nil {
+		{
+			size, err := m.CompletedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBilling(dAtA, i, uint64(size))
 		}
-		i++
-	}
-	if m.IsCompleted {
-		dAtA[i] = 0x58
-		i++
-		if m.IsCompleted {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i++
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xa2
 	}
 	if m.IsRejected {
-		dAtA[i] = 0x60
-		i++
+		i--
 		if m.IsRejected {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x60
 	}
-	if m.CompletedAt != nil {
-		dAtA[i] = 0xa2
-		i++
-		dAtA[i] = 0x1
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(m.CompletedAt.Size()))
-		n6, err := m.CompletedAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+	if m.IsCompleted {
+		i--
+		if m.IsCompleted {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
 		}
-		i += n6
+		i--
+		dAtA[i] = 0x58
 	}
-	if m.RejectedAt != nil {
-		dAtA[i] = 0xaa
-		i++
-		dAtA[i] = 0x1
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(m.RejectedAt.Size()))
-		n7, err := m.RejectedAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+	if m.IsPending {
+		i--
+		if m.IsPending {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
 		}
-		i += n7
+		i--
+		dAtA[i] = 0x50
 	}
-	if len(m.RejectionReason) > 0 {
-		dAtA[i] = 0xb2
-		i++
-		dAtA[i] = 0x1
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.RejectionReason)))
-		i += copy(dAtA[i:], m.RejectionReason)
+	if len(m.PaymentMethodId) > 0 {
+		i -= len(m.PaymentMethodId)
+		copy(dAtA[i:], m.PaymentMethodId)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.PaymentMethodId)))
+		i--
+		dAtA[i] = 0x22
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.PaymentId) > 0 {
+		i -= len(m.PaymentId)
+		copy(dAtA[i:], m.PaymentId)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.PaymentId)))
+		i--
+		dAtA[i] = 0x1a
 	}
-	return i, nil
+	if len(m.PaymentProviderId) > 0 {
+		i -= len(m.PaymentProviderId)
+		copy(dAtA[i:], m.PaymentProviderId)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.PaymentProviderId)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.CreatedAt != nil {
+		{
+			size, err := m.CreatedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBilling(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *InvoiceList) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2044,32 +2140,40 @@ func (m *InvoiceList) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *InvoiceList) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *InvoiceList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
-		for _, msg := range m.Items {
-			dAtA[i] = 0xa
-			i++
-			i = encodeVarintBilling(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
+		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Items[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintBilling(dAtA, i, uint64(size))
 			}
-			i += n
+			i--
+			dAtA[i] = 0xa
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *ListInvoicesRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2077,56 +2181,69 @@ func (m *ListInvoicesRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ListInvoicesRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ListInvoicesRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.OrganizationId) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.OrganizationId)))
-		i += copy(dAtA[i:], m.OrganizationId)
-	}
-	if m.From != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(m.From.Size()))
-		n8, err := m.From.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n8
-	}
-	if m.To != nil {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(m.To.Size()))
-		n9, err := m.To.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n9
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Options != nil {
-		dAtA[i] = 0x52
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(m.Options.Size()))
-		n10, err := m.Options.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.Options.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBilling(dAtA, i, uint64(size))
 		}
-		i += n10
+		i--
+		dAtA[i] = 0x52
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.To != nil {
+		{
+			size, err := m.To.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBilling(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
 	}
-	return i, nil
+	if m.From != nil {
+		{
+			size, err := m.From.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBilling(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.OrganizationId) > 0 {
+		i -= len(m.OrganizationId)
+		copy(dAtA[i:], m.OrganizationId)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.OrganizationId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *PaymentProvider) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2134,38 +2251,47 @@ func (m *PaymentProvider) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *PaymentProvider) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PaymentProvider) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Id) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.Id)))
-		i += copy(dAtA[i:], m.Id)
-	}
-	if len(m.Name) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.Name)))
-		i += copy(dAtA[i:], m.Name)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Description) > 0 {
-		dAtA[i] = 0x1a
-		i++
+		i -= len(m.Description)
+		copy(dAtA[i:], m.Description)
 		i = encodeVarintBilling(dAtA, i, uint64(len(m.Description)))
-		i += copy(dAtA[i:], m.Description)
+		i--
+		dAtA[i] = 0x1a
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0x12
 	}
-	return i, nil
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *PaymentProviderList) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2173,32 +2299,40 @@ func (m *PaymentProviderList) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *PaymentProviderList) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PaymentProviderList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
-		for _, msg := range m.Items {
-			dAtA[i] = 0xa
-			i++
-			i = encodeVarintBilling(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
+		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Items[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintBilling(dAtA, i, uint64(size))
 			}
-			i += n
+			i--
+			dAtA[i] = 0xa
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *ListPaymentProvidersRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2206,36 +2340,45 @@ func (m *ListPaymentProvidersRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ListPaymentProvidersRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ListPaymentProvidersRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.OrganizationId) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.OrganizationId)))
-		i += copy(dAtA[i:], m.OrganizationId)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Options != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(m.Options.Size()))
-		n11, err := m.Options.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.Options.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBilling(dAtA, i, uint64(size))
 		}
-		i += n11
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.OrganizationId) > 0 {
+		i -= len(m.OrganizationId)
+		copy(dAtA[i:], m.OrganizationId)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.OrganizationId)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *PaymentMethod) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2243,96 +2386,114 @@ func (m *PaymentMethod) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *PaymentMethod) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PaymentMethod) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Id) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.Id)))
-		i += copy(dAtA[i:], m.Id)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.Name) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.Name)))
-		i += copy(dAtA[i:], m.Name)
+	if len(m.Token) > 0 {
+		i -= len(m.Token)
+		copy(dAtA[i:], m.Token)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.Token)))
+		i--
+		dAtA[i] = 0x72
 	}
-	if len(m.Description) > 0 {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.Description)))
-		i += copy(dAtA[i:], m.Description)
-	}
-	if len(m.PaymentProviderId) > 0 {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.PaymentProviderId)))
-		i += copy(dAtA[i:], m.PaymentProviderId)
-	}
-	if len(m.OrganizationId) > 0 {
-		dAtA[i] = 0x2a
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.OrganizationId)))
-		i += copy(dAtA[i:], m.OrganizationId)
-	}
-	if m.CreatedAt != nil {
-		dAtA[i] = 0x52
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(m.CreatedAt.Size()))
-		n12, err := m.CreatedAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+	if m.ValidUntil != nil {
+		{
+			size, err := m.ValidUntil.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBilling(dAtA, i, uint64(size))
 		}
-		i += n12
-	}
-	if m.DeletedAt != nil {
-		dAtA[i] = 0x5a
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(m.DeletedAt.Size()))
-		n13, err := m.DeletedAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n13
+		i--
+		dAtA[i] = 0x6a
 	}
 	if m.IsDeleted {
-		dAtA[i] = 0x60
-		i++
+		i--
 		if m.IsDeleted {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x60
 	}
-	if m.ValidUntil != nil {
-		dAtA[i] = 0x6a
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(m.ValidUntil.Size()))
-		n14, err := m.ValidUntil.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+	if m.DeletedAt != nil {
+		{
+			size, err := m.DeletedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBilling(dAtA, i, uint64(size))
 		}
-		i += n14
+		i--
+		dAtA[i] = 0x5a
 	}
-	if len(m.Token) > 0 {
-		dAtA[i] = 0x72
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.Token)))
-		i += copy(dAtA[i:], m.Token)
+	if m.CreatedAt != nil {
+		{
+			size, err := m.CreatedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBilling(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x52
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.OrganizationId) > 0 {
+		i -= len(m.OrganizationId)
+		copy(dAtA[i:], m.OrganizationId)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.OrganizationId)))
+		i--
+		dAtA[i] = 0x2a
 	}
-	return i, nil
+	if len(m.PaymentProviderId) > 0 {
+		i -= len(m.PaymentProviderId)
+		copy(dAtA[i:], m.PaymentProviderId)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.PaymentProviderId)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Description) > 0 {
+		i -= len(m.Description)
+		copy(dAtA[i:], m.Description)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.Description)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *PaymentMethodList) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2340,32 +2501,40 @@ func (m *PaymentMethodList) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *PaymentMethodList) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PaymentMethodList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
-		for _, msg := range m.Items {
-			dAtA[i] = 0xa
-			i++
-			i = encodeVarintBilling(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
+		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Items[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintBilling(dAtA, i, uint64(size))
 			}
-			i += n
+			i--
+			dAtA[i] = 0xa
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *ListPaymentMethodsRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2373,36 +2542,45 @@ func (m *ListPaymentMethodsRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ListPaymentMethodsRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ListPaymentMethodsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.OrganizationId) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.OrganizationId)))
-		i += copy(dAtA[i:], m.OrganizationId)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Options != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(m.Options.Size()))
-		n15, err := m.Options.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.Options.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBilling(dAtA, i, uint64(size))
 		}
-		i += n15
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.OrganizationId) > 0 {
+		i -= len(m.OrganizationId)
+		copy(dAtA[i:], m.OrganizationId)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.OrganizationId)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *SetDefaultPaymentMethodRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2410,36 +2588,46 @@ func (m *SetDefaultPaymentMethodRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *SetDefaultPaymentMethodRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SetDefaultPaymentMethodRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.OrganizationId) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintBilling(dAtA, i, uint64(len(m.OrganizationId)))
-		i += copy(dAtA[i:], m.OrganizationId)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.PaymentMethodId) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.PaymentMethodId)
+		copy(dAtA[i:], m.PaymentMethodId)
 		i = encodeVarintBilling(dAtA, i, uint64(len(m.PaymentMethodId)))
-		i += copy(dAtA[i:], m.PaymentMethodId)
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.OrganizationId) > 0 {
+		i -= len(m.OrganizationId)
+		copy(dAtA[i:], m.OrganizationId)
+		i = encodeVarintBilling(dAtA, i, uint64(len(m.OrganizationId)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func encodeVarintBilling(dAtA []byte, offset int, v uint64) int {
+	offset -= sovBilling(v)
+	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return offset + 1
+	return base
 }
 func (m *Invoice) Size() (n int) {
 	if m == nil {
@@ -2829,14 +3017,7 @@ func (m *SetDefaultPaymentMethodRequest) Size() (n int) {
 }
 
 func sovBilling(x uint64) (n int) {
-	for {
-		n++
-		x >>= 7
-		if x == 0 {
-			break
-		}
-	}
-	return n
+	return (math_bits.Len64(x|1) + 6) / 7
 }
 func sozBilling(x uint64) (n int) {
 	return sovBilling(uint64((x << 1) ^ uint64((int64(x) >> 63))))

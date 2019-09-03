@@ -1,4 +1,4 @@
-FROM golang:1.11.5-alpine AS protoinstall
+FROM golang:1.12.9-alpine AS protoinstall
 
 # Install protoc 3.6
 RUN apk add -u unzip
@@ -6,7 +6,7 @@ ADD https://github.com/protocolbuffers/protobuf/releases/download/v3.6.1/protoc-
 RUN cd /usr/local/ && unzip /tmp/protoc.zip
 
 # Actual build image
-FROM golang:1.11.5
+FROM golang:1.12.9
 ARG version=1.0.5
 ARG arch=amd64
 ARG TOKEN
@@ -17,6 +17,8 @@ COPY --from=protoinstall /usr/local/bin/protoc /usr/local/bin/
 
 RUN git config --global "url.https://${TOKEN}@github.com/arangodb-managed/.insteadOf" "https://github.com/arangodb-managed/"
 RUN git config --global --list 
+
+ENV GO111MODULE=on
 
 # Install go tools
 RUN \
