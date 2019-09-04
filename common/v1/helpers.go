@@ -20,3 +20,12 @@ func CloneTimestamp(s *types.Timestamp) *types.Timestamp {
 	clone := *s
 	return &clone
 }
+
+// CloneDuration creates a deep copy of the given duration
+func CloneDuration(s *types.Duration) *types.Duration {
+	if s == nil {
+		return nil
+	}
+	clone := *s
+	return &clone
+}
