@@ -11,8 +11,11 @@ import (
 	proto "github.com/golang/protobuf/proto"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 	io "io"
 	math "math"
+	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -24,7 +27,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // A CACertificate is represents a self-signed certificate authority used to sign
 // TLS certificates for deployments & client authentication.
@@ -85,7 +88,7 @@ func (m *CACertificate) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return xxx_messageInfo_CACertificate.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -217,7 +220,7 @@ func (m *CACertificateList) XXX_Marshal(b []byte, deterministic bool) ([]byte, e
 		return xxx_messageInfo_CACertificateList.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -266,7 +269,7 @@ func (m *CACertificateInstructions) XXX_Marshal(b []byte, deterministic bool) ([
 		return xxx_messageInfo_CACertificateInstructions.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -324,7 +327,7 @@ func (m *CACertificateInstructions_PlatformInstructions) XXX_Marshal(b []byte, d
 		return xxx_messageInfo_CACertificateInstructions_PlatformInstructions.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -564,6 +567,29 @@ type CryptoServiceServer interface {
 	DeleteCACertificate(context.Context, *v1.IDOptions) (*v1.Empty, error)
 }
 
+// UnimplementedCryptoServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedCryptoServiceServer struct {
+}
+
+func (*UnimplementedCryptoServiceServer) ListCACertificates(ctx context.Context, req *v1.ListOptions) (*CACertificateList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCACertificates not implemented")
+}
+func (*UnimplementedCryptoServiceServer) GetCACertificate(ctx context.Context, req *v1.IDOptions) (*CACertificate, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCACertificate not implemented")
+}
+func (*UnimplementedCryptoServiceServer) GetCACertificateInstructions(ctx context.Context, req *v1.IDOptions) (*CACertificateInstructions, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCACertificateInstructions not implemented")
+}
+func (*UnimplementedCryptoServiceServer) CreateCACertificate(ctx context.Context, req *CACertificate) (*CACertificate, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCACertificate not implemented")
+}
+func (*UnimplementedCryptoServiceServer) UpdateCACertificate(ctx context.Context, req *CACertificate) (*CACertificate, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCACertificate not implemented")
+}
+func (*UnimplementedCryptoServiceServer) DeleteCACertificate(ctx context.Context, req *v1.IDOptions) (*v1.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCACertificate not implemented")
+}
+
 func RegisterCryptoServiceServer(s *grpc.Server, srv CryptoServiceServer) {
 	s.RegisterService(&_CryptoService_serviceDesc, srv)
 }
@@ -712,7 +738,7 @@ var _CryptoService_serviceDesc = grpc.ServiceDesc{
 func (m *CACertificate) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -720,126 +746,146 @@ func (m *CACertificate) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *CACertificate) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CACertificate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Id) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintCrypto(dAtA, i, uint64(len(m.Id)))
-		i += copy(dAtA[i:], m.Id)
-	}
-	if len(m.Url) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintCrypto(dAtA, i, uint64(len(m.Url)))
-		i += copy(dAtA[i:], m.Url)
-	}
-	if len(m.Name) > 0 {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintCrypto(dAtA, i, uint64(len(m.Name)))
-		i += copy(dAtA[i:], m.Name)
-	}
-	if len(m.Description) > 0 {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintCrypto(dAtA, i, uint64(len(m.Description)))
-		i += copy(dAtA[i:], m.Description)
-	}
-	if len(m.ProjectId) > 0 {
-		dAtA[i] = 0x2a
-		i++
-		i = encodeVarintCrypto(dAtA, i, uint64(len(m.ProjectId)))
-		i += copy(dAtA[i:], m.ProjectId)
-	}
-	if m.Lifetime != nil {
-		dAtA[i] = 0x32
-		i++
-		i = encodeVarintCrypto(dAtA, i, uint64(m.Lifetime.Size()))
-		n1, err := m.Lifetime.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n1
-	}
-	if m.CreatedAt != nil {
-		dAtA[i] = 0x3a
-		i++
-		i = encodeVarintCrypto(dAtA, i, uint64(m.CreatedAt.Size()))
-		n2, err := m.CreatedAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n2
-	}
-	if m.DeletedAt != nil {
-		dAtA[i] = 0x42
-		i++
-		i = encodeVarintCrypto(dAtA, i, uint64(m.DeletedAt.Size()))
-		n3, err := m.DeletedAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n3
-	}
-	if m.ExpiresAt != nil {
-		dAtA[i] = 0x4a
-		i++
-		i = encodeVarintCrypto(dAtA, i, uint64(m.ExpiresAt.Size()))
-		n4, err := m.ExpiresAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n4
-	}
-	if len(m.CertificatePem) > 0 {
-		dAtA[i] = 0x52
-		i++
-		i = encodeVarintCrypto(dAtA, i, uint64(len(m.CertificatePem)))
-		i += copy(dAtA[i:], m.CertificatePem)
-	}
-	if m.IsDeleted {
-		dAtA[i] = 0x58
-		i++
-		if m.IsDeleted {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i++
-	}
-	if m.IsExpired {
-		dAtA[i] = 0x60
-		i++
-		if m.IsExpired {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i++
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.WillExpireSoon {
-		dAtA[i] = 0x68
-		i++
+		i--
 		if m.WillExpireSoon {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x68
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.IsExpired {
+		i--
+		if m.IsExpired {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x60
 	}
-	return i, nil
+	if m.IsDeleted {
+		i--
+		if m.IsDeleted {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x58
+	}
+	if len(m.CertificatePem) > 0 {
+		i -= len(m.CertificatePem)
+		copy(dAtA[i:], m.CertificatePem)
+		i = encodeVarintCrypto(dAtA, i, uint64(len(m.CertificatePem)))
+		i--
+		dAtA[i] = 0x52
+	}
+	if m.ExpiresAt != nil {
+		{
+			size, err := m.ExpiresAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintCrypto(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x4a
+	}
+	if m.DeletedAt != nil {
+		{
+			size, err := m.DeletedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintCrypto(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x42
+	}
+	if m.CreatedAt != nil {
+		{
+			size, err := m.CreatedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintCrypto(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x3a
+	}
+	if m.Lifetime != nil {
+		{
+			size, err := m.Lifetime.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintCrypto(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x32
+	}
+	if len(m.ProjectId) > 0 {
+		i -= len(m.ProjectId)
+		copy(dAtA[i:], m.ProjectId)
+		i = encodeVarintCrypto(dAtA, i, uint64(len(m.ProjectId)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.Description) > 0 {
+		i -= len(m.Description)
+		copy(dAtA[i:], m.Description)
+		i = encodeVarintCrypto(dAtA, i, uint64(len(m.Description)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintCrypto(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Url) > 0 {
+		i -= len(m.Url)
+		copy(dAtA[i:], m.Url)
+		i = encodeVarintCrypto(dAtA, i, uint64(len(m.Url)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintCrypto(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *CACertificateList) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -847,32 +893,40 @@ func (m *CACertificateList) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *CACertificateList) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CACertificateList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
-		for _, msg := range m.Items {
-			dAtA[i] = 0xa
-			i++
-			i = encodeVarintCrypto(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
+		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Items[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintCrypto(dAtA, i, uint64(size))
 			}
-			i += n
+			i--
+			dAtA[i] = 0xa
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *CACertificateInstructions) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -880,32 +934,40 @@ func (m *CACertificateInstructions) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *CACertificateInstructions) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CACertificateInstructions) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Platforms) > 0 {
-		for _, msg := range m.Platforms {
-			dAtA[i] = 0xa
-			i++
-			i = encodeVarintCrypto(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
+		for iNdEx := len(m.Platforms) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Platforms[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintCrypto(dAtA, i, uint64(size))
 			}
-			i += n
+			i--
+			dAtA[i] = 0xa
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *CACertificateInstructions_PlatformInstructions) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -913,60 +975,57 @@ func (m *CACertificateInstructions_PlatformInstructions) Marshal() (dAtA []byte,
 }
 
 func (m *CACertificateInstructions_PlatformInstructions) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CACertificateInstructions_PlatformInstructions) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Platform) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintCrypto(dAtA, i, uint64(len(m.Platform)))
-		i += copy(dAtA[i:], m.Platform)
-	}
-	if len(m.InstallSteps) > 0 {
-		for _, s := range m.InstallSteps {
-			dAtA[i] = 0x12
-			i++
-			l = len(s)
-			for l >= 1<<7 {
-				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
-				l >>= 7
-				i++
-			}
-			dAtA[i] = uint8(l)
-			i++
-			i += copy(dAtA[i:], s)
-		}
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.UninstallSteps) > 0 {
-		for _, s := range m.UninstallSteps {
+		for iNdEx := len(m.UninstallSteps) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.UninstallSteps[iNdEx])
+			copy(dAtA[i:], m.UninstallSteps[iNdEx])
+			i = encodeVarintCrypto(dAtA, i, uint64(len(m.UninstallSteps[iNdEx])))
+			i--
 			dAtA[i] = 0x1a
-			i++
-			l = len(s)
-			for l >= 1<<7 {
-				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
-				l >>= 7
-				i++
-			}
-			dAtA[i] = uint8(l)
-			i++
-			i += copy(dAtA[i:], s)
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.InstallSteps) > 0 {
+		for iNdEx := len(m.InstallSteps) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.InstallSteps[iNdEx])
+			copy(dAtA[i:], m.InstallSteps[iNdEx])
+			i = encodeVarintCrypto(dAtA, i, uint64(len(m.InstallSteps[iNdEx])))
+			i--
+			dAtA[i] = 0x12
+		}
 	}
-	return i, nil
+	if len(m.Platform) > 0 {
+		i -= len(m.Platform)
+		copy(dAtA[i:], m.Platform)
+		i = encodeVarintCrypto(dAtA, i, uint64(len(m.Platform)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func encodeVarintCrypto(dAtA []byte, offset int, v uint64) int {
+	offset -= sovCrypto(v)
+	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return offset + 1
+	return base
 }
 func (m *CACertificate) Size() (n int) {
 	if m == nil {
@@ -1094,14 +1153,7 @@ func (m *CACertificateInstructions_PlatformInstructions) Size() (n int) {
 }
 
 func sovCrypto(x uint64) (n int) {
-	for {
-		n++
-		x >>= 7
-		if x == 0 {
-			break
-		}
-	}
-	return n
+	return (math_bits.Len64(x|1) + 6) / 7
 }
 func sozCrypto(x uint64) (n int) {
 	return sovCrypto(uint64((x << 1) ^ uint64((int64(x) >> 63))))

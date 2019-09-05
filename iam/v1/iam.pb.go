@@ -11,8 +11,11 @@ import (
 	proto "github.com/golang/protobuf/proto"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 	io "io"
 	math "math"
+	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -24,7 +27,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // User represents an actual person.
 type User struct {
@@ -98,7 +101,7 @@ func (m *User) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_User.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -238,7 +241,7 @@ func (m *VerifyUserMobilePhoneRequest) XXX_Marshal(b []byte, deterministic bool)
 		return xxx_messageInfo_VerifyUserMobilePhoneRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -307,7 +310,7 @@ func (m *Group) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_Group.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -411,7 +414,7 @@ func (m *GroupList) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_GroupList.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -462,7 +465,7 @@ func (m *IsMemberOfGroupRequest) XXX_Marshal(b []byte, deterministic bool) ([]by
 		return xxx_messageInfo_IsMemberOfGroupRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -518,7 +521,7 @@ func (m *GroupMemberList) XXX_Marshal(b []byte, deterministic bool) ([]byte, err
 		return xxx_messageInfo_GroupMemberList.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -569,7 +572,7 @@ func (m *GroupMembersRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte,
 		return xxx_messageInfo_GroupMembersRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -624,7 +627,7 @@ func (m *PermissionList) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return xxx_messageInfo_PermissionList.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -675,7 +678,7 @@ func (m *HasPermissionsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byt
 		return xxx_messageInfo_HasPermissionsRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -755,7 +758,7 @@ func (m *Role) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_Role.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -866,7 +869,7 @@ func (m *RoleList) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_RoleList.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -926,7 +929,7 @@ func (m *RoleBinding) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) 
 		return xxx_messageInfo_RoleBinding.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -998,7 +1001,7 @@ func (m *Policy) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_Policy.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1056,7 +1059,7 @@ func (m *RoleBindingsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte,
 		return xxx_messageInfo_RoleBindingsRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1130,7 +1133,7 @@ func (m *APIKey) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_APIKey.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1241,7 +1244,7 @@ func (m *APIKeyList) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_APIKeyList.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1297,7 +1300,7 @@ func (m *CreateAPIKeyRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte,
 		return xxx_messageInfo_CreateAPIKeyRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1363,7 +1366,7 @@ func (m *APIKeySecret) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)
 		return xxx_messageInfo_APIKeySecret.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1426,7 +1429,7 @@ func (m *AuthenticateAPIKeyRequest) XXX_Marshal(b []byte, deterministic bool) ([
 		return xxx_messageInfo_AuthenticateAPIKeyRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1491,7 +1494,7 @@ func (m *AuthenticateAPIKeyResponse) XXX_Marshal(b []byte, deterministic bool) (
 		return xxx_messageInfo_AuthenticateAPIKeyResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1554,7 +1557,7 @@ func (m *RenewAPIKeyTokenRequest) XXX_Marshal(b []byte, deterministic bool) ([]b
 		return xxx_messageInfo_RenewAPIKeyTokenRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1610,7 +1613,7 @@ func (m *RenewAPIKeyTokenResponse) XXX_Marshal(b []byte, deterministic bool) ([]
 		return xxx_messageInfo_RenewAPIKeyTokenResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1659,7 +1662,7 @@ func (m *RevokeAPIKeyTokenRequest) XXX_Marshal(b []byte, deterministic bool) ([]
 		return xxx_messageInfo_RevokeAPIKeyTokenRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -2486,6 +2489,110 @@ type IAMServiceServer interface {
 	RevokeAPIKeyToken(context.Context, *RevokeAPIKeyTokenRequest) (*v1.Empty, error)
 }
 
+// UnimplementedIAMServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedIAMServiceServer struct {
+}
+
+func (*UnimplementedIAMServiceServer) GetThisUser(ctx context.Context, req *v1.Empty) (*User, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetThisUser not implemented")
+}
+func (*UnimplementedIAMServiceServer) GetUser(ctx context.Context, req *v1.IDOptions) (*User, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
+}
+func (*UnimplementedIAMServiceServer) UpdateUser(ctx context.Context, req *User) (*User, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
+}
+func (*UnimplementedIAMServiceServer) VerifyUserMobilePhone(ctx context.Context, req *VerifyUserMobilePhoneRequest) (*v1.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VerifyUserMobilePhone not implemented")
+}
+func (*UnimplementedIAMServiceServer) ResendUserMobilePhoneVerification(ctx context.Context, req *v1.Empty) (*v1.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResendUserMobilePhoneVerification not implemented")
+}
+func (*UnimplementedIAMServiceServer) ListGroups(ctx context.Context, req *v1.ListOptions) (*GroupList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListGroups not implemented")
+}
+func (*UnimplementedIAMServiceServer) GetGroup(ctx context.Context, req *v1.IDOptions) (*Group, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGroup not implemented")
+}
+func (*UnimplementedIAMServiceServer) CreateGroup(ctx context.Context, req *Group) (*Group, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateGroup not implemented")
+}
+func (*UnimplementedIAMServiceServer) UpdateGroup(ctx context.Context, req *Group) (*Group, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateGroup not implemented")
+}
+func (*UnimplementedIAMServiceServer) DeleteGroup(ctx context.Context, req *v1.IDOptions) (*v1.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteGroup not implemented")
+}
+func (*UnimplementedIAMServiceServer) ListGroupMembers(ctx context.Context, req *v1.ListOptions) (*GroupMemberList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListGroupMembers not implemented")
+}
+func (*UnimplementedIAMServiceServer) AddGroupMembers(ctx context.Context, req *GroupMembersRequest) (*v1.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddGroupMembers not implemented")
+}
+func (*UnimplementedIAMServiceServer) DeleteGroupMembers(ctx context.Context, req *GroupMembersRequest) (*v1.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteGroupMembers not implemented")
+}
+func (*UnimplementedIAMServiceServer) IsMemberOfGroup(ctx context.Context, req *IsMemberOfGroupRequest) (*v1.YesOrNo, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IsMemberOfGroup not implemented")
+}
+func (*UnimplementedIAMServiceServer) ListRoles(ctx context.Context, req *v1.ListOptions) (*RoleList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListRoles not implemented")
+}
+func (*UnimplementedIAMServiceServer) GetRole(ctx context.Context, req *v1.IDOptions) (*Role, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRole not implemented")
+}
+func (*UnimplementedIAMServiceServer) CreateRole(ctx context.Context, req *Role) (*Role, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateRole not implemented")
+}
+func (*UnimplementedIAMServiceServer) UpdateRole(ctx context.Context, req *Role) (*Role, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateRole not implemented")
+}
+func (*UnimplementedIAMServiceServer) DeleteRole(ctx context.Context, req *v1.IDOptions) (*v1.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteRole not implemented")
+}
+func (*UnimplementedIAMServiceServer) GetPolicy(ctx context.Context, req *v1.URLOptions) (*Policy, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPolicy not implemented")
+}
+func (*UnimplementedIAMServiceServer) AddRoleBindings(ctx context.Context, req *RoleBindingsRequest) (*Policy, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddRoleBindings not implemented")
+}
+func (*UnimplementedIAMServiceServer) DeleteRoleBindings(ctx context.Context, req *RoleBindingsRequest) (*Policy, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteRoleBindings not implemented")
+}
+func (*UnimplementedIAMServiceServer) GetEffectivePermissions(ctx context.Context, req *v1.URLOptions) (*PermissionList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetEffectivePermissions not implemented")
+}
+func (*UnimplementedIAMServiceServer) HasPermissions(ctx context.Context, req *HasPermissionsRequest) (*v1.YesOrNo, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HasPermissions not implemented")
+}
+func (*UnimplementedIAMServiceServer) ListPermissions(ctx context.Context, req *v1.Empty) (*PermissionList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPermissions not implemented")
+}
+func (*UnimplementedIAMServiceServer) ListAPIKeys(ctx context.Context, req *v1.ListOptions) (*APIKeyList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAPIKeys not implemented")
+}
+func (*UnimplementedIAMServiceServer) GetAPIKey(ctx context.Context, req *v1.IDOptions) (*APIKey, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAPIKey not implemented")
+}
+func (*UnimplementedIAMServiceServer) CreateAPIKey(ctx context.Context, req *CreateAPIKeyRequest) (*APIKeySecret, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateAPIKey not implemented")
+}
+func (*UnimplementedIAMServiceServer) RevokeAPIKey(ctx context.Context, req *v1.IDOptions) (*v1.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RevokeAPIKey not implemented")
+}
+func (*UnimplementedIAMServiceServer) DeleteAPIKey(ctx context.Context, req *v1.IDOptions) (*v1.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteAPIKey not implemented")
+}
+func (*UnimplementedIAMServiceServer) AuthenticateAPIKey(ctx context.Context, req *AuthenticateAPIKeyRequest) (*AuthenticateAPIKeyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AuthenticateAPIKey not implemented")
+}
+func (*UnimplementedIAMServiceServer) RenewAPIKeyToken(ctx context.Context, req *RenewAPIKeyTokenRequest) (*RenewAPIKeyTokenResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RenewAPIKeyToken not implemented")
+}
+func (*UnimplementedIAMServiceServer) RevokeAPIKeyToken(ctx context.Context, req *RevokeAPIKeyTokenRequest) (*v1.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RevokeAPIKeyToken not implemented")
+}
+
 func RegisterIAMServiceServer(s *grpc.Server, srv IAMServiceServer) {
 	s.RegisterService(&_IAMService_serviceDesc, srv)
 }
@@ -3228,7 +3335,7 @@ var _IAMService_serviceDesc = grpc.ServiceDesc{
 func (m *User) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -3236,125 +3343,137 @@ func (m *User) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *User) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *User) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Id) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Id)))
-		i += copy(dAtA[i:], m.Id)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.Email) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Email)))
-		i += copy(dAtA[i:], m.Email)
+	if len(m.SlackName) > 0 {
+		i -= len(m.SlackName)
+		copy(dAtA[i:], m.SlackName)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.SlackName)))
+		i--
+		dAtA[i] = 0x72
 	}
-	if len(m.Name) > 0 {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Name)))
-		i += copy(dAtA[i:], m.Name)
+	if len(m.ApikeyId) > 0 {
+		i -= len(m.ApikeyId)
+		copy(dAtA[i:], m.ApikeyId)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.ApikeyId)))
+		i--
+		dAtA[i] = 0x6a
 	}
-	if len(m.GivenName) > 0 {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.GivenName)))
-		i += copy(dAtA[i:], m.GivenName)
-	}
-	if len(m.FamilyName) > 0 {
-		dAtA[i] = 0x2a
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.FamilyName)))
-		i += copy(dAtA[i:], m.FamilyName)
-	}
-	if m.CreatedAt != nil {
-		dAtA[i] = 0x32
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(m.CreatedAt.Size()))
-		n1, err := m.CreatedAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n1
-	}
-	if len(m.AdditionalEmails) > 0 {
-		for _, s := range m.AdditionalEmails {
-			dAtA[i] = 0x3a
-			i++
-			l = len(s)
-			for l >= 1<<7 {
-				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
-				l >>= 7
-				i++
-			}
-			dAtA[i] = uint8(l)
-			i++
-			i += copy(dAtA[i:], s)
-		}
-	}
-	if len(m.MobilePhone) > 0 {
-		dAtA[i] = 0x42
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.MobilePhone)))
-		i += copy(dAtA[i:], m.MobilePhone)
-	}
-	if m.MobilePhoneVerified {
-		dAtA[i] = 0x48
-		i++
-		if m.MobilePhoneVerified {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i++
-	}
-	if len(m.CompanyName) > 0 {
-		dAtA[i] = 0x52
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.CompanyName)))
-		i += copy(dAtA[i:], m.CompanyName)
+	if len(m.DashboardAccessDeniedReason) > 0 {
+		i -= len(m.DashboardAccessDeniedReason)
+		copy(dAtA[i:], m.DashboardAccessDeniedReason)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.DashboardAccessDeniedReason)))
+		i--
+		dAtA[i] = 0x62
 	}
 	if m.DashboardAccessDenied {
-		dAtA[i] = 0x58
-		i++
+		i--
 		if m.DashboardAccessDenied {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x58
 	}
-	if len(m.DashboardAccessDeniedReason) > 0 {
-		dAtA[i] = 0x62
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.DashboardAccessDeniedReason)))
-		i += copy(dAtA[i:], m.DashboardAccessDeniedReason)
+	if len(m.CompanyName) > 0 {
+		i -= len(m.CompanyName)
+		copy(dAtA[i:], m.CompanyName)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.CompanyName)))
+		i--
+		dAtA[i] = 0x52
 	}
-	if len(m.ApikeyId) > 0 {
-		dAtA[i] = 0x6a
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.ApikeyId)))
-		i += copy(dAtA[i:], m.ApikeyId)
+	if m.MobilePhoneVerified {
+		i--
+		if m.MobilePhoneVerified {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x48
 	}
-	if len(m.SlackName) > 0 {
-		dAtA[i] = 0x72
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.SlackName)))
-		i += copy(dAtA[i:], m.SlackName)
+	if len(m.MobilePhone) > 0 {
+		i -= len(m.MobilePhone)
+		copy(dAtA[i:], m.MobilePhone)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.MobilePhone)))
+		i--
+		dAtA[i] = 0x42
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.AdditionalEmails) > 0 {
+		for iNdEx := len(m.AdditionalEmails) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.AdditionalEmails[iNdEx])
+			copy(dAtA[i:], m.AdditionalEmails[iNdEx])
+			i = encodeVarintIam(dAtA, i, uint64(len(m.AdditionalEmails[iNdEx])))
+			i--
+			dAtA[i] = 0x3a
+		}
 	}
-	return i, nil
+	if m.CreatedAt != nil {
+		{
+			size, err := m.CreatedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintIam(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x32
+	}
+	if len(m.FamilyName) > 0 {
+		i -= len(m.FamilyName)
+		copy(dAtA[i:], m.FamilyName)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.FamilyName)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.GivenName) > 0 {
+		i -= len(m.GivenName)
+		copy(dAtA[i:], m.GivenName)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.GivenName)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Email) > 0 {
+		i -= len(m.Email)
+		copy(dAtA[i:], m.Email)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Email)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *VerifyUserMobilePhoneRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -3362,26 +3481,33 @@ func (m *VerifyUserMobilePhoneRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *VerifyUserMobilePhoneRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *VerifyUserMobilePhoneRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Code) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Code)))
-		i += copy(dAtA[i:], m.Code)
-	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if len(m.Code) > 0 {
+		i -= len(m.Code)
+		copy(dAtA[i:], m.Code)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Code)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *Group) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -3389,90 +3515,105 @@ func (m *Group) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Group) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Group) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Id) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Id)))
-		i += copy(dAtA[i:], m.Id)
-	}
-	if len(m.OrganizationId) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.OrganizationId)))
-		i += copy(dAtA[i:], m.OrganizationId)
-	}
-	if len(m.Name) > 0 {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Name)))
-		i += copy(dAtA[i:], m.Name)
-	}
-	if len(m.Description) > 0 {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Description)))
-		i += copy(dAtA[i:], m.Description)
-	}
-	if m.CreatedAt != nil {
-		dAtA[i] = 0x2a
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(m.CreatedAt.Size()))
-		n2, err := m.CreatedAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n2
-	}
-	if m.DeletedAt != nil {
-		dAtA[i] = 0x32
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(m.DeletedAt.Size()))
-		n3, err := m.DeletedAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n3
-	}
-	if m.IsDeleted {
-		dAtA[i] = 0x38
-		i++
-		if m.IsDeleted {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i++
-	}
-	if len(m.Url) > 0 {
-		dAtA[i] = 0x42
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Url)))
-		i += copy(dAtA[i:], m.Url)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.IsVirtual {
-		dAtA[i] = 0x48
-		i++
+		i--
 		if m.IsVirtual {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x48
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.Url) > 0 {
+		i -= len(m.Url)
+		copy(dAtA[i:], m.Url)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Url)))
+		i--
+		dAtA[i] = 0x42
 	}
-	return i, nil
+	if m.IsDeleted {
+		i--
+		if m.IsDeleted {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x38
+	}
+	if m.DeletedAt != nil {
+		{
+			size, err := m.DeletedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintIam(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x32
+	}
+	if m.CreatedAt != nil {
+		{
+			size, err := m.CreatedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintIam(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.Description) > 0 {
+		i -= len(m.Description)
+		copy(dAtA[i:], m.Description)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Description)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.OrganizationId) > 0 {
+		i -= len(m.OrganizationId)
+		copy(dAtA[i:], m.OrganizationId)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.OrganizationId)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *GroupList) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -3480,32 +3621,40 @@ func (m *GroupList) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *GroupList) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GroupList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
-		for _, msg := range m.Items {
-			dAtA[i] = 0xa
-			i++
-			i = encodeVarintIam(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
+		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Items[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintIam(dAtA, i, uint64(size))
 			}
-			i += n
+			i--
+			dAtA[i] = 0xa
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *IsMemberOfGroupRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -3513,32 +3662,40 @@ func (m *IsMemberOfGroupRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *IsMemberOfGroupRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *IsMemberOfGroupRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.UserId) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.UserId)))
-		i += copy(dAtA[i:], m.UserId)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.GroupId) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.GroupId)
+		copy(dAtA[i:], m.GroupId)
 		i = encodeVarintIam(dAtA, i, uint64(len(m.GroupId)))
-		i += copy(dAtA[i:], m.GroupId)
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.UserId) > 0 {
+		i -= len(m.UserId)
+		copy(dAtA[i:], m.UserId)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.UserId)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *GroupMemberList) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -3546,35 +3703,35 @@ func (m *GroupMemberList) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *GroupMemberList) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GroupMemberList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
-		for _, s := range m.Items {
+		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Items[iNdEx])
+			copy(dAtA[i:], m.Items[iNdEx])
+			i = encodeVarintIam(dAtA, i, uint64(len(m.Items[iNdEx])))
+			i--
 			dAtA[i] = 0xa
-			i++
-			l = len(s)
-			for l >= 1<<7 {
-				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
-				l >>= 7
-				i++
-			}
-			dAtA[i] = uint8(l)
-			i++
-			i += copy(dAtA[i:], s)
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *GroupMembersRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -3582,41 +3739,42 @@ func (m *GroupMembersRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *GroupMembersRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GroupMembersRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.GroupId) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.GroupId)))
-		i += copy(dAtA[i:], m.GroupId)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.UserIds) > 0 {
-		for _, s := range m.UserIds {
+		for iNdEx := len(m.UserIds) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.UserIds[iNdEx])
+			copy(dAtA[i:], m.UserIds[iNdEx])
+			i = encodeVarintIam(dAtA, i, uint64(len(m.UserIds[iNdEx])))
+			i--
 			dAtA[i] = 0x12
-			i++
-			l = len(s)
-			for l >= 1<<7 {
-				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
-				l >>= 7
-				i++
-			}
-			dAtA[i] = uint8(l)
-			i++
-			i += copy(dAtA[i:], s)
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.GroupId) > 0 {
+		i -= len(m.GroupId)
+		copy(dAtA[i:], m.GroupId)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.GroupId)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *PermissionList) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -3624,35 +3782,35 @@ func (m *PermissionList) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *PermissionList) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PermissionList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
-		for _, s := range m.Items {
+		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Items[iNdEx])
+			copy(dAtA[i:], m.Items[iNdEx])
+			i = encodeVarintIam(dAtA, i, uint64(len(m.Items[iNdEx])))
+			i--
 			dAtA[i] = 0xa
-			i++
-			l = len(s)
-			for l >= 1<<7 {
-				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
-				l >>= 7
-				i++
-			}
-			dAtA[i] = uint8(l)
-			i++
-			i += copy(dAtA[i:], s)
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *HasPermissionsRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -3660,41 +3818,42 @@ func (m *HasPermissionsRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *HasPermissionsRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *HasPermissionsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Url) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Url)))
-		i += copy(dAtA[i:], m.Url)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Permissions) > 0 {
-		for _, s := range m.Permissions {
+		for iNdEx := len(m.Permissions) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Permissions[iNdEx])
+			copy(dAtA[i:], m.Permissions[iNdEx])
+			i = encodeVarintIam(dAtA, i, uint64(len(m.Permissions[iNdEx])))
+			i--
 			dAtA[i] = 0x12
-			i++
-			l = len(s)
-			for l >= 1<<7 {
-				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
-				l >>= 7
-				i++
-			}
-			dAtA[i] = uint8(l)
-			i++
-			i += copy(dAtA[i:], s)
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.Url) > 0 {
+		i -= len(m.Url)
+		copy(dAtA[i:], m.Url)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Url)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *Role) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -3702,105 +3861,114 @@ func (m *Role) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Role) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Role) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Id) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Id)))
-		i += copy(dAtA[i:], m.Id)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.OrganizationId) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.OrganizationId)))
-		i += copy(dAtA[i:], m.OrganizationId)
-	}
-	if len(m.Name) > 0 {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Name)))
-		i += copy(dAtA[i:], m.Name)
-	}
-	if len(m.Description) > 0 {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Description)))
-		i += copy(dAtA[i:], m.Description)
-	}
-	if len(m.Permissions) > 0 {
-		for _, s := range m.Permissions {
-			dAtA[i] = 0x2a
-			i++
-			l = len(s)
-			for l >= 1<<7 {
-				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
-				l >>= 7
-				i++
-			}
-			dAtA[i] = uint8(l)
-			i++
-			i += copy(dAtA[i:], s)
-		}
-	}
-	if m.IsPredefined {
-		dAtA[i] = 0x30
-		i++
-		if m.IsPredefined {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i++
-	}
-	if m.CreatedAt != nil {
-		dAtA[i] = 0x3a
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(m.CreatedAt.Size()))
-		n4, err := m.CreatedAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n4
-	}
-	if m.DeletedAt != nil {
-		dAtA[i] = 0x42
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(m.DeletedAt.Size()))
-		n5, err := m.DeletedAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n5
+	if len(m.Url) > 0 {
+		i -= len(m.Url)
+		copy(dAtA[i:], m.Url)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Url)))
+		i--
+		dAtA[i] = 0x52
 	}
 	if m.IsDeleted {
-		dAtA[i] = 0x48
-		i++
+		i--
 		if m.IsDeleted {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x48
 	}
-	if len(m.Url) > 0 {
-		dAtA[i] = 0x52
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Url)))
-		i += copy(dAtA[i:], m.Url)
+	if m.DeletedAt != nil {
+		{
+			size, err := m.DeletedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintIam(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x42
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.CreatedAt != nil {
+		{
+			size, err := m.CreatedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintIam(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x3a
 	}
-	return i, nil
+	if m.IsPredefined {
+		i--
+		if m.IsPredefined {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x30
+	}
+	if len(m.Permissions) > 0 {
+		for iNdEx := len(m.Permissions) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Permissions[iNdEx])
+			copy(dAtA[i:], m.Permissions[iNdEx])
+			i = encodeVarintIam(dAtA, i, uint64(len(m.Permissions[iNdEx])))
+			i--
+			dAtA[i] = 0x2a
+		}
+	}
+	if len(m.Description) > 0 {
+		i -= len(m.Description)
+		copy(dAtA[i:], m.Description)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Description)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.OrganizationId) > 0 {
+		i -= len(m.OrganizationId)
+		copy(dAtA[i:], m.OrganizationId)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.OrganizationId)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *RoleList) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -3808,32 +3976,40 @@ func (m *RoleList) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *RoleList) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *RoleList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
-		for _, msg := range m.Items {
-			dAtA[i] = 0xa
-			i++
-			i = encodeVarintIam(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
+		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Items[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintIam(dAtA, i, uint64(size))
 			}
-			i += n
+			i--
+			dAtA[i] = 0xa
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *RoleBinding) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -3841,48 +4017,57 @@ func (m *RoleBinding) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *RoleBinding) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *RoleBinding) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Id) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Id)))
-		i += copy(dAtA[i:], m.Id)
-	}
-	if len(m.MemberId) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.MemberId)))
-		i += copy(dAtA[i:], m.MemberId)
-	}
-	if len(m.RoleId) > 0 {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.RoleId)))
-		i += copy(dAtA[i:], m.RoleId)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.DeleteNotAllowed {
-		dAtA[i] = 0x20
-		i++
+		i--
 		if m.DeleteNotAllowed {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x20
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.RoleId) > 0 {
+		i -= len(m.RoleId)
+		copy(dAtA[i:], m.RoleId)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.RoleId)))
+		i--
+		dAtA[i] = 0x1a
 	}
-	return i, nil
+	if len(m.MemberId) > 0 {
+		i -= len(m.MemberId)
+		copy(dAtA[i:], m.MemberId)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.MemberId)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *Policy) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -3890,38 +4075,47 @@ func (m *Policy) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Policy) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Policy) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.ResourceUrl) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.ResourceUrl)))
-		i += copy(dAtA[i:], m.ResourceUrl)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Bindings) > 0 {
-		for _, msg := range m.Bindings {
-			dAtA[i] = 0x12
-			i++
-			i = encodeVarintIam(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
+		for iNdEx := len(m.Bindings) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Bindings[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintIam(dAtA, i, uint64(size))
 			}
-			i += n
+			i--
+			dAtA[i] = 0x12
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.ResourceUrl) > 0 {
+		i -= len(m.ResourceUrl)
+		copy(dAtA[i:], m.ResourceUrl)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.ResourceUrl)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *RoleBindingsRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -3929,38 +4123,47 @@ func (m *RoleBindingsRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *RoleBindingsRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *RoleBindingsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.ResourceUrl) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.ResourceUrl)))
-		i += copy(dAtA[i:], m.ResourceUrl)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Bindings) > 0 {
-		for _, msg := range m.Bindings {
-			dAtA[i] = 0x12
-			i++
-			i = encodeVarintIam(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
+		for iNdEx := len(m.Bindings) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Bindings[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintIam(dAtA, i, uint64(size))
 			}
-			i += n
+			i--
+			dAtA[i] = 0x12
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.ResourceUrl) > 0 {
+		i -= len(m.ResourceUrl)
+		copy(dAtA[i:], m.ResourceUrl)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.ResourceUrl)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *APIKey) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -3968,104 +4171,120 @@ func (m *APIKey) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *APIKey) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *APIKey) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Id) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Id)))
-		i += copy(dAtA[i:], m.Id)
-	}
-	if len(m.Url) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Url)))
-		i += copy(dAtA[i:], m.Url)
-	}
-	if len(m.UserId) > 0 {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.UserId)))
-		i += copy(dAtA[i:], m.UserId)
-	}
-	if len(m.OrganizationId) > 0 {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.OrganizationId)))
-		i += copy(dAtA[i:], m.OrganizationId)
-	}
-	if m.IsReadonly {
-		dAtA[i] = 0x28
-		i++
-		if m.IsReadonly {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i++
-	}
-	if m.CreatedAt != nil {
-		dAtA[i] = 0x32
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(m.CreatedAt.Size()))
-		n6, err := m.CreatedAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n6
-	}
-	if m.ExpiresAt != nil {
-		dAtA[i] = 0x3a
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(m.ExpiresAt.Size()))
-		n7, err := m.ExpiresAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n7
-	}
-	if m.IsExpired {
-		dAtA[i] = 0x40
-		i++
-		if m.IsExpired {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i++
-	}
-	if m.RevokedAt != nil {
-		dAtA[i] = 0x4a
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(m.RevokedAt.Size()))
-		n8, err := m.RevokedAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n8
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.IsRevoked {
-		dAtA[i] = 0x50
-		i++
+		i--
 		if m.IsRevoked {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x50
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.RevokedAt != nil {
+		{
+			size, err := m.RevokedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintIam(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x4a
 	}
-	return i, nil
+	if m.IsExpired {
+		i--
+		if m.IsExpired {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x40
+	}
+	if m.ExpiresAt != nil {
+		{
+			size, err := m.ExpiresAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintIam(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x3a
+	}
+	if m.CreatedAt != nil {
+		{
+			size, err := m.CreatedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintIam(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x32
+	}
+	if m.IsReadonly {
+		i--
+		if m.IsReadonly {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x28
+	}
+	if len(m.OrganizationId) > 0 {
+		i -= len(m.OrganizationId)
+		copy(dAtA[i:], m.OrganizationId)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.OrganizationId)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.UserId) > 0 {
+		i -= len(m.UserId)
+		copy(dAtA[i:], m.UserId)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.UserId)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Url) > 0 {
+		i -= len(m.Url)
+		copy(dAtA[i:], m.Url)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Url)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *APIKeyList) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -4073,32 +4292,40 @@ func (m *APIKeyList) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *APIKeyList) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *APIKeyList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
-		for _, msg := range m.Items {
-			dAtA[i] = 0xa
-			i++
-			i = encodeVarintIam(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
+		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Items[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintIam(dAtA, i, uint64(size))
 			}
-			i += n
+			i--
+			dAtA[i] = 0xa
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *CreateAPIKeyRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -4106,46 +4333,55 @@ func (m *CreateAPIKeyRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *CreateAPIKeyRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CreateAPIKeyRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.OrganizationId) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.OrganizationId)))
-		i += copy(dAtA[i:], m.OrganizationId)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.TimeToLive != nil {
+		{
+			size, err := m.TimeToLive.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintIam(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
 	}
 	if m.Readonly {
-		dAtA[i] = 0x10
-		i++
+		i--
 		if m.Readonly {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x10
 	}
-	if m.TimeToLive != nil {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(m.TimeToLive.Size()))
-		n9, err := m.TimeToLive.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n9
+	if len(m.OrganizationId) > 0 {
+		i -= len(m.OrganizationId)
+		copy(dAtA[i:], m.OrganizationId)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.OrganizationId)))
+		i--
+		dAtA[i] = 0xa
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *APIKeySecret) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -4153,32 +4389,40 @@ func (m *APIKeySecret) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *APIKeySecret) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *APIKeySecret) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Id) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Id)))
-		i += copy(dAtA[i:], m.Id)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Secret) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.Secret)
+		copy(dAtA[i:], m.Secret)
 		i = encodeVarintIam(dAtA, i, uint64(len(m.Secret)))
-		i += copy(dAtA[i:], m.Secret)
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthenticateAPIKeyRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -4186,42 +4430,52 @@ func (m *AuthenticateAPIKeyRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthenticateAPIKeyRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthenticateAPIKeyRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Id) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Id)))
-		i += copy(dAtA[i:], m.Id)
-	}
-	if len(m.Secret) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Secret)))
-		i += copy(dAtA[i:], m.Secret)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.TimeToLive != nil {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(m.TimeToLive.Size()))
-		n10, err := m.TimeToLive.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.TimeToLive.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintIam(dAtA, i, uint64(size))
 		}
-		i += n10
+		i--
+		dAtA[i] = 0x1a
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.Secret) > 0 {
+		i -= len(m.Secret)
+		copy(dAtA[i:], m.Secret)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Secret)))
+		i--
+		dAtA[i] = 0x12
 	}
-	return i, nil
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthenticateAPIKeyResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -4229,36 +4483,45 @@ func (m *AuthenticateAPIKeyResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthenticateAPIKeyResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthenticateAPIKeyResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Token) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Token)))
-		i += copy(dAtA[i:], m.Token)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.TimeToLive != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(m.TimeToLive.Size()))
-		n11, err := m.TimeToLive.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.TimeToLive.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintIam(dAtA, i, uint64(size))
 		}
-		i += n11
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.Token) > 0 {
+		i -= len(m.Token)
+		copy(dAtA[i:], m.Token)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Token)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *RenewAPIKeyTokenRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -4266,36 +4529,45 @@ func (m *RenewAPIKeyTokenRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *RenewAPIKeyTokenRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *RenewAPIKeyTokenRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Token) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Token)))
-		i += copy(dAtA[i:], m.Token)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.TimeToLive != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(m.TimeToLive.Size()))
-		n12, err := m.TimeToLive.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.TimeToLive.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintIam(dAtA, i, uint64(size))
 		}
-		i += n12
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.Token) > 0 {
+		i -= len(m.Token)
+		copy(dAtA[i:], m.Token)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Token)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *RenewAPIKeyTokenResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -4303,30 +4575,38 @@ func (m *RenewAPIKeyTokenResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *RenewAPIKeyTokenResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *RenewAPIKeyTokenResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.TimeToLive != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(m.TimeToLive.Size()))
-		n13, err := m.TimeToLive.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n13
-	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if m.TimeToLive != nil {
+		{
+			size, err := m.TimeToLive.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintIam(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *RevokeAPIKeyTokenRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -4334,30 +4614,39 @@ func (m *RevokeAPIKeyTokenRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *RevokeAPIKeyTokenRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *RevokeAPIKeyTokenRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Token) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintIam(dAtA, i, uint64(len(m.Token)))
-		i += copy(dAtA[i:], m.Token)
-	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if len(m.Token) > 0 {
+		i -= len(m.Token)
+		copy(dAtA[i:], m.Token)
+		i = encodeVarintIam(dAtA, i, uint64(len(m.Token)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func encodeVarintIam(dAtA []byte, offset int, v uint64) int {
+	offset -= sovIam(v)
+	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return offset + 1
+	return base
 }
 func (m *User) Size() (n int) {
 	if m == nil {
@@ -4955,14 +5244,7 @@ func (m *RevokeAPIKeyTokenRequest) Size() (n int) {
 }
 
 func sovIam(x uint64) (n int) {
-	for {
-		n++
-		x >>= 7
-		if x == 0 {
-			break
-		}
-	}
-	return n
+	return (math_bits.Len64(x|1) + 6) / 7
 }
 func sozIam(x uint64) (n int) {
 	return sovIam(uint64((x << 1) ^ uint64((int64(x) >> 63))))

@@ -11,8 +11,11 @@ import (
 	proto "github.com/golang/protobuf/proto"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 	io "io"
 	math "math"
+	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -24,7 +27,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // A UsageItem message contained usage tracking information for a tracked
 // resource (usually deployment) in a specific time period.
@@ -71,7 +74,7 @@ func (m *UsageItem) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_UsageItem.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -207,7 +210,7 @@ func (m *UsageItem_Resource) XXX_Marshal(b []byte, deterministic bool) ([]byte, 
 		return xxx_messageInfo_UsageItem_Resource.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -353,7 +356,7 @@ func (m *UsageItem_DeploymentSize) XXX_Marshal(b []byte, deterministic bool) ([]
 		return xxx_messageInfo_UsageItem_DeploymentSize.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -450,7 +453,7 @@ func (m *UsageItem_NetworkTransferSize) XXX_Marshal(b []byte, deterministic bool
 		return xxx_messageInfo_UsageItem_NetworkTransferSize.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -498,7 +501,7 @@ func (m *UsageItemList) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return xxx_messageInfo_UsageItemList.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -569,7 +572,7 @@ func (m *ListUsageItemsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byt
 		return xxx_messageInfo_ListUsageItemsRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -765,6 +768,14 @@ type UsageServiceServer interface {
 	ListUsageItems(context.Context, *ListUsageItemsRequest) (*UsageItemList, error)
 }
 
+// UnimplementedUsageServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedUsageServiceServer struct {
+}
+
+func (*UnimplementedUsageServiceServer) ListUsageItems(ctx context.Context, req *ListUsageItemsRequest) (*UsageItemList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListUsageItems not implemented")
+}
+
 func RegisterUsageServiceServer(s *grpc.Server, srv UsageServiceServer) {
 	s.RegisterService(&_UsageService_serviceDesc, srv)
 }
@@ -803,7 +814,7 @@ var _UsageService_serviceDesc = grpc.ServiceDesc{
 func (m *UsageItem) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -811,108 +822,128 @@ func (m *UsageItem) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *UsageItem) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UsageItem) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Id) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(len(m.Id)))
-		i += copy(dAtA[i:], m.Id)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.Url) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(len(m.Url)))
-		i += copy(dAtA[i:], m.Url)
-	}
-	if len(m.Kind) > 0 {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(len(m.Kind)))
-		i += copy(dAtA[i:], m.Kind)
-	}
-	if m.Resource != nil {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(m.Resource.Size()))
-		n1, err := m.Resource.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+	if m.NetworkTransferSize != nil {
+		{
+			size, err := m.NetworkTransferSize.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintUsage(dAtA, i, uint64(size))
 		}
-		i += n1
+		i--
+		dAtA[i] = 0x6
+		i--
+		dAtA[i] = 0xb2
 	}
-	if m.StartsAt != nil {
-		dAtA[i] = 0x2a
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(m.StartsAt.Size()))
-		n2, err := m.StartsAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+	if m.DeploymentSize != nil {
+		{
+			size, err := m.DeploymentSize.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintUsage(dAtA, i, uint64(size))
 		}
-		i += n2
+		i--
+		dAtA[i] = 0x6
+		i--
+		dAtA[i] = 0xaa
 	}
-	if m.EndsAt != nil {
-		dAtA[i] = 0x32
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(m.EndsAt.Size()))
-		n3, err := m.EndsAt.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n3
+	if len(m.TierId) > 0 {
+		i -= len(m.TierId)
+		copy(dAtA[i:], m.TierId)
+		i = encodeVarintUsage(dAtA, i, uint64(len(m.TierId)))
+		i--
+		dAtA[i] = 0x42
 	}
 	if m.HasEnded {
-		dAtA[i] = 0x38
-		i++
+		i--
 		if m.HasEnded {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x38
 	}
-	if len(m.TierId) > 0 {
-		dAtA[i] = 0x42
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(len(m.TierId)))
-		i += copy(dAtA[i:], m.TierId)
-	}
-	if m.DeploymentSize != nil {
-		dAtA[i] = 0xaa
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(m.DeploymentSize.Size()))
-		n4, err := m.DeploymentSize.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+	if m.EndsAt != nil {
+		{
+			size, err := m.EndsAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintUsage(dAtA, i, uint64(size))
 		}
-		i += n4
+		i--
+		dAtA[i] = 0x32
 	}
-	if m.NetworkTransferSize != nil {
-		dAtA[i] = 0xb2
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(m.NetworkTransferSize.Size()))
-		n5, err := m.NetworkTransferSize.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+	if m.StartsAt != nil {
+		{
+			size, err := m.StartsAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintUsage(dAtA, i, uint64(size))
 		}
-		i += n5
+		i--
+		dAtA[i] = 0x2a
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Resource != nil {
+		{
+			size, err := m.Resource.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintUsage(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x22
 	}
-	return i, nil
+	if len(m.Kind) > 0 {
+		i -= len(m.Kind)
+		copy(dAtA[i:], m.Kind)
+		i = encodeVarintUsage(dAtA, i, uint64(len(m.Kind)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Url) > 0 {
+		i -= len(m.Url)
+		copy(dAtA[i:], m.Url)
+		i = encodeVarintUsage(dAtA, i, uint64(len(m.Url)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintUsage(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *UsageItem_Resource) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -920,98 +951,117 @@ func (m *UsageItem_Resource) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *UsageItem_Resource) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UsageItem_Resource) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Id) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(len(m.Id)))
-		i += copy(dAtA[i:], m.Id)
-	}
-	if len(m.Url) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(len(m.Url)))
-		i += copy(dAtA[i:], m.Url)
-	}
-	if len(m.Kind) > 0 {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(len(m.Kind)))
-		i += copy(dAtA[i:], m.Kind)
-	}
-	if len(m.Description) > 0 {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(len(m.Description)))
-		i += copy(dAtA[i:], m.Description)
-	}
-	if len(m.OrganizationId) > 0 {
-		dAtA[i] = 0x2a
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(len(m.OrganizationId)))
-		i += copy(dAtA[i:], m.OrganizationId)
-	}
-	if len(m.OrganizationName) > 0 {
-		dAtA[i] = 0x32
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(len(m.OrganizationName)))
-		i += copy(dAtA[i:], m.OrganizationName)
-	}
-	if len(m.ProjectId) > 0 {
-		dAtA[i] = 0x3a
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(len(m.ProjectId)))
-		i += copy(dAtA[i:], m.ProjectId)
-	}
-	if len(m.ProjectName) > 0 {
-		dAtA[i] = 0x42
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(len(m.ProjectName)))
-		i += copy(dAtA[i:], m.ProjectName)
-	}
-	if len(m.DeploymentId) > 0 {
-		dAtA[i] = 0x4a
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(len(m.DeploymentId)))
-		i += copy(dAtA[i:], m.DeploymentId)
-	}
-	if len(m.DeploymentName) > 0 {
-		dAtA[i] = 0x52
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(len(m.DeploymentName)))
-		i += copy(dAtA[i:], m.DeploymentName)
-	}
-	if len(m.DeploymentMemberName) > 0 {
-		dAtA[i] = 0x5a
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(len(m.DeploymentMemberName)))
-		i += copy(dAtA[i:], m.DeploymentMemberName)
-	}
-	if len(m.CloudProviderId) > 0 {
-		dAtA[i] = 0x62
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(len(m.CloudProviderId)))
-		i += copy(dAtA[i:], m.CloudProviderId)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.CloudRegionId) > 0 {
-		dAtA[i] = 0x6a
-		i++
+		i -= len(m.CloudRegionId)
+		copy(dAtA[i:], m.CloudRegionId)
 		i = encodeVarintUsage(dAtA, i, uint64(len(m.CloudRegionId)))
-		i += copy(dAtA[i:], m.CloudRegionId)
+		i--
+		dAtA[i] = 0x6a
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.CloudProviderId) > 0 {
+		i -= len(m.CloudProviderId)
+		copy(dAtA[i:], m.CloudProviderId)
+		i = encodeVarintUsage(dAtA, i, uint64(len(m.CloudProviderId)))
+		i--
+		dAtA[i] = 0x62
 	}
-	return i, nil
+	if len(m.DeploymentMemberName) > 0 {
+		i -= len(m.DeploymentMemberName)
+		copy(dAtA[i:], m.DeploymentMemberName)
+		i = encodeVarintUsage(dAtA, i, uint64(len(m.DeploymentMemberName)))
+		i--
+		dAtA[i] = 0x5a
+	}
+	if len(m.DeploymentName) > 0 {
+		i -= len(m.DeploymentName)
+		copy(dAtA[i:], m.DeploymentName)
+		i = encodeVarintUsage(dAtA, i, uint64(len(m.DeploymentName)))
+		i--
+		dAtA[i] = 0x52
+	}
+	if len(m.DeploymentId) > 0 {
+		i -= len(m.DeploymentId)
+		copy(dAtA[i:], m.DeploymentId)
+		i = encodeVarintUsage(dAtA, i, uint64(len(m.DeploymentId)))
+		i--
+		dAtA[i] = 0x4a
+	}
+	if len(m.ProjectName) > 0 {
+		i -= len(m.ProjectName)
+		copy(dAtA[i:], m.ProjectName)
+		i = encodeVarintUsage(dAtA, i, uint64(len(m.ProjectName)))
+		i--
+		dAtA[i] = 0x42
+	}
+	if len(m.ProjectId) > 0 {
+		i -= len(m.ProjectId)
+		copy(dAtA[i:], m.ProjectId)
+		i = encodeVarintUsage(dAtA, i, uint64(len(m.ProjectId)))
+		i--
+		dAtA[i] = 0x3a
+	}
+	if len(m.OrganizationName) > 0 {
+		i -= len(m.OrganizationName)
+		copy(dAtA[i:], m.OrganizationName)
+		i = encodeVarintUsage(dAtA, i, uint64(len(m.OrganizationName)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if len(m.OrganizationId) > 0 {
+		i -= len(m.OrganizationId)
+		copy(dAtA[i:], m.OrganizationId)
+		i = encodeVarintUsage(dAtA, i, uint64(len(m.OrganizationId)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.Description) > 0 {
+		i -= len(m.Description)
+		copy(dAtA[i:], m.Description)
+		i = encodeVarintUsage(dAtA, i, uint64(len(m.Description)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Kind) > 0 {
+		i -= len(m.Kind)
+		copy(dAtA[i:], m.Kind)
+		i = encodeVarintUsage(dAtA, i, uint64(len(m.Kind)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Url) > 0 {
+		i -= len(m.Url)
+		copy(dAtA[i:], m.Url)
+		i = encodeVarintUsage(dAtA, i, uint64(len(m.Url)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintUsage(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *UsageItem_DeploymentSize) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1019,66 +1069,72 @@ func (m *UsageItem_DeploymentSize) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *UsageItem_DeploymentSize) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UsageItem_DeploymentSize) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Coordinators != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(m.Coordinators))
-	}
-	if m.CoordinatorMemorySize != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(m.CoordinatorMemorySize))
-	}
-	if m.Dbservers != 0 {
-		dAtA[i] = 0x58
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(m.Dbservers))
-	}
-	if m.DbserverMemorySize != 0 {
-		dAtA[i] = 0x60
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(m.DbserverMemorySize))
-	}
-	if m.DbserverDiskSize != 0 {
-		dAtA[i] = 0x68
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(m.DbserverDiskSize))
-	}
-	if m.Agents != 0 {
-		dAtA[i] = 0xa8
-		i++
-		dAtA[i] = 0x1
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(m.Agents))
-	}
-	if m.AgentMemorySize != 0 {
-		dAtA[i] = 0xb0
-		i++
-		dAtA[i] = 0x1
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(m.AgentMemorySize))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.AgentDiskSize != 0 {
-		dAtA[i] = 0xb8
-		i++
-		dAtA[i] = 0x1
-		i++
 		i = encodeVarintUsage(dAtA, i, uint64(m.AgentDiskSize))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xb8
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.AgentMemorySize != 0 {
+		i = encodeVarintUsage(dAtA, i, uint64(m.AgentMemorySize))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xb0
 	}
-	return i, nil
+	if m.Agents != 0 {
+		i = encodeVarintUsage(dAtA, i, uint64(m.Agents))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xa8
+	}
+	if m.DbserverDiskSize != 0 {
+		i = encodeVarintUsage(dAtA, i, uint64(m.DbserverDiskSize))
+		i--
+		dAtA[i] = 0x68
+	}
+	if m.DbserverMemorySize != 0 {
+		i = encodeVarintUsage(dAtA, i, uint64(m.DbserverMemorySize))
+		i--
+		dAtA[i] = 0x60
+	}
+	if m.Dbservers != 0 {
+		i = encodeVarintUsage(dAtA, i, uint64(m.Dbservers))
+		i--
+		dAtA[i] = 0x58
+	}
+	if m.CoordinatorMemorySize != 0 {
+		i = encodeVarintUsage(dAtA, i, uint64(m.CoordinatorMemorySize))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Coordinators != 0 {
+		i = encodeVarintUsage(dAtA, i, uint64(m.Coordinators))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *UsageItem_NetworkTransferSize) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1086,25 +1142,31 @@ func (m *UsageItem_NetworkTransferSize) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *UsageItem_NetworkTransferSize) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UsageItem_NetworkTransferSize) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.TransferSize != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(m.TransferSize))
-	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if m.TransferSize != 0 {
+		i = encodeVarintUsage(dAtA, i, uint64(m.TransferSize))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *UsageItemList) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1112,32 +1174,40 @@ func (m *UsageItemList) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *UsageItemList) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UsageItemList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
-		for _, msg := range m.Items {
-			dAtA[i] = 0xa
-			i++
-			i = encodeVarintUsage(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
+		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Items[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintUsage(dAtA, i, uint64(size))
 			}
-			i += n
+			i--
+			dAtA[i] = 0xa
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *ListUsageItemsRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1145,84 +1215,103 @@ func (m *ListUsageItemsRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ListUsageItemsRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ListUsageItemsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.OrganizationId) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(len(m.OrganizationId)))
-		i += copy(dAtA[i:], m.OrganizationId)
-	}
-	if m.From != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(m.From.Size()))
-		n6, err := m.From.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n6
-	}
-	if m.To != nil {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(m.To.Size()))
-		n7, err := m.To.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n7
-	}
-	if m.Options != nil {
-		dAtA[i] = 0x52
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(m.Options.Size()))
-		n8, err := m.Options.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n8
-	}
-	if len(m.ResourceUrl) > 0 {
-		dAtA[i] = 0x5a
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(len(m.ResourceUrl)))
-		i += copy(dAtA[i:], m.ResourceUrl)
-	}
-	if len(m.ResourceKind) > 0 {
-		dAtA[i] = 0x62
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(len(m.ResourceKind)))
-		i += copy(dAtA[i:], m.ResourceKind)
-	}
-	if len(m.ProjectId) > 0 {
-		dAtA[i] = 0x6a
-		i++
-		i = encodeVarintUsage(dAtA, i, uint64(len(m.ProjectId)))
-		i += copy(dAtA[i:], m.ProjectId)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.DeploymentId) > 0 {
-		dAtA[i] = 0x72
-		i++
+		i -= len(m.DeploymentId)
+		copy(dAtA[i:], m.DeploymentId)
 		i = encodeVarintUsage(dAtA, i, uint64(len(m.DeploymentId)))
-		i += copy(dAtA[i:], m.DeploymentId)
+		i--
+		dAtA[i] = 0x72
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.ProjectId) > 0 {
+		i -= len(m.ProjectId)
+		copy(dAtA[i:], m.ProjectId)
+		i = encodeVarintUsage(dAtA, i, uint64(len(m.ProjectId)))
+		i--
+		dAtA[i] = 0x6a
 	}
-	return i, nil
+	if len(m.ResourceKind) > 0 {
+		i -= len(m.ResourceKind)
+		copy(dAtA[i:], m.ResourceKind)
+		i = encodeVarintUsage(dAtA, i, uint64(len(m.ResourceKind)))
+		i--
+		dAtA[i] = 0x62
+	}
+	if len(m.ResourceUrl) > 0 {
+		i -= len(m.ResourceUrl)
+		copy(dAtA[i:], m.ResourceUrl)
+		i = encodeVarintUsage(dAtA, i, uint64(len(m.ResourceUrl)))
+		i--
+		dAtA[i] = 0x5a
+	}
+	if m.Options != nil {
+		{
+			size, err := m.Options.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintUsage(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x52
+	}
+	if m.To != nil {
+		{
+			size, err := m.To.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintUsage(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.From != nil {
+		{
+			size, err := m.From.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintUsage(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.OrganizationId) > 0 {
+		i -= len(m.OrganizationId)
+		copy(dAtA[i:], m.OrganizationId)
+		i = encodeVarintUsage(dAtA, i, uint64(len(m.OrganizationId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func encodeVarintUsage(dAtA []byte, offset int, v uint64) int {
+	offset -= sovUsage(v)
+	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return offset + 1
+	return base
 }
 func (m *UsageItem) Size() (n int) {
 	if m == nil {
@@ -1453,14 +1542,7 @@ func (m *ListUsageItemsRequest) Size() (n int) {
 }
 
 func sovUsage(x uint64) (n int) {
-	for {
-		n++
-		x >>= 7
-		if x == 0 {
-			break
-		}
-	}
-	return n
+	return (math_bits.Len64(x|1) + 6) / 7
 }
 func sozUsage(x uint64) (n int) {
 	return sovUsage(uint64((x << 1) ^ uint64((int64(x) >> 63))))
