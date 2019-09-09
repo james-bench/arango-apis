@@ -30,7 +30,7 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 
 var (
-	filter_BackupService_ListBackupPolicies_0 = &utilities.DoubleArray{Encoding: map[string]int{"options": 0, "context_id": 1}, Base: []int{1, 1, 1, 0}, Check: []int{0, 1, 2, 3}}
+	filter_BackupService_ListBackupPolicies_0 = &utilities.DoubleArray{Encoding: map[string]int{"deployment_id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 )
 
 func request_BackupService_ListBackupPolicies_0(ctx context.Context, marshaler runtime.Marshaler, client BackupServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -44,15 +44,15 @@ func request_BackupService_ListBackupPolicies_0(ctx context.Context, marshaler r
 		_   = err
 	)
 
-	val, ok = pathParams["options.context_id"]
+	val, ok = pathParams["deployment_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "options.context_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "deployment_id")
 	}
 
-	err = runtime.PopulateFieldFromPath(&protoReq, "options.context_id", val)
+	protoReq.DeploymentId, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "options.context_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "deployment_id", err)
 	}
 
 	if err := req.ParseForm(); err != nil {
@@ -78,15 +78,15 @@ func local_request_BackupService_ListBackupPolicies_0(ctx context.Context, marsh
 		_   = err
 	)
 
-	val, ok = pathParams["options.context_id"]
+	val, ok = pathParams["deployment_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "options.context_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "deployment_id")
 	}
 
-	err = runtime.PopulateFieldFromPath(&protoReq, "options.context_id", val)
+	protoReq.DeploymentId, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "options.context_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "deployment_id", err)
 	}
 
 	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_BackupService_ListBackupPolicies_0); err != nil {
@@ -347,7 +347,7 @@ func local_request_BackupService_DeleteBackupPolicy_0(ctx context.Context, marsh
 }
 
 var (
-	filter_BackupService_ListBackups_0 = &utilities.DoubleArray{Encoding: map[string]int{"options": 0, "context_id": 1}, Base: []int{1, 1, 1, 0}, Check: []int{0, 1, 2, 3}}
+	filter_BackupService_ListBackups_0 = &utilities.DoubleArray{Encoding: map[string]int{"deployment_id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 )
 
 func request_BackupService_ListBackups_0(ctx context.Context, marshaler runtime.Marshaler, client BackupServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -361,15 +361,15 @@ func request_BackupService_ListBackups_0(ctx context.Context, marshaler runtime.
 		_   = err
 	)
 
-	val, ok = pathParams["options.context_id"]
+	val, ok = pathParams["deployment_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "options.context_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "deployment_id")
 	}
 
-	err = runtime.PopulateFieldFromPath(&protoReq, "options.context_id", val)
+	protoReq.DeploymentId, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "options.context_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "deployment_id", err)
 	}
 
 	if err := req.ParseForm(); err != nil {
@@ -395,15 +395,15 @@ func local_request_BackupService_ListBackups_0(ctx context.Context, marshaler ru
 		_   = err
 	)
 
-	val, ok = pathParams["options.context_id"]
+	val, ok = pathParams["deployment_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "options.context_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "deployment_id")
 	}
 
-	err = runtime.PopulateFieldFromPath(&protoReq, "options.context_id", val)
+	protoReq.DeploymentId, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "options.context_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "deployment_id", err)
 	}
 
 	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_BackupService_ListBackups_0); err != nil {
@@ -1301,7 +1301,7 @@ func RegisterBackupServiceHandlerClient(ctx context.Context, mux *runtime.ServeM
 }
 
 var (
-	pattern_BackupService_ListBackupPolicies_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "backup", "v1", "deployment", "options.context_id", "backuppolicies"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BackupService_ListBackupPolicies_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "backup", "v1", "deployment", "deployment_id", "backuppolicies"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_BackupService_GetBackupPolicy_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "backup", "v1", "backuppolicies", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
@@ -1311,7 +1311,7 @@ var (
 
 	pattern_BackupService_DeleteBackupPolicy_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "backup", "v1", "backuppolicies", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BackupService_ListBackups_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "backup", "v1", "deployment", "options.context_id", "backups"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BackupService_ListBackups_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "backup", "v1", "deployment", "deployment_id", "backups"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_BackupService_GetBackup_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 1, 1, 0, 4, 1, 5, 3}, []string{"api", "backup", "v1", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
