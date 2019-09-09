@@ -1001,6 +1001,7 @@ resource (usually deployment) in a specific time period.
 | ends_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | This usage item covers a time period that ends at this timestamp. If the usage item has not yet ended, this field is is set to the current time. |
 | has_ended | [bool](#bool) |  | Set when this usage item has ended. |
 | tier_id | [string](#string) |  | Identifier of the tier the organization was using at the start of this usage period. |
+| invoice_id | [string](#string) |  | Identifier of the invoice that includes this usage item. The usage item must be ended when this field it set. |
 | deployment_size | [UsageItem.DeploymentSize](#arangodb.cloud.usage.v1.UsageItem.DeploymentSize) |  | Amount of (computer) resources used by the resource covered by this usage item. This field is only set when the usage item is of kind DeploymentSize. |
 | network_transfer_size | [UsageItem.NetworkTransferSize](#arangodb.cloud.usage.v1.UsageItem.NetworkTransferSize) |  | Amount of network traffic used by the resource covered by this usage item. This field is only set when the usage item is of kind NetworkTransferSize. |
 
