@@ -50,6 +50,14 @@ export interface ListUsageItemsRequest {
   // This is an optional field.
   // string
   deployment_id?: string;
+  
+  // If set, limit to usage items that have no invoice_id set.
+  // boolean
+  has_no_invoice_id?: boolean;
+  
+  // If set, limit to usage items that have an invoice_id set.
+  // boolean
+  has_invoice_id?: boolean;
 }
 
 // A UsageItem message contained usage tracking information for a tracked
