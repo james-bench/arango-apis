@@ -978,6 +978,8 @@ Request arguments for ListUsageItems
 | resource_kind | [string](#string) |  | Limit to usage items for the resource with this kind. This is an optional field. |
 | project_id | [string](#string) |  | Limit to usage items for the project with this id. This is an optional field. |
 | deployment_id | [string](#string) |  | Limit to usage items for the deployment with this id. This is an optional field. |
+| has_no_invoice_id | [bool](#bool) |  | If set, limit to usage items that have no invoice_id set. |
+| has_invoice_id | [bool](#bool) |  | If set, limit to usage items that have an invoice_id set. |
 
 
 
