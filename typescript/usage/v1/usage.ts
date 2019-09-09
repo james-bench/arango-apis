@@ -88,6 +88,11 @@ export interface UsageItem {
   // string
   tier_id?: string;
   
+  // Identifier of the invoice that includes this usage item.
+  // The usage item must be ended when this field it set.
+  // string
+  invoice_id?: string;
+  
   // Amount of (computer) resources used by the resource covered by this usage item.
   // This field is only set when the usage item is of kind DeploymentSize.
   // UsageItem_DeploymentSize

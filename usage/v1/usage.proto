@@ -81,6 +81,9 @@ message UsageItem {
     bool has_ended = 7;
     // Identifier of the tier the organization was using at the start of this usage period.
     string tier_id = 8;
+    // Identifier of the invoice that includes this usage item.
+    // The usage item must be ended when this field it set.
+    string invoice_id = 9;
 
     message DeploymentSize {
         // Number of coordinators of the deployment
