@@ -27,7 +27,7 @@ service BackupService {
     // - backup.backuppolicy.list on the deployment that owns the backup policies and is identified by the given ID.
     rpc ListBackupPolicies(ListBackupPoliciesRequest) returns (BackupPolicyList) {
         option (google.api.http) = {
-            get: "/api/backup/v1/deployment/{options.context_id}/backuppolicies"
+            get: "/api/backup/v1/deployment/{deployment_id}/backuppolicies"
         };
     }
     
@@ -76,7 +76,7 @@ service BackupService {
     // - backup.backup.list on the deployment that owns the backup and is identified by the given ID.
     rpc ListBackups(ListBackupsRequest) returns (BackupList) {
         option (google.api.http) = {
-            get: "/api/backup/v1/deployment/{options.context_id}/backups"
+            get: "/api/backup/v1/deployment/{deployment_id}/backups"
         };
     }
 

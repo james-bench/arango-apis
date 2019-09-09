@@ -364,8 +364,8 @@ export class BackupService {
   // Required permissions:
   // - backup.backuppolicy.list on the deployment that owns the backup policies and is identified by the given ID.
   async ListBackupPolicies(req: ListBackupPoliciesRequest): Promise<BackupPolicyList> {
-    const path = `/api/backup/v1/deployment/${encodeURIComponent((req.options || {}).context_id || '')}/backuppolicies`;
-    const url = path + api.queryString(req, [`options.context_id`]);
+    const path = `/api/backup/v1/deployment/${encodeURIComponent(req.deployment_id || '')}/backuppolicies`;
+    const url = path + api.queryString(req, [`deployment_id`]);
     return api.get(url, undefined);
   }
   
@@ -409,8 +409,8 @@ export class BackupService {
   // Required permissions:
   // - backup.backup.list on the deployment that owns the backup and is identified by the given ID.
   async ListBackups(req: ListBackupsRequest): Promise<BackupList> {
-    const path = `/api/backup/v1/deployment/${encodeURIComponent((req.options || {}).context_id || '')}/backups`;
-    const url = path + api.queryString(req, [`options.context_id`]);
+    const path = `/api/backup/v1/deployment/${encodeURIComponent(req.deployment_id || '')}/backups`;
+    const url = path + api.queryString(req, [`deployment_id`]);
     return api.get(url, undefined);
   }
   
