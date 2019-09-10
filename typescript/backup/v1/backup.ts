@@ -364,8 +364,8 @@ export class BackupService {
   // Checks if the backup feature is enabled and available for a specific deployment.
   // Required permissions:
   // - backup.feature.get on the deployment that is identified by the given ID.
-  async HasBackupFeature(req: arangodb_cloud_common_v1_IDOptions): Promise<arangodb_cloud_common_v1_YesOrNo> {
-    const path = `/api/backup/v1/deployment/${encodeURIComponent(req.id || '')}/hasfeature`;
+  async IsBackupFeatureAvailable(req: arangodb_cloud_common_v1_IDOptions): Promise<arangodb_cloud_common_v1_YesOrNo> {
+    const path = `/api/backup/v1/deployment/${encodeURIComponent(req.id || '')}/feature`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }

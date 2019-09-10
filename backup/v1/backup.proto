@@ -24,9 +24,9 @@ service BackupService {
     // Checks if the backup feature is enabled and available for a specific deployment.
     // Required permissions:
     // - backup.feature.get on the deployment that is identified by the given ID.
-    rpc HasBackupFeature(common.v1.IDOptions) returns (common.v1.YesOrNo) {
+    rpc IsBackupFeatureAvailable(common.v1.IDOptions) returns (common.v1.YesOrNo) {
         option (google.api.http) = {
-            get: "/api/backup/v1/deployment/{id}/hasfeature"
+            get: "/api/backup/v1/deployment/{id}/feature"
         };
     }
 
