@@ -6,6 +6,7 @@ import api from '../../api'
 import * as googleTypes from '../../googleTypes'
 import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1/common'
 import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
+import { YesOrNo as arangodb_cloud_common_v1_YesOrNo } from '../../common/v1/common'
 import { Deployment_ServersSpec as arangodb_cloud_data_v1_Deployment_ServersSpec } from '../../data/v1/data'
 
 // File: backup/v1/backup.proto
@@ -360,6 +361,15 @@ export interface TimeOfDay {
 
 // BackupService is the API used to configure backup objects.
 export class BackupService {
+  // Checks if the backup feature is enabled and available for a specific deployment.
+  // Required permissions:
+  // - backup.feature.get on the deployment that is identified by the given ID.
+  async IsBackupFeatureAvailable(req: arangodb_cloud_common_v1_IDOptions): Promise<arangodb_cloud_common_v1_YesOrNo> {
+    const path = `/api/backup/v1/deployment/${encodeURIComponent(req.id || '')}/feature`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
   // Fetch all backup policies for a specific deployment.
   // Required permissions:
   // - backup.backuppolicy.list on the deployment that owns the backup policies and is identified by the given ID.
@@ -380,7 +390,7 @@ export class BackupService {
   
   // Create a new backup policy
   // Required permissions:
-  // -  backup.backuppolicy.create on the deployment that owns the backup policy and is identified by the given ID..
+  // -  backup.backuppolicy.create on the deployment that owns the backup policy and is identified by the given ID.
   async CreateBackupPolicy(req: BackupPolicy): Promise<BackupPolicy> {
     const url = `/api/backup/v1/deployment/${encodeURIComponent(req.deployment_id || '')}/backuppolicies`;
     return api.post(url, req);

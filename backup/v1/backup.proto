@@ -21,6 +21,14 @@ import "google/api/annotations.proto";
 
 // BackupService is the API used to configure backup objects.
 service BackupService {
+    // Checks if the backup feature is enabled and available for a specific deployment.
+    // Required permissions:
+    // - backup.feature.get on the deployment that is identified by the given ID.
+    rpc IsBackupFeatureAvailable(common.v1.IDOptions) returns (common.v1.YesOrNo) {
+        option (google.api.http) = {
+            get: "/api/backup/v1/deployment/{id}/feature"
+        };
+    }
 
     // Fetch all backup policies for a specific deployment.
     // Required permissions:
@@ -42,7 +50,7 @@ service BackupService {
 
     // Create a new backup policy
     // Required permissions:
-    // -  backup.backuppolicy.create on the deployment that owns the backup policy and is identified by the given ID..
+    // -  backup.backuppolicy.create on the deployment that owns the backup policy and is identified by the given ID.
     rpc CreateBackupPolicy(BackupPolicy) returns (BackupPolicy) {
         option (google.api.http) = {
             post: "/api/backup/v1/deployment/{deployment_id}/backuppolicies"
