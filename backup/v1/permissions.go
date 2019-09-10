@@ -9,6 +9,13 @@
 package v1
 
 const (
+	// Backup feature permissions
+
+	// PermissionBackupFeatureGet is needed for getting whether or not the backup feature is available for a specific deployment
+	PermissionBackupFeatureGet = "backup.feature.get"
+)
+
+const (
 	// BackupPolicy permissions
 
 	// PermissionBackupPolicyList is needed for listing backup policies in a deployment
