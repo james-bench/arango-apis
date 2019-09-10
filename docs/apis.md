@@ -3,133 +3,6 @@
 
 ## Table of Contents
 
-- [resourcemanager/v1/resourcemanager.proto](#resourcemanager/v1/resourcemanager.proto)
-    - [Event](#arangodb.cloud.resourcemanager.v1.Event)
-    - [Event.PayloadEntry](#arangodb.cloud.resourcemanager.v1.Event.PayloadEntry)
-    - [EventList](#arangodb.cloud.resourcemanager.v1.EventList)
-    - [IsMemberOfOrganizationRequest](#arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationRequest)
-    - [IsMemberOfOrganizationResponse](#arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationResponse)
-    - [ListEventOptions](#arangodb.cloud.resourcemanager.v1.ListEventOptions)
-    - [ListQuotasRequest](#arangodb.cloud.resourcemanager.v1.ListQuotasRequest)
-    - [Member](#arangodb.cloud.resourcemanager.v1.Member)
-    - [MemberList](#arangodb.cloud.resourcemanager.v1.MemberList)
-    - [Organization](#arangodb.cloud.resourcemanager.v1.Organization)
-    - [Organization.TotalDeploymentsEntry](#arangodb.cloud.resourcemanager.v1.Organization.TotalDeploymentsEntry)
-    - [OrganizationInvite](#arangodb.cloud.resourcemanager.v1.OrganizationInvite)
-    - [OrganizationInviteList](#arangodb.cloud.resourcemanager.v1.OrganizationInviteList)
-    - [OrganizationList](#arangodb.cloud.resourcemanager.v1.OrganizationList)
-    - [OrganizationMembersRequest](#arangodb.cloud.resourcemanager.v1.OrganizationMembersRequest)
-    - [Project](#arangodb.cloud.resourcemanager.v1.Project)
-    - [ProjectList](#arangodb.cloud.resourcemanager.v1.ProjectList)
-    - [Quota](#arangodb.cloud.resourcemanager.v1.Quota)
-    - [QuotaDescription](#arangodb.cloud.resourcemanager.v1.QuotaDescription)
-    - [QuotaDescriptionList](#arangodb.cloud.resourcemanager.v1.QuotaDescriptionList)
-    - [QuotaList](#arangodb.cloud.resourcemanager.v1.QuotaList)
-    - [Tier](#arangodb.cloud.resourcemanager.v1.Tier)
-  
-  
-  
-    - [ResourceManagerService](#arangodb.cloud.resourcemanager.v1.ResourceManagerService)
-  
-
-- [crypto/v1/crypto.proto](#crypto/v1/crypto.proto)
-    - [CACertificate](#arangodb.cloud.crypto.v1.CACertificate)
-    - [CACertificateInstructions](#arangodb.cloud.crypto.v1.CACertificateInstructions)
-    - [CACertificateInstructions.PlatformInstructions](#arangodb.cloud.crypto.v1.CACertificateInstructions.PlatformInstructions)
-    - [CACertificateList](#arangodb.cloud.crypto.v1.CACertificateList)
-  
-  
-  
-    - [CryptoService](#arangodb.cloud.crypto.v1.CryptoService)
-  
-
-- [security/v1/security.proto](#security/v1/security.proto)
-    - [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist)
-    - [IPWhitelistList](#arangodb.cloud.security.v1.IPWhitelistList)
-  
-  
-  
-    - [SecurityService](#arangodb.cloud.security.v1.SecurityService)
-  
-
-- [platform/v1/platform.proto](#platform/v1/platform.proto)
-    - [ListProvidersRequest](#arangodb.cloud.platform.v1.ListProvidersRequest)
-    - [ListRegionsRequest](#arangodb.cloud.platform.v1.ListRegionsRequest)
-    - [Provider](#arangodb.cloud.platform.v1.Provider)
-    - [ProviderList](#arangodb.cloud.platform.v1.ProviderList)
-    - [Region](#arangodb.cloud.platform.v1.Region)
-    - [RegionList](#arangodb.cloud.platform.v1.RegionList)
-  
-  
-  
-    - [PlatformService](#arangodb.cloud.platform.v1.PlatformService)
-  
-
-- [usage/v1/usage.proto](#usage/v1/usage.proto)
-    - [ListUsageItemsRequest](#arangodb.cloud.usage.v1.ListUsageItemsRequest)
-    - [UsageItem](#arangodb.cloud.usage.v1.UsageItem)
-    - [UsageItem.DeploymentSize](#arangodb.cloud.usage.v1.UsageItem.DeploymentSize)
-    - [UsageItem.NetworkTransferSize](#arangodb.cloud.usage.v1.UsageItem.NetworkTransferSize)
-    - [UsageItem.Resource](#arangodb.cloud.usage.v1.UsageItem.Resource)
-    - [UsageItemList](#arangodb.cloud.usage.v1.UsageItemList)
-  
-  
-  
-    - [UsageService](#arangodb.cloud.usage.v1.UsageService)
-  
-
-- [common/v1/common.proto](#common/v1/common.proto)
-    - [Budget](#arangodb.cloud.common.v1.Budget)
-    - [Empty](#arangodb.cloud.common.v1.Empty)
-    - [IDOptions](#arangodb.cloud.common.v1.IDOptions)
-    - [ListOptions](#arangodb.cloud.common.v1.ListOptions)
-    - [URLOptions](#arangodb.cloud.common.v1.URLOptions)
-    - [YesOrNo](#arangodb.cloud.common.v1.YesOrNo)
-  
-  
-  
-  
-
-- [iam/v1/iam.proto](#iam/v1/iam.proto)
-    - [APIKey](#arangodb.cloud.iam.v1.APIKey)
-    - [APIKeyList](#arangodb.cloud.iam.v1.APIKeyList)
-    - [APIKeySecret](#arangodb.cloud.iam.v1.APIKeySecret)
-    - [AuthenticateAPIKeyRequest](#arangodb.cloud.iam.v1.AuthenticateAPIKeyRequest)
-    - [AuthenticateAPIKeyResponse](#arangodb.cloud.iam.v1.AuthenticateAPIKeyResponse)
-    - [CreateAPIKeyRequest](#arangodb.cloud.iam.v1.CreateAPIKeyRequest)
-    - [Group](#arangodb.cloud.iam.v1.Group)
-    - [GroupList](#arangodb.cloud.iam.v1.GroupList)
-    - [GroupMemberList](#arangodb.cloud.iam.v1.GroupMemberList)
-    - [GroupMembersRequest](#arangodb.cloud.iam.v1.GroupMembersRequest)
-    - [HasPermissionsRequest](#arangodb.cloud.iam.v1.HasPermissionsRequest)
-    - [IsMemberOfGroupRequest](#arangodb.cloud.iam.v1.IsMemberOfGroupRequest)
-    - [PermissionList](#arangodb.cloud.iam.v1.PermissionList)
-    - [Policy](#arangodb.cloud.iam.v1.Policy)
-    - [RenewAPIKeyTokenRequest](#arangodb.cloud.iam.v1.RenewAPIKeyTokenRequest)
-    - [RenewAPIKeyTokenResponse](#arangodb.cloud.iam.v1.RenewAPIKeyTokenResponse)
-    - [RevokeAPIKeyTokenRequest](#arangodb.cloud.iam.v1.RevokeAPIKeyTokenRequest)
-    - [Role](#arangodb.cloud.iam.v1.Role)
-    - [RoleBinding](#arangodb.cloud.iam.v1.RoleBinding)
-    - [RoleBindingsRequest](#arangodb.cloud.iam.v1.RoleBindingsRequest)
-    - [RoleList](#arangodb.cloud.iam.v1.RoleList)
-    - [User](#arangodb.cloud.iam.v1.User)
-    - [VerifyUserMobilePhoneRequest](#arangodb.cloud.iam.v1.VerifyUserMobilePhoneRequest)
-  
-  
-  
-    - [IAMService](#arangodb.cloud.iam.v1.IAMService)
-  
-
-- [support/v1/support.proto](#support/v1/support.proto)
-    - [ListPlansRequest](#arangodb.cloud.support.v1.ListPlansRequest)
-    - [Plan](#arangodb.cloud.support.v1.Plan)
-    - [PlanList](#arangodb.cloud.support.v1.PlanList)
-  
-  
-  
-    - [SupportService](#arangodb.cloud.support.v1.SupportService)
-  
-
 - [backup/v1/backup.proto](#backup/v1/backup.proto)
     - [Backup](#arangodb.cloud.backup.v1.Backup)
     - [Backup.DeploymentInfo](#arangodb.cloud.backup.v1.Backup.DeploymentInfo)
@@ -149,6 +22,59 @@
   
   
     - [BackupService](#arangodb.cloud.backup.v1.BackupService)
+  
+
+- [billing/v1/billing.proto](#billing/v1/billing.proto)
+    - [Invoice](#arangodb.cloud.billing.v1.Invoice)
+    - [Invoice.Item](#arangodb.cloud.billing.v1.Invoice.Item)
+    - [Invoice.Payment](#arangodb.cloud.billing.v1.Invoice.Payment)
+    - [Invoice.Status](#arangodb.cloud.billing.v1.Invoice.Status)
+    - [InvoiceList](#arangodb.cloud.billing.v1.InvoiceList)
+    - [ListInvoicesRequest](#arangodb.cloud.billing.v1.ListInvoicesRequest)
+    - [ListPaymentMethodsRequest](#arangodb.cloud.billing.v1.ListPaymentMethodsRequest)
+    - [ListPaymentProvidersRequest](#arangodb.cloud.billing.v1.ListPaymentProvidersRequest)
+    - [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod)
+    - [PaymentMethodList](#arangodb.cloud.billing.v1.PaymentMethodList)
+    - [PaymentProvider](#arangodb.cloud.billing.v1.PaymentProvider)
+    - [PaymentProviderList](#arangodb.cloud.billing.v1.PaymentProviderList)
+    - [SetDefaultPaymentMethodRequest](#arangodb.cloud.billing.v1.SetDefaultPaymentMethodRequest)
+  
+  
+  
+    - [BillingService](#arangodb.cloud.billing.v1.BillingService)
+  
+
+- [common/v1/common.proto](#common/v1/common.proto)
+    - [Budget](#arangodb.cloud.common.v1.Budget)
+    - [Empty](#arangodb.cloud.common.v1.Empty)
+    - [IDOptions](#arangodb.cloud.common.v1.IDOptions)
+    - [ListOptions](#arangodb.cloud.common.v1.ListOptions)
+    - [URLOptions](#arangodb.cloud.common.v1.URLOptions)
+    - [YesOrNo](#arangodb.cloud.common.v1.YesOrNo)
+  
+  
+  
+  
+
+- [crypto/v1/crypto.proto](#crypto/v1/crypto.proto)
+    - [CACertificate](#arangodb.cloud.crypto.v1.CACertificate)
+    - [CACertificateInstructions](#arangodb.cloud.crypto.v1.CACertificateInstructions)
+    - [CACertificateInstructions.PlatformInstructions](#arangodb.cloud.crypto.v1.CACertificateInstructions.PlatformInstructions)
+    - [CACertificateList](#arangodb.cloud.crypto.v1.CACertificateList)
+  
+  
+  
+    - [CryptoService](#arangodb.cloud.crypto.v1.CryptoService)
+  
+
+- [currency/v1/currency.proto](#currency/v1/currency.proto)
+    - [Currency](#arangodb.cloud.currency.v1.Currency)
+    - [CurrencyList](#arangodb.cloud.currency.v1.CurrencyList)
+    - [GetDefaultCurrencyRequest](#arangodb.cloud.currency.v1.GetDefaultCurrencyRequest)
+  
+  
+  
+    - [CurrencyService](#arangodb.cloud.currency.v1.CurrencyService)
   
 
 - [data/v1/data.proto](#data/v1/data.proto)
@@ -181,429 +107,382 @@
     - [DataService](#arangodb.cloud.data.v1.DataService)
   
 
-- [currency/v1/currency.proto](#currency/v1/currency.proto)
-    - [Currency](#arangodb.cloud.currency.v1.Currency)
-    - [CurrencyList](#arangodb.cloud.currency.v1.CurrencyList)
-    - [GetDefaultCurrencyRequest](#arangodb.cloud.currency.v1.GetDefaultCurrencyRequest)
+- [iam/v1/iam.proto](#iam/v1/iam.proto)
+    - [APIKey](#arangodb.cloud.iam.v1.APIKey)
+    - [APIKeyList](#arangodb.cloud.iam.v1.APIKeyList)
+    - [APIKeySecret](#arangodb.cloud.iam.v1.APIKeySecret)
+    - [AuthenticateAPIKeyRequest](#arangodb.cloud.iam.v1.AuthenticateAPIKeyRequest)
+    - [AuthenticateAPIKeyResponse](#arangodb.cloud.iam.v1.AuthenticateAPIKeyResponse)
+    - [CreateAPIKeyRequest](#arangodb.cloud.iam.v1.CreateAPIKeyRequest)
+    - [Group](#arangodb.cloud.iam.v1.Group)
+    - [GroupList](#arangodb.cloud.iam.v1.GroupList)
+    - [GroupMemberList](#arangodb.cloud.iam.v1.GroupMemberList)
+    - [GroupMembersRequest](#arangodb.cloud.iam.v1.GroupMembersRequest)
+    - [HasPermissionsRequest](#arangodb.cloud.iam.v1.HasPermissionsRequest)
+    - [IsMemberOfGroupRequest](#arangodb.cloud.iam.v1.IsMemberOfGroupRequest)
+    - [PermissionList](#arangodb.cloud.iam.v1.PermissionList)
+    - [Policy](#arangodb.cloud.iam.v1.Policy)
+    - [RenewAPIKeyTokenRequest](#arangodb.cloud.iam.v1.RenewAPIKeyTokenRequest)
+    - [RenewAPIKeyTokenResponse](#arangodb.cloud.iam.v1.RenewAPIKeyTokenResponse)
+    - [RevokeAPIKeyTokenRequest](#arangodb.cloud.iam.v1.RevokeAPIKeyTokenRequest)
+    - [Role](#arangodb.cloud.iam.v1.Role)
+    - [RoleBinding](#arangodb.cloud.iam.v1.RoleBinding)
+    - [RoleBindingsRequest](#arangodb.cloud.iam.v1.RoleBindingsRequest)
+    - [RoleList](#arangodb.cloud.iam.v1.RoleList)
+    - [User](#arangodb.cloud.iam.v1.User)
+    - [VerifyUserMobilePhoneRequest](#arangodb.cloud.iam.v1.VerifyUserMobilePhoneRequest)
   
   
   
-    - [CurrencyService](#arangodb.cloud.currency.v1.CurrencyService)
+    - [IAMService](#arangodb.cloud.iam.v1.IAMService)
   
 
-- [billing/v1/billing.proto](#billing/v1/billing.proto)
-    - [Invoice](#arangodb.cloud.billing.v1.Invoice)
-    - [Invoice.Item](#arangodb.cloud.billing.v1.Invoice.Item)
-    - [Invoice.Payment](#arangodb.cloud.billing.v1.Invoice.Payment)
-    - [Invoice.Status](#arangodb.cloud.billing.v1.Invoice.Status)
-    - [InvoiceList](#arangodb.cloud.billing.v1.InvoiceList)
-    - [ListInvoicesRequest](#arangodb.cloud.billing.v1.ListInvoicesRequest)
-    - [ListPaymentMethodsRequest](#arangodb.cloud.billing.v1.ListPaymentMethodsRequest)
-    - [ListPaymentProvidersRequest](#arangodb.cloud.billing.v1.ListPaymentProvidersRequest)
-    - [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod)
-    - [PaymentMethodList](#arangodb.cloud.billing.v1.PaymentMethodList)
-    - [PaymentProvider](#arangodb.cloud.billing.v1.PaymentProvider)
-    - [PaymentProviderList](#arangodb.cloud.billing.v1.PaymentProviderList)
-    - [SetDefaultPaymentMethodRequest](#arangodb.cloud.billing.v1.SetDefaultPaymentMethodRequest)
+- [platform/v1/platform.proto](#platform/v1/platform.proto)
+    - [ListProvidersRequest](#arangodb.cloud.platform.v1.ListProvidersRequest)
+    - [ListRegionsRequest](#arangodb.cloud.platform.v1.ListRegionsRequest)
+    - [Provider](#arangodb.cloud.platform.v1.Provider)
+    - [ProviderList](#arangodb.cloud.platform.v1.ProviderList)
+    - [Region](#arangodb.cloud.platform.v1.Region)
+    - [RegionList](#arangodb.cloud.platform.v1.RegionList)
   
   
   
-    - [BillingService](#arangodb.cloud.billing.v1.BillingService)
+    - [PlatformService](#arangodb.cloud.platform.v1.PlatformService)
+  
+
+- [resourcemanager/v1/resourcemanager.proto](#resourcemanager/v1/resourcemanager.proto)
+    - [Event](#arangodb.cloud.resourcemanager.v1.Event)
+    - [Event.PayloadEntry](#arangodb.cloud.resourcemanager.v1.Event.PayloadEntry)
+    - [EventList](#arangodb.cloud.resourcemanager.v1.EventList)
+    - [IsMemberOfOrganizationRequest](#arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationRequest)
+    - [IsMemberOfOrganizationResponse](#arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationResponse)
+    - [ListEventOptions](#arangodb.cloud.resourcemanager.v1.ListEventOptions)
+    - [ListQuotasRequest](#arangodb.cloud.resourcemanager.v1.ListQuotasRequest)
+    - [Member](#arangodb.cloud.resourcemanager.v1.Member)
+    - [MemberList](#arangodb.cloud.resourcemanager.v1.MemberList)
+    - [Organization](#arangodb.cloud.resourcemanager.v1.Organization)
+    - [Organization.TotalDeploymentsEntry](#arangodb.cloud.resourcemanager.v1.Organization.TotalDeploymentsEntry)
+    - [OrganizationInvite](#arangodb.cloud.resourcemanager.v1.OrganizationInvite)
+    - [OrganizationInviteList](#arangodb.cloud.resourcemanager.v1.OrganizationInviteList)
+    - [OrganizationList](#arangodb.cloud.resourcemanager.v1.OrganizationList)
+    - [OrganizationMembersRequest](#arangodb.cloud.resourcemanager.v1.OrganizationMembersRequest)
+    - [Project](#arangodb.cloud.resourcemanager.v1.Project)
+    - [ProjectList](#arangodb.cloud.resourcemanager.v1.ProjectList)
+    - [Quota](#arangodb.cloud.resourcemanager.v1.Quota)
+    - [QuotaDescription](#arangodb.cloud.resourcemanager.v1.QuotaDescription)
+    - [QuotaDescriptionList](#arangodb.cloud.resourcemanager.v1.QuotaDescriptionList)
+    - [QuotaList](#arangodb.cloud.resourcemanager.v1.QuotaList)
+    - [Tier](#arangodb.cloud.resourcemanager.v1.Tier)
+  
+  
+  
+    - [ResourceManagerService](#arangodb.cloud.resourcemanager.v1.ResourceManagerService)
+  
+
+- [security/v1/security.proto](#security/v1/security.proto)
+    - [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist)
+    - [IPWhitelistList](#arangodb.cloud.security.v1.IPWhitelistList)
+  
+  
+  
+    - [SecurityService](#arangodb.cloud.security.v1.SecurityService)
+  
+
+- [support/v1/support.proto](#support/v1/support.proto)
+    - [ListPlansRequest](#arangodb.cloud.support.v1.ListPlansRequest)
+    - [Plan](#arangodb.cloud.support.v1.Plan)
+    - [PlanList](#arangodb.cloud.support.v1.PlanList)
+  
+  
+  
+    - [SupportService](#arangodb.cloud.support.v1.SupportService)
+  
+
+- [usage/v1/usage.proto](#usage/v1/usage.proto)
+    - [ListUsageItemsRequest](#arangodb.cloud.usage.v1.ListUsageItemsRequest)
+    - [UsageItem](#arangodb.cloud.usage.v1.UsageItem)
+    - [UsageItem.DeploymentSize](#arangodb.cloud.usage.v1.UsageItem.DeploymentSize)
+    - [UsageItem.NetworkTransferSize](#arangodb.cloud.usage.v1.UsageItem.NetworkTransferSize)
+    - [UsageItem.Resource](#arangodb.cloud.usage.v1.UsageItem.Resource)
+    - [UsageItemList](#arangodb.cloud.usage.v1.UsageItemList)
+  
+  
+  
+    - [UsageService](#arangodb.cloud.usage.v1.UsageService)
   
 
 - [Scalar Value Types](#scalar-value-types)
 
 
 
-<a name="resourcemanager/v1/resourcemanager.proto"></a>
+<a name="backup/v1/backup.proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
-## resourcemanager/v1/resourcemanager.proto
+## backup/v1/backup.proto
 
 
 
-<a name="arangodb.cloud.resourcemanager.v1.Event"></a>
+<a name="arangodb.cloud.backup.v1.Backup"></a>
 
-### Event
-An Event represents something that happened to an organization
-in the ArangoDB Managed service.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the event. This is a read-only value. |
-| url | [string](#string) |  | URL of this resource This is a read-only value and cannot be initialized. |
-| organization_id | [string](#string) |  | Identifier of the organization that owns this event. This is a read-only value. |
-| subject_id | [string](#string) |  | Identifier of the subject of this event. This is a read-only value. If the subject of this event is an organization, this value is a duplicate of organization_id. |
-| type | [string](#string) |  | Type of the event. |
-| payload | [Event.PayloadEntry](#arangodb.cloud.resourcemanager.v1.Event.PayloadEntry) | repeated | Payload of the event. The fields used in the payload are specific to the type of event. |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the event |
-| subject_url | [string](#string) |  | URL of the subject of this event. This is a read-only value. |
-| volatile | [bool](#bool) |  | If set, this event is not persisted. This is a read-only value. |
-
-
-
-
-
-
-<a name="arangodb.cloud.resourcemanager.v1.Event.PayloadEntry"></a>
-
-### Event.PayloadEntry
-
+### Backup
+Backup represents a single backup of a deployment.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| key | [string](#string) |  |  |
-| value | [string](#string) |  |  |
+| id | [string](#string) |  | System identifier of the backup. This is a read-only value. |
+| url | [string](#string) |  | URL of this resource This is a read-only value. |
+| name | [string](#string) |  | Name of the backup |
+| description | [string](#string) |  | Description of the backup |
+| deployment_id | [string](#string) |  | Identifier of the deployment that owns this backup. After creation, this value cannot be changed. |
+| backup_policy_id | [string](#string) |  | Identifier of the backup policy that triggered this backup After creation, this value cannot be changed. If this field is empty, this is a manual backup |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the backup (database object) This is a read-only value. |
+| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the backup This is a read-only value. |
+| is_deleted | [bool](#bool) |  | Set when this backup is deleted. This is a read-only value. |
+| auto_deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp that this backup will be automatically removed You cannot provide a value in the past, If the field is not set, the backup will not be automatically removed. |
+| deployment_info | [Backup.DeploymentInfo](#arangodb.cloud.backup.v1.Backup.DeploymentInfo) |  | Information about the deployment during backup |
+| upload | [bool](#bool) |  | Upload the backup, created by the backup policy, to an external source. Setting or unsetting this fields after the backup has been created will upload/delete the backup from the external source. Setting this field when status.available = false will result in an error |
+| status | [Backup.Status](#arangodb.cloud.backup.v1.Backup.Status) |  | Status of the actual backup |
 
 
 
 
 
 
-<a name="arangodb.cloud.resourcemanager.v1.EventList"></a>
+<a name="arangodb.cloud.backup.v1.Backup.DeploymentInfo"></a>
 
-### EventList
-List of Events.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [Event](#arangodb.cloud.resourcemanager.v1.Event) | repeated |  |
-
-
-
-
-
-
-<a name="arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationRequest"></a>
-
-### IsMemberOfOrganizationRequest
-Request arguments for IsMemberOfOrganization.
+### Backup.DeploymentInfo
+Information about the deployment during backup 
+All members of this field are read-only.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| user_id | [string](#string) |  | Identifier of the user |
-| organization_id | [string](#string) |  | Identifier of the organization |
+| version | [string](#string) |  | ArangoDB version of the deployment during backup. |
+| servers | [arangodb.cloud.data.v1.Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  | Servers spec of the deployment during backup. |
 
 
 
 
 
 
-<a name="arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationResponse"></a>
+<a name="arangodb.cloud.backup.v1.Backup.Status"></a>
 
-### IsMemberOfOrganizationResponse
-Response for IsMemberOfOrganization.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| member | [bool](#bool) |  | Set if the requested user is a member of the requested organization. |
-| owner | [bool](#bool) |  | Set if the requested user is an owner of the requested organization. |
-
-
-
-
-
-
-<a name="arangodb.cloud.resourcemanager.v1.ListEventOptions"></a>
-
-### ListEventOptions
-Options for ListEvents
+### Backup.Status
+Status of the actual backup
+All members of this field are read-only.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Standard list options |
-| subject_ids | [string](#string) | repeated | If set, filter on the subject_id of event |
-| types | [string](#string) | repeated | If set, filter on the type of event |
-| created_after | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | If set, filter of events created after this timestamp |
-| created_before | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | If set, filter of events created before this timestamp |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the backup |
+| version | [string](#string) |  | ArangoDB version of the backup |
+| state | [string](#string) |  | The state of the backup Will be one of the following: &#34;Pending|Scheduled|Download|DownloadError|Downloading|Create|Upload|Uploading|UploadError|Ready|Deleted|Failed&#34; |
+| is_failed | [bool](#bool) |  | Set when the backup is failed |
+| message | [string](#string) |  | State message |
+| progress | [string](#string) |  | Progress of the backup (upload or download) |
+| size_bytes | [int64](#int64) |  | Size of the backup (in bytes) |
+| uploaded | [bool](#bool) |  | Set when the backup has been fully uploaded |
+| downloaded | [bool](#bool) |  | Set when the backup has been fully downloaded |
+| available | [bool](#bool) |  | Set when the backup is available to restore to / recover from |
 
 
 
 
 
 
-<a name="arangodb.cloud.resourcemanager.v1.ListQuotasRequest"></a>
+<a name="arangodb.cloud.backup.v1.BackupList"></a>
 
-### ListQuotasRequest
-Request arguments for ListXyzQuotas
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Common list options |
-| kinds | [string](#string) | repeated | If set, limit the returned list of quota&#39;s to these kinds. |
-
-
-
-
-
-
-<a name="arangodb.cloud.resourcemanager.v1.Member"></a>
-
-### Member
-Member of an organization.
-A member is always a user.
+### BackupList
+List of backups.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| user_id | [string](#string) |  | Identifier of the user |
-| owner | [bool](#bool) |  | Set if this user is owner of the organization |
+| items | [Backup](#arangodb.cloud.backup.v1.Backup) | repeated |  |
 
 
 
 
 
 
-<a name="arangodb.cloud.resourcemanager.v1.MemberList"></a>
+<a name="arangodb.cloud.backup.v1.BackupPolicy"></a>
 
-### MemberList
-List of Members.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [Member](#arangodb.cloud.resourcemanager.v1.Member) | repeated |  |
-
-
-
-
-
-
-<a name="arangodb.cloud.resourcemanager.v1.Organization"></a>
-
-### Organization
-An Organization is represents a real world organization such as a company.
+### BackupPolicy
+BackupPolicy represents a single backup policy for a deployment.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the organization. This is a read-only value. |
-| url | [string](#string) |  | URL of this resource This is a read-only value and cannot be initialized. |
-| name | [string](#string) |  | Name of the organization |
-| description | [string](#string) |  | Description of the organization |
-| is_deleted | [bool](#bool) |  | Set when this organization is deleted. This is a read-only value. |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the organization |
-| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the organization |
-| tier | [Tier](#arangodb.cloud.resourcemanager.v1.Tier) |  | Tier used for this organization. This is a read-only value and cannot be initialized. |
-| total_deployments | [Organization.TotalDeploymentsEntry](#arangodb.cloud.resourcemanager.v1.Organization.TotalDeploymentsEntry) | repeated | Total number of deployments created in this organization throughout its entire lifetime per tier-id. map: tier-id -&gt; count This is a read-only value. |
+| id | [string](#string) |  | System identifier of the backup policy. This is a read-only value. |
+| url | [string](#string) |  | URL of this resource This is a read-only value. |
+| name | [string](#string) |  | Name of the backup policy |
+| description | [string](#string) |  | Description of the backup policy |
+| deployment_id | [string](#string) |  | Identifier of the deployment that owns this backup policy. After creation, this value cannot be changed. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the backup policy This is a read-only value. |
+| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the backup policy This is a read-only value. |
+| is_deleted | [bool](#bool) |  | Set when this backup policy is deleted. This is a read-only value. |
+| is_paused | [bool](#bool) |  | Pause this backup policy. If a backup policy is paused, the backup policy will not result in new backups. The backup policy isn&#39;t deleted, unsetting this field will resume the creation of backups again. |
+| schedule | [BackupPolicy.Schedule](#arangodb.cloud.backup.v1.BackupPolicy.Schedule) |  | The schedule for this backup policy |
+| upload | [bool](#bool) |  | Upload the backup, created by the backup policy, to an external source. |
+| retention_period | [google.protobuf.Duration](#google.protobuf.Duration) |  | Backups created by this policy will be automatically deleted after the specified retention period A value of 0 means that backup will never be deleted. |
+| email_notification | [string](#string) |  | The owners of the organization can be notified by email This field support the following values: &#34;None|FailureOnly|Always&#34; |
+| status | [BackupPolicy.Status](#arangodb.cloud.backup.v1.BackupPolicy.Status) |  | Status of the backup policy |
 
 
 
 
 
 
-<a name="arangodb.cloud.resourcemanager.v1.Organization.TotalDeploymentsEntry"></a>
+<a name="arangodb.cloud.backup.v1.BackupPolicy.DailySchedule"></a>
 
-### Organization.TotalDeploymentsEntry
+### BackupPolicy.DailySchedule
+Note: Nested types inside nested types is not supported by the typescript generator
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| monday | [bool](#bool) |  | If set, a backup will be created on Mondays. |
+| tuesday | [bool](#bool) |  | If set, a backup will be created on Tuesdays. |
+| wednesday | [bool](#bool) |  | If set, a backup will be created on Wednesdays. |
+| thursday | [bool](#bool) |  | If set, a backup will be created on Thursdays. |
+| friday | [bool](#bool) |  | If set, a backup will be created on Fridays. |
+| saturday | [bool](#bool) |  | If set, a backup will be created on Saturdays. |
+| sunday | [bool](#bool) |  | If set, a backup will be created on Sundays. |
+| schedule_at | [TimeOfDay](#arangodb.cloud.backup.v1.TimeOfDay) |  | The (target) time of the schedule |
+
+
+
+
+
+
+<a name="arangodb.cloud.backup.v1.BackupPolicy.HourlySchedule"></a>
+
+### BackupPolicy.HourlySchedule
+Note: Nested types inside nested types is not supported by the typescript generator
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| schedule_every_interval_hours | [int32](#int32) |  | Schedule should run with an interval of the specified hours (1-23) |
+
+
+
+
+
+
+<a name="arangodb.cloud.backup.v1.BackupPolicy.MonthlySchedule"></a>
+
+### BackupPolicy.MonthlySchedule
+Note: Nested types inside nested types is not supported by the typescript generator
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| day_of_month | [int32](#int32) |  | Run the backup on the specified day of the month (1-31) Note: Specifying a number larger than some months have days will result in no backup for those months (e.g. 29 for February (unless leap year)). |
+| schedule_at | [TimeOfDay](#arangodb.cloud.backup.v1.TimeOfDay) |  | The (target) time of the schedule |
+
+
+
+
+
+
+<a name="arangodb.cloud.backup.v1.BackupPolicy.Schedule"></a>
+
+### BackupPolicy.Schedule
 
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| key | [string](#string) |  |  |
-| value | [int32](#int32) |  |  |
+| schedule_type | [string](#string) |  | Schedule type should be one of the following string: &#34;Hourly|Daily|Monthly&#34; The schedule_hourly, schedule_daily or schedule_montly field should be set Setting multiple fields, or inconsistent with this field result in an error during create/update |
+| hourly_schedule | [BackupPolicy.HourlySchedule](#arangodb.cloud.backup.v1.BackupPolicy.HourlySchedule) |  | Schedule applies to the selected day of the week This is applicable for Hourly type only, ignored for Daily and Monthly |
+| daily_schedule | [BackupPolicy.DailySchedule](#arangodb.cloud.backup.v1.BackupPolicy.DailySchedule) |  | Schedule applies to the selected day of the week This is applicable for Daily type only, ignored for Hourly and Monthly |
+| monthly_schedule | [BackupPolicy.MonthlySchedule](#arangodb.cloud.backup.v1.BackupPolicy.MonthlySchedule) |  | Schedule applies to the selected day of the month This is applicable for Monthly type only, ignored for Hourly and Daily |
 
 
 
 
 
 
-<a name="arangodb.cloud.resourcemanager.v1.OrganizationInvite"></a>
+<a name="arangodb.cloud.backup.v1.BackupPolicy.Status"></a>
 
-### OrganizationInvite
-An OrganizationInvite represents an invite for a human to join an
-organization.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the invite. This is a read-only value. |
-| url | [string](#string) |  | URL of this resource This is a read-only value and cannot be initialized. |
-| organization_id | [string](#string) |  | Identifier of the organization that the human is invited to join. This is a read-only value. |
-| email | [string](#string) |  | Email address of the human who is invited. |
-| accepted | [bool](#bool) |  | If set, the invitee accepted the invite. This is a read-only value. |
-| rejected | [bool](#bool) |  | If set, the invitee rejected the invite. This is a read-only value. |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the invite This is a read-only value. |
-| accepted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The acceptance timestamp of the invite This is a read-only value. |
-| rejected_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The rejection timestamp of the invite This is a read-only value. |
-| user_id | [string](#string) |  | Identifier of the user that accepted or rejected this invite. This is a read-only value. |
-| created_by_id | [string](#string) |  | Identifier of the user that created this invite. |
-| organization_name | [string](#string) |  | Identifier of the organization that the human is invited to join. This is a read-only value. |
-| created_by_name | [string](#string) |  | Name of the user that created this invite. This is a read-only value. |
-
-
-
-
-
-
-<a name="arangodb.cloud.resourcemanager.v1.OrganizationInviteList"></a>
-
-### OrganizationInviteList
-List of OrganizationInvites.
+### BackupPolicy.Status
+Status of the backup policy
+All members of this field are read-only.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| items | [OrganizationInvite](#arangodb.cloud.resourcemanager.v1.OrganizationInvite) | repeated |  |
+| next_backup | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp when the next backup - initiated by this backup policy - will be created |
+| message | [string](#string) |  | Message in case of failure, otherwise an empty string |
 
 
 
 
 
 
-<a name="arangodb.cloud.resourcemanager.v1.OrganizationList"></a>
+<a name="arangodb.cloud.backup.v1.BackupPolicyList"></a>
 
-### OrganizationList
-List of organizations.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [Organization](#arangodb.cloud.resourcemanager.v1.Organization) | repeated | Actual organizations |
-| budget | [arangodb.cloud.common.v1.Budget](#arangodb.cloud.common.v1.Budget) |  | Budget for organizations (owned by the caller) |
-
-
-
-
-
-
-<a name="arangodb.cloud.resourcemanager.v1.OrganizationMembersRequest"></a>
-
-### OrganizationMembersRequest
-Request arguments for Add/DeleteOrganizationMembers.
+### BackupPolicyList
+List of backup policies.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| organization_id | [string](#string) |  | Identifier of the organization to add/remove a user from |
-| members | [MemberList](#arangodb.cloud.resourcemanager.v1.MemberList) |  | Users to add/remove. For every user, an owner flag is provided as well. If you add an existing user, the owner flag or the add request will overwrite the value of the existing owner flag. |
+| items | [BackupPolicy](#arangodb.cloud.backup.v1.BackupPolicy) | repeated |  |
 
 
 
 
 
 
-<a name="arangodb.cloud.resourcemanager.v1.Project"></a>
+<a name="arangodb.cloud.backup.v1.ListBackupPoliciesRequest"></a>
 
-### Project
-A Project is represents a unit within an organization such as a department.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the project. This is a read-only value. It can be set when creating the project. |
-| url | [string](#string) |  | URL of this resource This is a read-only value and cannot be initialized. |
-| name | [string](#string) |  | Name of the project |
-| description | [string](#string) |  | Description of the project |
-| organization_id | [string](#string) |  | Identifier of the organization that owns this project. This is a read-only value. |
-| is_deleted | [bool](#bool) |  | Set when this project is deleted |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the project |
-| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the project |
-
-
-
-
-
-
-<a name="arangodb.cloud.resourcemanager.v1.ProjectList"></a>
-
-### ProjectList
-List of Projects.
+### ListBackupPoliciesRequest
+Request arguments for ListBackupPolicies
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| items | [Project](#arangodb.cloud.resourcemanager.v1.Project) | repeated | Resulting projects |
-| budget | [arangodb.cloud.common.v1.Budget](#arangodb.cloud.common.v1.Budget) |  | Budget for projects |
+| deployment_id | [string](#string) |  | Identifier of the deployment to request the backup policies for. |
+| include_deleted | [bool](#bool) |  | If set, the result includes all backup policies, including those who set to deleted, however are not removed from the system currently. If not set, only backup policies not indicated as deleted are returned. |
+| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Optional common list options, the context_id is ignored |
 
 
 
 
 
 
-<a name="arangodb.cloud.resourcemanager.v1.Quota"></a>
+<a name="arangodb.cloud.backup.v1.ListBackupsRequest"></a>
 
-### Quota
-Quota limit
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| kind | [string](#string) |  | Kind of quota |
-| description | [string](#string) |  | Human readable description of the quota |
-| limit | [int64](#int64) |  | Current limit of the quota. A value of 0 means unlimited. |
-
-
-
-
-
-
-<a name="arangodb.cloud.resourcemanager.v1.QuotaDescription"></a>
-
-### QuotaDescription
-Description of a kind of quota&#39;s
+### ListBackupsRequest
+Request arguments for ListBackups
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| kind | [string](#string) |  | Kind of the quota |
-| description | [string](#string) |  | Human readable description |
-| for_organizations | [bool](#bool) |  | If set, this kind of quota is valid at organization level |
-| for_projects | [bool](#bool) |  | If set, this kind of quota is valid at project level |
+| deployment_id | [string](#string) |  | Identifier of the deployment to request the backups for. |
+| from | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request backups that are created at or after this timestamp. This is an optional field. |
+| to | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request backups that are created before this timestamp. This is an optional field. |
+| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Optional common list options, the context_id is ignored |
 
 
 
 
 
 
-<a name="arangodb.cloud.resourcemanager.v1.QuotaDescriptionList"></a>
+<a name="arangodb.cloud.backup.v1.TimeOfDay"></a>
 
-### QuotaDescriptionList
-List of QuotaDescription&#39;s
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [QuotaDescription](#arangodb.cloud.resourcemanager.v1.QuotaDescription) | repeated |  |
-
-
-
-
-
-
-<a name="arangodb.cloud.resourcemanager.v1.QuotaList"></a>
-
-### QuotaList
-List of Quota&#39;s
+### TimeOfDay
+TimeOfDay describes a specific moment on a day
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| items | [Quota](#arangodb.cloud.resourcemanager.v1.Quota) | repeated |  |
-
-
-
-
-
-
-<a name="arangodb.cloud.resourcemanager.v1.Tier"></a>
-
-### Tier
-Tier of an organization.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | Identifier of the tier. This is a read-only value and cannot be initialized. |
-| name | [string](#string) |  | Human readable name of the tier. This is a read-only value and cannot be initialized. |
-| has_support_plans | [bool](#bool) |  | If set the tier has support plans. This is a read-only value and cannot be initialized. |
+| hours | [int32](#int32) |  | Hours part of the time of day (0-23) |
+| minutes | [int32](#int32) |  | Minutes part of the time of day (0-59) |
+| time_zone | [string](#string) |  | The time-zone this time of day applies to (empty means UTC) Names MUST be exactly as defined in RFC-822. |
 
 
 
@@ -616,39 +495,408 @@ Tier of an organization.
  
 
 
-<a name="arangodb.cloud.resourcemanager.v1.ResourceManagerService"></a>
+<a name="arangodb.cloud.backup.v1.BackupService"></a>
 
-### ResourceManagerService
-ResourceManagerService is the API used to configure basic resource objects.
+### BackupService
+BackupService is the API used to configure backup objects.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| ListOrganizations | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [OrganizationList](#arangodb.cloud.resourcemanager.v1.OrganizationList) | Fetch all organizations that the authenticated user is a member of. Required permissions: - None |
-| GetOrganization | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Organization](#arangodb.cloud.resourcemanager.v1.Organization) | Fetch an organization by its id. The authenticated user must be a member of the organization. Required permissions: - None |
-| CreateOrganization | [Organization](#arangodb.cloud.resourcemanager.v1.Organization) | [Organization](#arangodb.cloud.resourcemanager.v1.Organization) | Create a new organization Required permissions: - None |
-| UpdateOrganization | [Organization](#arangodb.cloud.resourcemanager.v1.Organization) | [Organization](#arangodb.cloud.resourcemanager.v1.Organization) | Update an organization Required permissions: - resourcemanager.organization.update on the organization |
-| DeleteOrganization | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete an organization Note that organization are never really removed. Instead their is_deleted field is set to true. Required permissions: - resourcemanager.organization.delete on the organization |
-| ListOrganizationMembers | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [MemberList](#arangodb.cloud.resourcemanager.v1.MemberList) | Get a list of members of the organization identified by the given context ID. Required permissions: - resourcemanager.organization.get on the organization |
-| AddOrganizationMembers | [OrganizationMembersRequest](#arangodb.cloud.resourcemanager.v1.OrganizationMembersRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Add one or more members to an organization. If there are members (in the request arguments) that are already member of the organization an AlreadyExists error is returned. Required permissions: - resourcemanager.organization.update on the organization |
-| UpdateOrganizationMembers | [OrganizationMembersRequest](#arangodb.cloud.resourcemanager.v1.OrganizationMembersRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Update the ownership flag of one or more members of an organization. If there are members (in the request arguments) that are not yet member of the organization, an InvalidArgument error is returned. If the request would result in the last owner no longer being an owner, an InvalidArgument error is returned. Required permissions: - resourcemanager.organization.update on the organization |
-| DeleteOrganizationMembers | [OrganizationMembersRequest](#arangodb.cloud.resourcemanager.v1.OrganizationMembersRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Remove one or more members from an organization. If the request would result in the last owner being removed as member of the organization, an InvalidArgument error is returned. Required permissions: - resourcemanager.organization.update on the organization |
-| IsMemberOfOrganization | [IsMemberOfOrganizationRequest](#arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationRequest) | [IsMemberOfOrganizationResponse](#arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationResponse) | Is the user identified by the given user ID a member of the organization identified by the given organization ID. Required permissions: - resourcemanager.organization.get on the organization, unless the requested user is identical to the authenticated user. Note that if the identified user or organization does not exist, no is returned. |
-| ListOrganizationQuotas | [ListQuotasRequest](#arangodb.cloud.resourcemanager.v1.ListQuotasRequest) | [QuotaList](#arangodb.cloud.resourcemanager.v1.QuotaList) | Get a list of quota values for the organization identified by the given context ID. If a quota is not specified on organization level, a (potentially tier specific) default value is returned. Required permissions: - resourcemanager.organization.get on the organization |
-| ListProjects | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [ProjectList](#arangodb.cloud.resourcemanager.v1.ProjectList) | Fetch all projects in the organization identified by the given context ID. The authenticated user must be a member of the organization identifier by the given context ID. Required permissions: - resourcemanager.project.list on the organization identified by the given context ID |
-| GetProject | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Project](#arangodb.cloud.resourcemanager.v1.Project) | Fetch a project by its id. The authenticated user must be a member of the organization that owns the project. Required permissions: - resourcemanager.project.get on the project identified by the given ID |
-| CreateProject | [Project](#arangodb.cloud.resourcemanager.v1.Project) | [Project](#arangodb.cloud.resourcemanager.v1.Project) | Create a new project The authenticated user must be a member of the organization that owns the project. Required permissions: - resourcemanager.project.create on the organization that owns the project |
-| UpdateProject | [Project](#arangodb.cloud.resourcemanager.v1.Project) | [Project](#arangodb.cloud.resourcemanager.v1.Project) | Update a project The authenticated user must be a member of the organization that owns the project. Required permissions: - resourcemanager.project.update on the project |
-| DeleteProject | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a project Note that project are initially only marked for deleted. Once all their resources are removed the project itself is deleted and cannot be restored. The authenticated user must be a member of the organization that owns the project. Required permissions: - resourcemanager.project.delete on the project |
-| ListProjectQuotas | [ListQuotasRequest](#arangodb.cloud.resourcemanager.v1.ListQuotasRequest) | [QuotaList](#arangodb.cloud.resourcemanager.v1.QuotaList) | Get a list of quota values for the project identified by the given context ID. If a quota is not specified on project level, a value from organization level is returned. Required permissions: - resourcemanager.project.get on the project |
-| ListEvents | [ListEventOptions](#arangodb.cloud.resourcemanager.v1.ListEventOptions) | [EventList](#arangodb.cloud.resourcemanager.v1.EventList) | Fetch all events in the organization identified by the given context ID. The authenticated user must be a member of the organization identifier by the given context ID. Required permissions: - resourcemanager.event.list on the organization identified by the given context ID |
-| ListOrganizationInvites | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [OrganizationInviteList](#arangodb.cloud.resourcemanager.v1.OrganizationInviteList) | Fetch all organization invites in the organization identified by the given context ID. The authenticated user must be a member of the organization identifier by the given context ID. Required permissions: - resourcemanager.organization-invite.list on the invite. |
-| ListMyOrganizationInvites | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [OrganizationInviteList](#arangodb.cloud.resourcemanager.v1.OrganizationInviteList) | Fetch all organization invites for the email address of the authenticated user. Required permissions: - None |
-| GetOrganizationInvite | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [OrganizationInvite](#arangodb.cloud.resourcemanager.v1.OrganizationInvite) | Fetch an organization invite by its id. The authenticated user must be a member of the organization that the invite is for. Required permissions: - resourcemanager.organization-invite.get on the invite. |
-| CreateOrganizationInvite | [OrganizationInvite](#arangodb.cloud.resourcemanager.v1.OrganizationInvite) | [OrganizationInvite](#arangodb.cloud.resourcemanager.v1.OrganizationInvite) | Create a new organization invite. The authenticated user must be a member of the organization that the invite is for. Required permissions: - resourcemanager.organization-invite.create on the organization that the invite is for. |
-| DeleteOrganizationInvite | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete an organization invite The authenticated user must be a member of the organization that the invite is for. Required permissions: - resourcemanager.organization-invite.delete on the invite |
-| AcceptOrganizationInvite | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Accept an organization invite The authenticated user&#39;s email address must match the email address specified in the invite. Required permissions: - None |
-| RejectOrganizationInvite | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Reject an organization invite The authenticated user&#39;s email address must match the email address specified in the invite. Required permissions: - None |
-| ListQuotaDescriptions | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [QuotaDescriptionList](#arangodb.cloud.resourcemanager.v1.QuotaDescriptionList) | Fetch descriptions for all quota kinds know by the platform. Required permissions: - None |
+| HasBackupFeature | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.YesOrNo](#arangodb.cloud.common.v1.YesOrNo) | Checks if the backup feature is enabled and available for a specific deployment. Required permissions: - backup.feature.get on the deployment that is identified by the given ID. |
+| ListBackupPolicies | [ListBackupPoliciesRequest](#arangodb.cloud.backup.v1.ListBackupPoliciesRequest) | [BackupPolicyList](#arangodb.cloud.backup.v1.BackupPolicyList) | Fetch all backup policies for a specific deployment. Required permissions: - backup.backuppolicy.list on the deployment that owns the backup policies and is identified by the given ID. |
+| GetBackupPolicy | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [BackupPolicy](#arangodb.cloud.backup.v1.BackupPolicy) | Fetch a backup policy identified by the given ID. Required permissions: - backup.backuppolicy.get on the backup policy identified by the given ID. |
+| CreateBackupPolicy | [BackupPolicy](#arangodb.cloud.backup.v1.BackupPolicy) | [BackupPolicy](#arangodb.cloud.backup.v1.BackupPolicy) | Create a new backup policy Required permissions: - backup.backuppolicy.create on the deployment that owns the backup policy and is identified by the given ID. |
+| UpdateBackupPolicy | [BackupPolicy](#arangodb.cloud.backup.v1.BackupPolicy) | [BackupPolicy](#arangodb.cloud.backup.v1.BackupPolicy) | Update a backup policy Required permissions: - backup.backuppolicy.update on the backup policy identified by the given ID. |
+| DeleteBackupPolicy | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a backup policy identified by the given ID. Note that the backup policy are initially only marked for deletion, no backups will be deleted with this operation. Once all their dependent backups are removed, the backup policy is removed. Required permissions: - backup.backuppolicy.delete on the backup policy identified by the given ID. |
+| ListBackups | [ListBackupsRequest](#arangodb.cloud.backup.v1.ListBackupsRequest) | [BackupList](#arangodb.cloud.backup.v1.BackupList) | Fetch all backups for a specific deployment. Required permissions: - backup.backup.list on the deployment that owns the backup and is identified by the given ID. |
+| GetBackup | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Backup](#arangodb.cloud.backup.v1.Backup) | Fetch a backup identified by the given ID. Required permissions: - backup.backup.get on the backup identified by the given ID. |
+| CreateBackup | [Backup](#arangodb.cloud.backup.v1.Backup) | [Backup](#arangodb.cloud.backup.v1.Backup) | Create a new manual backup Setting the backup_policy_id field in the backup is not allowed Required permissions: - backup.backup.create on the deployment that owns the backup and is identified by the given ID. |
+| UpdateBackup | [Backup](#arangodb.cloud.backup.v1.Backup) | [Backup](#arangodb.cloud.backup.v1.Backup) | Update a backup Required permissions: - backup.backup.update on the backup identified by the given ID. |
+| DownloadBackup | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Download a backup identified by the given ID from remote storage to the volumes of the servers of the deployment If this backup was already be downloaded, another download will be done. If the backup is still available on the cluster there is no need to explicitly download the backup before restoring. This function will return immediately. To track status, please invoke GetBackup and check the .status field inside the returned backup object Required permissions: - backup.backup.download on the backup identified by the given ID. |
+| RestoreBackup | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Restore (or recover) a backup identified by the given ID This operation can only be executed on backups where status.available is set This function will return immediately. To track status, please invoke GetDeployment on the data API and check the .status.restoring_backup and .status.restore_backup_status fields inside the returned deployment object Required permissions (both are needed): - backup.backup.restore on the backup identified by the given ID. - data.deployment.restore-backup on the deployment that owns this backup |
+| DeleteBackup | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a backup identified by the given ID, after which removal of any remote storage of the backup is started. Note that the backup are initially only marked for deletion. Once all remote storage for the backup has been removed, the backup itself is removed. Required permissions: - backup.backup.delete on the backup identified by the given ID. |
+
+ 
+
+
+
+<a name="billing/v1/billing.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## billing/v1/billing.proto
+
+
+
+<a name="arangodb.cloud.billing.v1.Invoice"></a>
+
+### Invoice
+An Invoice message describes a transaction for usage of ArangoDB Oasis.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the invoice. |
+| url | [string](#string) |  | URL of this resource |
+| organization_id | [string](#string) |  | Identifier of the organization that is responsible for the payment of this invoice. |
+| organization_name | [string](#string) |  | Name of the organization that is responsible for the payment of this invoice. |
+| entity_id | [string](#string) |  | Identifier of the legal entity that is the sender of this invoice. |
+| entity_name | [string](#string) |  | Name of the legal entity that is the sender of this invoice. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation date of the invoice |
+| items | [Invoice.Item](#arangodb.cloud.billing.v1.Invoice.Item) | repeated | All items of the invoice |
+| currency_id | [string](#string) |  | Currency for all amounts |
+| total_amount_excl_vat | [float](#float) |  | Sum all amount for all items |
+| total_vat | [float](#float) |  | VAT amount for all items |
+| total_amount_incl_vat | [float](#float) |  | Sum of total_amount_ex_vat &#43; total_vat. This is the amount that the customer will be charged for. |
+| status | [Invoice.Status](#arangodb.cloud.billing.v1.Invoice.Status) |  |  |
+| payments | [Invoice.Payment](#arangodb.cloud.billing.v1.Invoice.Payment) | repeated | All payment attempts for this invoice, ordered by created_at. |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.Invoice.Item"></a>
+
+### Invoice.Item
+A single item of the invoice
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| usageitem_id | [string](#string) |  | Identifier of the UsageItem that this item covers. |
+| amount | [float](#float) |  | Amount of money (ex VAT) for this item |
+| description | [string](#string) |  | Human readable description of this item |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.Invoice.Payment"></a>
+
+### Invoice.Payment
+Payment (attempt) of the invoice
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of the start of the payment attempt. |
+| payment_provider_id | [string](#string) |  | Identifier of the payment provider that is used for this payment. |
+| payment_id | [string](#string) |  | Identifier of this payment (created by payment provider) |
+| payment_method_id | [string](#string) |  | Identifier of the payment method that is used for this payment. |
+| is_pending | [bool](#bool) |  | If set, this payment is still being processed. |
+| is_completed | [bool](#bool) |  | If set, this payment has been payed for succesfully. |
+| is_rejected | [bool](#bool) |  | If set, this payment has been rejected. |
+| completed_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of succesfull completion of the payment. |
+| rejected_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of rejected completion of the payment. |
+| rejection_reason | [string](#string) |  | Human readable reason for the rejection. |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.Invoice.Status"></a>
+
+### Invoice.Status
+Status of the invoice
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| is_pending | [bool](#bool) |  | If set, this invoice is still being processed. |
+| is_completed | [bool](#bool) |  | If set, a successful payment has been made for this invoice. |
+| is_rejected | [bool](#bool) |  | If set, all payment attempts for this invoice have been rejected. |
+| completed_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of succesfull completion of the payment. This field equals the completed_at field of the last payment if that payment succeeded, nil otherwise. |
+| rejected_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of rejected completion of the payment. This field equals the rejected_at field of the last payment if that payment failed, nil otherwise. |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.InvoiceList"></a>
+
+### InvoiceList
+List of Invoices.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Invoice](#arangodb.cloud.billing.v1.Invoice) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.ListInvoicesRequest"></a>
+
+### ListInvoicesRequest
+Request arguments for ListInvoices
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| organization_id | [string](#string) |  | Request invoices for the organization with this id. This is a required field. |
+| from | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request invoices that are created at or after this timestamp. This is an optional field. |
+| to | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request invoices that are created before this timestamp. This is an optional field. |
+| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Standard list options This is an optional field. |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.ListPaymentMethodsRequest"></a>
+
+### ListPaymentMethodsRequest
+Request arguments for ListPaymentMethods
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| organization_id | [string](#string) |  | Identifier of the organization for which payment methods are requested. |
+| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Optional common list options. (Context ID is ignored) |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.ListPaymentProvidersRequest"></a>
+
+### ListPaymentProvidersRequest
+Request arguments for ListPaymentProviders
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| organization_id | [string](#string) |  | Identifier of the organization for which payment providers are requested. |
+| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Optional common list options. (Context ID is ignored) |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.PaymentMethod"></a>
+
+### PaymentMethod
+Payment methods are specific methods for paying at a specific payment provider
+such as a specific credit card.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of this payment method. |
+| name | [string](#string) |  | Name of the payment method |
+| description | [string](#string) |  | Description of the payment method |
+| payment_provider_id | [string](#string) |  | Identifier of the payment provider used for this payment method This is a read-only field. |
+| organization_id | [string](#string) |  | Identifier of the organization that owns this payment method This is a read-only field. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Creation timestamp of this payment method This is a read-only field. |
+| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Deletion timestamp of this payment method This is a read-only field. |
+| is_deleted | [bool](#bool) |  | Set if the payment method is deleted. This is a read-only field. |
+| valid_until | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | If set, this timestamp specifies when the payment method is no longer valid. If not set, there is no (known) end date for this payment method. |
+| token | [string](#string) |  | Token for this payment method, provided by the payment provider. This is a read-only field. |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.PaymentMethodList"></a>
+
+### PaymentMethodList
+List of Payment methods
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.PaymentProvider"></a>
+
+### PaymentProvider
+Payment providers are services that handle payments.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of this payment provider. |
+| name | [string](#string) |  | Name of the payment provider |
+| description | [string](#string) |  | Description of the payment provider |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.PaymentProviderList"></a>
+
+### PaymentProviderList
+List of Payment providers
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [PaymentProvider](#arangodb.cloud.billing.v1.PaymentProvider) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.SetDefaultPaymentMethodRequest"></a>
+
+### SetDefaultPaymentMethodRequest
+Request argument for SetDefaultPaymentMethod
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| organization_id | [string](#string) |  | Identifier of the organization for which the default payment method will be set. |
+| payment_method_id | [string](#string) |  | Identifier of the new default payment method for the organization. |
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+
+<a name="arangodb.cloud.billing.v1.BillingService"></a>
+
+### BillingService
+BillingService is the API used to fetch billing information.
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+| ListInvoices | [ListInvoicesRequest](#arangodb.cloud.billing.v1.ListInvoicesRequest) | [InvoiceList](#arangodb.cloud.billing.v1.InvoiceList) | Fetch all Invoice resources for the organization identified by the given organization ID that match the given criteria. Required permissions: - billing.invoice.list on the organization identified by the given organization ID |
+| GetInvoice | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Invoice](#arangodb.cloud.billing.v1.Invoice) | Fetch a specific Invoice identified by the given ID. Required permissions: - billing.invoice.get on the organization that owns the invoice with given ID. |
+| ListPaymentProviders | [ListPaymentProvidersRequest](#arangodb.cloud.billing.v1.ListPaymentProvidersRequest) | [PaymentProviderList](#arangodb.cloud.billing.v1.PaymentProviderList) | Fetch all payment providers that are usable for the organization identified by the given context ID. Required permissions: - billing.paymentprovider.list on the organization identified by the given context ID |
+| GetPaymentProvider | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [PaymentProvider](#arangodb.cloud.billing.v1.PaymentProvider) | Fetch a specific payment provider identified by the given ID. Required permissions: - None |
+| ListPaymentMethods | [ListPaymentMethodsRequest](#arangodb.cloud.billing.v1.ListPaymentMethodsRequest) | [PaymentMethodList](#arangodb.cloud.billing.v1.PaymentMethodList) | Fetch all payment methods that are configured for the organization identified by the given context ID. Required permissions: - billing.paymentmethod.list on the organization identified by the given context ID |
+| GetPaymentMethod | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | Fetch a specific payment method identified by the given ID. Required permissions: - billing.paymentmethod.get on the organization that owns the payment method which is identified by the given ID |
+| CreatePaymentMethod | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | Create a new payment method. Required permissions: - billing.paymentmethod.create on the organization that owns the given payment method. |
+| UpdatePaymentMethod | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | Update a specific payment method. Note that only name, description &amp; valid period are updated. Required permissions: - billing.paymentmethod.update on the organization that owns the given payment method. |
+| DeletePaymentMethod | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a specific payment method identified by the given ID. Required permissions: - billing.paymentmethod.delete on the organization that owns the given payment method which is identified by the given ID. |
+| GetDefaultPaymentMethod | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | Fetch the default PaymentMethod for an organization identified by the given ID. Required permissions: - billing.paymentmethod.get-default on the organization that is identified by the given ID |
+| SetDefaultPaymentMethod | [SetDefaultPaymentMethodRequest](#arangodb.cloud.billing.v1.SetDefaultPaymentMethodRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Update the default PaymentMethod for an organization identifier by the given organization ID, to the payment method identified by the given payment method ID. Required permissions: - billing.paymentmethod.set-default on the organization identified by the given organization ID |
+
+ 
+
+
+
+<a name="common/v1/common.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## common/v1/common.proto
+
+
+
+<a name="arangodb.cloud.common.v1.Budget"></a>
+
+### Budget
+Budget for resources of a specific kind
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| used | [int64](#int64) |  | How many resources of the specific kind are in use |
+| available | [int64](#int64) |  | How many resources of the specific kind are still available. Note a value above 0 does not mean that the caller has permission to add those resources. |
+| unlimited | [bool](#bool) |  | If set, there is no limit to the number of resources of a specific kind that can be created. If set, available is 0. |
+
+
+
+
+
+
+<a name="arangodb.cloud.common.v1.Empty"></a>
+
+### Empty
+Empty message
+
+
+
+
+
+
+<a name="arangodb.cloud.common.v1.IDOptions"></a>
+
+### IDOptions
+Options for a get-by-id request
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the object to fetch. |
+
+
+
+
+
+
+<a name="arangodb.cloud.common.v1.ListOptions"></a>
+
+### ListOptions
+Options for a list request.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| page_size | [int32](#int32) |  | Maximum number of items to return. If not specified, all remaining items are returned. |
+| page | [int64](#int64) |  | Page to start with (defaults to 0). |
+| context_id | [string](#string) |  | Identifier of the resource in which the list request is made. |
+
+
+
+
+
+
+<a name="arangodb.cloud.common.v1.URLOptions"></a>
+
+### URLOptions
+Options for a get-by-url request
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| url | [string](#string) |  | URL of the resource to fetch. |
+
+
+
+
+
+
+<a name="arangodb.cloud.common.v1.YesOrNo"></a>
+
+### YesOrNo
+Response for single boolean.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| result | [bool](#bool) |  |  |
+
+
+
+
+
+ 
+
+ 
+
+ 
 
  
 
@@ -760,46 +1008,54 @@ CryptoService is the API used to configure various crypto objects.
 
 
 
-<a name="security/v1/security.proto"></a>
+<a name="currency/v1/currency.proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
-## security/v1/security.proto
+## currency/v1/currency.proto
 
 
 
-<a name="arangodb.cloud.security.v1.IPWhitelist"></a>
+<a name="arangodb.cloud.currency.v1.Currency"></a>
 
-### IPWhitelist
-IPWhitelist represents a list of CIDR ranges from which a deployment is accessible.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the whitelist. This is a read-only value. |
-| url | [string](#string) |  | URL of the whitelist. This is a read-only value. |
-| name | [string](#string) |  | Name of the whitelist. |
-| description | [string](#string) |  | Description of the whitelist. |
-| project_id | [string](#string) |  | Identifier of the project that contains this whitelist. |
-| cidr_ranges | [string](#string) | repeated | List of CIDR ranges. Values must follow format as defined in RFC 4632 and RFC 4291. |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of this whitelist. This is a read-only value. |
-| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the whitelist This is a read-only value. |
-| is_deleted | [bool](#bool) |  | Set when this whitelist is deleted. This is a read-only value. |
-| created_by_id | [string](#string) |  | Identifier of the user who created this whitelist. This is a read-only value. |
-
-
-
-
-
-
-<a name="arangodb.cloud.security.v1.IPWhitelistList"></a>
-
-### IPWhitelistList
-List of IP whitelists.
+### Currency
+Currency represents a specific monetary currency.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| items | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | repeated |  |
+| id | [string](#string) |  | System identifier of the currency. E.g. &#34;eur&#34; or &#34;usd&#34; |
+| name | [string](#string) |  | Human readable name of the currency E.g. &#34;US Dollar&#34; |
+| sign | [string](#string) |  | Human readable sign for the currency. E.g. &#34;$&#34; |
+
+
+
+
+
+
+<a name="arangodb.cloud.currency.v1.CurrencyList"></a>
+
+### CurrencyList
+List of currencies.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Currency](#arangodb.cloud.currency.v1.Currency) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.currency.v1.GetDefaultCurrencyRequest"></a>
+
+### GetDefaultCurrencyRequest
+Request arguments for GetDefaultCurrency.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| organization_id | [string](#string) |  | Optional identifier for the organization to request the default currency for. |
 
 
 
@@ -812,279 +1068,446 @@ List of IP whitelists.
  
 
 
-<a name="arangodb.cloud.security.v1.SecurityService"></a>
+<a name="arangodb.cloud.currency.v1.CurrencyService"></a>
 
-### SecurityService
-SecurityService is the API used to access security entities.
+### CurrencyService
+CurrencyService is the API used to query for supported currencies.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| ListIPWhitelists | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [IPWhitelistList](#arangodb.cloud.security.v1.IPWhitelistList) | Fetch all IP whitelists that belong to the project identified by the given context ID. Required permissions: - security.ipwhitelist.list on the project identified by the given context ID. |
-| GetIPWhitelist | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | Fetch an IP whitelist by its id. Required permissions: - security.ipwhitelist.get on the IP whitelist |
-| CreateIPWhitelist | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | Create a new IP whitelist Required permissions: - security.ipwhitelist.create on the project that owns the IP whitelist. |
-| UpdateIPWhitelist | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | Update an IP whitelist Required permissions: - security.ipwhitelist.update on the IP whitelist |
-| DeleteIPWhitelist | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete an IP whitelist. Note that IP whitelists are initially only marked for deletion. Once all their dependent deployments are removed, the whitelist is removed. Required permissions: - security.ipwhitelist.delete on the IP whitelist |
+| ListCurrencies | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [CurrencyList](#arangodb.cloud.currency.v1.CurrencyList) | Fetch all providers that are supported by the ArangoDB cloud. Required permissions: - None |
+| GetCurrency | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Currency](#arangodb.cloud.currency.v1.Currency) | Fetch a currency by its id. Required permissions: - None |
+| GetDefaultCurrency | [GetDefaultCurrencyRequest](#arangodb.cloud.currency.v1.GetDefaultCurrencyRequest) | [Currency](#arangodb.cloud.currency.v1.Currency) | Fetch the default currency for a given (optional) organization. Required permissions: - resourcemanager.organization.get On the organization identified by given id. - None In case no organization identifier was given. |
 
  
 
 
 
-<a name="platform/v1/platform.proto"></a>
+<a name="data/v1/data.proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
-## platform/v1/platform.proto
+## data/v1/data.proto
 
 
 
-<a name="arangodb.cloud.platform.v1.ListProvidersRequest"></a>
+<a name="arangodb.cloud.data.v1.CalculateDeploymentSizeRequest"></a>
 
-### ListProvidersRequest
-Request arguments for ListProviders
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Common list options |
-| organization_id | [string](#string) |  | If set, the result includes all providers for that are available for the organization identified by this ID. If not set, only providers are returned that are available to all organizations. |
-
-
-
-
-
-
-<a name="arangodb.cloud.platform.v1.ListRegionsRequest"></a>
-
-### ListRegionsRequest
-Request arguments for ListRegions
+### CalculateDeploymentSizeRequest
+Request arguments for CalculateDeploymentSize
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Common list options |
-| provider_id | [string](#string) |  | Required identifier of the provider to list regions for. |
-| organization_id | [string](#string) |  | If set, the result includes all regions for that are available for the organization identified by this ID. If not set, only regions are returned that are available to all organizations. |
+| coordinators | [int32](#int32) |  | Number of coordinators of the deployment |
+| coordinator_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for each coordinator. |
+| dbservers | [int32](#int32) |  | Number of dbservers of the deployment |
+| dbserver_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for each dbserver. |
+| dbserver_disk_size | [int32](#int32) |  | Amount of disk space (in GB) to allocate for each dbserver. |
 
 
 
 
 
 
-<a name="arangodb.cloud.platform.v1.Provider"></a>
+<a name="arangodb.cloud.data.v1.ConnectDriverInstructions"></a>
 
-### Provider
-Provider represents a specific cloud provider such as AWS or GCP.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the provider. |
-| name | [string](#string) |  | Name of the provider |
-
-
-
-
-
-
-<a name="arangodb.cloud.platform.v1.ProviderList"></a>
-
-### ProviderList
-List of providers.
+### ConnectDriverInstructions
+Instructions for connecting a driver to a deployment
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| items | [Provider](#arangodb.cloud.platform.v1.Provider) | repeated |  |
+| drivers | [ConnectDriverInstructions.DriverInstructions](#arangodb.cloud.data.v1.ConnectDriverInstructions.DriverInstructions) | repeated | Per driver instructions for connecting to a deployment |
 
 
 
 
 
 
-<a name="arangodb.cloud.platform.v1.Region"></a>
+<a name="arangodb.cloud.data.v1.ConnectDriverInstructions.DriverInstructions"></a>
 
-### Region
-Region represents a geographical region in which deployments are run.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the region. |
-| provider_id | [string](#string) |  | Identifier of the provider that hosts this region. |
-| location | [string](#string) |  | Location of the region |
-| available | [bool](#bool) |  | Is this region available for creating new deployments? |
-
-
-
-
-
-
-<a name="arangodb.cloud.platform.v1.RegionList"></a>
-
-### RegionList
-List of regions.
+### ConnectDriverInstructions.DriverInstructions
+Instructions for a specific driver
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| items | [Region](#arangodb.cloud.platform.v1.Region) | repeated |  |
+| name | [string](#string) |  | Human readable name of the driver. E.g. &#34;ArangoDB Go driver&#34; |
+| code | [string](#string) | repeated | Lines of code |
+| remarks | [string](#string) | repeated | Human readable remarks |
+| driver_url | [string](#string) |  | URL for getting more information on the driver. |
 
 
 
 
 
- 
 
- 
+<a name="arangodb.cloud.data.v1.DataVolumeInfo"></a>
 
- 
-
-
-<a name="arangodb.cloud.platform.v1.PlatformService"></a>
-
-### PlatformService
-PlatformService is the API used to query for cloud provider &amp; regional info.
-
-| Method Name | Request Type | Response Type | Description |
-| ----------- | ------------ | ------------- | ------------|
-| ListProviders | [ListProvidersRequest](#arangodb.cloud.platform.v1.ListProvidersRequest) | [ProviderList](#arangodb.cloud.platform.v1.ProviderList) | Fetch all providers that are supported by the ArangoDB cloud. Required permissions: - None |
-| GetProvider | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Provider](#arangodb.cloud.platform.v1.Provider) | Fetch a provider by its id. Required permissions: - None |
-| ListRegions | [ListRegionsRequest](#arangodb.cloud.platform.v1.ListRegionsRequest) | [RegionList](#arangodb.cloud.platform.v1.RegionList) | Fetch all regions provided by the provided identified by the given context ID. If the given context identifier contains a valid organization ID, the result includes all regions for that organization. Otherwise only regions are returned that are available to all organizations. Required permissions: - None |
-| GetRegion | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Region](#arangodb.cloud.platform.v1.Region) | Fetch a region by its id. Required permissions: - None |
-
- 
-
-
-
-<a name="usage/v1/usage.proto"></a>
-<p align="right"><a href="#top">Top</a></p>
-
-## usage/v1/usage.proto
-
-
-
-<a name="arangodb.cloud.usage.v1.ListUsageItemsRequest"></a>
-
-### ListUsageItemsRequest
-Request arguments for ListUsageItems
+### DataVolumeInfo
+DataVolumeInfo provides information about a data volume
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| organization_id | [string](#string) |  | Request usage items for the organization with this id. This is a required field. |
-| from | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request usage items that overlaps in time with the time period that starts with this timestamp (inclusive). This is a required field. |
-| to | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request usage items that overlaps in time with the time period that ends with this timestamp (inclusive). This is a required field. |
-| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Standard list options This is an optional field. |
-| resource_url | [string](#string) |  | Limit to usage items for the resource with this URL. This is an optional field. |
-| resource_kind | [string](#string) |  | Limit to usage items for the resource with this kind. This is an optional field. |
-| project_id | [string](#string) |  | Limit to usage items for the project with this id. This is an optional field. |
-| deployment_id | [string](#string) |  | Limit to usage items for the deployment with this id. This is an optional field. |
-| has_no_invoice_id | [bool](#bool) |  | If set, limit to usage items that have no invoice_id set. |
-| has_invoice_id | [bool](#bool) |  | If set, limit to usage items that have an invoice_id set. |
+| total_bytes | [int64](#int64) |  | The total number of bytes of the data volume. |
+| used_bytes | [int64](#int64) |  | The number of bytes used on the data volume. |
+| available_bytes | [int64](#int64) |  | The number of bytes available on the data volume. |
+| measured_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | When this info has been measused |
 
 
 
 
 
 
-<a name="arangodb.cloud.usage.v1.UsageItem"></a>
+<a name="arangodb.cloud.data.v1.Deployment"></a>
 
-### UsageItem
-A UsageItem message contained usage tracking information for a tracked
-resource (usually deployment) in a specific time period.
+### Deployment
+A Deployment is represents one deployment of an ArangoDB cluster.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the usage item. |
-| url | [string](#string) |  | URL of this resource |
-| kind | [string](#string) |  | Kind of usage item |
-| resource | [UsageItem.Resource](#arangodb.cloud.usage.v1.UsageItem.Resource) |  | Identification of the resource covered by this usage item |
-| starts_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | This usage item covers a time period that starts at this timestamp |
-| ends_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | This usage item covers a time period that ends at this timestamp. If the usage item has not yet ended, this field is is set to the current time. |
-| has_ended | [bool](#bool) |  | Set when this usage item has ended. |
-| tier_id | [string](#string) |  | Identifier of the tier the organization was using at the start of this usage period. |
-| invoice_id | [string](#string) |  | Identifier of the invoice that includes this usage item. The usage item must be ended when this field it set. |
-| deployment_size | [UsageItem.DeploymentSize](#arangodb.cloud.usage.v1.UsageItem.DeploymentSize) |  | Amount of (computer) resources used by the resource covered by this usage item. This field is only set when the usage item is of kind DeploymentSize. |
-| network_transfer_size | [UsageItem.NetworkTransferSize](#arangodb.cloud.usage.v1.UsageItem.NetworkTransferSize) |  | Amount of network traffic used by the resource covered by this usage item. This field is only set when the usage item is of kind NetworkTransferSize. |
+| id | [string](#string) |  | System identifier of the deployment. This is a read-only value. |
+| url | [string](#string) |  | URL of this resource This is a read-only value. |
+| name | [string](#string) |  | Name of the deployment |
+| description | [string](#string) |  | Description of the deployment |
+| project_id | [string](#string) |  | Identifier of the project that owns this deployment. After creation, this value cannot be changed. |
+| region_id | [string](#string) |  | Identifier of the region in which the deployment is created. After creation, this value cannot be changed. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the deployment This is a read-only value. |
+| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the deployment This is a read-only value. |
+| is_deleted | [bool](#bool) |  | Set when this deployment is deleted. This is a read-only value. |
+| support_plan_id | [string](#string) |  | Optional identifier of the support plan selected for this deployment. After creation, this value cannot be changed. If no support plan identifier is set, the default support plan is used. |
+| created_by_id | [string](#string) |  | Identifier of the user who created this deployment. This is a read-only value. |
+| version | [string](#string) |  | ArangoDB version to use for this deployment. See Version.version. If you change this value to a higher version, the deployment will be upgraded. If you change this value to a lower patch value, the deployment will be downgraded. Any attempt to change to a lower minor or major version is considered an invalid request. Any attempt to change to a version that is not in the list of available versions is considered an invalid request. |
+| certificates | [Deployment.CertificateSpec](#arangodb.cloud.data.v1.Deployment.CertificateSpec) |  |  |
+| servers | [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  |  |
+| ipwhitelist_id | [string](#string) |  | Optional identifier of IP whitelist to use for this deployment. |
+| status | [Deployment.Status](#arangodb.cloud.data.v1.Deployment.Status) |  |  |
+| size | [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize) |  | Detailed size of the deployment This is a read-only field. |
+| expiration | [Deployment.Expiration](#arangodb.cloud.data.v1.Deployment.Expiration) |  |  |
 
 
 
 
 
 
-<a name="arangodb.cloud.usage.v1.UsageItem.DeploymentSize"></a>
+<a name="arangodb.cloud.data.v1.Deployment.CertificateSpec"></a>
 
-### UsageItem.DeploymentSize
+### Deployment.CertificateSpec
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ca_certificate_id | [string](#string) |  | Identifier of the CACertificate used to sign TLS certificates for the deployment. If you change this value after the creation of the deployment a complete rotation of the deployment is required, which will result in some downtime. |
+| alternate_dns_names | [string](#string) | repeated | Zero or more DNS names to include in the TLS certificate of the deployment. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.Deployment.Expiration"></a>
+
+### Deployment.Expiration
+Expiration of the deployment.
+All members of this message are read-only.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| expires_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The expiration timestamp of the deployment If not set, the deployment will not expire. |
+| reason | [string](#string) |  | Human readable reason for why the deployment expires (or does not expire). |
+| last_warning_email_send_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of when the last &#34;this deployment will expire at&#34; email was send. If not set, no such email has been send. |
+| last_warning_email_send_to | [string](#string) | repeated | List of email addresses to which the last warning email has been send. Not set when no such email has been send. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.Deployment.ServerStatus"></a>
+
+### Deployment.ServerStatus
+Status of a single server (of the ArangoDB cluster)
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | ID of the server |
+| type | [string](#string) |  | Type of server (agent|coordinator|dbserver) |
+| description | [string](#string) |  | Human readable description of the status of the deployment. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the server |
+| ready | [bool](#bool) |  | Set once the server is ready |
+| member_of_cluster | [bool](#bool) |  | Set once the server has been known to be a member of the cluster |
+| failed | [bool](#bool) |  | Set if the server is in a failed state Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading. |
+| creating | [bool](#bool) |  | Set if the server is still being created Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading. |
+| ok | [bool](#bool) |  | Set if the server is in the ok state. Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading. |
+| upgrading | [bool](#bool) |  | Set if the server is still being upgraded Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading. |
+| version | [string](#string) |  | Latest known ArangoDB version used by this server. Initially this field is empty. |
+| data_volume_info | [DataVolumeInfo](#arangodb.cloud.data.v1.DataVolumeInfo) |  | Information about the data volume used to store the data |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.Deployment.ServersSpec"></a>
+
+### Deployment.ServersSpec
 
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | coordinators | [int32](#int32) |  | Number of coordinators of the deployment |
-| coordinator_memory_size | [int32](#int32) |  | Amount of memory (in GB) allocated for each coordinator. |
+| coordinator_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for coordinators. |
+| coordinator_args | [string](#string) | repeated | Custom command line arguments passed to all coordinators. |
 | dbservers | [int32](#int32) |  | Number of dbservers of the deployment |
-| dbserver_memory_size | [int32](#int32) |  | Amount of memory (in GB) allocated for each dbserver. |
-| dbserver_disk_size | [int32](#int32) |  | Amount of disk space (in GB) allocated for each dbserver. |
-| agents | [int32](#int32) |  | Number of agents of the deployment |
-| agent_memory_size | [int32](#int32) |  | Amount of memory (in GB) allocated for each agent. |
-| agent_disk_size | [int32](#int32) |  | Amount of disk space (in GB) allocated for each agent. |
+| dbserver_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for dbservers. |
+| dbserver_disk_size | [int32](#int32) |  | Amount of disk space (in GB) to allocate for dbservers. |
+| dbserver_args | [string](#string) | repeated | Custom command line arguments passed to all dbservers. |
 
 
 
 
 
 
-<a name="arangodb.cloud.usage.v1.UsageItem.NetworkTransferSize"></a>
+<a name="arangodb.cloud.data.v1.Deployment.Status"></a>
 
-### UsageItem.NetworkTransferSize
+### Deployment.Status
+Status of the deployment
+All members of this field are read-only.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| endpoint | [string](#string) |  | Endpoint URL used to reach the deployment This value will be empty during the creation of the deployment. |
+| description | [string](#string) |  | Human readable description of the status of the deployment. |
+| created | [bool](#bool) |  | Set once the deployment has been created. |
+| ready | [bool](#bool) |  | Set if the deployment is ready to be used. If the deployment has downtime (e.g. because of changing a CA certificate) this will go to false until the downtime is over. |
+| upgrading | [bool](#bool) |  | Set if the deployment is being upgraded. |
+| server_versions | [string](#string) | repeated | Versions of running servers |
+| servers | [Deployment.ServerStatus](#arangodb.cloud.data.v1.Deployment.ServerStatus) | repeated | Status of individual servers of the deployment |
+| bootstrapped_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Set if the ready boolean is transitioned to true for the very first time. |
+| bootstrapped | [bool](#bool) |  | Set if bootstrapped_at has a value, otherwise false. |
+| restoring_backup | [bool](#bool) |  | Set if the deployment is restoring a backup |
+| restore_backup_status | [string](#string) |  | Status of the restore backup operation. Enum of the following values: &#34;&lt;empty&gt;|Restoring|Restored|Failed&#34; The discription will be used for a human readable status |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.DeploymentCredentials"></a>
+
+### DeploymentCredentials
+Result for GetDeploymentCredentials
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| username | [string](#string) |  | Name of the user for which credentials were asked. Default to username of root user. |
+| password | [string](#string) |  | Password of the user for which credentials were asked. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.DeploymentCredentialsRequest"></a>
+
+### DeploymentCredentialsRequest
+Request arguments for GetDeploymentCredentials
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| deployment_id | [string](#string) |  | Identifier of deployment to request credentials for. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.DeploymentList"></a>
+
+### DeploymentList
+List of Deployments.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Deployment](#arangodb.cloud.data.v1.Deployment) | repeated | Actual deployments |
+| budget | [arangodb.cloud.common.v1.Budget](#arangodb.cloud.common.v1.Budget) |  | Budget for deployments |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.DeploymentSize"></a>
+
+### DeploymentSize
+Result of CalculateDeploymentSize
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| agents | [int32](#int32) |  | Number of agents |
+| agent_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for each agent. |
+| agent_disk_size | [int32](#int32) |  | Amount of disk space (in GB) to allocate for each agent. |
+| total_memory_size | [int32](#int32) |  | Total (combined) amount of memory (in GB) used by all servers (agents, coordinators &amp; dbservers) |
+| total_disk_size | [int32](#int32) |  | Total (combined) amount of disk space (in GB) used by all servers (agents &amp; dbservers) |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.ListVersionsRequest"></a>
+
+### ListVersionsRequest
+Request arguments for ListVersions.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Common list options |
+| organization_id | [string](#string) |  | If set, the result includes all versions for that are available for the organization identified by this ID. If not set, only versions are returned that are available to all organizations. |
+| current_version | [string](#string) |  | If set, only versions will be returned that are safe to upgrade to from this version. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.ServersSpecLimits"></a>
+
+### ServersSpecLimits
+Limits of allowed values for fields of Deployment.ServersSpec.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| coordinators | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Limits for the number of coordinators of the deployment |
+| coordinator_memory_size | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Possible values for the amount of memory (in GB) to allocate for coordinators. |
+| dbservers | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Limits for the number of dbservers of the deployment |
+| dbserver_memory_size | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Possible values for the amount of memory (in GB) to allocate for dbservers. |
+| dbserver_disk_size | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Amount of disk space (in GB) to allocate for dbservers. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.ServersSpecLimits.Limits"></a>
+
+### ServersSpecLimits.Limits
 
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| transfer_size | [int64](#int64) |  | Amount of network traffic (in bytes) caused by the use of a deployment. |
+| min | [int32](#int32) |  | Minimum value |
+| max | [int32](#int32) |  | Maximum value |
+| allowed_values | [int32](#int32) | repeated | Set of allowed values. If this field is non-empty, only one of these values is allowed. |
 
 
 
 
 
 
-<a name="arangodb.cloud.usage.v1.UsageItem.Resource"></a>
+<a name="arangodb.cloud.data.v1.ServersSpecLimitsRequest"></a>
 
-### UsageItem.Resource
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the resource that this usage item covers. |
-| url | [string](#string) |  | URL of the resource that this usage item covers |
-| kind | [string](#string) |  | Kind of resource that this usage item covers. |
-| description | [string](#string) |  | Human readable description of the resource that this usage item covers. |
-| organization_id | [string](#string) |  | Identifier of the organization that owns the resource that this usage item covers. |
-| organization_name | [string](#string) |  | Name of the organization that owns the resource that this usage item covers. |
-| project_id | [string](#string) |  | Identifier of the project that owns the resource that this usage item covers. |
-| project_name | [string](#string) |  | Name of the project that owns the resource that this usage item covers. |
-| deployment_id | [string](#string) |  | Identifier of the deployment that owns the resource that this usage item covers. |
-| deployment_name | [string](#string) |  | Name of the deployment that owns the resource that this usage item covers. |
-| deployment_member_name | [string](#string) |  | Name of the deployment member that owns the resource that this usage item covers. This field is only set when the usage item is specific for a member of the deployment (e.g. network transfer) |
-| cloud_provider_id | [string](#string) |  | Identifier of the cloud provider that is used to run the deployment. |
-| cloud_region_id | [string](#string) |  | Identifier of the cloud region that is used to run the deployment. |
-
-
-
-
-
-
-<a name="arangodb.cloud.usage.v1.UsageItemList"></a>
-
-### UsageItemList
-List of UsageItems.
+### ServersSpecLimitsRequest
+Request arguments for ListServersSpecLimits
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| items | [UsageItem](#arangodb.cloud.usage.v1.UsageItem) | repeated |  |
+| project_id | [string](#string) |  | Identifier of project that will own a deployment. |
+| region_id | [string](#string) |  | Identifier of a region in which a deployment will be created. |
+| deployment_id | [string](#string) |  | Optional identifier of a deployment for which compatible server specifications are request. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.ServersSpecPreset"></a>
+
+### ServersSpecPreset
+Specification of a ServersSpecPreset, which can be used to initialize a deployment.servers
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| name | [string](#string) |  | Name of the ServersSpecPreset This is a read-only value. |
+| is_default | [bool](#bool) |  | Set when this preset is the default. This is a read-only value. |
+| servers | [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  | The ServersSpec associated for this name |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.ServersSpecPresetList"></a>
+
+### ServersSpecPresetList
+List of ServersSpecPreset.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [ServersSpecPreset](#arangodb.cloud.data.v1.ServersSpecPreset) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.ServersSpecPresetsRequest"></a>
+
+### ServersSpecPresetsRequest
+Request arguments for ListServersSpecPresets and GetDefaultServersSpecPreset
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| project_id | [string](#string) |  | Identifier of project that will own a deployment. |
+| region_id | [string](#string) |  | Identifier of a region in which a deployment will be created. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.Version"></a>
+
+### Version
+Version of an ArangoDB release
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| version | [string](#string) |  | Version in the format of major.minor.patch |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.VersionList"></a>
+
+### VersionList
+List of Versions.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Version](#arangodb.cloud.data.v1.Version) | repeated |  |
 
 
 
@@ -1097,119 +1520,25 @@ List of UsageItems.
  
 
 
-<a name="arangodb.cloud.usage.v1.UsageService"></a>
+<a name="arangodb.cloud.data.v1.DataService"></a>
 
-### UsageService
-UsageService is the API used to fetch usage tracking information.
+### DataService
+DataService is the API used to configure data objects.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| ListUsageItems | [ListUsageItemsRequest](#arangodb.cloud.usage.v1.ListUsageItemsRequest) | [UsageItemList](#arangodb.cloud.usage.v1.UsageItemList) | Fetch all UsageItem resources in the organization identified by the given organization ID that match the given criteria. Required permissions: - usage.usageitem.list on the organization identified by the given organization ID |
-
- 
-
-
-
-<a name="common/v1/common.proto"></a>
-<p align="right"><a href="#top">Top</a></p>
-
-## common/v1/common.proto
-
-
-
-<a name="arangodb.cloud.common.v1.Budget"></a>
-
-### Budget
-Budget for resources of a specific kind
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| used | [int64](#int64) |  | How many resources of the specific kind are in use |
-| available | [int64](#int64) |  | How many resources of the specific kind are still available. Note a value above 0 does not mean that the caller has permission to add those resources. |
-| unlimited | [bool](#bool) |  | If set, there is no limit to the number of resources of a specific kind that can be created. If set, available is 0. |
-
-
-
-
-
-
-<a name="arangodb.cloud.common.v1.Empty"></a>
-
-### Empty
-Empty message
-
-
-
-
-
-
-<a name="arangodb.cloud.common.v1.IDOptions"></a>
-
-### IDOptions
-Options for a get-by-id request
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the object to fetch. |
-
-
-
-
-
-
-<a name="arangodb.cloud.common.v1.ListOptions"></a>
-
-### ListOptions
-Options for a list request.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| page_size | [int32](#int32) |  | Maximum number of items to return. If not specified, all remaining items are returned. |
-| page | [int64](#int64) |  | Page to start with (defaults to 0). |
-| context_id | [string](#string) |  | Identifier of the resource in which the list request is made. |
-
-
-
-
-
-
-<a name="arangodb.cloud.common.v1.URLOptions"></a>
-
-### URLOptions
-Options for a get-by-url request
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| url | [string](#string) |  | URL of the resource to fetch. |
-
-
-
-
-
-
-<a name="arangodb.cloud.common.v1.YesOrNo"></a>
-
-### YesOrNo
-Response for single boolean.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| result | [bool](#bool) |  |  |
-
-
-
-
-
- 
-
- 
-
- 
+| ListDeployments | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [DeploymentList](#arangodb.cloud.data.v1.DeploymentList) | Fetch all deployments in the project identified by the given context ID. Required permissions: - data.deployment.list on the project identified by the given context ID |
+| GetDeployment | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Fetch a deployment by its id. Required permissions: - data.deployment.get on the deployment identified by the given ID |
+| CreateDeployment | [Deployment](#arangodb.cloud.data.v1.Deployment) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Create a new deployment Required permissions: - data.deployment.create on the project that owns the deployment Note that deployment.status &amp; deployment.expiration are ignored in this request. |
+| UpdateDeployment | [Deployment](#arangodb.cloud.data.v1.Deployment) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Update a deployment Required permissions: - data.deployment.update on the deployment Note that deployment.status &amp; deployment.expiration are ignored in this request. |
+| DeleteDeployment | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a deployment Note that deployments are initially only marked for deletion. Once all their resources are removed the deployment itself is removed. Required permissions: - data.deployment.delete on the deployment |
+| GetDeploymentCredentials | [DeploymentCredentialsRequest](#arangodb.cloud.data.v1.DeploymentCredentialsRequest) | [DeploymentCredentials](#arangodb.cloud.data.v1.DeploymentCredentials) | Fetch credentials for accessing deployment by its id. Required permissions: - data.deployment.get on the deployment identified by the given ID - data.deploymentcredentials.get on the deployment identified by the given ID |
+| ListVersions | [ListVersionsRequest](#arangodb.cloud.data.v1.ListVersionsRequest) | [VersionList](#arangodb.cloud.data.v1.VersionList) | Fetch all ArangoDB versions that are available for deployments. Required permissions: - None |
+| GetDefaultVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [Version](#arangodb.cloud.data.v1.Version) | Fetch the default ArangoDB version for new deployment. Required permissions: - None |
+| GetServersSpecLimits | [ServersSpecLimitsRequest](#arangodb.cloud.data.v1.ServersSpecLimitsRequest) | [ServersSpecLimits](#arangodb.cloud.data.v1.ServersSpecLimits) | Fetch the limits for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.limits.get on the requested project - data.deployment.get on the specified deployment (if deployment_id is set) |
+| ListServersSpecPresets | [ServersSpecPresetsRequest](#arangodb.cloud.data.v1.ServersSpecPresetsRequest) | [ServersSpecPresetList](#arangodb.cloud.data.v1.ServersSpecPresetList) | Fetch the presets for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.presets.list on the requested project |
+| CalculateDeploymentSize | [CalculateDeploymentSizeRequest](#arangodb.cloud.data.v1.CalculateDeploymentSizeRequest) | [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize) | Calculate the total size of a deployment with given arguments. Required permissions: - none |
+| GetConnectDriverInstructions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [ConnectDriverInstructions](#arangodb.cloud.data.v1.ConnectDriverInstructions) | Fetch instructions for connecting drivers to the deployment identified by the given id. Required permissions: - data.deployment.get on the deployment identified by the given ID |
 
  
 
@@ -1678,6 +2007,640 @@ IAMService is the API used to configure IAM objects.
 
 
 
+<a name="platform/v1/platform.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## platform/v1/platform.proto
+
+
+
+<a name="arangodb.cloud.platform.v1.ListProvidersRequest"></a>
+
+### ListProvidersRequest
+Request arguments for ListProviders
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Common list options |
+| organization_id | [string](#string) |  | If set, the result includes all providers for that are available for the organization identified by this ID. If not set, only providers are returned that are available to all organizations. |
+
+
+
+
+
+
+<a name="arangodb.cloud.platform.v1.ListRegionsRequest"></a>
+
+### ListRegionsRequest
+Request arguments for ListRegions
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Common list options |
+| provider_id | [string](#string) |  | Required identifier of the provider to list regions for. |
+| organization_id | [string](#string) |  | If set, the result includes all regions for that are available for the organization identified by this ID. If not set, only regions are returned that are available to all organizations. |
+
+
+
+
+
+
+<a name="arangodb.cloud.platform.v1.Provider"></a>
+
+### Provider
+Provider represents a specific cloud provider such as AWS or GCP.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the provider. |
+| name | [string](#string) |  | Name of the provider |
+
+
+
+
+
+
+<a name="arangodb.cloud.platform.v1.ProviderList"></a>
+
+### ProviderList
+List of providers.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Provider](#arangodb.cloud.platform.v1.Provider) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.platform.v1.Region"></a>
+
+### Region
+Region represents a geographical region in which deployments are run.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the region. |
+| provider_id | [string](#string) |  | Identifier of the provider that hosts this region. |
+| location | [string](#string) |  | Location of the region |
+| available | [bool](#bool) |  | Is this region available for creating new deployments? |
+
+
+
+
+
+
+<a name="arangodb.cloud.platform.v1.RegionList"></a>
+
+### RegionList
+List of regions.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Region](#arangodb.cloud.platform.v1.Region) | repeated |  |
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+
+<a name="arangodb.cloud.platform.v1.PlatformService"></a>
+
+### PlatformService
+PlatformService is the API used to query for cloud provider &amp; regional info.
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+| ListProviders | [ListProvidersRequest](#arangodb.cloud.platform.v1.ListProvidersRequest) | [ProviderList](#arangodb.cloud.platform.v1.ProviderList) | Fetch all providers that are supported by the ArangoDB cloud. Required permissions: - None |
+| GetProvider | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Provider](#arangodb.cloud.platform.v1.Provider) | Fetch a provider by its id. Required permissions: - None |
+| ListRegions | [ListRegionsRequest](#arangodb.cloud.platform.v1.ListRegionsRequest) | [RegionList](#arangodb.cloud.platform.v1.RegionList) | Fetch all regions provided by the provided identified by the given context ID. If the given context identifier contains a valid organization ID, the result includes all regions for that organization. Otherwise only regions are returned that are available to all organizations. Required permissions: - None |
+| GetRegion | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Region](#arangodb.cloud.platform.v1.Region) | Fetch a region by its id. Required permissions: - None |
+
+ 
+
+
+
+<a name="resourcemanager/v1/resourcemanager.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## resourcemanager/v1/resourcemanager.proto
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.Event"></a>
+
+### Event
+An Event represents something that happened to an organization
+in the ArangoDB Managed service.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the event. This is a read-only value. |
+| url | [string](#string) |  | URL of this resource This is a read-only value and cannot be initialized. |
+| organization_id | [string](#string) |  | Identifier of the organization that owns this event. This is a read-only value. |
+| subject_id | [string](#string) |  | Identifier of the subject of this event. This is a read-only value. If the subject of this event is an organization, this value is a duplicate of organization_id. |
+| type | [string](#string) |  | Type of the event. |
+| payload | [Event.PayloadEntry](#arangodb.cloud.resourcemanager.v1.Event.PayloadEntry) | repeated | Payload of the event. The fields used in the payload are specific to the type of event. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the event |
+| subject_url | [string](#string) |  | URL of the subject of this event. This is a read-only value. |
+| volatile | [bool](#bool) |  | If set, this event is not persisted. This is a read-only value. |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.Event.PayloadEntry"></a>
+
+### Event.PayloadEntry
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | [string](#string) |  |  |
+| value | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.EventList"></a>
+
+### EventList
+List of Events.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Event](#arangodb.cloud.resourcemanager.v1.Event) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationRequest"></a>
+
+### IsMemberOfOrganizationRequest
+Request arguments for IsMemberOfOrganization.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| user_id | [string](#string) |  | Identifier of the user |
+| organization_id | [string](#string) |  | Identifier of the organization |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationResponse"></a>
+
+### IsMemberOfOrganizationResponse
+Response for IsMemberOfOrganization.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| member | [bool](#bool) |  | Set if the requested user is a member of the requested organization. |
+| owner | [bool](#bool) |  | Set if the requested user is an owner of the requested organization. |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.ListEventOptions"></a>
+
+### ListEventOptions
+Options for ListEvents
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Standard list options |
+| subject_ids | [string](#string) | repeated | If set, filter on the subject_id of event |
+| types | [string](#string) | repeated | If set, filter on the type of event |
+| created_after | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | If set, filter of events created after this timestamp |
+| created_before | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | If set, filter of events created before this timestamp |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.ListQuotasRequest"></a>
+
+### ListQuotasRequest
+Request arguments for ListXyzQuotas
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Common list options |
+| kinds | [string](#string) | repeated | If set, limit the returned list of quota&#39;s to these kinds. |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.Member"></a>
+
+### Member
+Member of an organization.
+A member is always a user.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| user_id | [string](#string) |  | Identifier of the user |
+| owner | [bool](#bool) |  | Set if this user is owner of the organization |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.MemberList"></a>
+
+### MemberList
+List of Members.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Member](#arangodb.cloud.resourcemanager.v1.Member) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.Organization"></a>
+
+### Organization
+An Organization is represents a real world organization such as a company.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the organization. This is a read-only value. |
+| url | [string](#string) |  | URL of this resource This is a read-only value and cannot be initialized. |
+| name | [string](#string) |  | Name of the organization |
+| description | [string](#string) |  | Description of the organization |
+| is_deleted | [bool](#bool) |  | Set when this organization is deleted. This is a read-only value. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the organization |
+| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the organization |
+| tier | [Tier](#arangodb.cloud.resourcemanager.v1.Tier) |  | Tier used for this organization. This is a read-only value and cannot be initialized. |
+| total_deployments | [Organization.TotalDeploymentsEntry](#arangodb.cloud.resourcemanager.v1.Organization.TotalDeploymentsEntry) | repeated | Total number of deployments created in this organization throughout its entire lifetime per tier-id. map: tier-id -&gt; count This is a read-only value. |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.Organization.TotalDeploymentsEntry"></a>
+
+### Organization.TotalDeploymentsEntry
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | [string](#string) |  |  |
+| value | [int32](#int32) |  |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.OrganizationInvite"></a>
+
+### OrganizationInvite
+An OrganizationInvite represents an invite for a human to join an
+organization.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the invite. This is a read-only value. |
+| url | [string](#string) |  | URL of this resource This is a read-only value and cannot be initialized. |
+| organization_id | [string](#string) |  | Identifier of the organization that the human is invited to join. This is a read-only value. |
+| email | [string](#string) |  | Email address of the human who is invited. |
+| accepted | [bool](#bool) |  | If set, the invitee accepted the invite. This is a read-only value. |
+| rejected | [bool](#bool) |  | If set, the invitee rejected the invite. This is a read-only value. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the invite This is a read-only value. |
+| accepted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The acceptance timestamp of the invite This is a read-only value. |
+| rejected_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The rejection timestamp of the invite This is a read-only value. |
+| user_id | [string](#string) |  | Identifier of the user that accepted or rejected this invite. This is a read-only value. |
+| created_by_id | [string](#string) |  | Identifier of the user that created this invite. |
+| organization_name | [string](#string) |  | Identifier of the organization that the human is invited to join. This is a read-only value. |
+| created_by_name | [string](#string) |  | Name of the user that created this invite. This is a read-only value. |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.OrganizationInviteList"></a>
+
+### OrganizationInviteList
+List of OrganizationInvites.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [OrganizationInvite](#arangodb.cloud.resourcemanager.v1.OrganizationInvite) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.OrganizationList"></a>
+
+### OrganizationList
+List of organizations.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Organization](#arangodb.cloud.resourcemanager.v1.Organization) | repeated | Actual organizations |
+| budget | [arangodb.cloud.common.v1.Budget](#arangodb.cloud.common.v1.Budget) |  | Budget for organizations (owned by the caller) |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.OrganizationMembersRequest"></a>
+
+### OrganizationMembersRequest
+Request arguments for Add/DeleteOrganizationMembers.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| organization_id | [string](#string) |  | Identifier of the organization to add/remove a user from |
+| members | [MemberList](#arangodb.cloud.resourcemanager.v1.MemberList) |  | Users to add/remove. For every user, an owner flag is provided as well. If you add an existing user, the owner flag or the add request will overwrite the value of the existing owner flag. |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.Project"></a>
+
+### Project
+A Project is represents a unit within an organization such as a department.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the project. This is a read-only value. It can be set when creating the project. |
+| url | [string](#string) |  | URL of this resource This is a read-only value and cannot be initialized. |
+| name | [string](#string) |  | Name of the project |
+| description | [string](#string) |  | Description of the project |
+| organization_id | [string](#string) |  | Identifier of the organization that owns this project. This is a read-only value. |
+| is_deleted | [bool](#bool) |  | Set when this project is deleted |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the project |
+| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the project |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.ProjectList"></a>
+
+### ProjectList
+List of Projects.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Project](#arangodb.cloud.resourcemanager.v1.Project) | repeated | Resulting projects |
+| budget | [arangodb.cloud.common.v1.Budget](#arangodb.cloud.common.v1.Budget) |  | Budget for projects |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.Quota"></a>
+
+### Quota
+Quota limit
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| kind | [string](#string) |  | Kind of quota |
+| description | [string](#string) |  | Human readable description of the quota |
+| limit | [int64](#int64) |  | Current limit of the quota. A value of 0 means unlimited. |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.QuotaDescription"></a>
+
+### QuotaDescription
+Description of a kind of quota&#39;s
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| kind | [string](#string) |  | Kind of the quota |
+| description | [string](#string) |  | Human readable description |
+| for_organizations | [bool](#bool) |  | If set, this kind of quota is valid at organization level |
+| for_projects | [bool](#bool) |  | If set, this kind of quota is valid at project level |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.QuotaDescriptionList"></a>
+
+### QuotaDescriptionList
+List of QuotaDescription&#39;s
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [QuotaDescription](#arangodb.cloud.resourcemanager.v1.QuotaDescription) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.QuotaList"></a>
+
+### QuotaList
+List of Quota&#39;s
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [Quota](#arangodb.cloud.resourcemanager.v1.Quota) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.Tier"></a>
+
+### Tier
+Tier of an organization.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | Identifier of the tier. This is a read-only value and cannot be initialized. |
+| name | [string](#string) |  | Human readable name of the tier. This is a read-only value and cannot be initialized. |
+| has_support_plans | [bool](#bool) |  | If set the tier has support plans. This is a read-only value and cannot be initialized. |
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+
+<a name="arangodb.cloud.resourcemanager.v1.ResourceManagerService"></a>
+
+### ResourceManagerService
+ResourceManagerService is the API used to configure basic resource objects.
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+| ListOrganizations | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [OrganizationList](#arangodb.cloud.resourcemanager.v1.OrganizationList) | Fetch all organizations that the authenticated user is a member of. Required permissions: - None |
+| GetOrganization | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Organization](#arangodb.cloud.resourcemanager.v1.Organization) | Fetch an organization by its id. The authenticated user must be a member of the organization. Required permissions: - None |
+| CreateOrganization | [Organization](#arangodb.cloud.resourcemanager.v1.Organization) | [Organization](#arangodb.cloud.resourcemanager.v1.Organization) | Create a new organization Required permissions: - None |
+| UpdateOrganization | [Organization](#arangodb.cloud.resourcemanager.v1.Organization) | [Organization](#arangodb.cloud.resourcemanager.v1.Organization) | Update an organization Required permissions: - resourcemanager.organization.update on the organization |
+| DeleteOrganization | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete an organization Note that organization are never really removed. Instead their is_deleted field is set to true. Required permissions: - resourcemanager.organization.delete on the organization |
+| ListOrganizationMembers | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [MemberList](#arangodb.cloud.resourcemanager.v1.MemberList) | Get a list of members of the organization identified by the given context ID. Required permissions: - resourcemanager.organization.get on the organization |
+| AddOrganizationMembers | [OrganizationMembersRequest](#arangodb.cloud.resourcemanager.v1.OrganizationMembersRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Add one or more members to an organization. If there are members (in the request arguments) that are already member of the organization an AlreadyExists error is returned. Required permissions: - resourcemanager.organization.update on the organization |
+| UpdateOrganizationMembers | [OrganizationMembersRequest](#arangodb.cloud.resourcemanager.v1.OrganizationMembersRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Update the ownership flag of one or more members of an organization. If there are members (in the request arguments) that are not yet member of the organization, an InvalidArgument error is returned. If the request would result in the last owner no longer being an owner, an InvalidArgument error is returned. Required permissions: - resourcemanager.organization.update on the organization |
+| DeleteOrganizationMembers | [OrganizationMembersRequest](#arangodb.cloud.resourcemanager.v1.OrganizationMembersRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Remove one or more members from an organization. If the request would result in the last owner being removed as member of the organization, an InvalidArgument error is returned. Required permissions: - resourcemanager.organization.update on the organization |
+| IsMemberOfOrganization | [IsMemberOfOrganizationRequest](#arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationRequest) | [IsMemberOfOrganizationResponse](#arangodb.cloud.resourcemanager.v1.IsMemberOfOrganizationResponse) | Is the user identified by the given user ID a member of the organization identified by the given organization ID. Required permissions: - resourcemanager.organization.get on the organization, unless the requested user is identical to the authenticated user. Note that if the identified user or organization does not exist, no is returned. |
+| ListOrganizationQuotas | [ListQuotasRequest](#arangodb.cloud.resourcemanager.v1.ListQuotasRequest) | [QuotaList](#arangodb.cloud.resourcemanager.v1.QuotaList) | Get a list of quota values for the organization identified by the given context ID. If a quota is not specified on organization level, a (potentially tier specific) default value is returned. Required permissions: - resourcemanager.organization.get on the organization |
+| ListProjects | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [ProjectList](#arangodb.cloud.resourcemanager.v1.ProjectList) | Fetch all projects in the organization identified by the given context ID. The authenticated user must be a member of the organization identifier by the given context ID. Required permissions: - resourcemanager.project.list on the organization identified by the given context ID |
+| GetProject | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Project](#arangodb.cloud.resourcemanager.v1.Project) | Fetch a project by its id. The authenticated user must be a member of the organization that owns the project. Required permissions: - resourcemanager.project.get on the project identified by the given ID |
+| CreateProject | [Project](#arangodb.cloud.resourcemanager.v1.Project) | [Project](#arangodb.cloud.resourcemanager.v1.Project) | Create a new project The authenticated user must be a member of the organization that owns the project. Required permissions: - resourcemanager.project.create on the organization that owns the project |
+| UpdateProject | [Project](#arangodb.cloud.resourcemanager.v1.Project) | [Project](#arangodb.cloud.resourcemanager.v1.Project) | Update a project The authenticated user must be a member of the organization that owns the project. Required permissions: - resourcemanager.project.update on the project |
+| DeleteProject | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a project Note that project are initially only marked for deleted. Once all their resources are removed the project itself is deleted and cannot be restored. The authenticated user must be a member of the organization that owns the project. Required permissions: - resourcemanager.project.delete on the project |
+| ListProjectQuotas | [ListQuotasRequest](#arangodb.cloud.resourcemanager.v1.ListQuotasRequest) | [QuotaList](#arangodb.cloud.resourcemanager.v1.QuotaList) | Get a list of quota values for the project identified by the given context ID. If a quota is not specified on project level, a value from organization level is returned. Required permissions: - resourcemanager.project.get on the project |
+| ListEvents | [ListEventOptions](#arangodb.cloud.resourcemanager.v1.ListEventOptions) | [EventList](#arangodb.cloud.resourcemanager.v1.EventList) | Fetch all events in the organization identified by the given context ID. The authenticated user must be a member of the organization identifier by the given context ID. Required permissions: - resourcemanager.event.list on the organization identified by the given context ID |
+| ListOrganizationInvites | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [OrganizationInviteList](#arangodb.cloud.resourcemanager.v1.OrganizationInviteList) | Fetch all organization invites in the organization identified by the given context ID. The authenticated user must be a member of the organization identifier by the given context ID. Required permissions: - resourcemanager.organization-invite.list on the invite. |
+| ListMyOrganizationInvites | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [OrganizationInviteList](#arangodb.cloud.resourcemanager.v1.OrganizationInviteList) | Fetch all organization invites for the email address of the authenticated user. Required permissions: - None |
+| GetOrganizationInvite | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [OrganizationInvite](#arangodb.cloud.resourcemanager.v1.OrganizationInvite) | Fetch an organization invite by its id. The authenticated user must be a member of the organization that the invite is for. Required permissions: - resourcemanager.organization-invite.get on the invite. |
+| CreateOrganizationInvite | [OrganizationInvite](#arangodb.cloud.resourcemanager.v1.OrganizationInvite) | [OrganizationInvite](#arangodb.cloud.resourcemanager.v1.OrganizationInvite) | Create a new organization invite. The authenticated user must be a member of the organization that the invite is for. Required permissions: - resourcemanager.organization-invite.create on the organization that the invite is for. |
+| DeleteOrganizationInvite | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete an organization invite The authenticated user must be a member of the organization that the invite is for. Required permissions: - resourcemanager.organization-invite.delete on the invite |
+| AcceptOrganizationInvite | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Accept an organization invite The authenticated user&#39;s email address must match the email address specified in the invite. Required permissions: - None |
+| RejectOrganizationInvite | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Reject an organization invite The authenticated user&#39;s email address must match the email address specified in the invite. Required permissions: - None |
+| ListQuotaDescriptions | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [QuotaDescriptionList](#arangodb.cloud.resourcemanager.v1.QuotaDescriptionList) | Fetch descriptions for all quota kinds know by the platform. Required permissions: - None |
+
+ 
+
+
+
+<a name="security/v1/security.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## security/v1/security.proto
+
+
+
+<a name="arangodb.cloud.security.v1.IPWhitelist"></a>
+
+### IPWhitelist
+IPWhitelist represents a list of CIDR ranges from which a deployment is accessible.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the whitelist. This is a read-only value. |
+| url | [string](#string) |  | URL of the whitelist. This is a read-only value. |
+| name | [string](#string) |  | Name of the whitelist. |
+| description | [string](#string) |  | Description of the whitelist. |
+| project_id | [string](#string) |  | Identifier of the project that contains this whitelist. |
+| cidr_ranges | [string](#string) | repeated | List of CIDR ranges. Values must follow format as defined in RFC 4632 and RFC 4291. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of this whitelist. This is a read-only value. |
+| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the whitelist This is a read-only value. |
+| is_deleted | [bool](#bool) |  | Set when this whitelist is deleted. This is a read-only value. |
+| created_by_id | [string](#string) |  | Identifier of the user who created this whitelist. This is a read-only value. |
+
+
+
+
+
+
+<a name="arangodb.cloud.security.v1.IPWhitelistList"></a>
+
+### IPWhitelistList
+List of IP whitelists.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | repeated |  |
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+
+<a name="arangodb.cloud.security.v1.SecurityService"></a>
+
+### SecurityService
+SecurityService is the API used to access security entities.
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+| ListIPWhitelists | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [IPWhitelistList](#arangodb.cloud.security.v1.IPWhitelistList) | Fetch all IP whitelists that belong to the project identified by the given context ID. Required permissions: - security.ipwhitelist.list on the project identified by the given context ID. |
+| GetIPWhitelist | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | Fetch an IP whitelist by its id. Required permissions: - security.ipwhitelist.get on the IP whitelist |
+| CreateIPWhitelist | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | Create a new IP whitelist Required permissions: - security.ipwhitelist.create on the project that owns the IP whitelist. |
+| UpdateIPWhitelist | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | Update an IP whitelist Required permissions: - security.ipwhitelist.update on the IP whitelist |
+| DeleteIPWhitelist | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete an IP whitelist. Note that IP whitelists are initially only marked for deletion. Once all their dependent deployments are removed, the whitelist is removed. Required permissions: - security.ipwhitelist.delete on the IP whitelist |
+
+ 
+
+
+
 <a name="support/v1/support.proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
@@ -1755,1088 +2718,136 @@ SupportService is the API used to query for support.
 
 
 
-<a name="backup/v1/backup.proto"></a>
+<a name="usage/v1/usage.proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
-## backup/v1/backup.proto
+## usage/v1/usage.proto
 
 
 
-<a name="arangodb.cloud.backup.v1.Backup"></a>
+<a name="arangodb.cloud.usage.v1.ListUsageItemsRequest"></a>
 
-### Backup
-Backup represents a single backup of a deployment.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the backup. This is a read-only value. |
-| url | [string](#string) |  | URL of this resource This is a read-only value. |
-| name | [string](#string) |  | Name of the backup |
-| description | [string](#string) |  | Description of the backup |
-| deployment_id | [string](#string) |  | Identifier of the deployment that owns this backup. After creation, this value cannot be changed. |
-| backup_policy_id | [string](#string) |  | Identifier of the backup policy that triggered this backup After creation, this value cannot be changed. If this field is empty, this is a manual backup |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the backup (database object) This is a read-only value. |
-| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the backup This is a read-only value. |
-| is_deleted | [bool](#bool) |  | Set when this backup is deleted. This is a read-only value. |
-| auto_deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp that this backup will be automatically removed You cannot provide a value in the past, If the field is not set, the backup will not be automatically removed. |
-| deployment_info | [Backup.DeploymentInfo](#arangodb.cloud.backup.v1.Backup.DeploymentInfo) |  | Information about the deployment during backup |
-| upload | [bool](#bool) |  | Upload the backup, created by the backup policy, to an external source. Setting or unsetting this fields after the backup has been created will upload/delete the backup from the external source. Setting this field when status.available = false will result in an error |
-| status | [Backup.Status](#arangodb.cloud.backup.v1.Backup.Status) |  | Status of the actual backup |
-
-
-
-
-
-
-<a name="arangodb.cloud.backup.v1.Backup.DeploymentInfo"></a>
-
-### Backup.DeploymentInfo
-Information about the deployment during backup 
-All members of this field are read-only.
+### ListUsageItemsRequest
+Request arguments for ListUsageItems
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| version | [string](#string) |  | ArangoDB version of the deployment during backup. |
-| servers | [arangodb.cloud.data.v1.Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  | Servers spec of the deployment during backup. |
-
-
-
-
-
-
-<a name="arangodb.cloud.backup.v1.Backup.Status"></a>
-
-### Backup.Status
-Status of the actual backup
-All members of this field are read-only.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the backup |
-| version | [string](#string) |  | ArangoDB version of the backup |
-| state | [string](#string) |  | The state of the backup Will be one of the following: &#34;Pending|Scheduled|Download|DownloadError|Downloading|Create|Upload|Uploading|UploadError|Ready|Deleted|Failed&#34; |
-| is_failed | [bool](#bool) |  | Set when the backup is failed |
-| message | [string](#string) |  | State message |
-| progress | [string](#string) |  | Progress of the backup (upload or download) |
-| size_bytes | [int64](#int64) |  | Size of the backup (in bytes) |
-| uploaded | [bool](#bool) |  | Set when the backup has been fully uploaded |
-| downloaded | [bool](#bool) |  | Set when the backup has been fully downloaded |
-| available | [bool](#bool) |  | Set when the backup is available to restore to / recover from |
-
-
-
-
-
-
-<a name="arangodb.cloud.backup.v1.BackupList"></a>
-
-### BackupList
-List of backups.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [Backup](#arangodb.cloud.backup.v1.Backup) | repeated |  |
-
-
-
-
-
-
-<a name="arangodb.cloud.backup.v1.BackupPolicy"></a>
-
-### BackupPolicy
-BackupPolicy represents a single backup policy for a deployment.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the backup policy. This is a read-only value. |
-| url | [string](#string) |  | URL of this resource This is a read-only value. |
-| name | [string](#string) |  | Name of the backup policy |
-| description | [string](#string) |  | Description of the backup policy |
-| deployment_id | [string](#string) |  | Identifier of the deployment that owns this backup policy. After creation, this value cannot be changed. |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the backup policy This is a read-only value. |
-| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the backup policy This is a read-only value. |
-| is_deleted | [bool](#bool) |  | Set when this backup policy is deleted. This is a read-only value. |
-| is_paused | [bool](#bool) |  | Pause this backup policy. If a backup policy is paused, the backup policy will not result in new backups. The backup policy isn&#39;t deleted, unsetting this field will resume the creation of backups again. |
-| schedule | [BackupPolicy.Schedule](#arangodb.cloud.backup.v1.BackupPolicy.Schedule) |  | The schedule for this backup policy |
-| upload | [bool](#bool) |  | Upload the backup, created by the backup policy, to an external source. |
-| retention_period | [google.protobuf.Duration](#google.protobuf.Duration) |  | Backups created by this policy will be automatically deleted after the specified retention period A value of 0 means that backup will never be deleted. |
-| email_notification | [string](#string) |  | The owners of the organization can be notified by email This field support the following values: &#34;None|FailureOnly|Always&#34; |
-| status | [BackupPolicy.Status](#arangodb.cloud.backup.v1.BackupPolicy.Status) |  | Status of the backup policy |
-
-
-
-
-
-
-<a name="arangodb.cloud.backup.v1.BackupPolicy.DailySchedule"></a>
-
-### BackupPolicy.DailySchedule
-Note: Nested types inside nested types is not supported by the typescript generator
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| monday | [bool](#bool) |  | If set, a backup will be created on Mondays. |
-| tuesday | [bool](#bool) |  | If set, a backup will be created on Tuesdays. |
-| wednesday | [bool](#bool) |  | If set, a backup will be created on Wednesdays. |
-| thursday | [bool](#bool) |  | If set, a backup will be created on Thursdays. |
-| friday | [bool](#bool) |  | If set, a backup will be created on Fridays. |
-| saturday | [bool](#bool) |  | If set, a backup will be created on Saturdays. |
-| sunday | [bool](#bool) |  | If set, a backup will be created on Sundays. |
-| schedule_at | [TimeOfDay](#arangodb.cloud.backup.v1.TimeOfDay) |  | The (target) time of the schedule |
-
-
-
-
-
-
-<a name="arangodb.cloud.backup.v1.BackupPolicy.HourlySchedule"></a>
-
-### BackupPolicy.HourlySchedule
-Note: Nested types inside nested types is not supported by the typescript generator
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| schedule_every_interval_hours | [int32](#int32) |  | Schedule should run with an interval of the specified hours (1-23) |
-
-
-
-
-
-
-<a name="arangodb.cloud.backup.v1.BackupPolicy.MonthlySchedule"></a>
-
-### BackupPolicy.MonthlySchedule
-Note: Nested types inside nested types is not supported by the typescript generator
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| day_of_month | [int32](#int32) |  | Run the backup on the specified day of the month (1-31) Note: Specifying a number larger than some months have days will result in no backup for those months (e.g. 29 for February (unless leap year)). |
-| schedule_at | [TimeOfDay](#arangodb.cloud.backup.v1.TimeOfDay) |  | The (target) time of the schedule |
-
-
-
-
-
-
-<a name="arangodb.cloud.backup.v1.BackupPolicy.Schedule"></a>
-
-### BackupPolicy.Schedule
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| schedule_type | [string](#string) |  | Schedule type should be one of the following string: &#34;Hourly|Daily|Monthly&#34; The schedule_hourly, schedule_daily or schedule_montly field should be set Setting multiple fields, or inconsistent with this field result in an error during create/update |
-| hourly_schedule | [BackupPolicy.HourlySchedule](#arangodb.cloud.backup.v1.BackupPolicy.HourlySchedule) |  | Schedule applies to the selected day of the week This is applicable for Hourly type only, ignored for Daily and Monthly |
-| daily_schedule | [BackupPolicy.DailySchedule](#arangodb.cloud.backup.v1.BackupPolicy.DailySchedule) |  | Schedule applies to the selected day of the week This is applicable for Daily type only, ignored for Hourly and Monthly |
-| monthly_schedule | [BackupPolicy.MonthlySchedule](#arangodb.cloud.backup.v1.BackupPolicy.MonthlySchedule) |  | Schedule applies to the selected day of the month This is applicable for Monthly type only, ignored for Hourly and Daily |
-
-
-
-
-
-
-<a name="arangodb.cloud.backup.v1.BackupPolicy.Status"></a>
-
-### BackupPolicy.Status
-Status of the backup policy
-All members of this field are read-only.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| next_backup | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp when the next backup - initiated by this backup policy - will be created |
-| message | [string](#string) |  | Message in case of failure, otherwise an empty string |
-
-
-
-
-
-
-<a name="arangodb.cloud.backup.v1.BackupPolicyList"></a>
-
-### BackupPolicyList
-List of backup policies.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [BackupPolicy](#arangodb.cloud.backup.v1.BackupPolicy) | repeated |  |
-
-
-
-
-
-
-<a name="arangodb.cloud.backup.v1.ListBackupPoliciesRequest"></a>
-
-### ListBackupPoliciesRequest
-Request arguments for ListBackupPolicies
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| deployment_id | [string](#string) |  | Identifier of the deployment to request the backup policies for. |
-| include_deleted | [bool](#bool) |  | If set, the result includes all backup policies, including those who set to deleted, however are not removed from the system currently. If not set, only backup policies not indicated as deleted are returned. |
-| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Optional common list options, the context_id is ignored |
-
-
-
-
-
-
-<a name="arangodb.cloud.backup.v1.ListBackupsRequest"></a>
-
-### ListBackupsRequest
-Request arguments for ListBackups
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| deployment_id | [string](#string) |  | Identifier of the deployment to request the backups for. |
-| from | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request backups that are created at or after this timestamp. This is an optional field. |
-| to | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request backups that are created before this timestamp. This is an optional field. |
-| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Optional common list options, the context_id is ignored |
-
-
-
-
-
-
-<a name="arangodb.cloud.backup.v1.TimeOfDay"></a>
-
-### TimeOfDay
-TimeOfDay describes a specific moment on a day
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| hours | [int32](#int32) |  | Hours part of the time of day (0-23) |
-| minutes | [int32](#int32) |  | Minutes part of the time of day (0-59) |
-| time_zone | [string](#string) |  | The time-zone this time of day applies to (empty means UTC) Names MUST be exactly as defined in RFC-822. |
-
-
-
-
-
- 
-
- 
-
- 
-
-
-<a name="arangodb.cloud.backup.v1.BackupService"></a>
-
-### BackupService
-BackupService is the API used to configure backup objects.
-
-| Method Name | Request Type | Response Type | Description |
-| ----------- | ------------ | ------------- | ------------|
-| ListBackupPolicies | [ListBackupPoliciesRequest](#arangodb.cloud.backup.v1.ListBackupPoliciesRequest) | [BackupPolicyList](#arangodb.cloud.backup.v1.BackupPolicyList) | Fetch all backup policies for a specific deployment. Required permissions: - backup.backuppolicy.list on the deployment that owns the backup policies and is identified by the given ID. |
-| GetBackupPolicy | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [BackupPolicy](#arangodb.cloud.backup.v1.BackupPolicy) | Fetch a backup policy identified by the given ID. Required permissions: - backup.backuppolicy.get on the backup policy identified by the given ID. |
-| CreateBackupPolicy | [BackupPolicy](#arangodb.cloud.backup.v1.BackupPolicy) | [BackupPolicy](#arangodb.cloud.backup.v1.BackupPolicy) | Create a new backup policy Required permissions: - backup.backuppolicy.create on the deployment that owns the backup policy and is identified by the given ID.. |
-| UpdateBackupPolicy | [BackupPolicy](#arangodb.cloud.backup.v1.BackupPolicy) | [BackupPolicy](#arangodb.cloud.backup.v1.BackupPolicy) | Update a backup policy Required permissions: - backup.backuppolicy.update on the backup policy identified by the given ID. |
-| DeleteBackupPolicy | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a backup policy identified by the given ID. Note that the backup policy are initially only marked for deletion, no backups will be deleted with this operation. Once all their dependent backups are removed, the backup policy is removed. Required permissions: - backup.backuppolicy.delete on the backup policy identified by the given ID. |
-| ListBackups | [ListBackupsRequest](#arangodb.cloud.backup.v1.ListBackupsRequest) | [BackupList](#arangodb.cloud.backup.v1.BackupList) | Fetch all backups for a specific deployment. Required permissions: - backup.backup.list on the deployment that owns the backup and is identified by the given ID. |
-| GetBackup | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Backup](#arangodb.cloud.backup.v1.Backup) | Fetch a backup identified by the given ID. Required permissions: - backup.backup.get on the backup identified by the given ID. |
-| CreateBackup | [Backup](#arangodb.cloud.backup.v1.Backup) | [Backup](#arangodb.cloud.backup.v1.Backup) | Create a new manual backup Setting the backup_policy_id field in the backup is not allowed Required permissions: - backup.backup.create on the deployment that owns the backup and is identified by the given ID. |
-| UpdateBackup | [Backup](#arangodb.cloud.backup.v1.Backup) | [Backup](#arangodb.cloud.backup.v1.Backup) | Update a backup Required permissions: - backup.backup.update on the backup identified by the given ID. |
-| DownloadBackup | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Download a backup identified by the given ID from remote storage to the volumes of the servers of the deployment If this backup was already be downloaded, another download will be done. If the backup is still available on the cluster there is no need to explicitly download the backup before restoring. This function will return immediately. To track status, please invoke GetBackup and check the .status field inside the returned backup object Required permissions: - backup.backup.download on the backup identified by the given ID. |
-| RestoreBackup | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Restore (or recover) a backup identified by the given ID This operation can only be executed on backups where status.available is set This function will return immediately. To track status, please invoke GetDeployment on the data API and check the .status.restoring_backup and .status.restore_backup_status fields inside the returned deployment object Required permissions (both are needed): - backup.backup.restore on the backup identified by the given ID. - data.deployment.restore-backup on the deployment that owns this backup |
-| DeleteBackup | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a backup identified by the given ID, after which removal of any remote storage of the backup is started. Note that the backup are initially only marked for deletion. Once all remote storage for the backup has been removed, the backup itself is removed. Required permissions: - backup.backup.delete on the backup identified by the given ID. |
-
- 
-
-
-
-<a name="data/v1/data.proto"></a>
-<p align="right"><a href="#top">Top</a></p>
-
-## data/v1/data.proto
-
-
-
-<a name="arangodb.cloud.data.v1.CalculateDeploymentSizeRequest"></a>
-
-### CalculateDeploymentSizeRequest
-Request arguments for CalculateDeploymentSize
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| coordinators | [int32](#int32) |  | Number of coordinators of the deployment |
-| coordinator_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for each coordinator. |
-| dbservers | [int32](#int32) |  | Number of dbservers of the deployment |
-| dbserver_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for each dbserver. |
-| dbserver_disk_size | [int32](#int32) |  | Amount of disk space (in GB) to allocate for each dbserver. |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.ConnectDriverInstructions"></a>
-
-### ConnectDriverInstructions
-Instructions for connecting a driver to a deployment
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| drivers | [ConnectDriverInstructions.DriverInstructions](#arangodb.cloud.data.v1.ConnectDriverInstructions.DriverInstructions) | repeated | Per driver instructions for connecting to a deployment |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.ConnectDriverInstructions.DriverInstructions"></a>
-
-### ConnectDriverInstructions.DriverInstructions
-Instructions for a specific driver
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| name | [string](#string) |  | Human readable name of the driver. E.g. &#34;ArangoDB Go driver&#34; |
-| code | [string](#string) | repeated | Lines of code |
-| remarks | [string](#string) | repeated | Human readable remarks |
-| driver_url | [string](#string) |  | URL for getting more information on the driver. |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.DataVolumeInfo"></a>
-
-### DataVolumeInfo
-DataVolumeInfo provides information about a data volume
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| total_bytes | [int64](#int64) |  | The total number of bytes of the data volume. |
-| used_bytes | [int64](#int64) |  | The number of bytes used on the data volume. |
-| available_bytes | [int64](#int64) |  | The number of bytes available on the data volume. |
-| measured_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | When this info has been measused |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.Deployment"></a>
-
-### Deployment
-A Deployment is represents one deployment of an ArangoDB cluster.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the deployment. This is a read-only value. |
-| url | [string](#string) |  | URL of this resource This is a read-only value. |
-| name | [string](#string) |  | Name of the deployment |
-| description | [string](#string) |  | Description of the deployment |
-| project_id | [string](#string) |  | Identifier of the project that owns this deployment. After creation, this value cannot be changed. |
-| region_id | [string](#string) |  | Identifier of the region in which the deployment is created. After creation, this value cannot be changed. |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the deployment This is a read-only value. |
-| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the deployment This is a read-only value. |
-| is_deleted | [bool](#bool) |  | Set when this deployment is deleted. This is a read-only value. |
-| support_plan_id | [string](#string) |  | Optional identifier of the support plan selected for this deployment. After creation, this value cannot be changed. If no support plan identifier is set, the default support plan is used. |
-| created_by_id | [string](#string) |  | Identifier of the user who created this deployment. This is a read-only value. |
-| version | [string](#string) |  | ArangoDB version to use for this deployment. See Version.version. If you change this value to a higher version, the deployment will be upgraded. If you change this value to a lower patch value, the deployment will be downgraded. Any attempt to change to a lower minor or major version is considered an invalid request. Any attempt to change to a version that is not in the list of available versions is considered an invalid request. |
-| certificates | [Deployment.CertificateSpec](#arangodb.cloud.data.v1.Deployment.CertificateSpec) |  |  |
-| servers | [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  |  |
-| ipwhitelist_id | [string](#string) |  | Optional identifier of IP whitelist to use for this deployment. |
-| status | [Deployment.Status](#arangodb.cloud.data.v1.Deployment.Status) |  |  |
-| size | [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize) |  | Detailed size of the deployment This is a read-only field. |
-| expiration | [Deployment.Expiration](#arangodb.cloud.data.v1.Deployment.Expiration) |  |  |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.Deployment.CertificateSpec"></a>
-
-### Deployment.CertificateSpec
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| ca_certificate_id | [string](#string) |  | Identifier of the CACertificate used to sign TLS certificates for the deployment. If you change this value after the creation of the deployment a complete rotation of the deployment is required, which will result in some downtime. |
-| alternate_dns_names | [string](#string) | repeated | Zero or more DNS names to include in the TLS certificate of the deployment. |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.Deployment.Expiration"></a>
-
-### Deployment.Expiration
-Expiration of the deployment.
-All members of this message are read-only.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| expires_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The expiration timestamp of the deployment If not set, the deployment will not expire. |
-| reason | [string](#string) |  | Human readable reason for why the deployment expires (or does not expire). |
-| last_warning_email_send_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of when the last &#34;this deployment will expire at&#34; email was send. If not set, no such email has been send. |
-| last_warning_email_send_to | [string](#string) | repeated | List of email addresses to which the last warning email has been send. Not set when no such email has been send. |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.Deployment.ServerStatus"></a>
-
-### Deployment.ServerStatus
-Status of a single server (of the ArangoDB cluster)
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | ID of the server |
-| type | [string](#string) |  | Type of server (agent|coordinator|dbserver) |
-| description | [string](#string) |  | Human readable description of the status of the deployment. |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of the server |
-| ready | [bool](#bool) |  | Set once the server is ready |
-| member_of_cluster | [bool](#bool) |  | Set once the server has been known to be a member of the cluster |
-| failed | [bool](#bool) |  | Set if the server is in a failed state Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading. |
-| creating | [bool](#bool) |  | Set if the server is still being created Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading. |
-| ok | [bool](#bool) |  | Set if the server is in the ok state. Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading. |
-| upgrading | [bool](#bool) |  | Set if the server is still being upgraded Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading. |
-| version | [string](#string) |  | Latest known ArangoDB version used by this server. Initially this field is empty. |
-| data_volume_info | [DataVolumeInfo](#arangodb.cloud.data.v1.DataVolumeInfo) |  | Information about the data volume used to store the data |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.Deployment.ServersSpec"></a>
-
-### Deployment.ServersSpec
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| coordinators | [int32](#int32) |  | Number of coordinators of the deployment |
-| coordinator_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for coordinators. |
-| coordinator_args | [string](#string) | repeated | Custom command line arguments passed to all coordinators. |
-| dbservers | [int32](#int32) |  | Number of dbservers of the deployment |
-| dbserver_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for dbservers. |
-| dbserver_disk_size | [int32](#int32) |  | Amount of disk space (in GB) to allocate for dbservers. |
-| dbserver_args | [string](#string) | repeated | Custom command line arguments passed to all dbservers. |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.Deployment.Status"></a>
-
-### Deployment.Status
-Status of the deployment
-All members of this field are read-only.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| endpoint | [string](#string) |  | Endpoint URL used to reach the deployment This value will be empty during the creation of the deployment. |
-| description | [string](#string) |  | Human readable description of the status of the deployment. |
-| created | [bool](#bool) |  | Set once the deployment has been created. |
-| ready | [bool](#bool) |  | Set if the deployment is ready to be used. If the deployment has downtime (e.g. because of changing a CA certificate) this will go to false until the downtime is over. |
-| upgrading | [bool](#bool) |  | Set if the deployment is being upgraded. |
-| server_versions | [string](#string) | repeated | Versions of running servers |
-| servers | [Deployment.ServerStatus](#arangodb.cloud.data.v1.Deployment.ServerStatus) | repeated | Status of individual servers of the deployment |
-| bootstrapped_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Set if the ready boolean is transitioned to true for the very first time. |
-| bootstrapped | [bool](#bool) |  | Set if bootstrapped_at has a value, otherwise false. |
-| restoring_backup | [bool](#bool) |  | Set if the deployment is restoring a backup |
-| restore_backup_status | [string](#string) |  | Status of the restore backup operation. Enum of the following values: &#34;&lt;empty&gt;|Restoring|Restored|Failed&#34; The discription will be used for a human readable status |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.DeploymentCredentials"></a>
-
-### DeploymentCredentials
-Result for GetDeploymentCredentials
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| username | [string](#string) |  | Name of the user for which credentials were asked. Default to username of root user. |
-| password | [string](#string) |  | Password of the user for which credentials were asked. |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.DeploymentCredentialsRequest"></a>
-
-### DeploymentCredentialsRequest
-Request arguments for GetDeploymentCredentials
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| deployment_id | [string](#string) |  | Identifier of deployment to request credentials for. |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.DeploymentList"></a>
-
-### DeploymentList
-List of Deployments.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [Deployment](#arangodb.cloud.data.v1.Deployment) | repeated | Actual deployments |
-| budget | [arangodb.cloud.common.v1.Budget](#arangodb.cloud.common.v1.Budget) |  | Budget for deployments |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.DeploymentSize"></a>
-
-### DeploymentSize
-Result of CalculateDeploymentSize
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| agents | [int32](#int32) |  | Number of agents |
-| agent_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for each agent. |
-| agent_disk_size | [int32](#int32) |  | Amount of disk space (in GB) to allocate for each agent. |
-| total_memory_size | [int32](#int32) |  | Total (combined) amount of memory (in GB) used by all servers (agents, coordinators &amp; dbservers) |
-| total_disk_size | [int32](#int32) |  | Total (combined) amount of disk space (in GB) used by all servers (agents &amp; dbservers) |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.ListVersionsRequest"></a>
-
-### ListVersionsRequest
-Request arguments for ListVersions.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Common list options |
-| organization_id | [string](#string) |  | If set, the result includes all versions for that are available for the organization identified by this ID. If not set, only versions are returned that are available to all organizations. |
-| current_version | [string](#string) |  | If set, only versions will be returned that are safe to upgrade to from this version. |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.ServersSpecLimits"></a>
-
-### ServersSpecLimits
-Limits of allowed values for fields of Deployment.ServersSpec.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| coordinators | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Limits for the number of coordinators of the deployment |
-| coordinator_memory_size | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Possible values for the amount of memory (in GB) to allocate for coordinators. |
-| dbservers | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Limits for the number of dbservers of the deployment |
-| dbserver_memory_size | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Possible values for the amount of memory (in GB) to allocate for dbservers. |
-| dbserver_disk_size | [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits) |  | Amount of disk space (in GB) to allocate for dbservers. |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.ServersSpecLimits.Limits"></a>
-
-### ServersSpecLimits.Limits
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| min | [int32](#int32) |  | Minimum value |
-| max | [int32](#int32) |  | Maximum value |
-| allowed_values | [int32](#int32) | repeated | Set of allowed values. If this field is non-empty, only one of these values is allowed. |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.ServersSpecLimitsRequest"></a>
-
-### ServersSpecLimitsRequest
-Request arguments for ListServersSpecLimits
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| project_id | [string](#string) |  | Identifier of project that will own a deployment. |
-| region_id | [string](#string) |  | Identifier of a region in which a deployment will be created. |
-| deployment_id | [string](#string) |  | Optional identifier of a deployment for which compatible server specifications are request. |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.ServersSpecPreset"></a>
-
-### ServersSpecPreset
-Specification of a ServersSpecPreset, which can be used to initialize a deployment.servers
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| name | [string](#string) |  | Name of the ServersSpecPreset This is a read-only value. |
-| is_default | [bool](#bool) |  | Set when this preset is the default. This is a read-only value. |
-| servers | [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  | The ServersSpec associated for this name |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.ServersSpecPresetList"></a>
-
-### ServersSpecPresetList
-List of ServersSpecPreset.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [ServersSpecPreset](#arangodb.cloud.data.v1.ServersSpecPreset) | repeated |  |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.ServersSpecPresetsRequest"></a>
-
-### ServersSpecPresetsRequest
-Request arguments for ListServersSpecPresets and GetDefaultServersSpecPreset
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| project_id | [string](#string) |  | Identifier of project that will own a deployment. |
-| region_id | [string](#string) |  | Identifier of a region in which a deployment will be created. |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.Version"></a>
-
-### Version
-Version of an ArangoDB release
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| version | [string](#string) |  | Version in the format of major.minor.patch |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.VersionList"></a>
-
-### VersionList
-List of Versions.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [Version](#arangodb.cloud.data.v1.Version) | repeated |  |
-
-
-
-
-
- 
-
- 
-
- 
-
-
-<a name="arangodb.cloud.data.v1.DataService"></a>
-
-### DataService
-DataService is the API used to configure data objects.
-
-| Method Name | Request Type | Response Type | Description |
-| ----------- | ------------ | ------------- | ------------|
-| ListDeployments | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [DeploymentList](#arangodb.cloud.data.v1.DeploymentList) | Fetch all deployments in the project identified by the given context ID. Required permissions: - data.deployment.list on the project identified by the given context ID |
-| GetDeployment | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Fetch a deployment by its id. Required permissions: - data.deployment.get on the deployment identified by the given ID |
-| CreateDeployment | [Deployment](#arangodb.cloud.data.v1.Deployment) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Create a new deployment Required permissions: - data.deployment.create on the project that owns the deployment Note that deployment.status &amp; deployment.expiration are ignored in this request. |
-| UpdateDeployment | [Deployment](#arangodb.cloud.data.v1.Deployment) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Update a deployment Required permissions: - data.deployment.update on the deployment Note that deployment.status &amp; deployment.expiration are ignored in this request. |
-| DeleteDeployment | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a deployment Note that deployments are initially only marked for deletion. Once all their resources are removed the deployment itself is removed. Required permissions: - data.deployment.delete on the deployment |
-| GetDeploymentCredentials | [DeploymentCredentialsRequest](#arangodb.cloud.data.v1.DeploymentCredentialsRequest) | [DeploymentCredentials](#arangodb.cloud.data.v1.DeploymentCredentials) | Fetch credentials for accessing deployment by its id. Required permissions: - data.deployment.get on the deployment identified by the given ID - data.deploymentcredentials.get on the deployment identified by the given ID |
-| ListVersions | [ListVersionsRequest](#arangodb.cloud.data.v1.ListVersionsRequest) | [VersionList](#arangodb.cloud.data.v1.VersionList) | Fetch all ArangoDB versions that are available for deployments. Required permissions: - None |
-| GetDefaultVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [Version](#arangodb.cloud.data.v1.Version) | Fetch the default ArangoDB version for new deployment. Required permissions: - None |
-| GetServersSpecLimits | [ServersSpecLimitsRequest](#arangodb.cloud.data.v1.ServersSpecLimitsRequest) | [ServersSpecLimits](#arangodb.cloud.data.v1.ServersSpecLimits) | Fetch the limits for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.limits.get on the requested project - data.deployment.get on the specified deployment (if deployment_id is set) |
-| ListServersSpecPresets | [ServersSpecPresetsRequest](#arangodb.cloud.data.v1.ServersSpecPresetsRequest) | [ServersSpecPresetList](#arangodb.cloud.data.v1.ServersSpecPresetList) | Fetch the presets for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.presets.list on the requested project |
-| CalculateDeploymentSize | [CalculateDeploymentSizeRequest](#arangodb.cloud.data.v1.CalculateDeploymentSizeRequest) | [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize) | Calculate the total size of a deployment with given arguments. Required permissions: - none |
-| GetConnectDriverInstructions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [ConnectDriverInstructions](#arangodb.cloud.data.v1.ConnectDriverInstructions) | Fetch instructions for connecting drivers to the deployment identified by the given id. Required permissions: - data.deployment.get on the deployment identified by the given ID |
-
- 
-
-
-
-<a name="currency/v1/currency.proto"></a>
-<p align="right"><a href="#top">Top</a></p>
-
-## currency/v1/currency.proto
-
-
-
-<a name="arangodb.cloud.currency.v1.Currency"></a>
-
-### Currency
-Currency represents a specific monetary currency.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the currency. E.g. &#34;eur&#34; or &#34;usd&#34; |
-| name | [string](#string) |  | Human readable name of the currency E.g. &#34;US Dollar&#34; |
-| sign | [string](#string) |  | Human readable sign for the currency. E.g. &#34;$&#34; |
-
-
-
-
-
-
-<a name="arangodb.cloud.currency.v1.CurrencyList"></a>
-
-### CurrencyList
-List of currencies.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [Currency](#arangodb.cloud.currency.v1.Currency) | repeated |  |
-
-
-
-
-
-
-<a name="arangodb.cloud.currency.v1.GetDefaultCurrencyRequest"></a>
-
-### GetDefaultCurrencyRequest
-Request arguments for GetDefaultCurrency.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| organization_id | [string](#string) |  | Optional identifier for the organization to request the default currency for. |
-
-
-
-
-
- 
-
- 
-
- 
-
-
-<a name="arangodb.cloud.currency.v1.CurrencyService"></a>
-
-### CurrencyService
-CurrencyService is the API used to query for supported currencies.
-
-| Method Name | Request Type | Response Type | Description |
-| ----------- | ------------ | ------------- | ------------|
-| ListCurrencies | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [CurrencyList](#arangodb.cloud.currency.v1.CurrencyList) | Fetch all providers that are supported by the ArangoDB cloud. Required permissions: - None |
-| GetCurrency | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Currency](#arangodb.cloud.currency.v1.Currency) | Fetch a currency by its id. Required permissions: - None |
-| GetDefaultCurrency | [GetDefaultCurrencyRequest](#arangodb.cloud.currency.v1.GetDefaultCurrencyRequest) | [Currency](#arangodb.cloud.currency.v1.Currency) | Fetch the default currency for a given (optional) organization. Required permissions: - resourcemanager.organization.get On the organization identified by given id. - None In case no organization identifier was given. |
-
- 
-
-
-
-<a name="billing/v1/billing.proto"></a>
-<p align="right"><a href="#top">Top</a></p>
-
-## billing/v1/billing.proto
-
-
-
-<a name="arangodb.cloud.billing.v1.Invoice"></a>
-
-### Invoice
-An Invoice message describes a transaction for usage of ArangoDB Oasis.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of the invoice. |
-| url | [string](#string) |  | URL of this resource |
-| organization_id | [string](#string) |  | Identifier of the organization that is responsible for the payment of this invoice. |
-| organization_name | [string](#string) |  | Name of the organization that is responsible for the payment of this invoice. |
-| entity_id | [string](#string) |  | Identifier of the legal entity that is the sender of this invoice. |
-| entity_name | [string](#string) |  | Name of the legal entity that is the sender of this invoice. |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation date of the invoice |
-| items | [Invoice.Item](#arangodb.cloud.billing.v1.Invoice.Item) | repeated | All items of the invoice |
-| currency_id | [string](#string) |  | Currency for all amounts |
-| total_amount_excl_vat | [float](#float) |  | Sum all amount for all items |
-| total_vat | [float](#float) |  | VAT amount for all items |
-| total_amount_incl_vat | [float](#float) |  | Sum of total_amount_ex_vat &#43; total_vat. This is the amount that the customer will be charged for. |
-| status | [Invoice.Status](#arangodb.cloud.billing.v1.Invoice.Status) |  |  |
-| payments | [Invoice.Payment](#arangodb.cloud.billing.v1.Invoice.Payment) | repeated | All payment attempts for this invoice, ordered by created_at. |
-
-
-
-
-
-
-<a name="arangodb.cloud.billing.v1.Invoice.Item"></a>
-
-### Invoice.Item
-A single item of the invoice
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| usageitem_id | [string](#string) |  | Identifier of the UsageItem that this item covers. |
-| amount | [float](#float) |  | Amount of money (ex VAT) for this item |
-| description | [string](#string) |  | Human readable description of this item |
-
-
-
-
-
-
-<a name="arangodb.cloud.billing.v1.Invoice.Payment"></a>
-
-### Invoice.Payment
-Payment (attempt) of the invoice
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of the start of the payment attempt. |
-| payment_provider_id | [string](#string) |  | Identifier of the payment provider that is used for this payment. |
-| payment_id | [string](#string) |  | Identifier of this payment (created by payment provider) |
-| payment_method_id | [string](#string) |  | Identifier of the payment method that is used for this payment. |
-| is_pending | [bool](#bool) |  | If set, this payment is still being processed. |
-| is_completed | [bool](#bool) |  | If set, this payment has been payed for succesfully. |
-| is_rejected | [bool](#bool) |  | If set, this payment has been rejected. |
-| completed_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of succesfull completion of the payment. |
-| rejected_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of rejected completion of the payment. |
-| rejection_reason | [string](#string) |  | Human readable reason for the rejection. |
-
-
-
-
-
-
-<a name="arangodb.cloud.billing.v1.Invoice.Status"></a>
-
-### Invoice.Status
-Status of the invoice
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| is_pending | [bool](#bool) |  | If set, this invoice is still being processed. |
-| is_completed | [bool](#bool) |  | If set, a successful payment has been made for this invoice. |
-| is_rejected | [bool](#bool) |  | If set, all payment attempts for this invoice have been rejected. |
-| completed_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of succesfull completion of the payment. This field equals the completed_at field of the last payment if that payment succeeded, nil otherwise. |
-| rejected_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of rejected completion of the payment. This field equals the rejected_at field of the last payment if that payment failed, nil otherwise. |
-
-
-
-
-
-
-<a name="arangodb.cloud.billing.v1.InvoiceList"></a>
-
-### InvoiceList
-List of Invoices.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [Invoice](#arangodb.cloud.billing.v1.Invoice) | repeated |  |
-
-
-
-
-
-
-<a name="arangodb.cloud.billing.v1.ListInvoicesRequest"></a>
-
-### ListInvoicesRequest
-Request arguments for ListInvoices
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| organization_id | [string](#string) |  | Request invoices for the organization with this id. This is a required field. |
-| from | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request invoices that are created at or after this timestamp. This is an optional field. |
-| to | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request invoices that are created before this timestamp. This is an optional field. |
+| organization_id | [string](#string) |  | Request usage items for the organization with this id. This is a required field. |
+| from | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request usage items that overlaps in time with the time period that starts with this timestamp (inclusive). This is a required field. |
+| to | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request usage items that overlaps in time with the time period that ends with this timestamp (inclusive). This is a required field. |
 | options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Standard list options This is an optional field. |
+| resource_url | [string](#string) |  | Limit to usage items for the resource with this URL. This is an optional field. |
+| resource_kind | [string](#string) |  | Limit to usage items for the resource with this kind. This is an optional field. |
+| project_id | [string](#string) |  | Limit to usage items for the project with this id. This is an optional field. |
+| deployment_id | [string](#string) |  | Limit to usage items for the deployment with this id. This is an optional field. |
+| has_no_invoice_id | [bool](#bool) |  | If set, limit to usage items that have no invoice_id set. |
+| has_invoice_id | [bool](#bool) |  | If set, limit to usage items that have an invoice_id set. |
 
 
 
 
 
 
-<a name="arangodb.cloud.billing.v1.ListPaymentMethodsRequest"></a>
+<a name="arangodb.cloud.usage.v1.UsageItem"></a>
 
-### ListPaymentMethodsRequest
-Request arguments for ListPaymentMethods
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| organization_id | [string](#string) |  | Identifier of the organization for which payment methods are requested. |
-| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Optional common list options. (Context ID is ignored) |
-
-
-
-
-
-
-<a name="arangodb.cloud.billing.v1.ListPaymentProvidersRequest"></a>
-
-### ListPaymentProvidersRequest
-Request arguments for ListPaymentProviders
+### UsageItem
+A UsageItem message contained usage tracking information for a tracked
+resource (usually deployment) in a specific time period.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| organization_id | [string](#string) |  | Identifier of the organization for which payment providers are requested. |
-| options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Optional common list options. (Context ID is ignored) |
+| id | [string](#string) |  | System identifier of the usage item. |
+| url | [string](#string) |  | URL of this resource |
+| kind | [string](#string) |  | Kind of usage item |
+| resource | [UsageItem.Resource](#arangodb.cloud.usage.v1.UsageItem.Resource) |  | Identification of the resource covered by this usage item |
+| starts_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | This usage item covers a time period that starts at this timestamp |
+| ends_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | This usage item covers a time period that ends at this timestamp. If the usage item has not yet ended, this field is is set to the current time. |
+| has_ended | [bool](#bool) |  | Set when this usage item has ended. |
+| tier_id | [string](#string) |  | Identifier of the tier the organization was using at the start of this usage period. |
+| invoice_id | [string](#string) |  | Identifier of the invoice that includes this usage item. The usage item must be ended when this field it set. |
+| deployment_size | [UsageItem.DeploymentSize](#arangodb.cloud.usage.v1.UsageItem.DeploymentSize) |  | Amount of (computer) resources used by the resource covered by this usage item. This field is only set when the usage item is of kind DeploymentSize. |
+| network_transfer_size | [UsageItem.NetworkTransferSize](#arangodb.cloud.usage.v1.UsageItem.NetworkTransferSize) |  | Amount of network traffic used by the resource covered by this usage item. This field is only set when the usage item is of kind NetworkTransferSize. |
 
 
 
 
 
 
-<a name="arangodb.cloud.billing.v1.PaymentMethod"></a>
+<a name="arangodb.cloud.usage.v1.UsageItem.DeploymentSize"></a>
 
-### PaymentMethod
-Payment methods are specific methods for paying at a specific payment provider
-such as a specific credit card.
+### UsageItem.DeploymentSize
+
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of this payment method. |
-| name | [string](#string) |  | Name of the payment method |
-| description | [string](#string) |  | Description of the payment method |
-| payment_provider_id | [string](#string) |  | Identifier of the payment provider used for this payment method This is a read-only field. |
-| organization_id | [string](#string) |  | Identifier of the organization that owns this payment method This is a read-only field. |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Creation timestamp of this payment method This is a read-only field. |
-| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Deletion timestamp of this payment method This is a read-only field. |
-| is_deleted | [bool](#bool) |  | Set if the payment method is deleted. This is a read-only field. |
-| valid_until | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | If set, this timestamp specifies when the payment method is no longer valid. If not set, there is no (known) end date for this payment method. |
-| token | [string](#string) |  | Token for this payment method, provided by the payment provider. This is a read-only field. |
+| coordinators | [int32](#int32) |  | Number of coordinators of the deployment |
+| coordinator_memory_size | [int32](#int32) |  | Amount of memory (in GB) allocated for each coordinator. |
+| dbservers | [int32](#int32) |  | Number of dbservers of the deployment |
+| dbserver_memory_size | [int32](#int32) |  | Amount of memory (in GB) allocated for each dbserver. |
+| dbserver_disk_size | [int32](#int32) |  | Amount of disk space (in GB) allocated for each dbserver. |
+| agents | [int32](#int32) |  | Number of agents of the deployment |
+| agent_memory_size | [int32](#int32) |  | Amount of memory (in GB) allocated for each agent. |
+| agent_disk_size | [int32](#int32) |  | Amount of disk space (in GB) allocated for each agent. |
 
 
 
 
 
 
-<a name="arangodb.cloud.billing.v1.PaymentMethodList"></a>
+<a name="arangodb.cloud.usage.v1.UsageItem.NetworkTransferSize"></a>
 
-### PaymentMethodList
-List of Payment methods
+### UsageItem.NetworkTransferSize
+
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| items | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | repeated |  |
+| transfer_size | [int64](#int64) |  | Amount of network traffic (in bytes) caused by the use of a deployment. |
 
 
 
 
 
 
-<a name="arangodb.cloud.billing.v1.PaymentProvider"></a>
+<a name="arangodb.cloud.usage.v1.UsageItem.Resource"></a>
 
-### PaymentProvider
-Payment providers are services that handle payments.
+### UsageItem.Resource
+
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | System identifier of this payment provider. |
-| name | [string](#string) |  | Name of the payment provider |
-| description | [string](#string) |  | Description of the payment provider |
+| id | [string](#string) |  | System identifier of the resource that this usage item covers. |
+| url | [string](#string) |  | URL of the resource that this usage item covers |
+| kind | [string](#string) |  | Kind of resource that this usage item covers. |
+| description | [string](#string) |  | Human readable description of the resource that this usage item covers. |
+| organization_id | [string](#string) |  | Identifier of the organization that owns the resource that this usage item covers. |
+| organization_name | [string](#string) |  | Name of the organization that owns the resource that this usage item covers. |
+| project_id | [string](#string) |  | Identifier of the project that owns the resource that this usage item covers. |
+| project_name | [string](#string) |  | Name of the project that owns the resource that this usage item covers. |
+| deployment_id | [string](#string) |  | Identifier of the deployment that owns the resource that this usage item covers. |
+| deployment_name | [string](#string) |  | Name of the deployment that owns the resource that this usage item covers. |
+| deployment_member_name | [string](#string) |  | Name of the deployment member that owns the resource that this usage item covers. This field is only set when the usage item is specific for a member of the deployment (e.g. network transfer) |
+| cloud_provider_id | [string](#string) |  | Identifier of the cloud provider that is used to run the deployment. |
+| cloud_region_id | [string](#string) |  | Identifier of the cloud region that is used to run the deployment. |
 
 
 
 
 
 
-<a name="arangodb.cloud.billing.v1.PaymentProviderList"></a>
+<a name="arangodb.cloud.usage.v1.UsageItemList"></a>
 
-### PaymentProviderList
-List of Payment providers
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [PaymentProvider](#arangodb.cloud.billing.v1.PaymentProvider) | repeated |  |
-
-
-
-
-
-
-<a name="arangodb.cloud.billing.v1.SetDefaultPaymentMethodRequest"></a>
-
-### SetDefaultPaymentMethodRequest
-Request argument for SetDefaultPaymentMethod
+### UsageItemList
+List of UsageItems.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| organization_id | [string](#string) |  | Identifier of the organization for which the default payment method will be set. |
-| payment_method_id | [string](#string) |  | Identifier of the new default payment method for the organization. |
+| items | [UsageItem](#arangodb.cloud.usage.v1.UsageItem) | repeated |  |
 
 
 
@@ -2849,24 +2860,14 @@ Request argument for SetDefaultPaymentMethod
  
 
 
-<a name="arangodb.cloud.billing.v1.BillingService"></a>
+<a name="arangodb.cloud.usage.v1.UsageService"></a>
 
-### BillingService
-BillingService is the API used to fetch billing information.
+### UsageService
+UsageService is the API used to fetch usage tracking information.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| ListInvoices | [ListInvoicesRequest](#arangodb.cloud.billing.v1.ListInvoicesRequest) | [InvoiceList](#arangodb.cloud.billing.v1.InvoiceList) | Fetch all Invoice resources for the organization identified by the given organization ID that match the given criteria. Required permissions: - billing.invoice.list on the organization identified by the given organization ID |
-| GetInvoice | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Invoice](#arangodb.cloud.billing.v1.Invoice) | Fetch a specific Invoice identified by the given ID. Required permissions: - billing.invoice.get on the organization that owns the invoice with given ID. |
-| ListPaymentProviders | [ListPaymentProvidersRequest](#arangodb.cloud.billing.v1.ListPaymentProvidersRequest) | [PaymentProviderList](#arangodb.cloud.billing.v1.PaymentProviderList) | Fetch all payment providers that are usable for the organization identified by the given context ID. Required permissions: - billing.paymentprovider.list on the organization identified by the given context ID |
-| GetPaymentProvider | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [PaymentProvider](#arangodb.cloud.billing.v1.PaymentProvider) | Fetch a specific payment provider identified by the given ID. Required permissions: - None |
-| ListPaymentMethods | [ListPaymentMethodsRequest](#arangodb.cloud.billing.v1.ListPaymentMethodsRequest) | [PaymentMethodList](#arangodb.cloud.billing.v1.PaymentMethodList) | Fetch all payment methods that are configured for the organization identified by the given context ID. Required permissions: - billing.paymentmethod.list on the organization identified by the given context ID |
-| GetPaymentMethod | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | Fetch a specific payment method identified by the given ID. Required permissions: - billing.paymentmethod.get on the organization that owns the payment method which is identified by the given ID |
-| CreatePaymentMethod | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | Create a new payment method. Required permissions: - billing.paymentmethod.create on the organization that owns the given payment method. |
-| UpdatePaymentMethod | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | Update a specific payment method. Note that only name, description &amp; valid period are updated. Required permissions: - billing.paymentmethod.update on the organization that owns the given payment method. |
-| DeletePaymentMethod | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a specific payment method identified by the given ID. Required permissions: - billing.paymentmethod.delete on the organization that owns the given payment method which is identified by the given ID. |
-| GetDefaultPaymentMethod | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | Fetch the default PaymentMethod for an organization identified by the given ID. Required permissions: - billing.paymentmethod.get-default on the organization that is identified by the given ID |
-| SetDefaultPaymentMethod | [SetDefaultPaymentMethodRequest](#arangodb.cloud.billing.v1.SetDefaultPaymentMethodRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Update the default PaymentMethod for an organization identifier by the given organization ID, to the payment method identified by the given payment method ID. Required permissions: - billing.paymentmethod.set-default on the organization identified by the given organization ID |
+| ListUsageItems | [ListUsageItemsRequest](#arangodb.cloud.usage.v1.ListUsageItemsRequest) | [UsageItemList](#arangodb.cloud.usage.v1.UsageItemList) | Fetch all UsageItem resources in the organization identified by the given organization ID that match the given criteria. Required permissions: - usage.usageitem.list on the organization identified by the given organization ID |
 
  
 
