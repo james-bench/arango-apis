@@ -2640,7 +2640,7 @@ A single item of the invoice
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| usageitem_id | [string](#string) |  | Identifier of the UsageItem that this item covers. |
+| usageitem_ids | [string](#string) | repeated | Identifiers of the UsageItems that this item covers. |
 | amount | [float](#float) |  | Amount of money (ex VAT) for this item |
 | description | [string](#string) |  | Human readable description of this item |
 
