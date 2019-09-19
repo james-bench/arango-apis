@@ -9,6 +9,7 @@
 package v1
 
 // SpecEquals returns true when source & other have the same specification values
+// Note that several fields, like ID, Name and Description are not checked
 func (source *BackupPolicy) SpecEquals(other *BackupPolicy) bool {
 	return source.GetEmailNotification() == other.GetEmailNotification() &&
 		source.GetIsDeleted() == other.GetIsDeleted() &&
@@ -63,6 +64,7 @@ func (source *TimeOfDay) Equals(other *TimeOfDay) bool {
 }
 
 // SpecEquals returns true when source & other have the same specification values
+// Note that several fields, like ID, Name and Description are not checked
 func (source *Backup) SpecEquals(other *Backup) bool {
 	return source.GetAutoDeletedAt().Equal(other.GetAutoDeletedAt()) &&
 		source.GetIsDeleted() == other.GetIsDeleted() &&
