@@ -202,6 +202,10 @@ export interface UsageItem_Resource {
   // Identifier of the cloud region that is used to run the deployment.
   // string
   cloud_region_id?: string;
+  
+  // Identifier of the support plan that is attached to the deployment.
+  // string
+  support_plan_id?: string;
 }
 
 // List of UsageItems.
