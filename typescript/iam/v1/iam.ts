@@ -425,6 +425,15 @@ export interface User {
   // If set, contains Slack name of this user in the arangodb-community slack.
   // string
   slack_name?: string;
+  
+  // The timestamp of the last login of the user.
+  // This is a read-only value.
+  // googleTypes.Timestamp
+  last_login_at?: googleTypes.Timestamp;
+  
+  // If set, contains IP address from which the user last logged in.
+  // string
+  last_ip?: string;
 }
 
 // Request arguments for VerifyUserMobilePhone
