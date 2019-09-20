@@ -354,8 +354,6 @@ service IAMService {
     }
 }
 
-
-
 // User represents an actual person.
 message User {
     // Identifier of the user.
@@ -409,6 +407,11 @@ message User {
     string apikey_id = 13;
     // If set, contains Slack name of this user in the arangodb-community slack.
     string slack_name = 14;
+    // The timestamp of the last login of the user.
+    // This is a read-only value.
+    google.protobuf.Timestamp last_login_at = 15;
+    // If set, contains IP address from which the user last logged in.
+    string last_ip = 16;
 }
 
 // Request arguments for VerifyUserMobilePhone
