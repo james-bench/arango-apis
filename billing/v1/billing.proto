@@ -150,8 +150,8 @@ message Invoice {
 
     // A single item of the invoice
     message Item {
-        // Identifier of the UsageItem that this item covers.
-        string usageitem_id = 1;
+        // Identifiers of the UsageItems that this item covers.
+        repeated string usageitem_ids = 4;
         // Amount of money (ex VAT) for this item
         float amount = 2;
         // Human readable description of this item

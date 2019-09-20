@@ -71,9 +71,9 @@ export interface Invoice {
 
 // A single item of the invoice
 export interface Invoice_Item {
-  // Identifier of the UsageItem that this item covers.
+  // Identifiers of the UsageItems that this item covers.
   // string
-  usageitem_id?: string;
+  usageitem_ids?: string[];
   
   // Amount of money (ex VAT) for this item
   // number
