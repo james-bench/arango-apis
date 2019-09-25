@@ -142,7 +142,7 @@ service BillingService {
     // given organization ID.
     // Required permissions:
     // - billing.config.set on the organization identified by the given organization ID
-    rpc SetBillingInfo(SetBillingConfigRequest) returns (common.v1.Empty) {
+    rpc SetBillingConfig(SetBillingConfigRequest) returns (common.v1.Empty) {
         option (google.api.http) = {
             put: "/api/billing/v1/organization/{organization_id}/config"
             body: "*"

@@ -462,7 +462,7 @@ export class BillingService {
   // given organization ID.
   // Required permissions:
   // - billing.config.set on the organization identified by the given organization ID
-  async SetBillingInfo(req: SetBillingConfigRequest): Promise<void> {
+  async SetBillingConfig(req: SetBillingConfigRequest): Promise<void> {
     const url = `/api/billing/v1/organization/${encodeURIComponent(req.organization_id || '')}/config`;
     return api.put(url, req);
   }
