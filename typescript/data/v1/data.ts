@@ -168,6 +168,12 @@ export interface Deployment {
   // DeploymentSize
   size?: DeploymentSize;
   
+  // Optional identifier of a backup to restore to.
+  // If this identifier is set to a backup-id the deployment will be restored to that backup.
+  // This is a read-only field. To set this field please use the backup service RestoreBackup method.
+  // string
+  restore_backup_id?: string;
+  
   // Deployment_Expiration
   expiration?: Deployment_Expiration;
 }
@@ -340,9 +346,12 @@ export interface Deployment_Status {
   
   // Status of the restore backup operation.
   // Enum of the following values: "<empty>|Restoring|Restored|Failed"
-  // The discription will be used for a human readable status
   // string
   restore_backup_status?: string;
+  
+  // Failure reason of the backup restore (if applicable)
+  // string
+  restore_backup_failure_reason?: string;
 }
 
 // Result for GetDeploymentCredentials

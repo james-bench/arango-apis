@@ -56,7 +56,8 @@ func (source *Deployment) SpecEquals(other *Deployment) bool {
 		source.GetRegionId() == other.GetRegionId() &&
 		source.GetIpwhitelistId() == other.GetIpwhitelistId() &&
 		source.GetCertificates().Equals(other.GetCertificates()) &&
-		source.GetServers().Equals(other.GetServers())
+		source.GetServers().Equals(other.GetServers()) &&
+		source.GetRestoreBackupId() == other.GetRestoreBackupId()
 }
 
 // Equals returns true when source & other have the same values
@@ -84,7 +85,10 @@ func DeploymentStatusEqual(a, b *Deployment_Status, ignoreTimestamps bool) bool 
 		a.GetReady() == b.GetReady() &&
 		a.GetUpgrading() == b.GetUpgrading() &&
 		strings.Join(a.GetServerVersions(), ",") == strings.Join(b.GetServerVersions(), ",") &&
-		DeploymentServerStatusListEqual(a.GetServers(), b.GetServers(), ignoreTimestamps)
+		DeploymentServerStatusListEqual(a.GetServers(), b.GetServers(), ignoreTimestamps) &&
+		a.GetRestoringBackup() == b.GetRestoringBackup() &&
+		a.GetRestoreBackupStatus() == b.GetRestoreBackupStatus() &&
+		a.GetRestoreBackupFailureReason() == b.GetRestoreBackupFailureReason()
 }
 
 // DeploymentServerStatusListEqual returns true when the elements of a & b are equal.

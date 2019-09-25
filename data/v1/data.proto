@@ -280,8 +280,9 @@ message Deployment {
         bool restoring_backup = 10;
         // Status of the restore backup operation.
         // Enum of the following values: "<empty>|Restoring|Restored|Failed"
-        // The discription will be used for a human readable status
         string restore_backup_status = 11;
+        // Failure reason of the backup restore (if applicable)
+        string restore_backup_failure_reason = 12; 
     }
     Status status = 201;
 
@@ -289,9 +290,10 @@ message Deployment {
     // This is a read-only field.
     DeploymentSize size = 202;
 
-    // Restore to a Backup
-    // If this id is set to a backup-id the deployment will be restored to that backup
-    // TODO: move to internal-api string backup_restore_id = 203;
+    // Optional identifier of a backup to restore to.
+    // If this identifier is set to a backup-id the deployment will be restored to that backup.
+    // This is a read-only field. To set this field please use the backup service RestoreBackup method.
+    string restore_backup_id = 203;
 
     // Expiration of the deployment.
     // All members of this message are read-only.
