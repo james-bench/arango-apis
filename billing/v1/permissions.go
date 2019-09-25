@@ -9,7 +9,7 @@
 package v1
 
 const (
-	// Address permissions
+	// BillingConfig permissions
 
 	// PermissionConfigGet is needed for getting the billing configuration of an organization
 	PermissionConfigGet = "billing.config.get"
