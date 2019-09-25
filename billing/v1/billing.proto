@@ -118,13 +118,33 @@ service BillingService {
         };
     }
 
-    // Update the default PaymentMethod for an organization identifier by the
+    // Update the default PaymentMethod for an organization identified by the
     // given organization ID, to the payment method identified by the given payment method ID.
     // Required permissions:
     // - billing.paymentmethod.set-default on the organization identified by the given organization ID
     rpc SetDefaultPaymentMethod(SetDefaultPaymentMethodRequest) returns (common.v1.Empty) {
         option (google.api.http) = {
             put: "/api/billing/v1/organization/{organization_id}/default-paymentmethod"
+            body: "*"
+        };
+    }
+
+    // Fetch the billing configuration of an organization identified by the given ID.
+    // Required permissions:
+    // - billing.config.get on the organization that is identified by the given ID
+    rpc GetBillingConfig(common.v1.IDOptions) returns (BillingConfig) {
+        option (google.api.http) = {
+            get: "/api/billing/v1/organization/{id}/config"
+        };
+    }
+
+    // Update the billing configuration for an organization identified by the
+    // given organization ID.
+    // Required permissions:
+    // - billing.config.set on the organization identified by the given organization ID
+    rpc SetBillingInfo(SetBillingConfigRequest) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            put: "/api/billing/v1/organization/{organization_id}/config"
             body: "*"
         };
     }
@@ -313,3 +333,36 @@ message SetDefaultPaymentMethodRequest {
     // Identifier of the new default payment method for the organization.
     string payment_method_id = 2;
 }
+
+// Address of organization
+message Address {
+    // Address lines
+    repeated string address = 1;
+    // ZIP code (if any)
+    string zipcode = 2;
+    // City
+    string city = 3;
+    // State
+    string state = 4;
+    // Country code
+    string country_code = 5;
+}
+
+// Billing configuration for an organization
+message BillingConfig {
+    // Address of the organization
+    Address address = 1;
+    // VAT number of the organization (if any)
+    string vat_number = 2;
+    // Email address(es) to send emails related to billing (mostly invoices) to.
+    repeated string email_addresses = 3;
+}
+
+// Request arguments for SetBillingConfig.
+message SetBillingConfigRequest {
+    // Identifier of the organization for which billing address is to be set.
+    string organization_id = 1;
+    // Billing configuration to set.
+    BillingConfig config = 2;
+}
+
