@@ -168,14 +168,26 @@ export interface Deployment {
   // DeploymentSize
   size?: DeploymentSize;
   
-  // Optional identifier of a backup to restore to.
-  // If this identifier is set to a backup-id the deployment will be restored to that backup.
-  // This is a read-only field. To set this field please use the backup service RestoreBackup method.
-  // string
-  restore_backup_id?: string;
-  
   // Deployment_Expiration
   expiration?: Deployment_Expiration;
+  
+  // Information about a backup restore.
+  // If this field is set the deployment will be restored to that backup.
+  // This is a read-only field. To set this field please use the backup service RestoreBackup method.
+  // Deployment_BackupRestore
+  backup_restore?: Deployment_BackupRestore;
+}
+
+// Information about a backup restore.
+// All members of this message are read-only.
+export interface Deployment_BackupRestore {
+  // Identifier of a backup to restore to.
+  // string
+  backup_id?: string;
+  
+  // The timestamp of when this message was last updated
+  // googleTypes.Timestamp
+  last_updated_at?: googleTypes.Timestamp;
 }
 export interface Deployment_CertificateSpec {
   // Identifier of the CACertificate used to sign TLS certificates for the deployment.
@@ -340,18 +352,22 @@ export interface Deployment_Status {
   // boolean
   bootstrapped?: boolean;
   
-  // Set if the deployment is restoring a backup
+  // Set if the deployment is restoring a backup, or a restore is pending
   // boolean
   restoring_backup?: boolean;
   
   // Status of the restore backup operation.
-  // Enum of the following values: "<empty>|Restoring|Restored|Failed"
+  // Enum of the following values: "<empty>|Pending|Restoring|Restored|Failed"
   // string
   restore_backup_status?: string;
   
   // Failure reason of the backup restore (if applicable)
   // string
   restore_backup_failure_reason?: string;
+  
+  // The timestamp of when the last time "restoring_backup" was set
+  // googleTypes.Timestamp
+  restoring_backup_updated_at?: googleTypes.Timestamp;
 }
 
 // Result for GetDeploymentCredentials
