@@ -61,9 +61,10 @@ func (source *Deployment) SpecEquals(other *Deployment) bool {
 }
 
 // Equals returns true when source & other have the same values
-func (source *Deployment_BackupRestore) Equals(other *Deployment_BackupRestore) bool {
-	return source.GetBackupId() == other.GetBackupId() &&
-		source.GetLastUpdatedAt().Equal(other.GetLastUpdatedAt())
+func (source *Deployment_BackupRestoreSpec) Equals(other *Deployment_BackupRestoreSpec) bool {
+	return source.GetRevision() == other.GetRevision() &&
+		source.GetLastUpdatedAt().Equal(other.GetLastUpdatedAt()) &&
+		source.GetBackupId() == other.GetBackupId()
 }
 
 // Equals returns true when source & other have the same values
@@ -92,10 +93,16 @@ func DeploymentStatusEqual(a, b *Deployment_Status, ignoreTimestamps bool) bool 
 		a.GetUpgrading() == b.GetUpgrading() &&
 		strings.Join(a.GetServerVersions(), ",") == strings.Join(b.GetServerVersions(), ",") &&
 		DeploymentServerStatusListEqual(a.GetServers(), b.GetServers(), ignoreTimestamps) &&
-		a.GetRestoringBackup() == b.GetRestoringBackup() &&
-		a.GetRestoreBackupStatus() == b.GetRestoreBackupStatus() &&
-		a.GetRestoreBackupFailureReason() == b.GetRestoreBackupFailureReason() &&
-		a.GetRestoringBackupUpdatedAt().Equal(b.GetRestoringBackupUpdatedAt()) // Do not ignore this timestamp
+		a.GetBackupRestoreStatus().Equals(b.GetBackupRestoreStatus())
+
+}
+
+// Equals returns true when source & other have the same values
+func (source *Deployment_BackupRestoreStatus) Equals(other *Deployment_BackupRestoreStatus) bool {
+	return source.GetRevision() == other.GetRevision() &&
+		source.GetRestoring() == other.GetRestoring() &&
+		source.GetStatus() == other.GetStatus() &&
+		source.GetFailureReason() == other.GetFailureReason()
 }
 
 // DeploymentServerStatusListEqual returns true when the elements of a & b are equal.

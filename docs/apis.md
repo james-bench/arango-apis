@@ -83,7 +83,8 @@
     - [ConnectDriverInstructions.DriverInstructions](#arangodb.cloud.data.v1.ConnectDriverInstructions.DriverInstructions)
     - [DataVolumeInfo](#arangodb.cloud.data.v1.DataVolumeInfo)
     - [Deployment](#arangodb.cloud.data.v1.Deployment)
-    - [Deployment.BackupRestore](#arangodb.cloud.data.v1.Deployment.BackupRestore)
+    - [Deployment.BackupRestoreSpec](#arangodb.cloud.data.v1.Deployment.BackupRestoreSpec)
+    - [Deployment.BackupRestoreStatus](#arangodb.cloud.data.v1.Deployment.BackupRestoreStatus)
     - [Deployment.CertificateSpec](#arangodb.cloud.data.v1.Deployment.CertificateSpec)
     - [Deployment.Expiration](#arangodb.cloud.data.v1.Deployment.Expiration)
     - [Deployment.ServerStatus](#arangodb.cloud.data.v1.Deployment.ServerStatus)
@@ -1187,24 +1188,44 @@ A Deployment is represents one deployment of an ArangoDB cluster.
 | status | [Deployment.Status](#arangodb.cloud.data.v1.Deployment.Status) |  |  |
 | size | [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize) |  | Detailed size of the deployment This is a read-only field. |
 | expiration | [Deployment.Expiration](#arangodb.cloud.data.v1.Deployment.Expiration) |  |  |
-| backup_restore | [Deployment.BackupRestore](#arangodb.cloud.data.v1.Deployment.BackupRestore) |  | Information about a backup restore. If this field is set the deployment will be restored to that backup. This is a read-only field. To set this field please use the backup service RestoreBackup method. |
+| backup_restore | [Deployment.BackupRestoreSpec](#arangodb.cloud.data.v1.Deployment.BackupRestoreSpec) |  | Information about a backup restore. If this field is set the deployment will be restored to that backup. This is a read-only field. To set this field please use the backup service RestoreBackup method. |
 
 
 
 
 
 
-<a name="arangodb.cloud.data.v1.Deployment.BackupRestore"></a>
+<a name="arangodb.cloud.data.v1.Deployment.BackupRestoreSpec"></a>
 
-### Deployment.BackupRestore
+### Deployment.BackupRestoreSpec
 Information about a backup restore.
 All members of this message are read-only.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
+| revision | [int32](#int32) |  | The revision of this BackupRestoreSpec |
+| last_updated_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of when the last revision has been updated. |
 | backup_id | [string](#string) |  | Identifier of a backup to restore to. |
-| last_updated_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of when this message was last updated |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.Deployment.BackupRestoreStatus"></a>
+
+### Deployment.BackupRestoreStatus
+The status of backup restore
+All members of this message are read-only.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| revision | [int32](#int32) |  | The revision of the used BackupRestoreSpec |
+| restoring | [bool](#bool) |  | Set if the deployment is preparing or restoring a backup |
+| status | [string](#string) |  | Status of the restore backup operation. Enum of the following values: &#34;&lt;empty&gt;|Preparing|Restoring|Restored|Failed&#34; |
+| failure_reason | [string](#string) |  | Failure reason of the backup restore (if applicable) |
 
 
 
@@ -1311,10 +1332,7 @@ All members of this field are read-only.
 | servers | [Deployment.ServerStatus](#arangodb.cloud.data.v1.Deployment.ServerStatus) | repeated | Status of individual servers of the deployment |
 | bootstrapped_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Set if the ready boolean is transitioned to true for the very first time. |
 | bootstrapped | [bool](#bool) |  | Set if bootstrapped_at has a value, otherwise false. |
-| restoring_backup | [bool](#bool) |  | Set if the deployment is preparing or restoring a backup |
-| restore_backup_status | [string](#string) |  | Status of the restore backup operation. Enum of the following values: &#34;&lt;empty&gt;|Preparing|Restoring|Restored|Failed&#34; |
-| restore_backup_failure_reason | [string](#string) |  | Failure reason of the backup restore (if applicable) |
-| restoring_backup_updated_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of when the last time &#34;restoring_backup&#34; was set |
+| backup_restore_status | [Deployment.BackupRestoreStatus](#arangodb.cloud.data.v1.Deployment.BackupRestoreStatus) |  | The status of backup restore (if applicable). This field will be set to empty if a new revision of the spec is available |
 
 
 

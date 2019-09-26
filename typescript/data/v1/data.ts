@@ -174,20 +174,45 @@ export interface Deployment {
   // Information about a backup restore.
   // If this field is set the deployment will be restored to that backup.
   // This is a read-only field. To set this field please use the backup service RestoreBackup method.
-  // Deployment_BackupRestore
-  backup_restore?: Deployment_BackupRestore;
+  // Deployment_BackupRestoreSpec
+  backup_restore?: Deployment_BackupRestoreSpec;
 }
 
 // Information about a backup restore.
 // All members of this message are read-only.
-export interface Deployment_BackupRestore {
+export interface Deployment_BackupRestoreSpec {
+  // The revision of this BackupRestoreSpec
+  // number
+  revision?: number;
+  
+  // The timestamp of when the last revision has been updated.
+  // googleTypes.Timestamp
+  last_updated_at?: googleTypes.Timestamp;
+  
   // Identifier of a backup to restore to.
   // string
   backup_id?: string;
+}
+
+// The status of backup restore
+// All members of this message are read-only.
+export interface Deployment_BackupRestoreStatus {
+  // The revision of the used BackupRestoreSpec
+  // number
+  revision?: number;
   
-  // The timestamp of when this message was last updated
-  // googleTypes.Timestamp
-  last_updated_at?: googleTypes.Timestamp;
+  // Set if the deployment is preparing or restoring a backup
+  // boolean
+  restoring?: boolean;
+  
+  // Status of the restore backup operation.
+  // Enum of the following values: "<empty>|Preparing|Restoring|Restored|Failed"
+  // string
+  status?: string;
+  
+  // Failure reason of the backup restore (if applicable)
+  // string
+  failure_reason?: string;
 }
 export interface Deployment_CertificateSpec {
   // Identifier of the CACertificate used to sign TLS certificates for the deployment.
@@ -352,22 +377,10 @@ export interface Deployment_Status {
   // boolean
   bootstrapped?: boolean;
   
-  // Set if the deployment is preparing or restoring a backup
-  // boolean
-  restoring_backup?: boolean;
-  
-  // Status of the restore backup operation.
-  // Enum of the following values: "<empty>|Preparing|Restoring|Restored|Failed"
-  // string
-  restore_backup_status?: string;
-  
-  // Failure reason of the backup restore (if applicable)
-  // string
-  restore_backup_failure_reason?: string;
-  
-  // The timestamp of when the last time "restoring_backup" was set
-  // googleTypes.Timestamp
-  restoring_backup_updated_at?: googleTypes.Timestamp;
+  // The status of backup restore (if applicable).
+  // This field will be set to empty if a new revision of the spec is available
+  // Deployment_BackupRestoreStatus
+  backup_restore_status?: Deployment_BackupRestoreStatus;
 }
 
 // Result for GetDeploymentCredentials
