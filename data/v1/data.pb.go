@@ -596,10 +596,10 @@ type Deployment_Status struct {
 	BootstrappedAt *types.Timestamp `protobuf:"bytes,8,opt,name=bootstrapped_at,json=bootstrappedAt,proto3" json:"bootstrapped_at,omitempty"`
 	// Set if bootstrapped_at has a value, otherwise false.
 	Bootstrapped bool `protobuf:"varint,9,opt,name=bootstrapped,proto3" json:"bootstrapped,omitempty"`
-	// Set if the deployment is restoring a backup, or a restore is pending
+	// Set if the deployment is preparing or restoring a backup
 	RestoringBackup bool `protobuf:"varint,10,opt,name=restoring_backup,json=restoringBackup,proto3" json:"restoring_backup,omitempty"`
 	// Status of the restore backup operation.
-	// Enum of the following values: "<empty>|Pending|Restoring|Restored|Failed"
+	// Enum of the following values: "<empty>|Preparing|Restoring|Restored|Failed"
 	RestoreBackupStatus string `protobuf:"bytes,11,opt,name=restore_backup_status,json=restoreBackupStatus,proto3" json:"restore_backup_status,omitempty"`
 	// Failure reason of the backup restore (if applicable)
 	RestoreBackupFailureReason string `protobuf:"bytes,12,opt,name=restore_backup_failure_reason,json=restoreBackupFailureReason,proto3" json:"restore_backup_failure_reason,omitempty"`

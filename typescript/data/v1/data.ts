@@ -352,12 +352,12 @@ export interface Deployment_Status {
   // boolean
   bootstrapped?: boolean;
   
-  // Set if the deployment is restoring a backup, or a restore is pending
+  // Set if the deployment is preparing or restoring a backup
   // boolean
   restoring_backup?: boolean;
   
   // Status of the restore backup operation.
-  // Enum of the following values: "<empty>|Pending|Restoring|Restored|Failed"
+  // Enum of the following values: "<empty>|Preparing|Restoring|Restored|Failed"
   // string
   restore_backup_status?: string;
   

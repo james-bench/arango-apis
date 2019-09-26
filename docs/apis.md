@@ -1311,8 +1311,8 @@ All members of this field are read-only.
 | servers | [Deployment.ServerStatus](#arangodb.cloud.data.v1.Deployment.ServerStatus) | repeated | Status of individual servers of the deployment |
 | bootstrapped_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Set if the ready boolean is transitioned to true for the very first time. |
 | bootstrapped | [bool](#bool) |  | Set if bootstrapped_at has a value, otherwise false. |
-| restoring_backup | [bool](#bool) |  | Set if the deployment is restoring a backup, or a restore is pending |
-| restore_backup_status | [string](#string) |  | Status of the restore backup operation. Enum of the following values: &#34;&lt;empty&gt;|Pending|Restoring|Restored|Failed&#34; |
+| restoring_backup | [bool](#bool) |  | Set if the deployment is preparing or restoring a backup |
+| restore_backup_status | [string](#string) |  | Status of the restore backup operation. Enum of the following values: &#34;&lt;empty&gt;|Preparing|Restoring|Restored|Failed&#34; |
 | restore_backup_failure_reason | [string](#string) |  | Failure reason of the backup restore (if applicable) |
 | restoring_backup_updated_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of when the last time &#34;restoring_backup&#34; was set |
 
