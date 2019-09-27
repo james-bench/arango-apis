@@ -9,6 +9,15 @@
 package v1
 
 const (
+	// BillingConfig permissions
+
+	// PermissionConfigGet is needed for getting the billing configuration of an organization
+	PermissionConfigGet = "billing.config.get"
+	// PermissionConfigSet is needed for setting the billing configuration of an organization
+	PermissionConfigSet = "billing.config.set"
+)
+
+const (
 	// Invoice permissions
 
 	// PermissionInvoiceList is needed for listing invoices in an organization

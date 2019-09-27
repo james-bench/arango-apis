@@ -10,6 +10,44 @@ import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../commo
 // File: billing/v1/billing.proto
 // Package: arangodb.cloud.billing.v1
 
+// Address of organization
+export interface Address {
+  // Address lines
+  // string
+  address?: string[];
+  
+  // ZIP code (if any)
+  // string
+  zipcode?: string;
+  
+  // City
+  // string
+  city?: string;
+  
+  // State
+  // string
+  state?: string;
+  
+  // Country code
+  // string
+  country_code?: string;
+}
+
+// Billing configuration for an organization
+export interface BillingConfig {
+  // Address of the organization
+  // Address
+  address?: Address;
+  
+  // VAT number of the organization (if any)
+  // string
+  vat_number?: string;
+  
+  // Email address(es) to send emails related to billing (mostly invoices) to.
+  // string
+  email_addresses?: string[];
+}
+
 // An Invoice message describes a transaction for usage of ArangoDB Oasis.
 export interface Invoice {
   // System identifier of the invoice.
@@ -283,6 +321,17 @@ export interface PaymentProviderList {
   items?: PaymentProvider[];
 }
 
+// Request arguments for SetBillingConfig.
+export interface SetBillingConfigRequest {
+  // Identifier of the organization for which billing address is to be set.
+  // string
+  organization_id?: string;
+  
+  // Billing configuration to set.
+  // BillingConfig
+  config?: BillingConfig;
+}
+
 // Request argument for SetDefaultPaymentMethod
 export interface SetDefaultPaymentMethodRequest {
   // Identifier of the organization for which the default payment method will be set.
@@ -391,12 +440,30 @@ export class BillingService {
     return api.get(url, undefined);
   }
   
-  // Update the default PaymentMethod for an organization identifier by the
+  // Update the default PaymentMethod for an organization identified by the
   // given organization ID, to the payment method identified by the given payment method ID.
   // Required permissions:
   // - billing.paymentmethod.set-default on the organization identified by the given organization ID
   async SetDefaultPaymentMethod(req: SetDefaultPaymentMethodRequest): Promise<void> {
     const url = `/api/billing/v1/organization/${encodeURIComponent(req.organization_id || '')}/default-paymentmethod`;
+    return api.put(url, req);
+  }
+  
+  // Fetch the billing configuration of an organization identified by the given ID.
+  // Required permissions:
+  // - billing.config.get on the organization that is identified by the given ID
+  async GetBillingConfig(req: arangodb_cloud_common_v1_IDOptions): Promise<BillingConfig> {
+    const path = `/api/billing/v1/organization/${encodeURIComponent(req.id || '')}/config`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Update the billing configuration for an organization identified by the
+  // given organization ID.
+  // Required permissions:
+  // - billing.config.set on the organization identified by the given organization ID
+  async SetBillingConfig(req: SetBillingConfigRequest): Promise<void> {
+    const url = `/api/billing/v1/organization/${encodeURIComponent(req.organization_id || '')}/config`;
     return api.put(url, req);
   }
 }

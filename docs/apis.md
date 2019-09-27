@@ -25,6 +25,8 @@
   
 
 - [billing/v1/billing.proto](#billing/v1/billing.proto)
+    - [Address](#arangodb.cloud.billing.v1.Address)
+    - [BillingConfig](#arangodb.cloud.billing.v1.BillingConfig)
     - [Invoice](#arangodb.cloud.billing.v1.Invoice)
     - [Invoice.Item](#arangodb.cloud.billing.v1.Invoice.Item)
     - [Invoice.Payment](#arangodb.cloud.billing.v1.Invoice.Payment)
@@ -37,6 +39,7 @@
     - [PaymentMethodList](#arangodb.cloud.billing.v1.PaymentMethodList)
     - [PaymentProvider](#arangodb.cloud.billing.v1.PaymentProvider)
     - [PaymentProviderList](#arangodb.cloud.billing.v1.PaymentProviderList)
+    - [SetBillingConfigRequest](#arangodb.cloud.billing.v1.SetBillingConfigRequest)
     - [SetDefaultPaymentMethodRequest](#arangodb.cloud.billing.v1.SetDefaultPaymentMethodRequest)
   
   
@@ -529,6 +532,42 @@ BackupService is the API used to configure backup objects.
 
 
 
+<a name="arangodb.cloud.billing.v1.Address"></a>
+
+### Address
+Address of organization
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| address | [string](#string) | repeated | Address lines |
+| zipcode | [string](#string) |  | ZIP code (if any) |
+| city | [string](#string) |  | City |
+| state | [string](#string) |  | State |
+| country_code | [string](#string) |  | Country code |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.BillingConfig"></a>
+
+### BillingConfig
+Billing configuration for an organization
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| address | [Address](#arangodb.cloud.billing.v1.Address) |  | Address of the organization |
+| vat_number | [string](#string) |  | VAT number of the organization (if any) |
+| email_addresses | [string](#string) | repeated | Email address(es) to send emails related to billing (mostly invoices) to. |
+
+
+
+
+
+
 <a name="arangodb.cloud.billing.v1.Invoice"></a>
 
 ### Invoice
@@ -754,6 +793,22 @@ List of Payment providers
 
 
 
+<a name="arangodb.cloud.billing.v1.SetBillingConfigRequest"></a>
+
+### SetBillingConfigRequest
+Request arguments for SetBillingConfig.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| organization_id | [string](#string) |  | Identifier of the organization for which billing address is to be set. |
+| config | [BillingConfig](#arangodb.cloud.billing.v1.BillingConfig) |  | Billing configuration to set. |
+
+
+
+
+
+
 <a name="arangodb.cloud.billing.v1.SetDefaultPaymentMethodRequest"></a>
 
 ### SetDefaultPaymentMethodRequest
@@ -793,7 +848,9 @@ BillingService is the API used to fetch billing information.
 | UpdatePaymentMethod | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | Update a specific payment method. Note that only name, description &amp; valid period are updated. Required permissions: - billing.paymentmethod.update on the organization that owns the given payment method. |
 | DeletePaymentMethod | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a specific payment method identified by the given ID. Required permissions: - billing.paymentmethod.delete on the organization that owns the given payment method which is identified by the given ID. |
 | GetDefaultPaymentMethod | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | Fetch the default PaymentMethod for an organization identified by the given ID. Required permissions: - billing.paymentmethod.get-default on the organization that is identified by the given ID |
-| SetDefaultPaymentMethod | [SetDefaultPaymentMethodRequest](#arangodb.cloud.billing.v1.SetDefaultPaymentMethodRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Update the default PaymentMethod for an organization identifier by the given organization ID, to the payment method identified by the given payment method ID. Required permissions: - billing.paymentmethod.set-default on the organization identified by the given organization ID |
+| SetDefaultPaymentMethod | [SetDefaultPaymentMethodRequest](#arangodb.cloud.billing.v1.SetDefaultPaymentMethodRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Update the default PaymentMethod for an organization identified by the given organization ID, to the payment method identified by the given payment method ID. Required permissions: - billing.paymentmethod.set-default on the organization identified by the given organization ID |
+| GetBillingConfig | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [BillingConfig](#arangodb.cloud.billing.v1.BillingConfig) | Fetch the billing configuration of an organization identified by the given ID. Required permissions: - billing.config.get on the organization that is identified by the given ID |
+| SetBillingConfig | [SetBillingConfigRequest](#arangodb.cloud.billing.v1.SetBillingConfigRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Update the billing configuration for an organization identified by the given organization ID. Required permissions: - billing.config.set on the organization identified by the given organization ID |
 
  
 
