@@ -111,6 +111,16 @@ service DataService {
         };
     }
 
+    // Fetch the node sizes  available for deployments
+    // owned by the given projected, created in the given region.
+    // Required permissions:
+    // - data.nodesize.list on the requested project
+    rpc ListNodeSizes(NodeSizesRequest) returns (NodeSize) {
+        option (google.api.http) = {
+            get: "/api/data/v1/projects/{project_id}/regions/{region_id}/nodesizes"
+        };
+    }
+
     // Fetch the presets for server specifications for deployments
     // owned by the given projected, created in the given region.
     // Required permissions:
@@ -310,6 +320,33 @@ message Deployment {
         repeated string last_warning_email_send_to = 4;
     }
     Expiration expiration = 301;
+}
+
+// NodeSize specifies the size constraints of different data nodes.
+message NodeSize {
+    // System identifier of the node size
+    string id = 1;
+    // Human readable name of the node size
+    string name = 2;
+    // Amount of memory (in GB) that is available on this size of node.
+    int32 memory_size = 3;
+    // Amount of disk (in GB) that is available on this size of node.
+    int32 min_disk_size = 4;
+    // Maximum amount of disk (in GB) that is available on this size of node.
+    int32 max_disk_size = 5;
+}
+
+// List of node sizes.
+message NodeSizeList {
+    repeated NodeSize items = 1;
+}
+
+// Request arguments for ListNodeSizes
+message NodeSizesRequest {
+    // Identifier of project that will own a deployment.
+    string project_id = 1;
+    // Identifier of a region in which a deployment will be created.
+    string region_id = 2;
 }
 
 // Request arguments for ListServersSpecPresets and GetDefaultServersSpecPreset
