@@ -78,6 +78,16 @@ service BillingService {
         };
     }
 
+    // Prepare the payment provider for creating a new payment method.
+    // Required permissions:
+    // - billing.paymentmethod.create on the organization that owns future payment method.
+    rpc PreparePaymentMethod(PreparePaymentMethodRequest) returns (PreparePaymentMethodResponse) {
+        option (google.api.http) = {
+            post: "/api/billing/v1/paymentproviders/{provider_id}"
+            body: "*"
+        };
+    }
+
     // Create a new payment method.
     // Required permissions:
     // - billing.paymentmethod.create on the organization that owns the given payment method.
@@ -275,6 +285,20 @@ message PaymentProviderList {
     repeated PaymentProvider items = 1;
 }
 
+// Request arguments for PreparePaymentMethod.
+message PreparePaymentMethodRequest {
+    // ID of the provider to prepare
+    string provider_id = 1;
+    // ID of the organization that will own the future payment method
+    string organization_id = 2;
+}
+
+// Response data for PreparePaymentMethod.
+message PreparePaymentMethodResponse {
+    // Token (semantics depends on payment provider)
+    string token = 1;
+}
+
 // Request arguments for ListPaymentProviders
 message ListPaymentProvidersRequest {
     // Identifier of the organization for which payment providers are requested.
@@ -379,4 +403,3 @@ message SetBillingConfigRequest {
     // Billing configuration to set.
     BillingConfig config = 2;
 }
-

@@ -209,6 +209,8 @@
     - [PaymentMethodList](#arangodb.cloud.billing.v1.PaymentMethodList)
     - [PaymentProvider](#arangodb.cloud.billing.v1.PaymentProvider)
     - [PaymentProviderList](#arangodb.cloud.billing.v1.PaymentProviderList)
+    - [PreparePaymentMethodRequest](#arangodb.cloud.billing.v1.PreparePaymentMethodRequest)
+    - [PreparePaymentMethodResponse](#arangodb.cloud.billing.v1.PreparePaymentMethodResponse)
     - [SetBillingConfigRequest](#arangodb.cloud.billing.v1.SetBillingConfigRequest)
     - [SetDefaultPaymentMethodRequest](#arangodb.cloud.billing.v1.SetDefaultPaymentMethodRequest)
   
@@ -2930,6 +2932,37 @@ List of Payment providers
 
 
 
+<a name="arangodb.cloud.billing.v1.PreparePaymentMethodRequest"></a>
+
+### PreparePaymentMethodRequest
+Request arguments for PreparePaymentMethod.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| provider_id | [string](#string) |  | ID of the provider to prepare |
+| organization_id | [string](#string) |  | ID of the organization that will own the future payment method |
+
+
+
+
+
+
+<a name="arangodb.cloud.billing.v1.PreparePaymentMethodResponse"></a>
+
+### PreparePaymentMethodResponse
+Response data for PreparePaymentMethod.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| token | [string](#string) |  | Token (semantics depends on payment provider) |
+
+
+
+
+
+
 <a name="arangodb.cloud.billing.v1.SetBillingConfigRequest"></a>
 
 ### SetBillingConfigRequest
@@ -2981,6 +3014,7 @@ BillingService is the API used to fetch billing information.
 | GetPaymentProvider | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [PaymentProvider](#arangodb.cloud.billing.v1.PaymentProvider) | Fetch a specific payment provider identified by the given ID. Required permissions: - None |
 | ListPaymentMethods | [ListPaymentMethodsRequest](#arangodb.cloud.billing.v1.ListPaymentMethodsRequest) | [PaymentMethodList](#arangodb.cloud.billing.v1.PaymentMethodList) | Fetch all payment methods that are configured for the organization identified by the given context ID. Required permissions: - billing.paymentmethod.list on the organization identified by the given context ID |
 | GetPaymentMethod | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | Fetch a specific payment method identified by the given ID. Required permissions: - billing.paymentmethod.get on the organization that owns the payment method which is identified by the given ID |
+| PreparePaymentMethod | [PreparePaymentMethodRequest](#arangodb.cloud.billing.v1.PreparePaymentMethodRequest) | [PreparePaymentMethodResponse](#arangodb.cloud.billing.v1.PreparePaymentMethodResponse) | Prepare the payment provider for creating a new payment method. Required permissions: - billing.paymentmethod.create on the organization that owns future payment method. |
 | CreatePaymentMethod | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | Create a new payment method. Required permissions: - billing.paymentmethod.create on the organization that owns the given payment method. |
 | UpdatePaymentMethod | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod) | Update a specific payment method. Note that only name, description &amp; valid period are updated. Required permissions: - billing.paymentmethod.update on the organization that owns the given payment method. |
 | DeletePaymentMethod | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a specific payment method identified by the given ID. Required permissions: - billing.paymentmethod.delete on the organization that owns the given payment method which is identified by the given ID. |

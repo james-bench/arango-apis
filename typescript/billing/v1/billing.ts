@@ -344,6 +344,24 @@ export interface PaymentProviderList {
   items?: PaymentProvider[];
 }
 
+// Request arguments for PreparePaymentMethod.
+export interface PreparePaymentMethodRequest {
+  // ID of the provider to prepare
+  // string
+  provider_id?: string;
+  
+  // ID of the organization that will own the future payment method
+  // string
+  organization_id?: string;
+}
+
+// Response data for PreparePaymentMethod.
+export interface PreparePaymentMethodResponse {
+  // Token (semantics depends on payment provider)
+  // string
+  token?: string;
+}
+
 // Request arguments for SetBillingConfig.
 export interface SetBillingConfigRequest {
   // Identifier of the organization for which billing address is to be set.
@@ -425,6 +443,14 @@ export class BillingService {
     const path = `/api/billing/v1/paymentmethods/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
+  }
+  
+  // Prepare the payment provider for creating a new payment method.
+  // Required permissions:
+  // - billing.paymentmethod.create on the organization that owns future payment method.
+  async PreparePaymentMethod(req: PreparePaymentMethodRequest): Promise<PreparePaymentMethodResponse> {
+    const url = `/api/billing/v1/paymentproviders/${encodeURIComponent(req.provider_id || '')}`;
+    return api.post(url, req);
   }
   
   // Create a new payment method.
