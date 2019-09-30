@@ -292,6 +292,25 @@ export interface PaymentMethod {
   // This is a read-only field.
   // string
   token?: string;
+  
+  // Type of payment method
+  // string
+  type?: string;
+  
+  // PaymentMethod_CreditCardInfo
+  credit_card_info?: PaymentMethod_CreditCardInfo;
+}
+
+// Information of the creditcard.
+// Only set when type == "creditcard"
+export interface PaymentMethod_CreditCardInfo {
+  // Last 4 digits of the CC number.
+  // string
+  last_digits?: string;
+  
+  // Type of creditcard
+  // string
+  card_type?: string;
 }
 
 // List of Payment methods
@@ -313,6 +332,10 @@ export interface PaymentProvider {
   // Description of the payment provider
   // string
   description?: string;
+  
+  // Type of payment method supported by this provider
+  // string
+  type?: string;
 }
 
 // List of Payment providers

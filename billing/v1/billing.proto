@@ -266,6 +266,8 @@ message PaymentProvider {
     string name = 2;
     // Description of the payment provider
     string description = 3;
+    // Type of payment method supported by this provider
+    string type = 4;
 }
 
 // List of Payment providers
@@ -311,6 +313,18 @@ message PaymentMethod {
     // Token for this payment method, provided by the payment provider.
     // This is a read-only field.
     string token = 14;
+    // Type of payment method 
+    string type = 15;
+
+    // Information of the creditcard.
+    // Only set when type == "creditcard"
+    message CreditCardInfo {
+        // Last 4 digits of the CC number.
+        string last_digits = 1;
+        // Type of creditcard
+        string card_type = 2;
+    }
+    CreditCardInfo credit_card_info = 101;
 }
 
 // List of Payment methods
