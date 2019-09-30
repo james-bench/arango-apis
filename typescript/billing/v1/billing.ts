@@ -476,7 +476,7 @@ export class BillingService {
   // Required permissions:
   // - billing.paymentmethod.create on the organization that owns future payment method.
   async PreparePaymentMethod(req: PreparePaymentMethodRequest): Promise<PreparedPaymentMethod> {
-    const url = `/api/billing/v1/paymentproviders/${encodeURIComponent(req.provider_id || '')}`;
+    const url = `/api/billing/v1/paymentproviders/${encodeURIComponent(req.provider_id || '')}/prepare`;
     return api.post(url, req);
   }
   

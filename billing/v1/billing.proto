@@ -83,7 +83,7 @@ service BillingService {
     // - billing.paymentmethod.create on the organization that owns future payment method.
     rpc PreparePaymentMethod(PreparePaymentMethodRequest) returns (PreparedPaymentMethod) {
         option (google.api.http) = {
-            post: "/api/billing/v1/paymentproviders/{provider_id}"
+            post: "/api/billing/v1/paymentproviders/{provider_id}/prepare"
             body: "*"
         };
     }
