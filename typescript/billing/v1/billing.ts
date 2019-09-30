@@ -48,6 +48,21 @@ export interface BillingConfig {
   email_addresses?: string[];
 }
 
+// Request arguments for CreatePaymentMethod
+export interface CreatePaymentMethodRequest {
+  // The result of PreparePaymentMethod.
+  // PreparedPaymentMethod
+  prepared_payment_method?: PreparedPaymentMethod;
+  
+  // First name of owner of payment method
+  // string
+  first_name?: string;
+  
+  // Last name of owner of payment method
+  // string
+  last_name?: string;
+}
+
 // An Invoice message describes a transaction for usage of ArangoDB Oasis.
 export interface Invoice {
   // System identifier of the invoice.
@@ -344,6 +359,36 @@ export interface PaymentProviderList {
   items?: PaymentProvider[];
 }
 
+// Request arguments for PreparePaymentMethod.
+export interface PreparePaymentMethodRequest {
+  // ID of the provider to prepare
+  // string
+  provider_id?: string;
+  
+  // ID of the organization that will own the future payment method
+  // string
+  organization_id?: string;
+}
+
+// Response data for PreparePaymentMethod.
+export interface PreparedPaymentMethod {
+  // ID of the provider of the future payment method
+  // string
+  provider_id?: string;
+  
+  // ID of the organization that will own the future payment method
+  // string
+  organization_id?: string;
+  
+  // Token (semantics depends on payment provider)
+  // string
+  token?: string;
+  
+  // Signature used to verify the consistency of the data in this message.
+  // string
+  signature?: string;
+}
+
 // Request arguments for SetBillingConfig.
 export interface SetBillingConfigRequest {
   // Identifier of the organization for which billing address is to be set.
@@ -427,10 +472,18 @@ export class BillingService {
     return api.get(url, undefined);
   }
   
+  // Prepare the payment provider for creating a new payment method.
+  // Required permissions:
+  // - billing.paymentmethod.create on the organization that owns future payment method.
+  async PreparePaymentMethod(req: PreparePaymentMethodRequest): Promise<PreparedPaymentMethod> {
+    const url = `/api/billing/v1/paymentproviders/${encodeURIComponent(req.provider_id || '')}/prepare`;
+    return api.post(url, req);
+  }
+  
   // Create a new payment method.
   // Required permissions:
   // - billing.paymentmethod.create on the organization that owns the given payment method.
-  async CreatePaymentMethod(req: PaymentMethod): Promise<PaymentMethod> {
+  async CreatePaymentMethod(req: CreatePaymentMethodRequest): Promise<PaymentMethod> {
     const url = `/api/billing/v1/paymentmethods`;
     return api.post(url, req);
   }
