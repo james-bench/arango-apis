@@ -469,7 +469,7 @@ func local_request_BillingService_PreparePaymentMethod_0(ctx context.Context, ma
 }
 
 func request_BillingService_CreatePaymentMethod_0(ctx context.Context, marshaler runtime.Marshaler, client BillingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq PaymentMethod
+	var protoReq CreatePaymentMethodRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -486,7 +486,7 @@ func request_BillingService_CreatePaymentMethod_0(ctx context.Context, marshaler
 }
 
 func local_request_BillingService_CreatePaymentMethod_0(ctx context.Context, marshaler runtime.Marshaler, server BillingServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq PaymentMethod
+	var protoReq CreatePaymentMethodRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)

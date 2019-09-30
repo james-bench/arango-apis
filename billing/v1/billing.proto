@@ -81,7 +81,7 @@ service BillingService {
     // Prepare the payment provider for creating a new payment method.
     // Required permissions:
     // - billing.paymentmethod.create on the organization that owns future payment method.
-    rpc PreparePaymentMethod(PreparePaymentMethodRequest) returns (PreparePaymentMethodResponse) {
+    rpc PreparePaymentMethod(PreparePaymentMethodRequest) returns (PreparedPaymentMethod) {
         option (google.api.http) = {
             post: "/api/billing/v1/paymentproviders/{provider_id}"
             body: "*"
@@ -91,7 +91,7 @@ service BillingService {
     // Create a new payment method.
     // Required permissions:
     // - billing.paymentmethod.create on the organization that owns the given payment method.
-    rpc CreatePaymentMethod(PaymentMethod) returns (PaymentMethod) {
+    rpc CreatePaymentMethod(CreatePaymentMethodRequest) returns (PaymentMethod) {
         option (google.api.http) = {
             post: "/api/billing/v1/paymentmethods"
             body: "*"
@@ -294,9 +294,25 @@ message PreparePaymentMethodRequest {
 }
 
 // Response data for PreparePaymentMethod.
-message PreparePaymentMethodResponse {
+message PreparedPaymentMethod {
+    // ID of the provider of the future payment method
+    string provider_id = 1;
+    // ID of the organization that will own the future payment method
+    string organization_id = 2;
     // Token (semantics depends on payment provider)
-    string token = 1;
+    string token = 11;
+    // Signature used to verify the consistency of the data in this message.
+    string signature = 101;
+}
+
+// Request arguments for CreatePaymentMethod
+message CreatePaymentMethodRequest {
+    // The result of PreparePaymentMethod.
+    PreparedPaymentMethod prepared_payment_method = 1;
+    // First name of owner of payment method
+    string first_name = 2;
+    // Last name of owner of payment method
+    string last_name = 3;
 }
 
 // Request arguments for ListPaymentProviders
