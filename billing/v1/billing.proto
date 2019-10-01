@@ -301,6 +301,8 @@ message PreparedPaymentMethod {
     string organization_id = 2;
     // Token (semantics depends on payment provider)
     string token = 11;
+    // URL of custom script to load to create the payment method
+    string script_url = 12;
     // Signature used to verify the consistency of the data in this message.
     string signature = 101;
 }
