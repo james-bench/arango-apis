@@ -384,6 +384,10 @@ export interface PreparedPaymentMethod {
   // string
   token?: string;
   
+  // URL of custom script to load to create the payment method
+  // string
+  script_url?: string;
+  
   // Signature used to verify the consistency of the data in this message.
   // string
   signature?: string;

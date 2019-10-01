@@ -2977,6 +2977,7 @@ Response data for PreparePaymentMethod.
 | provider_id | [string](#string) |  | ID of the provider of the future payment method |
 | organization_id | [string](#string) |  | ID of the organization that will own the future payment method |
 | token | [string](#string) |  | Token (semantics depends on payment provider) |
+| script_url | [string](#string) |  | URL of custom script to load to create the payment method |
 | signature | [string](#string) |  | Signature used to verify the consistency of the data in this message. |
 
 
