@@ -2588,6 +2588,7 @@ Currency represents a specific monetary currency.
 | id | [string](#string) |  | System identifier of the currency. E.g. &#34;eur&#34; or &#34;usd&#34; |
 | name | [string](#string) |  | Human readable name of the currency E.g. &#34;US Dollar&#34; |
 | sign | [string](#string) |  | Human readable sign for the currency. E.g. &#34;$&#34; |
+| iso4217_code | [string](#string) |  | ISO 4217 currency code. E.g. &#34;USD&#34; |
 
 
 
