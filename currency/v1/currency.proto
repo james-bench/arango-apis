@@ -58,6 +58,8 @@ message Currency {
     // Human readable sign for the currency.
     // E.g. "$"
     string sign = 3;
+    // ISO 4217 currency code
+    string iso4217_code = 4;
 }
 
 // List of currencies.
