@@ -27,7 +27,8 @@ export interface Currency {
   // string
   sign?: string;
   
-  // ISO 4217 currency code
+  // ISO 4217 currency code.
+  // E.g. "USD"
   // string
   iso4217_code?: string;
 }

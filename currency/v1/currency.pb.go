@@ -39,7 +39,8 @@ type Currency struct {
 	// Human readable sign for the currency.
 	// E.g. "$"
 	Sign string `protobuf:"bytes,3,opt,name=sign,proto3" json:"sign,omitempty"`
-	// ISO 4217 currency code
+	// ISO 4217 currency code.
+	// E.g. "USD"
 	Iso4217Code          string   `protobuf:"bytes,4,opt,name=iso4217_code,json=iso4217Code,proto3" json:"iso4217_code,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
