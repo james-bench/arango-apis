@@ -312,6 +312,11 @@ export interface PaymentMethod {
   // string
   type?: string;
   
+  // If set, this payment method is the default for its organization.
+  // This is a read-only field.
+  // boolean
+  is_default?: boolean;
+  
   // PaymentMethod_CreditCardInfo
   credit_card_info?: PaymentMethod_CreditCardInfo;
 }

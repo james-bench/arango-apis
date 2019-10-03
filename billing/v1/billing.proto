@@ -357,6 +357,9 @@ message PaymentMethod {
     string token = 14;
     // Type of payment method 
     string type = 15;
+    // If set, this payment method is the default for its organization.
+    // This is a read-only field.
+    bool is_default = 16;
 
     // Information of the creditcard.
     // Only set when type == "creditcard"
