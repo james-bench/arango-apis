@@ -279,6 +279,8 @@ message Deployment {
         // The status of backup restore (if applicable).
         // This field will be set to empty if a new revision of the spec is available
         BackupRestoreStatus backup_restore_status = 100;
+        // The total size of all backups in the external source (in bytes)
+        int64 total_backup_size_bytes = 101;
     }
     Status status = 201;
 

@@ -381,6 +381,10 @@ export interface Deployment_Status {
   // This field will be set to empty if a new revision of the spec is available
   // Deployment_BackupRestoreStatus
   backup_restore_status?: Deployment_BackupRestoreStatus;
+  
+  // The total size of all backups in the external source (in bytes)
+  // number
+  total_backup_size_bytes?: number;
 }
 
 // Result for GetDeploymentCredentials

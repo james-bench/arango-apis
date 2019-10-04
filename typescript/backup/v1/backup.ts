@@ -74,6 +74,12 @@ export interface Backup {
   // boolean
   upload?: boolean;
   
+  // Information about a backup download.
+  // If this field is set the backup will be downloaded the deployment.
+  // This is a read-only field. To set this field please use the DownloadBackup method.
+  // Backup_DownloadSpec
+  download?: Backup_DownloadSpec;
+  
   // Status of the actual backup
   // Backup_Status
   status?: Backup_Status;
@@ -91,6 +97,34 @@ export interface Backup_DeploymentInfo {
   servers?: arangodb_cloud_data_v1_Deployment_ServersSpec;
 }
 
+// Information about a backup download.
+// All members of this message are read-only.
+export interface Backup_DownloadSpec {
+  // The revision of this DownloadSpec
+  // number
+  revision?: number;
+  
+  // The timestamp of when the last revision has been updated.
+  // googleTypes.Timestamp
+  last_updated_at?: googleTypes.Timestamp;
+}
+
+// The status of backup download
+// All members of this message are read-only.
+export interface Backup_DownloadStatus {
+  // The revision of the used DownloadStatus
+  // number
+  revision?: number;
+  
+  // Set when the backup has been fully downloaded
+  // boolean
+  downloaded?: boolean;
+  
+  // The timestamp of when the backup has been fully downloaded.
+  // googleTypes.Timestamp
+  downloaded_at?: googleTypes.Timestamp;
+}
+
 // Status of the actual backup
 // All members of this field are read-only.
 export interface Backup_Status {
@@ -103,7 +137,7 @@ export interface Backup_Status {
   version?: string;
   
   // The state of the backup
-  // Will be one of the following: "Pending|Scheduled|Download|DownloadError|Downloading|Create|Upload|Uploading|UploadError|Ready|Deleted|Failed"
+  // Will be one of the following: "Pending|Unavailable|Scheduled|Download|DownloadError|Downloading|Create|Upload|Uploading|UploadError|Ready|Deleted|Failed"
   // string
   state?: string;
   
@@ -123,17 +157,38 @@ export interface Backup_Status {
   // number
   size_bytes?: number;
   
+  // If set the backup is available on the cluster and can be restored
+  // boolean
+  available?: boolean;
+  
+  // Number of dbservers of the deployment during backup
+  // number
+  dbservers?: number;
+  
+  // The status of backup upload (if applicable).
+  // Backup_UploadStatus
+  upload_status?: Backup_UploadStatus;
+  
+  // The status of backup download (if applicable).
+  // This field will be set to empty if a new revision of the spec is available
+  // Backup_DownloadStatus
+  download_status?: Backup_DownloadStatus;
+}
+
+// The status of backup upload
+// All members of this message are read-only.
+export interface Backup_UploadStatus {
   // Set when the backup has been fully uploaded
   // boolean
   uploaded?: boolean;
   
-  // Set when the backup has been fully downloaded
-  // boolean
-  downloaded?: boolean;
+  // The timestamp of when the backup has been fully uploaded
+  // googleTypes.Timestamp
+  uploaded_at?: googleTypes.Timestamp;
   
-  // Set when the backup is available to restore to / recover from
-  // boolean
-  available?: boolean;
+  // Size of the backup in the external source (in bytes)
+  // number
+  size_bytes?: number;
 }
 
 // List of backups.
