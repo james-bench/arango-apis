@@ -820,6 +820,7 @@ such as a specific credit card.
 | valid_until | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | If set, this timestamp specifies when the payment method is no longer valid. If not set, there is no (known) end date for this payment method. |
 | token | [string](#string) |  | Token for this payment method, provided by the payment provider. This is a read-only field. |
 | type | [string](#string) |  | Type of payment method |
+| is_default | [bool](#bool) |  | If set, this payment method is the default for its organization. This is a read-only field. |
 | credit_card_info | [PaymentMethod.CreditCardInfo](#arangodb.cloud.billing.v1.PaymentMethod.CreditCardInfo) |  |  |
 
 
