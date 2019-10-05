@@ -22,9 +22,9 @@ func (s *Deployment_Status) Clone() *Deployment_Status {
 	clone := *s
 	clone.ServerVersions = append([]string{}, s.GetServerVersions()...)
 	clone.BootstrappedAt = common.CloneTimestamp(s.GetBootstrappedAt())
-	s.Servers = make([]*Deployment_ServerStatus, 0, len(s.GetServers()))
+	clone.Servers = make([]*Deployment_ServerStatus, 0, len(s.GetServers()))
 	for _, x := range s.GetServers() {
-		s.Servers = append(s.Servers, x.Clone())
+		clone.Servers = append(clone.Servers, x.Clone())
 	}
 	return &clone
 }
