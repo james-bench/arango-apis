@@ -175,7 +175,7 @@ message Invoice {
     // Name of the legal entity that is the sender of this invoice.
     string entity_name = 6;
     // Invoice number (used by accounting)
-    string number = 7;
+    string invoice_number = 7;
 
     // The creation date of the invoice
     google.protobuf.Timestamp created_at = 10;

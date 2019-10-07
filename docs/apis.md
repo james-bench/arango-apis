@@ -2779,7 +2779,7 @@ An Invoice message describes a transaction for usage of ArangoDB Oasis.
 | organization_name | [string](#string) |  | Name of the organization that is responsible for the payment of this invoice. |
 | entity_id | [string](#string) |  | Identifier of the legal entity that is the sender of this invoice. |
 | entity_name | [string](#string) |  | Name of the legal entity that is the sender of this invoice. |
-| number | [string](#string) |  | Invoice number (used by accounting) |
+| invoice_number | [string](#string) |  | Invoice number (used by accounting) |
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation date of the invoice |
 | items | [Invoice.Item](#arangodb.cloud.billing.v1.Invoice.Item) | repeated | All items of the invoice |
 | currency_id | [string](#string) |  | Currency for all amounts |

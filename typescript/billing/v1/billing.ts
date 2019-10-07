@@ -91,7 +91,7 @@ export interface Invoice {
   
   // Invoice number (used by accounting)
   // string
-  number?: string;
+  invoice_number?: string;
   
   // The creation date of the invoice
   // googleTypes.Timestamp
