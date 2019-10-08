@@ -47,7 +47,7 @@ export interface BillingConfig {
   // string
   email_addresses?: string[];
   
-  // US sales tax number (if any)
+  // US sales tax number of the organization (if any)
   // string
   us_tax_number?: string;
 }

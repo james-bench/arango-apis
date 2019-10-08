@@ -2742,7 +2742,7 @@ Billing configuration for an organization
 | address | [Address](#arangodb.cloud.billing.v1.Address) |  | Address of the organization |
 | vat_number | [string](#string) |  | EU VAT number of the organization (if any) |
 | email_addresses | [string](#string) | repeated | Email address(es) to send emails related to billing (mostly invoices) to. |
-| us_tax_number | [string](#string) |  | US sales tax number (if any) |
+| us_tax_number | [string](#string) |  | US sales tax number of the organization (if any) |
 
 
 

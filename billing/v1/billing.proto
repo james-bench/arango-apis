@@ -417,7 +417,7 @@ message BillingConfig {
     string vat_number = 2;
     // Email address(es) to send emails related to billing (mostly invoices) to.
     repeated string email_addresses = 3;
-    // US sales tax number (if any)
+    // US sales tax number of the organization (if any)
     string us_tax_number = 4;
 }
 

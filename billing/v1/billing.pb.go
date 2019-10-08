@@ -1492,7 +1492,7 @@ type BillingConfig struct {
 	VatNumber string `protobuf:"bytes,2,opt,name=vat_number,json=vatNumber,proto3" json:"vat_number,omitempty"`
 	// Email address(es) to send emails related to billing (mostly invoices) to.
 	EmailAddresses []string `protobuf:"bytes,3,rep,name=email_addresses,json=emailAddresses,proto3" json:"email_addresses,omitempty"`
-	// US sales tax number (if any)
+	// US sales tax number of the organization (if any)
 	UsTaxNumber          string   `protobuf:"bytes,4,opt,name=us_tax_number,json=usTaxNumber,proto3" json:"us_tax_number,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
