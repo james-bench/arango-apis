@@ -74,6 +74,11 @@ export interface Backup {
   // boolean
   upload?: boolean;
   
+  // The timestamp of when the upload boolean has been updated.
+  // This is a read-only value.
+  // googleTypes.Timestamp
+  upload_updated_at?: googleTypes.Timestamp;
+  
   // Information about a backup download.
   // If this field is set the backup will be downloaded the deployment.
   // This is a read-only field. To set this field please use the DownloadBackup method.
@@ -164,6 +169,11 @@ export interface Backup_Status {
   // Number of dbservers of the deployment during backup
   // number
   dbservers?: number;
+  
+  // Indicates that the backup is available in the external source only.
+  // You should download the backup before you can restore it.
+  // boolean
+  upload_only?: boolean;
   
   // The status of backup upload (if applicable).
   // Backup_UploadStatus

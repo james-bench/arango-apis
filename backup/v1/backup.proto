@@ -347,6 +347,10 @@ message Backup {
     // Setting this field when status.available = false will result in an error
     bool upload = 12;
 
+    // The timestamp of when the upload boolean has been updated.
+    // This is a read-only value.
+    google.protobuf.Timestamp upload_updated_at = 14;
+
     // Information about a backup download.
     // All members of this message are read-only. 
     message DownloadSpec {  
@@ -382,6 +386,9 @@ message Backup {
         bool available = 10;
         // Number of dbservers of the deployment during backup
         int32 dbservers = 11;
+        // Indicates that the backup is available in the external source only.
+        // You should download the backup before you can restore it.
+        bool upload_only = 12;
         // The status of backup upload (if applicable).
         UploadStatus upload_status = 100;
         // The status of backup download (if applicable).
