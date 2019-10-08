@@ -122,6 +122,10 @@ export interface Invoice {
   // number
   total_amount_incl_vat?: number;
   
+  // If set, the VAT reverse charge rule is applied for this invoice.
+  // boolean
+  vat_reverse_charge?: boolean;
+  
   // Invoice_Status
   status?: Invoice_Status;
   

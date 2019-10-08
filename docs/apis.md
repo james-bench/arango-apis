@@ -2787,6 +2787,7 @@ An Invoice message describes a transaction for usage of ArangoDB Oasis.
 | total_amount_excl_vat | [float](#float) |  | Sum all amount for all items |
 | total_vat | [float](#float) |  | VAT amount for all items |
 | total_amount_incl_vat | [float](#float) |  | Sum of total_amount_ex_vat &#43; total_vat. This is the amount that the customer will be charged for. |
+| vat_reverse_charge | [bool](#bool) |  | If set, the VAT reverse charge rule is applied for this invoice. |
 | status | [Invoice.Status](#arangodb.cloud.billing.v1.Invoice.Status) |  |  |
 | payments | [Invoice.Payment](#arangodb.cloud.billing.v1.Invoice.Payment) | repeated | All payment attempts for this invoice, ordered by created_at. |
 
