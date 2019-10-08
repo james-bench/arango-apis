@@ -413,10 +413,12 @@ message Address {
 message BillingConfig {
     // Address of the organization
     Address address = 1;
-    // VAT number of the organization (if any)
+    // EU VAT number of the organization (if any)
     string vat_number = 2;
     // Email address(es) to send emails related to billing (mostly invoices) to.
     repeated string email_addresses = 3;
+    // US sales tax number (if any)
+    string us_tax_number = 4;
 }
 
 // Request arguments for SetBillingConfig.

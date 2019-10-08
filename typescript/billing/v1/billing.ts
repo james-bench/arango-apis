@@ -39,13 +39,17 @@ export interface BillingConfig {
   // Address
   address?: Address;
   
-  // VAT number of the organization (if any)
+  // EU VAT number of the organization (if any)
   // string
   vat_number?: string;
   
   // Email address(es) to send emails related to billing (mostly invoices) to.
   // string
   email_addresses?: string[];
+  
+  // US sales tax number (if any)
+  // string
+  us_tax_number?: string;
 }
 
 // Request arguments for CreatePaymentMethod
