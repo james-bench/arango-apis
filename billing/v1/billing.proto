@@ -201,6 +201,8 @@ message Invoice {
     // Sum of total_amount_ex_vat + total_vat.
     // This is the amount that the customer will be charged for.
     float total_amount_incl_vat = 113;
+    // If set, the VAT reverse charge rule is applied for this invoice.
+    bool vat_reverse_charge = 114;
 
     // Status of the invoice
     message Status {
