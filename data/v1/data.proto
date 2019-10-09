@@ -281,6 +281,8 @@ message Deployment {
         BackupRestoreStatus backup_restore_status = 100;
         // The total size of all backups in the external source (in bytes)
         int64 total_backup_size_bytes = 101;
+        // Set if there is any backup currently uploading data to the external source
+        bool backup_upload_in_progress = 102;
     }
     Status status = 201;
 

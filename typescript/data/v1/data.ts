@@ -385,6 +385,10 @@ export interface Deployment_Status {
   // The total size of all backups in the external source (in bytes)
   // number
   total_backup_size_bytes?: number;
+  
+  // Set if there is any backup currently uploading data to the external source
+  // boolean
+  backup_upload_in_progress?: boolean;
 }
 
 // Result for GetDeploymentCredentials
