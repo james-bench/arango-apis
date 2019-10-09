@@ -96,7 +96,8 @@ func (source *Backup_Status) Equals(other *Backup_Status) bool {
 		source.GetSizeBytes() == other.GetSizeBytes() &&
 		source.GetDbservers() == other.GetDbservers() &&
 		source.GetUploadStatus().Equals(other.GetUploadStatus()) &&
-		source.GetDownloadStatus().Equals(other.GetDownloadStatus())
+		source.GetDownloadStatus().Equals(other.GetDownloadStatus()) &&
+		source.GetUploadOnly() == other.GetUploadOnly()
 }
 
 // Equals returns true when source & other have the same values
