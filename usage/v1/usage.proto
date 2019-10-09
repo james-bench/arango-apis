@@ -118,6 +118,14 @@ message UsageItem {
     // Amount of network traffic used by the resource covered by this usage item.
     // This field is only set when the usage item is of kind NetworkTransferSize.
     NetworkTransferSize network_transfer_size = 102;
+
+    message BackupStorageSize {
+        // Amount of cloud storage (in bytes) used by backups of a deployment.
+        int64 cloud_storage_size = 1;
+    }
+    // Amount of backup related cloud storage used by the resource covered by this usage item.
+    // This field is only set when the usage item is of kind BackupStorageSize.
+    BackupStorageSize backup_storage_size = 103;
 }
 
 // List of UsageItems.

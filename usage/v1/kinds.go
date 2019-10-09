@@ -17,4 +17,7 @@ const (
 	// UsageItemKindNetworkTransferSize indicates a UsageItem that contains
 	// the amount of network traffic caused by a deployment (or member of a deployment).
 	UsageItemKindNetworkTransferSize = "NetworkTransferSize"
+	// UsageItemKindBackupStorageSize indicates a UsageItem that contains
+	// the amount of cloud storage used by backups of a deployment.
+	UsageItemKindBackupStorageSize = "BackupStorageSize"
 )

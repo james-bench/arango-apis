@@ -110,6 +110,16 @@ export interface UsageItem {
   // This field is only set when the usage item is of kind NetworkTransferSize.
   // UsageItem_NetworkTransferSize
   network_transfer_size?: UsageItem_NetworkTransferSize;
+  
+  // Amount of backup related cloud storage used by the resource covered by this usage item.
+  // This field is only set when the usage item is of kind BackupStorageSize.
+  // UsageItem_BackupStorageSize
+  backup_storage_size?: UsageItem_BackupStorageSize;
+}
+export interface UsageItem_BackupStorageSize {
+  // Amount of cloud storage (in bytes) used by backups of a deployment.
+  // number
+  cloud_storage_size?: number;
 }
 export interface UsageItem_DeploymentSize {
   // Number of coordinators of the deployment
