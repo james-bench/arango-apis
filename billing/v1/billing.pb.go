@@ -1417,6 +1417,8 @@ type Address struct {
 	// City
 	City string `protobuf:"bytes,3,opt,name=city,proto3" json:"city,omitempty"`
 	// State
+	// For US, this must be an ISO 3166-2 2-letter state code
+	// See https://en.wikipedia.org/wiki/List_of_U.S._state_abbreviations
 	State string `protobuf:"bytes,4,opt,name=state,proto3" json:"state,omitempty"`
 	// Country code
 	CountryCode          string   `protobuf:"bytes,5,opt,name=country_code,json=countryCode,proto3" json:"country_code,omitempty"`

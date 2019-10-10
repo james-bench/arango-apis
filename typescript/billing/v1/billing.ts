@@ -25,6 +25,8 @@ export interface Address {
   city?: string;
   
   // State
+  // For US, this must be an ISO 3166-2 2-letter state code
+  // See https://en.wikipedia.org/wiki/List_of_U.S._state_abbreviations
   // string
   state?: string;
   
