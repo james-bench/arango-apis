@@ -1665,8 +1665,9 @@ type BackupServiceClient interface {
 	// Required permissions:
 	// -  backup.backup.update on the backup identified by the given ID.
 	UpdateBackup(ctx context.Context, in *Backup, opts ...grpc.CallOption) (*Backup, error)
-	// Download a backup identified by the given ID from remote storage to the volumes of the servers of the deployment
-	// If this backup was already be downloaded, another download will be done.
+	// Download a backup identified by the given ID from remote storage to the volumes of the servers of the deployment.
+	// This operation can only be executed on backups which have the same number of DB Servers in the backup and the current running cluster.
+	// If this backup was already downloaded, another download will be done.
 	// If the backup is still available on the cluster there is no need to explicitly download the backup before restoring.
 	// This function will return immediately.
 	// To track status, please invoke GetBackup and check the .status field inside the returned backup object
@@ -1674,7 +1675,8 @@ type BackupServiceClient interface {
 	// -  backup.backup.download on the backup identified by the given ID.
 	DownloadBackup(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Restore (or recover) a backup identified by the given ID
-	// This operation can only be executed on backups where status.available is set
+	// This operation can only be executed on backups where status.available is set and
+	// the mayor and minor version of the backup and the current running cluster are the same.
 	// This function will return immediately.
 	// To track status, please invoke GetDeployment on the data API and check the
 	// .status.restoring_backup and .status.restore_backup_status fields inside the returned deployment object
@@ -1860,8 +1862,9 @@ type BackupServiceServer interface {
 	// Required permissions:
 	// -  backup.backup.update on the backup identified by the given ID.
 	UpdateBackup(context.Context, *Backup) (*Backup, error)
-	// Download a backup identified by the given ID from remote storage to the volumes of the servers of the deployment
-	// If this backup was already be downloaded, another download will be done.
+	// Download a backup identified by the given ID from remote storage to the volumes of the servers of the deployment.
+	// This operation can only be executed on backups which have the same number of DB Servers in the backup and the current running cluster.
+	// If this backup was already downloaded, another download will be done.
 	// If the backup is still available on the cluster there is no need to explicitly download the backup before restoring.
 	// This function will return immediately.
 	// To track status, please invoke GetBackup and check the .status field inside the returned backup object
@@ -1869,7 +1872,8 @@ type BackupServiceServer interface {
 	// -  backup.backup.download on the backup identified by the given ID.
 	DownloadBackup(context.Context, *v1.IDOptions) (*v1.Empty, error)
 	// Restore (or recover) a backup identified by the given ID
-	// This operation can only be executed on backups where status.available is set
+	// This operation can only be executed on backups where status.available is set and
+	// the mayor and minor version of the backup and the current running cluster are the same.
 	// This function will return immediately.
 	// To track status, please invoke GetDeployment on the data API and check the
 	// .status.restoring_backup and .status.restore_backup_status fields inside the returned deployment object
