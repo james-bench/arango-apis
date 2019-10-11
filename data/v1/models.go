@@ -15,7 +15,7 @@ const (
 	// - a fixed number of nodes (3).
 	// - a variable node size.
 	// - a limitation of 1 shard per collection.
-	// - a minimum replication factor of 2 (per collection)
+	// - a fixed replication factor of 3 (per collection)
 	// - optimized for graph use cases
 	ModelOneShard = "oneshard"
 
@@ -23,11 +23,12 @@ const (
 	// - a variable number of nodes (3..).
 	// - a variable node size.
 	// - a minimum replication factor of 2 (per shard)
+	// - a default replication factor of 3 (per shard)
 	// - no limitation of shards per collection
 	ModelSharded = "sharded"
 
 	// ModelFlexible is the model that yields a deployment with:
-	// - completely flexible in number of coordinators, dbservers
+	// - completely flexible in number of coordinators (2..), dbservers (3..)
 	// - completely flexible in resources used by coordinators, dbservers
 	// - no limitation of shards per collection
 	// - a minimum replication factor of 1 (per collection)
