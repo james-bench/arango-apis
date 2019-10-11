@@ -74,6 +74,17 @@ export interface Backup {
   // boolean
   upload?: boolean;
   
+  // The timestamp of when the upload boolean has been updated.
+  // This is a read-only value.
+  // googleTypes.Timestamp
+  upload_updated_at?: googleTypes.Timestamp;
+  
+  // Information about a backup download.
+  // If this field is set the backup will be downloaded the deployment.
+  // This is a read-only field. To set this field please use the DownloadBackup method.
+  // Backup_DownloadSpec
+  download?: Backup_DownloadSpec;
+  
   // Status of the actual backup
   // Backup_Status
   status?: Backup_Status;
@@ -91,6 +102,34 @@ export interface Backup_DeploymentInfo {
   servers?: arangodb_cloud_data_v1_Deployment_ServersSpec;
 }
 
+// Information about a backup download.
+// All members of this message are read-only.
+export interface Backup_DownloadSpec {
+  // The revision of this DownloadSpec
+  // number
+  revision?: number;
+  
+  // The timestamp of when the last revision has been updated.
+  // googleTypes.Timestamp
+  last_updated_at?: googleTypes.Timestamp;
+}
+
+// The status of backup download
+// All members of this message are read-only.
+export interface Backup_DownloadStatus {
+  // The revision of the used DownloadStatus
+  // number
+  revision?: number;
+  
+  // Set when the backup has been fully downloaded
+  // boolean
+  downloaded?: boolean;
+  
+  // The timestamp of when the backup has been fully downloaded.
+  // googleTypes.Timestamp
+  downloaded_at?: googleTypes.Timestamp;
+}
+
 // Status of the actual backup
 // All members of this field are read-only.
 export interface Backup_Status {
@@ -103,7 +142,7 @@ export interface Backup_Status {
   version?: string;
   
   // The state of the backup
-  // Will be one of the following: "Pending|Scheduled|Download|DownloadError|Downloading|Create|Upload|Uploading|UploadError|Ready|Deleted|Failed"
+  // Will be one of the following: "Pending|Unavailable|Scheduled|Download|DownloadError|Downloading|Create|Upload|Uploading|UploadError|Ready|Deleted|Failed"
   // string
   state?: string;
   
@@ -123,17 +162,43 @@ export interface Backup_Status {
   // number
   size_bytes?: number;
   
+  // If set the backup is available on the cluster and can be restored
+  // boolean
+  available?: boolean;
+  
+  // Number of dbservers of the deployment during backup
+  // number
+  dbservers?: number;
+  
+  // Indicates that the backup is available in the external source only.
+  // You should download the backup before you can restore it.
+  // boolean
+  upload_only?: boolean;
+  
+  // The status of backup upload (if applicable).
+  // Backup_UploadStatus
+  upload_status?: Backup_UploadStatus;
+  
+  // The status of backup download (if applicable).
+  // This field will be set to empty if a new revision of the spec is available
+  // Backup_DownloadStatus
+  download_status?: Backup_DownloadStatus;
+}
+
+// The status of backup upload
+// All members of this message are read-only.
+export interface Backup_UploadStatus {
   // Set when the backup has been fully uploaded
   // boolean
   uploaded?: boolean;
   
-  // Set when the backup has been fully downloaded
-  // boolean
-  downloaded?: boolean;
+  // The timestamp of when the backup has been fully uploaded
+  // googleTypes.Timestamp
+  uploaded_at?: googleTypes.Timestamp;
   
-  // Set when the backup is available to restore to / recover from
-  // boolean
-  available?: boolean;
+  // Size of the backup in the external source (in bytes)
+  // number
+  size_bytes?: number;
 }
 
 // List of backups.
@@ -450,8 +515,9 @@ export class BackupService {
     return api.patch(url, req);
   }
   
-  // Download a backup identified by the given ID from remote storage to the volumes of the servers of the deployment
-  // If this backup was already be downloaded, another download will be done.
+  // Download a backup identified by the given ID from remote storage to the volumes of the servers of the deployment.
+  // This operation can only be executed on backups which have the same number of DB Servers in the backup and the current running cluster.
+  // If this backup was already downloaded, another download will be done.
   // If the backup is still available on the cluster there is no need to explicitly download the backup before restoring.
   // This function will return immediately.
   // To track status, please invoke GetBackup and check the .status field inside the returned backup object
@@ -464,7 +530,8 @@ export class BackupService {
   }
   
   // Restore (or recover) a backup identified by the given ID
-  // This operation can only be executed on backups where status.available is set
+  // This operation can only be executed on backups where status.available is set and
+  // the mayor and minor version of the backup and the current running cluster are the same.
   // This function will return immediately.
   // To track status, please invoke GetDeployment on the data API and check the
   // .status.restoring_backup and .status.restore_backup_status fields inside the returned deployment object

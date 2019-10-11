@@ -286,22 +286,33 @@ message Deployment {
         google.protobuf.Timestamp bootstrapped_at = 8;
         // Set if bootstrapped_at has a value, otherwise false.
         bool bootstrapped = 9;
-        // Set if the deployment is restoring a backup
-        bool restoring_backup = 10;
-        // Status of the restore backup operation.
-        // Enum of the following values: "<empty>|Restoring|Restored|Failed"
-        // The discription will be used for a human readable status
-        string restore_backup_status = 11;
+        // The status of backup restore (if applicable).
+        // This field will be set to empty if a new revision of the spec is available
+        BackupRestoreStatus backup_restore_status = 100;
+        // The total size of all backups in the external source (in bytes)
+        int64 total_backup_size_bytes = 101;
+        // Set if there is any backup currently uploading data to the external source
+        bool backup_upload_in_progress = 102;
     }
     Status status = 201;
+
+    // The status of backup restore
+    // All members of this message are read-only.
+    message BackupRestoreStatus {
+        // The revision of the used BackupRestoreSpec 
+        int32 revision = 1;
+        // Set if the deployment is preparing or restoring a backup
+        bool restoring = 10;
+        // Status of the restore backup operation.
+        // Enum of the following values: "<empty>|Preparing|Restoring|Restored|Failed"
+        string status = 11;
+        // Failure reason of the backup restore (if applicable)
+        string failure_reason = 12; 
+    }
 
     // Detailed size of the deployment
     // This is a read-only field.
     DeploymentSize size = 202;
-
-    // Restore to a Backup
-    // If this id is set to a backup-id the deployment will be restored to that backup
-    // TODO: move to internal-api string backup_restore_id = 203;
 
     // Expiration of the deployment.
     // All members of this message are read-only.
@@ -320,6 +331,21 @@ message Deployment {
         repeated string last_warning_email_send_to = 4;
     }
     Expiration expiration = 301;
+
+    // Information about a backup restore.
+    // All members of this message are read-only. 
+    message BackupRestoreSpec {  
+        // The revision of this BackupRestoreSpec 
+        int32 revision = 1;
+        // The timestamp of when the last revision has been updated.
+        google.protobuf.Timestamp last_updated_at = 2;
+        // Identifier of a backup to restore to.
+        string backup_id = 10;
+    }
+    // Information about a backup restore.
+    // If this field is set the deployment will be restored to that backup.
+    // This is a read-only field. To set this field please use the backup service RestoreBackup method.
+    BackupRestoreSpec backup_restore = 401;
 }
 
 // NodeSize specifies the size constraints of different data nodes.

@@ -118,8 +118,9 @@ service BackupService {
         };
     }
 
-    // Download a backup identified by the given ID from remote storage to the volumes of the servers of the deployment
-    // If this backup was already be downloaded, another download will be done.
+    // Download a backup identified by the given ID from remote storage to the volumes of the servers of the deployment.
+    // This operation can only be executed on backups which have the same number of DB Servers in the backup and the current running cluster.
+    // If this backup was already downloaded, another download will be done.
     // If the backup is still available on the cluster there is no need to explicitly download the backup before restoring.
     // This function will return immediately. 
     // To track status, please invoke GetBackup and check the .status field inside the returned backup object
@@ -132,7 +133,8 @@ service BackupService {
     }
 
     // Restore (or recover) a backup identified by the given ID
-    // This operation can only be executed on backups where status.available is set
+    // This operation can only be executed on backups where status.available is set and 
+    // the mayor and minor version of the backup and the current running cluster are the same. 
     // This function will return immediately. 
     // To track status, please invoke GetDeployment on the data API and check the 
     // .status.restoring_backup and .status.restore_backup_status fields inside the returned deployment object
@@ -347,6 +349,23 @@ message Backup {
     // Setting this field when status.available = false will result in an error
     bool upload = 12;
 
+    // The timestamp of when the upload boolean has been updated.
+    // This is a read-only value.
+    google.protobuf.Timestamp upload_updated_at = 14;
+
+    // Information about a backup download.
+    // All members of this message are read-only. 
+    message DownloadSpec {  
+        // The revision of this DownloadSpec 
+        int32 revision = 1;
+        // The timestamp of when the last revision has been updated.
+        google.protobuf.Timestamp last_updated_at = 2;
+    }
+    // Information about a backup download.
+    // If this field is set the backup will be downloaded the deployment.
+    // This is a read-only field. To set this field please use the DownloadBackup method.
+    DownloadSpec download = 13;
+
     // Status of the actual backup
     // All members of this field are read-only.
     message Status {
@@ -355,7 +374,7 @@ message Backup {
         // ArangoDB version of the backup 
         string version = 2;
         // The state of the backup
-        // Will be one of the following: "Pending|Scheduled|Download|DownloadError|Downloading|Create|Upload|Uploading|UploadError|Ready|Deleted|Failed"  
+        // Will be one of the following: "Pending|Unavailable|Scheduled|Download|DownloadError|Downloading|Create|Upload|Uploading|UploadError|Ready|Deleted|Failed"  
         string state = 3;
         // Set when the backup is failed
         bool is_failed = 4;
@@ -365,15 +384,43 @@ message Backup {
         string progress = 6;
         // Size of the backup (in bytes)
         int64 size_bytes = 7;
-        // Set when the backup has been fully uploaded
-        bool uploaded = 8;
-        // Set when the backup has been fully downloaded
-        bool downloaded = 9;
-        // Set when the backup is available to restore to / recover from
+        // If set the backup is available on the cluster and can be restored
         bool available = 10;
+        // Number of dbservers of the deployment during backup
+        int32 dbservers = 11;
+        // Indicates that the backup is available in the external source only.
+        // You should download the backup before you can restore it.
+        bool upload_only = 12;
+        // The status of backup upload (if applicable).
+        UploadStatus upload_status = 100;
+        // The status of backup download (if applicable).
+        // This field will be set to empty if a new revision of the spec is available
+        DownloadStatus download_status = 101;
     }
     // Status of the actual backup
     Status status = 100;
+
+    // The status of backup upload
+    // All members of this message are read-only.
+    message UploadStatus {
+        // Set when the backup has been fully uploaded
+        bool uploaded = 1;
+        // The timestamp of when the backup has been fully uploaded
+        google.protobuf.Timestamp uploaded_at = 2;
+        // Size of the backup in the external source (in bytes)
+        int64 size_bytes = 3;
+    } 
+
+    // The status of backup download
+    // All members of this message are read-only.
+    message DownloadStatus {
+        // The revision of the used DownloadStatus 
+        int32 revision = 1;
+        // Set when the backup has been fully downloaded
+        bool downloaded = 2;
+        // The timestamp of when the backup has been fully downloaded.
+        google.protobuf.Timestamp downloaded_at = 3;
+    } 
 }
 
 // List of backups.

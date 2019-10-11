@@ -25,6 +25,8 @@ export interface Address {
   city?: string;
   
   // State
+  // For US, this must be an ISO 3166-2 2-letter state code
+  // See https://en.wikipedia.org/wiki/List_of_U.S._state_abbreviations
   // string
   state?: string;
   
@@ -39,13 +41,32 @@ export interface BillingConfig {
   // Address
   address?: Address;
   
-  // VAT number of the organization (if any)
+  // EU VAT number of the organization (if any)
   // string
   vat_number?: string;
   
   // Email address(es) to send emails related to billing (mostly invoices) to.
   // string
   email_addresses?: string[];
+  
+  // US sales tax number of the organization (if any)
+  // string
+  us_tax_number?: string;
+}
+
+// Request arguments for CreatePaymentMethod
+export interface CreatePaymentMethodRequest {
+  // The result of PreparePaymentMethod.
+  // PreparedPaymentMethod
+  prepared_payment_method?: PreparedPaymentMethod;
+  
+  // First name of owner of payment method
+  // string
+  first_name?: string;
+  
+  // Last name of owner of payment method
+  // string
+  last_name?: string;
 }
 
 // An Invoice message describes a transaction for usage of ArangoDB Oasis.
@@ -74,6 +95,10 @@ export interface Invoice {
   // string
   entity_name?: string;
   
+  // Invoice number (used by accounting)
+  // string
+  invoice_number?: string;
+  
   // The creation date of the invoice
   // googleTypes.Timestamp
   created_at?: googleTypes.Timestamp;
@@ -98,6 +123,10 @@ export interface Invoice {
   // This is the amount that the customer will be charged for.
   // number
   total_amount_incl_vat?: number;
+  
+  // If set, the VAT reverse charge rule is applied for this invoice.
+  // boolean
+  vat_reverse_charge?: boolean;
   
   // Invoice_Status
   status?: Invoice_Status;
@@ -292,6 +321,30 @@ export interface PaymentMethod {
   // This is a read-only field.
   // string
   token?: string;
+  
+  // Type of payment method
+  // string
+  type?: string;
+  
+  // If set, this payment method is the default for its organization.
+  // This is a read-only field.
+  // boolean
+  is_default?: boolean;
+  
+  // PaymentMethod_CreditCardInfo
+  credit_card_info?: PaymentMethod_CreditCardInfo;
+}
+
+// Information of the creditcard.
+// Only set when type == "creditcard"
+export interface PaymentMethod_CreditCardInfo {
+  // Last 4 digits of the CC number.
+  // string
+  last_digits?: string;
+  
+  // Type of creditcard
+  // string
+  card_type?: string;
 }
 
 // List of Payment methods
@@ -313,12 +366,50 @@ export interface PaymentProvider {
   // Description of the payment provider
   // string
   description?: string;
+  
+  // Type of payment method supported by this provider
+  // string
+  type?: string;
 }
 
 // List of Payment providers
 export interface PaymentProviderList {
   // PaymentProvider
   items?: PaymentProvider[];
+}
+
+// Request arguments for PreparePaymentMethod.
+export interface PreparePaymentMethodRequest {
+  // ID of the provider to prepare
+  // string
+  provider_id?: string;
+  
+  // ID of the organization that will own the future payment method
+  // string
+  organization_id?: string;
+}
+
+// Response data for PreparePaymentMethod.
+export interface PreparedPaymentMethod {
+  // ID of the provider of the future payment method
+  // string
+  provider_id?: string;
+  
+  // ID of the organization that will own the future payment method
+  // string
+  organization_id?: string;
+  
+  // Token (semantics depends on payment provider)
+  // string
+  token?: string;
+  
+  // URL of custom script to load to create the payment method
+  // string
+  script_url?: string;
+  
+  // Signature used to verify the consistency of the data in this message.
+  // string
+  signature?: string;
 }
 
 // Request arguments for SetBillingConfig.
@@ -404,10 +495,18 @@ export class BillingService {
     return api.get(url, undefined);
   }
   
+  // Prepare the payment provider for creating a new payment method.
+  // Required permissions:
+  // - billing.paymentmethod.create on the organization that owns future payment method.
+  async PreparePaymentMethod(req: PreparePaymentMethodRequest): Promise<PreparedPaymentMethod> {
+    const url = `/api/billing/v1/paymentproviders/${encodeURIComponent(req.provider_id || '')}/prepare`;
+    return api.post(url, req);
+  }
+  
   // Create a new payment method.
   // Required permissions:
   // - billing.paymentmethod.create on the organization that owns the given payment method.
-  async CreatePaymentMethod(req: PaymentMethod): Promise<PaymentMethod> {
+  async CreatePaymentMethod(req: CreatePaymentMethodRequest): Promise<PaymentMethod> {
     const url = `/api/billing/v1/paymentmethods`;
     return api.post(url, req);
   }
