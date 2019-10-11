@@ -192,6 +192,10 @@ export interface Organization {
   // This is a read-only value.
   // Organization_TotalDeploymentsEntry
   total_deployments?: Organization_TotalDeploymentsEntry[];
+  
+  // If set, all projects in this organization are allowed to use deployments using the flexible model.
+  // boolean
+  is_flexible_deployments_enabled?: boolean;
 }
 export interface Organization_TotalDeploymentsEntry {
   // string
@@ -336,6 +340,10 @@ export interface Project {
   // The deletion timestamp of the project
   // googleTypes.Timestamp
   deleted_at?: googleTypes.Timestamp;
+  
+  // If set, this project is allowed to use deployments using the flexible model.
+  // boolean
+  is_flexible_deployments_enabled?: boolean;
 }
 
 // List of Projects.

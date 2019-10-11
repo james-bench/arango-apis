@@ -105,13 +105,14 @@ service DataService {
     // Required permissions:
     // - data.limits.get on the requested project
     // - data.deployment.get on the specified deployment (if deployment_id is set)
+    // This method is deprecated.
     rpc GetServersSpecLimits(ServersSpecLimitsRequest) returns (ServersSpecLimits) {
         option (google.api.http) = {
             get: "/api/data/v1/projects/{project_id}/regions/{region_id}/limits"
         };
     }
 
-    // Fetch the node sizes  available for deployments
+    // Fetch the node sizes available for deployments
     // owned by the given projected, created in the given region.
     // Required permissions:
     // - data.nodesize.list on the requested project
@@ -125,6 +126,7 @@ service DataService {
     // owned by the given projected, created in the given region.
     // Required permissions:
     // - data.presets.list on the requested project
+    // This method is deprecated.
     rpc ListServersSpecPresets(ServersSpecPresetsRequest) returns (ServersSpecPresetList) {
         option (google.api.http) = {
             get: "/api/data/v1/projects/{project_id}/regions/{region_id}/presets"
@@ -209,25 +211,42 @@ message Deployment {
 
     message ServersSpec {
         // Number of coordinators of the deployment
+        // This field is automatically set unless the flexible model is used.
         int32 coordinators = 1;
         // Amount of memory (in GB) to allocate for coordinators.
+        // This field is automatically set unless the flexible model is used.
         int32 coordinator_memory_size = 2;
         // Custom command line arguments passed to all coordinators.
+        // This field is automatically set unless the flexible model is used.
         repeated string coordinator_args = 3;
 
         // Number of dbservers of the deployment
+        // This field is automatically set unless the flexible model is used.
         int32 dbservers = 11;
         // Amount of memory (in GB) to allocate for dbservers.
+        // This field is automatically set unless the flexible model is used.
         int32 dbserver_memory_size = 12;
         // Amount of disk space (in GB) to allocate for dbservers.
+        // This field is automatically set unless the flexible model is used.
         int32 dbserver_disk_size = 13;
         // Custom command line arguments passed to all dbservers.
+        // This field is automatically set unless the flexible model is used.
         repeated string dbserver_args = 14;
     }
     ServersSpec servers = 103;
 
     // Optional identifier of IP whitelist to use for this deployment.
     string ipwhitelist_id = 105;
+
+    message ModelSpec {
+        // Type of model being used
+        string model = 1;
+        // Size of nodes being used
+        string node_size_id = 2;
+        // Number of nodes being used
+        int32 node_count = 3;
+    }
+    ModelSpec model = 106;
 
     // Status of a single server (of the ArangoDB cluster)
     message ServerStatus {
@@ -376,6 +395,7 @@ message NodeSizesRequest {
 }
 
 // Request arguments for ListServersSpecPresets and GetDefaultServersSpecPreset
+// This message is now deprecated.
 message ServersSpecPresetsRequest {
     // Identifier of project that will own a deployment.
     string project_id = 1;
@@ -384,6 +404,7 @@ message ServersSpecPresetsRequest {
 }
 
 // Specification of a ServersSpecPreset, which can be used to initialize a deployment.servers
+// This message is now deprecated.
 message ServersSpecPreset {
     // Name of the ServersSpecPreset
     // This is a read-only value.
@@ -396,6 +417,7 @@ message ServersSpecPreset {
 }
 
 // List of ServersSpecPreset.
+// This message is now deprecated.
 message ServersSpecPresetList {
     repeated ServersSpecPreset items = 1;
 }
