@@ -39,11 +39,9 @@ type (
 
 // ForEachOrganization iterates over all organizations that the authenticated
 // caller is a member of, invoking the given callback for each organization.
-func ForEachOrganization(ctx context.Context, c ResourceManagerServiceClient, cb OrganizationCallback) error {
-	opts := &common.ListOptions{
-		Page:     0,
-		PageSize: 50,
-	}
+func ForEachOrganization(ctx context.Context, c ResourceManagerServiceClient,
+	req *common.ListOptions, cb OrganizationCallback) error {
+	opts := req.CloneOrDefault(50)
 	for {
 		list, err := c.ListOrganizations(ctx, opts)
 		if err != nil {
@@ -51,7 +49,10 @@ func ForEachOrganization(ctx context.Context, c ResourceManagerServiceClient, cb
 		}
 		for _, item := range list.GetItems() {
 			if err := cb(ctx, item); err != nil {
-				return nil
+				return err
+			}
+			if err := ctx.Err(); err != nil {
+				return err
 			}
 		}
 		if len(list.GetItems()) < int(opts.PageSize) {
@@ -74,7 +75,10 @@ func ForEachOrganizationMember(ctx context.Context, c ResourceManagerServiceClie
 		}
 		for _, item := range list.GetItems() {
 			if err := cb(ctx, item); err != nil {
-				return nil
+				return err
+			}
+			if err := ctx.Err(); err != nil {
+				return err
 			}
 		}
 		if len(list.GetItems()) < int(opts.PageSize) {
@@ -97,7 +101,10 @@ func ForEachOrganizationInvite(ctx context.Context, c ResourceManagerServiceClie
 		}
 		for _, item := range list.GetItems() {
 			if err := cb(ctx, item); err != nil {
-				return nil
+				return err
+			}
+			if err := ctx.Err(); err != nil {
+				return err
 			}
 		}
 		if len(list.GetItems()) < int(opts.PageSize) {
@@ -119,7 +126,10 @@ func ForEachMyOrganizationInvite(ctx context.Context, c ResourceManagerServiceCl
 		}
 		for _, item := range list.GetItems() {
 			if err := cb(ctx, item); err != nil {
-				return nil
+				return err
+			}
+			if err := ctx.Err(); err != nil {
+				return err
 			}
 		}
 		if len(list.GetItems()) < int(opts.PageSize) {
@@ -142,7 +152,10 @@ func ForEachProject(ctx context.Context, c ResourceManagerServiceClient,
 		}
 		for _, item := range list.GetItems() {
 			if err := cb(ctx, item); err != nil {
-				return nil
+				return err
+			}
+			if err := ctx.Err(); err != nil {
+				return err
 			}
 		}
 		if len(list.GetItems()) < int(opts.PageSize) {
@@ -165,7 +178,10 @@ func ForEachOrganizationQuota(ctx context.Context, c ResourceManagerServiceClien
 		}
 		for _, item := range list.GetItems() {
 			if err := cb(ctx, item); err != nil {
-				return nil
+				return err
+			}
+			if err := ctx.Err(); err != nil {
+				return err
 			}
 		}
 		if len(list.GetItems()) < int(req.Options.PageSize) {
@@ -188,7 +204,10 @@ func ForEachProjectQuota(ctx context.Context, c ResourceManagerServiceClient,
 		}
 		for _, item := range list.GetItems() {
 			if err := cb(ctx, item); err != nil {
-				return nil
+				return err
+			}
+			if err := ctx.Err(); err != nil {
+				return err
 			}
 		}
 		if len(list.GetItems()) < int(req.Options.PageSize) {
@@ -210,7 +229,10 @@ func ForEachEvent(ctx context.Context, c ResourceManagerServiceClient,
 		}
 		for _, item := range list.GetItems() {
 			if err := cb(ctx, item); err != nil {
-				return nil
+				return err
+			}
+			if err := ctx.Err(); err != nil {
+				return err
 			}
 		}
 		if len(list.GetItems()) < int(req.Options.PageSize) {
@@ -232,7 +254,10 @@ func ForEachQuotaDescription(ctx context.Context, c ResourceManagerServiceClient
 		}
 		for _, item := range list.GetItems() {
 			if err := cb(ctx, item); err != nil {
-				return nil
+				return err
+			}
+			if err := ctx.Err(); err != nil {
+				return err
 			}
 		}
 		if len(list.GetItems()) < int(req.PageSize) {
