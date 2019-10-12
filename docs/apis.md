@@ -1106,6 +1106,7 @@ resource (usually deployment) in a specific time period.
 | cloud_provider_id | [string](#string) |  | Identifier of the cloud provider that is used to run the deployment. |
 | cloud_region_id | [string](#string) |  | Identifier of the cloud region that is used to run the deployment. |
 | support_plan_id | [string](#string) |  | Identifier of the support plan that is attached to the deployment. |
+| deployment_model | [string](#string) |  | Model of the deployment |
 
 
 

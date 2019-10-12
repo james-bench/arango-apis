@@ -216,6 +216,10 @@ export interface UsageItem_Resource {
   // Identifier of the support plan that is attached to the deployment.
   // string
   support_plan_id?: string;
+  
+  // Model of the deployment
+  // string
+  deployment_model?: string;
 }
 
 // List of UsageItems.

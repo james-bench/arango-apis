@@ -70,6 +70,8 @@ message UsageItem {
         string cloud_region_id = 13;
         // Identifier of the support plan that is attached to the deployment.
         string support_plan_id = 14;
+        // Model of the deployment
+        string deployment_model = 15;
     }
     // Identification of the resource covered by this usage item 
     Resource resource = 4;
