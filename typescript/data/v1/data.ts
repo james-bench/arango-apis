@@ -724,7 +724,7 @@ export class DataService {
   // owned by the given projected, created in the given region.
   // Required permissions:
   // - data.nodesize.list on the requested project
-  async ListNodeSizes(req: NodeSizesRequest): Promise<NodeSize> {
+  async ListNodeSizes(req: NodeSizesRequest): Promise<NodeSizeList> {
     const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id || '')}/regions/${encodeURIComponent(req.region_id || '')}/nodesizes`;
     const url = path + api.queryString(req, [`project_id`, `region_id`]);
     return api.get(url, undefined);

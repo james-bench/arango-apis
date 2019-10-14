@@ -65,7 +65,8 @@ var xxx_messageInfo_Empty proto.InternalMessageInfo
 // Options for a list request.
 type ListOptions struct {
 	// Maximum number of items to return.
-	// If not specified, all remaining items are returned.
+	// If not specified, a default number items are returned.
+	// Unless specified otherwise, the default number is DefaultPageSize.
 	PageSize int32 `protobuf:"varint,1,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	// Page to start with (defaults to 0).
 	Page int64 `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`

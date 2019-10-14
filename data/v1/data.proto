@@ -116,7 +116,7 @@ service DataService {
     // owned by the given projected, created in the given region.
     // Required permissions:
     // - data.nodesize.list on the requested project
-    rpc ListNodeSizes(NodeSizesRequest) returns (NodeSize) {
+    rpc ListNodeSizes(NodeSizesRequest) returns (NodeSizeList) {
         option (google.api.http) = {
             get: "/api/data/v1/projects/{project_id}/regions/{region_id}/nodesizes"
         };
