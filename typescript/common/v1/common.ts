@@ -39,7 +39,8 @@ export interface IDOptions {
 // Options for a list request.
 export interface ListOptions {
   // Maximum number of items to return.
-  // If not specified, all remaining items are returned.
+  // If not specified, a default number items are returned.
+  // Unless specified otherwise, the default number is DefaultPageSize.
   // number
   page_size?: number;
   

@@ -1197,7 +1197,7 @@ Options for a list request.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| page_size | [int32](#int32) |  | Maximum number of items to return. If not specified, all remaining items are returned. |
+| page_size | [int32](#int32) |  | Maximum number of items to return. If not specified, a default number items are returned. Unless specified otherwise, the default number is DefaultPageSize. |
 | page | [int64](#int64) |  | Page to start with (defaults to 0). |
 | context_id | [string](#string) |  | Identifier of the resource in which the list request is made. |
 
