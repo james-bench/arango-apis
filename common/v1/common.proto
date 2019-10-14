@@ -18,7 +18,8 @@ message Empty {}
 // Options for a list request.
 message ListOptions {
     // Maximum number of items to return.
-    // If not specified, all remaining items are returned.
+    // If not specified, a default number items are returned.
+    // Unless specified otherwise, the default number is DefaultPageSize.
     int32 page_size = 1;
     // Page to start with (defaults to 0).
     int64 page = 2;
