@@ -20,7 +20,7 @@ type (
 	BackupCallback func(context.Context, *Backup) error
 )
 
-// ForEachBackupPolicy iterates over all backup policies,
+// ForEachBackupPolicy iterates over all backup policies for a specific deployment,
 // invoking the given callback for each backup policy.
 func ForEachBackupPolicy(ctx context.Context, c BackupServiceClient,
 	req ListBackupPoliciesRequest, cb BackupPolicyCallback) error {
@@ -46,7 +46,7 @@ func ForEachBackupPolicy(ctx context.Context, c BackupServiceClient,
 	}
 }
 
-// ForEachBackup iterates over all backups,
+// ForEachBackup iterates over all backups for a specific deployment,
 // invoking the given callback for each backup.
 func ForEachBackup(ctx context.Context, c BackupServiceClient,
 	req ListBackupsRequest, cb BackupCallback) error {
