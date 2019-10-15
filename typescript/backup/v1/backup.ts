@@ -4,6 +4,7 @@
 ///
 import api from '../../api'
 import * as googleTypes from '../../googleTypes'
+import { Budget as arangodb_cloud_common_v1_Budget } from '../../common/v1/common'
 import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1/common'
 import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
 import { YesOrNo as arangodb_cloud_common_v1_YesOrNo } from '../../common/v1/common'
@@ -205,6 +206,10 @@ export interface Backup_UploadStatus {
 export interface BackupList {
   // Backup
   items?: Backup[];
+  
+  // Budget for backups
+  // arangodb.cloud.common.v1.Budget
+  budget?: arangodb_cloud_common_v1_Budget;
 }
 
 // BackupPolicy represents a single backup policy for a deployment.
