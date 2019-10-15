@@ -505,6 +505,10 @@ message ServersSpecLimits {
     Limits dbserver_memory_size = 12;
     // Amount of disk space (in GB) to allocate for dbservers.
     Limits dbserver_disk_size = 13;
+
+    // Possible values for the amount of memory (in GB) to allocate
+    // for pairs of coordinator, dbserver.
+    Limits node_memory_size = 21;
 }
 
 // Request arguments for CalculateDeploymentSize

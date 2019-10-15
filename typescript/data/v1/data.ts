@@ -551,6 +551,11 @@ export interface ServersSpecLimits {
   // Amount of disk space (in GB) to allocate for dbservers.
   // ServersSpecLimits_Limits
   dbserver_disk_size?: ServersSpecLimits_Limits;
+  
+  // Possible values for the amount of memory (in GB) to allocate
+  // for pairs of coordinator, dbserver.
+  // ServersSpecLimits_Limits
+  node_memory_size?: ServersSpecLimits_Limits;
 }
 export interface ServersSpecLimits_Limits {
   // Minimum value
