@@ -426,6 +426,8 @@ message Backup {
 // List of backups.
 message BackupList {
     repeated Backup items = 1;
+    // Budget for backups
+    common.v1.Budget budget = 2;
 }
 
 // Request arguments for ListBackups
