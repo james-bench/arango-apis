@@ -245,6 +245,8 @@ message Deployment {
         string node_size_id = 2;
         // Number of nodes being used
         int32 node_count = 3;
+        // Amount of disk space per node (in GB)
+        int32 node_disk_size = 4;
     }
     ModelSpec model = 106;
 

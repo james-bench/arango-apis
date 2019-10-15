@@ -264,6 +264,10 @@ export interface Deployment_ModelSpec {
   // Number of nodes being used
   // number
   node_count?: number;
+  
+  // Amount of disk space per node (in GB)
+  // number
+  node_disk_size?: number;
 }
 
 // Status of a single server (of the ArangoDB cluster)
