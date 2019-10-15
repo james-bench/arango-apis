@@ -337,7 +337,7 @@ export interface Deployment_ServersSpec {
   coordinator_memory_size?: number;
   
   // Custom command line arguments passed to all coordinators.
-  // This field is automatically set unless the flexible model is used.
+  // This field is ignored set unless the flexible model is used.
   // string
   coordinator_args?: string[];
   
@@ -357,7 +357,7 @@ export interface Deployment_ServersSpec {
   dbserver_disk_size?: number;
   
   // Custom command line arguments passed to all dbservers.
-  // This field is automatically set unless the flexible model is used.
+  // This field is ignored set unless the flexible model is used.
   // string
   dbserver_args?: string[];
 }
@@ -502,7 +502,7 @@ export interface NodeSize {
   // number
   memory_size?: number;
   
-  // Amount of disk (in GB) that is available on this size of node.
+  // Minimum amount of disk (in GB) that is available on this size of node.
   // number
   min_disk_size?: number;
   
@@ -725,7 +725,7 @@ export class DataService {
   }
   
   // Fetch the node sizes available for deployments
-  // owned by the given projected, created in the given region.
+  // owned by the given project, created in the given region.
   // Required permissions:
   // - data.nodesize.list on the requested project
   async ListNodeSizes(req: NodeSizesRequest): Promise<NodeSizeList> {

@@ -113,7 +113,7 @@ service DataService {
     }
 
     // Fetch the node sizes available for deployments
-    // owned by the given projected, created in the given region.
+    // owned by the given project, created in the given region.
     // Required permissions:
     // - data.nodesize.list on the requested project
     rpc ListNodeSizes(NodeSizesRequest) returns (NodeSizeList) {
@@ -217,7 +217,7 @@ message Deployment {
         // This field is automatically set unless the flexible model is used.
         int32 coordinator_memory_size = 2;
         // Custom command line arguments passed to all coordinators.
-        // This field is automatically set unless the flexible model is used.
+        // This field is ignored set unless the flexible model is used.
         repeated string coordinator_args = 3;
 
         // Number of dbservers of the deployment
@@ -230,7 +230,7 @@ message Deployment {
         // This field is automatically set unless the flexible model is used.
         int32 dbserver_disk_size = 13;
         // Custom command line arguments passed to all dbservers.
-        // This field is automatically set unless the flexible model is used.
+        // This field is ignored set unless the flexible model is used.
         repeated string dbserver_args = 14;
     }
     ServersSpec servers = 103;
@@ -377,7 +377,7 @@ message NodeSize {
     string name = 2;
     // Amount of memory (in GB) that is available on this size of node.
     int32 memory_size = 3;
-    // Amount of disk (in GB) that is available on this size of node.
+    // Minimum amount of disk (in GB) that is available on this size of node.
     int32 min_disk_size = 4;
     // Maximum amount of disk (in GB) that is available on this size of node.
     int32 max_disk_size = 5;

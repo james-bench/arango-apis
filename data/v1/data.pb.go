@@ -333,7 +333,7 @@ type Deployment_ServersSpec struct {
 	// This field is automatically set unless the flexible model is used.
 	CoordinatorMemorySize int32 `protobuf:"varint,2,opt,name=coordinator_memory_size,json=coordinatorMemorySize,proto3" json:"coordinator_memory_size,omitempty"`
 	// Custom command line arguments passed to all coordinators.
-	// This field is automatically set unless the flexible model is used.
+	// This field is ignored set unless the flexible model is used.
 	CoordinatorArgs []string `protobuf:"bytes,3,rep,name=coordinator_args,json=coordinatorArgs,proto3" json:"coordinator_args,omitempty"`
 	// Number of dbservers of the deployment
 	// This field is automatically set unless the flexible model is used.
@@ -345,7 +345,7 @@ type Deployment_ServersSpec struct {
 	// This field is automatically set unless the flexible model is used.
 	DbserverDiskSize int32 `protobuf:"varint,13,opt,name=dbserver_disk_size,json=dbserverDiskSize,proto3" json:"dbserver_disk_size,omitempty"`
 	// Custom command line arguments passed to all dbservers.
-	// This field is automatically set unless the flexible model is used.
+	// This field is ignored set unless the flexible model is used.
 	DbserverArgs         []string `protobuf:"bytes,14,rep,name=dbserver_args,json=dbserverArgs,proto3" json:"dbserver_args,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -1050,7 +1050,7 @@ type NodeSize struct {
 	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	// Amount of memory (in GB) that is available on this size of node.
 	MemorySize int32 `protobuf:"varint,3,opt,name=memory_size,json=memorySize,proto3" json:"memory_size,omitempty"`
-	// Amount of disk (in GB) that is available on this size of node.
+	// Minimum amount of disk (in GB) that is available on this size of node.
 	MinDiskSize int32 `protobuf:"varint,4,opt,name=min_disk_size,json=minDiskSize,proto3" json:"min_disk_size,omitempty"`
 	// Maximum amount of disk (in GB) that is available on this size of node.
 	MaxDiskSize          int32    `protobuf:"varint,5,opt,name=max_disk_size,json=maxDiskSize,proto3" json:"max_disk_size,omitempty"`
@@ -2598,7 +2598,7 @@ type DataServiceClient interface {
 	// This method is deprecated.
 	GetServersSpecLimits(ctx context.Context, in *ServersSpecLimitsRequest, opts ...grpc.CallOption) (*ServersSpecLimits, error)
 	// Fetch the node sizes available for deployments
-	// owned by the given projected, created in the given region.
+	// owned by the given project, created in the given region.
 	// Required permissions:
 	// - data.nodesize.list on the requested project
 	ListNodeSizes(ctx context.Context, in *NodeSizesRequest, opts ...grpc.CallOption) (*NodeSizeList, error)
@@ -2792,7 +2792,7 @@ type DataServiceServer interface {
 	// This method is deprecated.
 	GetServersSpecLimits(context.Context, *ServersSpecLimitsRequest) (*ServersSpecLimits, error)
 	// Fetch the node sizes available for deployments
-	// owned by the given projected, created in the given region.
+	// owned by the given project, created in the given region.
 	// Required permissions:
 	// - data.nodesize.list on the requested project
 	ListNodeSizes(context.Context, *NodeSizesRequest) (*NodeSizeList, error)

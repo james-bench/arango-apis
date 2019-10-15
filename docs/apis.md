@@ -2393,11 +2393,11 @@ Status of a single server (of the ArangoDB cluster)
 | ----- | ---- | ----- | ----------- |
 | coordinators | [int32](#int32) |  | Number of coordinators of the deployment This field is automatically set unless the flexible model is used. |
 | coordinator_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for coordinators. This field is automatically set unless the flexible model is used. |
-| coordinator_args | [string](#string) | repeated | Custom command line arguments passed to all coordinators. This field is automatically set unless the flexible model is used. |
+| coordinator_args | [string](#string) | repeated | Custom command line arguments passed to all coordinators. This field is ignored set unless the flexible model is used. |
 | dbservers | [int32](#int32) |  | Number of dbservers of the deployment This field is automatically set unless the flexible model is used. |
 | dbserver_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for dbservers. This field is automatically set unless the flexible model is used. |
 | dbserver_disk_size | [int32](#int32) |  | Amount of disk space (in GB) to allocate for dbservers. This field is automatically set unless the flexible model is used. |
-| dbserver_args | [string](#string) | repeated | Custom command line arguments passed to all dbservers. This field is automatically set unless the flexible model is used. |
+| dbserver_args | [string](#string) | repeated | Custom command line arguments passed to all dbservers. This field is ignored set unless the flexible model is used. |
 
 
 
@@ -2525,7 +2525,7 @@ NodeSize specifies the size constraints of different data nodes.
 | id | [string](#string) |  | System identifier of the node size |
 | name | [string](#string) |  | Human readable name of the node size |
 | memory_size | [int32](#int32) |  | Amount of memory (in GB) that is available on this size of node. |
-| min_disk_size | [int32](#int32) |  | Amount of disk (in GB) that is available on this size of node. |
+| min_disk_size | [int32](#int32) |  | Minimum amount of disk (in GB) that is available on this size of node. |
 | max_disk_size | [int32](#int32) |  | Maximum amount of disk (in GB) that is available on this size of node. |
 
 
@@ -2720,7 +2720,7 @@ DataService is the API used to configure data objects.
 | ListVersions | [ListVersionsRequest](#arangodb.cloud.data.v1.ListVersionsRequest) | [VersionList](#arangodb.cloud.data.v1.VersionList) | Fetch all ArangoDB versions that are available for deployments. Required permissions: - None |
 | GetDefaultVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [Version](#arangodb.cloud.data.v1.Version) | Fetch the default ArangoDB version for new deployment. Required permissions: - None |
 | GetServersSpecLimits | [ServersSpecLimitsRequest](#arangodb.cloud.data.v1.ServersSpecLimitsRequest) | [ServersSpecLimits](#arangodb.cloud.data.v1.ServersSpecLimits) | Fetch the limits for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.limits.get on the requested project - data.deployment.get on the specified deployment (if deployment_id is set) This method is deprecated. |
-| ListNodeSizes | [NodeSizesRequest](#arangodb.cloud.data.v1.NodeSizesRequest) | [NodeSizeList](#arangodb.cloud.data.v1.NodeSizeList) | Fetch the node sizes available for deployments owned by the given projected, created in the given region. Required permissions: - data.nodesize.list on the requested project |
+| ListNodeSizes | [NodeSizesRequest](#arangodb.cloud.data.v1.NodeSizesRequest) | [NodeSizeList](#arangodb.cloud.data.v1.NodeSizeList) | Fetch the node sizes available for deployments owned by the given project, created in the given region. Required permissions: - data.nodesize.list on the requested project |
 | ListServersSpecPresets | [ServersSpecPresetsRequest](#arangodb.cloud.data.v1.ServersSpecPresetsRequest) | [ServersSpecPresetList](#arangodb.cloud.data.v1.ServersSpecPresetList) | Fetch the presets for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.presets.list on the requested project This method is deprecated. |
 | CalculateDeploymentSize | [CalculateDeploymentSizeRequest](#arangodb.cloud.data.v1.CalculateDeploymentSizeRequest) | [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize) | Calculate the total size of a deployment with given arguments. Required permissions: - none |
 | GetConnectDriverInstructions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [ConnectDriverInstructions](#arangodb.cloud.data.v1.ConnectDriverInstructions) | Fetch instructions for connecting drivers to the deployment identified by the given id. Required permissions: - data.deployment.get on the deployment identified by the given ID |
