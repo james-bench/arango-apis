@@ -323,6 +323,8 @@ message Organization {
     // map: tier-id -> count
     // This is a read-only value.
     map<string, int32> total_deployments = 9;
+    // If set, all projects in this organization are allowed to use deployments using the flexible model.
+    bool is_flexible_deployments_enabled = 10;
 }
 
 // List of organizations.
@@ -409,6 +411,8 @@ message Project {
     google.protobuf.Timestamp created_at = 7;
     // The deletion timestamp of the project
     google.protobuf.Timestamp deleted_at = 8;
+    // If set, this project is allowed to use deployments using the flexible model.
+    bool is_flexible_deployments_enabled = 9;
 }
 
 // List of Projects.

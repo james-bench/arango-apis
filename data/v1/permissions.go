@@ -45,3 +45,10 @@ const (
 	// PermissionPresetsList is needed for listing server spec presets in a project
 	PermissionPresetsList = "data.presets.list"
 )
+
+const (
+	// NodeSize permissions
+
+	// PermissionPresetsList is needed for listing server spec presets in a project
+	PermissionNodeSizeList = "data.nodesize.list"
+)

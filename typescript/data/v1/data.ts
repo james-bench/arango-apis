@@ -160,6 +160,9 @@ export interface Deployment {
   // string
   ipwhitelist_id?: string;
   
+  // Deployment_ModelSpec
+  model?: Deployment_ModelSpec;
+  
   // Deployment_Status
   status?: Deployment_Status;
   
@@ -249,6 +252,23 @@ export interface Deployment_Expiration {
   // string
   last_warning_email_send_to?: string[];
 }
+export interface Deployment_ModelSpec {
+  // Type of model being used
+  // string
+  model?: string;
+  
+  // Size of nodes being used
+  // string
+  node_size_id?: string;
+  
+  // Number of nodes being used
+  // number
+  node_count?: number;
+  
+  // Amount of disk space per node (in GB)
+  // number
+  node_disk_size?: number;
+}
 
 // Status of a single server (of the ArangoDB cluster)
 export interface Deployment_ServerStatus {
@@ -307,30 +327,37 @@ export interface Deployment_ServerStatus {
 }
 export interface Deployment_ServersSpec {
   // Number of coordinators of the deployment
+  // This field is automatically set unless the flexible model is used.
   // number
   coordinators?: number;
   
   // Amount of memory (in GB) to allocate for coordinators.
+  // This field is automatically set unless the flexible model is used.
   // number
   coordinator_memory_size?: number;
   
   // Custom command line arguments passed to all coordinators.
+  // This field is ignored set unless the flexible model is used.
   // string
   coordinator_args?: string[];
   
   // Number of dbservers of the deployment
+  // This field is automatically set unless the flexible model is used.
   // number
   dbservers?: number;
   
   // Amount of memory (in GB) to allocate for dbservers.
+  // This field is automatically set unless the flexible model is used.
   // number
   dbserver_memory_size?: number;
   
   // Amount of disk space (in GB) to allocate for dbservers.
+  // This field is automatically set unless the flexible model is used.
   // number
   dbserver_disk_size?: number;
   
   // Custom command line arguments passed to all dbservers.
+  // This field is ignored set unless the flexible model is used.
   // string
   dbserver_args?: string[];
 }
@@ -461,6 +488,46 @@ export interface ListVersionsRequest {
   current_version?: string;
 }
 
+// NodeSize specifies the size constraints of different data nodes.
+export interface NodeSize {
+  // System identifier of the node size
+  // string
+  id?: string;
+  
+  // Human readable name of the node size
+  // string
+  name?: string;
+  
+  // Amount of memory (in GB) that is available on this size of node.
+  // number
+  memory_size?: number;
+  
+  // Minimum amount of disk (in GB) that is available on this size of node.
+  // number
+  min_disk_size?: number;
+  
+  // Maximum amount of disk (in GB) that is available on this size of node.
+  // number
+  max_disk_size?: number;
+}
+
+// List of node sizes.
+export interface NodeSizeList {
+  // NodeSize
+  items?: NodeSize[];
+}
+
+// Request arguments for ListNodeSizes
+export interface NodeSizesRequest {
+  // Identifier of project that will own a deployment.
+  // string
+  project_id?: string;
+  
+  // Identifier of a region in which a deployment will be created.
+  // string
+  region_id?: string;
+}
+
 // Limits of allowed values for fields of Deployment.ServersSpec.
 export interface ServersSpecLimits {
   // Limits for the number of coordinators of the deployment
@@ -517,6 +584,7 @@ export interface ServersSpecLimitsRequest {
 }
 
 // Specification of a ServersSpecPreset, which can be used to initialize a deployment.servers
+// This message is now deprecated.
 export interface ServersSpecPreset {
   // Name of the ServersSpecPreset
   // This is a read-only value.
@@ -534,12 +602,14 @@ export interface ServersSpecPreset {
 }
 
 // List of ServersSpecPreset.
+// This message is now deprecated.
 export interface ServersSpecPresetList {
   // ServersSpecPreset
   items?: ServersSpecPreset[];
 }
 
 // Request arguments for ListServersSpecPresets and GetDefaultServersSpecPreset
+// This message is now deprecated.
 export interface ServersSpecPresetsRequest {
   // Identifier of project that will own a deployment.
   // string
@@ -647,8 +717,19 @@ export class DataService {
   // Required permissions:
   // - data.limits.get on the requested project
   // - data.deployment.get on the specified deployment (if deployment_id is set)
+  // This method is deprecated.
   async GetServersSpecLimits(req: ServersSpecLimitsRequest): Promise<ServersSpecLimits> {
     const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id || '')}/regions/${encodeURIComponent(req.region_id || '')}/limits`;
+    const url = path + api.queryString(req, [`project_id`, `region_id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch the node sizes available for deployments
+  // owned by the given project, created in the given region.
+  // Required permissions:
+  // - data.nodesize.list on the requested project
+  async ListNodeSizes(req: NodeSizesRequest): Promise<NodeSizeList> {
+    const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id || '')}/regions/${encodeURIComponent(req.region_id || '')}/nodesizes`;
     const url = path + api.queryString(req, [`project_id`, `region_id`]);
     return api.get(url, undefined);
   }
@@ -657,6 +738,7 @@ export class DataService {
   // owned by the given projected, created in the given region.
   // Required permissions:
   // - data.presets.list on the requested project
+  // This method is deprecated.
   async ListServersSpecPresets(req: ServersSpecPresetsRequest): Promise<ServersSpecPresetList> {
     const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id || '')}/regions/${encodeURIComponent(req.region_id || '')}/presets`;
     const url = path + api.queryString(req, [`project_id`, `region_id`]);
