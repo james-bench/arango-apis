@@ -514,16 +514,30 @@ message ServersSpecLimits {
 // Request arguments for CalculateDeploymentSize
 message CalculateDeploymentSizeRequest {
     // Number of coordinators of the deployment
+    // This field is ignored unless model is "flexible".
     int32 coordinators = 1;
     // Amount of memory (in GB) to allocate for each coordinator.
+    // This field is ignored unless model is "flexible".
     int32 coordinator_memory_size = 2;
 
     // Number of dbservers of the deployment
+    // This field is ignored unless model is "flexible".
     int32 dbservers = 11;
     // Amount of memory (in GB) to allocate for each dbserver.
+    // This field is ignored unless model is "flexible".
     int32 dbserver_memory_size = 12;
     // Amount of disk space (in GB) to allocate for each dbserver.
+    // This field is ignored unless model is "flexible".
     int32 dbserver_disk_size = 13;
+
+    // Type of model being used
+    string model = 21;
+    // Size of nodes being used
+    string node_size_id = 22;
+    // Number of nodes being used
+    int32 node_count = 23;
+    // Amount of disk space per node (in GB)
+    int32 node_disk_size = 34;
 }
 
 // Result of CalculateDeploymentSize

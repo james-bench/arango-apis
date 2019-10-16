@@ -15,24 +15,45 @@ import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../commo
 // Request arguments for CalculateDeploymentSize
 export interface CalculateDeploymentSizeRequest {
   // Number of coordinators of the deployment
+  // This field is ignored unless model is "flexible".
   // number
   coordinators?: number;
   
   // Amount of memory (in GB) to allocate for each coordinator.
+  // This field is ignored unless model is "flexible".
   // number
   coordinator_memory_size?: number;
   
   // Number of dbservers of the deployment
+  // This field is ignored unless model is "flexible".
   // number
   dbservers?: number;
   
   // Amount of memory (in GB) to allocate for each dbserver.
+  // This field is ignored unless model is "flexible".
   // number
   dbserver_memory_size?: number;
   
   // Amount of disk space (in GB) to allocate for each dbserver.
+  // This field is ignored unless model is "flexible".
   // number
   dbserver_disk_size?: number;
+  
+  // Type of model being used
+  // string
+  model?: string;
+  
+  // Size of nodes being used
+  // string
+  node_size_id?: string;
+  
+  // Number of nodes being used
+  // number
+  node_count?: number;
+  
+  // Amount of disk space per node (in GB)
+  // number
+  node_disk_size?: number;
 }
 
 // Instructions for connecting a driver to a deployment
