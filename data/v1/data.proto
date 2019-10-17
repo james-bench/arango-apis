@@ -509,6 +509,9 @@ message ServersSpecLimits {
     // Possible values for the amount of memory (in GB) to allocate
     // for pairs of coordinator, dbserver.
     Limits node_memory_size = 21;
+    // Possible values for the number of nodes.
+    // Value must be min/max (not using allowed_values)
+    Limits node_count = 22;
 }
 
 // Request arguments for CalculateDeploymentSize
