@@ -577,6 +577,11 @@ export interface ServersSpecLimits {
   // for pairs of coordinator, dbserver.
   // ServersSpecLimits_Limits
   node_memory_size?: ServersSpecLimits_Limits;
+  
+  // Possible values for the number of nodes.
+  // Value must be min/max (not using allowed_values)
+  // ServersSpecLimits_Limits
+  node_count?: ServersSpecLimits_Limits;
 }
 export interface ServersSpecLimits_Limits {
   // Minimum value
