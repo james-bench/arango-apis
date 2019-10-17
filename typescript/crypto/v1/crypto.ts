@@ -75,6 +75,11 @@ export interface CACertificate {
   // This is a read-only value.
   // boolean
   will_expire_soon?: boolean;
+  
+  // Set when this certificate is the default in its project.
+  // This is a read-only value.
+  // boolean
+  is_default?: boolean;
 }
 
 // Instructions for installing & uninstalling CA certificates
@@ -162,5 +167,13 @@ export class CryptoService {
     const path = `/api/crypto/v1/cacertificates/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.delete(url, undefined);
+  }
+  
+  // Mark the given CA certificate as default for its containing project.
+  // Required permissions:
+  // - crypto.cacertificate.set-default on the project that owns the certificate.
+  async SetDefaultCACertificate(req: CACertificate): Promise<void> {
+    const url = `/api/crypto/v1/projects/${encodeURIComponent(req.project_id || '')}/cacertificates/default`;
+    return api.post(url, req);
   }
 }

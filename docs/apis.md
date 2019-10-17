@@ -702,6 +702,7 @@ TLS certificates for deployments &amp; client authentication.
 | is_deleted | [bool](#bool) |  | Set when this CA certificate is deleted. This is a read-only value. |
 | is_expired | [bool](#bool) |  | Set when this CA certificate has expired. This is a read-only value. |
 | will_expire_soon | [bool](#bool) |  | Set when this CA certificate will expire in the next month. This is a read-only value. |
+| is_default | [bool](#bool) |  | Set when this certificate is the default in its project. This is a read-only value. |
 
 
 
@@ -774,6 +775,7 @@ CryptoService is the API used to configure various crypto objects.
 | CreateCACertificate | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | Create a new CA certificate Required permissions: - crypto.cacertificate.create on the project that owns the CA certificate |
 | UpdateCACertificate | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | Update a CA certificate Required permissions: - crypto.cacertificate.update on the CA certificate |
 | DeleteCACertificate | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete a CA certificate Note that CA certificate are initially only marked for deleted. Once all the resources that depend on it are removed the CA certificate itself is deleted and cannot be restored. Required permissions: - crypto.cacertificate.delete on the CA certificate |
+| SetDefaultCACertificate | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Mark the given CA certificate as default for its containing project. Required permissions: - crypto.cacertificate.set-default on the project that owns the certificate. |
 
  
 
