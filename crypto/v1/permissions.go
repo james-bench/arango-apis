@@ -21,4 +21,6 @@ const (
 	PermissionCACertificateUpdate = "crypto.cacertificate.update"
 	// PermissionCACertificateDelete is needed for deleting a CA certificate
 	PermissionCACertificateDelete = "crypto.cacertificate.delete"
+	// PermissionCACertificateSetDefault is needed for setting a CA certificate as default
+	PermissionCACertificateSetDefault = "crypto.cacertificate.set-default"
 )

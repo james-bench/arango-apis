@@ -79,6 +79,16 @@ service CryptoService {
             delete: "/api/crypto/v1/cacertificates/{id}"
         };
     }
+
+    // Mark the given CA certificate as default for its containing project.
+    // Required permissions:
+    // - crypto.cacertificate.set-default on the project that owns the certificate.
+    rpc SetDefaultCACertificate(CACertificate) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            post: "/api/crypto/v1/projects/{project_id}/cacertificates/default"
+            body: "*"
+        };
+    }
 }
 
 // A CACertificate is represents a self-signed certificate authority used to sign
@@ -121,6 +131,9 @@ message CACertificate {
     // Set when this CA certificate will expire in the next month.
     // This is a read-only value.
     bool will_expire_soon = 13;
+    // Set when this certificate is the default in its project.
+    // This is a read-only value.
+    bool is_default = 14;
 }
 
 // List of CACertificates.
