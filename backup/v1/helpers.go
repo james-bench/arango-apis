@@ -172,7 +172,18 @@ func (source *BackupPolicy_DailySchedule) Validate(prefix string) error {
 	if source == nil {
 		return common.InvalidArgument("required field '%s' not found", prefix)
 	}
-	// Day bools are OK by design, Validate ScheduleAt
+	// Day bools should have at least 1 set
+	anyDay := source.GetMonday() ||
+		source.GetTuesday() ||
+		source.GetWednesday() ||
+		source.GetThursday() ||
+		source.GetFriday() ||
+		source.GetSaturday() ||
+		source.GetSunday()
+	if !anyDay {
+		return common.InvalidArgument("in field '%s' at least 1 day should be selected", prefix)
+	}
+	// Validate ScheduleAt
 	if err := source.GetScheduleAt().Validate(fmt.Sprintf("%s.ScheduleAt", prefix)); err != nil {
 		return err
 	}
