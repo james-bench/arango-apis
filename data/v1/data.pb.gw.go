@@ -727,6 +727,39 @@ func local_request_DataService_CalculateDeploymentSize_0(ctx context.Context, ma
 
 }
 
+var (
+	filter_DataService_RecommendShardedDeploymentSize_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+)
+
+func request_DataService_RecommendShardedDeploymentSize_0(ctx context.Context, marshaler runtime.Marshaler, client DataServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ShardedDeploymentSizeRequest
+	var metadata runtime.ServerMetadata
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_DataService_RecommendShardedDeploymentSize_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := client.RecommendShardedDeploymentSize(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_DataService_RecommendShardedDeploymentSize_0(ctx context.Context, marshaler runtime.Marshaler, server DataServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ShardedDeploymentSizeRequest
+	var metadata runtime.ServerMetadata
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_DataService_RecommendShardedDeploymentSize_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.RecommendShardedDeploymentSize(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
 func request_DataService_GetConnectDriverInstructions_0(ctx context.Context, marshaler runtime.Marshaler, client DataServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq v1.IDOptions
 	var metadata runtime.ServerMetadata
@@ -1023,6 +1056,26 @@ func RegisterDataServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		}
 
 		forward_DataService_CalculateDeploymentSize_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_DataService_RecommendShardedDeploymentSize_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_DataService_RecommendShardedDeploymentSize_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_DataService_RecommendShardedDeploymentSize_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -1327,6 +1380,26 @@ func RegisterDataServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 
 	})
 
+	mux.Handle("GET", pattern_DataService_RecommendShardedDeploymentSize_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_DataService_RecommendShardedDeploymentSize_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_DataService_RecommendShardedDeploymentSize_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
 	mux.Handle("GET", pattern_DataService_GetConnectDriverInstructions_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
@@ -1375,6 +1448,8 @@ var (
 
 	pattern_DataService_CalculateDeploymentSize_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"api", "data", "v1", "deployment-size", "calculate"}, "", runtime.AssumeColonVerbOpt(true)))
 
+	pattern_DataService_RecommendShardedDeploymentSize_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4, 2, 5}, []string{"api", "data", "v1", "deployment-size", "recommend", "sharded"}, "", runtime.AssumeColonVerbOpt(true)))
+
 	pattern_DataService_GetConnectDriverInstructions_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "data", "v1", "deployments", "id", "connect-driver-instructions"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
@@ -1402,6 +1477,8 @@ var (
 	forward_DataService_ListServersSpecPresets_0 = runtime.ForwardResponseMessage
 
 	forward_DataService_CalculateDeploymentSize_0 = runtime.ForwardResponseMessage
+
+	forward_DataService_RecommendShardedDeploymentSize_0 = runtime.ForwardResponseMessage
 
 	forward_DataService_GetConnectDriverInstructions_0 = runtime.ForwardResponseMessage
 )
