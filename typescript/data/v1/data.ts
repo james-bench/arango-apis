@@ -200,6 +200,10 @@ export interface Deployment {
   // This is a read-only field. To set this field please use the backup service RestoreBackup method.
   // Deployment_BackupRestoreSpec
   backup_restore?: Deployment_BackupRestoreSpec;
+  
+  // Recommendations made for deployments using the "sharded" model.
+  // ShardedDeploymentSizeRecommendation
+  sharded_deployment_recommendations?: ShardedDeploymentSizeRecommendation[];
 }
 
 // Information about a backup restore.
@@ -651,6 +655,74 @@ export interface ServersSpecPresetsRequest {
   region_id?: string;
 }
 
+// Response of RecommendShardedDeploymentSize.
+export interface ShardedDeploymentSizeRecommendation {
+  // Request that resulted in this recommendation.
+  // ShardedDeploymentSizeRequest
+  request?: ShardedDeploymentSizeRequest;
+  
+  // Time when the recommendation was made.
+  // googleTypes.Timestamp
+  created_at?: googleTypes.Timestamp;
+  
+  // Amount of memory space per node (in GB) being recommended
+  // number
+  node_memory_size?: number;
+  
+  // Amount of disk space per node (in GB) being recommended
+  // number
+  node_disk_size?: number;
+  
+  // Number of nodes being recommended
+  // number
+  node_count?: number;
+}
+
+// Request arguments for RecommendShardedDeploymentSize.
+export interface ShardedDeploymentSizeRequest {
+  // Size of entire dataset (on disk) in GB.
+  // Required field.
+  // Must be >= 1.
+  // number
+  dataset_size?: number;
+  
+  // File format on dataset
+  // Possible values:
+  // - JSON
+  // - CSV
+  // string
+  file_format?: string;
+  
+  // Percentage of dataset_size that is considered "hot"
+  // Must be >= 0.0 and <= 1.0
+  // number
+  working_set_percentage?: number;
+  
+  // Percentage of operations that are READ
+  // Must be >= 0.0 and <= 1.0
+  // number
+  access_read_percentage?: number;
+  
+  // Percentage of operations that are CREATE
+  // Must be >= 0.0 and <= 1.0
+  // number
+  access_create_percentage?: number;
+  
+  // Percentage of operations that are UPDATE
+  // Must be >= 0.0 and <= 1.0
+  // number
+  access_update_percentage?: number;
+  
+  // Increase factor of the dataset_size in 1 year.
+  // number
+  growth_rate?: number;
+  
+  // Desired number of replicas.
+  // Must be >= 3 and <= 5
+  // number
+  replication_factor?: number;
+}
+
 // Version of an ArangoDB release
 export interface Version {
   // Version in the format of major.minor.patch
@@ -781,6 +853,16 @@ export class DataService {
   // - none
   async CalculateDeploymentSize(req: CalculateDeploymentSizeRequest): Promise<DeploymentSize> {
     const path = `/api/data/v1/deployment-size/calculate`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
+  // Recommend a deployment size, for a sharded deployment, using the
+  // given input values.
+  // Required permissions:
+  // - none
+  async RecommendShardedDeploymentSize(req: ShardedDeploymentSizeRequest): Promise<ShardedDeploymentSizeRecommendation> {
+    const path = `/api/data/v1/deployment-size/recommend/sharded`;
     const url = path + api.queryString(req, []);
     return api.get(url, undefined);
   }
