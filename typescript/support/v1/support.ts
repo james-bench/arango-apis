@@ -42,12 +42,38 @@ export interface Plan {
   // If set, this plan is shown, but not selectable.
   // boolean
   is_unavailable?: boolean;
+  
+  // SLA times to first response for various situations.
+  // When this plan is unavailable, this field is optional.
+  // ResponseTimes
+  first_response_times?: ResponseTimes;
 }
 
 // List of plans.
 export interface PlanList {
   // Plan
   items?: Plan[];
+}
+
+// Response for various categories on situations.
+// All values are in minutes.
+// A value of 0 means "best effort".
+export interface ResponseTimes {
+  // Response time for operation-impeding Error in a production environment.
+  // number
+  critical?: number;
+  
+  // Response time for operation-limiting error.
+  // number
+  high?: number;
+  
+  // Response time for minor error.
+  // number
+  normal?: number;
+  
+  // Response time for usage question.
+  // number
+  low?: number;
 }
 
 // SupportService is the API used to query for support.
