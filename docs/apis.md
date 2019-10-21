@@ -125,6 +125,7 @@
     - [ListPlansRequest](#arangodb.cloud.support.v1.ListPlansRequest)
     - [Plan](#arangodb.cloud.support.v1.Plan)
     - [PlanList](#arangodb.cloud.support.v1.PlanList)
+    - [ResponseTimes](#arangodb.cloud.support.v1.ResponseTimes)
   
   
   
@@ -1757,6 +1758,7 @@ Plan represents a specific support plan such as Bronze, Silver or Gold.
 | is_default | [bool](#bool) |  | If set, this plan is the default support plan. |
 | description | [string](#string) |  | Human readable description of the plan |
 | is_unavailable | [bool](#bool) |  | If set, this plan is shown, but not selectable. |
+| first_response_times | [ResponseTimes](#arangodb.cloud.support.v1.ResponseTimes) |  | SLA times to first response for various situations. When this plan is unavailable, this field is optional. |
 
 
 
@@ -1772,6 +1774,26 @@ List of plans.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | items | [Plan](#arangodb.cloud.support.v1.Plan) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.support.v1.ResponseTimes"></a>
+
+### ResponseTimes
+Response for various categories on situations.
+All values are in minutes.
+A value of 0 means &#34;best effort&#34;.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| critical | [int32](#int32) |  | Response time for operation-impeding Error in a production environment. |
+| high | [int32](#int32) |  | Response time for operation-limiting error. |
+| normal | [int32](#int32) |  | Response time for minor error. |
+| low | [int32](#int32) |  | Response time for usage question. |
 
 
 
