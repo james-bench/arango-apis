@@ -155,9 +155,17 @@ export interface UsageItem_DeploymentSize {
   agent_disk_size?: number;
 }
 export interface UsageItem_NetworkTransferSize {
-  // Amount of network traffic (in bytes) caused by the use of a deployment.
+  // Total amount of network ingress traffic (in bytes) caused by the use of a deployment.
+  // This is excluding inner cluster traffic and excluding backup traffic (downloads).
   // number
-  transfer_size?: number;
+  total_transfer_ingress_size?: number;
+  
+  // Total amount of network egress traffic (in bytes) caused by the use of a deployment.
+  // This is excluding inner cluster traffic and excluding backup traffic (uploads).
+  // Note: In the future we want to split between cross_region_transfer_x and inner_region_transfer_x,
+  // the total_transfer_x is the sum of these 2. Inner region can be cross availability zone.
+  // number
+  total_transfer_egress_size?: number;
 }
 export interface UsageItem_Resource {
   // System identifier of the resource that this usage item covers.
