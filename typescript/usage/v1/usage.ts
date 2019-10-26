@@ -153,6 +153,10 @@ export interface UsageItem_DeploymentSize {
   // Amount of disk space (in GB) allocated for each agent.
   // number
   agent_disk_size?: number;
+  
+  // Identifier of the node-size used for this deployment (empty for flexible)
+  // string
+  node_size_id?: string;
 }
 export interface UsageItem_NetworkTransferSize {
   // Total amount of network ingress traffic (in bytes) caused by the use of a deployment.
