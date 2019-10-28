@@ -108,6 +108,9 @@ message UsageItem {
         int32 agent_memory_size = 22;
         // Amount of disk space (in GB) allocated for each agent.
         int32 agent_disk_size = 23;
+
+        // Identifier of the node-size used for this deployment (empty for flexible)
+        string node_size_id = 31;
     }
     // Amount of (computer) resources used by the resource covered by this usage item.
     // This field is only set when the usage item is of kind DeploymentSize.
