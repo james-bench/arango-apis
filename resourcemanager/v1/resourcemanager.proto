@@ -294,6 +294,25 @@ service ResourceManagerService {
             get: "/api/resourcemanager/v1/quotas/descriptions"
         };
     }
+
+    // Fetch a specific version of the Terms & Conditions.
+    // Required permissions:
+    // - None
+    rpc GetTermsAndConditions(common.v1.IDOptions) returns (TermsAndConditions) {
+        option (google.api.http) = {
+            get: "/api/resourcemanager/v1/termsandconditions/{id}"
+        };
+    }
+
+    // Fetch the current version of the Terms & Conditions for the organization
+    // identified by the given ID.
+    // Required permissions:
+    // - None
+    rpc GetCurrentTermsAndConditions(common.v1.IDOptions) returns (TermsAndConditions) {
+        option (google.api.http) = {
+            get: "/api/resourcemanager/v1/current-termsandconditions"
+        };
+    }
 }
 
 // An Organization is represents a real world organization such as a company.
@@ -349,6 +368,10 @@ message Tier {
     // If set the tier has backup uploads.
     // This is a read-only value and cannot be initialized.
     bool has_backup_uploads = 4;
+    // If set, the tier requires that new deployments accept the 
+    // current terms & conditions.
+    // This is a read-only value and cannot be initialized.
+    bool requires_terms_and_conditions = 5;
 }
 
 // Member of an organization.
@@ -564,4 +587,13 @@ message ListQuotasRequest {
     common.v1.ListOptions options = 1;
     // If set, limit the returned list of quota's to these kinds.
     repeated string kinds = 2;
+}
+
+message TermsAndConditions {
+    // Identifier of this version of the terms & conditions
+    string id = 1;
+    // Content of terms & conditions in markdown format
+    string content = 2;
+    // Creation date of this version of the terms & conditions.
+    google.protobuf.Timestamp created_at = 3;
 }

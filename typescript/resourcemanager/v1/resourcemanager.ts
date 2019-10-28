@@ -403,6 +403,19 @@ export interface QuotaList {
   // Quota
   items?: Quota[];
 }
+export interface TermsAndConditions {
+  // Identifier of this version of the terms & conditions
+  // string
+  id?: string;
+  
+  // Content of terms & conditions in markdown format
+  // string
+  content?: string;
+  
+  // Creation date of this version of the terms & conditions.
+  // googleTypes.Timestamp
+  created_at?: googleTypes.Timestamp;
+}
 
 // Tier of an organization.
 export interface Tier {
@@ -425,6 +438,12 @@ export interface Tier {
   // This is a read-only value and cannot be initialized.
   // boolean
   has_backup_uploads?: boolean;
+  
+  // If set, the tier requires that new deployments accept the
+  // current terms & conditions.
+  // This is a read-only value and cannot be initialized.
+  // boolean
+  requires_terms_and_conditions?: boolean;
 }
 
 // ResourceManagerService is the API used to configure basic resource objects.
@@ -685,6 +704,25 @@ export class ResourceManagerService {
   // - None
   async ListQuotaDescriptions(req: arangodb_cloud_common_v1_ListOptions): Promise<QuotaDescriptionList> {
     const path = `/api/resourcemanager/v1/quotas/descriptions`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch a specific version of the Terms & Conditions.
+  // Required permissions:
+  // - None
+  async GetTermsAndConditions(req: arangodb_cloud_common_v1_IDOptions): Promise<TermsAndConditions> {
+    const path = `/api/resourcemanager/v1/termsandconditions/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch the current version of the Terms & Conditions for the organization
+  // identified by the given ID.
+  // Required permissions:
+  // - None
+  async GetCurrentTermsAndConditions(req: arangodb_cloud_common_v1_IDOptions): Promise<TermsAndConditions> {
+    const path = `/api/resourcemanager/v1/current-termsandconditions`;
     const url = path + api.queryString(req, []);
     return api.get(url, undefined);
   }

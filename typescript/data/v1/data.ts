@@ -158,6 +158,14 @@ export interface Deployment {
   // string
   created_by_id?: string;
   
+  // This field must be set to the identifier of the current Terms&Conditions
+  // when creating a deployment.
+  // If the tier of the organization does not require a non-empty Terms&Condition
+  // identifier, this field may be left empty.
+  // This is a read-only value after creation.
+  // string
+  accepted_terms_and_conditions_id?: string;
+  
   // ArangoDB version to use for this deployment.
   // See Version.version.
   // If you change this value to a higher version,
