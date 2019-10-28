@@ -346,6 +346,9 @@ message Tier {
     // If set the tier has support plans.
     // This is a read-only value and cannot be initialized.
     bool has_support_plans = 3;
+    // If set the tier support backup uploads.
+    // This is a read-only value and cannot be initialized.
+    bool support_backup_uploads = 4;
 }
 
 // Member of an organization.

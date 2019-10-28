@@ -420,6 +420,11 @@ export interface Tier {
   // This is a read-only value and cannot be initialized.
   // boolean
   has_support_plans?: boolean;
+  
+  // If set the tier support backup uploads.
+  // This is a read-only value and cannot be initialized.
+  // boolean
+  support_backup_uploads?: boolean;
 }
 
 // ResourceManagerService is the API used to configure basic resource objects.
