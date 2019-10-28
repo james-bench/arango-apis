@@ -644,6 +644,7 @@ Tier of an organization.
 | id | [string](#string) |  | Identifier of the tier. This is a read-only value and cannot be initialized. |
 | name | [string](#string) |  | Human readable name of the tier. This is a read-only value and cannot be initialized. |
 | has_support_plans | [bool](#bool) |  | If set the tier has support plans. This is a read-only value and cannot be initialized. |
+| has_backup_uploads | [bool](#bool) |  | If set the tier has backup uploads. This is a read-only value and cannot be initialized. |
 
 
 
@@ -2190,6 +2191,7 @@ BackupService is the API used to configure backup objects.
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
 | IsBackupFeatureAvailable | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.YesOrNo](#arangodb.cloud.common.v1.YesOrNo) | Checks if the backup feature is enabled and available for a specific deployment. Required permissions: - backup.feature.get on the deployment that is identified by the given ID. |
+| IsBackupUploadFeatureAvailable | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.YesOrNo](#arangodb.cloud.common.v1.YesOrNo) | Checks if the backup upload feature is enabled for a specific deployment. Required permissions: - backup.feature.get on the deployment that is identified by the given ID. |
 | ListBackupPolicies | [ListBackupPoliciesRequest](#arangodb.cloud.backup.v1.ListBackupPoliciesRequest) | [BackupPolicyList](#arangodb.cloud.backup.v1.BackupPolicyList) | Fetch all backup policies for a specific deployment. Required permissions: - backup.backuppolicy.list on the deployment that owns the backup policies and is identified by the given ID. |
 | GetBackupPolicy | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [BackupPolicy](#arangodb.cloud.backup.v1.BackupPolicy) | Fetch a backup policy identified by the given ID. Required permissions: - backup.backuppolicy.get on the backup policy identified by the given ID. |
 | CreateBackupPolicy | [BackupPolicy](#arangodb.cloud.backup.v1.BackupPolicy) | [BackupPolicy](#arangodb.cloud.backup.v1.BackupPolicy) | Create a new backup policy Required permissions: - backup.backuppolicy.create on the deployment that owns the backup policy and is identified by the given ID. |

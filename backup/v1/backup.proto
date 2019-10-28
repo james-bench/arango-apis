@@ -30,6 +30,15 @@ service BackupService {
         };
     }
 
+    // Checks if the backup upload feature is enabled for a specific deployment.
+    // Required permissions:
+    // - backup.feature.get on the deployment that is identified by the given ID.
+    rpc IsBackupUploadFeatureAvailable(common.v1.IDOptions) returns (common.v1.YesOrNo) {
+        option (google.api.http) = {
+            get: "/api/backup/v1/deployment/{id}/uploadfeature"
+        };
+    }
+
     // Fetch all backup policies for a specific deployment.
     // Required permissions:
     // - backup.backuppolicy.list on the deployment that owns the backup policies and is identified by the given ID.
