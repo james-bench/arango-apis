@@ -25,6 +25,7 @@
     - [QuotaDescription](#arangodb.cloud.resourcemanager.v1.QuotaDescription)
     - [QuotaDescriptionList](#arangodb.cloud.resourcemanager.v1.QuotaDescriptionList)
     - [QuotaList](#arangodb.cloud.resourcemanager.v1.QuotaList)
+    - [TermsAndConditions](#arangodb.cloud.resourcemanager.v1.TermsAndConditions)
     - [Tier](#arangodb.cloud.resourcemanager.v1.Tier)
   
   
@@ -615,6 +616,23 @@ List of Quota&#39;s
 
 
 
+<a name="arangodb.cloud.resourcemanager.v1.TermsAndConditions"></a>
+
+### TermsAndConditions
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | Identifier of this version of the terms &amp; conditions |
+| content | [string](#string) |  | Content of terms &amp; conditions in markdown format |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Creation date of this version of the terms &amp; conditions. |
+
+
+
+
+
+
 <a name="arangodb.cloud.resourcemanager.v1.Tier"></a>
 
 ### Tier
@@ -671,6 +689,8 @@ ResourceManagerService is the API used to configure basic resource objects.
 | AcceptOrganizationInvite | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Accept an organization invite The authenticated user&#39;s email address must match the email address specified in the invite. Required permissions: - None |
 | RejectOrganizationInvite | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Reject an organization invite The authenticated user&#39;s email address must match the email address specified in the invite. Required permissions: - None |
 | ListQuotaDescriptions | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [QuotaDescriptionList](#arangodb.cloud.resourcemanager.v1.QuotaDescriptionList) | Fetch descriptions for all quota kinds know by the platform. Required permissions: - None |
+| GetTermsAndConditions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [TermsAndConditions](#arangodb.cloud.resourcemanager.v1.TermsAndConditions) | Fetch a specific version of the Terms &amp; Conditions. Required permissions: - None |
+| GetCurrentTermsAndConditions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [TermsAndConditions](#arangodb.cloud.resourcemanager.v1.TermsAndConditions) | Fetch the current version of the Terms &amp; Conditions. Required permissions: - None |
 
  
 
@@ -2287,6 +2307,7 @@ A Deployment is represents one deployment of an ArangoDB cluster.
 | is_deleted | [bool](#bool) |  | Set when this deployment is deleted. This is a read-only value. |
 | support_plan_id | [string](#string) |  | Optional identifier of the support plan selected for this deployment. After creation, this value cannot be changed. If no support plan identifier is set, the default support plan is used. |
 | created_by_id | [string](#string) |  | Identifier of the user who created this deployment. This is a read-only value. |
+| accepted_terms_and_conditions_id | [string](#string) |  | This field must be set to the identifier of the current Terms&amp;Conditions when creating a deployment. This is a read-only value after creation. |
 | version | [string](#string) |  | ArangoDB version to use for this deployment. See Version.version. If you change this value to a higher version, the deployment will be upgraded. If you change this value to a lower patch value, the deployment will be downgraded. Any attempt to change to a lower minor or major version is considered an invalid request. Any attempt to change to a version that is not in the list of available versions is considered an invalid request. |
 | certificates | [Deployment.CertificateSpec](#arangodb.cloud.data.v1.Deployment.CertificateSpec) |  |  |
 | servers | [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  |  |

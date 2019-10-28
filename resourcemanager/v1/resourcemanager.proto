@@ -294,6 +294,24 @@ service ResourceManagerService {
             get: "/api/resourcemanager/v1/quotas/descriptions"
         };
     }
+
+    // Fetch a specific version of the Terms & Conditions.
+    // Required permissions:
+    // - None
+    rpc GetTermsAndConditions(common.v1.IDOptions) returns (TermsAndConditions) {
+        option (google.api.http) = {
+            get: "/api/resourcemanager/v1/termsandconditions/{id}"
+        };
+    }
+
+    // Fetch the current version of the Terms & Conditions.
+    // Required permissions:
+    // - None
+    rpc GetCurrentTermsAndConditions(common.v1.IDOptions) returns (TermsAndConditions) {
+        option (google.api.http) = {
+            get: "/api/resourcemanager/v1/current-termsandconditions"
+        };
+    }
 }
 
 // An Organization is represents a real world organization such as a company.
@@ -561,4 +579,13 @@ message ListQuotasRequest {
     common.v1.ListOptions options = 1;
     // If set, limit the returned list of quota's to these kinds.
     repeated string kinds = 2;
+}
+
+message TermsAndConditions {
+    // Identifier of this version of the terms & conditions
+    string id = 1;
+    // Content of terms & conditions in markdown format
+    string content = 2;
+    // Creation date of this version of the terms & conditions.
+    google.protobuf.Timestamp created_at = 3;
 }

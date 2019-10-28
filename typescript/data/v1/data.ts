@@ -158,6 +158,12 @@ export interface Deployment {
   // string
   created_by_id?: string;
   
+  // This field must be set to the identifier of the current Terms&Conditions
+  // when creating a deployment.
+  // This is a read-only value after creation.
+  // string
+  accepted_terms_and_conditions_id?: string;
+  
   // ArangoDB version to use for this deployment.
   // See Version.version.
   // If you change this value to a higher version,

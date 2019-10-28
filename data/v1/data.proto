@@ -196,6 +196,10 @@ message Deployment {
     // Identifier of the user who created this deployment.
     // This is a read-only value.
     string created_by_id = 11;
+    // This field must be set to the identifier of the current Terms&Conditions 
+    // when creating a deployment.
+    // This is a read-only value after creation.
+    string accepted_terms_and_conditions_id = 12;
 
     // ArangoDB version to use for this deployment.
     // See Version.version.
