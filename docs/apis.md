@@ -2900,7 +2900,7 @@ Tier of an organization.
 | id | [string](#string) |  | Identifier of the tier. This is a read-only value and cannot be initialized. |
 | name | [string](#string) |  | Human readable name of the tier. This is a read-only value and cannot be initialized. |
 | has_support_plans | [bool](#bool) |  | If set the tier has support plans. This is a read-only value and cannot be initialized. |
-| support_backup_uploads | [bool](#bool) |  | If set the tier support backup uploads. This is a read-only value and cannot be initialized. |
+| has_backup_uploads | [bool](#bool) |  | If set the tier has backup uploads. This is a read-only value and cannot be initialized. |
 
 
 
