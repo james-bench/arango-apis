@@ -438,6 +438,12 @@ export interface Tier {
   // This is a read-only value and cannot be initialized.
   // boolean
   has_backup_uploads?: boolean;
+  
+  // If set, the tier requires that new deployments accept the
+  // current terms & conditions.
+  // This is a read-only value and cannot be initialized.
+  // boolean
+  requires_terms_and_conditions?: boolean;
 }
 
 // ResourceManagerService is the API used to configure basic resource objects.
@@ -711,7 +717,8 @@ export class ResourceManagerService {
     return api.get(url, undefined);
   }
   
-  // Fetch the current version of the Terms & Conditions.
+  // Fetch the current version of the Terms & Conditions for the organization
+  // identified by the given ID.
   // Required permissions:
   // - None
   async GetCurrentTermsAndConditions(req: arangodb_cloud_common_v1_IDOptions): Promise<TermsAndConditions> {

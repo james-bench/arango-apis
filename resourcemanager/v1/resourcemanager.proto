@@ -304,7 +304,8 @@ service ResourceManagerService {
         };
     }
 
-    // Fetch the current version of the Terms & Conditions.
+    // Fetch the current version of the Terms & Conditions for the organization
+    // identified by the given ID.
     // Required permissions:
     // - None
     rpc GetCurrentTermsAndConditions(common.v1.IDOptions) returns (TermsAndConditions) {
@@ -367,6 +368,10 @@ message Tier {
     // If set the tier has backup uploads.
     // This is a read-only value and cannot be initialized.
     bool has_backup_uploads = 4;
+    // If set, the tier requires that new deployments accept the 
+    // current terms & conditions.
+    // This is a read-only value and cannot be initialized.
+    bool requires_terms_and_conditions = 5;
 }
 
 // Member of an organization.

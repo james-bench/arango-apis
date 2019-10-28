@@ -66,6 +66,8 @@ type Deployment struct {
 	CreatedById string `protobuf:"bytes,11,opt,name=created_by_id,json=createdById,proto3" json:"created_by_id,omitempty"`
 	// This field must be set to the identifier of the current Terms&Conditions
 	// when creating a deployment.
+	// If the tier of the organization does not require a non-empty Terms&Condition
+	// identifier, this field may be left empty.
 	// This is a read-only value after creation.
 	AcceptedTermsAndConditionsId string `protobuf:"bytes,12,opt,name=accepted_terms_and_conditions_id,json=acceptedTermsAndConditionsId,proto3" json:"accepted_terms_and_conditions_id,omitempty"`
 	// ArangoDB version to use for this deployment.
