@@ -179,6 +179,9 @@ message Invoice {
 
     // The creation date of the invoice
     google.protobuf.Timestamp created_at = 10;
+    // If set, this invoice must be manually verified 
+    // before payment can be initiated.
+    bool requires_manual_verification = 11;
 
     // A single item of the invoice
     message Item {
@@ -212,6 +215,8 @@ message Invoice {
         bool is_completed = 2;
         // If set, all payment attempts for this invoice have been rejected.
         bool is_rejected = 3;
+        // If set, this invoice has been verified manually.
+        bool is_verified = 4;
         // The timestamp of succesfull completion of the payment.
         // This field equals the completed_at field of the last payment if
         // that payment succeeded, nil otherwise.

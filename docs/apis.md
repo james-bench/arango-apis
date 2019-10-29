@@ -2986,6 +2986,7 @@ An Invoice message describes a transaction for usage of ArangoDB Oasis.
 | entity_name | [string](#string) |  | Name of the legal entity that is the sender of this invoice. |
 | invoice_number | [string](#string) |  | Invoice number (used by accounting) |
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation date of the invoice |
+| requires_manual_verification | [bool](#bool) |  | If set, this invoice must be manually verified before payment can be initiated. |
 | items | [Invoice.Item](#arangodb.cloud.billing.v1.Invoice.Item) | repeated | All items of the invoice |
 | currency_id | [string](#string) |  | Currency for all amounts |
 | total_amount_excl_vat | [float](#float) |  | Sum all amount for all items |
@@ -3052,6 +3053,7 @@ Status of the invoice
 | is_pending | [bool](#bool) |  | If set, this invoice is still being processed. |
 | is_completed | [bool](#bool) |  | If set, a successful payment has been made for this invoice. |
 | is_rejected | [bool](#bool) |  | If set, all payment attempts for this invoice have been rejected. |
+| is_verified | [bool](#bool) |  | If set, this invoice has been verified manually. |
 | completed_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of succesfull completion of the payment. This field equals the completed_at field of the last payment if that payment succeeded, nil otherwise. |
 | rejected_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of rejected completion of the payment. This field equals the rejected_at field of the last payment if that payment failed, nil otherwise. |
 

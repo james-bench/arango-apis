@@ -103,6 +103,11 @@ export interface Invoice {
   // googleTypes.Timestamp
   created_at?: googleTypes.Timestamp;
   
+  // If set, this invoice must be manually verified
+  // before payment can be initiated.
+  // boolean
+  requires_manual_verification?: boolean;
+  
   // All items of the invoice
   // Invoice_Item
   items?: Invoice_Item[];
@@ -207,6 +212,10 @@ export interface Invoice_Status {
   // If set, all payment attempts for this invoice have been rejected.
   // boolean
   is_rejected?: boolean;
+  
+  // If set, this invoice has been verified manually.
+  // boolean
+  is_verified?: boolean;
   
   // The timestamp of succesfull completion of the payment.
   // This field equals the completed_at field of the last payment if
