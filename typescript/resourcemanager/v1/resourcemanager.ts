@@ -718,9 +718,10 @@ export class ResourceManagerService {
   }
   
   // Fetch the current version of the Terms & Conditions for the organization
-  // identified by the given ID.
+  // identified by the given (optional) ID.
   // Required permissions:
-  // - None
+  // - None If ID is empty.
+  // - resourcemanager.organization.get If ID is not empty.
   async GetCurrentTermsAndConditions(req: arangodb_cloud_common_v1_IDOptions): Promise<TermsAndConditions> {
     const path = `/api/resourcemanager/v1/current-termsandconditions`;
     const url = path + api.queryString(req, []);
