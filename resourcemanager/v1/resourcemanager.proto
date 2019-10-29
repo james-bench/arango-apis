@@ -305,9 +305,10 @@ service ResourceManagerService {
     }
 
     // Fetch the current version of the Terms & Conditions for the organization
-    // identified by the given ID.
+    // identified by the given (optional) ID.
     // Required permissions:
-    // - None
+    // - None If ID is empty.
+    // - resourcemanager.organization.get If ID is not empty.
     rpc GetCurrentTermsAndConditions(common.v1.IDOptions) returns (TermsAndConditions) {
         option (google.api.http) = {
             get: "/api/resourcemanager/v1/current-termsandconditions"

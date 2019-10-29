@@ -692,7 +692,7 @@ ResourceManagerService is the API used to configure basic resource objects.
 | RejectOrganizationInvite | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Reject an organization invite The authenticated user&#39;s email address must match the email address specified in the invite. Required permissions: - None |
 | ListQuotaDescriptions | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [QuotaDescriptionList](#arangodb.cloud.resourcemanager.v1.QuotaDescriptionList) | Fetch descriptions for all quota kinds know by the platform. Required permissions: - None |
 | GetTermsAndConditions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [TermsAndConditions](#arangodb.cloud.resourcemanager.v1.TermsAndConditions) | Fetch a specific version of the Terms &amp; Conditions. Required permissions: - None |
-| GetCurrentTermsAndConditions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [TermsAndConditions](#arangodb.cloud.resourcemanager.v1.TermsAndConditions) | Fetch the current version of the Terms &amp; Conditions for the organization identified by the given ID. Required permissions: - None |
+| GetCurrentTermsAndConditions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [TermsAndConditions](#arangodb.cloud.resourcemanager.v1.TermsAndConditions) | Fetch the current version of the Terms &amp; Conditions for the organization identified by the given (optional) ID. Required permissions: - None If ID is empty. - resourcemanager.organization.get If ID is not empty. |
 
  
 

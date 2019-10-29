@@ -1945,9 +1945,10 @@ type ResourceManagerServiceClient interface {
 	// - None
 	GetTermsAndConditions(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*TermsAndConditions, error)
 	// Fetch the current version of the Terms & Conditions for the organization
-	// identified by the given ID.
+	// identified by the given (optional) ID.
 	// Required permissions:
-	// - None
+	// - None If ID is empty.
+	// - resourcemanager.organization.get If ID is not empty.
 	GetCurrentTermsAndConditions(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*TermsAndConditions, error)
 }
 
@@ -2356,9 +2357,10 @@ type ResourceManagerServiceServer interface {
 	// - None
 	GetTermsAndConditions(context.Context, *v1.IDOptions) (*TermsAndConditions, error)
 	// Fetch the current version of the Terms & Conditions for the organization
-	// identified by the given ID.
+	// identified by the given (optional) ID.
 	// Required permissions:
-	// - None
+	// - None If ID is empty.
+	// - resourcemanager.organization.get If ID is not empty.
 	GetCurrentTermsAndConditions(context.Context, *v1.IDOptions) (*TermsAndConditions, error)
 }
 
