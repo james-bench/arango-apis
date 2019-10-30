@@ -217,6 +217,7 @@
     - [ListInvoicesRequest](#arangodb.cloud.billing.v1.ListInvoicesRequest)
     - [ListPaymentMethodsRequest](#arangodb.cloud.billing.v1.ListPaymentMethodsRequest)
     - [ListPaymentProvidersRequest](#arangodb.cloud.billing.v1.ListPaymentProvidersRequest)
+    - [PDFDocument](#arangodb.cloud.billing.v1.PDFDocument)
     - [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod)
     - [PaymentMethod.CreditCardInfo](#arangodb.cloud.billing.v1.PaymentMethod.CreditCardInfo)
     - [PaymentMethodList](#arangodb.cloud.billing.v1.PaymentMethodList)
@@ -3127,6 +3128,22 @@ Request arguments for ListPaymentProviders
 
 
 
+<a name="arangodb.cloud.billing.v1.PDFDocument"></a>
+
+### PDFDocument
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| content | [bytes](#bytes) |  | Content of the document |
+| filename | [string](#string) |  | Filename of the document |
+
+
+
+
+
+
 <a name="arangodb.cloud.billing.v1.PaymentMethod"></a>
 
 ### PaymentMethod
@@ -3302,6 +3319,7 @@ BillingService is the API used to fetch billing information.
 | ----------- | ------------ | ------------- | ------------|
 | ListInvoices | [ListInvoicesRequest](#arangodb.cloud.billing.v1.ListInvoicesRequest) | [InvoiceList](#arangodb.cloud.billing.v1.InvoiceList) | Fetch all Invoice resources for the organization identified by the given organization ID that match the given criteria. Required permissions: - billing.invoice.list on the organization identified by the given organization ID |
 | GetInvoice | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Invoice](#arangodb.cloud.billing.v1.Invoice) | Fetch a specific Invoice identified by the given ID. Required permissions: - billing.invoice.get on the organization that owns the invoice with given ID. |
+| GetInvoicePDF | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [PDFDocument](#arangodb.cloud.billing.v1.PDFDocument) | Fetch a specific Invoice identified by the given ID as PDF document. Required permissions: - billing.invoice.get on the organization that owns the invoice with given ID. |
 | ListPaymentProviders | [ListPaymentProvidersRequest](#arangodb.cloud.billing.v1.ListPaymentProvidersRequest) | [PaymentProviderList](#arangodb.cloud.billing.v1.PaymentProviderList) | Fetch all payment providers that are usable for the organization identified by the given context ID. Required permissions: - billing.paymentprovider.list on the organization identified by the given context ID |
 | GetPaymentProvider | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [PaymentProvider](#arangodb.cloud.billing.v1.PaymentProvider) | Fetch a specific payment provider identified by the given ID. Required permissions: - None |
 | ListPaymentMethods | [ListPaymentMethodsRequest](#arangodb.cloud.billing.v1.ListPaymentMethodsRequest) | [PaymentMethodList](#arangodb.cloud.billing.v1.PaymentMethodList) | Fetch all payment methods that are configured for the organization identified by the given context ID. Required permissions: - billing.paymentmethod.list on the organization identified by the given context ID |

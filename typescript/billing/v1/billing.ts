@@ -280,6 +280,15 @@ export interface ListPaymentProvidersRequest {
   // arangodb.cloud.common.v1.ListOptions
   options?: arangodb_cloud_common_v1_ListOptions;
 }
+export interface PDFDocument {
+  // Content of the document
+  // string
+  content?: string;
+  
+  // Filename of the document
+  // string
+  filename?: string;
+}
 
 // Payment methods are specific methods for paying at a specific payment provider
 // such as a specific credit card.
@@ -461,6 +470,16 @@ export class BillingService {
   // with given ID.
   async GetInvoice(req: arangodb_cloud_common_v1_IDOptions): Promise<Invoice> {
     const path = `/api/billing/v1/invoices/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch a specific Invoice identified by the given ID as PDF document.
+  // Required permissions:
+  // - billing.invoice.get on the organization that owns the invoice
+  // with given ID.
+  async GetInvoicePDF(req: arangodb_cloud_common_v1_IDOptions): Promise<PDFDocument> {
+    const path = `/api/billing/v1/invoices/${encodeURIComponent(req.id || '')}/pdf`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
