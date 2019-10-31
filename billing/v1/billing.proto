@@ -39,6 +39,16 @@ service BillingService {
         };
     }
 
+    // Fetch a specific Invoice identified by the given ID as PDF document.
+    // Required permissions:
+    // - billing.invoice.get on the organization that owns the invoice
+    //   with given ID.
+    rpc GetInvoicePDF(common.v1.IDOptions) returns (PDFDocument) {
+        option (google.api.http) = {
+            get: "/api/billing/v1/invoices/{id}/pdf"
+        };
+    }
+
     // Fetch all payment providers that are usable for the organization identified
     // by the given context ID.
     // Required permissions:
@@ -436,4 +446,11 @@ message SetBillingConfigRequest {
     string organization_id = 1;
     // Billing configuration to set.
     BillingConfig config = 2;
+}
+
+message PDFDocument {
+    // Content of the document
+    bytes content = 1;
+    // Filename of the document
+    string filename = 2;
 }
