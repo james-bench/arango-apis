@@ -175,6 +175,7 @@
     - [DeploymentCredentialsRequest](#arangodb.cloud.data.v1.DeploymentCredentialsRequest)
     - [DeploymentList](#arangodb.cloud.data.v1.DeploymentList)
     - [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize)
+    - [ImportDataInstructions](#arangodb.cloud.data.v1.ImportDataInstructions)
     - [ListVersionsRequest](#arangodb.cloud.data.v1.ListVersionsRequest)
     - [NodeSize](#arangodb.cloud.data.v1.NodeSize)
     - [NodeSizeList](#arangodb.cloud.data.v1.NodeSizeList)
@@ -2558,6 +2559,21 @@ Result of CalculateDeploymentSize
 
 
 
+<a name="arangodb.cloud.data.v1.ImportDataInstructions"></a>
+
+### ImportDataInstructions
+Instructions for importing data into a deployment
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| import_dump | [string](#string) | repeated | Lines of code to run arangorestore |
+
+
+
+
+
+
 <a name="arangodb.cloud.data.v1.ListVersionsRequest"></a>
 
 ### ListVersionsRequest
@@ -2829,6 +2845,7 @@ DataService is the API used to configure data objects.
 | CalculateDeploymentSize | [CalculateDeploymentSizeRequest](#arangodb.cloud.data.v1.CalculateDeploymentSizeRequest) | [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize) | Calculate the total size of a deployment with given arguments. Required permissions: - none |
 | RecommendShardedDeploymentSize | [ShardedDeploymentSizeRequest](#arangodb.cloud.data.v1.ShardedDeploymentSizeRequest) | [ShardedDeploymentSizeRecommendation](#arangodb.cloud.data.v1.ShardedDeploymentSizeRecommendation) | Recommend a deployment size, for a sharded deployment, using the given input values. Required permissions: - none |
 | GetConnectDriverInstructions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [ConnectDriverInstructions](#arangodb.cloud.data.v1.ConnectDriverInstructions) | Fetch instructions for connecting drivers to the deployment identified by the given id. Required permissions: - data.deployment.get on the deployment identified by the given ID |
+| GetImportDataInstructions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [ImportDataInstructions](#arangodb.cloud.data.v1.ImportDataInstructions) | Fetch instructions for importing data into the deployment identified by the given id. Required permissions: - data.deployment.get on the deployment identified by the given ID |
 
  
 

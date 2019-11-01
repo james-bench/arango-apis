@@ -160,6 +160,15 @@ service DataService {
             get: "/api/data/v1/deployments/{id}/connect-driver-instructions"
         };
     }
+
+    // Fetch instructions for importing data into the deployment identified by the given id.
+    // Required permissions:
+    // - data.deployment.get on the deployment identified by the given ID
+    rpc GetImportDataInstructions(common.v1.IDOptions) returns (ImportDataInstructions) {
+        option (google.api.http) = {
+            get: "/api/data/v1/deployments/{id}/import-data-instructions"
+        };
+    }
 }
 
 // A Deployment is represents one deployment of an ArangoDB cluster.
@@ -650,4 +659,10 @@ message ConnectDriverInstructions {
 
     // Per driver instructions for connecting to a deployment
     repeated DriverInstructions drivers = 1;
+}
+
+// Instructions for importing data into a deployment
+message ImportDataInstructions {
+    // Lines of code to run arangorestore
+    repeated string import_dump = 2;
 }

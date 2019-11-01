@@ -504,6 +504,13 @@ export interface DeploymentSize {
   total_disk_size?: number;
 }
 
+// Instructions for importing data into a deployment
+export interface ImportDataInstructions {
+  // Lines of code to run arangorestore
+  // string
+  import_dump?: string[];
+}
+
 // Request arguments for ListVersions.
 export interface ListVersionsRequest {
   // Common list options
@@ -880,6 +887,15 @@ export class DataService {
   // - data.deployment.get on the deployment identified by the given ID
   async GetConnectDriverInstructions(req: arangodb_cloud_common_v1_IDOptions): Promise<ConnectDriverInstructions> {
     const path = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}/connect-driver-instructions`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch instructions for importing data into the deployment identified by the given id.
+  // Required permissions:
+  // - data.deployment.get on the deployment identified by the given ID
+  async GetImportDataInstructions(req: arangodb_cloud_common_v1_IDOptions): Promise<ImportDataInstructions> {
+    const path = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}/import-data-instructions`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
