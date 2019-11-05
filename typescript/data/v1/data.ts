@@ -480,6 +480,81 @@ export interface DeploymentList {
   // arangodb.cloud.common.v1.Budget
   budget?: arangodb_cloud_common_v1_Budget;
 }
+export interface DeploymentPrice {
+  // Price per hour in given currency
+  // number
+  price_per_hour?: number;
+  
+  // Identifier of the currency in which the price is specified.
+  // string
+  currency_id?: string;
+}
+
+// Arguments for requesting a price a deployment of given properties.
+export interface DeploymentPriceRequest {
+  // Identifier of organization containing the deployment.
+  // string
+  organization_id?: string;
+  
+  // Identifier of project containing the deployment.
+  // string
+  project_id?: string;
+  
+  // Identifier of the support plan of the deployment.
+  // string
+  support_plan_id?: string;
+  
+  // Identifier of the cloud provider of the deployment.
+  // string
+  cloud_provider_id?: string;
+  
+  // Identifier of the cloud region of the deployment.
+  // string
+  cloud_region_id?: string;
+  
+  // Model of the deployment.
+  // string
+  model?: string;
+  
+  // Node size use for deployments
+  // string
+  node_size_id?: string;
+  
+  // Number of nodes being used
+  // This field is ignored if model is "flexible".
+  // number
+  node_count?: number;
+  
+  // Amount of disk space per node (in GB)
+  // This field is ignored if model is "flexible".
+  // number
+  node_disk_size?: number;
+  
+  // Number of coordinators of the deployment
+  // This field is ignored unless model is "flexible".
+  // number
+  coordinators?: number;
+  
+  // Amount of memory (in GB) to allocate for each coordinator.
+  // This field is ignored unless model is "flexible".
+  // number
+  coordinator_memory_size?: number;
+  
+  // Number of dbservers of the deployment
+  // This field is ignored unless model is "flexible".
+  // number
+  dbservers?: number;
+  
+  // Amount of memory (in GB) to allocate for each dbserver.
+  // This field is ignored unless model is "flexible".
+  // number
+  dbserver_memory_size?: number;
+  
+  // Amount of disk space (in GB) to allocate for each dbserver.
+  // This field is ignored unless model is "flexible".
+  // number
+  dbserver_disk_size?: number;
+}
 
 // Result of CalculateDeploymentSize
 export interface DeploymentSize {
@@ -905,6 +980,15 @@ export class DataService {
   async GetImportDataInstructions(req: arangodb_cloud_common_v1_IDOptions): Promise<ImportDataInstructions> {
     const path = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}/import-data-instructions`;
     const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Calculate the price of a deployment of given settings.
+  // Required permissions:
+  // - data.deploymentprice.calculate
+  async CalculateDeploymentPrice(req: DeploymentPriceRequest): Promise<DeploymentPrice> {
+    const path = `/api/data/v1/deployment-price/calculate`;
+    const url = path + api.queryString(req, []);
     return api.get(url, undefined);
   }
 }
