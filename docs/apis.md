@@ -2782,6 +2782,7 @@ Request arguments for RecommendShardedDeploymentSize.
 | access_update_percentage | [float](#float) |  | Percentage of operations that are UPDATE Must be &gt;= 0.0 and &lt;= 1.0 |
 | growth_rate | [float](#float) |  | Increase factor of the dataset_size in 1 year. |
 | replication_factor | [int32](#int32) |  | Desired number of replicas. Must be &gt;= 3 and &lt;= 5 |
+| usecase | [string](#string) |  | Primary use case for the database Possible values: - GRAPH - DOCUMENT - MULTIMODEL |
 
 
 

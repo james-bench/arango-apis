@@ -736,6 +736,14 @@ export interface ShardedDeploymentSizeRequest {
   // Must be >= 3 and <= 5
   // number
   replication_factor?: number;
+  
+  // Primary use case for the database
+  // Possible values:
+  // - GRAPH
+  // - DOCUMENT
+  // - MULTIMODEL
+  // string
+  usecase?: string;
 }
 
 // Version of an ArangoDB release

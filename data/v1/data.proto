@@ -613,6 +613,12 @@ message ShardedDeploymentSizeRequest {
     // Desired number of replicas.
     // Must be >= 3 and <= 5
     int32 replication_factor = 8;
+    // Primary use case for the database
+    // Possible values:
+    // - GRAPH
+    // - DOCUMENT
+    // - MULTIMODEL
+    string usecase = 9;
 }
 
 // Response of RecommendShardedDeploymentSize.
