@@ -174,6 +174,8 @@
     - [DeploymentCredentials](#arangodb.cloud.data.v1.DeploymentCredentials)
     - [DeploymentCredentialsRequest](#arangodb.cloud.data.v1.DeploymentCredentialsRequest)
     - [DeploymentList](#arangodb.cloud.data.v1.DeploymentList)
+    - [DeploymentPrice](#arangodb.cloud.data.v1.DeploymentPrice)
+    - [DeploymentPriceRequest](#arangodb.cloud.data.v1.DeploymentPriceRequest)
     - [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize)
     - [ImportDataInstructions](#arangodb.cloud.data.v1.ImportDataInstructions)
     - [ListVersionsRequest](#arangodb.cloud.data.v1.ListVersionsRequest)
@@ -2540,6 +2542,50 @@ List of Deployments.
 
 
 
+<a name="arangodb.cloud.data.v1.DeploymentPrice"></a>
+
+### DeploymentPrice
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| price_per_hour | [float](#float) |  | Price per hour in given currency |
+| currency_id | [string](#string) |  | Identifier of the currency in which the price is specified. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.DeploymentPriceRequest"></a>
+
+### DeploymentPriceRequest
+Arguments for requesting a price a deployment of given properties.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| organization_id | [string](#string) |  | Identifier of organization containing the deployment. |
+| project_id | [string](#string) |  | Identifier of project containing the deployment. |
+| support_plan_id | [string](#string) |  | Identifier of the support plan of the deployment. |
+| cloud_provider_id | [string](#string) |  | Identifier of the cloud provider of the deployment. |
+| cloud_region_id | [string](#string) |  | Identifier of the cloud region of the deployment. |
+| model | [string](#string) |  | Model of the deployment. |
+| node_size_id | [string](#string) |  | Node size use for deployments |
+| node_count | [int32](#int32) |  | Number of nodes being used This field is ignored if model is &#34;flexible&#34;. |
+| node_disk_size | [int32](#int32) |  | Amount of disk space per node (in GB) This field is ignored if model is &#34;flexible&#34;. |
+| coordinators | [int32](#int32) |  | Number of coordinators of the deployment This field is ignored unless model is &#34;flexible&#34;. |
+| coordinator_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for each coordinator. This field is ignored unless model is &#34;flexible&#34;. |
+| dbservers | [int32](#int32) |  | Number of dbservers of the deployment This field is ignored unless model is &#34;flexible&#34;. |
+| dbserver_memory_size | [int32](#int32) |  | Amount of memory (in GB) to allocate for each dbserver. This field is ignored unless model is &#34;flexible&#34;. |
+| dbserver_disk_size | [int32](#int32) |  | Amount of disk space (in GB) to allocate for each dbserver. This field is ignored unless model is &#34;flexible&#34;. |
+
+
+
+
+
+
 <a name="arangodb.cloud.data.v1.DeploymentSize"></a>
 
 ### DeploymentSize
@@ -2847,6 +2893,7 @@ DataService is the API used to configure data objects.
 | RecommendShardedDeploymentSize | [ShardedDeploymentSizeRequest](#arangodb.cloud.data.v1.ShardedDeploymentSizeRequest) | [ShardedDeploymentSizeRecommendation](#arangodb.cloud.data.v1.ShardedDeploymentSizeRecommendation) | Recommend a deployment size, for a sharded deployment, using the given input values. Required permissions: - none |
 | GetConnectDriverInstructions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [ConnectDriverInstructions](#arangodb.cloud.data.v1.ConnectDriverInstructions) | Fetch instructions for connecting drivers to the deployment identified by the given id. Required permissions: - data.deployment.get on the deployment identified by the given ID |
 | GetImportDataInstructions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [ImportDataInstructions](#arangodb.cloud.data.v1.ImportDataInstructions) | Fetch instructions for importing data into the deployment identified by the given id. Required permissions: - data.deployment.get on the deployment identified by the given ID |
+| CalculateDeploymentPrice | [DeploymentPriceRequest](#arangodb.cloud.data.v1.DeploymentPriceRequest) | [DeploymentPrice](#arangodb.cloud.data.v1.DeploymentPrice) | Calculate the price of a deployment of given settings. Required permissions: - data.deploymentprice.calculate |
 
  
 

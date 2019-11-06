@@ -169,6 +169,15 @@ service DataService {
             get: "/api/data/v1/deployments/{id}/import-data-instructions"
         };
     }
+
+    // Calculate the price of a deployment of given settings.
+    // Required permissions:
+    // - data.deploymentprice.calculate
+    rpc CalculateDeploymentPrice(DeploymentPriceRequest) returns (DeploymentPrice) {
+        option (google.api.http) = {
+            get: "/api/data/v1/deployment-price/calculate"
+        };
+    }
 }
 
 // A Deployment is represents one deployment of an ArangoDB cluster.
@@ -671,4 +680,52 @@ message ConnectDriverInstructions {
 message ImportDataInstructions {
     // Lines of code to run arangorestore
     repeated string import_dump = 2;
+}
+
+// Arguments for requesting a price a deployment of given properties.
+message DeploymentPriceRequest {
+    // Identifier of organization containing the deployment.
+    string organization_id = 1;
+    // Identifier of project containing the deployment.
+    string project_id = 2;
+    // Identifier of the support plan of the deployment.
+    string support_plan_id = 3;
+    // Identifier of the cloud provider of the deployment.
+    string cloud_provider_id = 4;
+    // Identifier of the cloud region of the deployment.
+    string cloud_region_id = 5;
+    // Model of the deployment.
+    string model = 6;
+    // Node size use for deployments
+    string node_size_id = 7;
+    // Number of nodes being used
+    // This field is ignored if model is "flexible".
+    int32 node_count = 8;
+    // Amount of disk space per node (in GB)
+    // This field is ignored if model is "flexible".
+    int32 node_disk_size = 9;
+
+    // Number of coordinators of the deployment
+    // This field is ignored unless model is "flexible".
+    int32 coordinators = 10;
+    // Amount of memory (in GB) to allocate for each coordinator.
+    // This field is ignored unless model is "flexible".
+    int32 coordinator_memory_size = 11;
+
+    // Number of dbservers of the deployment
+    // This field is ignored unless model is "flexible".
+    int32 dbservers = 12;
+    // Amount of memory (in GB) to allocate for each dbserver.
+    // This field is ignored unless model is "flexible".
+    int32 dbserver_memory_size = 13;
+    // Amount of disk space (in GB) to allocate for each dbserver.
+    // This field is ignored unless model is "flexible".
+    int32 dbserver_disk_size = 14;
+}
+
+message DeploymentPrice {
+    // Price per hour in given currency
+    float price_per_hour = 1;
+    // Identifier of the currency in which the price is specified.
+    string currency_id = 4;
 }

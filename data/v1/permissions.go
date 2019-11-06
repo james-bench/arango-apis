@@ -49,6 +49,13 @@ const (
 const (
 	// NodeSize permissions
 
-	// PermissionPresetsList is needed for listing server spec presets in a project
+	// PermissionNodeSizeList is needed for listing server spec presets in a project
 	PermissionNodeSizeList = "data.nodesize.list"
+)
+
+const (
+	// DeploymentPrice permissions
+
+	// PermissionDeploymentPriceCalculate is needed for calculating deployment prices
+	PermissionDeploymentPriceCalculate = "data.deploymentprice.calculate"
 )
