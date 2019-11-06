@@ -743,7 +743,7 @@ message DeploymentPrice {
     }
 
     message BackupPrice {
-        // Price per GB of uploaded backup storage
-        float price_per_gb = 1;
+        // Price per GB/hour of uploaded backup storage
+        float price_per_gb_per_hour = 1;
     }
 }

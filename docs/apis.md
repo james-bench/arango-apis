@@ -2570,7 +2570,7 @@ List of Deployments.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| price_per_gb | [float](#float) |  | Price per GB of uploaded backup storage |
+| price_per_gb_per_hour | [float](#float) |  | Price per GB/hour of uploaded backup storage |
 
 
 

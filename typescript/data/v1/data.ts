@@ -498,9 +498,9 @@ export interface DeploymentPrice {
   currency_id?: string;
 }
 export interface DeploymentPrice_BackupPrice {
-  // Price per GB of uploaded backup storage
+  // Price per GB/hour of uploaded backup storage
   // number
-  price_per_gb?: number;
+  price_per_gb_per_hour?: number;
 }
 export interface DeploymentPrice_NetworkTransferPrice {
   // Price per GB of network transfer into the database
