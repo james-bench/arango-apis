@@ -175,6 +175,8 @@
     - [DeploymentCredentialsRequest](#arangodb.cloud.data.v1.DeploymentCredentialsRequest)
     - [DeploymentList](#arangodb.cloud.data.v1.DeploymentList)
     - [DeploymentPrice](#arangodb.cloud.data.v1.DeploymentPrice)
+    - [DeploymentPrice.BackupPrice](#arangodb.cloud.data.v1.DeploymentPrice.BackupPrice)
+    - [DeploymentPrice.NetworkTransferPrice](#arangodb.cloud.data.v1.DeploymentPrice.NetworkTransferPrice)
     - [DeploymentPriceRequest](#arangodb.cloud.data.v1.DeploymentPriceRequest)
     - [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize)
     - [ImportDataInstructions](#arangodb.cloud.data.v1.ImportDataInstructions)
@@ -2550,8 +2552,42 @@ List of Deployments.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| price_per_hour | [float](#float) |  | Price per hour in given currency |
+| price_per_hour | [float](#float) |  | Price per hour in given currency for the deployment. |
+| network_transfer_prices | [DeploymentPrice.NetworkTransferPrice](#arangodb.cloud.data.v1.DeploymentPrice.NetworkTransferPrice) | repeated | Network transfer prices (variable depending on usage) |
+| backup_price | [DeploymentPrice.BackupPrice](#arangodb.cloud.data.v1.DeploymentPrice.BackupPrice) |  | Network transfer prices (variable depending on usage) |
 | currency_id | [string](#string) |  | Identifier of the currency in which the price is specified. |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.DeploymentPrice.BackupPrice"></a>
+
+### DeploymentPrice.BackupPrice
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| price_per_gb_per_hour | [float](#float) |  | Price per GB/hour of uploaded backup storage |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.DeploymentPrice.NetworkTransferPrice"></a>
+
+### DeploymentPrice.NetworkTransferPrice
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ingress_price_per_gb | [float](#float) |  | Price per GB of network transfer into the database |
+| egress_price_per_gb | [float](#float) |  | Price per GB of network transfer out of the database |
+| description | [string](#string) |  | Description of this price |
 
 
 

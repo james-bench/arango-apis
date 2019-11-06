@@ -481,13 +481,39 @@ export interface DeploymentList {
   budget?: arangodb_cloud_common_v1_Budget;
 }
 export interface DeploymentPrice {
-  // Price per hour in given currency
+  // Price per hour in given currency for the deployment.
   // number
   price_per_hour?: number;
+  
+  // Network transfer prices (variable depending on usage)
+  // DeploymentPrice_NetworkTransferPrice
+  network_transfer_prices?: DeploymentPrice_NetworkTransferPrice[];
+  
+  // Network transfer prices (variable depending on usage)
+  // DeploymentPrice_BackupPrice
+  backup_price?: DeploymentPrice_BackupPrice;
   
   // Identifier of the currency in which the price is specified.
   // string
   currency_id?: string;
+}
+export interface DeploymentPrice_BackupPrice {
+  // Price per GB/hour of uploaded backup storage
+  // number
+  price_per_gb_per_hour?: number;
+}
+export interface DeploymentPrice_NetworkTransferPrice {
+  // Price per GB of network transfer into the database
+  // number
+  ingress_price_per_gb?: number;
+  
+  // Price per GB of network transfer out of the database
+  // number
+  egress_price_per_gb?: number;
+  
+  // Description of this price
+  // string
+  description?: string;
 }
 
 // Arguments for requesting a price a deployment of given properties.
