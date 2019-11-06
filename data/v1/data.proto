@@ -724,8 +724,26 @@ message DeploymentPriceRequest {
 }
 
 message DeploymentPrice {
-    // Price per hour in given currency
+    // Price per hour in given currency for the deployment.
     float price_per_hour = 1;
+    // Network transfer prices (variable depending on usage)
+    repeated NetworkTransferPrice network_transfer_prices = 2;
+    // Network transfer prices (variable depending on usage)
+    BackupPrice backup_price = 3;
     // Identifier of the currency in which the price is specified.
     string currency_id = 4;
+
+    message NetworkTransferPrice {
+        // Price per GB of network transfer into the database
+        float ingress_price_per_gb = 1;
+        // Price per GB of network transfer out of the database
+        float egress_price_per_gb = 2;
+        // Description of this price
+        string description = 3;
+    }
+
+    message BackupPrice {
+        // Price per GB of uploaded backup storage
+        float price_per_gb = 1;
+    }
 }
