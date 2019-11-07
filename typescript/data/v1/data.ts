@@ -693,6 +693,14 @@ export interface DeploymentSizeRequest {
   // Must be >= 3 and <= 5
   // number
   replication_factor?: number;
+  
+  // Identifier of project to request a recommendation in
+  // string
+  project_id?: string;
+  
+  // Identifier of region to request a recommendation in
+  // string
+  region_id?: string;
 }
 
 // Instructions for importing data into a deployment

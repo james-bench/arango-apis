@@ -636,6 +636,11 @@ message DeploymentSizeRequest {
     // Desired number of replicas.
     // Must be >= 3 and <= 5
     int32 replication_factor = 12;
+
+    // Identifier of project to request a recommendation in
+    string project_id = 21;
+    // Identifier of region to request a recommendation in
+    string region_id = 22;
 }
 
 // Response of RecommendDeploymentSize.
