@@ -209,9 +209,9 @@ export interface Deployment {
   // Deployment_BackupRestoreSpec
   backup_restore?: Deployment_BackupRestoreSpec;
   
-  // Recommendations made for deployments using the "sharded" model.
-  // ShardedDeploymentSizeRecommendation
-  sharded_deployment_recommendations?: ShardedDeploymentSizeRecommendation[];
+  // Recommendations made for deployments using the "oneshard" or "sharded" model.
+  // DeploymentSizeRecommendation
+  deployment_recommendations?: DeploymentSizeRecommendation[];
 }
 
 // Information about a backup restore.
@@ -605,6 +605,96 @@ export interface DeploymentSize {
   total_disk_size?: number;
 }
 
+// Response of RecommendDeploymentSize.
+export interface DeploymentSizeRecommendation {
+  // Request that resulted in this recommendation.
+  // DeploymentSizeRequest
+  request?: DeploymentSizeRequest;
+  
+  // Time when the recommendation was made.
+  // googleTypes.Timestamp
+  created_at?: googleTypes.Timestamp;
+  
+  // Amount of memory space per node (in GB) being recommended
+  // number
+  node_memory_size?: number;
+  
+  // Amount of disk space per node (in GB) being recommended
+  // number
+  node_disk_size?: number;
+  
+  // Number of nodes being recommended
+  // number
+  node_count?: number;
+}
+
+// Request arguments for RecommendDeploymentSize.
+export interface DeploymentSizeRequest {
+  // Size of entire dataset (on disk) in GB.
+  // Required field.
+  // Must be >= 1.
+  // number
+  dataset_size?: number;
+  
+  // Primary use case for the database
+  // Possible values:
+  // - GRAPH
+  // - DOCUMENT
+  // - MULTIMODEL
+  // - KEYVALUE
+  // string
+  usecase?: string;
+  
+  // Customer preferred model
+  // string
+  model?: string;
+  
+  // File format on dataset
+  // Possible values:
+  // - JSON
+  // - CSV
+  // string
+  file_format?: string;
+  
+  // Number of documents in the entire dataset (in case of JSON).
+  // Number of rows in the entire dataset (in case of CSV).
+  // number
+  number_of_documents?: number;
+  
+  // Largest number of columns of the dataset (in case of CSV).
+  // number
+  number_of_columns?: number;
+  
+  // Percentage of dataset_size that is considered "hot"
+  // Must be >= 0.0 and <= 1.0
+  // number
+  working_set_percentage?: number;
+  
+  // Percentage of operations that are READ
+  // Must be >= 0.0 and <= 1.0
+  // number
+  access_read_percentage?: number;
+  
+  // Percentage of operations that are CREATE
+  // Must be >= 0.0 and <= 1.0
+  // number
+  access_create_percentage?: number;
+  
+  // Percentage of operations that are UPDATE
+  // Must be >= 0.0 and <= 1.0
+  // number
+  access_update_percentage?: number;
+  
+  // Increase factor of the dataset_size in 1 year.
+  // number
+  growth_rate?: number;
+  
+  // Desired number of replicas.
+  // Must be >= 3 and <= 5
+  // number
+  replication_factor?: number;
+}
+
 // Instructions for importing data into a deployment
 export interface ImportDataInstructions {
   // Lines of code to run arangorestore
@@ -771,82 +861,6 @@ export interface ServersSpecPresetsRequest {
   region_id?: string;
 }
 
-// Response of RecommendShardedDeploymentSize.
-export interface ShardedDeploymentSizeRecommendation {
-  // Request that resulted in this recommendation.
-  // ShardedDeploymentSizeRequest
-  request?: ShardedDeploymentSizeRequest;
-  
-  // Time when the recommendation was made.
-  // googleTypes.Timestamp
-  created_at?: googleTypes.Timestamp;
-  
-  // Amount of memory space per node (in GB) being recommended
-  // number
-  node_memory_size?: number;
-  
-  // Amount of disk space per node (in GB) being recommended
-  // number
-  node_disk_size?: number;
-  
-  // Number of nodes being recommended
-  // number
-  node_count?: number;
-}
-
-// Request arguments for RecommendShardedDeploymentSize.
-export interface ShardedDeploymentSizeRequest {
-  // Size of entire dataset (on disk) in GB.
-  // Required field.
-  // Must be >= 1.
-  // number
-  dataset_size?: number;
-  
-  // File format on dataset
-  // Possible values:
-  // - JSON
-  // - CSV
-  // string
-  file_format?: string;
-  
-  // Percentage of dataset_size that is considered "hot"
-  // Must be >= 0.0 and <= 1.0
-  // number
-  working_set_percentage?: number;
-  
-  // Percentage of operations that are READ
-  // Must be >= 0.0 and <= 1.0
-  // number
-  access_read_percentage?: number;
-  
-  // Percentage of operations that are CREATE
-  // Must be >= 0.0 and <= 1.0
-  // number
-  access_create_percentage?: number;
-  
-  // Percentage of operations that are UPDATE
-  // Must be >= 0.0 and <= 1.0
-  // number
-  access_update_percentage?: number;
-  
-  // Increase factor of the dataset_size in 1 year.
-  // number
-  growth_rate?: number;
-  
-  // Desired number of replicas.
-  // Must be >= 3 and <= 5
-  // number
-  replication_factor?: number;
-  
-  // Primary use case for the database
-  // Possible values:
-  // - GRAPH
-  // - DOCUMENT
-  // - MULTIMODEL
-  // string
-  usecase?: string;
-}
-
 // Version of an ArangoDB release
 export interface Version {
   // Version in the format of major.minor.patch
@@ -981,12 +995,12 @@ export class DataService {
     return api.get(url, undefined);
   }
   
-  // Recommend a deployment size, for a sharded deployment, using the
+  // Recommend a deployment size, for a oneshard or sharded deployments, using the
   // given input values.
   // Required permissions:
   // - none
-  async RecommendShardedDeploymentSize(req: ShardedDeploymentSizeRequest): Promise<ShardedDeploymentSizeRecommendation> {
-    const path = `/api/data/v1/deployment-size/recommend/sharded`;
+  async RecommendDeploymentSize(req: DeploymentSizeRequest): Promise<DeploymentSizeRecommendation> {
+    const path = `/api/data/v1/deployment-size/recommend`;
     const url = path + api.queryString(req, []);
     return api.get(url, undefined);
   }

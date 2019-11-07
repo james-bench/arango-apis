@@ -142,13 +142,13 @@ service DataService {
         };
     }
 
-    // Recommend a deployment size, for a sharded deployment, using the
+    // Recommend a deployment size, for a oneshard or sharded deployments, using the
     // given input values.
     // Required permissions:
     // - none
-    rpc RecommendShardedDeploymentSize(ShardedDeploymentSizeRequest) returns (ShardedDeploymentSizeRecommendation) {
+    rpc RecommendDeploymentSize(DeploymentSizeRequest) returns (DeploymentSizeRecommendation) {
         option (google.api.http) = {
-            get: "/api/data/v1/deployment-size/recommend/sharded"
+            get: "/api/data/v1/deployment-size/recommend"
         };
     }
 
@@ -402,8 +402,8 @@ message Deployment {
     // This is a read-only field. To set this field please use the backup service RestoreBackup method.
     BackupRestoreSpec backup_restore = 401;
 
-    // Recommendations made for deployments using the "sharded" model.
-    repeated ShardedDeploymentSizeRecommendation sharded_deployment_recommendations = 501;
+    // Recommendations made for deployments using the "oneshard" or "sharded" model.
+    repeated DeploymentSizeRecommendation deployment_recommendations = 501;
 }
 
 // NodeSize specifies the size constraints of different data nodes.
@@ -594,46 +594,54 @@ message DeploymentSize {
     int32 total_disk_size = 12; 
 }
 
-// Request arguments for RecommendShardedDeploymentSize.
-message ShardedDeploymentSizeRequest {
+// Request arguments for RecommendDeploymentSize.
+message DeploymentSizeRequest {
     // Size of entire dataset (on disk) in GB.
     // Required field.
     // Must be >= 1.
     int32 dataset_size = 1;
-    // File format on dataset
-    // Possible values:
-    // - JSON
-    // - CSV
-    string file_format = 2;
-    // Percentage of dataset_size that is considered "hot"
-    // Must be >= 0.0 and <= 1.0
-    float working_set_percentage = 3;
-    // Percentage of operations that are READ
-    // Must be >= 0.0 and <= 1.0
-    float access_read_percentage = 4;
-    // Percentage of operations that are CREATE
-    // Must be >= 0.0 and <= 1.0
-    float access_create_percentage = 5;
-    // Percentage of operations that are UPDATE
-    // Must be >= 0.0 and <= 1.0
-    float access_update_percentage = 6;
-    // Increase factor of the dataset_size in 1 year.
-    float growth_rate = 7;
-    // Desired number of replicas.
-    // Must be >= 3 and <= 5
-    int32 replication_factor = 8;
     // Primary use case for the database
     // Possible values:
     // - GRAPH
     // - DOCUMENT
     // - MULTIMODEL
-    string usecase = 9;
+    // - KEYVALUE
+    string usecase = 2;
+    // Customer preferred model
+    string model = 3;
+    // File format on dataset
+    // Possible values:
+    // - JSON
+    // - CSV
+    string file_format = 4;
+    // Number of documents in the entire dataset (in case of JSON).
+    // Number of rows in the entire dataset (in case of CSV).
+    int64 number_of_documents = 5;
+    // Largest number of columns of the dataset (in case of CSV).
+    int32 number_of_columns = 6;
+    // Percentage of dataset_size that is considered "hot"
+    // Must be >= 0.0 and <= 1.0
+    float working_set_percentage = 7;
+    // Percentage of operations that are READ
+    // Must be >= 0.0 and <= 1.0
+    float access_read_percentage = 8;
+    // Percentage of operations that are CREATE
+    // Must be >= 0.0 and <= 1.0
+    float access_create_percentage = 9;
+    // Percentage of operations that are UPDATE
+    // Must be >= 0.0 and <= 1.0
+    float access_update_percentage = 10;
+    // Increase factor of the dataset_size in 1 year.
+    float growth_rate = 11;
+    // Desired number of replicas.
+    // Must be >= 3 and <= 5
+    int32 replication_factor = 12;
 }
 
-// Response of RecommendShardedDeploymentSize.
-message ShardedDeploymentSizeRecommendation {
+// Response of RecommendDeploymentSize.
+message DeploymentSizeRecommendation {
     // Request that resulted in this recommendation.
-    ShardedDeploymentSizeRequest request = 1;
+    DeploymentSizeRequest request = 1;
     // Time when the recommendation was made.
     google.protobuf.Timestamp created_at = 2;
 
