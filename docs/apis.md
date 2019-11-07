@@ -2680,6 +2680,8 @@ Request arguments for RecommendDeploymentSize.
 | access_update_percentage | [float](#float) |  | Percentage of operations that are UPDATE Must be &gt;= 0.0 and &lt;= 1.0 |
 | growth_rate | [float](#float) |  | Increase factor of the dataset_size in 1 year. |
 | replication_factor | [int32](#int32) |  | Desired number of replicas. Must be &gt;= 3 and &lt;= 5 |
+| project_id | [string](#string) |  | Identifier of project to request a recommendation in |
+| region_id | [string](#string) |  | Identifier of region to request a recommendation in |
 
 
 
