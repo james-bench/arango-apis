@@ -179,6 +179,8 @@
     - [DeploymentPrice.NetworkTransferPrice](#arangodb.cloud.data.v1.DeploymentPrice.NetworkTransferPrice)
     - [DeploymentPriceRequest](#arangodb.cloud.data.v1.DeploymentPriceRequest)
     - [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize)
+    - [DeploymentSizeRecommendation](#arangodb.cloud.data.v1.DeploymentSizeRecommendation)
+    - [DeploymentSizeRequest](#arangodb.cloud.data.v1.DeploymentSizeRequest)
     - [ImportDataInstructions](#arangodb.cloud.data.v1.ImportDataInstructions)
     - [ListVersionsRequest](#arangodb.cloud.data.v1.ListVersionsRequest)
     - [NodeSize](#arangodb.cloud.data.v1.NodeSize)
@@ -190,8 +192,6 @@
     - [ServersSpecPreset](#arangodb.cloud.data.v1.ServersSpecPreset)
     - [ServersSpecPresetList](#arangodb.cloud.data.v1.ServersSpecPresetList)
     - [ServersSpecPresetsRequest](#arangodb.cloud.data.v1.ServersSpecPresetsRequest)
-    - [ShardedDeploymentSizeRecommendation](#arangodb.cloud.data.v1.ShardedDeploymentSizeRecommendation)
-    - [ShardedDeploymentSizeRequest](#arangodb.cloud.data.v1.ShardedDeploymentSizeRequest)
     - [Version](#arangodb.cloud.data.v1.Version)
     - [VersionList](#arangodb.cloud.data.v1.VersionList)
   
@@ -2326,7 +2326,7 @@ A Deployment is represents one deployment of an ArangoDB cluster.
 | size | [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize) |  | Detailed size of the deployment This is a read-only field. |
 | expiration | [Deployment.Expiration](#arangodb.cloud.data.v1.Deployment.Expiration) |  |  |
 | backup_restore | [Deployment.BackupRestoreSpec](#arangodb.cloud.data.v1.Deployment.BackupRestoreSpec) |  | Information about a backup restore. If this field is set the deployment will be restored to that backup. This is a read-only field. To set this field please use the backup service RestoreBackup method. |
-| sharded_deployment_recommendations | [ShardedDeploymentSizeRecommendation](#arangodb.cloud.data.v1.ShardedDeploymentSizeRecommendation) | repeated | Recommendations made for deployments using the &#34;sharded&#34; model. |
+| deployment_recommendations | [DeploymentSizeRecommendation](#arangodb.cloud.data.v1.DeploymentSizeRecommendation) | repeated | Recommendations made for deployments using the &#34;oneshard&#34; or &#34;sharded&#34; model. |
 
 
 
@@ -2641,6 +2641,51 @@ Result of CalculateDeploymentSize
 
 
 
+<a name="arangodb.cloud.data.v1.DeploymentSizeRecommendation"></a>
+
+### DeploymentSizeRecommendation
+Response of RecommendDeploymentSize.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| request | [DeploymentSizeRequest](#arangodb.cloud.data.v1.DeploymentSizeRequest) |  | Request that resulted in this recommendation. |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Time when the recommendation was made. |
+| node_memory_size | [int32](#int32) |  | Amount of memory space per node (in GB) being recommended |
+| node_disk_size | [int32](#int32) |  | Amount of disk space per node (in GB) being recommended |
+| node_count | [int32](#int32) |  | Number of nodes being recommended |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.DeploymentSizeRequest"></a>
+
+### DeploymentSizeRequest
+Request arguments for RecommendDeploymentSize.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| dataset_size | [int32](#int32) |  | Size of entire dataset (on disk) in GB. Required field. Must be &gt;= 1. |
+| usecase | [string](#string) |  | Primary use case for the database Possible values: - GRAPH - DOCUMENT - MULTIMODEL - KEYVALUE |
+| model | [string](#string) |  | Customer preferred model |
+| file_format | [string](#string) |  | File format on dataset Possible values: - JSON - CSV |
+| number_of_documents | [int64](#int64) |  | Number of documents in the entire dataset (in case of JSON). Number of rows in the entire dataset (in case of CSV). |
+| number_of_columns | [int32](#int32) |  | Largest number of columns of the dataset (in case of CSV). |
+| working_set_percentage | [float](#float) |  | Percentage of dataset_size that is considered &#34;hot&#34; Must be &gt;= 0.0 and &lt;= 1.0 |
+| access_read_percentage | [float](#float) |  | Percentage of operations that are READ Must be &gt;= 0.0 and &lt;= 1.0 |
+| access_create_percentage | [float](#float) |  | Percentage of operations that are CREATE Must be &gt;= 0.0 and &lt;= 1.0 |
+| access_update_percentage | [float](#float) |  | Percentage of operations that are UPDATE Must be &gt;= 0.0 and &lt;= 1.0 |
+| growth_rate | [float](#float) |  | Increase factor of the dataset_size in 1 year. |
+| replication_factor | [int32](#int32) |  | Desired number of replicas. Must be &gt;= 3 and &lt;= 5 |
+
+
+
+
+
+
 <a name="arangodb.cloud.data.v1.ImportDataInstructions"></a>
 
 ### ImportDataInstructions
@@ -2829,48 +2874,6 @@ This message is now deprecated.
 
 
 
-<a name="arangodb.cloud.data.v1.ShardedDeploymentSizeRecommendation"></a>
-
-### ShardedDeploymentSizeRecommendation
-Response of RecommendShardedDeploymentSize.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| request | [ShardedDeploymentSizeRequest](#arangodb.cloud.data.v1.ShardedDeploymentSizeRequest) |  | Request that resulted in this recommendation. |
-| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Time when the recommendation was made. |
-| node_memory_size | [int32](#int32) |  | Amount of memory space per node (in GB) being recommended |
-| node_disk_size | [int32](#int32) |  | Amount of disk space per node (in GB) being recommended |
-| node_count | [int32](#int32) |  | Number of nodes being recommended |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.ShardedDeploymentSizeRequest"></a>
-
-### ShardedDeploymentSizeRequest
-Request arguments for RecommendShardedDeploymentSize.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| dataset_size | [int32](#int32) |  | Size of entire dataset (on disk) in GB. Required field. Must be &gt;= 1. |
-| file_format | [string](#string) |  | File format on dataset Possible values: - JSON - CSV |
-| working_set_percentage | [float](#float) |  | Percentage of dataset_size that is considered &#34;hot&#34; Must be &gt;= 0.0 and &lt;= 1.0 |
-| access_read_percentage | [float](#float) |  | Percentage of operations that are READ Must be &gt;= 0.0 and &lt;= 1.0 |
-| access_create_percentage | [float](#float) |  | Percentage of operations that are CREATE Must be &gt;= 0.0 and &lt;= 1.0 |
-| access_update_percentage | [float](#float) |  | Percentage of operations that are UPDATE Must be &gt;= 0.0 and &lt;= 1.0 |
-| growth_rate | [float](#float) |  | Increase factor of the dataset_size in 1 year. |
-| replication_factor | [int32](#int32) |  | Desired number of replicas. Must be &gt;= 3 and &lt;= 5 |
-| usecase | [string](#string) |  | Primary use case for the database Possible values: - GRAPH - DOCUMENT - MULTIMODEL |
-
-
-
-
-
-
 <a name="arangodb.cloud.data.v1.Version"></a>
 
 ### Version
@@ -2926,7 +2929,7 @@ DataService is the API used to configure data objects.
 | ListNodeSizes | [NodeSizesRequest](#arangodb.cloud.data.v1.NodeSizesRequest) | [NodeSizeList](#arangodb.cloud.data.v1.NodeSizeList) | Fetch the node sizes available for deployments owned by the given project, created in the given region. Required permissions: - data.nodesize.list on the requested project |
 | ListServersSpecPresets | [ServersSpecPresetsRequest](#arangodb.cloud.data.v1.ServersSpecPresetsRequest) | [ServersSpecPresetList](#arangodb.cloud.data.v1.ServersSpecPresetList) | Fetch the presets for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.presets.list on the requested project This method is deprecated. |
 | CalculateDeploymentSize | [CalculateDeploymentSizeRequest](#arangodb.cloud.data.v1.CalculateDeploymentSizeRequest) | [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize) | Calculate the total size of a deployment with given arguments. Required permissions: - none |
-| RecommendShardedDeploymentSize | [ShardedDeploymentSizeRequest](#arangodb.cloud.data.v1.ShardedDeploymentSizeRequest) | [ShardedDeploymentSizeRecommendation](#arangodb.cloud.data.v1.ShardedDeploymentSizeRecommendation) | Recommend a deployment size, for a sharded deployment, using the given input values. Required permissions: - none |
+| RecommendDeploymentSize | [DeploymentSizeRequest](#arangodb.cloud.data.v1.DeploymentSizeRequest) | [DeploymentSizeRecommendation](#arangodb.cloud.data.v1.DeploymentSizeRecommendation) | Recommend a deployment size, for a oneshard or sharded deployments, using the given input values. Required permissions: - none |
 | GetConnectDriverInstructions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [ConnectDriverInstructions](#arangodb.cloud.data.v1.ConnectDriverInstructions) | Fetch instructions for connecting drivers to the deployment identified by the given id. Required permissions: - data.deployment.get on the deployment identified by the given ID |
 | GetImportDataInstructions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [ImportDataInstructions](#arangodb.cloud.data.v1.ImportDataInstructions) | Fetch instructions for importing data into the deployment identified by the given id. Required permissions: - data.deployment.get on the deployment identified by the given ID |
 | CalculateDeploymentPrice | [DeploymentPriceRequest](#arangodb.cloud.data.v1.DeploymentPriceRequest) | [DeploymentPrice](#arangodb.cloud.data.v1.DeploymentPrice) | Calculate the price of a deployment of given settings. Required permissions: - data.deploymentprice.calculate |
