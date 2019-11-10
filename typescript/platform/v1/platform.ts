@@ -74,6 +74,16 @@ export interface Region {
   // Is this region available for creating new deployments?
   // boolean
   available?: boolean;
+  
+  // If set, this region is low on stock.
+  // Creating a deployment may not be possible.
+  // boolean
+  low_stock?: boolean;
+  
+  // If set, this region is out of stock.
+  // Creating a deployment is currently not possible.
+  // boolean
+  out_of_stock?: boolean;
 }
 
 // List of regions.

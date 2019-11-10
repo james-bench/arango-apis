@@ -964,6 +964,8 @@ Region represents a geographical region in which deployments are run.
 | provider_id | [string](#string) |  | Identifier of the provider that hosts this region. |
 | location | [string](#string) |  | Location of the region |
 | available | [bool](#bool) |  | Is this region available for creating new deployments? |
+| low_stock | [bool](#bool) |  | If set, this region is low on stock. Creating a deployment may not be possible. |
+| out_of_stock | [bool](#bool) |  | If set, this region is out of stock. Creating a deployment is currently not possible. |
 
 
 
