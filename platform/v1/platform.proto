@@ -91,6 +91,12 @@ message Region {
     string location = 3;
     // Is this region available for creating new deployments?
     bool available = 4;
+    // If set, this region is low on stock.
+    // Creating a deployment may not be possible.
+    bool low_stock = 5;
+    // If set, this region is out of stock.
+    // Creating a deployment is currently not possible.
+    bool out_of_stock = 6;
 }
 
 // List of regions.
