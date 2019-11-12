@@ -4,6 +4,7 @@
 ## Table of Contents
 
 - [resourcemanager/v1/resourcemanager.proto](#resourcemanager/v1/resourcemanager.proto)
+    - [DataProcessingAddendum](#arangodb.cloud.resourcemanager.v1.DataProcessingAddendum)
     - [Event](#arangodb.cloud.resourcemanager.v1.Event)
     - [Event.PayloadEntry](#arangodb.cloud.resourcemanager.v1.Event.PayloadEntry)
     - [EventList](#arangodb.cloud.resourcemanager.v1.EventList)
@@ -246,6 +247,23 @@
 <p align="right"><a href="#top">Top</a></p>
 
 ## resourcemanager/v1/resourcemanager.proto
+
+
+
+<a name="arangodb.cloud.resourcemanager.v1.DataProcessingAddendum"></a>
+
+### DataProcessingAddendum
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | Identifier of this version of the DPA |
+| content | [string](#string) |  | Content of DPA in markdown format |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Creation date of this version of the DPA. |
+
+
+
 
 
 
@@ -699,6 +717,8 @@ ResourceManagerService is the API used to configure basic resource objects.
 | ListQuotaDescriptions | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [QuotaDescriptionList](#arangodb.cloud.resourcemanager.v1.QuotaDescriptionList) | Fetch descriptions for all quota kinds know by the platform. Required permissions: - None |
 | GetTermsAndConditions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [TermsAndConditions](#arangodb.cloud.resourcemanager.v1.TermsAndConditions) | Fetch a specific version of the Terms &amp; Conditions. Required permissions: - None |
 | GetCurrentTermsAndConditions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [TermsAndConditions](#arangodb.cloud.resourcemanager.v1.TermsAndConditions) | Fetch the current version of the Terms &amp; Conditions for the organization identified by the given (optional) ID. Required permissions: - None If ID is empty. - resourcemanager.organization.get If ID is not empty. |
+| GetDataProcessingAddendum | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [DataProcessingAddendum](#arangodb.cloud.resourcemanager.v1.DataProcessingAddendum) | Fetch a specific version of the Data Processing Addendum. Required permissions: - None |
+| GetCurrentDataProcessingAddendum | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [DataProcessingAddendum](#arangodb.cloud.resourcemanager.v1.DataProcessingAddendum) | Fetch the current version of the Data Processing Addendum for the organization identified by the given (optional) ID. Required permissions: - None If ID is empty. - resourcemanager.organization.get If ID is not empty. |
 
  
 

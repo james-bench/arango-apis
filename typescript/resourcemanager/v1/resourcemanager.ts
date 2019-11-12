@@ -10,6 +10,19 @@ import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../commo
 
 // File: resourcemanager/v1/resourcemanager.proto
 // Package: arangodb.cloud.resourcemanager.v1
+export interface DataProcessingAddendum {
+  // Identifier of this version of the DPA
+  // string
+  id?: string;
+  
+  // Content of DPA in markdown format
+  // string
+  content?: string;
+  
+  // Creation date of this version of the DPA.
+  // googleTypes.Timestamp
+  created_at?: googleTypes.Timestamp;
+}
 
 // An Event represents something that happened to an organization
 // in the ArangoDB Managed service.
@@ -724,6 +737,26 @@ export class ResourceManagerService {
   // - resourcemanager.organization.get If ID is not empty.
   async GetCurrentTermsAndConditions(req: arangodb_cloud_common_v1_IDOptions): Promise<TermsAndConditions> {
     const path = `/api/resourcemanager/v1/current-termsandconditions`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch a specific version of the Data Processing Addendum.
+  // Required permissions:
+  // - None
+  async GetDataProcessingAddendum(req: arangodb_cloud_common_v1_IDOptions): Promise<DataProcessingAddendum> {
+    const path = `/api/resourcemanager/v1/dpa/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch the current version of the Data Processing Addendum for the organization
+  // identified by the given (optional) ID.
+  // Required permissions:
+  // - None If ID is empty.
+  // - resourcemanager.organization.get If ID is not empty.
+  async GetCurrentDataProcessingAddendum(req: arangodb_cloud_common_v1_IDOptions): Promise<DataProcessingAddendum> {
+    const path = `/api/resourcemanager/v1/current-dpa`;
     const url = path + api.queryString(req, []);
     return api.get(url, undefined);
   }
