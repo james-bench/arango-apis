@@ -314,6 +314,26 @@ service ResourceManagerService {
             get: "/api/resourcemanager/v1/current-termsandconditions"
         };
     }
+
+    // Fetch a specific version of the Data Processing Addendum.
+    // Required permissions:
+    // - None
+    rpc GetDataProcessingAddendum(common.v1.IDOptions) returns (DataProcessingAddendum) {
+        option (google.api.http) = {
+            get: "/api/resourcemanager/v1/dpa/{id}"
+        };
+    }
+
+    // Fetch the current version of the Data Processing Addendum for the organization
+    // identified by the given (optional) ID.
+    // Required permissions:
+    // - None If ID is empty.
+    // - resourcemanager.organization.get If ID is not empty.
+    rpc GetCurrentDataProcessingAddendum(common.v1.IDOptions) returns (DataProcessingAddendum) {
+        option (google.api.http) = {
+            get: "/api/resourcemanager/v1/current-dpa"
+        };
+    }
 }
 
 // An Organization is represents a real world organization such as a company.
@@ -596,5 +616,14 @@ message TermsAndConditions {
     // Content of terms & conditions in markdown format
     string content = 2;
     // Creation date of this version of the terms & conditions.
+    google.protobuf.Timestamp created_at = 3;
+}
+
+message DataProcessingAddendum {
+    // Identifier of this version of the DPA
+    string id = 1;
+    // Content of DPA in markdown format
+    string content = 2;
+    // Creation date of this version of the DPA.
     google.protobuf.Timestamp created_at = 3;
 }
