@@ -626,6 +626,16 @@ export interface DeploymentSizeRecommendation {
   // Number of nodes being recommended
   // number
   node_count?: number;
+  
+  // If set, this recommendation does not fit in
+  // the callers quota.
+  // boolean
+  exceeds_quota?: boolean;
+  
+  // If set, this recommendation does not fit in
+  // the Oasis platform.
+  // boolean
+  exceeds_platform?: boolean;
 }
 
 // Request arguments for RecommendDeploymentSize.
