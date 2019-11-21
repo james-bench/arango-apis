@@ -2676,6 +2676,8 @@ Response of RecommendDeploymentSize.
 | node_memory_size | [int32](#int32) |  | Amount of memory space per node (in GB) being recommended |
 | node_disk_size | [int32](#int32) |  | Amount of disk space per node (in GB) being recommended |
 | node_count | [int32](#int32) |  | Number of nodes being recommended |
+| exceeds_quota | [bool](#bool) |  | If set, this recommendation does not fit in the callers quota. |
+| exceeds_platform | [bool](#bool) |  | If set, this recommendation does not fit in the Oasis platform. |
 
 
 

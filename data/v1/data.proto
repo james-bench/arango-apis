@@ -656,6 +656,13 @@ message DeploymentSizeRecommendation {
     int32 node_disk_size = 12;
     // Number of nodes being recommended
     int32 node_count = 13;
+
+    // If set, this recommendation does not fit in
+    // the callers quota.
+    bool exceeds_quota = 21;
+    // If set, this recommendation does not fit in
+    // the Oasis platform.
+    bool exceeds_platform = 22;
 }
 
 // DataVolumeInfo provides information about a data volume
