@@ -3439,9 +3439,11 @@ type DataServiceClient interface {
 	// This method is deprecated.
 	GetServersSpecLimits(ctx context.Context, in *ServersSpecLimitsRequest, opts ...grpc.CallOption) (*ServersSpecLimits, error)
 	// Fetch the node sizes available for deployments
-	// owned by the given project, created in the given region.
+	// owned by the project with given ID, created in the given region with given ID.
+	// If project ID "all" is used, the all node sizes for the region with given
+	// ID are returned.
 	// Required permissions:
-	// - data.nodesize.list on the requested project
+	// - data.nodesize.list on the requested project (or globally if project ID equals "all")
 	ListNodeSizes(ctx context.Context, in *NodeSizesRequest, opts ...grpc.CallOption) (*NodeSizeList, error)
 	// Fetch the presets for server specifications for deployments
 	// owned by the given projected, created in the given region.
@@ -3673,9 +3675,11 @@ type DataServiceServer interface {
 	// This method is deprecated.
 	GetServersSpecLimits(context.Context, *ServersSpecLimitsRequest) (*ServersSpecLimits, error)
 	// Fetch the node sizes available for deployments
-	// owned by the given project, created in the given region.
+	// owned by the project with given ID, created in the given region with given ID.
+	// If project ID "all" is used, the all node sizes for the region with given
+	// ID are returned.
 	// Required permissions:
-	// - data.nodesize.list on the requested project
+	// - data.nodesize.list on the requested project (or globally if project ID equals "all")
 	ListNodeSizes(context.Context, *NodeSizesRequest) (*NodeSizeList, error)
 	// Fetch the presets for server specifications for deployments
 	// owned by the given projected, created in the given region.
