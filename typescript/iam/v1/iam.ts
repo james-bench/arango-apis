@@ -434,6 +434,10 @@ export interface User {
   // If set, contains IP address from which the user last logged in.
   // string
   last_ip?: string;
+  
+  // Defines if a user's mobile phone number needs verification based on email root domain address.
+  // boolean
+  mobile_phone_needs_verification?: boolean;
 }
 
 // Request arguments for VerifyUserMobilePhone
