@@ -394,26 +394,26 @@ message User {
     // Set when the mobile phone number has been successfully verified.
     // This is a read-only value.
     bool mobile_phone_verified = 9;
-    // Defines if a user's mobile phone number needs verification based on email root domain address.
-    bool mobile_phone_needs_verification = 10;
     // Company name of the user
     // This may be empty if not filled out by the user.
-    string company_name = 11;
+    string company_name = 10;
     // If set, this user is denied access to the dashboard.
     // This is a read-only value.
-    bool dashboard_access_denied = 12;
+    bool dashboard_access_denied = 11;
     // If set, this field describes the reason why this user is denied access to the dashboard.
     // This is a read-only value.
-    string dashboard_access_denied_reason = 13;
+    string dashboard_access_denied_reason = 12;
     // If set, this user is currently being authenticated using an API key (identified by this ID)
-    string apikey_id = 14;
+    string apikey_id = 13;
     // If set, contains Slack name of this user in the arangodb-community slack.
-    string slack_name = 15;
+    string slack_name = 14;
     // The timestamp of the last login of the user.
     // This is a read-only value.
-    google.protobuf.Timestamp last_login_at = 16;
+    google.protobuf.Timestamp last_login_at = 15;
     // If set, contains IP address from which the user last logged in.
-    string last_ip = 17;
+    string last_ip = 16;
+    // Defines if a user's mobile phone number needs verification based on email root domain address.
+    bool mobile_phone_needs_verification = 17;
 }
 
 // Request arguments for VerifyUserMobilePhone
