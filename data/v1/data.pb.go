@@ -3440,7 +3440,7 @@ type DataServiceClient interface {
 	GetServersSpecLimits(ctx context.Context, in *ServersSpecLimitsRequest, opts ...grpc.CallOption) (*ServersSpecLimits, error)
 	// Fetch the node sizes available for deployments
 	// owned by the project with given ID, created in the given region with given ID.
-	// If project ID "all" is used, the all node sizes for the region with given
+	// If project ID "all" is used, then all node sizes for the region with given
 	// ID are returned.
 	// Required permissions:
 	// - data.nodesize.list on the requested project (if project ID does not equal "all")
@@ -3677,7 +3677,7 @@ type DataServiceServer interface {
 	GetServersSpecLimits(context.Context, *ServersSpecLimitsRequest) (*ServersSpecLimits, error)
 	// Fetch the node sizes available for deployments
 	// owned by the project with given ID, created in the given region with given ID.
-	// If project ID "all" is used, the all node sizes for the region with given
+	// If project ID "all" is used, then all node sizes for the region with given
 	// ID are returned.
 	// Required permissions:
 	// - data.nodesize.list on the requested project (if project ID does not equal "all")
