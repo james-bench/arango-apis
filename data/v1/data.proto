@@ -117,7 +117,8 @@ service DataService {
     // If project ID "all" is used, the all node sizes for the region with given
     // ID are returned.
     // Required permissions:
-    // - data.nodesize.list on the requested project (or globally if project ID equals "all")
+    // - data.nodesize.list on the requested project (if project ID does not equal "all")
+    // - None if project ID does equals "all"
     rpc ListNodeSizes(NodeSizesRequest) returns (NodeSizeList) {
         option (google.api.http) = {
             get: "/api/data/v1/projects/{project_id}/regions/{region_id}/nodesizes"

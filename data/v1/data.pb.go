@@ -3443,7 +3443,8 @@ type DataServiceClient interface {
 	// If project ID "all" is used, the all node sizes for the region with given
 	// ID are returned.
 	// Required permissions:
-	// - data.nodesize.list on the requested project (or globally if project ID equals "all")
+	// - data.nodesize.list on the requested project (if project ID does not equal "all")
+	// - None if project ID does equals "all"
 	ListNodeSizes(ctx context.Context, in *NodeSizesRequest, opts ...grpc.CallOption) (*NodeSizeList, error)
 	// Fetch the presets for server specifications for deployments
 	// owned by the given projected, created in the given region.
@@ -3679,7 +3680,8 @@ type DataServiceServer interface {
 	// If project ID "all" is used, the all node sizes for the region with given
 	// ID are returned.
 	// Required permissions:
-	// - data.nodesize.list on the requested project (or globally if project ID equals "all")
+	// - data.nodesize.list on the requested project (if project ID does not equal "all")
+	// - None if project ID does equals "all"
 	ListNodeSizes(context.Context, *NodeSizesRequest) (*NodeSizeList, error)
 	// Fetch the presets for server specifications for deployments
 	// owned by the given projected, created in the given region.

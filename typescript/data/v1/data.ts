@@ -988,7 +988,8 @@ export class DataService {
   // If project ID "all" is used, the all node sizes for the region with given
   // ID are returned.
   // Required permissions:
-  // - data.nodesize.list on the requested project (or globally if project ID equals "all")
+  // - data.nodesize.list on the requested project (if project ID does not equal "all")
+  // - None if project ID does equals "all"
   async ListNodeSizes(req: NodeSizesRequest): Promise<NodeSizeList> {
     const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id || '')}/regions/${encodeURIComponent(req.region_id || '')}/nodesizes`;
     const url = path + api.queryString(req, [`project_id`, `region_id`]);
