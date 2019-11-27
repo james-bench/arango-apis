@@ -460,7 +460,198 @@ export interface Tier {
 }
 
 // ResourceManagerService is the API used to configure basic resource objects.
-export class ResourceManagerService {
+export interface IResourceManagerService {
+  // Fetch all organizations that the authenticated user is a member of.
+  // Required permissions:
+  // - None
+  ListOrganizations: (req: arangodb_cloud_common_v1_ListOptions) => Promise<OrganizationList>;
+  
+  // Fetch an organization by its id.
+  // The authenticated user must be a member of the organization.
+  // Required permissions:
+  // - None
+  GetOrganization: (req: arangodb_cloud_common_v1_IDOptions) => Promise<Organization>;
+  
+  // Create a new organization
+  // Required permissions:
+  // - None
+  CreateOrganization: (req: Organization) => Promise<Organization>;
+  
+  // Update an organization
+  // Required permissions:
+  // - resourcemanager.organization.update on the organization
+  UpdateOrganization: (req: Organization) => Promise<Organization>;
+  
+  // Delete an organization
+  // Note that organization are never really removed.
+  // Instead their is_deleted field is set to true.
+  // Required permissions:
+  // - resourcemanager.organization.delete on the organization
+  DeleteOrganization: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Get a list of members of the organization identified by the given context ID.
+  // Required permissions:
+  // - resourcemanager.organization.get on the organization
+  ListOrganizationMembers: (req: arangodb_cloud_common_v1_ListOptions) => Promise<MemberList>;
+  
+  // Add one or more members to an organization.
+  // If there are members (in the request arguments) that are already member of the
+  // organization an AlreadyExists error is returned.
+  // Required permissions:
+  // - resourcemanager.organization.update on the organization
+  AddOrganizationMembers: (req: OrganizationMembersRequest) => Promise<void>;
+  
+  // Update the ownership flag of one or more members of an organization.
+  // If there are members (in the request arguments) that are not yet member of
+  // the organization, an InvalidArgument error is returned.
+  // If the request would result in the last owner no longer being an owner,
+  // an InvalidArgument error is returned.
+  // Required permissions:
+  // - resourcemanager.organization.update on the organization
+  UpdateOrganizationMembers: (req: OrganizationMembersRequest) => Promise<void>;
+  
+  // Remove one or more members from an organization.
+  // If the request would result in the last owner being removed as member
+  // of the organization, an InvalidArgument error is returned.
+  // Required permissions:
+  // - resourcemanager.organization.update on the organization
+  DeleteOrganizationMembers: (req: OrganizationMembersRequest) => Promise<void>;
+  
+  // Is the user identified by the given user ID a member
+  // of the organization identified by the given organization ID.
+  // Required permissions:
+  // - resourcemanager.organization.get on the organization, unless the requested user is identical to the authenticated user.
+  // Note that if the identified user or organization does not exist, no is returned.
+  IsMemberOfOrganization: (req: IsMemberOfOrganizationRequest) => Promise<IsMemberOfOrganizationResponse>;
+  
+  // Get a list of quota values for the organization identified by the given context ID.
+  // If a quota is not specified on organization level, a (potentially tier specific) default
+  // value is returned.
+  // Required permissions:
+  // - resourcemanager.organization.get on the organization
+  ListOrganizationQuotas: (req: ListQuotasRequest) => Promise<QuotaList>;
+  
+  // Fetch all projects in the organization identified by the given context ID.
+  // The authenticated user must be a member of the organization identifier by the given context ID.
+  // Required permissions:
+  // - resourcemanager.project.list on the organization identified by the given context ID
+  ListProjects: (req: arangodb_cloud_common_v1_ListOptions) => Promise<ProjectList>;
+  
+  // Fetch a project by its id.
+  // The authenticated user must be a member of the organization that owns the project.
+  // Required permissions:
+  // - resourcemanager.project.get on the project identified by the given ID
+  GetProject: (req: arangodb_cloud_common_v1_IDOptions) => Promise<Project>;
+  
+  // Create a new project
+  // The authenticated user must be a member of the organization that owns the project.
+  // Required permissions:
+  // - resourcemanager.project.create on the organization that owns the project
+  CreateProject: (req: Project) => Promise<Project>;
+  
+  // Update a project
+  // The authenticated user must be a member of the organization that owns the project.
+  // Required permissions:
+  // - resourcemanager.project.update on the project
+  UpdateProject: (req: Project) => Promise<Project>;
+  
+  // Delete a project
+  // Note that project are initially only marked for deleted.
+  // Once all their resources are removed the project itself is deleted
+  // and cannot be restored.
+  // The authenticated user must be a member of the organization that owns the project.
+  // Required permissions:
+  // - resourcemanager.project.delete on the project
+  DeleteProject: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Get a list of quota values for the project identified by the given context ID.
+  // If a quota is not specified on project level, a value from organization level
+  // is returned.
+  // Required permissions:
+  // - resourcemanager.project.get on the project
+  ListProjectQuotas: (req: ListQuotasRequest) => Promise<QuotaList>;
+  
+  // Fetch all events in the organization identified by the given context ID.
+  // The authenticated user must be a member of the organization identifier by the given context ID.
+  // Required permissions:
+  // - resourcemanager.event.list on the organization identified by the given context ID
+  ListEvents: (req: ListEventOptions) => Promise<EventList>;
+  
+  // Fetch all organization invites in the organization identified by the given context ID.
+  // The authenticated user must be a member of the organization identifier by the given context ID.
+  // Required permissions:
+  // - resourcemanager.organization-invite.list on the invite.
+  ListOrganizationInvites: (req: arangodb_cloud_common_v1_ListOptions) => Promise<OrganizationInviteList>;
+  
+  // Fetch all organization invites for the email address of the authenticated user.
+  // Required permissions:
+  // - None
+  ListMyOrganizationInvites: (req: arangodb_cloud_common_v1_ListOptions) => Promise<OrganizationInviteList>;
+  
+  // Fetch an organization invite by its id.
+  // The authenticated user must be a member of the organization that the invite is for.
+  // Required permissions:
+  // - resourcemanager.organization-invite.get on the invite.
+  GetOrganizationInvite: (req: arangodb_cloud_common_v1_IDOptions) => Promise<OrganizationInvite>;
+  
+  // Create a new organization invite.
+  // The authenticated user must be a member of the organization that the invite is for.
+  // Required permissions:
+  // - resourcemanager.organization-invite.create on the organization that the invite is for.
+  CreateOrganizationInvite: (req: OrganizationInvite) => Promise<OrganizationInvite>;
+  
+  // Delete an organization invite
+  // The authenticated user must be a member of the organization that the invite is for.
+  // Required permissions:
+  // - resourcemanager.organization-invite.delete on the invite
+  DeleteOrganizationInvite: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Accept an organization invite
+  // The authenticated user's email address must match the email address specified in
+  // the invite.
+  // Required permissions:
+  // - None
+  AcceptOrganizationInvite: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Reject an organization invite
+  // The authenticated user's email address must match the email address specified in
+  // the invite.
+  // Required permissions:
+  // - None
+  RejectOrganizationInvite: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Fetch descriptions for all quota kinds know by the platform.
+  // Required permissions:
+  // - None
+  ListQuotaDescriptions: (req: arangodb_cloud_common_v1_ListOptions) => Promise<QuotaDescriptionList>;
+  
+  // Fetch a specific version of the Terms & Conditions.
+  // Required permissions:
+  // - None
+  GetTermsAndConditions: (req: arangodb_cloud_common_v1_IDOptions) => Promise<TermsAndConditions>;
+  
+  // Fetch the current version of the Terms & Conditions for the organization
+  // identified by the given (optional) ID.
+  // Required permissions:
+  // - None If ID is empty.
+  // - resourcemanager.organization.get If ID is not empty.
+  GetCurrentTermsAndConditions: (req: arangodb_cloud_common_v1_IDOptions) => Promise<TermsAndConditions>;
+  
+  // Fetch a specific version of the Data Processing Addendum.
+  // Required permissions:
+  // - None
+  GetDataProcessingAddendum: (req: arangodb_cloud_common_v1_IDOptions) => Promise<DataProcessingAddendum>;
+  
+  // Fetch the current version of the Data Processing Addendum for the organization
+  // identified by the given (optional) ID.
+  // Required permissions:
+  // - None If ID is empty.
+  // - resourcemanager.organization.get If ID is not empty.
+  GetCurrentDataProcessingAddendum: (req: arangodb_cloud_common_v1_IDOptions) => Promise<DataProcessingAddendum>;
+}
+
+// ResourceManagerService is the API used to configure basic resource objects.
+export class ResourceManagerService implements IResourceManagerService {
   // Fetch all organizations that the authenticated user is a member of.
   // Required permissions:
   // - None

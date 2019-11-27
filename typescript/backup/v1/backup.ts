@@ -430,7 +430,96 @@ export interface TimeOfDay {
 }
 
 // BackupService is the API used to configure backup objects.
-export class BackupService {
+export interface IBackupService {
+  // Checks if the backup feature is enabled and available for a specific deployment.
+  // Required permissions:
+  // - backup.feature.get on the deployment that is identified by the given ID.
+  IsBackupFeatureAvailable: (req: arangodb_cloud_common_v1_IDOptions) => Promise<arangodb_cloud_common_v1_YesOrNo>;
+  
+  // Checks if the backup upload feature is enabled for a specific deployment.
+  // Required permissions:
+  // - backup.feature.get on the deployment that is identified by the given ID.
+  IsBackupUploadFeatureAvailable: (req: arangodb_cloud_common_v1_IDOptions) => Promise<arangodb_cloud_common_v1_YesOrNo>;
+  
+  // Fetch all backup policies for a specific deployment.
+  // Required permissions:
+  // - backup.backuppolicy.list on the deployment that owns the backup policies and is identified by the given ID.
+  ListBackupPolicies: (req: ListBackupPoliciesRequest) => Promise<BackupPolicyList>;
+  
+  // Fetch a backup policy identified by the given ID.
+  // Required permissions:
+  // - backup.backuppolicy.get on the backup policy identified by the given ID.
+  GetBackupPolicy: (req: arangodb_cloud_common_v1_IDOptions) => Promise<BackupPolicy>;
+  
+  // Create a new backup policy
+  // Required permissions:
+  // -  backup.backuppolicy.create on the deployment that owns the backup policy and is identified by the given ID.
+  CreateBackupPolicy: (req: BackupPolicy) => Promise<BackupPolicy>;
+  
+  // Update a backup policy
+  // Required permissions:
+  // -  backup.backuppolicy.update on the backup policy identified by the given ID.
+  UpdateBackupPolicy: (req: BackupPolicy) => Promise<BackupPolicy>;
+  
+  // Delete a backup policy identified by the given ID.
+  // Note that the backup policy are initially only marked for deletion, no backups will be deleted with this operation.
+  // Once all their dependent backups are removed, the backup policy is removed.
+  // Required permissions:
+  // -  backup.backuppolicy.delete on the backup policy identified by the given ID.
+  DeleteBackupPolicy: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Fetch all backups for a specific deployment.
+  // Required permissions:
+  // - backup.backup.list on the deployment that owns the backup and is identified by the given ID.
+  ListBackups: (req: ListBackupsRequest) => Promise<BackupList>;
+  
+  // Fetch a backup identified by the given ID.
+  // Required permissions:
+  // - backup.backup.get on the backup identified by the given ID.
+  GetBackup: (req: arangodb_cloud_common_v1_IDOptions) => Promise<Backup>;
+  
+  // Create a new manual backup
+  // Setting the backup_policy_id field in the backup is not allowed
+  // Required permissions:
+  // -  backup.backup.create on the deployment that owns the backup and is identified by the given ID.
+  CreateBackup: (req: Backup) => Promise<Backup>;
+  
+  // Update a backup
+  // Required permissions:
+  // -  backup.backup.update on the backup identified by the given ID.
+  UpdateBackup: (req: Backup) => Promise<Backup>;
+  
+  // Download a backup identified by the given ID from remote storage to the volumes of the servers of the deployment.
+  // This operation can only be executed on backups which have the same number of DB Servers in the backup and the current running cluster.
+  // If this backup was already downloaded, another download will be done.
+  // If the backup is still available on the cluster there is no need to explicitly download the backup before restoring.
+  // This function will return immediately.
+  // To track status, please invoke GetBackup and check the .status field inside the returned backup object
+  // Required permissions:
+  // -  backup.backup.download on the backup identified by the given ID.
+  DownloadBackup: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Restore (or recover) a backup identified by the given ID
+  // This operation can only be executed on backups where status.available is set and
+  // the mayor and minor version of the backup and the current running cluster are the same.
+  // This function will return immediately.
+  // To track status, please invoke GetDeployment on the data API and check the
+  // .status.restoring_backup and .status.restore_backup_status fields inside the returned deployment object
+  // Required permissions (both are needed):
+  // -  backup.backup.restore on the backup identified by the given ID.
+  // -  data.deployment.restore-backup on the deployment that owns this backup
+  RestoreBackup: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Delete a backup identified by the given ID, after which removal of any remote storage of the backup is started.
+  // Note that the backup are initially only marked for deletion.
+  // Once all remote storage for the backup has been removed, the backup itself is removed.
+  // Required permissions:
+  // -  backup.backup.delete on the backup identified by the given ID.
+  DeleteBackup: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+}
+
+// BackupService is the API used to configure backup objects.
+export class BackupService implements IBackupService {
   // Checks if the backup feature is enabled and available for a specific deployment.
   // Required permissions:
   // - backup.feature.get on the deployment that is identified by the given ID.

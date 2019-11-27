@@ -48,7 +48,26 @@ export interface GetDefaultCurrencyRequest {
 }
 
 // CurrencyService is the API used to query for supported currencies.
-export class CurrencyService {
+export interface ICurrencyService {
+  // Fetch all providers that are supported by the ArangoDB cloud.
+  // Required permissions:
+  // - None
+  ListCurrencies: (req: arangodb_cloud_common_v1_ListOptions) => Promise<CurrencyList>;
+  
+  // Fetch a currency by its id.
+  // Required permissions:
+  // - None
+  GetCurrency: (req: arangodb_cloud_common_v1_IDOptions) => Promise<Currency>;
+  
+  // Fetch the default currency for a given (optional) organization.
+  // Required permissions:
+  // - resourcemanager.organization.get On the organization identified by given id.
+  // - None In case no organization identifier was given.
+  GetDefaultCurrency: (req: GetDefaultCurrencyRequest) => Promise<Currency>;
+}
+
+// CurrencyService is the API used to query for supported currencies.
+export class CurrencyService implements ICurrencyService {
   // Fetch all providers that are supported by the ArangoDB cloud.
   // Required permissions:
   // - None

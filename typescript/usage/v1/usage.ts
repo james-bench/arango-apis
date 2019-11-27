@@ -241,7 +241,16 @@ export interface UsageItemList {
 }
 
 // UsageService is the API used to fetch usage tracking information.
-export class UsageService {
+export interface IUsageService {
+  // Fetch all UsageItem resources in the organization identified by the given
+  // organization ID that match the given criteria.
+  // Required permissions:
+  // - usage.usageitem.list on the organization identified by the given organization ID
+  ListUsageItems: (req: ListUsageItemsRequest) => Promise<UsageItemList>;
+}
+
+// UsageService is the API used to fetch usage tracking information.
+export class UsageService implements IUsageService {
   // Fetch all UsageItem resources in the organization identified by the given
   // organization ID that match the given criteria.
   // Required permissions:
