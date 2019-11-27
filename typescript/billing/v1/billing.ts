@@ -453,7 +453,95 @@ export interface SetDefaultPaymentMethodRequest {
 }
 
 // BillingService is the API used to fetch billing information.
-export class BillingService {
+export interface IBillingService {
+  // Fetch all Invoice resources for the organization identified by the given
+  // organization ID that match the given criteria.
+  // Required permissions:
+  // - billing.invoice.list on the organization identified by the given organization ID
+  ListInvoices: (req: ListInvoicesRequest) => Promise<InvoiceList>;
+  
+  // Fetch a specific Invoice identified by the given ID.
+  // Required permissions:
+  // - billing.invoice.get on the organization that owns the invoice
+  // with given ID.
+  GetInvoice: (req: arangodb_cloud_common_v1_IDOptions) => Promise<Invoice>;
+  
+  // Fetch a specific Invoice identified by the given ID as PDF document.
+  // Required permissions:
+  // - billing.invoice.get on the organization that owns the invoice
+  // with given ID.
+  GetInvoicePDF: (req: arangodb_cloud_common_v1_IDOptions) => Promise<PDFDocument>;
+  
+  // Fetch all payment providers that are usable for the organization identified
+  // by the given context ID.
+  // Required permissions:
+  // - billing.paymentprovider.list on the organization identified by the given context ID
+  ListPaymentProviders: (req: ListPaymentProvidersRequest) => Promise<PaymentProviderList>;
+  
+  // Fetch a specific payment provider identified by the given ID.
+  // Required permissions:
+  // - None
+  GetPaymentProvider: (req: arangodb_cloud_common_v1_IDOptions) => Promise<PaymentProvider>;
+  
+  // Fetch all payment methods that are configured for the organization identified
+  // by the given context ID.
+  // Required permissions:
+  // - billing.paymentmethod.list on the organization identified by the given context ID
+  ListPaymentMethods: (req: ListPaymentMethodsRequest) => Promise<PaymentMethodList>;
+  
+  // Fetch a specific payment method identified by the given ID.
+  // Required permissions:
+  // - billing.paymentmethod.get on the organization that owns the payment method
+  // which is identified by the given ID
+  GetPaymentMethod: (req: arangodb_cloud_common_v1_IDOptions) => Promise<PaymentMethod>;
+  
+  // Prepare the payment provider for creating a new payment method.
+  // Required permissions:
+  // - billing.paymentmethod.create on the organization that owns future payment method.
+  PreparePaymentMethod: (req: PreparePaymentMethodRequest) => Promise<PreparedPaymentMethod>;
+  
+  // Create a new payment method.
+  // Required permissions:
+  // - billing.paymentmethod.create on the organization that owns the given payment method.
+  CreatePaymentMethod: (req: CreatePaymentMethodRequest) => Promise<PaymentMethod>;
+  
+  // Update a specific payment method.
+  // Note that only name, description & valid period are updated.
+  // Required permissions:
+  // - billing.paymentmethod.update on the organization that owns the given payment method.
+  UpdatePaymentMethod: (req: PaymentMethod) => Promise<PaymentMethod>;
+  
+  // Delete a specific payment method identified by the given ID.
+  // Required permissions:
+  // - billing.paymentmethod.delete on the organization that owns the given payment method
+  // which is identified by the given ID.
+  DeletePaymentMethod: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Fetch the default PaymentMethod for an organization identified by the given ID.
+  // Required permissions:
+  // - billing.paymentmethod.get-default on the organization that is identified by the given ID
+  GetDefaultPaymentMethod: (req: arangodb_cloud_common_v1_IDOptions) => Promise<PaymentMethod>;
+  
+  // Update the default PaymentMethod for an organization identified by the
+  // given organization ID, to the payment method identified by the given payment method ID.
+  // Required permissions:
+  // - billing.paymentmethod.set-default on the organization identified by the given organization ID
+  SetDefaultPaymentMethod: (req: SetDefaultPaymentMethodRequest) => Promise<void>;
+  
+  // Fetch the billing configuration of an organization identified by the given ID.
+  // Required permissions:
+  // - billing.config.get on the organization that is identified by the given ID
+  GetBillingConfig: (req: arangodb_cloud_common_v1_IDOptions) => Promise<BillingConfig>;
+  
+  // Update the billing configuration for an organization identified by the
+  // given organization ID.
+  // Required permissions:
+  // - billing.config.set on the organization identified by the given organization ID
+  SetBillingConfig: (req: SetBillingConfigRequest) => Promise<void>;
+}
+
+// BillingService is the API used to fetch billing information.
+export class BillingService implements IBillingService {
   // Fetch all Invoice resources for the organization identified by the given
   // organization ID that match the given criteria.
   // Required permissions:

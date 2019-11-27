@@ -28,23 +28,27 @@ all: generate build check ts docs
 
 # Build docker builder image
 .PHONY: build-image
-build-image:
 ifndef CIRCLECI
+build-image:
 	docker build \
 		--build-arg=TOKEN=$(shell cat $(HOME)/.arangodb/ms/github-readonly-code-acces.token) \
 		-t $(BUILDIMAGE) \
 		-f Dockerfile.build .
 else
-	go get github.com/gogo/protobuf/protoc-gen-gogo
-	go get github.com/gogo/protobuf/protoc-gen-gofast
-	go get github.com/gogo/protobuf/protoc-gen-gogofaster
-	go get golang.org/x/tools/cmd/goimports
-	go get github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
-	go get github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
-	go get github.com/golang/protobuf/protoc-gen-go
-	go get github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc
-	go get github.com/arangodb-managed/protoc-gen-ts/cmd/protoc-gen-ts
+build-image: get-plugins
 endif
+
+.PHONY: get-plugins
+get-plugins:
+	go get github.com/gogo/protobuf/protoc-gen-gogo@v1.3.0
+	go get github.com/gogo/protobuf/protoc-gen-gofast@v1.3.0
+	go get github.com/gogo/protobuf/protoc-gen-gogofaster@v1.3.0
+	go get golang.org/x/tools/cmd/goimports@v0.0.0-20190918214516-5a1a30219888
+	go get github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway@v1.11.0
+	go get github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger@v1.11.0
+	go get github.com/golang/protobuf/protoc-gen-go@v1.3.2
+	go get github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@v1.3.0
+	go get github.com/arangodb-managed/protoc-gen-ts/cmd/protoc-gen-ts@v0.1.0
 
 .PHONY: $(CACHEVOL)
 $(CACHEVOL):

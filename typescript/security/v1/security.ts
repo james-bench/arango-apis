@@ -67,7 +67,38 @@ export interface IPWhitelistList {
 }
 
 // SecurityService is the API used to access security entities.
-export class SecurityService {
+export interface ISecurityService {
+  // Fetch all IP whitelists that belong to the project identified by the given
+  // context ID.
+  // Required permissions:
+  // - security.ipwhitelist.list on the project identified by the given context ID.
+  ListIPWhitelists: (req: arangodb_cloud_common_v1_ListOptions) => Promise<IPWhitelistList>;
+  
+  // Fetch an IP whitelist by its id.
+  // Required permissions:
+  // - security.ipwhitelist.get on the IP whitelist
+  GetIPWhitelist: (req: arangodb_cloud_common_v1_IDOptions) => Promise<IPWhitelist>;
+  
+  // Create a new IP whitelist
+  // Required permissions:
+  // - security.ipwhitelist.create on the project that owns the IP whitelist.
+  CreateIPWhitelist: (req: IPWhitelist) => Promise<IPWhitelist>;
+  
+  // Update an IP whitelist
+  // Required permissions:
+  // - security.ipwhitelist.update on the IP whitelist
+  UpdateIPWhitelist: (req: IPWhitelist) => Promise<IPWhitelist>;
+  
+  // Delete an IP whitelist.
+  // Note that IP whitelists are initially only marked for deletion.
+  // Once all their dependent deployments are removed, the whitelist is removed.
+  // Required permissions:
+  // - security.ipwhitelist.delete on the IP whitelist
+  DeleteIPWhitelist: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+}
+
+// SecurityService is the API used to access security entities.
+export class SecurityService implements ISecurityService {
   // Fetch all IP whitelists that belong to the project identified by the given
   // context ID.
   // Required permissions:

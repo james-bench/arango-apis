@@ -77,7 +77,20 @@ export interface ResponseTimes {
 }
 
 // SupportService is the API used to query for support.
-export class SupportService {
+export interface ISupportService {
+  // Fetch all support plans that are supported by the ArangoDB cloud.
+  // Required permissions:
+  // - None
+  ListPlans: (req: ListPlansRequest) => Promise<PlanList>;
+  
+  // Fetch a support plan by its id.
+  // Required permissions:
+  // - None
+  GetPlan: (req: arangodb_cloud_common_v1_IDOptions) => Promise<Plan>;
+}
+
+// SupportService is the API used to query for support.
+export class SupportService implements ISupportService {
   // Fetch all support plans that are supported by the ArangoDB cloud.
   // Required permissions:
   // - None

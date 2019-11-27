@@ -448,7 +448,199 @@ export interface VerifyUserMobilePhoneRequest {
 }
 
 // IAMService is the API used to configure IAM objects.
-export class IAMService {
+export interface IIAMService {
+  // Fetch all available information of the currently authenticated user.
+  // Required permissions:
+  // - None
+  GetThisUser: (req?: arangodb_cloud_common_v1_Empty) => Promise<User>;
+  
+  // Fetch all available information of the user identified by the given ID.
+  // Required permissions:
+  // - resourcemanager.organization.get on one of the organizations that the requested user and authenticated user are both a member of
+  GetUser: (req: arangodb_cloud_common_v1_IDOptions) => Promise<User>;
+  
+  // Update a user
+  // Required permissions:
+  // - None if the given user is the authenticated user.
+  // or
+  // - resourcemanager.organization.get on one of the organizations that the requested user and authenticated user are both a member of and
+  // - iam.user.update on organization on one of the organizations that the requested user and authenticated user are both a member of
+  UpdateUser: (req: User) => Promise<User>;
+  
+  // Verify the mobile phone number of a user, by provided the unique
+  // code that was send to the number.
+  // If the code is valid an empty result is returned, otherwise an InvalidArgument error is returned.
+  // The authenticated user is always the subject of this request.
+  // Required permissions:
+  // - None (since the subject is always the authenticated user).
+  VerifyUserMobilePhone: (req: VerifyUserMobilePhoneRequest) => Promise<void>;
+  
+  // Resend a verification code to the mobile phone number listed for the
+  // authenticated user.
+  // Required permissions:
+  // - None (since the subject is always the authenticated user).
+  ResendUserMobilePhoneVerification: (req?: arangodb_cloud_common_v1_Empty) => Promise<void>;
+  
+  // Fetch all groups of the organization identified by the given context ID.
+  // Required permissions:
+  // - iam.group.list on organization identified by given context ID.
+  ListGroups: (req: arangodb_cloud_common_v1_ListOptions) => Promise<GroupList>;
+  
+  // Fetch a group by its id.
+  // Required permissions:
+  // - iam.group.get on organization that owns the group
+  GetGroup: (req: arangodb_cloud_common_v1_IDOptions) => Promise<Group>;
+  
+  // Create a group
+  // Required permissions:
+  // - iam.group.create on organization that owns the group
+  CreateGroup: (req: Group) => Promise<Group>;
+  
+  // Update a group
+  // Required permissions:
+  // - iam.group.update on organization that owns the group
+  UpdateGroup: (req: Group) => Promise<Group>;
+  
+  // Delete a group
+  // Required permissions:
+  // - iam.group.delete on organization that owns the group
+  DeleteGroup: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // List of members of the group identified by the given context ID.
+  // Required permissions:
+  // - iam.group.get on organization that owns the group
+  ListGroupMembers: (req: arangodb_cloud_common_v1_ListOptions) => Promise<GroupMemberList>;
+  
+  // Add one or more members to the group identified by given ID.
+  // Required permissions:
+  // - iam.group.update on organization that owns the group
+  AddGroupMembers: (req: GroupMembersRequest) => Promise<void>;
+  
+  // Remove one or more members from the group identified by given ID.
+  // Required permissions:
+  // - iam.group.update on organization that owns the group
+  DeleteGroupMembers: (req: GroupMembersRequest) => Promise<void>;
+  
+  // Is the user identified by the given user ID a member of the group identified by the given group ID.
+  // Required permissions:
+  // - iam.group.get on organization that owns the group, unless the requested user is identical to the authenticated user.
+  // Note that if the identified group does not exist, no is returned.
+  IsMemberOfGroup: (req: IsMemberOfGroupRequest) => Promise<arangodb_cloud_common_v1_YesOrNo>;
+  
+  // Fetch all roles in the organization identified by the given context ID.
+  // Required permissions:
+  // - iam.role.list on organization identified by given context ID.
+  ListRoles: (req: arangodb_cloud_common_v1_ListOptions) => Promise<RoleList>;
+  
+  // Fetch a role by its id.
+  // Required permissions:
+  // - iam.role.get on organization that owns the role
+  GetRole: (req: arangodb_cloud_common_v1_IDOptions) => Promise<Role>;
+  
+  // Create a custom role
+  // Required permissions:
+  // - iam.role.create on organization that owns the role
+  CreateRole: (req: Role) => Promise<Role>;
+  
+  // Update a custom role
+  // Required permissions:
+  // - iam.role.update on organization that owns the role
+  UpdateRole: (req: Role) => Promise<Role>;
+  
+  // Delete a custom role
+  // Required permissions:
+  // - iam.role.delete on organization that owns the role
+  DeleteRole: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Get the policy for a resource identified by given URL.
+  // Required permissions:
+  // - iam.policy.get on resource identified by the url
+  GetPolicy: (req: arangodb_cloud_common_v1_URLOptions) => Promise<Policy>;
+  
+  // Add one or more RoleBindings to the policy of a resource identified by given URL.
+  // Required permissions:
+  // - iam.policy.update on resource identified by the url
+  AddRoleBindings: (req: RoleBindingsRequest) => Promise<Policy>;
+  
+  // Remove one or more RoleBindings from the policy of a resource identified by given URL.
+  // Required permissions:
+  // - iam.policy.update on resource identified by the url
+  DeleteRoleBindings: (req: RoleBindingsRequest) => Promise<Policy>;
+  
+  // Return the list of permissions that are available to the currently authenticated
+  // used for actions on the resource identified by the given URL.
+  // Required permissions:
+  // - None
+  GetEffectivePermissions: (req: arangodb_cloud_common_v1_URLOptions) => Promise<PermissionList>;
+  
+  // Does the authenticated user have all of the requested permissions for the resource
+  // identified by the given URL?
+  // Required permissions:
+  // - None
+  HasPermissions: (req: HasPermissionsRequest) => Promise<arangodb_cloud_common_v1_YesOrNo>;
+  
+  // List all known permissions.
+  // Required permissions:
+  // - None
+  ListPermissions: (req?: arangodb_cloud_common_v1_Empty) => Promise<PermissionList>;
+  
+  // Fetch all API keys owned by the authenticated caller.
+  // Required permissions:
+  // - None
+  ListAPIKeys: (req: arangodb_cloud_common_v1_ListOptions) => Promise<APIKeyList>;
+  
+  // Fetch an API key by its id.
+  // The API key must be owned by the authenticated caller.
+  // Required permissions:
+  // - None
+  GetAPIKey: (req: arangodb_cloud_common_v1_IDOptions) => Promise<APIKey>;
+  
+  // Create a new API key.
+  // The API key will be owned by the authenticated caller.
+  // Required permissions:
+  // - None
+  CreateAPIKey: (req: CreateAPIKeyRequest) => Promise<APIKeySecret>;
+  
+  // Ensure that the expiration date of the API key identified by given ID
+  // is either in the past or set to now.
+  // The API key must be owned by the authenticated caller.
+  // Required permissions:
+  // - None
+  RevokeAPIKey: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Delete the API key identified by given ID
+  // The API key must be owned by the authenticated caller.
+  // Required permissions:
+  // - None
+  DeleteAPIKey: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Authenticate using an API key.
+  // If authentication succeeds, this function returns a bearer token.
+  // That token must be used to authenticate all other API requests.
+  // If the given API key identifier is invalid or expired, or an incorrect secret
+  // is given, this function will return an unauthenticated error.
+  // Required permissions:
+  // - None
+  AuthenticateAPIKey: (req: AuthenticateAPIKeyRequest) => Promise<AuthenticateAPIKeyResponse>;
+  
+  // Renew a non-expired API key authentication token.
+  // This allows to extend the lifetime of a token created by AuthenticateAPIKey.
+  // If the given token is invalid or expired, or the underlying API key is expired
+  // this function will return an unauthenticated error.
+  // Required permissions:
+  // - None
+  RenewAPIKeyToken: (req: RenewAPIKeyTokenRequest) => Promise<RenewAPIKeyTokenResponse>;
+  
+  // Revoke an API key authentication token.
+  // This function will return a non-error response, even if the given token
+  // is invalid or already expired.
+  // Required permissions:
+  // - None
+  RevokeAPIKeyToken: (req: RevokeAPIKeyTokenRequest) => Promise<void>;
+}
+
+// IAMService is the API used to configure IAM objects.
+export class IAMService implements IIAMService {
   // Fetch all available information of the currently authenticated user.
   // Required permissions:
   // - None

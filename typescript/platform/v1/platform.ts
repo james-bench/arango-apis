@@ -93,7 +93,33 @@ export interface RegionList {
 }
 
 // PlatformService is the API used to query for cloud provider & regional info.
-export class PlatformService {
+export interface IPlatformService {
+  // Fetch all providers that are supported by the ArangoDB cloud.
+  // Required permissions:
+  // - None
+  ListProviders: (req: ListProvidersRequest) => Promise<ProviderList>;
+  
+  // Fetch a provider by its id.
+  // Required permissions:
+  // - None
+  GetProvider: (req: arangodb_cloud_common_v1_IDOptions) => Promise<Provider>;
+  
+  // Fetch all regions provided by the provided identified by the given context ID.
+  // If the given context identifier contains a valid organization ID,
+  // the result includes all regions for that organization.
+  // Otherwise only regions are returned that are available to all organizations.
+  // Required permissions:
+  // - None
+  ListRegions: (req: ListRegionsRequest) => Promise<RegionList>;
+  
+  // Fetch a region by its id.
+  // Required permissions:
+  // - None
+  GetRegion: (req: arangodb_cloud_common_v1_IDOptions) => Promise<Region>;
+}
+
+// PlatformService is the API used to query for cloud provider & regional info.
+export class PlatformService implements IPlatformService {
   // Fetch all providers that are supported by the ArangoDB cloud.
   // Required permissions:
   // - None

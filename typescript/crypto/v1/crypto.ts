@@ -112,7 +112,49 @@ export interface CACertificateList {
 }
 
 // CryptoService is the API used to configure various crypto objects.
-export class CryptoService {
+export interface ICryptoService {
+  // Fetch all CA certificates in the project identified by the given context ID.
+  // Required permissions:
+  // - crypto.cacertificate.list on the project identified by the given context ID
+  ListCACertificates: (req: arangodb_cloud_common_v1_ListOptions) => Promise<CACertificateList>;
+  
+  // Fetch a CA certificate by its id.
+  // Required permissions:
+  // - crypto.cacertificate.get on the CA certificate identified by the given ID
+  GetCACertificate: (req: arangodb_cloud_common_v1_IDOptions) => Promise<CACertificate>;
+  
+  // Fetch instructions for installing & unistalling a CA certificate identified by its id
+  // on various platforms.
+  // Required permissions:
+  // - crypto.cacertificate.get on the CA certificate identified by the given ID
+  GetCACertificateInstructions: (req: arangodb_cloud_common_v1_IDOptions) => Promise<CACertificateInstructions>;
+  
+  // Create a new CA certificate
+  // Required permissions:
+  // - crypto.cacertificate.create on the project that owns the CA certificate
+  CreateCACertificate: (req: CACertificate) => Promise<CACertificate>;
+  
+  // Update a CA certificate
+  // Required permissions:
+  // - crypto.cacertificate.update on the CA certificate
+  UpdateCACertificate: (req: CACertificate) => Promise<CACertificate>;
+  
+  // Delete a CA certificate
+  // Note that CA certificate are initially only marked for deleted.
+  // Once all the resources that depend on it are removed the CA certificate itself is deleted
+  // and cannot be restored.
+  // Required permissions:
+  // - crypto.cacertificate.delete on the CA certificate
+  DeleteCACertificate: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Mark the given CA certificate as default for its containing project.
+  // Required permissions:
+  // - crypto.cacertificate.set-default on the project that owns the certificate.
+  SetDefaultCACertificate: (req: CACertificate) => Promise<void>;
+}
+
+// CryptoService is the API used to configure various crypto objects.
+export class CryptoService implements ICryptoService {
   // Fetch all CA certificates in the project identified by the given context ID.
   // Required permissions:
   // - crypto.cacertificate.list on the project identified by the given context ID

@@ -893,7 +893,107 @@ export interface VersionList {
 }
 
 // DataService is the API used to configure data objects.
-export class DataService {
+export interface IDataService {
+  // Fetch all deployments in the project identified by the given context ID.
+  // Required permissions:
+  // - data.deployment.list on the project identified by the given context ID
+  ListDeployments: (req: arangodb_cloud_common_v1_ListOptions) => Promise<DeploymentList>;
+  
+  // Fetch a deployment by its id.
+  // Required permissions:
+  // - data.deployment.get on the deployment identified by the given ID
+  GetDeployment: (req: arangodb_cloud_common_v1_IDOptions) => Promise<Deployment>;
+  
+  // Create a new deployment
+  // Required permissions:
+  // - data.deployment.create on the project that owns the deployment
+  // Note that deployment.status & deployment.expiration are ignored
+  // in this request.
+  CreateDeployment: (req: Deployment) => Promise<Deployment>;
+  
+  // Update a deployment
+  // Required permissions:
+  // - data.deployment.update on the deployment
+  // Note that deployment.status & deployment.expiration are ignored
+  // in this request.
+  UpdateDeployment: (req: Deployment) => Promise<Deployment>;
+  
+  // Delete a deployment
+  // Note that deployments are initially only marked for deletion.
+  // Once all their resources are removed the deployment itself is removed.
+  // Required permissions:
+  // - data.deployment.delete on the deployment
+  DeleteDeployment: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Fetch credentials for accessing deployment by its id.
+  // Required permissions:
+  // - data.deployment.get on the deployment identified by the given ID
+  // - data.deploymentcredentials.get on the deployment identified by the given ID
+  GetDeploymentCredentials: (req: DeploymentCredentialsRequest) => Promise<DeploymentCredentials>;
+  
+  // Fetch all ArangoDB versions that are available for deployments.
+  // Required permissions:
+  // - None
+  ListVersions: (req: ListVersionsRequest) => Promise<VersionList>;
+  
+  // Fetch the default ArangoDB version for new deployment.
+  // Required permissions:
+  // - None
+  GetDefaultVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<Version>;
+  
+  // Fetch the limits for server specifications for deployments
+  // owned by the given projected, created in the given region.
+  // Required permissions:
+  // - data.limits.get on the requested project
+  // - data.deployment.get on the specified deployment (if deployment_id is set)
+  // This method is deprecated.
+  GetServersSpecLimits: (req: ServersSpecLimitsRequest) => Promise<ServersSpecLimits>;
+  
+  // Fetch the node sizes available for deployments
+  // owned by the project with given ID, created in the given region with given ID.
+  // If project ID "all" is used, then all node sizes for the region with given
+  // ID are returned.
+  // Required permissions:
+  // - data.nodesize.list on the requested project (if project ID does not equal "all")
+  // - None if project ID does equals "all"
+  ListNodeSizes: (req: NodeSizesRequest) => Promise<NodeSizeList>;
+  
+  // Fetch the presets for server specifications for deployments
+  // owned by the given projected, created in the given region.
+  // Required permissions:
+  // - data.presets.list on the requested project
+  // This method is deprecated.
+  ListServersSpecPresets: (req: ServersSpecPresetsRequest) => Promise<ServersSpecPresetList>;
+  
+  // Calculate the total size of a deployment with given arguments.
+  // Required permissions:
+  // - none
+  CalculateDeploymentSize: (req: CalculateDeploymentSizeRequest) => Promise<DeploymentSize>;
+  
+  // Recommend a deployment size, for a oneshard or sharded deployments, using the
+  // given input values.
+  // Required permissions:
+  // - none
+  RecommendDeploymentSize: (req: DeploymentSizeRequest) => Promise<DeploymentSizeRecommendation>;
+  
+  // Fetch instructions for connecting drivers to the deployment identified by the given id.
+  // Required permissions:
+  // - data.deployment.get on the deployment identified by the given ID
+  GetConnectDriverInstructions: (req: arangodb_cloud_common_v1_IDOptions) => Promise<ConnectDriverInstructions>;
+  
+  // Fetch instructions for importing data into the deployment identified by the given id.
+  // Required permissions:
+  // - data.deployment.get on the deployment identified by the given ID
+  GetImportDataInstructions: (req: arangodb_cloud_common_v1_IDOptions) => Promise<ImportDataInstructions>;
+  
+  // Calculate the price of a deployment of given settings.
+  // Required permissions:
+  // - data.deploymentprice.calculate
+  CalculateDeploymentPrice: (req: DeploymentPriceRequest) => Promise<DeploymentPrice>;
+}
+
+// DataService is the API used to configure data objects.
+export class DataService implements IDataService {
   // Fetch all deployments in the project identified by the given context ID.
   // Required permissions:
   // - data.deployment.list on the project identified by the given context ID
