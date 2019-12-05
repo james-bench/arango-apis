@@ -124,6 +124,10 @@
   
 
 - [support/v1/support.proto](#support/v1/support.proto)
+    - [FaqGroup](#arangodb.cloud.support.v1.FaqGroup)
+    - [FaqGroupEntry](#arangodb.cloud.support.v1.FaqGroupEntry)
+    - [FaqGroupEntryList](#arangodb.cloud.support.v1.FaqGroupEntryList)
+    - [FaqGroupList](#arangodb.cloud.support.v1.FaqGroupList)
     - [ListPlansRequest](#arangodb.cloud.support.v1.ListPlansRequest)
     - [Plan](#arangodb.cloud.support.v1.Plan)
     - [PlanList](#arangodb.cloud.support.v1.PlanList)
@@ -1784,6 +1788,68 @@ IAMService is the API used to configure IAM objects.
 
 
 
+<a name="arangodb.cloud.support.v1.FaqGroup"></a>
+
+### FaqGroup
+FaqGroup contains groups of faq entries
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | ID of the FAQ Group |
+| name | [string](#string) |  | Name of the FAQ Group |
+
+
+
+
+
+
+<a name="arangodb.cloud.support.v1.FaqGroupEntry"></a>
+
+### FaqGroupEntry
+FaqGroupEntry contains entries for a group
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| question | [string](#string) |  | The question of this entry |
+| answer | [string](#string) |  | The answer to the question in this entry |
+
+
+
+
+
+
+<a name="arangodb.cloud.support.v1.FaqGroupEntryList"></a>
+
+### FaqGroupEntryList
+List of faq group entries.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [FaqGroupEntry](#arangodb.cloud.support.v1.FaqGroupEntry) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.support.v1.FaqGroupList"></a>
+
+### FaqGroupList
+List of faq groups.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [FaqGroup](#arangodb.cloud.support.v1.FaqGroup) | repeated |  |
+
+
+
+
+
+
 <a name="arangodb.cloud.support.v1.ListPlansRequest"></a>
 
 ### ListPlansRequest
@@ -1870,6 +1936,8 @@ SupportService is the API used to query for support.
 | ----------- | ------------ | ------------- | ------------|
 | ListPlans | [ListPlansRequest](#arangodb.cloud.support.v1.ListPlansRequest) | [PlanList](#arangodb.cloud.support.v1.PlanList) | Fetch all support plans that are supported by the ArangoDB cloud. Required permissions: - None |
 | GetPlan | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Plan](#arangodb.cloud.support.v1.Plan) | Fetch a support plan by its id. Required permissions: - None |
+| ListFaqGroups | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [FaqGroupList](#arangodb.cloud.support.v1.FaqGroupList) | Fetch all FAQ groups. Required permissions: - None |
+| ListFaqGroupEntries | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [FaqGroupEntryList](#arangodb.cloud.support.v1.FaqGroupEntryList) | Fetch all FAQ group entries of the FAQ group identified by the given context ID. Required permissions: - None |
 
  
 
