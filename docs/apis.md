@@ -1861,7 +1861,7 @@ Arguments for a ListFaqGroupEntries request
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Common list options |
-| faq_group_id | [string](#string) |  | If set, list entries for this FAQ group. |
+| context_id | [string](#string) |  | If set, list entries for this FAQ group. |
 
 
 
@@ -1969,8 +1969,8 @@ SupportService is the API used to query for support.
 | ----------- | ------------ | ------------- | ------------|
 | ListPlans | [ListPlansRequest](#arangodb.cloud.support.v1.ListPlansRequest) | [PlanList](#arangodb.cloud.support.v1.PlanList) | Fetch all support plans that are supported by the ArangoDB cloud. Required permissions: - None |
 | GetPlan | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Plan](#arangodb.cloud.support.v1.Plan) | Fetch a support plan by its id. Required permissions: - None |
-| ListFaqGroups | [ListFaqGroupsRequest](#arangodb.cloud.support.v1.ListFaqGroupsRequest) | [FaqGroupList](#arangodb.cloud.support.v1.FaqGroupList) | Fetch all FAQ groups Required permissions: - None |
-| ListFaqGroupEntries | [ListFaqGroupEntriesRequest](#arangodb.cloud.support.v1.ListFaqGroupEntriesRequest) | [FaqGroupEntryList](#arangodb.cloud.support.v1.FaqGroupEntryList) | Fetch all FAQ group entries Required permissions: - None |
+| ListFaqGroups | [ListFaqGroupsRequest](#arangodb.cloud.support.v1.ListFaqGroupsRequest) | [FaqGroupList](#arangodb.cloud.support.v1.FaqGroupList) | Fetch all FAQ groups. Required permissions: - None |
+| ListFaqGroupEntries | [ListFaqGroupEntriesRequest](#arangodb.cloud.support.v1.ListFaqGroupEntriesRequest) | [FaqGroupEntryList](#arangodb.cloud.support.v1.FaqGroupEntryList) | Fetch all FAQ group entries of the FAQ group identified by the given context ID. Required permissions: - None |
 
  
 

@@ -36,7 +36,7 @@ service SupportService {
         };
     }
 
-    // Fetch all FAQ groups
+    // Fetch all FAQ groups.
     // Required permissions:
     // - None
     rpc ListFaqGroups(ListFaqGroupsRequest) returns (FaqGroupList) {
@@ -45,12 +45,12 @@ service SupportService {
         };
     }
 
-    // Fetch all FAQ group entries
+    // Fetch all FAQ group entries of the FAQ group identified by the given context ID.
     // Required permissions:
     // - None
     rpc ListFaqGroupEntries(ListFaqGroupEntriesRequest) returns (FaqGroupEntryList) {
         option (google.api.http) = {
-            get: "/api/support/v1/faqgroupentries"
+            get: "/api/support/v1/faqgroups/{context_id}/entries"
         };
     }
 }
@@ -136,5 +136,5 @@ message ListFaqGroupEntriesRequest {
     // Common list options
     common.v1.ListOptions options = 1;
     // If set, list entries for this FAQ group.
-    string faq_group_id = 2;
+    string context_id = 2;
 }

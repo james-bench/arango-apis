@@ -52,7 +52,7 @@ export interface ListFaqGroupEntriesRequest {
   
   // If set, list entries for this FAQ group.
   // string
-  faq_group_id?: string;
+  context_id?: string;
 }
 
 // Arguments for a ListFaqGroups request
@@ -140,12 +140,12 @@ export interface ISupportService {
   // - None
   GetPlan: (req: arangodb_cloud_common_v1_IDOptions) => Promise<Plan>;
   
-  // Fetch all FAQ groups
+  // Fetch all FAQ groups.
   // Required permissions:
   // - None
   ListFaqGroups: (req: ListFaqGroupsRequest) => Promise<FaqGroupList>;
   
-  // Fetch all FAQ group entries
+  // Fetch all FAQ group entries of the FAQ group identified by the given context ID.
   // Required permissions:
   // - None
   ListFaqGroupEntries: (req: ListFaqGroupEntriesRequest) => Promise<FaqGroupEntryList>;
@@ -171,7 +171,7 @@ export class SupportService implements ISupportService {
     return api.get(url, undefined);
   }
   
-  // Fetch all FAQ groups
+  // Fetch all FAQ groups.
   // Required permissions:
   // - None
   async ListFaqGroups(req: ListFaqGroupsRequest): Promise<FaqGroupList> {
@@ -180,12 +180,12 @@ export class SupportService implements ISupportService {
     return api.get(url, undefined);
   }
   
-  // Fetch all FAQ group entries
+  // Fetch all FAQ group entries of the FAQ group identified by the given context ID.
   // Required permissions:
   // - None
   async ListFaqGroupEntries(req: ListFaqGroupEntriesRequest): Promise<FaqGroupEntryList> {
-    const path = `/api/support/v1/faqgroupentries`;
-    const url = path + api.queryString(req, []);
+    const path = `/api/support/v1/faqgroups/${encodeURIComponent(req.context_id || '')}/entries`;
+    const url = path + api.queryString(req, [`context_id`]);
     return api.get(url, undefined);
   }
 }
