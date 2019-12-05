@@ -121,7 +121,7 @@ var (
 )
 
 func request_SupportService_ListFaqGroups_0(ctx context.Context, marshaler runtime.Marshaler, client SupportServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListFaqGroupsRequest
+	var protoReq v1.ListOptions
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
@@ -137,7 +137,7 @@ func request_SupportService_ListFaqGroups_0(ctx context.Context, marshaler runti
 }
 
 func local_request_SupportService_ListFaqGroups_0(ctx context.Context, marshaler runtime.Marshaler, server SupportServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListFaqGroupsRequest
+	var protoReq v1.ListOptions
 	var metadata runtime.ServerMetadata
 
 	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_SupportService_ListFaqGroups_0); err != nil {
@@ -154,7 +154,7 @@ var (
 )
 
 func request_SupportService_ListFaqGroupEntries_0(ctx context.Context, marshaler runtime.Marshaler, client SupportServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListFaqGroupEntriesRequest
+	var protoReq v1.ListOptions
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -188,7 +188,7 @@ func request_SupportService_ListFaqGroupEntries_0(ctx context.Context, marshaler
 }
 
 func local_request_SupportService_ListFaqGroupEntries_0(ctx context.Context, marshaler runtime.Marshaler, server SupportServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListFaqGroupEntriesRequest
+	var protoReq v1.ListOptions
 	var metadata runtime.ServerMetadata
 
 	var (

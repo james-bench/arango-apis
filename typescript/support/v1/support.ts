@@ -44,24 +44,6 @@ export interface FaqGroupList {
   items?: FaqGroup[];
 }
 
-// Arguments for a ListFaqGroupEntries request
-export interface ListFaqGroupEntriesRequest {
-  // Common list options
-  // arangodb.cloud.common.v1.ListOptions
-  options?: arangodb_cloud_common_v1_ListOptions;
-  
-  // If set, list entries for this FAQ group.
-  // string
-  context_id?: string;
-}
-
-// Arguments for a ListFaqGroups request
-export interface ListFaqGroupsRequest {
-  // Common list options
-  // arangodb.cloud.common.v1.ListOptions
-  options?: arangodb_cloud_common_v1_ListOptions;
-}
-
 // Arguments for a ListPlans request
 export interface ListPlansRequest {
   // Common list options
@@ -143,12 +125,12 @@ export interface ISupportService {
   // Fetch all FAQ groups.
   // Required permissions:
   // - None
-  ListFaqGroups: (req: ListFaqGroupsRequest) => Promise<FaqGroupList>;
+  ListFaqGroups: (req: arangodb_cloud_common_v1_ListOptions) => Promise<FaqGroupList>;
   
   // Fetch all FAQ group entries of the FAQ group identified by the given context ID.
   // Required permissions:
   // - None
-  ListFaqGroupEntries: (req: ListFaqGroupEntriesRequest) => Promise<FaqGroupEntryList>;
+  ListFaqGroupEntries: (req: arangodb_cloud_common_v1_ListOptions) => Promise<FaqGroupEntryList>;
 }
 
 // SupportService is the API used to query for support.
@@ -174,7 +156,7 @@ export class SupportService implements ISupportService {
   // Fetch all FAQ groups.
   // Required permissions:
   // - None
-  async ListFaqGroups(req: ListFaqGroupsRequest): Promise<FaqGroupList> {
+  async ListFaqGroups(req: arangodb_cloud_common_v1_ListOptions): Promise<FaqGroupList> {
     const path = `/api/support/v1/faqgroups`;
     const url = path + api.queryString(req, []);
     return api.get(url, undefined);
@@ -183,7 +165,7 @@ export class SupportService implements ISupportService {
   // Fetch all FAQ group entries of the FAQ group identified by the given context ID.
   // Required permissions:
   // - None
-  async ListFaqGroupEntries(req: ListFaqGroupEntriesRequest): Promise<FaqGroupEntryList> {
+  async ListFaqGroupEntries(req: arangodb_cloud_common_v1_ListOptions): Promise<FaqGroupEntryList> {
     const path = `/api/support/v1/faqgroups/${encodeURIComponent(req.context_id || '')}/entries`;
     const url = path + api.queryString(req, [`context_id`]);
     return api.get(url, undefined);
