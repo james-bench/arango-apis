@@ -35,6 +35,24 @@ service SupportService {
             get: "/api/support/v1/plans/{id}"
         };
     }
+
+    // Fetch all FAQ groups
+    // Required permissions:
+    // - None
+    rpc ListFaqGroups(ListFaqGroupsRequest) returns (FaqGroupList) {
+        option (google.api.http) = {
+            get: "/api/support/v1/faqgroups"
+        };
+    }
+
+    // Fetch all FAQ group entries
+    // Required permissions:
+    // - None
+    rpc ListFaqGroupEntries(ListFaqGroupEntriesRequest) returns (FaqGroupEntryList) {
+        option (google.api.http) = {
+            get: "/api/support/v1/faqgroupentries"
+        };
+    }
 }
 
 // Plan represents a specific support plan such as Bronze, Silver or Gold.
@@ -79,4 +97,44 @@ message ListPlansRequest {
     common.v1.ListOptions options = 1;
     // If set, list plans as they are available for the organization identified by this ID.
     string organization_id = 2;
+}
+
+// FaqGroup contains groups of faq entries
+message FaqGroup {
+    // ID of the FAQ Group
+    string id = 1;
+    // Name of the FAQ Group
+    string name = 2;
+}
+
+// List of faq groups.
+message FaqGroupList {
+    repeated FaqGroup items = 1;
+}
+
+// Arguments for a ListFaqGroups request
+message ListFaqGroupsRequest {
+    // Common list options
+    common.v1.ListOptions options = 1;
+}
+
+// FaqGroupEntry contains entries for a group
+message FaqGroupEntry {
+    // The question of this entry
+    string question = 1;
+    // The answer to the question in this entry
+    string answer = 2;
+}
+
+// List of faq group entries.
+message FaqGroupEntryList {
+    repeated FaqGroupEntry items = 1;
+}
+
+// Arguments for a ListFaqGroupEntries request
+message ListFaqGroupEntriesRequest {
+    // Common list options
+    common.v1.ListOptions options = 1;
+    // If set, list entries for this FAQ group.
+    string faq_group_id = 2;
 }
