@@ -2418,6 +2418,7 @@ A Deployment is represents one deployment of an ArangoDB cluster.
 | expiration | [Deployment.Expiration](#arangodb.cloud.data.v1.Deployment.Expiration) |  |  |
 | backup_restore | [Deployment.BackupRestoreSpec](#arangodb.cloud.data.v1.Deployment.BackupRestoreSpec) |  | Information about a backup restore. If this field is set the deployment will be restored to that backup. This is a read-only field. To set this field please use the backup service RestoreBackup method. |
 | deployment_recommendations | [DeploymentSizeRecommendation](#arangodb.cloud.data.v1.DeploymentSizeRecommendation) | repeated | Recommendations made for deployments using the &#34;oneshard&#34; or &#34;sharded&#34; model. |
+| custom_image | [string](#string) |  | If provided, dataclusterd will use this custom image tag instead of the configured one for a given version. Further, ImagePullPolicy will be set to Always. This field can only be set by selected organizations. |
 
 
 

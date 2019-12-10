@@ -212,6 +212,12 @@ export interface Deployment {
   // Recommendations made for deployments using the "oneshard" or "sharded" model.
   // DeploymentSizeRecommendation
   deployment_recommendations?: DeploymentSizeRecommendation[];
+  
+  // If provided, dataclusterd will use this custom image tag instead of the configured one for a given version.
+  // Further, ImagePullPolicy will be set to Always.
+  // This field can only be set by selected organizations.
+  // string
+  custom_image?: string;
 }
 
 // Information about a backup restore.
