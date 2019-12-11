@@ -287,6 +287,11 @@ message Deployment {
     }
     ModelSpec model = 106;
 
+    // If provided, dataclusterd will use this custom image tag instead of the configured one for a given version.
+    // Further, ImagePullPolicy will be set to Always.
+    // This field can only be set by selected organizations.
+    string custom_image = 107;
+
     // Status of a single server (of the ArangoDB cluster)
     message ServerStatus {
         // ID of the server
@@ -407,11 +412,6 @@ message Deployment {
 
     // Recommendations made for deployments using the "oneshard" or "sharded" model.
     repeated DeploymentSizeRecommendation deployment_recommendations = 501;
-
-    // If provided, dataclusterd will use this custom image tag instead of the configured one for a given version.
-    // Further, ImagePullPolicy will be set to Always.
-    // This field can only be set by selected organizations.
-    string custom_image = 502;
 }
 
 // NodeSize specifies the size constraints of different data nodes.
