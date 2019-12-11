@@ -108,6 +108,15 @@ export interface Invoice {
   // boolean
   requires_manual_verification?: boolean;
   
+  // The last update date of the invoice.
+  // This applies to 'specification' only and doesn't apply to status or payments changes.
+  // googleTypes.Timestamp
+  last_modified_at?: googleTypes.Timestamp;
+  
+  // The version of the invoice-builder who created the invoice.
+  // string
+  invoice_builder_version?: string;
+  
   // All items of the invoice
   // Invoice_Item
   items?: Invoice_Item[];
@@ -216,6 +225,11 @@ export interface Invoice_Status {
   // If set, this invoice has been verified manually.
   // boolean
   is_verified?: boolean;
+  
+  // If set, this payment needs to be rebuild (by the invoice-builder service).
+  // If set, is_completed & is_rejected must be false.
+  // boolean
+  needs_rebuild?: boolean;
   
   // The timestamp of succesfull completion of the payment.
   // This field equals the completed_at field of the last payment if
