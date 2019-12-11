@@ -3387,6 +3387,7 @@ Request arguments for ListUsageItems
 | deployment_id | [string](#string) |  | Limit to usage items for the deployment with this id. This is an optional field. |
 | has_no_invoice_id | [bool](#bool) |  | If set, limit to usage items that have no invoice_id set. |
 | has_invoice_id | [bool](#bool) |  | If set, limit to usage items that have an invoice_id set. |
+| invoice_id | [string](#string) |  | If set, limit to usage items that have the invoice_id set to this specific value. This is an optional field. |
 
 
 

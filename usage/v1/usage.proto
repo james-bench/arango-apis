@@ -176,4 +176,7 @@ message ListUsageItemsRequest {
     bool has_no_invoice_id = 20;
     // If set, limit to usage items that have an invoice_id set.
     bool has_invoice_id = 21;
+    // If set, limit to usage items that have the invoice_id set to this specific value.
+    // This is an optional field.
+    string invoice_id = 22;
 }
