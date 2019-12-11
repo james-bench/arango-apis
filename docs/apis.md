@@ -689,7 +689,7 @@ An Invoice message describes a transaction for usage of ArangoDB Oasis.
 | invoice_number | [string](#string) |  | Invoice number (used by accounting) |
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation date of the invoice |
 | requires_manual_verification | [bool](#bool) |  | If set, this invoice must be manually verified before payment can be initiated. |
-| last_modified_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The last update date of the invoice. This applies to &#39;specification&#39; only and doesn&#39;t apply to status or payments changes. |
+| last_updated_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The last update date of the invoice. This applies to &#39;specification&#39; only and doesn&#39;t apply to status or payments changes. |
 | invoice_builder_version | [string](#string) |  | The version of the invoice-builder who created the invoice. |
 | items | [Invoice.Item](#arangodb.cloud.billing.v1.Invoice.Item) | repeated | All items of the invoice |
 | currency_id | [string](#string) |  | Currency for all amounts |

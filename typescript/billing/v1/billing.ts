@@ -111,7 +111,7 @@ export interface Invoice {
   // The last update date of the invoice.
   // This applies to 'specification' only and doesn't apply to status or payments changes.
   // googleTypes.Timestamp
-  last_modified_at?: googleTypes.Timestamp;
+  last_updated_at?: googleTypes.Timestamp;
   
   // The version of the invoice-builder who created the invoice.
   // string
