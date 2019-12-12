@@ -1436,6 +1436,7 @@ A Deployment is represents one deployment of an ArangoDB cluster.
 | servers | [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  |  |
 | ipwhitelist_id | [string](#string) |  | Optional identifier of IP whitelist to use for this deployment. |
 | model | [Deployment.ModelSpec](#arangodb.cloud.data.v1.Deployment.ModelSpec) |  |  |
+| custom_image | [string](#string) |  | If provided, dataclusterd will use this custom image tag instead of the configured one for a given version. Further, ImagePullPolicy will be set to Always. This field can only be set by selected organizations. |
 | status | [Deployment.Status](#arangodb.cloud.data.v1.Deployment.Status) |  |  |
 | size | [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize) |  | Detailed size of the deployment This is a read-only field. |
 | expiration | [Deployment.Expiration](#arangodb.cloud.data.v1.Deployment.Expiration) |  |  |
@@ -2846,6 +2847,7 @@ An Organization is represents a real world organization such as a company.
 | tier | [Tier](#arangodb.cloud.resourcemanager.v1.Tier) |  | Tier used for this organization. This is a read-only value and cannot be initialized. |
 | total_deployments | [Organization.TotalDeploymentsEntry](#arangodb.cloud.resourcemanager.v1.Organization.TotalDeploymentsEntry) | repeated | Total number of deployments created in this organization throughout its entire lifetime per tier-id. map: tier-id -&gt; count This is a read-only value. |
 | is_flexible_deployments_enabled | [bool](#bool) |  | If set, all projects in this organization are allowed to use deployments using the flexible model. |
+| is_allowed_to_use_custom_images | [bool](#bool) |  | If set, this organization is allowed to use custom images for ArangoDB deployments. |
 
 
 
