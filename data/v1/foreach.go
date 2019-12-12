@@ -25,11 +25,11 @@ type (
 // ForEachDeployment iterates over all deployments in a project
 // identified by given context ID, invoking the given callback for
 // each deployment.
-func ForEachDeployment(ctx context.Context, c DataServiceClient,
+func ForEachDeployment(ctx context.Context, listFunc func(ctx context.Context, req *common.ListOptions) (*DeploymentList, error),
 	opts *common.ListOptions, cb DeploymentCallback) error {
 	opts = opts.CloneOrDefault()
 	for {
-		list, err := c.ListDeployments(ctx, opts)
+		list, err := listFunc(ctx, opts)
 		if err != nil {
 			return err
 		}
@@ -51,11 +51,11 @@ func ForEachDeployment(ctx context.Context, c DataServiceClient,
 
 // ForEachVersion iterates over all (ArangoDB) versions that match the given filter
 // invoking the given callback for each version.
-func ForEachVersion(ctx context.Context, c DataServiceClient,
+func ForEachVersion(ctx context.Context, listFunc func(ctx context.Context, req *ListVersionsRequest) (*VersionList, error),
 	req ListVersionsRequest, cb VersionCallback) error {
 	req.Options = req.Options.CloneOrDefault()
 	for {
-		list, err := c.ListVersions(ctx, &req)
+		list, err := listFunc(ctx, &req)
 		if err != nil {
 			return err
 		}

@@ -22,11 +22,11 @@ type (
 // ForEachIPWhitelist iterates over all IP whitelists in a project
 // identified by given context ID, invoking the given callback for
 // each IP whitelist.
-func ForEachIPWhitelist(ctx context.Context, c SecurityServiceClient,
+func ForEachIPWhitelist(ctx context.Context, listFunc func(ctx context.Context, req *common.ListOptions) (*IPWhitelistList, error),
 	opts *common.ListOptions, cb IPWhitelistCallback) error {
 	opts = opts.CloneOrDefault()
 	for {
-		list, err := c.ListIPWhitelists(ctx, opts)
+		list, err := listFunc(ctx, opts)
 		if err != nil {
 			return err
 		}
