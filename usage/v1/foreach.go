@@ -3,7 +3,7 @@
 //
 // Copyright 2019 ArangoDB Inc, Cologne, Germany
 //
-// Author Ewout Prangsma
+// Author Robert Stam
 //
 
 package v1
@@ -13,14 +13,14 @@ import (
 )
 
 type (
-	// PlanCallback is a callback for individual support plan.
-	PlanCallback func(context.Context, *Plan) error
+	// UsageItemCallback is a callback for individual usage items.
+	UsageItemCallback func(context.Context, *UsageItem) error
 )
 
-// ForEachPlan iterates over all support plans that match given given filter,
-// invoking the given callback for each plan.
-func ForEachPlan(ctx context.Context, listFunc func(ctx context.Context, req *ListPlansRequest) (*PlanList, error),
-	req ListPlansRequest, cb PlanCallback) error {
+// ForEachUsageItem iterates over all usage items that match given given filter,
+// invoking the given callback for each usage item.
+func ForEachUsageItem(ctx context.Context, listFunc func(ctx context.Context, req *ListUsageItemsRequest) (*UsageItemList, error),
+	req ListUsageItemsRequest, cb UsageItemCallback) error {
 	req.Options = req.Options.CloneOrDefault()
 	for {
 		list, err := listFunc(ctx, &req)

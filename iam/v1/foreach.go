@@ -31,11 +31,11 @@ type (
 // ForEachGroup iterates over all groups in an organization
 // identified by given context ID, invoking the given callback for
 // each group.
-func ForEachGroup(ctx context.Context, c IAMServiceClient,
+func ForEachGroup(ctx context.Context, listFunc func(ctx context.Context, req *common.ListOptions) (*GroupList, error),
 	opts *common.ListOptions, cb GroupCallback) error {
 	opts = opts.CloneOrDefault()
 	for {
-		list, err := c.ListGroups(ctx, opts)
+		list, err := listFunc(ctx, opts)
 		if err != nil {
 			return err
 		}
@@ -58,11 +58,11 @@ func ForEachGroup(ctx context.Context, c IAMServiceClient,
 // ForEachGroupMember iterates over all members in the group
 // identified by given context ID, invoking the given callback for
 // each group member ID.
-func ForEachGroupMember(ctx context.Context, c IAMServiceClient,
+func ForEachGroupMember(ctx context.Context, listFunc func(ctx context.Context, req *common.ListOptions) (*GroupMemberList, error),
 	opts *common.ListOptions, cb GroupMemberCallback) error {
 	opts = opts.CloneOrDefault()
 	for {
-		list, err := c.ListGroupMembers(ctx, opts)
+		list, err := listFunc(ctx, opts)
 		if err != nil {
 			return err
 		}
@@ -85,11 +85,11 @@ func ForEachGroupMember(ctx context.Context, c IAMServiceClient,
 // ForEachRole iterates over all roles in an organization
 // identified by given context ID, invoking the given callback for
 // each role.
-func ForEachRole(ctx context.Context, c IAMServiceClient,
+func ForEachRole(ctx context.Context, listFunc func(ctx context.Context, req *common.ListOptions) (*RoleList, error),
 	opts *common.ListOptions, cb RoleCallback) error {
 	opts = opts.CloneOrDefault()
 	for {
-		list, err := c.ListRoles(ctx, opts)
+		list, err := listFunc(ctx, opts)
 		if err != nil {
 			return err
 		}
@@ -111,11 +111,11 @@ func ForEachRole(ctx context.Context, c IAMServiceClient,
 
 // ForEachAPIKey iterates over all API keys of the authenticated user,
 // invoking the given callback for each key.
-func ForEachAPIKey(ctx context.Context, c IAMServiceClient,
+func ForEachAPIKey(ctx context.Context, listFunc func(ctx context.Context, req *common.ListOptions) (*APIKeyList, error),
 	opts *common.ListOptions, cb APIKeyCallback) error {
 	opts = opts.CloneOrDefault()
 	for {
-		list, err := c.ListAPIKeys(ctx, opts)
+		list, err := listFunc(ctx, opts)
 		if err != nil {
 			return err
 		}

@@ -22,11 +22,11 @@ type (
 // ForEachCACertificate iterates over all CA certificates in the project
 // identified by the given context ID,
 // invoking the given callback for each certificate.
-func ForEachCACertificate(ctx context.Context, c CryptoServiceClient,
+func ForEachCACertificate(ctx context.Context, listFunc func(ctx context.Context, req *common.ListOptions) (*CACertificateList, error),
 	opts *common.ListOptions, cb CACertificateCallback) error {
 	opts = opts.CloneOrDefault()
 	for {
-		list, err := c.ListCACertificates(ctx, opts)
+		list, err := listFunc(ctx, opts)
 		if err != nil {
 			return err
 		}

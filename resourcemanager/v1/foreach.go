@@ -39,11 +39,11 @@ type (
 
 // ForEachOrganization iterates over all organizations that the authenticated
 // caller is a member of, invoking the given callback for each organization.
-func ForEachOrganization(ctx context.Context, c ResourceManagerServiceClient,
+func ForEachOrganization(ctx context.Context, listFunc func(ctx context.Context, req *common.ListOptions) (*OrganizationList, error),
 	req *common.ListOptions, cb OrganizationCallback) error {
 	opts := req.CloneOrDefault()
 	for {
-		list, err := c.ListOrganizations(ctx, opts)
+		list, err := listFunc(ctx, opts)
 		if err != nil {
 			return err
 		}
@@ -65,11 +65,11 @@ func ForEachOrganization(ctx context.Context, c ResourceManagerServiceClient,
 
 // ForEachOrganizationMember iterates over all members of the organization
 // identified by the given context ID.
-func ForEachOrganizationMember(ctx context.Context, c ResourceManagerServiceClient,
+func ForEachOrganizationMember(ctx context.Context, listFunc func(ctx context.Context, req *common.ListOptions) (*MemberList, error),
 	req *common.ListOptions, cb OrganizationMemberCallback) error {
 	opts := req.CloneOrDefault()
 	for {
-		list, err := c.ListOrganizationMembers(ctx, opts)
+		list, err := listFunc(ctx, opts)
 		if err != nil {
 			return err
 		}
@@ -91,11 +91,11 @@ func ForEachOrganizationMember(ctx context.Context, c ResourceManagerServiceClie
 
 // ForEachOrganizationInvite iterates over all invites of the organization
 // identified by the given context ID.
-func ForEachOrganizationInvite(ctx context.Context, c ResourceManagerServiceClient,
+func ForEachOrganizationInvite(ctx context.Context, listFunc func(ctx context.Context, req *common.ListOptions) (*OrganizationInviteList, error),
 	req *common.ListOptions, cb OrganizationInviteCallback) error {
 	opts := req.CloneOrDefault()
 	for {
-		list, err := c.ListOrganizationInvites(ctx, opts)
+		list, err := listFunc(ctx, opts)
 		if err != nil {
 			return err
 		}
@@ -116,11 +116,11 @@ func ForEachOrganizationInvite(ctx context.Context, c ResourceManagerServiceClie
 }
 
 // ForEachMyOrganizationInvite iterates over all my invites.
-func ForEachMyOrganizationInvite(ctx context.Context, c ResourceManagerServiceClient,
+func ForEachMyOrganizationInvite(ctx context.Context, listFunc func(ctx context.Context, req *common.ListOptions) (*OrganizationInviteList, error),
 	req *common.ListOptions, cb OrganizationInviteCallback) error {
 	opts := req.CloneOrDefault()
 	for {
-		list, err := c.ListMyOrganizationInvites(ctx, opts)
+		list, err := listFunc(ctx, opts)
 		if err != nil {
 			return err
 		}
@@ -142,11 +142,11 @@ func ForEachMyOrganizationInvite(ctx context.Context, c ResourceManagerServiceCl
 
 // ForEachProject iterates over all projects of the organization
 // identified by the given context ID.
-func ForEachProject(ctx context.Context, c ResourceManagerServiceClient,
+func ForEachProject(ctx context.Context, listFunc func(ctx context.Context, req *common.ListOptions) (*ProjectList, error),
 	req *common.ListOptions, cb ProjectCallback) error {
 	opts := req.CloneOrDefault()
 	for {
-		list, err := c.ListProjects(ctx, opts)
+		list, err := listFunc(ctx, opts)
 		if err != nil {
 			return err
 		}
@@ -168,11 +168,11 @@ func ForEachProject(ctx context.Context, c ResourceManagerServiceClient,
 
 // ForEachOrganizationQuota iterates over all organization related
 // quotas specified by the given request.
-func ForEachOrganizationQuota(ctx context.Context, c ResourceManagerServiceClient,
+func ForEachOrganizationQuota(ctx context.Context, listFunc func(ctx context.Context, req *ListQuotasRequest) (*QuotaList, error),
 	req ListQuotasRequest, cb QuotaCallback) error {
 	req.Options = req.GetOptions().CloneOrDefault()
 	for {
-		list, err := c.ListOrganizationQuotas(ctx, &req)
+		list, err := listFunc(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -194,11 +194,11 @@ func ForEachOrganizationQuota(ctx context.Context, c ResourceManagerServiceClien
 
 // ForEachProjectQuota iterates over all project related quotas
 // specified by the given request.
-func ForEachProjectQuota(ctx context.Context, c ResourceManagerServiceClient,
+func ForEachProjectQuota(ctx context.Context, listFunc func(ctx context.Context, req *ListQuotasRequest) (*QuotaList, error),
 	req ListQuotasRequest, cb QuotaCallback) error {
 	req.Options = req.GetOptions().CloneOrDefault()
 	for {
-		list, err := c.ListProjectQuotas(ctx, &req)
+		list, err := listFunc(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -219,11 +219,11 @@ func ForEachProjectQuota(ctx context.Context, c ResourceManagerServiceClient,
 }
 
 // ForEachEvent iterates over all events specified by the given request.
-func ForEachEvent(ctx context.Context, c ResourceManagerServiceClient,
+func ForEachEvent(ctx context.Context, listFunc func(ctx context.Context, req *ListEventOptions) (*EventList, error),
 	req ListEventOptions, cb EventCallback) error {
 	req.Options = req.GetOptions().CloneOrDefault()
 	for {
-		list, err := c.ListEvents(ctx, &req)
+		list, err := listFunc(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -244,11 +244,11 @@ func ForEachEvent(ctx context.Context, c ResourceManagerServiceClient,
 }
 
 // ForEachQuotaDescription iterates over all quota descriptions.
-func ForEachQuotaDescription(ctx context.Context, c ResourceManagerServiceClient,
+func ForEachQuotaDescription(ctx context.Context, listFunc func(ctx context.Context, req *common.ListOptions) (*QuotaDescriptionList, error),
 	req *common.ListOptions, cb QuotaDescriptionCallback) error {
 	req = req.CloneOrDefault()
 	for {
-		list, err := c.ListQuotaDescriptions(ctx, req)
+		list, err := listFunc(ctx, req)
 		if err != nil {
 			return err
 		}
