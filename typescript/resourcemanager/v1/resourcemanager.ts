@@ -209,6 +209,10 @@ export interface Organization {
   // If set, all projects in this organization are allowed to use deployments using the flexible model.
   // boolean
   is_flexible_deployments_enabled?: boolean;
+  
+  // If set, this organization is allowed to use custom images for ArangoDB deployments.
+  // boolean
+  is_allowed_to_use_custom_images?: boolean;
 }
 export interface Organization_TotalDeploymentsEntry {
   // string

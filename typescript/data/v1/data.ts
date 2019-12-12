@@ -192,6 +192,12 @@ export interface Deployment {
   // Deployment_ModelSpec
   model?: Deployment_ModelSpec;
   
+  // If provided, dataclusterd will use this custom image tag instead of the configured one for a given version.
+  // Further, ImagePullPolicy will be set to Always.
+  // This field can only be set by selected organizations.
+  // string
+  custom_image?: string;
+  
   // Deployment_Status
   status?: Deployment_Status;
   
