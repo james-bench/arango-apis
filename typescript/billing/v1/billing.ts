@@ -125,22 +125,34 @@ export interface Invoice {
   // string
   currency_id?: string;
   
-  // Sum all amount for all items
+  // Sum all amount for all items (excluding VAT and sales tax)
   // number
   total_amount_excl_vat?: number;
   
-  // VAT amount for all items
+  // VAT amount for all items (applicable for Entity GmbH)
   // number
   total_vat?: number;
-  
-  // Sum of total_amount_ex_vat + total_vat.
-  // This is the amount that the customer will be charged for.
-  // number
-  total_amount_incl_vat?: number;
   
   // If set, the VAT reverse charge rule is applied for this invoice.
   // boolean
   vat_reverse_charge?: boolean;
+  
+  // The VAT percentage used
+  // number
+  vat_percentage_used?: number;
+  
+  // Sales tax amount for all items (applicable for Entity Inc.)
+  // number
+  total_sales_tax?: number;
+  
+  // The sales tax percentage used
+  // number
+  sales_tax_percentage_used?: number;
+  
+  // Sum of total_amount_ex_vat + total_vat + total_sales_tax.
+  // This is the amount that the customer will be charged for.
+  // number
+  total_amount_incl_vat?: number;
   
   // Invoice_Status
   status?: Invoice_Status;
