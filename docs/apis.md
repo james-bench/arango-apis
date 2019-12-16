@@ -693,10 +693,13 @@ An Invoice message describes a transaction for usage of ArangoDB Oasis.
 | invoice_builder_version | [string](#string) |  | The version of the invoice-builder who created the invoice. |
 | items | [Invoice.Item](#arangodb.cloud.billing.v1.Invoice.Item) | repeated | All items of the invoice |
 | currency_id | [string](#string) |  | Currency for all amounts |
-| total_amount_excl_vat | [float](#float) |  | Sum all amount for all items |
-| total_vat | [float](#float) |  | VAT amount for all items |
-| total_amount_incl_vat | [float](#float) |  | Sum of total_amount_ex_vat &#43; total_vat. This is the amount that the customer will be charged for. |
+| total_amount_excl_taxes | [float](#float) |  | Sum all amount for all items (excluding VAT and sales tax) |
+| total_vat | [float](#float) |  | VAT amount for all items (applicable for Entity GmbH) |
 | vat_reverse_charge | [bool](#bool) |  | If set, the VAT reverse charge rule is applied for this invoice. |
+| vat_percentage_used | [float](#float) |  | The VAT percentage used |
+| total_sales_tax | [float](#float) |  | Sales tax amount for all items (applicable for Entity Inc.) |
+| sales_tax_percentage_used | [float](#float) |  | The sales tax percentage used |
+| total_amount_incl_taxes | [float](#float) |  | Sum of total_amount_excl_taxes &#43; total_vat &#43; total_sales_tax. This is the amount that the customer will be charged for. |
 | status | [Invoice.Status](#arangodb.cloud.billing.v1.Invoice.Status) |  |  |
 | payments | [Invoice.Payment](#arangodb.cloud.billing.v1.Invoice.Payment) | repeated | All payment attempts for this invoice, ordered by created_at. |
 

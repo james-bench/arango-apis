@@ -213,16 +213,26 @@ message Invoice {
 
     // Currency for all amounts
     string currency_id = 110;
-    // Sum all amount for all items
-    float total_amount_excl_vat = 111;
-    // VAT amount for all items
+    
+    // Sum all amount for all items (excluding VAT and sales tax)
+    float total_amount_excl_taxes = 111;
+    
+    // VAT amount for all items (applicable for Entity GmbH)
     float total_vat = 112;
-    // Sum of total_amount_ex_vat + total_vat.
-    // This is the amount that the customer will be charged for.
-    float total_amount_incl_vat = 113;
     // If set, the VAT reverse charge rule is applied for this invoice.
     bool vat_reverse_charge = 114;
+    // The VAT percentage used 
+    float vat_percentage_used = 115;
 
+    // Sales tax amount for all items (applicable for Entity Inc.)
+    float total_sales_tax = 116;
+    // The sales tax percentage used 
+    float sales_tax_percentage_used = 117;
+
+    // Sum of total_amount_excl_taxes + total_vat + total_sales_tax.
+    // This is the amount that the customer will be charged for.
+    float total_amount_incl_taxes = 113;
+   
     // Status of the invoice
     message Status {
         // If set, this invoice is still being processed.
