@@ -215,7 +215,7 @@ message Invoice {
     string currency_id = 110;
     
     // Sum all amount for all items (excluding VAT and sales tax)
-    float total_amount_excl_vat = 111;
+    float total_amount_excl_taxes = 111;
     
     // VAT amount for all items (applicable for Entity GmbH)
     float total_vat = 112;
@@ -229,9 +229,9 @@ message Invoice {
     // The sales tax percentage used 
     float sales_tax_percentage_used = 117;
 
-    // Sum of total_amount_ex_vat + total_vat + total_sales_tax.
+    // Sum of total_amount_excl_taxes + total_vat + total_sales_tax.
     // This is the amount that the customer will be charged for.
-    float total_amount_incl_vat = 113;
+    float total_amount_incl_taxes = 113;
    
     // Status of the invoice
     message Status {

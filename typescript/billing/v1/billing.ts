@@ -127,7 +127,7 @@ export interface Invoice {
   
   // Sum all amount for all items (excluding VAT and sales tax)
   // number
-  total_amount_excl_vat?: number;
+  total_amount_excl_taxes?: number;
   
   // VAT amount for all items (applicable for Entity GmbH)
   // number
@@ -149,10 +149,10 @@ export interface Invoice {
   // number
   sales_tax_percentage_used?: number;
   
-  // Sum of total_amount_ex_vat + total_vat + total_sales_tax.
+  // Sum of total_amount_excl_taxes + total_vat + total_sales_tax.
   // This is the amount that the customer will be charged for.
   // number
-  total_amount_incl_vat?: number;
+  total_amount_incl_taxes?: number;
   
   // Invoice_Status
   status?: Invoice_Status;
