@@ -59,3 +59,10 @@ const (
 	// PermissionDeploymentPriceCalculate is needed for calculating deployment prices
 	PermissionDeploymentPriceCalculate = "data.deploymentprice.calculate"
 )
+
+const (
+	// DeploymentModel permissions
+
+	// PermissionDeploymentModelList is needed for listing deployment models in a project.
+	PermissionDeploymentModelList = "data.deploymentmodel.list"
+)

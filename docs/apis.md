@@ -175,6 +175,8 @@
     - [DeploymentCredentials](#arangodb.cloud.data.v1.DeploymentCredentials)
     - [DeploymentCredentialsRequest](#arangodb.cloud.data.v1.DeploymentCredentialsRequest)
     - [DeploymentList](#arangodb.cloud.data.v1.DeploymentList)
+    - [DeploymentModel](#arangodb.cloud.data.v1.DeploymentModel)
+    - [DeploymentModelList](#arangodb.cloud.data.v1.DeploymentModelList)
     - [DeploymentPrice](#arangodb.cloud.data.v1.DeploymentPrice)
     - [DeploymentPrice.BackupPrice](#arangodb.cloud.data.v1.DeploymentPrice.BackupPrice)
     - [DeploymentPrice.NetworkTransferPrice](#arangodb.cloud.data.v1.DeploymentPrice.NetworkTransferPrice)
@@ -183,6 +185,7 @@
     - [DeploymentSizeRecommendation](#arangodb.cloud.data.v1.DeploymentSizeRecommendation)
     - [DeploymentSizeRequest](#arangodb.cloud.data.v1.DeploymentSizeRequest)
     - [ImportDataInstructions](#arangodb.cloud.data.v1.ImportDataInstructions)
+    - [ListDeploymentModelsRequest](#arangodb.cloud.data.v1.ListDeploymentModelsRequest)
     - [ListVersionsRequest](#arangodb.cloud.data.v1.ListVersionsRequest)
     - [NodeSize](#arangodb.cloud.data.v1.NodeSize)
     - [NodeSizeList](#arangodb.cloud.data.v1.NodeSizeList)
@@ -2567,6 +2570,38 @@ List of Deployments.
 
 
 
+<a name="arangodb.cloud.data.v1.DeploymentModel"></a>
+
+### DeploymentModel
+DeploymentModel specifies the a specific model of deploying
+arangodb clusters.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the model (e.g. oneshard) |
+| name | [string](#string) |  | Human readable name of the model (e.g. One shard) |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.DeploymentModelList"></a>
+
+### DeploymentModelList
+List of node sizes.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [DeploymentModel](#arangodb.cloud.data.v1.DeploymentModel) | repeated |  |
+
+
+
+
+
+
 <a name="arangodb.cloud.data.v1.DeploymentPrice"></a>
 
 ### DeploymentPrice
@@ -2722,6 +2757,21 @@ Instructions for importing data into a deployment
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | import_dump | [string](#string) | repeated | Lines of code to run arangorestore |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.ListDeploymentModelsRequest"></a>
+
+### ListDeploymentModelsRequest
+Request arguments for ListDeploymentModels
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| project_id | [string](#string) |  | Identifier of project that will own a deployment. |
 
 
 
@@ -2954,6 +3004,7 @@ DataService is the API used to configure data objects.
 | GetDefaultVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [Version](#arangodb.cloud.data.v1.Version) | Fetch the default ArangoDB version for new deployment. Required permissions: - None |
 | GetServersSpecLimits | [ServersSpecLimitsRequest](#arangodb.cloud.data.v1.ServersSpecLimitsRequest) | [ServersSpecLimits](#arangodb.cloud.data.v1.ServersSpecLimits) | Fetch the limits for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.limits.get on the requested project - data.deployment.get on the specified deployment (if deployment_id is set) This method is deprecated. |
 | ListNodeSizes | [NodeSizesRequest](#arangodb.cloud.data.v1.NodeSizesRequest) | [NodeSizeList](#arangodb.cloud.data.v1.NodeSizeList) | Fetch the node sizes available for deployments owned by the project with given ID, created in the given region with given ID. If project ID &#34;all&#34; is used, then all node sizes for the region with given ID are returned. Required permissions: - data.nodesize.list on the requested project (if project ID does not equal &#34;all&#34;) - None if project ID does equals &#34;all&#34; |
+| ListDeploymentModels | [ListDeploymentModelsRequest](#arangodb.cloud.data.v1.ListDeploymentModelsRequest) | [DeploymentModelList](#arangodb.cloud.data.v1.DeploymentModelList) | Fetch the models available for deployments owned by the project with given ID. Required permissions: - data.deploymentmodel.list on the requested project |
 | ListServersSpecPresets | [ServersSpecPresetsRequest](#arangodb.cloud.data.v1.ServersSpecPresetsRequest) | [ServersSpecPresetList](#arangodb.cloud.data.v1.ServersSpecPresetList) | Fetch the presets for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.presets.list on the requested project This method is deprecated. |
 | CalculateDeploymentSize | [CalculateDeploymentSizeRequest](#arangodb.cloud.data.v1.CalculateDeploymentSizeRequest) | [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize) | Calculate the total size of a deployment with given arguments. Required permissions: - none |
 | RecommendDeploymentSize | [DeploymentSizeRequest](#arangodb.cloud.data.v1.DeploymentSizeRequest) | [DeploymentSizeRecommendation](#arangodb.cloud.data.v1.DeploymentSizeRecommendation) | Recommend a deployment size, for a oneshard or sharded deployments, using the given input values. Required permissions: - none |

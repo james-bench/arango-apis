@@ -480,6 +480,24 @@ export interface DeploymentList {
   // arangodb.cloud.common.v1.Budget
   budget?: arangodb_cloud_common_v1_Budget;
 }
+
+// DeploymentModel specifies the a specific model of deploying
+// arangodb clusters.
+export interface DeploymentModel {
+  // System identifier of the model (e.g. oneshard)
+  // string
+  id?: string;
+  
+  // Human readable name of the model (e.g. One shard)
+  // string
+  name?: string;
+}
+
+// List of node sizes.
+export interface DeploymentModelList {
+  // DeploymentModel
+  items?: DeploymentModel[];
+}
 export interface DeploymentPrice {
   // Price per hour in given currency for the deployment.
   // number
@@ -720,6 +738,13 @@ export interface ImportDataInstructions {
   import_dump?: string[];
 }
 
+// Request arguments for ListDeploymentModels
+export interface ListDeploymentModelsRequest {
+  // Identifier of project that will own a deployment.
+  // string
+  project_id?: string;
+}
+
 // Request arguments for ListVersions.
 export interface ListVersionsRequest {
   // Common list options
@@ -958,6 +983,11 @@ export interface IDataService {
   // - None if project ID does equals "all"
   ListNodeSizes: (req: NodeSizesRequest) => Promise<NodeSizeList>;
   
+  // Fetch the models available for deployments owned by the project with given ID.
+  // Required permissions:
+  // - data.deploymentmodel.list on the requested project
+  ListDeploymentModels: (req: ListDeploymentModelsRequest) => Promise<DeploymentModelList>;
+  
   // Fetch the presets for server specifications for deployments
   // owned by the given projected, created in the given region.
   // Required permissions:
@@ -1093,6 +1123,15 @@ export class DataService implements IDataService {
   async ListNodeSizes(req: NodeSizesRequest): Promise<NodeSizeList> {
     const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id || '')}/regions/${encodeURIComponent(req.region_id || '')}/nodesizes`;
     const url = path + api.queryString(req, [`project_id`, `region_id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch the models available for deployments owned by the project with given ID.
+  // Required permissions:
+  // - data.deploymentmodel.list on the requested project
+  async ListDeploymentModels(req: ListDeploymentModelsRequest): Promise<DeploymentModelList> {
+    const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id || '')}/deploymentmodels`;
+    const url = path + api.queryString(req, [`project_id`]);
     return api.get(url, undefined);
   }
   
