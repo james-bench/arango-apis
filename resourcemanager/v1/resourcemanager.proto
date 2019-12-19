@@ -365,6 +365,8 @@ message Organization {
     map<string, int32> total_deployments = 9;
     // If set, all projects in this organization are allowed to use deployments using the flexible model.
     bool is_flexible_deployments_enabled = 10;
+    // If set, this organization is allowed to use custom images for ArangoDB deployments.
+    bool is_allowed_to_use_custom_images = 11;
 }
 
 // List of organizations.

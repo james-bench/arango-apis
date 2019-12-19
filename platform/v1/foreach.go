@@ -22,11 +22,11 @@ type (
 
 // ForEachProvider iterates over all providers that match the given request,
 // invoking the given callback for each item.
-func ForEachProvider(ctx context.Context, c PlatformServiceClient,
+func ForEachProvider(ctx context.Context, listFunc func(ctx context.Context, req *ListProvidersRequest) (*ProviderList, error),
 	req ListProvidersRequest, cb ProviderCallback) error {
 	req.Options = req.Options.CloneOrDefault()
 	for {
-		list, err := c.ListProviders(ctx, &req)
+		list, err := listFunc(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -48,11 +48,11 @@ func ForEachProvider(ctx context.Context, c PlatformServiceClient,
 
 // ForEachRegion iterates over all regions that match the given request,
 // invoking the given callback for each item.
-func ForEachRegion(ctx context.Context, c PlatformServiceClient,
+func ForEachRegion(ctx context.Context, listFunc func(ctx context.Context, req *ListRegionsRequest) (*RegionList, error),
 	req ListRegionsRequest, cb RegionCallback) error {
 	req.Options = req.Options.CloneOrDefault()
 	for {
-		list, err := c.ListRegions(ctx, &req)
+		list, err := listFunc(ctx, &req)
 		if err != nil {
 			return err
 		}

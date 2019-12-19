@@ -124,6 +124,10 @@
   
 
 - [support/v1/support.proto](#support/v1/support.proto)
+    - [FaqGroup](#arangodb.cloud.support.v1.FaqGroup)
+    - [FaqGroupEntry](#arangodb.cloud.support.v1.FaqGroupEntry)
+    - [FaqGroupEntryList](#arangodb.cloud.support.v1.FaqGroupEntryList)
+    - [FaqGroupList](#arangodb.cloud.support.v1.FaqGroupList)
     - [ListPlansRequest](#arangodb.cloud.support.v1.ListPlansRequest)
     - [Plan](#arangodb.cloud.support.v1.Plan)
     - [PlanList](#arangodb.cloud.support.v1.PlanList)
@@ -442,6 +446,7 @@ An Organization is represents a real world organization such as a company.
 | tier | [Tier](#arangodb.cloud.resourcemanager.v1.Tier) |  | Tier used for this organization. This is a read-only value and cannot be initialized. |
 | total_deployments | [Organization.TotalDeploymentsEntry](#arangodb.cloud.resourcemanager.v1.Organization.TotalDeploymentsEntry) | repeated | Total number of deployments created in this organization throughout its entire lifetime per tier-id. map: tier-id -&gt; count This is a read-only value. |
 | is_flexible_deployments_enabled | [bool](#bool) |  | If set, all projects in this organization are allowed to use deployments using the flexible model. |
+| is_allowed_to_use_custom_images | [bool](#bool) |  | If set, this organization is allowed to use custom images for ArangoDB deployments. |
 
 
 
@@ -1057,6 +1062,7 @@ Request arguments for ListUsageItems
 | deployment_id | [string](#string) |  | Limit to usage items for the deployment with this id. This is an optional field. |
 | has_no_invoice_id | [bool](#bool) |  | If set, limit to usage items that have no invoice_id set. |
 | has_invoice_id | [bool](#bool) |  | If set, limit to usage items that have an invoice_id set. |
+| invoice_id | [string](#string) |  | If set, limit to usage items that have the invoice_id set to this specific value. This is an optional field. |
 
 
 
@@ -1787,6 +1793,68 @@ IAMService is the API used to configure IAM objects.
 
 
 
+<a name="arangodb.cloud.support.v1.FaqGroup"></a>
+
+### FaqGroup
+FaqGroup contains groups of faq entries
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | ID of the FAQ Group |
+| name | [string](#string) |  | Name of the FAQ Group |
+
+
+
+
+
+
+<a name="arangodb.cloud.support.v1.FaqGroupEntry"></a>
+
+### FaqGroupEntry
+FaqGroupEntry contains entries for a group
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| question | [string](#string) |  | The question of this entry |
+| answer | [string](#string) |  | The answer to the question in this entry |
+
+
+
+
+
+
+<a name="arangodb.cloud.support.v1.FaqGroupEntryList"></a>
+
+### FaqGroupEntryList
+List of faq group entries.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [FaqGroupEntry](#arangodb.cloud.support.v1.FaqGroupEntry) | repeated |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.support.v1.FaqGroupList"></a>
+
+### FaqGroupList
+List of faq groups.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [FaqGroup](#arangodb.cloud.support.v1.FaqGroup) | repeated |  |
+
+
+
+
+
+
 <a name="arangodb.cloud.support.v1.ListPlansRequest"></a>
 
 ### ListPlansRequest
@@ -1873,6 +1941,8 @@ SupportService is the API used to query for support.
 | ----------- | ------------ | ------------- | ------------|
 | ListPlans | [ListPlansRequest](#arangodb.cloud.support.v1.ListPlansRequest) | [PlanList](#arangodb.cloud.support.v1.PlanList) | Fetch all support plans that are supported by the ArangoDB cloud. Required permissions: - None |
 | GetPlan | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Plan](#arangodb.cloud.support.v1.Plan) | Fetch a support plan by its id. Required permissions: - None |
+| ListFaqGroups | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [FaqGroupList](#arangodb.cloud.support.v1.FaqGroupList) | Fetch all FAQ groups. Required permissions: - None |
+| ListFaqGroupEntries | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [FaqGroupEntryList](#arangodb.cloud.support.v1.FaqGroupEntryList) | Fetch all FAQ group entries of the FAQ group identified by the given context ID. Required permissions: - None |
 
  
 
@@ -2348,6 +2418,7 @@ A Deployment is represents one deployment of an ArangoDB cluster.
 | servers | [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  |  |
 | ipwhitelist_id | [string](#string) |  | Optional identifier of IP whitelist to use for this deployment. |
 | model | [Deployment.ModelSpec](#arangodb.cloud.data.v1.Deployment.ModelSpec) |  |  |
+| custom_image | [string](#string) |  | If provided, dataclusterd will use this custom image tag instead of the configured one for a given version. Further, ImagePullPolicy will be set to Always. This field can only be set by selected organizations. |
 | status | [Deployment.Status](#arangodb.cloud.data.v1.Deployment.Status) |  |  |
 | size | [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize) |  | Detailed size of the deployment This is a read-only field. |
 | expiration | [Deployment.Expiration](#arangodb.cloud.data.v1.Deployment.Expiration) |  |  |
@@ -3170,12 +3241,17 @@ An Invoice message describes a transaction for usage of ArangoDB Oasis.
 | invoice_number | [string](#string) |  | Invoice number (used by accounting) |
 | created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation date of the invoice |
 | requires_manual_verification | [bool](#bool) |  | If set, this invoice must be manually verified before payment can be initiated. |
+| last_updated_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The last update date of the invoice. This applies to &#39;specification&#39; only and doesn&#39;t apply to status or payments changes. |
+| invoice_builder_version | [string](#string) |  | The version of the invoice-builder who created the invoice. |
 | items | [Invoice.Item](#arangodb.cloud.billing.v1.Invoice.Item) | repeated | All items of the invoice |
 | currency_id | [string](#string) |  | Currency for all amounts |
-| total_amount_excl_vat | [float](#float) |  | Sum all amount for all items |
-| total_vat | [float](#float) |  | VAT amount for all items |
-| total_amount_incl_vat | [float](#float) |  | Sum of total_amount_ex_vat &#43; total_vat. This is the amount that the customer will be charged for. |
+| total_amount_excl_taxes | [float](#float) |  | Sum all amount for all items (excluding VAT and sales tax) |
+| total_vat | [float](#float) |  | VAT amount for all items (applicable for Entity GmbH) |
 | vat_reverse_charge | [bool](#bool) |  | If set, the VAT reverse charge rule is applied for this invoice. |
+| vat_percentage_used | [float](#float) |  | The VAT percentage used |
+| total_sales_tax | [float](#float) |  | Sales tax amount for all items (applicable for Entity Inc.) |
+| sales_tax_percentage_used | [float](#float) |  | The sales tax percentage used |
+| total_amount_incl_taxes | [float](#float) |  | Sum of total_amount_excl_taxes &#43; total_vat &#43; total_sales_tax. This is the amount that the customer will be charged for. |
 | status | [Invoice.Status](#arangodb.cloud.billing.v1.Invoice.Status) |  |  |
 | payments | [Invoice.Payment](#arangodb.cloud.billing.v1.Invoice.Payment) | repeated | All payment attempts for this invoice, ordered by created_at. |
 
@@ -3237,6 +3313,7 @@ Status of the invoice
 | is_completed | [bool](#bool) |  | If set, a successful payment has been made for this invoice. |
 | is_rejected | [bool](#bool) |  | If set, all payment attempts for this invoice have been rejected. |
 | is_verified | [bool](#bool) |  | If set, this invoice has been verified manually. |
+| needs_rebuild | [bool](#bool) |  | If set, this payment needs to be rebuild (by the invoice-builder service). If set, is_completed &amp; is_rejected must be false. |
 | completed_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of succesfull completion of the payment. This field equals the completed_at field of the last payment if that payment succeeded, nil otherwise. |
 | rejected_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of rejected completion of the payment. This field equals the rejected_at field of the last payment if that payment failed, nil otherwise. |
 

@@ -58,6 +58,11 @@ export interface ListUsageItemsRequest {
   // If set, limit to usage items that have an invoice_id set.
   // boolean
   has_invoice_id?: boolean;
+  
+  // If set, limit to usage items that have the invoice_id set to this specific value.
+  // This is an optional field.
+  // string
+  invoice_id?: string;
 }
 
 // A UsageItem message contained usage tracking information for a tracked

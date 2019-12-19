@@ -108,6 +108,15 @@ export interface Invoice {
   // boolean
   requires_manual_verification?: boolean;
   
+  // The last update date of the invoice.
+  // This applies to 'specification' only and doesn't apply to status or payments changes.
+  // googleTypes.Timestamp
+  last_updated_at?: googleTypes.Timestamp;
+  
+  // The version of the invoice-builder who created the invoice.
+  // string
+  invoice_builder_version?: string;
+  
   // All items of the invoice
   // Invoice_Item
   items?: Invoice_Item[];
@@ -116,22 +125,34 @@ export interface Invoice {
   // string
   currency_id?: string;
   
-  // Sum all amount for all items
+  // Sum all amount for all items (excluding VAT and sales tax)
   // number
-  total_amount_excl_vat?: number;
+  total_amount_excl_taxes?: number;
   
-  // VAT amount for all items
+  // VAT amount for all items (applicable for Entity GmbH)
   // number
   total_vat?: number;
-  
-  // Sum of total_amount_ex_vat + total_vat.
-  // This is the amount that the customer will be charged for.
-  // number
-  total_amount_incl_vat?: number;
   
   // If set, the VAT reverse charge rule is applied for this invoice.
   // boolean
   vat_reverse_charge?: boolean;
+  
+  // The VAT percentage used
+  // number
+  vat_percentage_used?: number;
+  
+  // Sales tax amount for all items (applicable for Entity Inc.)
+  // number
+  total_sales_tax?: number;
+  
+  // The sales tax percentage used
+  // number
+  sales_tax_percentage_used?: number;
+  
+  // Sum of total_amount_excl_taxes + total_vat + total_sales_tax.
+  // This is the amount that the customer will be charged for.
+  // number
+  total_amount_incl_taxes?: number;
   
   // Invoice_Status
   status?: Invoice_Status;
@@ -216,6 +237,11 @@ export interface Invoice_Status {
   // If set, this invoice has been verified manually.
   // boolean
   is_verified?: boolean;
+  
+  // If set, this payment needs to be rebuild (by the invoice-builder service).
+  // If set, is_completed & is_rejected must be false.
+  // boolean
+  needs_rebuild?: boolean;
   
   // The timestamp of succesfull completion of the payment.
   // This field equals the completed_at field of the last payment if

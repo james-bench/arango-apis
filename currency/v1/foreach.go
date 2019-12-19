@@ -21,11 +21,11 @@ type (
 
 // ForEachCurrency iterates over all currencies,
 // invoking the given callback for each IP currencies.
-func ForEachCurrency(ctx context.Context, c CurrencyServiceClient,
+func ForEachCurrency(ctx context.Context, listFunc func(ctx context.Context, req *common.ListOptions) (*CurrencyList, error),
 	opts *common.ListOptions, cb CurrencyCallback) error {
 	opts = opts.CloneOrDefault()
 	for {
-		list, err := c.ListCurrencies(ctx, opts)
+		list, err := listFunc(ctx, opts)
 		if err != nil {
 			return err
 		}
