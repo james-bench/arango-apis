@@ -789,6 +789,10 @@ export interface NodeSize {
   // Maximum amount of disk (in GB) that is available on this size of node.
   // number
   max_disk_size?: number;
+  
+  // CPU size that is available on this size of node (e.g. standard or high).
+  // string
+  cpu_size?: string;
 }
 
 // List of node sizes.

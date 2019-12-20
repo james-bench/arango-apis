@@ -435,6 +435,8 @@ message NodeSize {
     int32 min_disk_size = 4;
     // Maximum amount of disk (in GB) that is available on this size of node.
     int32 max_disk_size = 5;
+    // CPU size that is available on this size of node (e.g. standard or high).
+    string cpu_size = 6;
 }
 
 // List of node sizes.
