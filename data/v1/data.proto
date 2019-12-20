@@ -125,6 +125,15 @@ service DataService {
         };
     }
 
+    // Fetch the models available for deployments owned by the project with given ID.
+    // Required permissions:
+    // - data.deploymentmodel.list on the requested project
+    rpc ListDeploymentModels(ListDeploymentModelsRequest) returns (DeploymentModelList) {
+        option (google.api.http) = {
+            get: "/api/data/v1/projects/{project_id}/deploymentmodels"
+        };
+    }
+
     // Fetch the presets for server specifications for deployments
     // owned by the given projected, created in the given region.
     // Required permissions:
@@ -439,6 +448,26 @@ message NodeSizesRequest {
     string project_id = 1;
     // Identifier of a region in which a deployment will be created.
     string region_id = 2;
+}
+
+// DeploymentModel specifies the a specific model of deploying
+// arangodb clusters.
+message DeploymentModel {
+    // System identifier of the model (e.g. oneshard)
+    string id = 1;
+    // Human readable name of the model (e.g. One shard)
+    string name = 2;
+}
+
+// List of node sizes.
+message DeploymentModelList {
+    repeated DeploymentModel items = 1;
+}
+
+// Request arguments for ListDeploymentModels
+message ListDeploymentModelsRequest {
+    // Identifier of project that will own a deployment.
+    string project_id = 1;
 }
 
 // Request arguments for ListServersSpecPresets and GetDefaultServersSpecPreset
