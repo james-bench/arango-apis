@@ -66,3 +66,10 @@ const (
 	// PermissionDeploymentModelList is needed for listing deployment models in a project.
 	PermissionDeploymentModelList = "data.deploymentmodel.list"
 )
+
+const (
+	// CPUSize permissions
+
+	// PermissionCPUSizeList is needed for listing CPU sizes in a project.
+	PermissionCPUSizeList = "data.cpusize.list"
+)

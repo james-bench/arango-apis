@@ -163,6 +163,8 @@
   
 
 - [data/v1/data.proto](#data/v1/data.proto)
+    - [CPUSize](#arangodb.cloud.data.v1.CPUSize)
+    - [CPUSizeList](#arangodb.cloud.data.v1.CPUSizeList)
     - [CalculateDeploymentSizeRequest](#arangodb.cloud.data.v1.CalculateDeploymentSizeRequest)
     - [ConnectDriverInstructions](#arangodb.cloud.data.v1.ConnectDriverInstructions)
     - [ConnectDriverInstructions.DriverInstructions](#arangodb.cloud.data.v1.ConnectDriverInstructions.DriverInstructions)
@@ -189,6 +191,7 @@
     - [DeploymentSizeRecommendation](#arangodb.cloud.data.v1.DeploymentSizeRecommendation)
     - [DeploymentSizeRequest](#arangodb.cloud.data.v1.DeploymentSizeRequest)
     - [ImportDataInstructions](#arangodb.cloud.data.v1.ImportDataInstructions)
+    - [ListCPUSizesRequest](#arangodb.cloud.data.v1.ListCPUSizesRequest)
     - [ListDeploymentModelsRequest](#arangodb.cloud.data.v1.ListDeploymentModelsRequest)
     - [ListVersionsRequest](#arangodb.cloud.data.v1.ListVersionsRequest)
     - [NodeSize](#arangodb.cloud.data.v1.NodeSize)
@@ -2319,6 +2322,37 @@ BackupService is the API used to configure backup objects.
 
 
 
+<a name="arangodb.cloud.data.v1.CPUSize"></a>
+
+### CPUSize
+CPUSize specifies the a specific level of CPU for a node.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the size (e.g. standard) |
+| name | [string](#string) |  | Human readable name of the size (e.g. Standard) |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.CPUSizeList"></a>
+
+### CPUSizeList
+List of CPU sizes.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [CPUSize](#arangodb.cloud.data.v1.CPUSize) | repeated |  |
+
+
+
+
+
+
 <a name="arangodb.cloud.data.v1.CalculateDeploymentSizeRequest"></a>
 
 ### CalculateDeploymentSizeRequest
@@ -2661,7 +2695,7 @@ arangodb clusters.
 <a name="arangodb.cloud.data.v1.DeploymentModelList"></a>
 
 ### DeploymentModelList
-List of node sizes.
+List of deployment models.
 
 
 | Field | Type | Label | Description |
@@ -2828,6 +2862,21 @@ Instructions for importing data into a deployment
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | import_dump | [string](#string) | repeated | Lines of code to run arangorestore |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.ListCPUSizesRequest"></a>
+
+### ListCPUSizesRequest
+Request arguments for ListCPUSizes
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| project_id | [string](#string) |  | Identifier of project that will own a deployment. |
 
 
 
@@ -3077,6 +3126,7 @@ DataService is the API used to configure data objects.
 | GetServersSpecLimits | [ServersSpecLimitsRequest](#arangodb.cloud.data.v1.ServersSpecLimitsRequest) | [ServersSpecLimits](#arangodb.cloud.data.v1.ServersSpecLimits) | Fetch the limits for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.limits.get on the requested project - data.deployment.get on the specified deployment (if deployment_id is set) This method is deprecated. |
 | ListNodeSizes | [NodeSizesRequest](#arangodb.cloud.data.v1.NodeSizesRequest) | [NodeSizeList](#arangodb.cloud.data.v1.NodeSizeList) | Fetch the node sizes available for deployments owned by the project with given ID, created in the given region with given ID. If project ID &#34;all&#34; is used, then all node sizes for the region with given ID are returned. Required permissions: - data.nodesize.list on the requested project (if project ID does not equal &#34;all&#34;) - None if project ID does equals &#34;all&#34; |
 | ListDeploymentModels | [ListDeploymentModelsRequest](#arangodb.cloud.data.v1.ListDeploymentModelsRequest) | [DeploymentModelList](#arangodb.cloud.data.v1.DeploymentModelList) | Fetch the models available for deployments owned by the project with given ID. Required permissions: - data.deploymentmodel.list on the requested project |
+| ListCPUSizes | [ListCPUSizesRequest](#arangodb.cloud.data.v1.ListCPUSizesRequest) | [CPUSizeList](#arangodb.cloud.data.v1.CPUSizeList) | Fetch the CPU sizes available for deployments owned by the project with given ID. Required permissions: - data.cpusize.list on the requested project |
 | ListServersSpecPresets | [ServersSpecPresetsRequest](#arangodb.cloud.data.v1.ServersSpecPresetsRequest) | [ServersSpecPresetList](#arangodb.cloud.data.v1.ServersSpecPresetList) | Fetch the presets for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.presets.list on the requested project This method is deprecated. |
 | CalculateDeploymentSize | [CalculateDeploymentSizeRequest](#arangodb.cloud.data.v1.CalculateDeploymentSizeRequest) | [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize) | Calculate the total size of a deployment with given arguments. Required permissions: - none |
 | RecommendDeploymentSize | [DeploymentSizeRequest](#arangodb.cloud.data.v1.DeploymentSizeRequest) | [DeploymentSizeRecommendation](#arangodb.cloud.data.v1.DeploymentSizeRecommendation) | Recommend a deployment size, for a oneshard or sharded deployments, using the given input values. Required permissions: - none |

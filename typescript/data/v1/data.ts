@@ -12,6 +12,23 @@ import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../commo
 // File: data/v1/data.proto
 // Package: arangodb.cloud.data.v1
 
+// CPUSize specifies the a specific level of CPU for a node.
+export interface CPUSize {
+  // System identifier of the size (e.g. standard)
+  // string
+  id?: string;
+  
+  // Human readable name of the size (e.g. Standard)
+  // string
+  name?: string;
+}
+
+// List of CPU sizes.
+export interface CPUSizeList {
+  // CPUSize
+  items?: CPUSize[];
+}
+
 // Request arguments for CalculateDeploymentSize
 export interface CalculateDeploymentSizeRequest {
   // Number of coordinators of the deployment
@@ -499,7 +516,7 @@ export interface DeploymentModel {
   name?: string;
 }
 
-// List of node sizes.
+// List of deployment models.
 export interface DeploymentModelList {
   // DeploymentModel
   items?: DeploymentModel[];
@@ -742,6 +759,13 @@ export interface ImportDataInstructions {
   // Lines of code to run arangorestore
   // string
   import_dump?: string[];
+}
+
+// Request arguments for ListCPUSizes
+export interface ListCPUSizesRequest {
+  // Identifier of project that will own a deployment.
+  // string
+  project_id?: string;
 }
 
 // Request arguments for ListDeploymentModels
@@ -998,6 +1022,11 @@ export interface IDataService {
   // - data.deploymentmodel.list on the requested project
   ListDeploymentModels: (req: ListDeploymentModelsRequest) => Promise<DeploymentModelList>;
   
+  // Fetch the CPU sizes available for deployments owned by the project with given ID.
+  // Required permissions:
+  // - data.cpusize.list on the requested project
+  ListCPUSizes: (req: ListCPUSizesRequest) => Promise<CPUSizeList>;
+  
   // Fetch the presets for server specifications for deployments
   // owned by the given projected, created in the given region.
   // Required permissions:
@@ -1141,6 +1170,15 @@ export class DataService implements IDataService {
   // - data.deploymentmodel.list on the requested project
   async ListDeploymentModels(req: ListDeploymentModelsRequest): Promise<DeploymentModelList> {
     const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id || '')}/deploymentmodels`;
+    const url = path + api.queryString(req, [`project_id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch the CPU sizes available for deployments owned by the project with given ID.
+  // Required permissions:
+  // - data.cpusize.list on the requested project
+  async ListCPUSizes(req: ListCPUSizesRequest): Promise<CPUSizeList> {
+    const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id || '')}/cpusizes`;
     const url = path + api.queryString(req, [`project_id`]);
     return api.get(url, undefined);
   }
