@@ -134,6 +134,15 @@ service DataService {
         };
     }
 
+    // Fetch the CPU sizes available for deployments owned by the project with given ID.
+    // Required permissions:
+    // - data.cpusize.list on the requested project
+    rpc ListCPUSizes(ListCPUSizesRequest) returns (CPUSizeList) {
+        option (google.api.http) = {
+            get: "/api/data/v1/projects/{project_id}/cpusizes"
+        };
+    }
+
     // Fetch the presets for server specifications for deployments
     // owned by the given projected, created in the given region.
     // Required permissions:
@@ -461,13 +470,32 @@ message DeploymentModel {
     string name = 2;
 }
 
-// List of node sizes.
+// List of deployment models.
 message DeploymentModelList {
     repeated DeploymentModel items = 1;
 }
 
 // Request arguments for ListDeploymentModels
 message ListDeploymentModelsRequest {
+    // Identifier of project that will own a deployment.
+    string project_id = 1;
+}
+
+// CPUSize specifies the a specific level of CPU for a node.
+message CPUSize {
+    // System identifier of the size (e.g. standard)
+    string id = 1;
+    // Human readable name of the size (e.g. Standard)
+    string name = 2;
+}
+
+// List of CPU sizes.
+message CPUSizeList {
+    repeated CPUSize items = 1;
+}
+
+// Request arguments for ListCPUSizes
+message ListCPUSizesRequest {
     // Identifier of project that will own a deployment.
     string project_id = 1;
 }
