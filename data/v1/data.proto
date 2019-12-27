@@ -143,17 +143,6 @@ service DataService {
         };
     }
 
-    // Fetch the presets for server specifications for deployments
-    // owned by the given projected, created in the given region.
-    // Required permissions:
-    // - data.presets.list on the requested project
-    // This method is deprecated.
-    rpc ListServersSpecPresets(ServersSpecPresetsRequest) returns (ServersSpecPresetList) {
-        option (google.api.http) = {
-            get: "/api/data/v1/projects/{project_id}/regions/{region_id}/presets"
-        };
-    }
-
     // Calculate the total size of a deployment with given arguments.
     // Required permissions:
     // - none
@@ -498,34 +487,6 @@ message CPUSizeList {
 message ListCPUSizesRequest {
     // Identifier of project that will own a deployment.
     string project_id = 1;
-}
-
-// Request arguments for ListServersSpecPresets and GetDefaultServersSpecPreset
-// This message is now deprecated.
-message ServersSpecPresetsRequest {
-    // Identifier of project that will own a deployment.
-    string project_id = 1;
-    // Identifier of a region in which a deployment will be created.
-    string region_id = 2;
-}
-
-// Specification of a ServersSpecPreset, which can be used to initialize a deployment.servers
-// This message is now deprecated.
-message ServersSpecPreset {
-    // Name of the ServersSpecPreset
-    // This is a read-only value.
-    string name = 1;
-    // Set when this preset is the default.
-    // This is a read-only value.
-    bool is_default = 2;
-    // The ServersSpec associated for this name
-    Deployment.ServersSpec servers = 3;
-}
-
-// List of ServersSpecPreset.
-// This message is now deprecated.
-message ServersSpecPresetList {
-    repeated ServersSpecPreset items = 1;
 }
 
 // Request arguments for GetDeploymentCredentials
