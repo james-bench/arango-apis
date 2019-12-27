@@ -200,9 +200,6 @@
     - [ServersSpecLimits](#arangodb.cloud.data.v1.ServersSpecLimits)
     - [ServersSpecLimits.Limits](#arangodb.cloud.data.v1.ServersSpecLimits.Limits)
     - [ServersSpecLimitsRequest](#arangodb.cloud.data.v1.ServersSpecLimitsRequest)
-    - [ServersSpecPreset](#arangodb.cloud.data.v1.ServersSpecPreset)
-    - [ServersSpecPresetList](#arangodb.cloud.data.v1.ServersSpecPresetList)
-    - [ServersSpecPresetsRequest](#arangodb.cloud.data.v1.ServersSpecPresetsRequest)
     - [Version](#arangodb.cloud.data.v1.Version)
     - [VersionList](#arangodb.cloud.data.v1.VersionList)
   
@@ -3021,57 +3018,6 @@ Request arguments for ListServersSpecLimits
 
 
 
-<a name="arangodb.cloud.data.v1.ServersSpecPreset"></a>
-
-### ServersSpecPreset
-Specification of a ServersSpecPreset, which can be used to initialize a deployment.servers
-This message is now deprecated.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| name | [string](#string) |  | Name of the ServersSpecPreset This is a read-only value. |
-| is_default | [bool](#bool) |  | Set when this preset is the default. This is a read-only value. |
-| servers | [Deployment.ServersSpec](#arangodb.cloud.data.v1.Deployment.ServersSpec) |  | The ServersSpec associated for this name |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.ServersSpecPresetList"></a>
-
-### ServersSpecPresetList
-List of ServersSpecPreset.
-This message is now deprecated.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| items | [ServersSpecPreset](#arangodb.cloud.data.v1.ServersSpecPreset) | repeated |  |
-
-
-
-
-
-
-<a name="arangodb.cloud.data.v1.ServersSpecPresetsRequest"></a>
-
-### ServersSpecPresetsRequest
-Request arguments for ListServersSpecPresets and GetDefaultServersSpecPreset
-This message is now deprecated.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| project_id | [string](#string) |  | Identifier of project that will own a deployment. |
-| region_id | [string](#string) |  | Identifier of a region in which a deployment will be created. |
-
-
-
-
-
-
 <a name="arangodb.cloud.data.v1.Version"></a>
 
 ### Version
@@ -3127,7 +3073,6 @@ DataService is the API used to configure data objects.
 | ListNodeSizes | [NodeSizesRequest](#arangodb.cloud.data.v1.NodeSizesRequest) | [NodeSizeList](#arangodb.cloud.data.v1.NodeSizeList) | Fetch the node sizes available for deployments owned by the project with given ID, created in the given region with given ID. If project ID &#34;all&#34; is used, then all node sizes for the region with given ID are returned. Required permissions: - data.nodesize.list on the requested project (if project ID does not equal &#34;all&#34;) - None if project ID does equals &#34;all&#34; |
 | ListDeploymentModels | [ListDeploymentModelsRequest](#arangodb.cloud.data.v1.ListDeploymentModelsRequest) | [DeploymentModelList](#arangodb.cloud.data.v1.DeploymentModelList) | Fetch the models available for deployments owned by the project with given ID. Required permissions: - data.deploymentmodel.list on the requested project |
 | ListCPUSizes | [ListCPUSizesRequest](#arangodb.cloud.data.v1.ListCPUSizesRequest) | [CPUSizeList](#arangodb.cloud.data.v1.CPUSizeList) | Fetch the CPU sizes available for deployments owned by the project with given ID. Required permissions: - data.cpusize.list on the requested project |
-| ListServersSpecPresets | [ServersSpecPresetsRequest](#arangodb.cloud.data.v1.ServersSpecPresetsRequest) | [ServersSpecPresetList](#arangodb.cloud.data.v1.ServersSpecPresetList) | Fetch the presets for server specifications for deployments owned by the given projected, created in the given region. Required permissions: - data.presets.list on the requested project This method is deprecated. |
 | CalculateDeploymentSize | [CalculateDeploymentSizeRequest](#arangodb.cloud.data.v1.CalculateDeploymentSizeRequest) | [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize) | Calculate the total size of a deployment with given arguments. Required permissions: - none |
 | RecommendDeploymentSize | [DeploymentSizeRequest](#arangodb.cloud.data.v1.DeploymentSizeRequest) | [DeploymentSizeRecommendation](#arangodb.cloud.data.v1.DeploymentSizeRecommendation) | Recommend a deployment size, for a oneshard or sharded deployments, using the given input values. Required permissions: - none |
 | GetConnectDriverInstructions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [ConnectDriverInstructions](#arangodb.cloud.data.v1.ConnectDriverInstructions) | Fetch instructions for connecting drivers to the deployment identified by the given id. Required permissions: - data.deployment.get on the deployment identified by the given ID |

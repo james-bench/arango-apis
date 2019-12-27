@@ -901,43 +901,6 @@ export interface ServersSpecLimitsRequest {
   deployment_id?: string;
 }
 
-// Specification of a ServersSpecPreset, which can be used to initialize a deployment.servers
-// This message is now deprecated.
-export interface ServersSpecPreset {
-  // Name of the ServersSpecPreset
-  // This is a read-only value.
-  // string
-  name?: string;
-  
-  // Set when this preset is the default.
-  // This is a read-only value.
-  // boolean
-  is_default?: boolean;
-  
-  // The ServersSpec associated for this name
-  // Deployment_ServersSpec
-  servers?: Deployment_ServersSpec;
-}
-
-// List of ServersSpecPreset.
-// This message is now deprecated.
-export interface ServersSpecPresetList {
-  // ServersSpecPreset
-  items?: ServersSpecPreset[];
-}
-
-// Request arguments for ListServersSpecPresets and GetDefaultServersSpecPreset
-// This message is now deprecated.
-export interface ServersSpecPresetsRequest {
-  // Identifier of project that will own a deployment.
-  // string
-  project_id?: string;
-  
-  // Identifier of a region in which a deployment will be created.
-  // string
-  region_id?: string;
-}
-
 // Version of an ArangoDB release
 export interface Version {
   // Version in the format of major.minor.patch
@@ -1026,13 +989,6 @@ export interface IDataService {
   // Required permissions:
   // - data.cpusize.list on the requested project
   ListCPUSizes: (req: ListCPUSizesRequest) => Promise<CPUSizeList>;
-  
-  // Fetch the presets for server specifications for deployments
-  // owned by the given projected, created in the given region.
-  // Required permissions:
-  // - data.presets.list on the requested project
-  // This method is deprecated.
-  ListServersSpecPresets: (req: ServersSpecPresetsRequest) => Promise<ServersSpecPresetList>;
   
   // Calculate the total size of a deployment with given arguments.
   // Required permissions:
@@ -1180,17 +1136,6 @@ export class DataService implements IDataService {
   async ListCPUSizes(req: ListCPUSizesRequest): Promise<CPUSizeList> {
     const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id || '')}/cpusizes`;
     const url = path + api.queryString(req, [`project_id`]);
-    return api.get(url, undefined);
-  }
-  
-  // Fetch the presets for server specifications for deployments
-  // owned by the given projected, created in the given region.
-  // Required permissions:
-  // - data.presets.list on the requested project
-  // This method is deprecated.
-  async ListServersSpecPresets(req: ServersSpecPresetsRequest): Promise<ServersSpecPresetList> {
-    const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id || '')}/regions/${encodeURIComponent(req.region_id || '')}/presets`;
-    const url = path + api.queryString(req, [`project_id`, `region_id`]);
     return api.get(url, undefined);
   }
   
