@@ -2957,6 +2957,7 @@ Request arguments for ListNodeSizes
 | ----- | ---- | ----- | ----------- |
 | project_id | [string](#string) |  | Identifier of project that will own a deployment. |
 | region_id | [string](#string) |  | Identifier of a region in which a deployment will be created. |
+| deployment_id | [string](#string) |  | If set, project_id &amp; region_id will be taken from this deployment. This also causes the node_size used by this deployment to be included in the result, if it it would not match for new deployments. |
 
 
 

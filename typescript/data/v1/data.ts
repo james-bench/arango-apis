@@ -834,6 +834,12 @@ export interface NodeSizesRequest {
   // Identifier of a region in which a deployment will be created.
   // string
   region_id?: string;
+  
+  // If set, project_id & region_id will be taken from this deployment.
+  // This also causes the node_size used by this deployment to be included
+  // in the result, if it it would not match for new deployments.
+  // string
+  deployment_id?: string;
 }
 
 // Limits of allowed values for fields of Deployment.ServersSpec.
