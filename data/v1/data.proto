@@ -448,6 +448,10 @@ message NodeSizesRequest {
     string project_id = 1;
     // Identifier of a region in which a deployment will be created.
     string region_id = 2;
+    // If set, project_id & region_id will be taken from this deployment.
+    // This also causes the node_size used by this deployment to be included
+    // in the result, if it it would not match for new deployments.
+    string deployment_id = 3;
 }
 
 // DeploymentModel specifies the a specific model of deploying
