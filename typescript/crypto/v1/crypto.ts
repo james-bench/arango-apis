@@ -80,6 +80,11 @@ export interface CACertificate {
   // This is a read-only value.
   // boolean
   is_default?: boolean;
+  
+  // When enabled, deployments using this certificate use a well known TLS certificate on the 8529 port.
+  // The self-signed certificates is always hosted on port 18529.
+  // boolean
+  use_well_known_certificate?: boolean;
 }
 
 // Instructions for installing & uninstalling CA certificates
