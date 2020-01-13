@@ -80,6 +80,12 @@ export interface CACertificate {
   // This is a read-only value.
   // boolean
   is_default?: boolean;
+  
+  // When enabled, envoy is used for TLS termination on coordinators via an envoy side car.
+  // TTL of self signed certificate is increased to 10+ years.
+  // 8592 traffic is forwarded to envoy sidecar and 18529 is forwarded to the coordinators.
+  // boolean
+  use_well_known_certificate?: boolean;
 }
 
 // Instructions for installing & uninstalling CA certificates
