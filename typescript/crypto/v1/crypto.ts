@@ -81,9 +81,8 @@ export interface CACertificate {
   // boolean
   is_default?: boolean;
   
-  // When enabled, envoy is used for TLS termination on coordinators via an envoy side car.
-  // TTL of self signed certificate is increased to 10+ years.
-  // 8592 traffic is forwarded to envoy sidecar and 18529 is forwarded to the coordinators.
+  // When enabled, deployments using this certificate use a well known TLS certificate on the 8529 port.
+  // The self-signed certificates is always hosted on port 18529.
   // boolean
   use_well_known_certificate?: boolean;
 }

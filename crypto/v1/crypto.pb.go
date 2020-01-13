@@ -72,9 +72,8 @@ type CACertificate struct {
 	// Set when this certificate is the default in its project.
 	// This is a read-only value.
 	IsDefault bool `protobuf:"varint,14,opt,name=is_default,json=isDefault,proto3" json:"is_default,omitempty"`
-	// When enabled, envoy is used for TLS termination on coordinators via an envoy side car.
-	// TTL of self signed certificate is increased to 10+ years.
-	// 8592 traffic is forwarded to envoy sidecar and 18529 is forwarded to the coordinators.
+	// When enabled, deployments using this certificate use a well known TLS certificate on the 8529 port.
+	// The self-signed certificates is always hosted on port 18529.
 	UseWellKnownCertificate bool     `protobuf:"varint,15,opt,name=use_well_known_certificate,json=useWellKnownCertificate,proto3" json:"use_well_known_certificate,omitempty"`
 	XXX_NoUnkeyedLiteral    struct{} `json:"-"`
 	XXX_unrecognized        []byte   `json:"-"`
