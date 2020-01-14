@@ -20,6 +20,15 @@ import "google/api/annotations.proto";
 
 // CryptoService is the API used to configure various crypto objects.
 service CryptoService {
+    // Get the current API version of this service.
+    // Required permissions:
+    // - None
+    rpc GetAPIVersion(common.v1.Empty) returns (common.v1.Version) {
+        option (google.api.http) = {
+            get: "/api/crypto/v1/api-version"
+        };
+    }
+
     // Fetch all CA certificates in the project identified by the given context ID.
     // Required permissions:
     // - crypto.cacertificate.list on the project identified by the given context ID

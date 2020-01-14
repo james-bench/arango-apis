@@ -20,6 +20,15 @@ import "google/api/annotations.proto";
 
 // IAMService is the API used to configure IAM objects.
 service IAMService {
+    // Get the current API version of this service.
+    // Required permissions:
+    // - None
+    rpc GetAPIVersion(common.v1.Empty) returns (common.v1.Version) {
+        option (google.api.http) = {
+            get: "/api/iam/v1/api-version"
+        };
+    }
+
     // Fetch all available information of the currently authenticated user.
     // Required permissions:
     // - None

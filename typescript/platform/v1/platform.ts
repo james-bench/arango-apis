@@ -4,8 +4,10 @@
 ///
 import api from '../../api'
 import * as googleTypes from '../../googleTypes'
+import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
 import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1/common'
 import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
+import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 
 // File: platform/v1/platform.proto
 // Package: arangodb.cloud.platform.v1
@@ -94,6 +96,11 @@ export interface RegionList {
 
 // PlatformService is the API used to query for cloud provider & regional info.
 export interface IPlatformService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None
+  GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
+  
   // Fetch all providers that are supported by the ArangoDB cloud.
   // Required permissions:
   // - None
@@ -120,6 +127,15 @@ export interface IPlatformService {
 
 // PlatformService is the API used to query for cloud provider & regional info.
 export class PlatformService implements IPlatformService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None
+  async GetAPIVersion(req?: arangodb_cloud_common_v1_Empty): Promise<arangodb_cloud_common_v1_Version> {
+    const path = `/api/platform/v1/api-version`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
   // Fetch all providers that are supported by the ArangoDB cloud.
   // Required permissions:
   // - None

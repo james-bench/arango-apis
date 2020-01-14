@@ -5,8 +5,10 @@
 import api from '../../api'
 import * as googleTypes from '../../googleTypes'
 import { Budget as arangodb_cloud_common_v1_Budget } from '../../common/v1/common'
+import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
 import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1/common'
 import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
+import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 import { YesOrNo as arangodb_cloud_common_v1_YesOrNo } from '../../common/v1/common'
 import { Deployment_ServersSpec as arangodb_cloud_data_v1_Deployment_ServersSpec } from '../../data/v1/data'
 
@@ -431,6 +433,11 @@ export interface TimeOfDay {
 
 // BackupService is the API used to configure backup objects.
 export interface IBackupService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None
+  GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
+  
   // Checks if the backup feature is enabled and available for a specific deployment.
   // Required permissions:
   // - backup.feature.get on the deployment that is identified by the given ID.
@@ -520,6 +527,15 @@ export interface IBackupService {
 
 // BackupService is the API used to configure backup objects.
 export class BackupService implements IBackupService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None
+  async GetAPIVersion(req?: arangodb_cloud_common_v1_Empty): Promise<arangodb_cloud_common_v1_Version> {
+    const path = `/api/backup/v1/api-version`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
   // Checks if the backup feature is enabled and available for a specific deployment.
   // Required permissions:
   // - backup.feature.get on the deployment that is identified by the given ID.

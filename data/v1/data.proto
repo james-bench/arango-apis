@@ -19,6 +19,15 @@ import "google/api/annotations.proto";
 
 // DataService is the API used to configure data objects.
 service DataService {
+    // Get the current API version of this service.
+    // Required permissions:
+    // - None
+    rpc GetAPIVersion(common.v1.Empty) returns (common.v1.Version) {
+        option (google.api.http) = {
+            get: "/api/data/v1/api-version"
+        };
+    }
+
     // Fetch all deployments in the project identified by the given context ID.
     // Required permissions:
     // - data.deployment.list on the project identified by the given context ID

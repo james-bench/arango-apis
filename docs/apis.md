@@ -87,6 +87,7 @@
     - [IDOptions](#arangodb.cloud.common.v1.IDOptions)
     - [ListOptions](#arangodb.cloud.common.v1.ListOptions)
     - [URLOptions](#arangodb.cloud.common.v1.URLOptions)
+    - [Version](#arangodb.cloud.common.v1.Version)
     - [YesOrNo](#arangodb.cloud.common.v1.YesOrNo)
   
   
@@ -697,6 +698,7 @@ ResourceManagerService is the API used to configure basic resource objects.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
+| GetAPIVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [.arangodb.cloud.common.v1.Version](#arangodb.cloud.common.v1.Version) | Get the current API version of this service. Required permissions: - None |
 | ListOrganizations | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [OrganizationList](#arangodb.cloud.resourcemanager.v1.OrganizationList) | Fetch all organizations that the authenticated user is a member of. Required permissions: - None |
 | GetOrganization | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Organization](#arangodb.cloud.resourcemanager.v1.Organization) | Fetch an organization by its id. The authenticated user must be a member of the organization. Required permissions: - None |
 | CreateOrganization | [Organization](#arangodb.cloud.resourcemanager.v1.Organization) | [Organization](#arangodb.cloud.resourcemanager.v1.Organization) | Create a new organization Required permissions: - None |
@@ -829,6 +831,7 @@ CryptoService is the API used to configure various crypto objects.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
+| GetAPIVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [.arangodb.cloud.common.v1.Version](#arangodb.cloud.common.v1.Version) | Get the current API version of this service. Required permissions: - None |
 | ListCACertificates | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [CACertificateList](#arangodb.cloud.crypto.v1.CACertificateList) | Fetch all CA certificates in the project identified by the given context ID. Required permissions: - crypto.cacertificate.list on the project identified by the given context ID |
 | GetCACertificate | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [CACertificate](#arangodb.cloud.crypto.v1.CACertificate) | Fetch a CA certificate by its id. Required permissions: - crypto.cacertificate.get on the CA certificate identified by the given ID |
 | GetCACertificateInstructions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [CACertificateInstructions](#arangodb.cloud.crypto.v1.CACertificateInstructions) | Fetch instructions for installing &amp; unistalling a CA certificate identified by its id on various platforms. Required permissions: - crypto.cacertificate.get on the CA certificate identified by the given ID |
@@ -900,6 +903,7 @@ SecurityService is the API used to access security entities.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
+| GetAPIVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [.arangodb.cloud.common.v1.Version](#arangodb.cloud.common.v1.Version) | Get the current API version of this service. Required permissions: - None |
 | ListIPWhitelists | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [IPWhitelistList](#arangodb.cloud.security.v1.IPWhitelistList) | Fetch all IP whitelists that belong to the project identified by the given context ID. Required permissions: - security.ipwhitelist.list on the project identified by the given context ID. |
 | GetIPWhitelist | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | Fetch an IP whitelist by its id. Required permissions: - security.ipwhitelist.get on the IP whitelist |
 | CreateIPWhitelist | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | Create a new IP whitelist Required permissions: - security.ipwhitelist.create on the project that owns the IP whitelist. |
@@ -1029,6 +1033,7 @@ PlatformService is the API used to query for cloud provider &amp; regional info.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
+| GetAPIVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [.arangodb.cloud.common.v1.Version](#arangodb.cloud.common.v1.Version) | Get the current API version of this service. Required permissions: - None |
 | ListProviders | [ListProvidersRequest](#arangodb.cloud.platform.v1.ListProvidersRequest) | [ProviderList](#arangodb.cloud.platform.v1.ProviderList) | Fetch all providers that are supported by the ArangoDB cloud. Required permissions: - None |
 | GetProvider | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Provider](#arangodb.cloud.platform.v1.Provider) | Fetch a provider by its id. Required permissions: - None |
 | ListRegions | [ListRegionsRequest](#arangodb.cloud.platform.v1.ListRegionsRequest) | [RegionList](#arangodb.cloud.platform.v1.RegionList) | Fetch all regions provided by the provided identified by the given context ID. If the given context identifier contains a valid organization ID, the result includes all regions for that organization. Otherwise only regions are returned that are available to all organizations. Required permissions: - None |
@@ -1210,6 +1215,7 @@ UsageService is the API used to fetch usage tracking information.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
+| GetAPIVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [.arangodb.cloud.common.v1.Version](#arangodb.cloud.common.v1.Version) | Get the current API version of this service. Required permissions: - None |
 | ListUsageItems | [ListUsageItemsRequest](#arangodb.cloud.usage.v1.ListUsageItemsRequest) | [UsageItemList](#arangodb.cloud.usage.v1.UsageItemList) | Fetch all UsageItem resources in the organization identified by the given organization ID that match the given criteria. Required permissions: - usage.usageitem.list on the organization identified by the given organization ID |
 
  
@@ -1291,6 +1297,23 @@ Options for a get-by-url request
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | url | [string](#string) |  | URL of the resource to fetch. |
+
+
+
+
+
+
+<a name="arangodb.cloud.common.v1.Version"></a>
+
+### Version
+Semantic version number.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| major | [int32](#int32) |  | Major version (increasing may break APIs) |
+| minor | [int32](#int32) |  | Minor version (increased for new features) |
+| patch | [int32](#int32) |  | Patch version (increased for fixed) |
 
 
 
@@ -1749,6 +1772,7 @@ IAMService is the API used to configure IAM objects.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
+| GetAPIVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [.arangodb.cloud.common.v1.Version](#arangodb.cloud.common.v1.Version) | Get the current API version of this service. Required permissions: - None |
 | GetThisUser | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [User](#arangodb.cloud.iam.v1.User) | Fetch all available information of the currently authenticated user. Required permissions: - None |
 | GetUser | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [User](#arangodb.cloud.iam.v1.User) | Fetch all available information of the user identified by the given ID. Required permissions: - resourcemanager.organization.get on one of the organizations that the requested user and authenticated user are both a member of |
 | UpdateUser | [User](#arangodb.cloud.iam.v1.User) | [User](#arangodb.cloud.iam.v1.User) | Update a user Required permissions: - None if the given user is the authenticated user. or - resourcemanager.organization.get on one of the organizations that the requested user and authenticated user are both a member of and - iam.user.update on organization on one of the organizations that the requested user and authenticated user are both a member of |
@@ -1940,6 +1964,7 @@ SupportService is the API used to query for support.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
+| GetAPIVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [.arangodb.cloud.common.v1.Version](#arangodb.cloud.common.v1.Version) | Get the current API version of this service. Required permissions: - None |
 | ListPlans | [ListPlansRequest](#arangodb.cloud.support.v1.ListPlansRequest) | [PlanList](#arangodb.cloud.support.v1.PlanList) | Fetch all support plans that are supported by the ArangoDB cloud. Required permissions: - None |
 | GetPlan | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Plan](#arangodb.cloud.support.v1.Plan) | Fetch a support plan by its id. Required permissions: - None |
 | ListFaqGroups | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [FaqGroupList](#arangodb.cloud.support.v1.FaqGroupList) | Fetch all FAQ groups. Required permissions: - None |
@@ -2294,6 +2319,7 @@ BackupService is the API used to configure backup objects.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
+| GetAPIVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [.arangodb.cloud.common.v1.Version](#arangodb.cloud.common.v1.Version) | Get the current API version of this service. Required permissions: - None |
 | IsBackupFeatureAvailable | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.YesOrNo](#arangodb.cloud.common.v1.YesOrNo) | Checks if the backup feature is enabled and available for a specific deployment. Required permissions: - backup.feature.get on the deployment that is identified by the given ID. |
 | IsBackupUploadFeatureAvailable | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.YesOrNo](#arangodb.cloud.common.v1.YesOrNo) | Checks if the backup upload feature is enabled for a specific deployment. Required permissions: - backup.feature.get on the deployment that is identified by the given ID. |
 | ListBackupPolicies | [ListBackupPoliciesRequest](#arangodb.cloud.backup.v1.ListBackupPoliciesRequest) | [BackupPolicyList](#arangodb.cloud.backup.v1.BackupPolicyList) | Fetch all backup policies for a specific deployment. Required permissions: - backup.backuppolicy.list on the deployment that owns the backup policies and is identified by the given ID. |
@@ -3063,6 +3089,7 @@ DataService is the API used to configure data objects.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
+| GetAPIVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [.arangodb.cloud.common.v1.Version](#arangodb.cloud.common.v1.Version) | Get the current API version of this service. Required permissions: - None |
 | ListDeployments | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [DeploymentList](#arangodb.cloud.data.v1.DeploymentList) | Fetch all deployments in the project identified by the given context ID. Required permissions: - data.deployment.list on the project identified by the given context ID |
 | GetDeployment | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Fetch a deployment by its id. Required permissions: - data.deployment.get on the deployment identified by the given ID |
 | CreateDeployment | [Deployment](#arangodb.cloud.data.v1.Deployment) | [Deployment](#arangodb.cloud.data.v1.Deployment) | Create a new deployment Required permissions: - data.deployment.create on the project that owns the deployment Note that deployment.status &amp; deployment.expiration are ignored in this request. |
@@ -3153,6 +3180,7 @@ CurrencyService is the API used to query for supported currencies.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
+| GetAPIVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [.arangodb.cloud.common.v1.Version](#arangodb.cloud.common.v1.Version) | Get the current API version of this service. Required permissions: - None |
 | ListCurrencies | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [CurrencyList](#arangodb.cloud.currency.v1.CurrencyList) | Fetch all providers that are supported by the ArangoDB cloud. Required permissions: - None |
 | GetCurrency | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Currency](#arangodb.cloud.currency.v1.Currency) | Fetch a currency by its id. Required permissions: - None |
 | GetDefaultCurrency | [GetDefaultCurrencyRequest](#arangodb.cloud.currency.v1.GetDefaultCurrencyRequest) | [Currency](#arangodb.cloud.currency.v1.Currency) | Fetch the default currency for a given (optional) organization. Required permissions: - resourcemanager.organization.get On the organization identified by given id. - None In case no organization identifier was given. |
@@ -3574,6 +3602,7 @@ BillingService is the API used to fetch billing information.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
+| GetAPIVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [.arangodb.cloud.common.v1.Version](#arangodb.cloud.common.v1.Version) | Get the current API version of this service. Required permissions: - None |
 | ListInvoices | [ListInvoicesRequest](#arangodb.cloud.billing.v1.ListInvoicesRequest) | [InvoiceList](#arangodb.cloud.billing.v1.InvoiceList) | Fetch all Invoice resources for the organization identified by the given organization ID that match the given criteria. Required permissions: - billing.invoice.list on the organization identified by the given organization ID |
 | GetInvoice | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Invoice](#arangodb.cloud.billing.v1.Invoice) | Fetch a specific Invoice identified by the given ID. Required permissions: - billing.invoice.get on the organization that owns the invoice with given ID. |
 | GetInvoicePDF | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [PDFDocument](#arangodb.cloud.billing.v1.PDFDocument) | Fetch a specific Invoice identified by the given ID as PDF document. Required permissions: - billing.invoice.get on the organization that owns the invoice with given ID. |

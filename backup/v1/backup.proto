@@ -21,6 +21,15 @@ import "google/api/annotations.proto";
 
 // BackupService is the API used to configure backup objects.
 service BackupService {
+    // Get the current API version of this service.
+    // Required permissions:
+    // - None
+    rpc GetAPIVersion(common.v1.Empty) returns (common.v1.Version) {
+        option (google.api.http) = {
+            get: "/api/backup/v1/api-version"
+        };
+    }
+
     // Checks if the backup feature is enabled and available for a specific deployment.
     // Required permissions:
     // - backup.feature.get on the deployment that is identified by the given ID.

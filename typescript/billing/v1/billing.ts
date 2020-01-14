@@ -4,8 +4,10 @@
 ///
 import api from '../../api'
 import * as googleTypes from '../../googleTypes'
+import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
 import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1/common'
 import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
+import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 
 // File: billing/v1/billing.proto
 // Package: arangodb.cloud.billing.v1
@@ -480,6 +482,11 @@ export interface SetDefaultPaymentMethodRequest {
 
 // BillingService is the API used to fetch billing information.
 export interface IBillingService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None
+  GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
+  
   // Fetch all Invoice resources for the organization identified by the given
   // organization ID that match the given criteria.
   // Required permissions:
@@ -568,6 +575,15 @@ export interface IBillingService {
 
 // BillingService is the API used to fetch billing information.
 export class BillingService implements IBillingService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None
+  async GetAPIVersion(req?: arangodb_cloud_common_v1_Empty): Promise<arangodb_cloud_common_v1_Version> {
+    const path = `/api/billing/v1/api-version`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
   // Fetch all Invoice resources for the organization identified by the given
   // organization ID that match the given criteria.
   // Required permissions:

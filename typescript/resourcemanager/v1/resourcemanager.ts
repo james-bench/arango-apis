@@ -5,8 +5,10 @@
 import api from '../../api'
 import * as googleTypes from '../../googleTypes'
 import { Budget as arangodb_cloud_common_v1_Budget } from '../../common/v1/common'
+import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
 import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1/common'
 import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
+import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 
 // File: resourcemanager/v1/resourcemanager.proto
 // Package: arangodb.cloud.resourcemanager.v1
@@ -465,6 +467,11 @@ export interface Tier {
 
 // ResourceManagerService is the API used to configure basic resource objects.
 export interface IResourceManagerService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None
+  GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
+  
   // Fetch all organizations that the authenticated user is a member of.
   // Required permissions:
   // - None
@@ -656,6 +663,15 @@ export interface IResourceManagerService {
 
 // ResourceManagerService is the API used to configure basic resource objects.
 export class ResourceManagerService implements IResourceManagerService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None
+  async GetAPIVersion(req?: arangodb_cloud_common_v1_Empty): Promise<arangodb_cloud_common_v1_Version> {
+    const path = `/api/resourcemanager/v1/api-version`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
   // Fetch all organizations that the authenticated user is a member of.
   // Required permissions:
   // - None

@@ -8,6 +8,7 @@ import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
 import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1/common'
 import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
 import { URLOptions as arangodb_cloud_common_v1_URLOptions } from '../../common/v1/common'
+import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 import { YesOrNo as arangodb_cloud_common_v1_YesOrNo } from '../../common/v1/common'
 
 // File: iam/v1/iam.proto
@@ -449,6 +450,11 @@ export interface VerifyUserMobilePhoneRequest {
 
 // IAMService is the API used to configure IAM objects.
 export interface IIAMService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None
+  GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
+  
   // Fetch all available information of the currently authenticated user.
   // Required permissions:
   // - None
@@ -641,6 +647,15 @@ export interface IIAMService {
 
 // IAMService is the API used to configure IAM objects.
 export class IAMService implements IIAMService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None
+  async GetAPIVersion(req?: arangodb_cloud_common_v1_Empty): Promise<arangodb_cloud_common_v1_Version> {
+    const path = `/api/iam/v1/api-version`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
   // Fetch all available information of the currently authenticated user.
   // Required permissions:
   // - None
