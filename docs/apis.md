@@ -964,6 +964,7 @@ Provider represents a specific cloud provider such as AWS or GCP.
 | ----- | ---- | ----- | ----------- |
 | id | [string](#string) |  | System identifier of the provider. |
 | name | [string](#string) |  | Name of the provider |
+| prerelease | [bool](#bool) |  | If set, this provider has not be released as generally available. |
 
 
 
@@ -999,6 +1000,7 @@ Region represents a geographical region in which deployments are run.
 | available | [bool](#bool) |  | Is this region available for creating new deployments? |
 | low_stock | [bool](#bool) |  | If set, this region is low on stock. Creating a deployment may not be possible. |
 | out_of_stock | [bool](#bool) |  | If set, this region is out of stock. Creating a deployment is currently not possible. |
+| prerelease | [bool](#bool) |  | If set, this region has not be released as generally available. |
 
 
 
