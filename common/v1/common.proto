@@ -55,3 +55,13 @@ message Budget {
     // If set, available is 0.
     bool unlimited = 3;
 }
+
+// Semantic version number.
+message Version {
+    // Major version (increasing may break APIs)
+    int32 major = 1;
+    // Minor version (increased for new features)
+    int32 minor = 2;
+    // Patch version (increased for fixed)
+    int32 patch = 3;
+}

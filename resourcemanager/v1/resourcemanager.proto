@@ -19,6 +19,15 @@ import "google/api/annotations.proto";
 
 // ResourceManagerService is the API used to configure basic resource objects.
 service ResourceManagerService {
+    // Get the current API version of this service.
+    // Required permissions:
+    // - None
+    rpc GetAPIVersion(common.v1.Empty) returns (common.v1.Version) {
+        option (google.api.http) = {
+            get: "/api/resourcemanager/v1/api-version"
+        };
+    }
+
     // Fetch all organizations that the authenticated user is a member of.
     // Required permissions:
     // - None

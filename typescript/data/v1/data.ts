@@ -8,6 +8,7 @@ import { Budget as arangodb_cloud_common_v1_Budget } from '../../common/v1/commo
 import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
 import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1/common'
 import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
+import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 
 // File: data/v1/data.proto
 // Package: arangodb.cloud.data.v1
@@ -922,6 +923,11 @@ export interface VersionList {
 
 // DataService is the API used to configure data objects.
 export interface IDataService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None
+  GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
+  
   // Fetch all deployments in the project identified by the given context ID.
   // Required permissions:
   // - data.deployment.list on the project identified by the given context ID
@@ -1025,6 +1031,15 @@ export interface IDataService {
 
 // DataService is the API used to configure data objects.
 export class DataService implements IDataService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None
+  async GetAPIVersion(req?: arangodb_cloud_common_v1_Empty): Promise<arangodb_cloud_common_v1_Version> {
+    const path = `/api/data/v1/api-version`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
   // Fetch all deployments in the project identified by the given context ID.
   // Required permissions:
   // - data.deployment.list on the project identified by the given context ID

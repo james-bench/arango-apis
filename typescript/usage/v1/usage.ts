@@ -4,7 +4,9 @@
 ///
 import api from '../../api'
 import * as googleTypes from '../../googleTypes'
+import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
 import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
+import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 
 // File: usage/v1/usage.proto
 // Package: arangodb.cloud.usage.v1
@@ -247,6 +249,11 @@ export interface UsageItemList {
 
 // UsageService is the API used to fetch usage tracking information.
 export interface IUsageService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None
+  GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
+  
   // Fetch all UsageItem resources in the organization identified by the given
   // organization ID that match the given criteria.
   // Required permissions:
@@ -256,6 +263,15 @@ export interface IUsageService {
 
 // UsageService is the API used to fetch usage tracking information.
 export class UsageService implements IUsageService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None
+  async GetAPIVersion(req?: arangodb_cloud_common_v1_Empty): Promise<arangodb_cloud_common_v1_Version> {
+    const path = `/api/usage/v1/api-version`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
   // Fetch all UsageItem resources in the organization identified by the given
   // organization ID that match the given criteria.
   // Required permissions:

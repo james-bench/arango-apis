@@ -4,8 +4,10 @@
 ///
 import api from '../../api'
 import * as googleTypes from '../../googleTypes'
+import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
 import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1/common'
 import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
+import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 
 // File: support/v1/support.proto
 // Package: arangodb.cloud.support.v1
@@ -112,6 +114,11 @@ export interface ResponseTimes {
 
 // SupportService is the API used to query for support.
 export interface ISupportService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None
+  GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
+  
   // Fetch all support plans that are supported by the ArangoDB cloud.
   // Required permissions:
   // - None
@@ -135,6 +142,15 @@ export interface ISupportService {
 
 // SupportService is the API used to query for support.
 export class SupportService implements ISupportService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None
+  async GetAPIVersion(req?: arangodb_cloud_common_v1_Empty): Promise<arangodb_cloud_common_v1_Version> {
+    const path = `/api/support/v1/api-version`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
   // Fetch all support plans that are supported by the ArangoDB cloud.
   // Required permissions:
   // - None

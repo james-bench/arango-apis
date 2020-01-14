@@ -60,6 +60,21 @@ export interface URLOptions {
   url?: string;
 }
 
+// Semantic version number.
+export interface Version {
+  // Major version (increasing may break APIs)
+  // number
+  major?: number;
+  
+  // Minor version (increased for new features)
+  // number
+  minor?: number;
+  
+  // Patch version (increased for fixed)
+  // number
+  patch?: number;
+}
+
 // Response for single boolean.
 export interface YesOrNo {
   // boolean

@@ -4,8 +4,10 @@
 ///
 import api from '../../api'
 import * as googleTypes from '../../googleTypes'
+import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
 import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1/common'
 import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
+import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 
 // File: security/v1/security.proto
 // Package: arangodb.cloud.security.v1
@@ -68,6 +70,11 @@ export interface IPWhitelistList {
 
 // SecurityService is the API used to access security entities.
 export interface ISecurityService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None
+  GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
+  
   // Fetch all IP whitelists that belong to the project identified by the given
   // context ID.
   // Required permissions:
@@ -99,6 +106,15 @@ export interface ISecurityService {
 
 // SecurityService is the API used to access security entities.
 export class SecurityService implements ISecurityService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None
+  async GetAPIVersion(req?: arangodb_cloud_common_v1_Empty): Promise<arangodb_cloud_common_v1_Version> {
+    const path = `/api/security/v1/api-version`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
   // Fetch all IP whitelists that belong to the project identified by the given
   // context ID.
   // Required permissions:
