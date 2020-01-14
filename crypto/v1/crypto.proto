@@ -143,6 +143,9 @@ message CACertificate {
     // Set when this certificate is the default in its project.
     // This is a read-only value.
     bool is_default = 14;
+    // When enabled, deployments using this certificate use a well known TLS certificate on the 8529 port.
+    // The self-signed certificates is always hosted on port 18529.
+    bool use_well_known_certificate = 15;
 }
 
 // List of CACertificates.

@@ -764,6 +764,7 @@ TLS certificates for deployments &amp; client authentication.
 | is_expired | [bool](#bool) |  | Set when this CA certificate has expired. This is a read-only value. |
 | will_expire_soon | [bool](#bool) |  | Set when this CA certificate will expire in the next month. This is a read-only value. |
 | is_default | [bool](#bool) |  | Set when this certificate is the default in its project. This is a read-only value. |
+| use_well_known_certificate | [bool](#bool) |  | When enabled, deployments using this certificate use a well known TLS certificate on the 8529 port. The self-signed certificates is always hosted on port 18529. |
 
 
 
