@@ -51,6 +51,10 @@ export interface Provider {
   // Name of the provider
   // string
   name?: string;
+  
+  // If set, this provider has not be released as generally available.
+  // boolean
+  prerelease?: boolean;
 }
 
 // List of providers.
@@ -86,6 +90,10 @@ export interface Region {
   // Creating a deployment is currently not possible.
   // boolean
   out_of_stock?: boolean;
+  
+  // If set, this region has not be released as generally available.
+  // boolean
+  prerelease?: boolean;
 }
 
 // List of regions.

@@ -73,6 +73,8 @@ message Provider {
     string id = 1;
     // Name of the provider
     string name = 2; 
+    // If set, this provider has not be released as generally available.
+    bool prerelease = 3;
 }
 
 // List of providers.
@@ -106,6 +108,8 @@ message Region {
     // If set, this region is out of stock.
     // Creating a deployment is currently not possible.
     bool out_of_stock = 6;
+    // If set, this region has not be released as generally available.
+    bool prerelease = 7;
 }
 
 // List of regions.
