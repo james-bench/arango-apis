@@ -87,6 +87,7 @@ func (source *Deployment_ServersSpec) Equals(other *Deployment_ServersSpec) bool
 // DeploymentStatusEqual returns true when the fields of a & b are equal.
 func DeploymentStatusEqual(a, b *Deployment_Status, ignoreTimestamps bool) bool {
 	return a.GetEndpoint() == b.GetEndpoint() &&
+		a.GetEndpointSelfSigned() == b.GetEndpointSelfSigned() &&
 		a.GetDescription() == b.GetDescription() &&
 		a.GetCreated() == b.GetCreated() &&
 		a.GetReady() == b.GetReady() &&
