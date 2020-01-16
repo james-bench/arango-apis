@@ -2636,7 +2636,7 @@ All members of this field are read-only.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| endpoint | [string](#string) |  | Endpoint URL used to reach the deployment This value will be empty during the creation of the deployment. |
+| endpoint | [string](#string) |  | Endpoint URL used to reach the deployment This value will be empty during the creation of the deployment. This field always contains the URL of the low port (8529) of the deployment. If a certificate with well known certificate is used, this port is using the well known certificate. Otherwise this port is using the self-signed certificate. This endpoint is recommended for human-to-database connections. |
 | description | [string](#string) |  | Human readable description of the status of the deployment. |
 | created | [bool](#bool) |  | Set once the deployment has been created. |
 | ready | [bool](#bool) |  | Set if the deployment is ready to be used. If the deployment has downtime (e.g. because of changing a CA certificate) this will go to false until the downtime is over. |
@@ -2645,6 +2645,7 @@ All members of this field are read-only.
 | servers | [Deployment.ServerStatus](#arangodb.cloud.data.v1.Deployment.ServerStatus) | repeated | Status of individual servers of the deployment |
 | bootstrapped_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Set if the ready boolean is transitioned to true for the very first time. |
 | bootstrapped | [bool](#bool) |  | Set if bootstrapped_at has a value, otherwise false. |
+| endpoint_self_signed | [string](#string) |  | Endpoint URL used to reach the deployment on the port that uses the self-signed certificate. This endpoint is recommended for machine-to-database connections. |
 | backup_restore_status | [Deployment.BackupRestoreStatus](#arangodb.cloud.data.v1.Deployment.BackupRestoreStatus) |  | The status of backup restore (if applicable). This field will be set to empty if a new revision of the spec is available |
 | total_backup_size_bytes | [int64](#int64) |  | The total size of all backups in the external source (in bytes) |
 | backup_upload_in_progress | [bool](#bool) |  | Set if there is any backup currently uploading data to the external source |

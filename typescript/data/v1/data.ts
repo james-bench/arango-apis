@@ -424,6 +424,12 @@ export interface Deployment_ServersSpec {
 export interface Deployment_Status {
   // Endpoint URL used to reach the deployment
   // This value will be empty during the creation of the deployment.
+  // This field always contains the URL of the low port (8529) of the
+  // deployment.
+  // If a certificate with well known certificate is used, this
+  // port is using the well known certificate.
+  // Otherwise this port is using the self-signed certificate.
+  // This endpoint is recommended for human-to-database connections.
   // string
   endpoint?: string;
   
@@ -460,6 +466,12 @@ export interface Deployment_Status {
   // Set if bootstrapped_at has a value, otherwise false.
   // boolean
   bootstrapped?: boolean;
+  
+  // Endpoint URL used to reach the deployment on the port that uses
+  // the self-signed certificate.
+  // This endpoint is recommended for machine-to-database connections.
+  // string
+  endpoint_self_signed?: string;
   
   // The status of backup restore (if applicable).
   // This field will be set to empty if a new revision of the spec is available
