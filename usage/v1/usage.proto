@@ -164,6 +164,8 @@ message ListUsageItemsRequest {
     // Request usage items that overlaps in time with the time period that ends with this timestamp (inclusive).
     // This is a required field.
     google.protobuf.Timestamp to = 3;
+    // Sort descending (new to old) on started_at field (default is ascending).
+    bool sort_descending = 4;
 
     // Standard list options
     // This is an optional field.

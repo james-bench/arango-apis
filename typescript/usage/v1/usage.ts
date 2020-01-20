@@ -28,6 +28,10 @@ export interface ListUsageItemsRequest {
   // googleTypes.Timestamp
   to?: googleTypes.Timestamp;
   
+  // Sort descending (new to old) on started_at field (default is ascending).
+  // boolean
+  sort_descending?: boolean;
+  
   // Standard list options
   // This is an optional field.
   // arangodb.cloud.common.v1.ListOptions
