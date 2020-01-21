@@ -23,7 +23,7 @@ export interface ListUsageItemsRequest {
   // googleTypes.Timestamp
   from?: googleTypes.Timestamp;
   
-  // Request usage items that overlaps in time with the time period that ends with this timestamp (inclusive).
+  // Request usage items that overlaps in time with the time period that ends with this timestamp (exclusive).
   // This is a required field.
   // googleTypes.Timestamp
   to?: googleTypes.Timestamp;

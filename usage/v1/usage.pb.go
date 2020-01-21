@@ -641,7 +641,7 @@ type ListUsageItemsRequest struct {
 	// Request usage items that overlaps in time with the time period that starts with this timestamp (inclusive).
 	// This is a required field.
 	From *types.Timestamp `protobuf:"bytes,2,opt,name=from,proto3" json:"from,omitempty"`
-	// Request usage items that overlaps in time with the time period that ends with this timestamp (inclusive).
+	// Request usage items that overlaps in time with the time period that ends with this timestamp (exclusive).
 	// This is a required field.
 	To *types.Timestamp `protobuf:"bytes,3,opt,name=to,proto3" json:"to,omitempty"`
 	// Sort descending (new to old) on started_at field (default is ascending).
