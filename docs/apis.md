@@ -2683,6 +2683,7 @@ Request arguments for GetDeploymentCredentials
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | deployment_id | [string](#string) |  | Identifier of deployment to request credentials for. |
+| reason | [string](#string) |  | Reason for requesting the credentials |
 
 
 

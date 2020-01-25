@@ -516,6 +516,8 @@ message ListCPUSizesRequest {
 message DeploymentCredentialsRequest {
     // Identifier of deployment to request credentials for.
     string deployment_id = 1;
+    // Reason for requesting the credentials
+    string reason = 2;
 }
 
 // Result for GetDeploymentCredentials
