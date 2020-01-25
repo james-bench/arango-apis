@@ -377,6 +377,7 @@ Options for ListEvents
 | types | [string](#string) | repeated | If set, filter on the type of event |
 | created_after | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | If set, filter of events created after this timestamp |
 | created_before | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | If set, filter of events created before this timestamp |
+| sort_descending | [bool](#bool) |  | Sort descending (new to old) on created_at field (default is ascending). |
 
 
 

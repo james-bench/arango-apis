@@ -142,6 +142,10 @@ export interface ListEventOptions {
   // If set, filter of events created before this timestamp
   // googleTypes.Timestamp
   created_before?: googleTypes.Timestamp;
+  
+  // Sort descending (new to old) on created_at field (default is ascending).
+  // boolean
+  sort_descending?: boolean;
 }
 
 // Request arguments for ListXyzQuotas

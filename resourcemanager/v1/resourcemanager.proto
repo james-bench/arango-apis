@@ -539,6 +539,8 @@ message ListEventOptions {
     google.protobuf.Timestamp created_after = 4;
     // If set, filter of events created before this timestamp
     google.protobuf.Timestamp created_before = 5;
+    // Sort descending (new to old) on created_at field (default is ascending).
+    bool sort_descending = 6;
 }
 
 // An OrganizationInvite represents an invite for a human to join an
