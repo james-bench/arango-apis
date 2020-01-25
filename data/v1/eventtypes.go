@@ -22,3 +22,12 @@ const (
 	// SubjectID contains the ID of the deployment.
 	EventTypeDeploymentDeleted = "data.deployment.deleted"
 )
+
+const (
+	// DeploymentCredentials event types
+
+	// EventTypeDeploymentCredentialsRead is the type of event fired after the credentials
+	// of a deployment have been read.
+	// SubjectID contains the ID of the deployment.
+	EventTypeDeploymentCredentialsRead = "data.deploymentcredentials.read"
+)
