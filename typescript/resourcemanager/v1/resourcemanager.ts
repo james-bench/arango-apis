@@ -74,6 +74,16 @@ export interface Event {
   // This is a read-only value.
   // boolean
   volatile?: boolean;
+  
+  // Identifier of the user that has created this event.
+  // This is a read-only value that can be empty.
+  // string
+  created_by_id?: string;
+  
+  // Optional human readable reason for the event.
+  // This is a read-only value that can be empty.
+  // string
+  reason?: string;
 }
 export interface Event_PayloadEntry {
   // string
@@ -586,6 +596,7 @@ export interface IResourceManagerService {
   // The authenticated user must be a member of the organization identifier by the given context ID.
   // Required permissions:
   // - resourcemanager.event.list on the organization identified by the given context ID
+  // Note that this method uses a POST method because the list options contains a repeated field.
   ListEvents: (req: ListEventOptions) => Promise<EventList>;
   
   // Fetch all organization invites in the organization identified by the given context ID.
@@ -847,10 +858,10 @@ export class ResourceManagerService implements IResourceManagerService {
   // The authenticated user must be a member of the organization identifier by the given context ID.
   // Required permissions:
   // - resourcemanager.event.list on the organization identified by the given context ID
+  // Note that this method uses a POST method because the list options contains a repeated field.
   async ListEvents(req: ListEventOptions): Promise<EventList> {
-    const path = `/api/resourcemanager/v1/organizations/${encodeURIComponent((req.options || {}).context_id || '')}/events`;
-    const url = path + api.queryString(req, [`options.context_id`]);
-    return api.get(url, undefined);
+    const url = `/api/resourcemanager/v1/organizations/${encodeURIComponent((req.options || {}).context_id || '')}/events`;
+    return api.post(url, req);
   }
   
   // Fetch all organization invites in the organization identified by the given context ID.

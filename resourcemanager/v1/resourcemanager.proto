@@ -217,9 +217,11 @@ service ResourceManagerService {
     // The authenticated user must be a member of the organization identifier by the given context ID.
     // Required permissions:
     // - resourcemanager.event.list on the organization identified by the given context ID
+    // Note that this method uses a POST method because the list options contains a repeated field.
     rpc ListEvents(ListEventOptions) returns (EventList) {
         option (google.api.http) = {
-            get: "/api/resourcemanager/v1/organizations/{options.context_id}/events"
+            post: "/api/resourcemanager/v1/organizations/{options.context_id}/events"
+            body: "*"
         };
     }
 
@@ -512,6 +514,12 @@ message Event {
     // If set, this event is not persisted.
     // This is a read-only value.
     bool volatile = 9;
+    // Identifier of the user that has created this event.
+    // This is a read-only value that can be empty.
+    string created_by_id = 10;
+    // Optional human readable reason for the event.
+    // This is a read-only value that can be empty.
+    string reason = 11;
 }
 
 // List of Events.
