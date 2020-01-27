@@ -507,6 +507,10 @@ export interface DeploymentCredentialsRequest {
   // Identifier of deployment to request credentials for.
   // string
   deployment_id?: string;
+  
+  // Reason for requesting the credentials
+  // string
+  reason?: string;
 }
 
 // List of Deployments.

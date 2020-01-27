@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2019 ArangoDB Inc, Cologne, Germany
+// Copyright 2019 ArangoDB GmbH, Cologne, Germany
 //
 // Author Ewout Prangsma
 //
@@ -21,4 +21,13 @@ const (
 	// EventTypeDeploymentDeleted is the type of event fired after a deployment has been (marked for) deleted
 	// SubjectID contains the ID of the deployment.
 	EventTypeDeploymentDeleted = "data.deployment.deleted"
+)
+
+const (
+	// DeploymentCredentials event types
+
+	// EventTypeDeploymentCredentialsRead is the type of event fired after the credentials
+	// of a deployment have been read.
+	// SubjectID contains the ID of the deployment.
+	EventTypeDeploymentCredentialsRead = "data.deploymentcredentials.read"
 )

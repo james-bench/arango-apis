@@ -1,7 +1,7 @@
 // 
 // DISCLAIMER
 // 
-// Copyright 2019 ArangoDB Inc, Cologne, Germany
+// Copyright 2019 ArangoDB GmbH, Cologne, Germany
 // 
 // Author Ewout Prangsma
 // 
@@ -519,6 +519,8 @@ message ListCPUSizesRequest {
 message DeploymentCredentialsRequest {
     // Identifier of deployment to request credentials for.
     string deployment_id = 1;
+    // Reason for requesting the credentials
+    string reason = 2;
 }
 
 // Result for GetDeploymentCredentials
