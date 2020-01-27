@@ -472,10 +472,13 @@ type Deployment_ModelSpec struct {
 	// Type of model being used
 	Model string `protobuf:"bytes,1,opt,name=model,proto3" json:"model,omitempty"`
 	// Size of nodes being used
+	// This field is ignored set in case the flexible model is used.
 	NodeSizeId string `protobuf:"bytes,2,opt,name=node_size_id,json=nodeSizeId,proto3" json:"node_size_id,omitempty"`
 	// Number of nodes being used
+	// This field is ignored set in case the flexible model is used.
 	NodeCount int32 `protobuf:"varint,3,opt,name=node_count,json=nodeCount,proto3" json:"node_count,omitempty"`
 	// Amount of disk space per node (in GB)
+	// This field is ignored set in case the flexible model is used.
 	NodeDiskSize         int32    `protobuf:"varint,4,opt,name=node_disk_size,json=nodeDiskSize,proto3" json:"node_disk_size,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`

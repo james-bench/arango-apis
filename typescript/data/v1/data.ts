@@ -315,14 +315,17 @@ export interface Deployment_ModelSpec {
   model?: string;
   
   // Size of nodes being used
+  // This field is ignored set in case the flexible model is used.
   // string
   node_size_id?: string;
   
   // Number of nodes being used
+  // This field is ignored set in case the flexible model is used.
   // number
   node_count?: number;
   
   // Amount of disk space per node (in GB)
+  // This field is ignored set in case the flexible model is used.
   // number
   node_disk_size?: number;
 }
