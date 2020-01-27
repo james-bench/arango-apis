@@ -2575,9 +2575,9 @@ All members of this message are read-only.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | model | [string](#string) |  | Type of model being used |
-| node_size_id | [string](#string) |  | Size of nodes being used |
-| node_count | [int32](#int32) |  | Number of nodes being used |
-| node_disk_size | [int32](#int32) |  | Amount of disk space per node (in GB) |
+| node_size_id | [string](#string) |  | Size of nodes being used This field is ignored set in case the flexible model is used. |
+| node_count | [int32](#int32) |  | Number of nodes being used This field is ignored set in case the flexible model is used. |
+| node_disk_size | [int32](#int32) |  | Amount of disk space per node (in GB) This field is ignored set in case the flexible model is used. |
 
 
 
