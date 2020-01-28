@@ -231,6 +231,7 @@
     - [ListInvoicesRequest](#arangodb.cloud.billing.v1.ListInvoicesRequest)
     - [ListPaymentMethodsRequest](#arangodb.cloud.billing.v1.ListPaymentMethodsRequest)
     - [ListPaymentProvidersRequest](#arangodb.cloud.billing.v1.ListPaymentProvidersRequest)
+    - [OrganizationBillingFlags](#arangodb.cloud.billing.v1.OrganizationBillingFlags)
     - [PDFDocument](#arangodb.cloud.billing.v1.PDFDocument)
     - [PaymentMethod](#arangodb.cloud.billing.v1.PaymentMethod)
     - [PaymentMethod.CreditCardInfo](#arangodb.cloud.billing.v1.PaymentMethod.CreditCardInfo)
@@ -3421,6 +3422,22 @@ Request arguments for ListPaymentProviders
 
 
 
+<a name="arangodb.cloud.billing.v1.OrganizationBillingFlags"></a>
+
+### OrganizationBillingFlags
+Billing specific organization flags
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| is_allowed_to_list_invoices | [bool](#bool) |  | If set, this organization is allowed to list invoices. |
+| is_allowed_to_access_payment_methods | [bool](#bool) |  | If set, this organization is allowed to create/list/update payment methods. |
+
+
+
+
+
+
 <a name="arangodb.cloud.billing.v1.PDFDocument"></a>
 
 ### PDFDocument
@@ -3611,6 +3628,7 @@ BillingService is the API used to fetch billing information.
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
 | GetAPIVersion | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | [.arangodb.cloud.common.v1.Version](#arangodb.cloud.common.v1.Version) | Get the current API version of this service. Required permissions: - None |
+| GetOrganizationBillingFlags | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [OrganizationBillingFlags](#arangodb.cloud.billing.v1.OrganizationBillingFlags) | Fetch the billing specific flags for the organization identified by the given ID. Required permissions: - billing.organization.get |
 | ListInvoices | [ListInvoicesRequest](#arangodb.cloud.billing.v1.ListInvoicesRequest) | [InvoiceList](#arangodb.cloud.billing.v1.InvoiceList) | Fetch all Invoice resources for the organization identified by the given organization ID that match the given criteria. Required permissions: - billing.invoice.list on the organization identified by the given organization ID |
 | GetInvoice | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Invoice](#arangodb.cloud.billing.v1.Invoice) | Fetch a specific Invoice identified by the given ID. Required permissions: - billing.invoice.get on the organization that owns the invoice with given ID. |
 | GetInvoicePDF | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [PDFDocument](#arangodb.cloud.billing.v1.PDFDocument) | Fetch a specific Invoice identified by the given ID as PDF document. Required permissions: - billing.invoice.get on the organization that owns the invoice with given ID. |

@@ -308,6 +308,17 @@ export interface ListPaymentProvidersRequest {
   // arangodb.cloud.common.v1.ListOptions
   options?: arangodb_cloud_common_v1_ListOptions;
 }
+
+// Billing specific organization flags
+export interface OrganizationBillingFlags {
+  // If set, this organization is allowed to list invoices.
+  // boolean
+  is_allowed_to_list_invoices?: boolean;
+  
+  // If set, this organization is allowed to create/list/update payment methods.
+  // boolean
+  is_allowed_to_access_payment_methods?: boolean;
+}
 export interface PDFDocument {
   // Content of the document
   // string
@@ -487,6 +498,11 @@ export interface IBillingService {
   // - None
   GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
   
+  // Fetch the billing specific flags for the organization identified by the given ID.
+  // Required permissions:
+  // - billing.organization.get
+  GetOrganizationBillingFlags: (req: arangodb_cloud_common_v1_IDOptions) => Promise<OrganizationBillingFlags>;
+  
   // Fetch all Invoice resources for the organization identified by the given
   // organization ID that match the given criteria.
   // Required permissions:
@@ -581,6 +597,15 @@ export class BillingService implements IBillingService {
   async GetAPIVersion(req?: arangodb_cloud_common_v1_Empty): Promise<arangodb_cloud_common_v1_Version> {
     const path = `/api/billing/v1/api-version`;
     const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch the billing specific flags for the organization identified by the given ID.
+  // Required permissions:
+  // - billing.organization.get
+  async GetOrganizationBillingFlags(req: arangodb_cloud_common_v1_IDOptions): Promise<OrganizationBillingFlags> {
+    const path = `/api/billing/v1/organization/${encodeURIComponent(req.id || '')}/billing-flags`;
+    const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
   
