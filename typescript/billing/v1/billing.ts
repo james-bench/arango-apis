@@ -115,6 +115,14 @@ export interface Invoice {
   // googleTypes.Timestamp
   last_updated_at?: googleTypes.Timestamp;
   
+  // The list of email addresses that this invoice (and payments related to this invoice) will be send to.
+  // string
+  email_addresses?: string[];
+  
+  // If set, this invoice is generated for an organization that is configured to use purchase orders.
+  // boolean
+  purchase_order_based?: boolean;
+  
   // The version of the invoice-builder who created the invoice.
   // string
   invoice_builder_version?: string;
