@@ -1068,6 +1068,7 @@ Request arguments for ListUsageItems
 | from | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request usage items that overlaps in time with the time period that starts with this timestamp (inclusive). This is a required field. |
 | to | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | Request usage items that overlaps in time with the time period that ends with this timestamp (exclusive). This is a required field. |
 | sort_descending | [bool](#bool) |  | Sort descending (new to old) on started_at field (default is ascending). |
+| kind | [string](#string) |  | Limit to usage items of this kind |
 | options | [arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) |  | Standard list options This is an optional field. |
 | resource_url | [string](#string) |  | Limit to usage items for the resource with this URL. This is an optional field. |
 | resource_kind | [string](#string) |  | Limit to usage items for the resource with this kind. This is an optional field. |
