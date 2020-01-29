@@ -213,6 +213,10 @@ message Invoice {
     // The last update date of the invoice.
     // This applies to 'specification' only and doesn't apply to status or payments changes.
     google.protobuf.Timestamp last_updated_at = 12;
+    // The list of email addresses that this invoice (and payments related to this invoice) will be send to.
+    repeated string email_addresses = 13;
+    // If set, this invoice is generated for an organization that is configured to use purchase orders.
+    bool purchase_order_based = 14;
     
     // The version of the invoice-builder who created the invoice.
     string invoice_builder_version = 20;
