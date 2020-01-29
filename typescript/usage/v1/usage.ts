@@ -32,6 +32,10 @@ export interface ListUsageItemsRequest {
   // boolean
   sort_descending?: boolean;
   
+  // Limit to usage items of this kind
+  // string
+  kind?: string;
+  
   // Standard list options
   // This is an optional field.
   // arangodb.cloud.common.v1.ListOptions
