@@ -18,6 +18,13 @@ const (
 )
 
 const (
+	// Organization permissions
+
+	// PermissionOrganizationGet is needed for getting the billing flags of an organization
+	PermissionOrganizationGet = "billing.organization.get"
+)
+
+const (
 	// Invoice permissions
 
 	// PermissionInvoiceList is needed for listing invoices in an organization

@@ -28,6 +28,15 @@ service BillingService {
         };
     }
 
+    // Fetch the billing specific flags for the organization identified by the given ID.
+    // Required permissions:
+    // - billing.organization.get
+    rpc GetOrganizationBillingFlags(common.v1.IDOptions) returns (OrganizationBillingFlags) {
+        option (google.api.http) = {
+            get: "/api/billing/v1/organization/{id}/billing-flags"
+        };
+    }
+
     // Fetch all Invoice resources for the organization identified by the given
     // organization ID that match the given criteria.
     // Required permissions:
@@ -454,6 +463,14 @@ message Address {
     string state = 4;
     // Country code
     string country_code = 5;
+}
+
+// Billing specific organization flags
+message OrganizationBillingFlags {
+    // If set, this organization is allowed to list invoices.
+    bool is_allowed_to_list_invoices = 1;
+    // If set, this organization is allowed to create/list/update payment methods.
+    bool is_allowed_to_access_payment_methods = 2;
 }
 
 // Billing configuration for an organization
