@@ -3354,6 +3354,10 @@ Status of the invoice
 | needs_rebuild | [bool](#bool) |  | If set, this payment needs to be rebuild (by the invoice-builder service). If set, is_completed &amp; is_rejected must be false. |
 | completed_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of succesfull completion of the payment. This field equals the completed_at field of the last payment if that payment succeeded, nil otherwise. |
 | rejected_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The timestamp of rejected completion of the payment. This field equals the rejected_at field of the last payment if that payment failed, nil otherwise. |
+| completion_reason | [string](#string) |  | Human readable reason for the completion. |
+| rejection_reason | [string](#string) |  | Human readable reason for the rejection. |
+| completed_by | [string](#string) |  | Identifier of user who completed this invoice. |
+| rejected_by | [string](#string) |  | Identifier of user who rejected this invoice. |
 
 
 

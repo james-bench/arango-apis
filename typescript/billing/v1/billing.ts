@@ -264,6 +264,22 @@ export interface Invoice_Status {
   // that payment failed, nil otherwise.
   // googleTypes.Timestamp
   rejected_at?: googleTypes.Timestamp;
+  
+  // Human readable reason for the completion.
+  // string
+  completion_reason?: string;
+  
+  // Human readable reason for the rejection.
+  // string
+  rejection_reason?: string;
+  
+  // Identifier of user who completed this invoice.
+  // string
+  completed_by?: string;
+  
+  // Identifier of user who rejected this invoice.
+  // string
+  rejected_by?: string;
 }
 
 // List of Invoices.
