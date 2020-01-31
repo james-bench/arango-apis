@@ -276,6 +276,14 @@ message Invoice {
         // This field equals the rejected_at field of the last payment if
         // that payment failed, nil otherwise.
         google.protobuf.Timestamp rejected_at = 11;
+        // Human readable reason for the completion.
+        string completion_reason = 12;
+        // Human readable reason for the rejection.
+        string rejection_reason = 13;
+        // Identifier of user who completed this invoice.
+        string completed_by = 14;
+        // Identifier of user who rejected this invoice.
+        string rejected_by = 15;
     }
     Status status = 200;
 
