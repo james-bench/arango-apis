@@ -62,6 +62,45 @@ service SupportService {
             get: "/api/support/v1/faqgroups/{context_id}/entries"
         };
     }
+
+    // Submit a support ticket to JIRA
+    // Required permissions:
+    // - None
+    rpc SubmitSupportTicket(SupportTicketRequest) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            post: "/api/support/v1/support/submit-ticket"
+            body: "*"
+        };
+    }
+}
+
+// SupportTicketRequest contains information about the ticket
+message SupportTicketRequest {
+    // username of the user submitting the ticket
+    string username = 1;
+    // authenticated_id is provided if the user submitting the ticket is authenticated
+    string authenticated_id = 2;
+    // email_address of the user submitting the ticket
+    string email_address = 3;
+    // organization_id is provided if applicable to the issue
+    string organization_id = 4;
+    // project_id is provided if applicable to the issue
+    string project_id = 5;
+    // deployment_id is provided if applicable to the issue
+    string deployment_id = 6;
+    // description of the issue.
+    string description = 7;
+    // severity can be one of these four below
+    enum Severity {
+        LOW = 0;
+        NORMAL = 1;
+        HIGH = 2;
+        CRITICAL = 3;
+    }
+    Severity severity = 8;
+    // This field should be set to Production Support
+    // Read-only
+    string support_type=9;
 }
 
 // Plan represents a specific support plan such as Bronze, Silver or Gold.

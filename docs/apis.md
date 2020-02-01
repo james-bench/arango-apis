@@ -133,7 +133,9 @@
     - [Plan](#arangodb.cloud.support.v1.Plan)
     - [PlanList](#arangodb.cloud.support.v1.PlanList)
     - [ResponseTimes](#arangodb.cloud.support.v1.ResponseTimes)
+    - [SupportTicketRequest](#arangodb.cloud.support.v1.SupportTicketRequest)
   
+    - [SupportTicketRequest.Severity](#arangodb.cloud.support.v1.SupportTicketRequest.Severity)
   
   
     - [SupportService](#arangodb.cloud.support.v1.SupportService)
@@ -1958,7 +1960,44 @@ A value of 0 means &#34;best effort&#34;.
 
 
 
+
+<a name="arangodb.cloud.support.v1.SupportTicketRequest"></a>
+
+### SupportTicketRequest
+SupportTicketRequest contains information about the ticket
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| username | [string](#string) |  | username of the user submitting the ticket |
+| authenticated_id | [string](#string) |  | authenticated_id is provided if the user submitting the ticket is authenticated |
+| email_address | [string](#string) |  | email_address of the user submitting the ticket |
+| organization_id | [string](#string) |  | organization_id is provided if applicable to the issue |
+| project_id | [string](#string) |  | project_id is provided if applicable to the issue |
+| deployment_id | [string](#string) |  | deployment_id is provided if applicable to the issue |
+| description | [string](#string) |  | description of the issue. |
+| severity | [SupportTicketRequest.Severity](#arangodb.cloud.support.v1.SupportTicketRequest.Severity) |  |  |
+| support_type | [string](#string) |  | This field should be set to Production Support Read-only |
+
+
+
+
+
  
+
+
+<a name="arangodb.cloud.support.v1.SupportTicketRequest.Severity"></a>
+
+### SupportTicketRequest.Severity
+severity can be one of these four below
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| LOW | 0 |  |
+| NORMAL | 1 |  |
+| HIGH | 2 |  |
+| CRITICAL | 3 |  |
+
 
  
 
@@ -1977,6 +2016,7 @@ SupportService is the API used to query for support.
 | GetPlan | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Plan](#arangodb.cloud.support.v1.Plan) | Fetch a support plan by its id. Required permissions: - None |
 | ListFaqGroups | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [FaqGroupList](#arangodb.cloud.support.v1.FaqGroupList) | Fetch all FAQ groups. Required permissions: - None |
 | ListFaqGroupEntries | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [FaqGroupEntryList](#arangodb.cloud.support.v1.FaqGroupEntryList) | Fetch all FAQ group entries of the FAQ group identified by the given context ID. Required permissions: - None |
+| SubmitSupportTicket | [SupportTicketRequest](#arangodb.cloud.support.v1.SupportTicketRequest) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Submit a support ticket to JIRA Required permissions: - None |
 
  
 

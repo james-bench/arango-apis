@@ -112,6 +112,47 @@ export interface ResponseTimes {
   low?: number;
 }
 
+// SupportTicketRequest contains information about the ticket
+export interface SupportTicketRequest {
+  // username of the user submitting the ticket
+  // string
+  username?: string;
+  
+  // authenticated_id is provided if the user submitting the ticket is authenticated
+  // string
+  authenticated_id?: string;
+  
+  // email_address of the user submitting the ticket
+  // string
+  email_address?: string;
+  
+  // organization_id is provided if applicable to the issue
+  // string
+  organization_id?: string;
+  
+  // project_id is provided if applicable to the issue
+  // string
+  project_id?: string;
+  
+  // deployment_id is provided if applicable to the issue
+  // string
+  deployment_id?: string;
+  
+  // description of the issue.
+  // string
+  description?: string;
+  
+  // SupportTicketRequest_Severity
+  severity?: SupportTicketRequest_Severity;
+  
+  // This field should be set to Production Support
+  // Read-only
+  // string
+  support_type?: string;
+}
+
+// Enum arangodb.cloud.support.v1.SupportTicketRequest.Severity: Not implemented
+
 // SupportService is the API used to query for support.
 export interface ISupportService {
   // Get the current API version of this service.
@@ -138,6 +179,11 @@ export interface ISupportService {
   // Required permissions:
   // - None
   ListFaqGroupEntries: (req: arangodb_cloud_common_v1_ListOptions) => Promise<FaqGroupEntryList>;
+  
+  // Submit a support ticket to JIRA
+  // Required permissions:
+  // - None
+  SubmitSupportTicket: (req: SupportTicketRequest) => Promise<void>;
 }
 
 // SupportService is the API used to query for support.
@@ -185,5 +231,13 @@ export class SupportService implements ISupportService {
     const path = `/api/support/v1/faqgroups/${encodeURIComponent(req.context_id || '')}/entries`;
     const url = path + api.queryString(req, [`context_id`]);
     return api.get(url, undefined);
+  }
+  
+  // Submit a support ticket to JIRA
+  // Required permissions:
+  // - None
+  async SubmitSupportTicket(req: SupportTicketRequest): Promise<void> {
+    const url = `/api/support/v1/support/submit-ticket`;
+    return api.post(url, req);
   }
 }
