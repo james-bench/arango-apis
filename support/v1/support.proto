@@ -63,44 +63,40 @@ service SupportService {
         };
     }
 
-    // Submit a support ticket to JIRA
+    // Submit a support request.
     // Required permissions:
     // - None
-    rpc SubmitSupportTicket(SupportTicketRequest) returns (common.v1.Empty) {
+    rpc CreateSupportRequest(SupportRequest) returns (SupportRequest) {
         option (google.api.http) = {
-            post: "/api/support/v1/support/submit-ticket"
+            post: "/api/support/v1/supportrequests"
             body: "*"
         };
     }
 }
 
 // SupportTicketRequest contains information about the ticket
-message SupportTicketRequest {
-    // username of the user submitting the ticket
-    string username = 1;
+message SupportRequest {
+    // ID of the ticket.
+    // This is a read-only field
+    string id = 1;
+    // Name of the user who submitted the support request.
+    // This is a required field
+    string user_name = 2;
     // authenticated_id is provided if the user submitting the ticket is authenticated
-    string authenticated_id = 2;
+    // This is an optional field
+    string user_id = 3;
     // email_address of the user submitting the ticket
-    string email_address = 3;
+    string email_address = 4;
     // organization_id is provided if applicable to the issue
-    string organization_id = 4;
+    string organization_id = 5;
     // project_id is provided if applicable to the issue
-    string project_id = 5;
+    string project_id = 6;
     // deployment_id is provided if applicable to the issue
-    string deployment_id = 6;
+    string deployment_id = 7;
     // description of the issue.
-    string description = 7;
-    // severity can be one of these four below
-    enum Severity {
-        LOW = 0;
-        NORMAL = 1;
-        HIGH = 2;
-        CRITICAL = 3;
-    }
-    Severity severity = 8;
-    // This field should be set to Production Support
-    // Read-only
-    string support_type=9;
+    string description = 8;
+    // severity of the issue. Can be one of the following: (low|normal|high|critical)
+    string severity = 9;
 }
 
 // Plan represents a specific support plan such as Bronze, Silver or Gold.

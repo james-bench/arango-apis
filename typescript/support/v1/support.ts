@@ -113,14 +113,21 @@ export interface ResponseTimes {
 }
 
 // SupportTicketRequest contains information about the ticket
-export interface SupportTicketRequest {
-  // username of the user submitting the ticket
+export interface SupportRequest {
+  // ID of the ticket.
+  // This is a read-only field
   // string
-  username?: string;
+  id?: string;
+  
+  // Name of the user who submitted the support request.
+  // This is a required field
+  // string
+  user_name?: string;
   
   // authenticated_id is provided if the user submitting the ticket is authenticated
+  // This is an optional field
   // string
-  authenticated_id?: string;
+  user_id?: string;
   
   // email_address of the user submitting the ticket
   // string
@@ -142,16 +149,10 @@ export interface SupportTicketRequest {
   // string
   description?: string;
   
-  // SupportTicketRequest_Severity
-  severity?: SupportTicketRequest_Severity;
-  
-  // This field should be set to Production Support
-  // Read-only
+  // severity of the issue. Can be one of the following: (low|normal|high|critical)
   // string
-  support_type?: string;
+  severity?: string;
 }
-
-// Enum arangodb.cloud.support.v1.SupportTicketRequest.Severity: Not implemented
 
 // SupportService is the API used to query for support.
 export interface ISupportService {
@@ -180,10 +181,10 @@ export interface ISupportService {
   // - None
   ListFaqGroupEntries: (req: arangodb_cloud_common_v1_ListOptions) => Promise<FaqGroupEntryList>;
   
-  // Submit a support ticket to JIRA
+  // Submit a support request.
   // Required permissions:
   // - None
-  SubmitSupportTicket: (req: SupportTicketRequest) => Promise<void>;
+  CreateSupportRequest: (req: SupportRequest) => Promise<SupportRequest>;
 }
 
 // SupportService is the API used to query for support.
@@ -233,11 +234,11 @@ export class SupportService implements ISupportService {
     return api.get(url, undefined);
   }
   
-  // Submit a support ticket to JIRA
+  // Submit a support request.
   // Required permissions:
   // - None
-  async SubmitSupportTicket(req: SupportTicketRequest): Promise<void> {
-    const url = `/api/support/v1/support/submit-ticket`;
+  async CreateSupportRequest(req: SupportRequest): Promise<SupportRequest> {
+    const url = `/api/support/v1/supportrequests`;
     return api.post(url, req);
   }
 }
