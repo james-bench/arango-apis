@@ -9,14 +9,14 @@
 package v1
 
 const (
-	// Critical severity
-	SupportTicketCriticalSeverity = "Critical"
-	// High severity
-	SupportTicketHighSeverity = "High"
-	// Medium severity
-	SupportTicketMediumSeverity = "Medium"
-	// Low severity
-	SupportTicketLowSeverity = "Low"
-	// Lowest severity
-	SupportTicketLowestSeverity = "Lowest"
+	// Critical severity.
+	SupportTicketCriticalSeverity = "critical"
+	// High severity.
+	SupportTicketHighSeverity = "high"
+	// Medium severity.
+	SupportTicketMediumSeverity = "medium"
+	// Low severity.
+	SupportTicketLowSeverity = "low"
+	// Lowest severity.
+	SupportTicketLowestSeverity = "lowest"
 )
