@@ -1970,7 +1970,7 @@ SupportTicketRequest contains information about the ticket
 | ----- | ---- | ----- | ----------- |
 | id | [string](#string) |  | ID of the ticket. This is a read-only field |
 | user_name | [string](#string) |  | Name of the user who submitted the support request. This is a required field |
-| user_id | [string](#string) |  | authenticated_id is provided if the user submitting the ticket is authenticated This is an optional field |
+| user_id | [string](#string) |  | user_id is provided if the user submitting the ticket is authenticated This is an optional field |
 | email_address | [string](#string) |  | email_address of the user submitting the ticket |
 | organization_id | [string](#string) |  | organization_id is provided if applicable to the issue |
 | project_id | [string](#string) |  | project_id is provided if applicable to the issue |

@@ -14,9 +14,7 @@ const (
 	// High severity.
 	SupportTicketHighSeverity = "high"
 	// Medium severity.
-	SupportTicketMediumSeverity = "medium"
+	SupportTicketNormalSeverity = "normal"
 	// Low severity.
 	SupportTicketLowSeverity = "low"
-	// Lowest severity.
-	SupportTicketLowestSeverity = "lowest"
 )

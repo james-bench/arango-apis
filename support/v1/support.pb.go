@@ -36,7 +36,7 @@ type SupportRequest struct {
 	// Name of the user who submitted the support request.
 	// This is a required field
 	UserName string `protobuf:"bytes,2,opt,name=user_name,json=userName,proto3" json:"user_name,omitempty"`
-	// authenticated_id is provided if the user submitting the ticket is authenticated
+	// user_id is provided if the user submitting the ticket is authenticated
 	// This is an optional field
 	UserId string `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	// email_address of the user submitting the ticket

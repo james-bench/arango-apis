@@ -124,7 +124,7 @@ export interface SupportRequest {
   // string
   user_name?: string;
   
-  // authenticated_id is provided if the user submitting the ticket is authenticated
+  // user_id is provided if the user submitting the ticket is authenticated
   // This is an optional field
   // string
   user_id?: string;

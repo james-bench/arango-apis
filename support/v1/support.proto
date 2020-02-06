@@ -95,7 +95,7 @@ message SupportRequest {
     string deployment_id = 7;
     // description of the issue.
     string description = 8;
-    // severity of the issue. Can be one of the following: (lowest|low|medium|high|critical)
+    // severity of the issue. Can be one of the following: (low|normal|high|critical)
     string severity = 9;
 }
 
