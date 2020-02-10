@@ -112,6 +112,48 @@ export interface ResponseTimes {
   low?: number;
 }
 
+// SupportRequest contains information about the request
+export interface SupportRequest {
+  // ID of the request
+  // This is a read-only field
+  // string
+  id?: string;
+  
+  // Name of the user who submitted the support request
+  // This is a required field
+  // string
+  user_name?: string;
+  
+  // User ID is only provided if the user submitting the request has authenticated
+  // This is an optional field
+  // string
+  user_id?: string;
+  
+  // Email address of the user if applicable submitting the request
+  // string
+  email_address?: string;
+  
+  // Optional identifier of the organization that is the subject of the support request
+  // string
+  organization_id?: string;
+  
+  // Optional identifier of the project that is the subject of the support request
+  // string
+  project_id?: string;
+  
+  // Optional identifier of the deployment that is the subject of the support request
+  // string
+  deployment_id?: string;
+  
+  // Desciption which will contain the details provided by the submitter
+  // string
+  description?: string;
+  
+  // Severity of the request. Can be one of the following: (low|normal|high|critical)
+  // string
+  severity?: string;
+}
+
 // SupportService is the API used to query for support.
 export interface ISupportService {
   // Get the current API version of this service.
@@ -138,6 +180,11 @@ export interface ISupportService {
   // Required permissions:
   // - None
   ListFaqGroupEntries: (req: arangodb_cloud_common_v1_ListOptions) => Promise<FaqGroupEntryList>;
+  
+  // Submit a support request.
+  // Required permissions:
+  // - None
+  CreateSupportRequest: (req: SupportRequest) => Promise<SupportRequest>;
 }
 
 // SupportService is the API used to query for support.
@@ -185,5 +232,13 @@ export class SupportService implements ISupportService {
     const path = `/api/support/v1/faqgroups/${encodeURIComponent(req.context_id || '')}/entries`;
     const url = path + api.queryString(req, [`context_id`]);
     return api.get(url, undefined);
+  }
+  
+  // Submit a support request.
+  // Required permissions:
+  // - None
+  async CreateSupportRequest(req: SupportRequest): Promise<SupportRequest> {
+    const url = `/api/support/v1/supportrequests`;
+    return api.post(url, req);
   }
 }

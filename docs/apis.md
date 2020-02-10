@@ -133,6 +133,7 @@
     - [Plan](#arangodb.cloud.support.v1.Plan)
     - [PlanList](#arangodb.cloud.support.v1.PlanList)
     - [ResponseTimes](#arangodb.cloud.support.v1.ResponseTimes)
+    - [SupportRequest](#arangodb.cloud.support.v1.SupportRequest)
   
   
   
@@ -1958,6 +1959,29 @@ A value of 0 means &#34;best effort&#34;.
 
 
 
+
+<a name="arangodb.cloud.support.v1.SupportRequest"></a>
+
+### SupportRequest
+SupportRequest contains information about the request
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | ID of the request This is a read-only field |
+| user_name | [string](#string) |  | Name of the user who submitted the support request This is a required field |
+| user_id | [string](#string) |  | User ID is only provided if the user submitting the request has authenticated This is an optional field |
+| email_address | [string](#string) |  | Email address of the user if applicable submitting the request |
+| organization_id | [string](#string) |  | Optional identifier of the organization that is the subject of the support request |
+| project_id | [string](#string) |  | Optional identifier of the project that is the subject of the support request |
+| deployment_id | [string](#string) |  | Optional identifier of the deployment that is the subject of the support request |
+| description | [string](#string) |  | Desciption which will contain the details provided by the submitter |
+| severity | [string](#string) |  | Severity of the request. Can be one of the following: (low|normal|high|critical) |
+
+
+
+
+
  
 
  
@@ -1977,6 +2001,7 @@ SupportService is the API used to query for support.
 | GetPlan | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Plan](#arangodb.cloud.support.v1.Plan) | Fetch a support plan by its id. Required permissions: - None |
 | ListFaqGroups | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [FaqGroupList](#arangodb.cloud.support.v1.FaqGroupList) | Fetch all FAQ groups. Required permissions: - None |
 | ListFaqGroupEntries | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [FaqGroupEntryList](#arangodb.cloud.support.v1.FaqGroupEntryList) | Fetch all FAQ group entries of the FAQ group identified by the given context ID. Required permissions: - None |
+| CreateSupportRequest | [SupportRequest](#arangodb.cloud.support.v1.SupportRequest) | [SupportRequest](#arangodb.cloud.support.v1.SupportRequest) | Submit a support request. Required permissions: - None |
 
  
 

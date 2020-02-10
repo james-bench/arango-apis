@@ -62,6 +62,41 @@ service SupportService {
             get: "/api/support/v1/faqgroups/{context_id}/entries"
         };
     }
+
+    // Submit a support request.
+    // Required permissions:
+    // - None
+    rpc CreateSupportRequest(SupportRequest) returns (SupportRequest) {
+        option (google.api.http) = {
+            post: "/api/support/v1/supportrequests"
+            body: "*"
+        };
+    }
+}
+
+// SupportRequest contains information about the request
+message SupportRequest {
+    // ID of the request
+    // This is a read-only field
+    string id = 1;
+    // Name of the user who submitted the support request
+    // This is a required field
+    string user_name = 2;
+    // User ID is only provided if the user submitting the request has authenticated
+    // This is an optional field
+    string user_id = 3;
+    // Email address of the user if applicable submitting the request
+    string email_address = 4;
+    // Optional identifier of the organization that is the subject of the support request
+    string organization_id = 5;
+    // Optional identifier of the project that is the subject of the support request
+    string project_id = 6;
+    // Optional identifier of the deployment that is the subject of the support request
+    string deployment_id = 7;
+    // Desciption which will contain the details provided by the submitter
+    string description = 8;
+    // Severity of the request. Can be one of the following: (low|normal|high|critical)
+    string severity = 9;
 }
 
 // Plan represents a specific support plan such as Bronze, Silver or Gold.
