@@ -1963,20 +1963,20 @@ A value of 0 means &#34;best effort&#34;.
 <a name="arangodb.cloud.support.v1.SupportRequest"></a>
 
 ### SupportRequest
-SupportTicketRequest contains information about the ticket
+SupportRequest contains information about the request
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| id | [string](#string) |  | ID of the ticket. This is a read-only field |
-| user_name | [string](#string) |  | Name of the user who submitted the support request. This is a required field |
-| user_id | [string](#string) |  | user_id is provided if the user submitting the ticket is authenticated This is an optional field |
-| email_address | [string](#string) |  | email_address of the user submitting the ticket |
-| organization_id | [string](#string) |  | organization_id is provided if applicable to the issue |
-| project_id | [string](#string) |  | project_id is provided if applicable to the issue |
-| deployment_id | [string](#string) |  | deployment_id is provided if applicable to the issue |
-| description | [string](#string) |  | description of the issue. |
-| severity | [string](#string) |  | severity of the issue. Can be one of the following: (low|normal|high|critical) |
+| id | [string](#string) |  | ID of the request This is a read-only field |
+| user_name | [string](#string) |  | Name of the user who submitted the support request This is a required field |
+| user_id | [string](#string) |  | User ID is only provided if the user submitting the request has authenticated This is an optional field |
+| email_address | [string](#string) |  | Email address of the user if applicable submitting the request |
+| organization_id | [string](#string) |  | Optional identifier of the organization that is the subject of the support request |
+| project_id | [string](#string) |  | Optional identifier of the project that is the subject of the support request |
+| deployment_id | [string](#string) |  | Optional identifier of the deployment that is the subject of the support request |
+| description | [string](#string) |  | Desciption which will contain the details provided by the submitter |
+| severity | [string](#string) |  | Severity of the request. Can be one of the following: (low|normal|high|critical) |
 
 
 

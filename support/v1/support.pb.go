@@ -28,28 +28,28 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-// SupportTicketRequest contains information about the ticket
+// SupportRequest contains information about the request
 type SupportRequest struct {
-	// ID of the ticket.
+	// ID of the request
 	// This is a read-only field
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// Name of the user who submitted the support request.
+	// Name of the user who submitted the support request
 	// This is a required field
 	UserName string `protobuf:"bytes,2,opt,name=user_name,json=userName,proto3" json:"user_name,omitempty"`
-	// user_id is provided if the user submitting the ticket is authenticated
+	// User ID is only provided if the user submitting the request has authenticated
 	// This is an optional field
 	UserId string `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	// email_address of the user submitting the ticket
+	// Email address of the user if applicable submitting the request
 	EmailAddress string `protobuf:"bytes,4,opt,name=email_address,json=emailAddress,proto3" json:"email_address,omitempty"`
-	// organization_id is provided if applicable to the issue
+	// Optional identifier of the organization that is the subject of the support request
 	OrganizationId string `protobuf:"bytes,5,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
-	// project_id is provided if applicable to the issue
+	// Optional identifier of the project that is the subject of the support request
 	ProjectId string `protobuf:"bytes,6,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
-	// deployment_id is provided if applicable to the issue
+	// Optional identifier of the deployment that is the subject of the support request
 	DeploymentId string `protobuf:"bytes,7,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
-	// description of the issue.
+	// Desciption which will contain the details provided by the submitter
 	Description string `protobuf:"bytes,8,opt,name=description,proto3" json:"description,omitempty"`
-	// severity of the issue. Can be one of the following: (low|normal|high|critical)
+	// Severity of the request. Can be one of the following: (low|normal|high|critical)
 	Severity             string   `protobuf:"bytes,9,opt,name=severity,proto3" json:"severity,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`

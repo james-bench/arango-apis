@@ -74,28 +74,28 @@ service SupportService {
     }
 }
 
-// SupportTicketRequest contains information about the ticket
+// SupportRequest contains information about the request
 message SupportRequest {
-    // ID of the ticket.
+    // ID of the request
     // This is a read-only field
     string id = 1;
-    // Name of the user who submitted the support request.
+    // Name of the user who submitted the support request
     // This is a required field
     string user_name = 2;
-    // user_id is provided if the user submitting the ticket is authenticated
+    // User ID is only provided if the user submitting the request has authenticated
     // This is an optional field
     string user_id = 3;
-    // email_address of the user submitting the ticket
+    // Email address of the user if applicable submitting the request
     string email_address = 4;
-    // organization_id is provided if applicable to the issue
+    // Optional identifier of the organization that is the subject of the support request
     string organization_id = 5;
-    // project_id is provided if applicable to the issue
+    // Optional identifier of the project that is the subject of the support request
     string project_id = 6;
-    // deployment_id is provided if applicable to the issue
+    // Optional identifier of the deployment that is the subject of the support request
     string deployment_id = 7;
-    // description of the issue.
+    // Desciption which will contain the details provided by the submitter
     string description = 8;
-    // severity of the issue. Can be one of the following: (low|normal|high|critical)
+    // Severity of the request. Can be one of the following: (low|normal|high|critical)
     string severity = 9;
 }
 

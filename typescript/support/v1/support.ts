@@ -112,44 +112,44 @@ export interface ResponseTimes {
   low?: number;
 }
 
-// SupportTicketRequest contains information about the ticket
+// SupportRequest contains information about the request
 export interface SupportRequest {
-  // ID of the ticket.
+  // ID of the request
   // This is a read-only field
   // string
   id?: string;
   
-  // Name of the user who submitted the support request.
+  // Name of the user who submitted the support request
   // This is a required field
   // string
   user_name?: string;
   
-  // user_id is provided if the user submitting the ticket is authenticated
+  // User ID is only provided if the user submitting the request has authenticated
   // This is an optional field
   // string
   user_id?: string;
   
-  // email_address of the user submitting the ticket
+  // Email address of the user if applicable submitting the request
   // string
   email_address?: string;
   
-  // organization_id is provided if applicable to the issue
+  // Optional identifier of the organization that is the subject of the support request
   // string
   organization_id?: string;
   
-  // project_id is provided if applicable to the issue
+  // Optional identifier of the project that is the subject of the support request
   // string
   project_id?: string;
   
-  // deployment_id is provided if applicable to the issue
+  // Optional identifier of the deployment that is the subject of the support request
   // string
   deployment_id?: string;
   
-  // description of the issue.
+  // Desciption which will contain the details provided by the submitter
   // string
   description?: string;
   
-  // severity of the issue. Can be one of the following: (low|normal|high|critical)
+  // Severity of the request. Can be one of the following: (low|normal|high|critical)
   // string
   severity?: string;
 }
