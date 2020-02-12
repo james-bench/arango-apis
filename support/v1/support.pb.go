@@ -751,7 +751,10 @@ type SupportServiceClient interface {
 	ListFaqGroupEntries(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*FaqGroupEntryList, error)
 	// Submit a support request.
 	// Required permissions:
-	// - None
+	// - resourcemanager.organization.get (if organization id is set)
+	// - resourcemanager.project.get (if project id is set)
+	// - data.deployment.get (if deployment id is set)
+	// - None (if no ids are set)
 	CreateSupportRequest(ctx context.Context, in *SupportRequest, opts ...grpc.CallOption) (*SupportRequest, error)
 }
 
@@ -841,7 +844,10 @@ type SupportServiceServer interface {
 	ListFaqGroupEntries(context.Context, *v1.ListOptions) (*FaqGroupEntryList, error)
 	// Submit a support request.
 	// Required permissions:
-	// - None
+	// - resourcemanager.organization.get (if organization id is set)
+	// - resourcemanager.project.get (if project id is set)
+	// - data.deployment.get (if deployment id is set)
+	// - None (if no ids are set)
 	CreateSupportRequest(context.Context, *SupportRequest) (*SupportRequest, error)
 }
 

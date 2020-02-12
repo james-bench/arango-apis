@@ -183,7 +183,10 @@ export interface ISupportService {
   
   // Submit a support request.
   // Required permissions:
-  // - None
+  // - resourcemanager.organization.get (if organization id is set)
+  // - resourcemanager.project.get (if project id is set)
+  // - data.deployment.get (if deployment id is set)
+  // - None (if no ids are set)
   CreateSupportRequest: (req: SupportRequest) => Promise<SupportRequest>;
 }
 
@@ -236,7 +239,10 @@ export class SupportService implements ISupportService {
   
   // Submit a support request.
   // Required permissions:
-  // - None
+  // - resourcemanager.organization.get (if organization id is set)
+  // - resourcemanager.project.get (if project id is set)
+  // - data.deployment.get (if deployment id is set)
+  // - None (if no ids are set)
   async CreateSupportRequest(req: SupportRequest): Promise<SupportRequest> {
     const url = `/api/support/v1/supportrequests`;
     return api.post(url, req);

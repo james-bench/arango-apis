@@ -2001,7 +2001,7 @@ SupportService is the API used to query for support.
 | GetPlan | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [Plan](#arangodb.cloud.support.v1.Plan) | Fetch a support plan by its id. Required permissions: - None |
 | ListFaqGroups | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [FaqGroupList](#arangodb.cloud.support.v1.FaqGroupList) | Fetch all FAQ groups. Required permissions: - None |
 | ListFaqGroupEntries | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [FaqGroupEntryList](#arangodb.cloud.support.v1.FaqGroupEntryList) | Fetch all FAQ group entries of the FAQ group identified by the given context ID. Required permissions: - None |
-| CreateSupportRequest | [SupportRequest](#arangodb.cloud.support.v1.SupportRequest) | [SupportRequest](#arangodb.cloud.support.v1.SupportRequest) | Submit a support request. Required permissions: - None |
+| CreateSupportRequest | [SupportRequest](#arangodb.cloud.support.v1.SupportRequest) | [SupportRequest](#arangodb.cloud.support.v1.SupportRequest) | Submit a support request. Required permissions: - resourcemanager.organization.get (if organization id is set) - resourcemanager.project.get (if project id is set) - data.deployment.get (if deployment id is set) - None (if no ids are set) |
 
  
 

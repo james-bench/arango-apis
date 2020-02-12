@@ -65,7 +65,10 @@ service SupportService {
 
     // Submit a support request.
     // Required permissions:
-    // - None
+    // - resourcemanager.organization.get (if organization id is set)
+    // - resourcemanager.project.get (if project id is set)
+    // - data.deployment.get (if deployment id is set)
+    // - None (if no ids are set)
     rpc CreateSupportRequest(SupportRequest) returns (SupportRequest) {
         option (google.api.http) = {
             post: "/api/support/v1/supportrequests"
