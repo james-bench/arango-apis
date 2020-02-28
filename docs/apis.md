@@ -2988,6 +2988,7 @@ NodeSize specifies the size constraints of different data nodes.
 | min_disk_size | [int32](#int32) |  | Minimum amount of disk (in GB) that is available on this size of node. |
 | max_disk_size | [int32](#int32) |  | Maximum amount of disk (in GB) that is available on this size of node. |
 | cpu_size | [string](#string) |  | CPU size that is available on this size of node (e.g. standard or high). |
+| disk_sizes | [int64](#int64) | repeated | If set, contains list of possible disk sizes (in GB) for the node. |
 
 
 
