@@ -839,6 +839,7 @@ export interface NodeSize {
   cpu_size?: string;
   
   // If set, contains list of possible disk sizes (in GB) for the node.
+  // In that case, this field overrides the min_disk_size & max_disk_size fields.
   // number
   disk_sizes?: number[];
 }
