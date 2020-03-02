@@ -637,6 +637,9 @@ message CalculateDeploymentSizeRequest {
     int32 node_count = 23;
     // Amount of disk space per node (in GB)
     int32 node_disk_size = 34;
+
+    // ID of region in which the deployment will be created.
+    string region_id = 50;
 }
 
 // Result of CalculateDeploymentSize

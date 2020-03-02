@@ -72,6 +72,10 @@ export interface CalculateDeploymentSizeRequest {
   // Amount of disk space per node (in GB)
   // number
   node_disk_size?: number;
+  
+  // ID of region in which the deployment will be created.
+  // string
+  region_id?: string;
 }
 
 // Instructions for connecting a driver to a deployment
