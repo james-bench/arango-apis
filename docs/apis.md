@@ -2427,6 +2427,7 @@ Request arguments for CalculateDeploymentSize
 | node_size_id | [string](#string) |  | Size of nodes being used |
 | node_count | [int32](#int32) |  | Number of nodes being used |
 | node_disk_size | [int32](#int32) |  | Amount of disk space per node (in GB) |
+| region_id | [string](#string) |  | ID of region in which the deployment will be created. |
 
 
 
