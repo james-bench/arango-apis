@@ -12,6 +12,189 @@ import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/com
 // File: security/v1/security.proto
 // Package: arangodb.cloud.security.v1
 
+// IAMProvider provides configuration for a custom Identity & Access management provider
+// for deployments.
+export interface IAMProvider {
+  // System identifier of the provider.
+  // This is a read-only value.
+  // string
+  id?: string;
+  
+  // URL of the provider.
+  // This is a read-only value.
+  // string
+  url?: string;
+  
+  // Name of the provider.
+  // string
+  name?: string;
+  
+  // Description of the provider.
+  // string
+  description?: string;
+  
+  // Identifier of the project that contains this provider.
+  // string
+  project_id?: string;
+  
+  // Type of provider
+  // string
+  type?: string;
+  
+  // The creation timestamp of this provider.
+  // This is a read-only value.
+  // googleTypes.Timestamp
+  created_at?: googleTypes.Timestamp;
+  
+  // The deletion timestamp of the provider
+  // This is a read-only value.
+  // googleTypes.Timestamp
+  deleted_at?: googleTypes.Timestamp;
+  
+  // Set when this provider is deleted.
+  // This is a read-only value.
+  // boolean
+  is_deleted?: boolean;
+  
+  // Identifier of the user who created this provider.
+  // This is a read-only value.
+  // string
+  created_by_id?: string;
+  
+  // IAMProvider_LDAPSettings
+  ldap_settings?: IAMProvider_LDAPSettings;
+}
+
+// LDAP provider specific settings
+export interface IAMProvider_LDAPSettings {
+  // Hostname or IP address of the server
+  // string
+  server?: string;
+  
+  // Port number of the server (defaults to 389)
+  // number
+  port?: number;
+  
+  // Base distinguished name under which the search takes place
+  // string
+  base_distinguished_name?: string;
+  
+  // distinguished name for a read-only LDAP user to which ArangoDB can bind to search the LDAP server
+  // string
+  bind_distinguished_name?: string;
+  
+  // Password name for a read-only LDAP user to which ArangoDB can bind to search the LDAP server.
+  // This is a set-only field. During get/list requests, this field will be empty.
+  // string
+  bind_password?: string;
+  
+  // Refresh rate in seconds (defaults to 300)
+  // number
+  refresh_rate?: number;
+  
+  // PEM encoded version of the CA certificate used by the LDAP server.
+  // string
+  tls_ca_certificate_pem?: string;
+  
+  // If set, calls into the underlying LDAP library are serialized.
+  // This option can be used to work around thread-unsafe LDAP library functionality.
+  // boolean
+  serialized?: boolean;
+  
+  // Timeout (in seconds) used when waiting to enter the LDAP library call serialization lock.
+  // This is only meaningful when serialized has been set to true.
+  // number
+  serialize_timeout_sec?: number;
+  
+  // Number of tries to attempt a connection to the LDAP server.
+  // Setting this to values greater than one will make ArangoDB retry to contact the
+  // LDAP server in case no connection can be made initially.
+  // number
+  retries?: number;
+  
+  // If set, the LDAP library will implicitly restart connections.
+  // boolean
+  restart?: boolean;
+  
+  // If set, the LDAP library will implicitly chase referrals.
+  // boolean
+  referrals?: boolean;
+  
+  // Timeout value (in seconds) for synchronous LDAP API calls (a value of 0 means default timeout).
+  // number
+  timeout_sec?: number;
+  
+  // Timeout value (in seconds) after which network operations following the initial
+  // connection return in case of no activity (a value of 0 means default timeout).
+  // number
+  network_timeout_sec?: number;
+  
+  // If set, the LDAP library will connect asynchronously.
+  // boolean
+  async_connect?: boolean;
+  
+  // Prefix for simple authentication
+  // string
+  prefix?: string;
+  
+  // Suffix for simple authentication
+  // string
+  suffix?: string;
+  
+  // LDAP search scope with possible values "base" (just search the base distinguished name),
+  // "sub" (recursive search under the base distinguished name) or
+  // "one" (search the base’s immediate children) (default: "sub").
+  // string
+  search_scope?: string;
+  
+  // LDAP filter expression which limits the set of LDAP users being considered
+  // (default: "objectClass=*"" which means all objects).
+  // string
+  search_filter?: string;
+  
+  // Specifies the attribute in the user objects which is used to match the ArangoDB user name (default: "uid").
+  // string
+  search_attribute?: string;
+  
+  // If set, this field specifies the name of the attribute used to fetch the roles of a user.
+  // string
+  roles_attribute_name?: string;
+  
+  // If set, then the string {USER} in the value of this field is replaced with the distinguished
+  // name of the authenticated LDAP user and the resulting search expression is used to
+  // match distinguished names of LDAP objects representing roles of that user.
+  // string
+  roles_search?: string;
+  
+  // Regular expression that is used to filter roles.
+  // Only roles that match the regular expression are used.
+  // string
+  roles_include?: string;
+  
+  // Regular expression that is used to filter roles.
+  // Only roles that do not match the regular expression are used.
+  // string
+  roles_exclude?: string;
+  
+  // A regular expression in the format of a replacement text (/re/text/).
+  // This regular expression is applied to the role name found.
+  // This is especially useful in the roles-search variant to extract the real role name out of the dn value.
+  // string
+  roles_transformation?: string;
+  
+  // Name of role associated with the superuser.
+  // Any user belonging to this role gains superuser status.
+  // This role is checked after applying the roles_transformation expression.
+  // string
+  super_user_role?: string;
+}
+
+// List of IAM providers.
+export interface IAMProviderList {
+  // IAMProvider
+  items?: IAMProvider[];
+}
+
 // IPWhitelist represents a list of CIDR ranges from which a deployment is accessible.
 export interface IPWhitelist {
   // System identifier of the whitelist.
@@ -102,6 +285,34 @@ export interface ISecurityService {
   // Required permissions:
   // - security.ipwhitelist.delete on the IP whitelist
   DeleteIPWhitelist: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Fetch all IAM providers that belong to the project identified by the given
+  // context ID.
+  // Required permissions:
+  // - security.iamprovider.list on the project identified by the given context ID.
+  ListIAMProviders: (req: arangodb_cloud_common_v1_ListOptions) => Promise<IAMProviderList>;
+  
+  // Fetch an IAM provider by its id.
+  // Required permissions:
+  // - security.iamprovider.get on the IAM provider
+  GetIAMProvider: (req: arangodb_cloud_common_v1_IDOptions) => Promise<IAMProvider>;
+  
+  // Create a new IAM provider
+  // Required permissions:
+  // - security.iamprovider.create on the project that owns the IAM provider.
+  CreateIAMProvider: (req: IAMProvider) => Promise<IAMProvider>;
+  
+  // Update an IAM provider
+  // Required permissions:
+  // - security.iamprovider.update on the IAM provider
+  UpdateIAMProvider: (req: IAMProvider) => Promise<IAMProvider>;
+  
+  // Delete an IAM provider.
+  // Note that IAM providers are initially only marked for deletion.
+  // Once all their dependent deployments are removed, the provider is removed.
+  // Required permissions:
+  // - security.iamprovider.delete on the IP whitelist
+  DeleteIAMProvider: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
 }
 
 // SecurityService is the API used to access security entities.
@@ -157,6 +368,52 @@ export class SecurityService implements ISecurityService {
   // - security.ipwhitelist.delete on the IP whitelist
   async DeleteIPWhitelist(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
     const path = `/api/security/v1/ipwhitelists/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.delete(url, undefined);
+  }
+  
+  // Fetch all IAM providers that belong to the project identified by the given
+  // context ID.
+  // Required permissions:
+  // - security.iamprovider.list on the project identified by the given context ID.
+  async ListIAMProviders(req: arangodb_cloud_common_v1_ListOptions): Promise<IAMProviderList> {
+    const path = `/api/security/v1/projects/${encodeURIComponent(req.context_id || '')}/iamproviders`;
+    const url = path + api.queryString(req, [`context_id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch an IAM provider by its id.
+  // Required permissions:
+  // - security.iamprovider.get on the IAM provider
+  async GetIAMProvider(req: arangodb_cloud_common_v1_IDOptions): Promise<IAMProvider> {
+    const path = `/api/security/v1/iamproviders/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Create a new IAM provider
+  // Required permissions:
+  // - security.iamprovider.create on the project that owns the IAM provider.
+  async CreateIAMProvider(req: IAMProvider): Promise<IAMProvider> {
+    const url = `/api/security/v1/project/${encodeURIComponent(req.project_id || '')}/iamproviders`;
+    return api.post(url, req);
+  }
+  
+  // Update an IAM provider
+  // Required permissions:
+  // - security.iamprovider.update on the IAM provider
+  async UpdateIAMProvider(req: IAMProvider): Promise<IAMProvider> {
+    const url = `/api/security/v1/iamproviders/${encodeURIComponent(req.id || '')}`;
+    return api.patch(url, req);
+  }
+  
+  // Delete an IAM provider.
+  // Note that IAM providers are initially only marked for deletion.
+  // Once all their dependent deployments are removed, the provider is removed.
+  // Required permissions:
+  // - security.iamprovider.delete on the IP whitelist
+  async DeleteIAMProvider(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
+    const path = `/api/security/v1/iamproviders/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.delete(url, undefined);
   }

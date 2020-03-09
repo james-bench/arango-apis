@@ -214,56 +214,581 @@ func (m *IPWhitelistList) GetItems() []*IPWhitelist {
 	return nil
 }
 
+// IAMProvider provides configuration for a custom Identity & Access management provider
+// for deployments.
+type IAMProvider struct {
+	// System identifier of the provider.
+	// This is a read-only value.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// URL of the provider.
+	// This is a read-only value.
+	Url string `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty"`
+	// Name of the provider.
+	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	// Description of the provider.
+	Description string `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	// Identifier of the project that contains this provider.
+	ProjectId string `protobuf:"bytes,5,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
+	// Type of provider
+	Type string `protobuf:"bytes,6,opt,name=type,proto3" json:"type,omitempty"`
+	// The creation timestamp of this provider.
+	// This is a read-only value.
+	CreatedAt *types.Timestamp `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	// The deletion timestamp of the provider
+	// This is a read-only value.
+	DeletedAt *types.Timestamp `protobuf:"bytes,8,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`
+	// Set when this provider is deleted.
+	// This is a read-only value.
+	IsDeleted bool `protobuf:"varint,9,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
+	// Identifier of the user who created this provider.
+	// This is a read-only value.
+	CreatedById          string                    `protobuf:"bytes,10,opt,name=created_by_id,json=createdById,proto3" json:"created_by_id,omitempty"`
+	LdapSettings         *IAMProvider_LDAPSettings `protobuf:"bytes,101,opt,name=ldap_settings,json=ldapSettings,proto3" json:"ldap_settings,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                  `json:"-"`
+	XXX_unrecognized     []byte                    `json:"-"`
+	XXX_sizecache        int32                     `json:"-"`
+}
+
+func (m *IAMProvider) Reset()         { *m = IAMProvider{} }
+func (m *IAMProvider) String() string { return proto.CompactTextString(m) }
+func (*IAMProvider) ProtoMessage()    {}
+func (*IAMProvider) Descriptor() ([]byte, []int) {
+	return fileDescriptor_55a487c716a8b59c, []int{2}
+}
+func (m *IAMProvider) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *IAMProvider) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_IAMProvider.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *IAMProvider) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IAMProvider.Merge(m, src)
+}
+func (m *IAMProvider) XXX_Size() int {
+	return m.Size()
+}
+func (m *IAMProvider) XXX_DiscardUnknown() {
+	xxx_messageInfo_IAMProvider.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_IAMProvider proto.InternalMessageInfo
+
+func (m *IAMProvider) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *IAMProvider) GetUrl() string {
+	if m != nil {
+		return m.Url
+	}
+	return ""
+}
+
+func (m *IAMProvider) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *IAMProvider) GetDescription() string {
+	if m != nil {
+		return m.Description
+	}
+	return ""
+}
+
+func (m *IAMProvider) GetProjectId() string {
+	if m != nil {
+		return m.ProjectId
+	}
+	return ""
+}
+
+func (m *IAMProvider) GetType() string {
+	if m != nil {
+		return m.Type
+	}
+	return ""
+}
+
+func (m *IAMProvider) GetCreatedAt() *types.Timestamp {
+	if m != nil {
+		return m.CreatedAt
+	}
+	return nil
+}
+
+func (m *IAMProvider) GetDeletedAt() *types.Timestamp {
+	if m != nil {
+		return m.DeletedAt
+	}
+	return nil
+}
+
+func (m *IAMProvider) GetIsDeleted() bool {
+	if m != nil {
+		return m.IsDeleted
+	}
+	return false
+}
+
+func (m *IAMProvider) GetCreatedById() string {
+	if m != nil {
+		return m.CreatedById
+	}
+	return ""
+}
+
+func (m *IAMProvider) GetLdapSettings() *IAMProvider_LDAPSettings {
+	if m != nil {
+		return m.LdapSettings
+	}
+	return nil
+}
+
+// LDAP provider specific settings
+type IAMProvider_LDAPSettings struct {
+	// Hostname or IP address of the server
+	Server string `protobuf:"bytes,1,opt,name=server,proto3" json:"server,omitempty"`
+	// Port number of the server (defaults to 389)
+	Port int32 `protobuf:"varint,2,opt,name=port,proto3" json:"port,omitempty"`
+	// Base distinguished name under which the search takes place
+	BaseDistinguishedName string `protobuf:"bytes,3,opt,name=base_distinguished_name,json=baseDistinguishedName,proto3" json:"base_distinguished_name,omitempty"`
+	// distinguished name for a read-only LDAP user to which ArangoDB can bind to search the LDAP server
+	BindDistinguishedName string `protobuf:"bytes,4,opt,name=bind_distinguished_name,json=bindDistinguishedName,proto3" json:"bind_distinguished_name,omitempty"`
+	// Password name for a read-only LDAP user to which ArangoDB can bind to search the LDAP server.
+	// This is a set-only field. During get/list requests, this field will be empty.
+	BindPassword string `protobuf:"bytes,5,opt,name=bind_password,json=bindPassword,proto3" json:"bind_password,omitempty"`
+	// Refresh rate in seconds (defaults to 300)
+	RefreshRate int32 `protobuf:"varint,6,opt,name=refresh_rate,json=refreshRate,proto3" json:"refresh_rate,omitempty"`
+	// PEM encoded version of the CA certificate used by the LDAP server.
+	TlsCaCertificatePem string `protobuf:"bytes,10,opt,name=tls_ca_certificate_pem,json=tlsCaCertificatePem,proto3" json:"tls_ca_certificate_pem,omitempty"`
+	// If set, calls into the underlying LDAP library are serialized.
+	// This option can be used to work around thread-unsafe LDAP library functionality.
+	Serialized bool `protobuf:"varint,20,opt,name=serialized,proto3" json:"serialized,omitempty"`
+	// Timeout (in seconds) used when waiting to enter the LDAP library call serialization lock.
+	// This is only meaningful when serialized has been set to true.
+	SerializeTimeoutSec int32 `protobuf:"varint,21,opt,name=serialize_timeout_sec,json=serializeTimeoutSec,proto3" json:"serialize_timeout_sec,omitempty"`
+	// Number of tries to attempt a connection to the LDAP server.
+	// Setting this to values greater than one will make ArangoDB retry to contact the
+	// LDAP server in case no connection can be made initially.
+	Retries int32 `protobuf:"varint,22,opt,name=retries,proto3" json:"retries,omitempty"`
+	// If set, the LDAP library will implicitly restart connections.
+	Restart bool `protobuf:"varint,23,opt,name=restart,proto3" json:"restart,omitempty"`
+	// If set, the LDAP library will implicitly chase referrals.
+	Referrals bool `protobuf:"varint,24,opt,name=referrals,proto3" json:"referrals,omitempty"`
+	// Timeout value (in seconds) for synchronous LDAP API calls (a value of 0 means default timeout).
+	TimeoutSec int32 `protobuf:"varint,25,opt,name=timeout_sec,json=timeoutSec,proto3" json:"timeout_sec,omitempty"`
+	// Timeout value (in seconds) after which network operations following the initial
+	// connection return in case of no activity (a value of 0 means default timeout).
+	NetworkTimeoutSec int32 `protobuf:"varint,26,opt,name=network_timeout_sec,json=networkTimeoutSec,proto3" json:"network_timeout_sec,omitempty"`
+	// If set, the LDAP library will connect asynchronously.
+	AsyncConnect bool `protobuf:"varint,27,opt,name=async_connect,json=asyncConnect,proto3" json:"async_connect,omitempty"`
+	// Prefix for simple authentication
+	Prefix string `protobuf:"bytes,100,opt,name=prefix,proto3" json:"prefix,omitempty"`
+	// Suffix for simple authentication
+	Suffix string `protobuf:"bytes,101,opt,name=suffix,proto3" json:"suffix,omitempty"`
+	// LDAP search scope with possible values "base" (just search the base distinguished name),
+	// "sub" (recursive search under the base distinguished name) or
+	// "one" (search the base’s immediate children) (default: "sub").
+	SearchScope string `protobuf:"bytes,200,opt,name=search_scope,json=searchScope,proto3" json:"search_scope,omitempty"`
+	// LDAP filter expression which limits the set of LDAP users being considered
+	// (default: "objectClass=*"" which means all objects).
+	SearchFilter string `protobuf:"bytes,201,opt,name=search_filter,json=searchFilter,proto3" json:"search_filter,omitempty"`
+	// Specifies the attribute in the user objects which is used to match the ArangoDB user name (default: "uid").
+	SearchAttribute string `protobuf:"bytes,202,opt,name=search_attribute,json=searchAttribute,proto3" json:"search_attribute,omitempty"`
+	// If set, this field specifies the name of the attribute used to fetch the roles of a user.
+	RolesAttributeName string `protobuf:"bytes,300,opt,name=roles_attribute_name,json=rolesAttributeName,proto3" json:"roles_attribute_name,omitempty"`
+	// If set, then the string {USER} in the value of this field is replaced with the distinguished
+	// name of the authenticated LDAP user and the resulting search expression is used to
+	// match distinguished names of LDAP objects representing roles of that user.
+	RolesSearch string `protobuf:"bytes,301,opt,name=roles_search,json=rolesSearch,proto3" json:"roles_search,omitempty"`
+	// Regular expression that is used to filter roles.
+	// Only roles that match the regular expression are used.
+	RolesInclude string `protobuf:"bytes,400,opt,name=roles_include,json=rolesInclude,proto3" json:"roles_include,omitempty"`
+	// Regular expression that is used to filter roles.
+	// Only roles that do not match the regular expression are used.
+	RolesExclude string `protobuf:"bytes,401,opt,name=roles_exclude,json=rolesExclude,proto3" json:"roles_exclude,omitempty"`
+	// A regular expression in the format of a replacement text (/re/text/).
+	// This regular expression is applied to the role name found.
+	// This is especially useful in the roles-search variant to extract the real role name out of the dn value.
+	RolesTransformation string `protobuf:"bytes,402,opt,name=roles_transformation,json=rolesTransformation,proto3" json:"roles_transformation,omitempty"`
+	// Name of role associated with the superuser.
+	// Any user belonging to this role gains superuser status.
+	// This role is checked after applying the roles_transformation expression.
+	SuperUserRole        string   `protobuf:"bytes,403,opt,name=super_user_role,json=superUserRole,proto3" json:"super_user_role,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *IAMProvider_LDAPSettings) Reset()         { *m = IAMProvider_LDAPSettings{} }
+func (m *IAMProvider_LDAPSettings) String() string { return proto.CompactTextString(m) }
+func (*IAMProvider_LDAPSettings) ProtoMessage()    {}
+func (*IAMProvider_LDAPSettings) Descriptor() ([]byte, []int) {
+	return fileDescriptor_55a487c716a8b59c, []int{2, 0}
+}
+func (m *IAMProvider_LDAPSettings) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *IAMProvider_LDAPSettings) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_IAMProvider_LDAPSettings.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *IAMProvider_LDAPSettings) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IAMProvider_LDAPSettings.Merge(m, src)
+}
+func (m *IAMProvider_LDAPSettings) XXX_Size() int {
+	return m.Size()
+}
+func (m *IAMProvider_LDAPSettings) XXX_DiscardUnknown() {
+	xxx_messageInfo_IAMProvider_LDAPSettings.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_IAMProvider_LDAPSettings proto.InternalMessageInfo
+
+func (m *IAMProvider_LDAPSettings) GetServer() string {
+	if m != nil {
+		return m.Server
+	}
+	return ""
+}
+
+func (m *IAMProvider_LDAPSettings) GetPort() int32 {
+	if m != nil {
+		return m.Port
+	}
+	return 0
+}
+
+func (m *IAMProvider_LDAPSettings) GetBaseDistinguishedName() string {
+	if m != nil {
+		return m.BaseDistinguishedName
+	}
+	return ""
+}
+
+func (m *IAMProvider_LDAPSettings) GetBindDistinguishedName() string {
+	if m != nil {
+		return m.BindDistinguishedName
+	}
+	return ""
+}
+
+func (m *IAMProvider_LDAPSettings) GetBindPassword() string {
+	if m != nil {
+		return m.BindPassword
+	}
+	return ""
+}
+
+func (m *IAMProvider_LDAPSettings) GetRefreshRate() int32 {
+	if m != nil {
+		return m.RefreshRate
+	}
+	return 0
+}
+
+func (m *IAMProvider_LDAPSettings) GetTlsCaCertificatePem() string {
+	if m != nil {
+		return m.TlsCaCertificatePem
+	}
+	return ""
+}
+
+func (m *IAMProvider_LDAPSettings) GetSerialized() bool {
+	if m != nil {
+		return m.Serialized
+	}
+	return false
+}
+
+func (m *IAMProvider_LDAPSettings) GetSerializeTimeoutSec() int32 {
+	if m != nil {
+		return m.SerializeTimeoutSec
+	}
+	return 0
+}
+
+func (m *IAMProvider_LDAPSettings) GetRetries() int32 {
+	if m != nil {
+		return m.Retries
+	}
+	return 0
+}
+
+func (m *IAMProvider_LDAPSettings) GetRestart() bool {
+	if m != nil {
+		return m.Restart
+	}
+	return false
+}
+
+func (m *IAMProvider_LDAPSettings) GetReferrals() bool {
+	if m != nil {
+		return m.Referrals
+	}
+	return false
+}
+
+func (m *IAMProvider_LDAPSettings) GetTimeoutSec() int32 {
+	if m != nil {
+		return m.TimeoutSec
+	}
+	return 0
+}
+
+func (m *IAMProvider_LDAPSettings) GetNetworkTimeoutSec() int32 {
+	if m != nil {
+		return m.NetworkTimeoutSec
+	}
+	return 0
+}
+
+func (m *IAMProvider_LDAPSettings) GetAsyncConnect() bool {
+	if m != nil {
+		return m.AsyncConnect
+	}
+	return false
+}
+
+func (m *IAMProvider_LDAPSettings) GetPrefix() string {
+	if m != nil {
+		return m.Prefix
+	}
+	return ""
+}
+
+func (m *IAMProvider_LDAPSettings) GetSuffix() string {
+	if m != nil {
+		return m.Suffix
+	}
+	return ""
+}
+
+func (m *IAMProvider_LDAPSettings) GetSearchScope() string {
+	if m != nil {
+		return m.SearchScope
+	}
+	return ""
+}
+
+func (m *IAMProvider_LDAPSettings) GetSearchFilter() string {
+	if m != nil {
+		return m.SearchFilter
+	}
+	return ""
+}
+
+func (m *IAMProvider_LDAPSettings) GetSearchAttribute() string {
+	if m != nil {
+		return m.SearchAttribute
+	}
+	return ""
+}
+
+func (m *IAMProvider_LDAPSettings) GetRolesAttributeName() string {
+	if m != nil {
+		return m.RolesAttributeName
+	}
+	return ""
+}
+
+func (m *IAMProvider_LDAPSettings) GetRolesSearch() string {
+	if m != nil {
+		return m.RolesSearch
+	}
+	return ""
+}
+
+func (m *IAMProvider_LDAPSettings) GetRolesInclude() string {
+	if m != nil {
+		return m.RolesInclude
+	}
+	return ""
+}
+
+func (m *IAMProvider_LDAPSettings) GetRolesExclude() string {
+	if m != nil {
+		return m.RolesExclude
+	}
+	return ""
+}
+
+func (m *IAMProvider_LDAPSettings) GetRolesTransformation() string {
+	if m != nil {
+		return m.RolesTransformation
+	}
+	return ""
+}
+
+func (m *IAMProvider_LDAPSettings) GetSuperUserRole() string {
+	if m != nil {
+		return m.SuperUserRole
+	}
+	return ""
+}
+
+// List of IAM providers.
+type IAMProviderList struct {
+	Items                []*IAMProvider `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *IAMProviderList) Reset()         { *m = IAMProviderList{} }
+func (m *IAMProviderList) String() string { return proto.CompactTextString(m) }
+func (*IAMProviderList) ProtoMessage()    {}
+func (*IAMProviderList) Descriptor() ([]byte, []int) {
+	return fileDescriptor_55a487c716a8b59c, []int{3}
+}
+func (m *IAMProviderList) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *IAMProviderList) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_IAMProviderList.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *IAMProviderList) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IAMProviderList.Merge(m, src)
+}
+func (m *IAMProviderList) XXX_Size() int {
+	return m.Size()
+}
+func (m *IAMProviderList) XXX_DiscardUnknown() {
+	xxx_messageInfo_IAMProviderList.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_IAMProviderList proto.InternalMessageInfo
+
+func (m *IAMProviderList) GetItems() []*IAMProvider {
+	if m != nil {
+		return m.Items
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*IPWhitelist)(nil), "arangodb.cloud.security.v1.IPWhitelist")
 	proto.RegisterType((*IPWhitelistList)(nil), "arangodb.cloud.security.v1.IPWhitelistList")
+	proto.RegisterType((*IAMProvider)(nil), "arangodb.cloud.security.v1.IAMProvider")
+	proto.RegisterType((*IAMProvider_LDAPSettings)(nil), "arangodb.cloud.security.v1.IAMProvider.LDAPSettings")
+	proto.RegisterType((*IAMProviderList)(nil), "arangodb.cloud.security.v1.IAMProviderList")
 }
 
 func init() { proto.RegisterFile("security.proto", fileDescriptor_55a487c716a8b59c) }
 
 var fileDescriptor_55a487c716a8b59c = []byte{
-	// 652 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x94, 0xcf, 0x6b, 0x13, 0x41,
-	0x14, 0xc7, 0x9d, 0xa4, 0xbf, 0x32, 0xa1, 0xbf, 0xe6, 0x20, 0x4b, 0xa8, 0x69, 0x5c, 0x2b, 0x0d,
-	0xd5, 0xee, 0xd0, 0x14, 0x11, 0x2d, 0x15, 0x5a, 0x2b, 0x25, 0x20, 0x58, 0x52, 0x7f, 0x80, 0x97,
-	0x30, 0xd9, 0x19, 0xb7, 0x23, 0xd9, 0x9d, 0x65, 0x67, 0x12, 0x0d, 0xa5, 0x17, 0xa1, 0x17, 0xaf,
-	0x7a, 0xf0, 0xae, 0x7f, 0x8c, 0x47, 0xc1, 0xbb, 0x48, 0xf5, 0x0f, 0x91, 0x99, 0x9d, 0x35, 0xab,
-	0x25, 0x34, 0x1e, 0xbc, 0xcd, 0xbe, 0x79, 0xef, 0xcd, 0xe7, 0x7d, 0xe7, 0x3b, 0x0b, 0xe7, 0x24,
-	0xf3, 0x7b, 0x09, 0x57, 0x03, 0x2f, 0x4e, 0x84, 0x12, 0xa8, 0x42, 0x12, 0x12, 0x05, 0x82, 0x76,
-	0x3c, 0xbf, 0x2b, 0x7a, 0xd4, 0xfb, 0xbd, 0xdd, 0xdf, 0xa8, 0x5c, 0xf6, 0x45, 0x18, 0x8a, 0x08,
-	0xf7, 0x37, 0x70, 0xba, 0x4a, 0x6b, 0x2a, 0x5b, 0x01, 0x57, 0x47, 0xbd, 0x8e, 0xe7, 0x8b, 0x10,
-	0x07, 0xa2, 0x4b, 0xa2, 0x00, 0x9b, 0x8d, 0x4e, 0xef, 0x05, 0x8e, 0xd5, 0x20, 0x66, 0x12, 0x2b,
-	0x1e, 0x32, 0xa9, 0x48, 0x18, 0x0f, 0x57, 0xb6, 0x78, 0x29, 0x10, 0x22, 0xe8, 0x32, 0x4c, 0x62,
-	0x8e, 0x49, 0x14, 0x09, 0x45, 0x14, 0x17, 0x91, 0x4c, 0x77, 0xdd, 0x6f, 0x05, 0x58, 0x6e, 0x1e,
-	0x3c, 0x3b, 0xe2, 0x8a, 0x75, 0xb9, 0x54, 0x68, 0x0e, 0x16, 0x38, 0x75, 0x40, 0x0d, 0xd4, 0x4b,
-	0xad, 0x02, 0xa7, 0x68, 0x01, 0x16, 0x7b, 0x49, 0xd7, 0x29, 0x98, 0x80, 0x5e, 0x22, 0x04, 0x27,
-	0x22, 0x12, 0x32, 0xa7, 0x68, 0x42, 0x66, 0x8d, 0x6a, 0xb0, 0x4c, 0x99, 0xf4, 0x13, 0x1e, 0xeb,
-	0xde, 0xce, 0x84, 0xd9, 0xca, 0x87, 0xd0, 0x15, 0x08, 0xe3, 0x44, 0xbc, 0x64, 0xbe, 0x6a, 0x73,
-	0xea, 0x4c, 0x9a, 0x84, 0x92, 0x8d, 0x34, 0x29, 0x5a, 0x86, 0x65, 0x9f, 0xd3, 0xa4, 0xad, 0xb5,
-	0x61, 0xd2, 0x99, 0xaa, 0x15, 0xeb, 0xa5, 0x16, 0xd4, 0xa1, 0x96, 0x89, 0xa0, 0x3b, 0x10, 0xfa,
-	0x09, 0x23, 0x8a, 0xd1, 0x36, 0x51, 0xce, 0x74, 0x0d, 0xd4, 0xcb, 0x8d, 0x8a, 0x97, 0x8e, 0xe6,
-	0x65, 0x62, 0x78, 0x8f, 0xb3, 0xd9, 0x5b, 0x25, 0x9b, 0xbd, 0xa3, 0x74, 0x29, 0x65, 0x5d, 0x66,
-	0x4b, 0x67, 0x2e, 0x2e, 0xb5, 0xd9, 0x3b, 0x4a, 0x53, 0x73, 0xd9, 0xb6, 0xdf, 0x4e, 0xa9, 0x06,
-	0xea, 0x33, 0xad, 0x12, 0x97, 0x7b, 0x69, 0x00, 0xb9, 0x70, 0x36, 0x83, 0xea, 0x0c, 0xf4, 0x5c,
-	0x30, 0x1d, 0xdc, 0x06, 0x77, 0x07, 0x4d, 0xea, 0x1e, 0xc0, 0xf9, 0x9c, 0xbe, 0x0f, 0xb5, 0xc6,
-	0xdb, 0x70, 0x92, 0x2b, 0x16, 0x4a, 0x07, 0xd4, 0x8a, 0xf5, 0x72, 0x63, 0xd5, 0x1b, 0x6d, 0x09,
-	0x2f, 0x57, 0xdb, 0x4a, 0xab, 0x1a, 0xa7, 0xd3, 0x70, 0xfe, 0xd0, 0xa6, 0x1c, 0xb2, 0xa4, 0xcf,
-	0x7d, 0x86, 0x06, 0x70, 0x76, 0x9f, 0xa9, 0x9d, 0x83, 0xe6, 0x53, 0x96, 0x48, 0xad, 0xf7, 0xf2,
-	0xdf, 0x4d, 0xad, 0xa1, 0xfa, 0x1b, 0xde, 0x83, 0x30, 0x56, 0x83, 0xca, 0xd5, 0xd1, 0x09, 0xb6,
-	0x87, 0xbb, 0xf2, 0xe6, 0xeb, 0xcf, 0x77, 0x85, 0x2a, 0x5a, 0x32, 0xde, 0xc9, 0xa8, 0xb4, 0x3b,
-	0x49, 0xcc, 0xd7, 0xfb, 0xf6, 0xa4, 0x8f, 0x00, 0x2e, 0xe8, 0xb1, 0x72, 0xa4, 0x12, 0x5d, 0x1f,
-	0xdd, 0x5d, 0xe7, 0x3e, 0x32, 0xa6, 0x90, 0x95, 0x1b, 0x63, 0x8e, 0xae, 0x6b, 0xdc, 0x2d, 0x83,
-	0x73, 0x0b, 0x6d, 0x9e, 0xc3, 0xb1, 0x3e, 0x92, 0xf8, 0xd8, 0x17, 0x91, 0x62, 0xaf, 0xb5, 0xc7,
-	0x4e, 0x30, 0x8f, 0x5f, 0x0d, 0x81, 0xde, 0x02, 0x38, 0xb7, 0xcf, 0xf2, 0x90, 0xe8, 0xda, 0x68,
-	0xc6, 0xe6, 0x5e, 0x46, 0x38, 0xee, 0xe5, 0xb8, 0x6b, 0x86, 0x6e, 0x05, 0xb9, 0xe7, 0xe8, 0xf2,
-	0x1c, 0xf8, 0x98, 0xd3, 0x13, 0xf4, 0x09, 0xc0, 0xc5, 0xfb, 0xc6, 0x23, 0x79, 0x9e, 0x71, 0x8f,
-	0x1a, 0x9f, 0x69, 0xdb, 0x30, 0xdd, 0x76, 0x1b, 0xa3, 0x14, 0xc3, 0xc7, 0xc3, 0x47, 0xf9, 0xa7,
-	0x60, 0x77, 0xc1, 0x1a, 0x7a, 0x0f, 0xe0, 0xe2, 0x93, 0x98, 0xfe, 0x77, 0xcc, 0x75, 0x83, 0xb9,
-	0xda, 0x18, 0x43, 0x3a, 0x8d, 0x75, 0x0a, 0xe0, 0x62, 0xfa, 0x02, 0xff, 0xf9, 0x36, 0x2f, 0x7a,
-	0x15, 0xd9, 0x2d, 0xae, 0x8d, 0x81, 0xb2, 0x7b, 0xef, 0xf3, 0x59, 0x15, 0x7c, 0x39, 0xab, 0x82,
-	0xef, 0x67, 0x55, 0xf0, 0xe1, 0x47, 0xf5, 0xd2, 0xf3, 0x9b, 0xb9, 0xff, 0x74, 0x76, 0xd0, 0x7a,
-	0x48, 0x22, 0x12, 0x30, 0xaa, 0x1b, 0xca, 0x7c, 0xc7, 0xce, 0x94, 0xf9, 0xf7, 0x6c, 0xfe, 0x0a,
-	0x00, 0x00, 0xff, 0xff, 0x35, 0x6d, 0xf6, 0xd1, 0x22, 0x06, 0x00, 0x00,
+	// 1264 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x57, 0xcd, 0x6f, 0x1b, 0xc5,
+	0x1b, 0xfe, 0x6d, 0xbe, 0x5a, 0x8f, 0xed, 0xa6, 0x99, 0xb4, 0xe9, 0xfc, 0x4c, 0x49, 0x53, 0xb7,
+	0xa8, 0x51, 0xa0, 0xb6, 0xe2, 0xf2, 0x21, 0xa8, 0x8a, 0x94, 0x26, 0xa5, 0xb2, 0x54, 0xc0, 0x72,
+	0x5a, 0x10, 0x5c, 0x56, 0xe3, 0xdd, 0xd7, 0xce, 0xc0, 0xee, 0xce, 0x6a, 0x66, 0xec, 0xd6, 0x54,
+	0xbd, 0x20, 0x71, 0xe1, 0x04, 0x94, 0x43, 0xef, 0x70, 0x84, 0xff, 0xa3, 0x70, 0x42, 0xe2, 0x8e,
+	0x50, 0xe1, 0xc2, 0x3f, 0x81, 0xd0, 0x7c, 0xac, 0xbd, 0x49, 0x48, 0xeb, 0x88, 0x56, 0x88, 0xdb,
+	0xcc, 0xf3, 0x3e, 0xef, 0x3b, 0xcf, 0xce, 0xfb, 0x78, 0x66, 0x8c, 0x8e, 0x49, 0x08, 0xfa, 0x82,
+	0xa9, 0x61, 0x2d, 0x15, 0x5c, 0x71, 0x5c, 0xa1, 0x82, 0x26, 0x3d, 0x1e, 0x76, 0x6a, 0x41, 0xc4,
+	0xfb, 0x61, 0x6d, 0x14, 0x1e, 0xac, 0x57, 0x96, 0x02, 0x1e, 0xc7, 0x3c, 0xa9, 0x0f, 0xd6, 0xeb,
+	0x76, 0x64, 0x73, 0x2a, 0x97, 0x7b, 0x4c, 0xed, 0xf4, 0x3b, 0xb5, 0x80, 0xc7, 0xf5, 0x1e, 0x8f,
+	0x68, 0xd2, 0xab, 0x9b, 0x40, 0xa7, 0xdf, 0xad, 0xa7, 0x6a, 0x98, 0x82, 0xac, 0x2b, 0x16, 0x83,
+	0x54, 0x34, 0x4e, 0xc7, 0x23, 0x97, 0x7c, 0xba, 0xc7, 0x79, 0x2f, 0x82, 0x3a, 0x4d, 0x59, 0x9d,
+	0x26, 0x09, 0x57, 0x54, 0x31, 0x9e, 0x48, 0x1b, 0xad, 0xfe, 0x32, 0x85, 0x8a, 0xcd, 0xd6, 0xfb,
+	0x3b, 0x4c, 0x41, 0xc4, 0xa4, 0xc2, 0xc7, 0xd0, 0x14, 0x0b, 0x89, 0xb7, 0xe2, 0xad, 0x16, 0xda,
+	0x53, 0x2c, 0xc4, 0xc7, 0xd1, 0x74, 0x5f, 0x44, 0x64, 0xca, 0x00, 0x7a, 0x88, 0x31, 0x9a, 0x49,
+	0x68, 0x0c, 0x64, 0xda, 0x40, 0x66, 0x8c, 0x57, 0x50, 0x31, 0x04, 0x19, 0x08, 0x96, 0xea, 0xda,
+	0x64, 0xc6, 0x84, 0xf2, 0x10, 0x7e, 0x1e, 0xa1, 0x54, 0xf0, 0x8f, 0x20, 0x50, 0x3e, 0x0b, 0xc9,
+	0xac, 0x21, 0x14, 0x1c, 0xd2, 0x0c, 0xf1, 0x19, 0x54, 0x0c, 0x58, 0x28, 0x7c, 0xbd, 0x37, 0x20,
+	0xc9, 0xdc, 0xca, 0xf4, 0x6a, 0xa1, 0x8d, 0x34, 0xd4, 0x36, 0x08, 0x7e, 0x1d, 0xa1, 0x40, 0x00,
+	0x55, 0x10, 0xfa, 0x54, 0x91, 0x23, 0x2b, 0xde, 0x6a, 0xb1, 0x51, 0xa9, 0xd9, 0x4f, 0xab, 0x65,
+	0x9b, 0x51, 0xbb, 0x99, 0x7d, 0x7b, 0xbb, 0xe0, 0xd8, 0x1b, 0x4a, 0xa7, 0x86, 0x10, 0x81, 0x4b,
+	0x3d, 0xfa, 0xe4, 0x54, 0xc7, 0xde, 0x50, 0x5a, 0x35, 0x93, 0xbe, 0x9b, 0x93, 0xc2, 0x8a, 0xb7,
+	0x7a, 0xb4, 0x5d, 0x60, 0x72, 0xcb, 0x02, 0xb8, 0x8a, 0xca, 0x99, 0xa8, 0xce, 0x50, 0x7f, 0x17,
+	0xb2, 0x1f, 0xee, 0xc0, 0xab, 0xc3, 0x66, 0x58, 0x6d, 0xa1, 0xf9, 0xdc, 0xfe, 0xde, 0xd0, 0x7b,
+	0x7c, 0x05, 0xcd, 0x32, 0x05, 0xb1, 0x24, 0xde, 0xca, 0xf4, 0x6a, 0xb1, 0x71, 0xa1, 0x76, 0xb0,
+	0x25, 0x6a, 0xb9, 0xdc, 0xb6, 0xcd, 0xaa, 0x3e, 0x28, 0xa2, 0x62, 0x73, 0xe3, 0xed, 0x96, 0xe0,
+	0x03, 0x16, 0x82, 0xf8, 0xb7, 0x5a, 0x86, 0xd1, 0x8c, 0xb6, 0x1e, 0x99, 0xb3, 0x45, 0xf5, 0xf8,
+	0x3f, 0xdb, 0x25, 0xfc, 0x01, 0x2a, 0x47, 0x21, 0x4d, 0x7d, 0x09, 0x4a, 0xb1, 0xa4, 0x27, 0x09,
+	0x18, 0x01, 0x2f, 0x3f, 0xb6, 0x35, 0xe3, 0x1e, 0xd4, 0x6e, 0x6c, 0x6d, 0xb4, 0xb6, 0x5d, 0x6e,
+	0xbb, 0xa4, 0x4b, 0x65, 0xb3, 0xca, 0x1f, 0x47, 0x50, 0x29, 0x1f, 0xc6, 0x4b, 0x68, 0x4e, 0x82,
+	0x18, 0x80, 0x70, 0x3d, 0x73, 0x33, 0xbd, 0xa1, 0x29, 0x17, 0xca, 0x34, 0x6e, 0xb6, 0x6d, 0xc6,
+	0xf8, 0x55, 0x74, 0xaa, 0x43, 0x25, 0xf8, 0x21, 0x93, 0x3a, 0xb9, 0xcf, 0xe4, 0x0e, 0x84, 0x7e,
+	0xae, 0x99, 0x27, 0x75, 0x78, 0x2b, 0x1f, 0x7d, 0x47, 0x77, 0x57, 0xe7, 0xb1, 0x24, 0xfc, 0xbb,
+	0xbc, 0x19, 0x97, 0xc7, 0x92, 0x70, 0x7f, 0xde, 0x39, 0x54, 0x36, 0x79, 0x29, 0x95, 0xf2, 0x36,
+	0x17, 0x59, 0xdb, 0x4b, 0x1a, 0x6c, 0x39, 0x0c, 0x9f, 0x45, 0x25, 0x01, 0x5d, 0x01, 0x72, 0xc7,
+	0x17, 0x54, 0x59, 0x07, 0xcc, 0xb6, 0x8b, 0x0e, 0x6b, 0x53, 0x05, 0xf8, 0x12, 0x5a, 0x52, 0x91,
+	0xf4, 0x03, 0xea, 0x07, 0x20, 0x14, 0xeb, 0xb2, 0x80, 0x2a, 0xf0, 0x53, 0x88, 0xdd, 0xe6, 0x2f,
+	0xaa, 0x48, 0x6e, 0xd2, 0xcd, 0x71, 0xac, 0x05, 0x31, 0x5e, 0x46, 0x48, 0x82, 0x60, 0x34, 0x62,
+	0x9f, 0x40, 0x48, 0x4e, 0x98, 0x3e, 0xe6, 0x10, 0xdc, 0x40, 0x27, 0x47, 0x33, 0x5f, 0x1f, 0x73,
+	0xbc, 0xaf, 0x7c, 0x09, 0x01, 0x39, 0x69, 0x04, 0x2c, 0x8e, 0x82, 0x37, 0x6d, 0x6c, 0x1b, 0x02,
+	0x4c, 0xd0, 0x11, 0x01, 0x4a, 0x30, 0x90, 0x64, 0xc9, 0xb0, 0xb2, 0xa9, 0x8d, 0x48, 0x45, 0x85,
+	0x22, 0xa7, 0xcc, 0x52, 0xd9, 0x14, 0x9f, 0x46, 0x05, 0x01, 0x5d, 0x10, 0x82, 0x46, 0x92, 0x10,
+	0x6b, 0xa7, 0x11, 0xa0, 0x8f, 0xaa, 0xfc, 0xda, 0xff, 0x37, 0x55, 0x91, 0x1a, 0x2f, 0x59, 0x43,
+	0x8b, 0x09, 0xa8, 0xdb, 0x5c, 0x7c, 0xbc, 0x4b, 0x64, 0xc5, 0x10, 0x17, 0x5c, 0x28, 0x27, 0xf1,
+	0x1c, 0x2a, 0x53, 0x39, 0x4c, 0x02, 0x3f, 0xe0, 0x49, 0x02, 0x81, 0x22, 0xcf, 0x99, 0x25, 0x4b,
+	0x06, 0xdc, 0xb4, 0x98, 0x36, 0x4d, 0x2a, 0xa0, 0xcb, 0xee, 0x90, 0xd0, 0x9a, 0xc6, 0xce, 0x8c,
+	0x99, 0xfa, 0x5d, 0x8d, 0x83, 0x33, 0x93, 0x99, 0xe1, 0x2a, 0x2a, 0x49, 0xa0, 0x22, 0xd8, 0xf1,
+	0x65, 0xc0, 0x53, 0x20, 0x0f, 0xad, 0xd7, 0x8a, 0x16, 0xdc, 0xd6, 0x18, 0x3e, 0x8f, 0xca, 0x8e,
+	0xd3, 0x65, 0x91, 0x02, 0x41, 0x7e, 0xb0, 0x24, 0x97, 0xf9, 0x96, 0x01, 0xf1, 0x1a, 0x3a, 0xee,
+	0x58, 0x54, 0x29, 0xc1, 0x3a, 0x7d, 0x05, 0xe4, 0x47, 0x4b, 0x9c, 0xb7, 0x81, 0x8d, 0x0c, 0xc7,
+	0xeb, 0xe8, 0x84, 0xe0, 0x11, 0xc8, 0x31, 0xd5, 0x7a, 0xee, 0x3b, 0x7b, 0x18, 0x61, 0x13, 0x1c,
+	0xd1, 0x8d, 0xe3, 0xaa, 0xa8, 0x64, 0x53, 0x6c, 0x2d, 0xf2, 0xbd, 0xa5, 0x16, 0x0d, 0xb8, 0x6d,
+	0x30, 0x2d, 0xd4, 0x72, 0x58, 0x12, 0x44, 0xfd, 0x10, 0xc8, 0x17, 0xd6, 0xfc, 0x36, 0xb3, 0x69,
+	0xc1, 0x31, 0x0b, 0xee, 0x58, 0xd6, 0x97, 0x79, 0xd6, 0x35, 0x0b, 0xe2, 0x46, 0x26, 0x51, 0x09,
+	0x9a, 0xc8, 0x2e, 0x17, 0xb1, 0xb9, 0x0f, 0xc9, 0x57, 0x96, 0xbc, 0x68, 0x82, 0x37, 0x77, 0xc5,
+	0xf0, 0x05, 0x34, 0x2f, 0xfb, 0x29, 0x08, 0xbf, 0x2f, 0x41, 0xf8, 0x9a, 0x41, 0xee, 0x5b, 0x7a,
+	0xd9, 0xe0, 0xb7, 0x24, 0x88, 0x36, 0x8f, 0xc0, 0x1c, 0xf6, 0xe3, 0x53, 0xe1, 0xf0, 0x87, 0xfd,
+	0x38, 0xd7, 0x1d, 0xf6, 0x8d, 0x3f, 0x4b, 0x68, 0x7e, 0xdb, 0x51, 0xb6, 0x41, 0x0c, 0x58, 0x00,
+	0x78, 0x88, 0xca, 0xd7, 0x41, 0x6d, 0xb4, 0x9a, 0xef, 0x81, 0x90, 0x5a, 0xdf, 0x99, 0xbd, 0x45,
+	0xdd, 0xeb, 0x61, 0xb0, 0x5e, 0xbb, 0x16, 0xa7, 0x6a, 0x58, 0x39, 0x7b, 0x30, 0xc1, 0xd5, 0xa8,
+	0x9e, 0xff, 0xf4, 0xe7, 0xdf, 0xef, 0x4f, 0x2d, 0xe3, 0xd3, 0xe6, 0xa1, 0x90, 0xa9, 0xd2, 0x4f,
+	0x11, 0x9a, 0xb2, 0x8b, 0x03, 0xb7, 0xd2, 0x37, 0x1e, 0x3a, 0xae, 0x3f, 0x2b, 0x77, 0x2d, 0x49,
+	0xfc, 0xc2, 0xc1, 0xd5, 0x35, 0xf7, 0x5d, 0x73, 0x9d, 0xc8, 0xca, 0x8b, 0x13, 0xde, 0x73, 0x3a,
+	0xa7, 0x7a, 0xd9, 0xc8, 0x79, 0x05, 0x5f, 0xda, 0x27, 0xc7, 0xdd, 0x40, 0xb2, 0x7e, 0x37, 0xe0,
+	0x89, 0x82, 0x3b, 0xfa, 0x76, 0xba, 0x57, 0x67, 0xe9, 0xed, 0xb1, 0xa0, 0xcf, 0x3d, 0x74, 0xec,
+	0x3a, 0xe4, 0x45, 0xe2, 0x73, 0x07, 0x6b, 0x6c, 0x6e, 0x65, 0x0a, 0x27, 0xbd, 0x89, 0xab, 0x6b,
+	0x46, 0xdd, 0x79, 0x5c, 0xdd, 0xa7, 0x2e, 0xaf, 0xa3, 0x7e, 0x97, 0x85, 0xf7, 0xf0, 0xb7, 0x1e,
+	0x5a, 0xd8, 0x34, 0x57, 0x4d, 0x5e, 0xcf, 0xa4, 0x4b, 0x4d, 0xae, 0xe9, 0x8a, 0xd1, 0xf4, 0x5a,
+	0xb5, 0x71, 0xd0, 0x8e, 0xd5, 0xef, 0x8e, 0xaf, 0xf3, 0xdd, 0x1b, 0xf6, 0x86, 0xb7, 0x86, 0xbf,
+	0xf6, 0xd0, 0xc2, 0xad, 0x34, 0x7c, 0xe6, 0x32, 0x2f, 0x1a, 0x99, 0x17, 0x1a, 0x13, 0x6c, 0x9d,
+	0x96, 0xf5, 0x99, 0x87, 0x16, 0xec, 0x45, 0x7e, 0xe8, 0x6e, 0x3e, 0xe9, 0x57, 0x91, 0x75, 0x71,
+	0x6d, 0x92, 0x2e, 0x8e, 0x8c, 0x3f, 0xfe, 0x89, 0x3e, 0x25, 0xe3, 0xef, 0x3e, 0x2f, 0x0e, 0x6f,
+	0x7c, 0x1a, 0xa7, 0x23, 0x41, 0x99, 0xf1, 0x73, 0xaf, 0xc3, 0xa7, 0x60, 0xfc, 0x71, 0xb5, 0xc7,
+	0x19, 0x3f, 0xa7, 0x63, 0x9f, 0xf1, 0x73, 0x7a, 0x26, 0x5d, 0x6a, 0x72, 0x4d, 0x87, 0x35, 0x7e,
+	0x4e, 0xe8, 0x1e, 0xe3, 0x3f, 0x53, 0x99, 0x8f, 0x31, 0xfe, 0xde, 0xad, 0xdb, 0x63, 0xfc, 0xc3,
+	0x76, 0xf3, 0x9f, 0x18, 0x7f, 0xaf, 0x94, 0xab, 0x6f, 0x3e, 0x7c, 0xb4, 0xec, 0xfd, 0xf4, 0x68,
+	0xd9, 0xfb, 0xf5, 0xd1, 0xb2, 0xf7, 0xe0, 0xb7, 0xe5, 0xff, 0x7d, 0xf8, 0x52, 0xee, 0xdf, 0x68,
+	0xb6, 0xd0, 0xc5, 0x98, 0x26, 0xb4, 0x07, 0xa1, 0x2e, 0x28, 0xf3, 0x15, 0x3b, 0x73, 0xe6, 0xed,
+	0x7e, 0xe9, 0xaf, 0x00, 0x00, 0x00, 0xff, 0xff, 0xf3, 0x72, 0x0e, 0x1f, 0x08, 0x0f, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -305,6 +830,29 @@ type SecurityServiceClient interface {
 	// Required permissions:
 	// - security.ipwhitelist.delete on the IP whitelist
 	DeleteIPWhitelist(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
+	// Fetch all IAM providers that belong to the project identified by the given
+	// context ID.
+	// Required permissions:
+	// - security.iamprovider.list on the project identified by the given context ID.
+	ListIAMProviders(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*IAMProviderList, error)
+	// Fetch an IAM provider by its id.
+	// Required permissions:
+	// - security.iamprovider.get on the IAM provider
+	GetIAMProvider(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*IAMProvider, error)
+	// Create a new IAM provider
+	// Required permissions:
+	// - security.iamprovider.create on the project that owns the IAM provider.
+	CreateIAMProvider(ctx context.Context, in *IAMProvider, opts ...grpc.CallOption) (*IAMProvider, error)
+	// Update an IAM provider
+	// Required permissions:
+	// - security.iamprovider.update on the IAM provider
+	UpdateIAMProvider(ctx context.Context, in *IAMProvider, opts ...grpc.CallOption) (*IAMProvider, error)
+	// Delete an IAM provider.
+	// Note that IAM providers are initially only marked for deletion.
+	// Once all their dependent deployments are removed, the provider is removed.
+	// Required permissions:
+	// - security.iamprovider.delete on the IP whitelist
+	DeleteIAMProvider(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
 }
 
 type securityServiceClient struct {
@@ -369,6 +917,51 @@ func (c *securityServiceClient) DeleteIPWhitelist(ctx context.Context, in *v1.ID
 	return out, nil
 }
 
+func (c *securityServiceClient) ListIAMProviders(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*IAMProviderList, error) {
+	out := new(IAMProviderList)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.security.v1.SecurityService/ListIAMProviders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *securityServiceClient) GetIAMProvider(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*IAMProvider, error) {
+	out := new(IAMProvider)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.security.v1.SecurityService/GetIAMProvider", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *securityServiceClient) CreateIAMProvider(ctx context.Context, in *IAMProvider, opts ...grpc.CallOption) (*IAMProvider, error) {
+	out := new(IAMProvider)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.security.v1.SecurityService/CreateIAMProvider", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *securityServiceClient) UpdateIAMProvider(ctx context.Context, in *IAMProvider, opts ...grpc.CallOption) (*IAMProvider, error) {
+	out := new(IAMProvider)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.security.v1.SecurityService/UpdateIAMProvider", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *securityServiceClient) DeleteIAMProvider(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error) {
+	out := new(v1.Empty)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.security.v1.SecurityService/DeleteIAMProvider", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SecurityServiceServer is the server API for SecurityService service.
 type SecurityServiceServer interface {
 	// Get the current API version of this service.
@@ -398,6 +991,29 @@ type SecurityServiceServer interface {
 	// Required permissions:
 	// - security.ipwhitelist.delete on the IP whitelist
 	DeleteIPWhitelist(context.Context, *v1.IDOptions) (*v1.Empty, error)
+	// Fetch all IAM providers that belong to the project identified by the given
+	// context ID.
+	// Required permissions:
+	// - security.iamprovider.list on the project identified by the given context ID.
+	ListIAMProviders(context.Context, *v1.ListOptions) (*IAMProviderList, error)
+	// Fetch an IAM provider by its id.
+	// Required permissions:
+	// - security.iamprovider.get on the IAM provider
+	GetIAMProvider(context.Context, *v1.IDOptions) (*IAMProvider, error)
+	// Create a new IAM provider
+	// Required permissions:
+	// - security.iamprovider.create on the project that owns the IAM provider.
+	CreateIAMProvider(context.Context, *IAMProvider) (*IAMProvider, error)
+	// Update an IAM provider
+	// Required permissions:
+	// - security.iamprovider.update on the IAM provider
+	UpdateIAMProvider(context.Context, *IAMProvider) (*IAMProvider, error)
+	// Delete an IAM provider.
+	// Note that IAM providers are initially only marked for deletion.
+	// Once all their dependent deployments are removed, the provider is removed.
+	// Required permissions:
+	// - security.iamprovider.delete on the IP whitelist
+	DeleteIAMProvider(context.Context, *v1.IDOptions) (*v1.Empty, error)
 }
 
 // UnimplementedSecurityServiceServer can be embedded to have forward compatible implementations.
@@ -421,6 +1037,21 @@ func (*UnimplementedSecurityServiceServer) UpdateIPWhitelist(ctx context.Context
 }
 func (*UnimplementedSecurityServiceServer) DeleteIPWhitelist(ctx context.Context, req *v1.IDOptions) (*v1.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteIPWhitelist not implemented")
+}
+func (*UnimplementedSecurityServiceServer) ListIAMProviders(ctx context.Context, req *v1.ListOptions) (*IAMProviderList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListIAMProviders not implemented")
+}
+func (*UnimplementedSecurityServiceServer) GetIAMProvider(ctx context.Context, req *v1.IDOptions) (*IAMProvider, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetIAMProvider not implemented")
+}
+func (*UnimplementedSecurityServiceServer) CreateIAMProvider(ctx context.Context, req *IAMProvider) (*IAMProvider, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateIAMProvider not implemented")
+}
+func (*UnimplementedSecurityServiceServer) UpdateIAMProvider(ctx context.Context, req *IAMProvider) (*IAMProvider, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateIAMProvider not implemented")
+}
+func (*UnimplementedSecurityServiceServer) DeleteIAMProvider(ctx context.Context, req *v1.IDOptions) (*v1.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteIAMProvider not implemented")
 }
 
 func RegisterSecurityServiceServer(s *grpc.Server, srv SecurityServiceServer) {
@@ -535,6 +1166,96 @@ func _SecurityService_DeleteIPWhitelist_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SecurityService_ListIAMProviders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.ListOptions)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SecurityServiceServer).ListIAMProviders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.security.v1.SecurityService/ListIAMProviders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SecurityServiceServer).ListIAMProviders(ctx, req.(*v1.ListOptions))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SecurityService_GetIAMProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.IDOptions)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SecurityServiceServer).GetIAMProvider(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.security.v1.SecurityService/GetIAMProvider",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SecurityServiceServer).GetIAMProvider(ctx, req.(*v1.IDOptions))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SecurityService_CreateIAMProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IAMProvider)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SecurityServiceServer).CreateIAMProvider(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.security.v1.SecurityService/CreateIAMProvider",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SecurityServiceServer).CreateIAMProvider(ctx, req.(*IAMProvider))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SecurityService_UpdateIAMProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IAMProvider)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SecurityServiceServer).UpdateIAMProvider(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.security.v1.SecurityService/UpdateIAMProvider",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SecurityServiceServer).UpdateIAMProvider(ctx, req.(*IAMProvider))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SecurityService_DeleteIAMProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.IDOptions)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SecurityServiceServer).DeleteIAMProvider(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.security.v1.SecurityService/DeleteIAMProvider",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SecurityServiceServer).DeleteIAMProvider(ctx, req.(*v1.IDOptions))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _SecurityService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "arangodb.cloud.security.v1.SecurityService",
 	HandlerType: (*SecurityServiceServer)(nil),
@@ -562,6 +1283,26 @@ var _SecurityService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteIPWhitelist",
 			Handler:    _SecurityService_DeleteIPWhitelist_Handler,
+		},
+		{
+			MethodName: "ListIAMProviders",
+			Handler:    _SecurityService_ListIAMProviders_Handler,
+		},
+		{
+			MethodName: "GetIAMProvider",
+			Handler:    _SecurityService_GetIAMProvider_Handler,
+		},
+		{
+			MethodName: "CreateIAMProvider",
+			Handler:    _SecurityService_CreateIAMProvider_Handler,
+		},
+		{
+			MethodName: "UpdateIAMProvider",
+			Handler:    _SecurityService_UpdateIAMProvider_Handler,
+		},
+		{
+			MethodName: "DeleteIAMProvider",
+			Handler:    _SecurityService_DeleteIAMProvider_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -721,6 +1462,418 @@ func (m *IPWhitelistList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *IAMProvider) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *IAMProvider) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *IAMProvider) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.LdapSettings != nil {
+		{
+			size, err := m.LdapSettings.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSecurity(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x6
+		i--
+		dAtA[i] = 0xaa
+	}
+	if len(m.CreatedById) > 0 {
+		i -= len(m.CreatedById)
+		copy(dAtA[i:], m.CreatedById)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.CreatedById)))
+		i--
+		dAtA[i] = 0x52
+	}
+	if m.IsDeleted {
+		i--
+		if m.IsDeleted {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x48
+	}
+	if m.DeletedAt != nil {
+		{
+			size, err := m.DeletedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSecurity(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x42
+	}
+	if m.CreatedAt != nil {
+		{
+			size, err := m.CreatedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSecurity(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x3a
+	}
+	if len(m.Type) > 0 {
+		i -= len(m.Type)
+		copy(dAtA[i:], m.Type)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.Type)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if len(m.ProjectId) > 0 {
+		i -= len(m.ProjectId)
+		copy(dAtA[i:], m.ProjectId)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.ProjectId)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.Description) > 0 {
+		i -= len(m.Description)
+		copy(dAtA[i:], m.Description)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.Description)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Url) > 0 {
+		i -= len(m.Url)
+		copy(dAtA[i:], m.Url)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.Url)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *IAMProvider_LDAPSettings) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *IAMProvider_LDAPSettings) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *IAMProvider_LDAPSettings) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.SuperUserRole) > 0 {
+		i -= len(m.SuperUserRole)
+		copy(dAtA[i:], m.SuperUserRole)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.SuperUserRole)))
+		i--
+		dAtA[i] = 0x19
+		i--
+		dAtA[i] = 0x9a
+	}
+	if len(m.RolesTransformation) > 0 {
+		i -= len(m.RolesTransformation)
+		copy(dAtA[i:], m.RolesTransformation)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.RolesTransformation)))
+		i--
+		dAtA[i] = 0x19
+		i--
+		dAtA[i] = 0x92
+	}
+	if len(m.RolesExclude) > 0 {
+		i -= len(m.RolesExclude)
+		copy(dAtA[i:], m.RolesExclude)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.RolesExclude)))
+		i--
+		dAtA[i] = 0x19
+		i--
+		dAtA[i] = 0x8a
+	}
+	if len(m.RolesInclude) > 0 {
+		i -= len(m.RolesInclude)
+		copy(dAtA[i:], m.RolesInclude)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.RolesInclude)))
+		i--
+		dAtA[i] = 0x19
+		i--
+		dAtA[i] = 0x82
+	}
+	if len(m.RolesSearch) > 0 {
+		i -= len(m.RolesSearch)
+		copy(dAtA[i:], m.RolesSearch)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.RolesSearch)))
+		i--
+		dAtA[i] = 0x12
+		i--
+		dAtA[i] = 0xea
+	}
+	if len(m.RolesAttributeName) > 0 {
+		i -= len(m.RolesAttributeName)
+		copy(dAtA[i:], m.RolesAttributeName)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.RolesAttributeName)))
+		i--
+		dAtA[i] = 0x12
+		i--
+		dAtA[i] = 0xe2
+	}
+	if len(m.SearchAttribute) > 0 {
+		i -= len(m.SearchAttribute)
+		copy(dAtA[i:], m.SearchAttribute)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.SearchAttribute)))
+		i--
+		dAtA[i] = 0xc
+		i--
+		dAtA[i] = 0xd2
+	}
+	if len(m.SearchFilter) > 0 {
+		i -= len(m.SearchFilter)
+		copy(dAtA[i:], m.SearchFilter)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.SearchFilter)))
+		i--
+		dAtA[i] = 0xc
+		i--
+		dAtA[i] = 0xca
+	}
+	if len(m.SearchScope) > 0 {
+		i -= len(m.SearchScope)
+		copy(dAtA[i:], m.SearchScope)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.SearchScope)))
+		i--
+		dAtA[i] = 0xc
+		i--
+		dAtA[i] = 0xc2
+	}
+	if len(m.Suffix) > 0 {
+		i -= len(m.Suffix)
+		copy(dAtA[i:], m.Suffix)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.Suffix)))
+		i--
+		dAtA[i] = 0x6
+		i--
+		dAtA[i] = 0xaa
+	}
+	if len(m.Prefix) > 0 {
+		i -= len(m.Prefix)
+		copy(dAtA[i:], m.Prefix)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.Prefix)))
+		i--
+		dAtA[i] = 0x6
+		i--
+		dAtA[i] = 0xa2
+	}
+	if m.AsyncConnect {
+		i--
+		if m.AsyncConnect {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xd8
+	}
+	if m.NetworkTimeoutSec != 0 {
+		i = encodeVarintSecurity(dAtA, i, uint64(m.NetworkTimeoutSec))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xd0
+	}
+	if m.TimeoutSec != 0 {
+		i = encodeVarintSecurity(dAtA, i, uint64(m.TimeoutSec))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xc8
+	}
+	if m.Referrals {
+		i--
+		if m.Referrals {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xc0
+	}
+	if m.Restart {
+		i--
+		if m.Restart {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xb8
+	}
+	if m.Retries != 0 {
+		i = encodeVarintSecurity(dAtA, i, uint64(m.Retries))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xb0
+	}
+	if m.SerializeTimeoutSec != 0 {
+		i = encodeVarintSecurity(dAtA, i, uint64(m.SerializeTimeoutSec))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xa8
+	}
+	if m.Serialized {
+		i--
+		if m.Serialized {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xa0
+	}
+	if len(m.TlsCaCertificatePem) > 0 {
+		i -= len(m.TlsCaCertificatePem)
+		copy(dAtA[i:], m.TlsCaCertificatePem)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.TlsCaCertificatePem)))
+		i--
+		dAtA[i] = 0x52
+	}
+	if m.RefreshRate != 0 {
+		i = encodeVarintSecurity(dAtA, i, uint64(m.RefreshRate))
+		i--
+		dAtA[i] = 0x30
+	}
+	if len(m.BindPassword) > 0 {
+		i -= len(m.BindPassword)
+		copy(dAtA[i:], m.BindPassword)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.BindPassword)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.BindDistinguishedName) > 0 {
+		i -= len(m.BindDistinguishedName)
+		copy(dAtA[i:], m.BindDistinguishedName)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.BindDistinguishedName)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.BaseDistinguishedName) > 0 {
+		i -= len(m.BaseDistinguishedName)
+		copy(dAtA[i:], m.BaseDistinguishedName)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.BaseDistinguishedName)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.Port != 0 {
+		i = encodeVarintSecurity(dAtA, i, uint64(m.Port))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.Server) > 0 {
+		i -= len(m.Server)
+		copy(dAtA[i:], m.Server)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.Server)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *IAMProviderList) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *IAMProviderList) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *IAMProviderList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Items) > 0 {
+		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Items[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintSecurity(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintSecurity(dAtA []byte, offset int, v uint64) int {
 	offset -= sovSecurity(v)
 	base := offset
@@ -786,6 +1939,185 @@ func (m *IPWhitelist) Size() (n int) {
 }
 
 func (m *IPWhitelistList) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Items) > 0 {
+		for _, e := range m.Items {
+			l = e.Size()
+			n += 1 + l + sovSecurity(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *IAMProvider) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovSecurity(uint64(l))
+	}
+	l = len(m.Url)
+	if l > 0 {
+		n += 1 + l + sovSecurity(uint64(l))
+	}
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovSecurity(uint64(l))
+	}
+	l = len(m.Description)
+	if l > 0 {
+		n += 1 + l + sovSecurity(uint64(l))
+	}
+	l = len(m.ProjectId)
+	if l > 0 {
+		n += 1 + l + sovSecurity(uint64(l))
+	}
+	l = len(m.Type)
+	if l > 0 {
+		n += 1 + l + sovSecurity(uint64(l))
+	}
+	if m.CreatedAt != nil {
+		l = m.CreatedAt.Size()
+		n += 1 + l + sovSecurity(uint64(l))
+	}
+	if m.DeletedAt != nil {
+		l = m.DeletedAt.Size()
+		n += 1 + l + sovSecurity(uint64(l))
+	}
+	if m.IsDeleted {
+		n += 2
+	}
+	l = len(m.CreatedById)
+	if l > 0 {
+		n += 1 + l + sovSecurity(uint64(l))
+	}
+	if m.LdapSettings != nil {
+		l = m.LdapSettings.Size()
+		n += 2 + l + sovSecurity(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *IAMProvider_LDAPSettings) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Server)
+	if l > 0 {
+		n += 1 + l + sovSecurity(uint64(l))
+	}
+	if m.Port != 0 {
+		n += 1 + sovSecurity(uint64(m.Port))
+	}
+	l = len(m.BaseDistinguishedName)
+	if l > 0 {
+		n += 1 + l + sovSecurity(uint64(l))
+	}
+	l = len(m.BindDistinguishedName)
+	if l > 0 {
+		n += 1 + l + sovSecurity(uint64(l))
+	}
+	l = len(m.BindPassword)
+	if l > 0 {
+		n += 1 + l + sovSecurity(uint64(l))
+	}
+	if m.RefreshRate != 0 {
+		n += 1 + sovSecurity(uint64(m.RefreshRate))
+	}
+	l = len(m.TlsCaCertificatePem)
+	if l > 0 {
+		n += 1 + l + sovSecurity(uint64(l))
+	}
+	if m.Serialized {
+		n += 3
+	}
+	if m.SerializeTimeoutSec != 0 {
+		n += 2 + sovSecurity(uint64(m.SerializeTimeoutSec))
+	}
+	if m.Retries != 0 {
+		n += 2 + sovSecurity(uint64(m.Retries))
+	}
+	if m.Restart {
+		n += 3
+	}
+	if m.Referrals {
+		n += 3
+	}
+	if m.TimeoutSec != 0 {
+		n += 2 + sovSecurity(uint64(m.TimeoutSec))
+	}
+	if m.NetworkTimeoutSec != 0 {
+		n += 2 + sovSecurity(uint64(m.NetworkTimeoutSec))
+	}
+	if m.AsyncConnect {
+		n += 3
+	}
+	l = len(m.Prefix)
+	if l > 0 {
+		n += 2 + l + sovSecurity(uint64(l))
+	}
+	l = len(m.Suffix)
+	if l > 0 {
+		n += 2 + l + sovSecurity(uint64(l))
+	}
+	l = len(m.SearchScope)
+	if l > 0 {
+		n += 2 + l + sovSecurity(uint64(l))
+	}
+	l = len(m.SearchFilter)
+	if l > 0 {
+		n += 2 + l + sovSecurity(uint64(l))
+	}
+	l = len(m.SearchAttribute)
+	if l > 0 {
+		n += 2 + l + sovSecurity(uint64(l))
+	}
+	l = len(m.RolesAttributeName)
+	if l > 0 {
+		n += 2 + l + sovSecurity(uint64(l))
+	}
+	l = len(m.RolesSearch)
+	if l > 0 {
+		n += 2 + l + sovSecurity(uint64(l))
+	}
+	l = len(m.RolesInclude)
+	if l > 0 {
+		n += 2 + l + sovSecurity(uint64(l))
+	}
+	l = len(m.RolesExclude)
+	if l > 0 {
+		n += 2 + l + sovSecurity(uint64(l))
+	}
+	l = len(m.RolesTransformation)
+	if l > 0 {
+		n += 2 + l + sovSecurity(uint64(l))
+	}
+	l = len(m.SuperUserRole)
+	if l > 0 {
+		n += 2 + l + sovSecurity(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *IAMProviderList) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1238,6 +2570,1260 @@ func (m *IPWhitelistList) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.Items = append(m.Items, &IPWhitelist{})
+			if err := m.Items[len(m.Items)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSecurity(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *IAMProvider) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSecurity
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: IAMProvider: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: IAMProvider: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Url", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Url = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Description = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ProjectId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ProjectId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Type", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Type = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.CreatedAt == nil {
+				m.CreatedAt = &types.Timestamp{}
+			}
+			if err := m.CreatedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 8:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DeletedAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.DeletedAt == nil {
+				m.DeletedAt = &types.Timestamp{}
+			}
+			if err := m.DeletedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 9:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field IsDeleted", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.IsDeleted = bool(v != 0)
+		case 10:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CreatedById", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.CreatedById = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 101:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LdapSettings", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.LdapSettings == nil {
+				m.LdapSettings = &IAMProvider_LDAPSettings{}
+			}
+			if err := m.LdapSettings.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSecurity(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *IAMProvider_LDAPSettings) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSecurity
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: LDAPSettings: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: LDAPSettings: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Server", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Server = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Port", wireType)
+			}
+			m.Port = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Port |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BaseDistinguishedName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.BaseDistinguishedName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BindDistinguishedName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.BindDistinguishedName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BindPassword", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.BindPassword = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RefreshRate", wireType)
+			}
+			m.RefreshRate = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.RefreshRate |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 10:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TlsCaCertificatePem", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TlsCaCertificatePem = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 20:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Serialized", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Serialized = bool(v != 0)
+		case 21:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SerializeTimeoutSec", wireType)
+			}
+			m.SerializeTimeoutSec = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SerializeTimeoutSec |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 22:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Retries", wireType)
+			}
+			m.Retries = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Retries |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 23:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Restart", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Restart = bool(v != 0)
+		case 24:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Referrals", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Referrals = bool(v != 0)
+		case 25:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TimeoutSec", wireType)
+			}
+			m.TimeoutSec = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.TimeoutSec |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 26:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NetworkTimeoutSec", wireType)
+			}
+			m.NetworkTimeoutSec = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.NetworkTimeoutSec |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 27:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AsyncConnect", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.AsyncConnect = bool(v != 0)
+		case 100:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Prefix", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Prefix = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 101:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Suffix", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Suffix = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 200:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SearchScope", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SearchScope = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 201:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SearchFilter", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SearchFilter = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 202:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SearchAttribute", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SearchAttribute = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 300:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RolesAttributeName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RolesAttributeName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 301:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RolesSearch", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RolesSearch = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 400:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RolesInclude", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RolesInclude = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 401:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RolesExclude", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RolesExclude = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 402:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RolesTransformation", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RolesTransformation = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 403:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SuperUserRole", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SuperUserRole = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSecurity(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *IAMProviderList) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSecurity
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: IAMProviderList: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: IAMProviderList: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Items", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Items = append(m.Items, &IAMProvider{})
 			if err := m.Items[len(m.Items)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
