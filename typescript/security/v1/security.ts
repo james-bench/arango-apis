@@ -106,8 +106,8 @@ export interface IAMProvider_LDAPSettings {
   // number
   serialize_timeout_sec?: number;
   
-  // Number of tries to attempt a connection to the LDAP server.
-  // Setting this to values greater than one will make ArangoDB retry to contact the
+  // Number of retries to attempt a connection to the LDAP server.
+  // Setting this to values greater than zero will make ArangoDB retry to contact the
   // LDAP server in case no connection can be made initially.
   // number
   retries?: number;

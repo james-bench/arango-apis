@@ -382,8 +382,8 @@ type IAMProvider_LDAPSettings struct {
 	// Timeout (in seconds) used when waiting to enter the LDAP library call serialization lock.
 	// This is only meaningful when serialized has been set to true.
 	SerializeTimeoutSec int32 `protobuf:"varint,21,opt,name=serialize_timeout_sec,json=serializeTimeoutSec,proto3" json:"serialize_timeout_sec,omitempty"`
-	// Number of tries to attempt a connection to the LDAP server.
-	// Setting this to values greater than one will make ArangoDB retry to contact the
+	// Number of retries to attempt a connection to the LDAP server.
+	// Setting this to values greater than zero will make ArangoDB retry to contact the
 	// LDAP server in case no connection can be made initially.
 	Retries int32 `protobuf:"varint,22,opt,name=retries,proto3" json:"retries,omitempty"`
 	// If set, the LDAP library will implicitly restart connections.

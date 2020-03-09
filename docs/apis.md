@@ -902,7 +902,7 @@ LDAP provider specific settings
 | tls_ca_certificate_pem | [string](#string) |  | PEM encoded version of the CA certificate used by the LDAP server. |
 | serialized | [bool](#bool) |  | If set, calls into the underlying LDAP library are serialized. This option can be used to work around thread-unsafe LDAP library functionality. |
 | serialize_timeout_sec | [int32](#int32) |  | Timeout (in seconds) used when waiting to enter the LDAP library call serialization lock. This is only meaningful when serialized has been set to true. |
-| retries | [int32](#int32) |  | Number of tries to attempt a connection to the LDAP server. Setting this to values greater than one will make ArangoDB retry to contact the LDAP server in case no connection can be made initially. |
+| retries | [int32](#int32) |  | Number of retries to attempt a connection to the LDAP server. Setting this to values greater than zero will make ArangoDB retry to contact the LDAP server in case no connection can be made initially. |
 | restart | [bool](#bool) |  | If set, the LDAP library will implicitly restart connections. |
 | referrals | [bool](#bool) |  | If set, the LDAP library will implicitly chase referrals. |
 | timeout_sec | [int32](#int32) |  | Timeout value (in seconds) for synchronous LDAP API calls (a value of 0 means default timeout). |

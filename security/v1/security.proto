@@ -220,8 +220,8 @@ message IAMProvider {
         // Timeout (in seconds) used when waiting to enter the LDAP library call serialization lock. 
         // This is only meaningful when serialized has been set to true.
         int32 serialize_timeout_sec = 21;
-        // Number of tries to attempt a connection to the LDAP server. 
-        // Setting this to values greater than one will make ArangoDB retry to contact the
+        // Number of retries to attempt a connection to the LDAP server. 
+        // Setting this to values greater than zero will make ArangoDB retry to contact the
         // LDAP server in case no connection can be made initially.
         int32 retries = 22;
         // If set, the LDAP library will implicitly restart connections.
