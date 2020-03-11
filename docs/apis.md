@@ -2176,7 +2176,7 @@ BackupPolicy represents a single backup policy for a deployment.
 | schedule | [BackupPolicy.Schedule](#arangodb.cloud.backup.v1.BackupPolicy.Schedule) |  | The schedule for this backup policy |
 | upload | [bool](#bool) |  | Upload the backup, created by the backup policy, to an external source. |
 | retention_period | [google.protobuf.Duration](#google.protobuf.Duration) |  | Backups created by this policy will be automatically deleted after the specified retention period A value of 0 means that backup will never be deleted. |
-| email_notification | [string](#string) |  | The owners of the organization can be notified by email This field support the following values: &#34;None|FailureOnly|Always&#34; |
+| email_notification | [string](#string) |  | The owners of the organization can be notified by email This field support the following values: &#34;Never|FailureOnly|Always&#34; |
 | status | [BackupPolicy.Status](#arangodb.cloud.backup.v1.BackupPolicy.Status) |  | Status of the backup policy |
 
 

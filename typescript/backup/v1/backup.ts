@@ -274,7 +274,7 @@ export interface BackupPolicy {
   retention_period?: googleTypes.Duration;
   
   // The owners of the organization can be notified by email
-  // This field support the following values: "None|FailureOnly|Always"
+  // This field support the following values: "Never|FailureOnly|Always"
   // string
   email_notification?: string;
   
