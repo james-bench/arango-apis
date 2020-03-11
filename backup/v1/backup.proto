@@ -273,7 +273,7 @@ message BackupPolicy {
     google.protobuf.Duration retention_period = 12;
 
     // The owners of the organization can be notified by email
-    // This field support the following values: "None|FailureOnly|Always"
+    // This field support the following values: "Never|FailureOnly|Always"
     string email_notification = 13;
 
     // Status of the backup policy

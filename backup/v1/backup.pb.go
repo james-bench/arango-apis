@@ -66,7 +66,7 @@ type BackupPolicy struct {
 	// A value of 0 means that backup will never be deleted.
 	RetentionPeriod *types.Duration `protobuf:"bytes,12,opt,name=retention_period,json=retentionPeriod,proto3" json:"retention_period,omitempty"`
 	// The owners of the organization can be notified by email
-	// This field support the following values: "None|FailureOnly|Always"
+	// This field support the following values: "Never|FailureOnly|Always"
 	EmailNotification string `protobuf:"bytes,13,opt,name=email_notification,json=emailNotification,proto3" json:"email_notification,omitempty"`
 	// Status of the backup policy
 	Status               *BackupPolicy_Status `protobuf:"bytes,100,opt,name=status,proto3" json:"status,omitempty"`
