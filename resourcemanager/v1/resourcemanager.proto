@@ -378,6 +378,8 @@ message Organization {
     bool is_flexible_deployments_enabled = 10;
     // If set, this organization is allowed to use custom images for ArangoDB deployments.
     bool is_allowed_to_use_custom_images = 11;
+    // If set, this organization is allowed to use IAMProviders on their deployments.
+    bool is_allowed_to_use_iamproviders = 12;
 }
 
 // List of organizations.

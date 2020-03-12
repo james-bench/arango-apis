@@ -456,6 +456,7 @@ An Organization is represents a real world organization such as a company.
 | total_deployments | [Organization.TotalDeploymentsEntry](#arangodb.cloud.resourcemanager.v1.Organization.TotalDeploymentsEntry) | repeated | Total number of deployments created in this organization throughout its entire lifetime per tier-id. map: tier-id -&gt; count This is a read-only value. |
 | is_flexible_deployments_enabled | [bool](#bool) |  | If set, all projects in this organization are allowed to use deployments using the flexible model. |
 | is_allowed_to_use_custom_images | [bool](#bool) |  | If set, this organization is allowed to use custom images for ArangoDB deployments. |
+| is_allowed_to_use_iamproviders | [bool](#bool) |  | If set, this organization is allowed to use IAMProviders on their deployments. |
 
 
 

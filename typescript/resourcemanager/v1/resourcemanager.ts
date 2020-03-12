@@ -229,6 +229,10 @@ export interface Organization {
   // If set, this organization is allowed to use custom images for ArangoDB deployments.
   // boolean
   is_allowed_to_use_custom_images?: boolean;
+  
+  // If set, this organization is allowed to use IAMProviders on their deployments.
+  // boolean
+  is_allowed_to_use_iamproviders?: boolean;
 }
 export interface Organization_TotalDeploymentsEntry {
   // string
