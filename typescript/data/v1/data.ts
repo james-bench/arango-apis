@@ -220,6 +220,10 @@ export interface Deployment {
   // string
   custom_image?: string;
   
+  // Optional identifier of IAM provider to use for this deployment.
+  // string
+  iamprovider_id?: string;
+  
   // Deployment_Status
   status?: Deployment_Status;
   

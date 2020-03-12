@@ -21,3 +21,17 @@ const (
 	// SubjectID contains the ID of the whitelist.
 	EventTypeIPWhitelistDeleted = "security.ipwhitelist̀.deleted"
 )
+
+const (
+	// IAMProvider event types
+
+	// EventTypeIAMProviderCreated is the type of event fired after an IAM provider has been created
+	// SubjectID contains the ID of the provider.
+	EventTypeIAMProviderCreated = "security.iamprovider.created"
+	// EventTypeIAMProviderUpdated is the type of event fired after an IAM provider has been updated
+	// SubjectID contains the ID of the provider.
+	EventTypeIAMProviderUpdated = "security.iamprovider.updated"
+	// EventTypeIAMProviderDeleted is the type of event fired after an IAM provider has been (marked for) deleted
+	// SubjectID contains the ID of the provider.
+	EventTypeIAMProviderDeleted = "security.iamprovider.deleted"
+)

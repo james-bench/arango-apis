@@ -311,6 +311,9 @@ message Deployment {
     // This field can only be set by selected organizations.
     string custom_image = 107;
 
+    // Optional identifier of IAM provider to use for this deployment.
+    string iamprovider_id = 108;
+
     // Status of a single server (of the ArangoDB cluster)
     message ServerStatus {
         // ID of the server

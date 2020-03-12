@@ -46,6 +46,9 @@
   
 
 - [security/v1/security.proto](#security/v1/security.proto)
+    - [IAMProvider](#arangodb.cloud.security.v1.IAMProvider)
+    - [IAMProvider.LDAPSettings](#arangodb.cloud.security.v1.IAMProvider.LDAPSettings)
+    - [IAMProviderList](#arangodb.cloud.security.v1.IAMProviderList)
     - [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist)
     - [IPWhitelistList](#arangodb.cloud.security.v1.IPWhitelistList)
   
@@ -453,6 +456,7 @@ An Organization is represents a real world organization such as a company.
 | total_deployments | [Organization.TotalDeploymentsEntry](#arangodb.cloud.resourcemanager.v1.Organization.TotalDeploymentsEntry) | repeated | Total number of deployments created in this organization throughout its entire lifetime per tier-id. map: tier-id -&gt; count This is a read-only value. |
 | is_flexible_deployments_enabled | [bool](#bool) |  | If set, all projects in this organization are allowed to use deployments using the flexible model. |
 | is_allowed_to_use_custom_images | [bool](#bool) |  | If set, this organization is allowed to use custom images for ArangoDB deployments. |
+| is_allowed_to_use_iamproviders | [bool](#bool) |  | If set, this organization is allowed to use IAMProviders on their deployments. |
 
 
 
@@ -856,6 +860,87 @@ CryptoService is the API used to configure various crypto objects.
 
 
 
+<a name="arangodb.cloud.security.v1.IAMProvider"></a>
+
+### IAMProvider
+IAMProvider provides configuration for a custom Identity &amp; Access management provider
+for deployments.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | System identifier of the provider. This is a read-only value. |
+| url | [string](#string) |  | URL of the provider. This is a read-only value. |
+| name | [string](#string) |  | Name of the provider. |
+| description | [string](#string) |  | Description of the provider. |
+| project_id | [string](#string) |  | Identifier of the project that contains this provider. |
+| type | [string](#string) |  | Type of provider |
+| created_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The creation timestamp of this provider. This is a read-only value. |
+| deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the provider This is a read-only value. |
+| is_deleted | [bool](#bool) |  | Set when this provider is deleted. This is a read-only value. |
+| created_by_id | [string](#string) |  | Identifier of the user who created this provider. This is a read-only value. |
+| ldap_settings | [IAMProvider.LDAPSettings](#arangodb.cloud.security.v1.IAMProvider.LDAPSettings) |  |  |
+
+
+
+
+
+
+<a name="arangodb.cloud.security.v1.IAMProvider.LDAPSettings"></a>
+
+### IAMProvider.LDAPSettings
+LDAP provider specific settings
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| server | [string](#string) |  | Hostname or IP address of the server |
+| port | [int32](#int32) |  | Port number of the server (defaults to 389) |
+| base_distinguished_name | [string](#string) |  | Base distinguished name under which the search takes place |
+| bind_distinguished_name | [string](#string) |  | distinguished name for a read-only LDAP user to which ArangoDB can bind to search the LDAP server |
+| bind_password | [string](#string) |  | Password name for a read-only LDAP user to which ArangoDB can bind to search the LDAP server. This is a set-only field. During get/list requests, this field will be empty. |
+| refresh_rate | [int32](#int32) |  | Refresh rate in seconds (defaults to 300) |
+| tls_ca_certificate_pem | [string](#string) |  | PEM encoded version of the CA certificate used by the LDAP server. |
+| serialized | [bool](#bool) |  | If set, calls into the underlying LDAP library are serialized. This option can be used to work around thread-unsafe LDAP library functionality. |
+| serialize_timeout_sec | [int32](#int32) |  | Timeout (in seconds) used when waiting to enter the LDAP library call serialization lock. This is only meaningful when serialized has been set to true. |
+| retries | [int32](#int32) |  | Number of retries to attempt a connection to the LDAP server. Setting this to values greater than zero will make ArangoDB retry to contact the LDAP server in case no connection can be made initially. |
+| restart | [bool](#bool) |  | If set, the LDAP library will implicitly restart connections. |
+| referrals | [bool](#bool) |  | If set, the LDAP library will implicitly chase referrals. |
+| timeout_sec | [int32](#int32) |  | Timeout value (in seconds) for synchronous LDAP API calls (a value of 0 means default timeout). |
+| network_timeout_sec | [int32](#int32) |  | Timeout value (in seconds) after which network operations following the initial connection return in case of no activity (a value of 0 means default timeout). |
+| async_connect | [bool](#bool) |  | If set, the LDAP library will connect asynchronously. |
+| prefix | [string](#string) |  | Prefix for simple authentication |
+| suffix | [string](#string) |  | Suffix for simple authentication |
+| search_scope | [string](#string) |  | LDAP search scope with possible values &#34;base&#34; (just search the base distinguished name), &#34;sub&#34; (recursive search under the base distinguished name) or &#34;one&#34; (search the base’s immediate children) (default: &#34;sub&#34;). |
+| search_filter | [string](#string) |  | LDAP filter expression which limits the set of LDAP users being considered (default: &#34;objectClass=*&#34;&#34; which means all objects). |
+| search_attribute | [string](#string) |  | Specifies the attribute in the user objects which is used to match the ArangoDB user name (default: &#34;uid&#34;). |
+| roles_attribute_name | [string](#string) |  | If set, this field specifies the name of the attribute used to fetch the roles of a user. |
+| roles_search | [string](#string) |  | If set, then the string {USER} in the value of this field is replaced with the distinguished name of the authenticated LDAP user and the resulting search expression is used to match distinguished names of LDAP objects representing roles of that user. |
+| roles_include | [string](#string) |  | Regular expression that is used to filter roles. Only roles that match the regular expression are used. |
+| roles_exclude | [string](#string) |  | Regular expression that is used to filter roles. Only roles that do not match the regular expression are used. |
+| roles_transformation | [string](#string) |  | A regular expression in the format of a replacement text (/re/text/). This regular expression is applied to the role name found. This is especially useful in the roles-search variant to extract the real role name out of the dn value. |
+| super_user_role | [string](#string) |  | Name of role associated with the superuser. Any user belonging to this role gains superuser status. This role is checked after applying the roles_transformation expression. |
+
+
+
+
+
+
+<a name="arangodb.cloud.security.v1.IAMProviderList"></a>
+
+### IAMProviderList
+List of IAM providers.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| items | [IAMProvider](#arangodb.cloud.security.v1.IAMProvider) | repeated |  |
+
+
+
+
+
+
 <a name="arangodb.cloud.security.v1.IPWhitelist"></a>
 
 ### IPWhitelist
@@ -914,6 +999,11 @@ SecurityService is the API used to access security entities.
 | CreateIPWhitelist | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | Create a new IP whitelist Required permissions: - security.ipwhitelist.create on the project that owns the IP whitelist. |
 | UpdateIPWhitelist | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | [IPWhitelist](#arangodb.cloud.security.v1.IPWhitelist) | Update an IP whitelist Required permissions: - security.ipwhitelist.update on the IP whitelist |
 | DeleteIPWhitelist | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete an IP whitelist. Note that IP whitelists are initially only marked for deletion. Once all their dependent deployments are removed, the whitelist is removed. Required permissions: - security.ipwhitelist.delete on the IP whitelist |
+| ListIAMProviders | [.arangodb.cloud.common.v1.ListOptions](#arangodb.cloud.common.v1.ListOptions) | [IAMProviderList](#arangodb.cloud.security.v1.IAMProviderList) | Fetch all IAM providers that belong to the project identified by the given context ID. Required permissions: - security.iamprovider.list on the project identified by the given context ID. |
+| GetIAMProvider | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [IAMProvider](#arangodb.cloud.security.v1.IAMProvider) | Fetch an IAM provider by its id. Required permissions: - security.iamprovider.get on the IAM provider |
+| CreateIAMProvider | [IAMProvider](#arangodb.cloud.security.v1.IAMProvider) | [IAMProvider](#arangodb.cloud.security.v1.IAMProvider) | Create a new IAM provider Required permissions: - security.iamprovider.create on the project that owns the IAM provider. |
+| UpdateIAMProvider | [IAMProvider](#arangodb.cloud.security.v1.IAMProvider) | [IAMProvider](#arangodb.cloud.security.v1.IAMProvider) | Update an IAM provider Required permissions: - security.iamprovider.update on the IAM provider |
+| DeleteIAMProvider | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete an IAM provider. Note that IAM providers are initially only marked for deletion. Once all their dependent deployments are removed, the provider is removed. Required permissions: - security.iamprovider.delete on the IP whitelist |
 
  
 
@@ -2511,6 +2601,7 @@ A Deployment is represents one deployment of an ArangoDB cluster.
 | ipwhitelist_id | [string](#string) |  | Optional identifier of IP whitelist to use for this deployment. |
 | model | [Deployment.ModelSpec](#arangodb.cloud.data.v1.Deployment.ModelSpec) |  |  |
 | custom_image | [string](#string) |  | If provided, dataclusterd will use this custom image tag instead of the configured one for a given version. Further, ImagePullPolicy will be set to Always. This field can only be set by selected organizations. |
+| iamprovider_id | [string](#string) |  | Optional identifier of IAM provider to use for this deployment. |
 | status | [Deployment.Status](#arangodb.cloud.data.v1.Deployment.Status) |  |  |
 | size | [DeploymentSize](#arangodb.cloud.data.v1.DeploymentSize) |  | Detailed size of the deployment This is a read-only field. |
 | expiration | [Deployment.Expiration](#arangodb.cloud.data.v1.Deployment.Expiration) |  |  |

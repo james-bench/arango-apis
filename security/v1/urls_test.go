@@ -19,3 +19,9 @@ func TestIPWhitelistURL(t *testing.T) {
 	assert.Equal(t, "/Organization/123%2F567/Project/ab/IPWhitelist/c2%2F3", IPWhitelistURL("123/567", "ab", "c2/3"))
 	assert.Equal(t, "/Organization/123%2F567/Project/a%25b/IPWhitelist/e%25f", IPWhitelistURL("123/567", "a%b", "e%f"))
 }
+
+func TestIAMProviderURL(t *testing.T) {
+	assert.Equal(t, "/Organization/123/Project/p1/IAMProvider/c1", IAMProviderURL("123", "p1", "c1"))
+	assert.Equal(t, "/Organization/123%2F567/Project/ab/IAMProvider/c2%2F3", IAMProviderURL("123/567", "ab", "c2/3"))
+	assert.Equal(t, "/Organization/123%2F567/Project/a%25b/IAMProvider/e%25f", IAMProviderURL("123/567", "a%b", "e%f"))
+}
