@@ -1233,6 +1233,7 @@ resource (usually deployment) in a specific time period.
 | agent_memory_size | [int32](#int32) |  | Amount of memory (in GB) allocated for each agent. |
 | agent_disk_size | [int32](#int32) |  | Amount of disk space (in GB) allocated for each agent. |
 | node_size_id | [string](#string) |  | Identifier of the node-size used for this deployment (empty for flexible) |
+| addon_ids | [string](#string) | repeated | List of identifiers of addons used by the deployment. |
 
 
 

@@ -120,6 +120,9 @@ message UsageItem {
 
         // Identifier of the node-size used for this deployment (empty for flexible)
         string node_size_id = 31;
+
+        // List of identifiers of addons used by the deployment.
+        repeated string addon_ids = 41;
     }
     // Amount of (computer) resources used by the resource covered by this usage item.
     // This field is only set when the usage item is of kind DeploymentSize.
