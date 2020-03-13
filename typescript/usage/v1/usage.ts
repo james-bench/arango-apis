@@ -172,6 +172,10 @@ export interface UsageItem_DeploymentSize {
   // Identifier of the node-size used for this deployment (empty for flexible)
   // string
   node_size_id?: string;
+  
+  // List of identifiers of addons used by the deployment.
+  // string
+  addon_ids?: string[];
 }
 export interface UsageItem_NetworkTransferSize {
   // Total amount of network ingress traffic (in bytes) caused by the use of a deployment.
