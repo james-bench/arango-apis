@@ -1088,7 +1088,7 @@ export interface IDataService {
   
   // Get the features that will be available to a deployment in the given context.
   // Required permissions:
-  // - data.deploymentfeatures.get
+  // - data.deploymentfeatures.get on the project that is given in the request.
   GetDeploymentFeatures: (req: DeploymentFeaturesRequest) => Promise<DeploymentFeatures>;
 }
 
@@ -1271,7 +1271,7 @@ export class DataService implements IDataService {
   
   // Get the features that will be available to a deployment in the given context.
   // Required permissions:
-  // - data.deploymentfeatures.get
+  // - data.deploymentfeatures.get on the project that is given in the request.
   async GetDeploymentFeatures(req: DeploymentFeaturesRequest): Promise<DeploymentFeatures> {
     const url = `/api/data/v1/deployment-features`;
     return api.post(url, req);

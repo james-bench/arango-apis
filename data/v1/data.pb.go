@@ -3847,7 +3847,7 @@ type DataServiceClient interface {
 	CalculateDeploymentPrice(ctx context.Context, in *DeploymentPriceRequest, opts ...grpc.CallOption) (*DeploymentPrice, error)
 	// Get the features that will be available to a deployment in the given context.
 	// Required permissions:
-	// - data.deploymentfeatures.get
+	// - data.deploymentfeatures.get on the project that is given in the request.
 	GetDeploymentFeatures(ctx context.Context, in *DeploymentFeaturesRequest, opts ...grpc.CallOption) (*DeploymentFeatures, error)
 }
 
@@ -4121,7 +4121,7 @@ type DataServiceServer interface {
 	CalculateDeploymentPrice(context.Context, *DeploymentPriceRequest) (*DeploymentPrice, error)
 	// Get the features that will be available to a deployment in the given context.
 	// Required permissions:
-	// - data.deploymentfeatures.get
+	// - data.deploymentfeatures.get on the project that is given in the request.
 	GetDeploymentFeatures(context.Context, *DeploymentFeaturesRequest) (*DeploymentFeatures, error)
 }
 

@@ -200,7 +200,7 @@ service DataService {
 
     // Get the features that will be available to a deployment in the given context.
     // Required permissions:
-    // - data.deploymentfeatures.get
+    // - data.deploymentfeatures.get on the project that is given in the request.
     rpc GetDeploymentFeatures(DeploymentFeaturesRequest) returns (DeploymentFeatures) {
         option (google.api.http) = {
             post: "/api/data/v1/deployment-features"
