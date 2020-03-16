@@ -185,6 +185,8 @@
     - [Deployment.Status](#arangodb.cloud.data.v1.Deployment.Status)
     - [DeploymentCredentials](#arangodb.cloud.data.v1.DeploymentCredentials)
     - [DeploymentCredentialsRequest](#arangodb.cloud.data.v1.DeploymentCredentialsRequest)
+    - [DeploymentFeatures](#arangodb.cloud.data.v1.DeploymentFeatures)
+    - [DeploymentFeaturesRequest](#arangodb.cloud.data.v1.DeploymentFeaturesRequest)
     - [DeploymentList](#arangodb.cloud.data.v1.DeploymentList)
     - [DeploymentModel](#arangodb.cloud.data.v1.DeploymentModel)
     - [DeploymentModelList](#arangodb.cloud.data.v1.DeploymentModelList)
@@ -2811,6 +2813,39 @@ Request arguments for GetDeploymentCredentials
 
 
 
+<a name="arangodb.cloud.data.v1.DeploymentFeatures"></a>
+
+### DeploymentFeatures
+Features that are available to new deployments in a given context.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| iamprovider | [bool](#bool) |  | Is the use of an IAM provider available? |
+
+
+
+
+
+
+<a name="arangodb.cloud.data.v1.DeploymentFeaturesRequest"></a>
+
+### DeploymentFeaturesRequest
+Request arguments for GetDeploymentFeatures
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| project_id | [string](#string) |  | Identifier of project that will own a deployment. |
+| region_id | [string](#string) |  | Identifier of a region in which a deployment will be created. |
+| model | [string](#string) |  | Model of the intended deployment. |
+| node_size_id | [string](#string) |  | Node size use for the intended deployments |
+
+
+
+
+
+
 <a name="arangodb.cloud.data.v1.DeploymentList"></a>
 
 ### DeploymentList
@@ -3236,6 +3271,7 @@ DataService is the API used to configure data objects.
 | GetConnectDriverInstructions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [ConnectDriverInstructions](#arangodb.cloud.data.v1.ConnectDriverInstructions) | Fetch instructions for connecting drivers to the deployment identified by the given id. Required permissions: - data.deployment.get on the deployment identified by the given ID |
 | GetImportDataInstructions | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [ImportDataInstructions](#arangodb.cloud.data.v1.ImportDataInstructions) | Fetch instructions for importing data into the deployment identified by the given id. Required permissions: - data.deployment.get on the deployment identified by the given ID |
 | CalculateDeploymentPrice | [DeploymentPriceRequest](#arangodb.cloud.data.v1.DeploymentPriceRequest) | [DeploymentPrice](#arangodb.cloud.data.v1.DeploymentPrice) | Calculate the price of a deployment of given settings. Required permissions: - data.deploymentprice.calculate |
+| GetDeploymentFeatures | [DeploymentFeaturesRequest](#arangodb.cloud.data.v1.DeploymentFeaturesRequest) | [DeploymentFeatures](#arangodb.cloud.data.v1.DeploymentFeatures) | Get the features that will be available to a deployment in the given context. Required permissions: - data.deploymentfeatures.get |
 
  
 

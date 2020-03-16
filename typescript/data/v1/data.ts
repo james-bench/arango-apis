@@ -521,6 +521,32 @@ export interface DeploymentCredentialsRequest {
   reason?: string;
 }
 
+// Features that are available to new deployments in a given context.
+export interface DeploymentFeatures {
+  // Is the use of an IAM provider available?
+  // boolean
+  iamprovider?: boolean;
+}
+
+// Request arguments for GetDeploymentFeatures
+export interface DeploymentFeaturesRequest {
+  // Identifier of project that will own a deployment.
+  // string
+  project_id?: string;
+  
+  // Identifier of a region in which a deployment will be created.
+  // string
+  region_id?: string;
+  
+  // Model of the intended deployment.
+  // string
+  model?: string;
+  
+  // Node size use for the intended deployments
+  // string
+  node_size_id?: string;
+}
+
 // List of Deployments.
 export interface DeploymentList {
   // Actual deployments
@@ -1059,6 +1085,11 @@ export interface IDataService {
   // Required permissions:
   // - data.deploymentprice.calculate
   CalculateDeploymentPrice: (req: DeploymentPriceRequest) => Promise<DeploymentPrice>;
+  
+  // Get the features that will be available to a deployment in the given context.
+  // Required permissions:
+  // - data.deploymentfeatures.get
+  GetDeploymentFeatures: (req: DeploymentFeaturesRequest) => Promise<DeploymentFeatures>;
 }
 
 // DataService is the API used to configure data objects.
@@ -1236,5 +1267,13 @@ export class DataService implements IDataService {
     const path = `/api/data/v1/deployment-price/calculate`;
     const url = path + api.queryString(req, []);
     return api.get(url, undefined);
+  }
+  
+  // Get the features that will be available to a deployment in the given context.
+  // Required permissions:
+  // - data.deploymentfeatures.get
+  async GetDeploymentFeatures(req: DeploymentFeaturesRequest): Promise<DeploymentFeatures> {
+    const url = `/api/data/v1/deployment-features`;
+    return api.post(url, req);
   }
 }

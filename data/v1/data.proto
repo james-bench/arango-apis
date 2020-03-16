@@ -197,6 +197,16 @@ service DataService {
             get: "/api/data/v1/deployment-price/calculate"
         };
     }
+
+    // Get the features that will be available to a deployment in the given context.
+    // Required permissions:
+    // - data.deploymentfeatures.get
+    rpc GetDeploymentFeatures(DeploymentFeaturesRequest) returns (DeploymentFeatures) {
+        option (google.api.http) = {
+            post: "/api/data/v1/deployment-features"
+            body: "*"
+        };
+    }
 }
 
 // A Deployment is represents one deployment of an ArangoDB cluster.
@@ -832,3 +842,22 @@ message DeploymentPrice {
         float price_per_gb_per_hour = 1;
     }
 }
+
+// Features that are available to new deployments in a given context.
+message DeploymentFeatures {
+    // Is the use of an IAM provider available?
+    bool iamprovider = 1;
+}
+
+// Request arguments for GetDeploymentFeatures
+message DeploymentFeaturesRequest {
+    // Identifier of project that will own a deployment.
+    string project_id = 1;
+    // Identifier of a region in which a deployment will be created.
+    string region_id = 2;
+    // Model of the intended deployment.
+    string model = 3;
+    // Node size use for the intended deployments
+    string node_size_id = 4;
+}
+
