@@ -33,6 +33,13 @@ const (
 )
 
 const (
+	// DeploymentFeatures permissions
+
+	// PermissionDeploymentFeaturesGet is needed for fetching features that are available to deployments in a project
+	PermissionDeploymentFeaturesGet = "data.deploymentfeatures.get"
+)
+
+const (
 	// ServerSpecLimits permissions
 
 	// PermissionLimitsGet is needed for fetching server spec limits in a project
