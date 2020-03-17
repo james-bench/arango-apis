@@ -127,6 +127,16 @@ service SecurityService {
             delete: "/api/security/v1/iamproviders/{id}"
         };
     }
+
+    // Mark the given IAM provider as default for its containing project.
+    // Required permissions:
+    // - security.iamprovider.set-default on the project that owns the provider.
+    rpc SetDefaultIAMProvider(IAMProvider) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            post: "/api/security/v1/projects/{project_id}/iamproviders/default"
+            body: "*"
+        };
+    }
 }
 
 // IPWhitelist represents a list of CIDR ranges from which a deployment is accessible.
@@ -194,6 +204,9 @@ message IAMProvider {
     // Identifier of the user who created this provider.
     // This is a read-only value.
     string created_by_id = 10;
+    // Set when this provider is the default in its project.
+    // This is a read-only value.
+    bool is_default = 11;
 
     // LDAP provider specific settings
     message LDAPSettings {

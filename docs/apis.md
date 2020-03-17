@@ -881,6 +881,7 @@ for deployments.
 | deleted_at | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |  | The deletion timestamp of the provider This is a read-only value. |
 | is_deleted | [bool](#bool) |  | Set when this provider is deleted. This is a read-only value. |
 | created_by_id | [string](#string) |  | Identifier of the user who created this provider. This is a read-only value. |
+| is_default | [bool](#bool) |  | Set when this provider is the default in its project. This is a read-only value. |
 | ldap_settings | [IAMProvider.LDAPSettings](#arangodb.cloud.security.v1.IAMProvider.LDAPSettings) |  |  |
 
 
@@ -1006,6 +1007,7 @@ SecurityService is the API used to access security entities.
 | CreateIAMProvider | [IAMProvider](#arangodb.cloud.security.v1.IAMProvider) | [IAMProvider](#arangodb.cloud.security.v1.IAMProvider) | Create a new IAM provider Required permissions: - security.iamprovider.create on the project that owns the IAM provider. |
 | UpdateIAMProvider | [IAMProvider](#arangodb.cloud.security.v1.IAMProvider) | [IAMProvider](#arangodb.cloud.security.v1.IAMProvider) | Update an IAM provider Required permissions: - security.iamprovider.update on the IAM provider |
 | DeleteIAMProvider | [.arangodb.cloud.common.v1.IDOptions](#arangodb.cloud.common.v1.IDOptions) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Delete an IAM provider. Note that IAM providers are initially only marked for deletion. Once all their dependent deployments are removed, the provider is removed. Required permissions: - security.iamprovider.delete on the IP whitelist |
+| SetDefaultIAMProvider | [IAMProvider](#arangodb.cloud.security.v1.IAMProvider) | [.arangodb.cloud.common.v1.Empty](#arangodb.cloud.common.v1.Empty) | Mark the given IAM provider as default for its containing project. Required permissions: - security.iamprovider.set-default on the project that owns the provider. |
 
  
 
