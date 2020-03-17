@@ -322,7 +322,7 @@ export interface ISecurityService {
   // Mark the given IAM provider as default for its containing project.
   // Required permissions:
   // - security.iamprovider.set-default on the project that owns the provider.
-  SetDefaultCACertificate: (req: IAMProvider) => Promise<void>;
+  SetDefaultIAMProvider: (req: IAMProvider) => Promise<void>;
 }
 
 // SecurityService is the API used to access security entities.
@@ -431,7 +431,7 @@ export class SecurityService implements ISecurityService {
   // Mark the given IAM provider as default for its containing project.
   // Required permissions:
   // - security.iamprovider.set-default on the project that owns the provider.
-  async SetDefaultCACertificate(req: IAMProvider): Promise<void> {
+  async SetDefaultIAMProvider(req: IAMProvider): Promise<void> {
     const url = `/api/security/v1/projects/${encodeURIComponent(req.project_id || '')}/iamproviders/default`;
     return api.post(url, req);
   }

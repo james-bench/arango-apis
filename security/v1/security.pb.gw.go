@@ -681,7 +681,7 @@ func local_request_SecurityService_DeleteIAMProvider_0(ctx context.Context, mars
 
 }
 
-func request_SecurityService_SetDefaultCACertificate_0(ctx context.Context, marshaler runtime.Marshaler, client SecurityServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_SecurityService_SetDefaultIAMProvider_0(ctx context.Context, marshaler runtime.Marshaler, client SecurityServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq IAMProvider
 	var metadata runtime.ServerMetadata
 
@@ -711,12 +711,12 @@ func request_SecurityService_SetDefaultCACertificate_0(ctx context.Context, mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project_id", err)
 	}
 
-	msg, err := client.SetDefaultCACertificate(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.SetDefaultIAMProvider(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_SecurityService_SetDefaultCACertificate_0(ctx context.Context, marshaler runtime.Marshaler, server SecurityServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_SecurityService_SetDefaultIAMProvider_0(ctx context.Context, marshaler runtime.Marshaler, server SecurityServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq IAMProvider
 	var metadata runtime.ServerMetadata
 
@@ -746,7 +746,7 @@ func local_request_SecurityService_SetDefaultCACertificate_0(ctx context.Context
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project_id", err)
 	}
 
-	msg, err := server.SetDefaultCACertificate(ctx, &protoReq)
+	msg, err := server.SetDefaultIAMProvider(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -976,7 +976,7 @@ func RegisterSecurityServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 
 	})
 
-	mux.Handle("POST", pattern_SecurityService_SetDefaultCACertificate_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_SecurityService_SetDefaultIAMProvider_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -985,14 +985,14 @@ func RegisterSecurityServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_SecurityService_SetDefaultCACertificate_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_SecurityService_SetDefaultIAMProvider_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_SecurityService_SetDefaultCACertificate_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SecurityService_SetDefaultIAMProvider_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -1257,7 +1257,7 @@ func RegisterSecurityServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 
 	})
 
-	mux.Handle("POST", pattern_SecurityService_SetDefaultCACertificate_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_SecurityService_SetDefaultIAMProvider_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -1266,14 +1266,14 @@ func RegisterSecurityServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_SecurityService_SetDefaultCACertificate_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_SecurityService_SetDefaultIAMProvider_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_SecurityService_SetDefaultCACertificate_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SecurityService_SetDefaultIAMProvider_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -1303,7 +1303,7 @@ var (
 
 	pattern_SecurityService_DeleteIAMProvider_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "security", "v1", "iamproviders", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_SecurityService_SetDefaultCACertificate_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 6}, []string{"api", "security", "v1", "projects", "project_id", "iamproviders", "default"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_SecurityService_SetDefaultIAMProvider_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 6}, []string{"api", "security", "v1", "projects", "project_id", "iamproviders", "default"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
@@ -1329,5 +1329,5 @@ var (
 
 	forward_SecurityService_DeleteIAMProvider_0 = runtime.ForwardResponseMessage
 
-	forward_SecurityService_SetDefaultCACertificate_0 = runtime.ForwardResponseMessage
+	forward_SecurityService_SetDefaultIAMProvider_0 = runtime.ForwardResponseMessage
 )
