@@ -36,4 +36,6 @@ const (
 	PermissionIAMProviderUpdate = "security.iamprovider.update"
 	// PermissionIAMProviderDelete is needed for deleting an IAM provider
 	PermissionIAMProviderDelete = "security.iamprovider.delete"
+	// PermissionIAMProviderSetDefault is needed for marking an IAM provider as the default in a project
+	PermissionIAMProviderSetDefault = "security.iamprovider.set-default"
 )

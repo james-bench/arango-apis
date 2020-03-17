@@ -61,6 +61,11 @@ export interface IAMProvider {
   // string
   created_by_id?: string;
   
+  // Set when this provider is the default in its project.
+  // This is a read-only value.
+  // boolean
+  is_default?: boolean;
+  
   // IAMProvider_LDAPSettings
   ldap_settings?: IAMProvider_LDAPSettings;
 }
@@ -313,6 +318,11 @@ export interface ISecurityService {
   // Required permissions:
   // - security.iamprovider.delete on the IP whitelist
   DeleteIAMProvider: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Mark the given IAM provider as default for its containing project.
+  // Required permissions:
+  // - security.iamprovider.set-default on the project that owns the provider.
+  SetDefaultCACertificate: (req: IAMProvider) => Promise<void>;
 }
 
 // SecurityService is the API used to access security entities.
@@ -416,5 +426,13 @@ export class SecurityService implements ISecurityService {
     const path = `/api/security/v1/iamproviders/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.delete(url, undefined);
+  }
+  
+  // Mark the given IAM provider as default for its containing project.
+  // Required permissions:
+  // - security.iamprovider.set-default on the project that owns the provider.
+  async SetDefaultCACertificate(req: IAMProvider): Promise<void> {
+    const url = `/api/security/v1/projects/${encodeURIComponent(req.project_id || '')}/iamproviders/default`;
+    return api.post(url, req);
   }
 }
