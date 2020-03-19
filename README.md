@@ -1,6 +1,6 @@
-# ArangoDB Managed Service API's
+# ArangoDB Cloud API's
 
-Public API definitions of ArangoDB Managed Services
+[Public API definitions](https://arangodb-managed.github.io/apis/) of ArangoDB Cloud
 
 ## Build
 
