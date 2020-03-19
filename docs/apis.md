@@ -1,17 +1,8 @@
 ---
-layout: default
 page-toc:
   disable: true
-title: "Protocol documentation"
+title: "ArangoDB Oasis API"
 permalink: /index.html
-theme: jekyll-theme-modernist
-highlighter: rouge
-markdown: kramdown
-kramdown:
- input: GFM
- auto_ids: true
- hard_wrap: false
- syntax_highlighter: rouge
 ---
 # Protocol Documentation
 <a name="top"></a>
