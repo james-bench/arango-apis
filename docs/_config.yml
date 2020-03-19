@@ -1,4 +1,4 @@
-theme: jekyll-theme-modernist
+theme: cayman
 highlighter: rouge
 markdown: kramdown
 kramdown:
