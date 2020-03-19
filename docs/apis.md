@@ -2,6 +2,7 @@
 layout: page
 title: "Protocol documentation"
 permalink: /index.html
+theme: jekyll-theme-hacker
 ---
 # Protocol Documentation
 <a name="top"></a>
