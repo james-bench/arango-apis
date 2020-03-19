@@ -1,5 +1,7 @@
 ---
-layout: page
+layout: default
+page-toc:
+  disable: true
 title: "Protocol documentation"
 permalink: /index.html
 theme: jekyll-theme-modernist
