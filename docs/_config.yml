@@ -1,6 +1,6 @@
 title: ArangoDB Oasis API
 __remote_theme: pmarsceill/just-the-docs
-theme: jekyll-theme-hacker
+theme: jekyll-theme-cayman
 highlighter: rouge
 markdown: kramdown
 kramdown:
