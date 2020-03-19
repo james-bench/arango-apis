@@ -2,7 +2,14 @@
 layout: page
 title: "Protocol documentation"
 permalink: /index.html
-theme: jekyll-theme-hacker
+theme: jekyll-theme-modernist
+highlighter: rouge
+markdown: kramdown
+kramdown:
+ input: GFM
+ auto_ids: true
+ hard_wrap: false
+ syntax_highlighter: rouge
 ---
 # Protocol Documentation
 <a name="top"></a>
