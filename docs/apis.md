@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Protocol documentation"
-permalink: /
+permalink: /index.html
 ---
 # Protocol Documentation
 <a name="top"></a>
