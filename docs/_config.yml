@@ -1,5 +1,6 @@
 title: ArangoDB Oasis API
-theme: cayman
+remote_theme: pmarsceill/just-the-docs
+__theme: cayman
 highlighter: rouge
 markdown: kramdown
 kramdown:
