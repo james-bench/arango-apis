@@ -1,0 +1,6 @@
+---
+page-toc:
+  disable: true
+title: "ArangoDB Oasis API"
+permalink: /index.html
+---
