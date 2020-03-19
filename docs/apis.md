@@ -1,3 +1,8 @@
+---
+layout: page
+title: "Protocol documentation"
+permalink: /apis/
+---
 # Protocol Documentation
 <a name="top"></a>
 
