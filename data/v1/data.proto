@@ -353,6 +353,8 @@ message Deployment {
         // Latest known ArangoDB version used by this server.
         // Initially this field is empty.
         string version = 11;
+        // The last started timestamp of the server
+        google.protobuf.Timestamp last_started_at = 12;
         // Information about the data volume used to store the data
         DataVolumeInfo data_volume_info = 20;
     }

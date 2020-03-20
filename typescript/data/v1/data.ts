@@ -389,6 +389,10 @@ export interface Deployment_ServerStatus {
   // string
   version?: string;
   
+  // The last started timestamp of the server
+  // googleTypes.Timestamp
+  last_started_at?: googleTypes.Timestamp;
+  
   // Information about the data volume used to store the data
   // DataVolumeInfo
   data_volume_info?: DataVolumeInfo;
