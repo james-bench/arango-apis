@@ -3747,7 +3747,7 @@ resource (usually deployment) in a specific time period.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | destination | [string](#string) |  | The destination (or source) the network traffic going to (or comming from) Can be &#39;Internet&#39; or &#39;SameRegion&#39; An empty string means &#39;Internet&#39; |
-| total_transfer_ingress_size | [int64](#int64) |  | Total amount of network ingress traffic (in bytes) caused by the use of a deployment. Destination &#39;Internet&#39;: This is traffic comming from the internet, so excluding inner cluster traffic Destination &#39;SameRegion&#39;: This is inner cluster traffic only This is always excluding backup traffic (downloads). |
+| total_transfer_ingress_size | [int64](#int64) |  | Total amount of network ingress traffic (in bytes) caused by the use of a deployment. Destination &#39;Internet&#39;: This is traffic coming from the internet, so excluding inner cluster traffic Destination &#39;SameRegion&#39;: This is inner cluster traffic only This is always excluding backup traffic (downloads). |
 | total_transfer_egress_size | [int64](#int64) |  | Total amount of network egress traffic (in bytes) caused by the use of a deployment. Destination &#39;Internet&#39;: This is traffic going to the internet, so excluding inner cluster traffic Destination &#39;SameRegion&#39;: This is inner cluster traffic only This is always excluding backup traffic (uploads).
 
 Note: In the future we want to split between cross_region_transfer_x and inner_region_transfer_x, the total_transfer_x is the sum of these 2. Inner region can be cross availability zone. |

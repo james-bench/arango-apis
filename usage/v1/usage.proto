@@ -134,7 +134,7 @@ message UsageItem {
         // An empty string means 'Internet' 
         string destination = 1;
         // Total amount of network ingress traffic (in bytes) caused by the use of a deployment.
-        // Destination 'Internet': This is traffic comming from the internet, so excluding inner cluster traffic 
+        // Destination 'Internet': This is traffic coming from the internet, so excluding inner cluster traffic 
         // Destination 'SameRegion': This is inner cluster traffic only
         // This is always excluding backup traffic (downloads).
         int64 total_transfer_ingress_size = 2;

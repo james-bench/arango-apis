@@ -11,8 +11,8 @@ package v1
 const (
 	// Network transfer destinations
 
-	// NetworkTransferDestinationInternet specifies the destination (or source) from the ingess/egress as internet data transfer.
+	// NetworkTransferDestinationInternet specifies the destination (or source) from the ingress/egress as internet data transfer.
 	NetworkTransferDestinationInternet = "Internet"
-	// NetworkTransferDestinationSameRegion specifies the destination (or source) from the ingess/egress as inner region data transfer.
+	// NetworkTransferDestinationSameRegion specifies the destination (or source) from the ingress/egress as inner region data transfer.
 	NetworkTransferDestinationSameRegion = "SameRegion"
 )

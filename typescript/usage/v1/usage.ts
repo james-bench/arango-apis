@@ -185,7 +185,7 @@ export interface UsageItem_NetworkTransferSize {
   destination?: string;
   
   // Total amount of network ingress traffic (in bytes) caused by the use of a deployment.
-  // Destination 'Internet': This is traffic comming from the internet, so excluding inner cluster traffic
+  // Destination 'Internet': This is traffic coming from the internet, so excluding inner cluster traffic
   // Destination 'SameRegion': This is inner cluster traffic only
   // This is always excluding backup traffic (downloads).
   // number
