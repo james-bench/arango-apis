@@ -19,7 +19,7 @@ The following projects make use of the ArangoDB Oasis API and are good examples 
 
 ## Building
 
-Building the API's involves the compilation of the protocol buffers and the generation of a Go client for it.
+Building the APIs involves the compilation of the protocol buffers and the generation of a Go client for it.
 
 *Note that it is not needed to go through this build process in order to use the API.*
 
@@ -43,8 +43,8 @@ make
 
 ## Building clients for other languages
 
-Since GRPC is available for many languages (Java, NodeJS, C#, Python...) it is fairly straightforward to create clients for this languages.
+Since GRPC is available for many languages (Java, NodeJS, C#, Python...) it is fairly straightforward to create clients for these languages.
 
 To do so, follow language specific instructions on [grpc.io](https://grpc.io/docs/reference/).
 
-*Note that we do not support other clients other than the Go client that already included in this repository.*
+*Note that we do not support clients other than the Go client that already included in this repository.*
