@@ -1,10 +1,16 @@
 # ArangoDB Cloud API's
 
+![ArangoDB Oasis](https://cloud.arangodb.com/assets/logos/arangodb-oasis-logo-whitebg-right.png)
+
 This repository contains the interface definition of the API for ArangoDB Oasis, the ArangoDB Cloud.
 
 The entire interface is specified in protocol buffers and uses GRPC underlying as protocol.
-A full list of API methods and their arguments are available
+A full list of API methods and their arguments is available
 [here](https://arangodb-managed.github.io/apis/).
+
+## Maintainers
+
+This provider plugin is maintained by the team at [ArangoDB](https://www.arangodb.com/).
 
 ## More information
 
