@@ -1,10 +1,29 @@
 # ArangoDB Cloud API's
 
-[Public API definitions](https://arangodb-managed.github.io/apis/) of ArangoDB Cloud
+This repository contains the interface definition of the API for ArangoDB Oasis, the ArangoDB Cloud.
 
-## Build
+The entire interface is specified in protocol buffers and uses GRPC underlying as protocol.
+A full list of API methods and their arguments are available
+[here](https://arangodb-managed.github.io/apis/).
 
-The build requires a github personal access token with the following scopes.
+## More information
+
+More information and a getting started guide about the Oasis API is available at [arangodb.com/docs/stable/oasis](https://www.arangodb.com/docs/stable/oasis/).
+
+## Examples
+
+The following projects make use of the ArangoDB Oasis API and are good examples of how to use it:
+
+* [oasisctl](https://github.com/arangodb-managed/oasisctl) Commandline utility for ArangoDB Oasis
+* [terraform-provider-oasis](https://github.com/arangodb-managed/terraform-provider-oasis) Terraform plugin for ArangoDB Oasis
+
+## Building
+
+Building the API's involves the compilation of the protocol buffers and the generation of a Go client for it.
+
+*Note that it is not needed to go through this build process in order to use the API.*
+
+The build process requires a github personal access token with the following scopes.
 
 * repo
     * repo:status
@@ -21,3 +40,11 @@ Go wrappers for them, run:
 make build-image
 make
 ```
+
+## Building clients for other languages
+
+Since GRPC is available for many languages (Java, NodeJS, C#, Python...) it is fairly straightforward to create clients for this languages.
+
+To do so, follow language specific instructions on [grpc.io](https://grpc.io/docs/reference/).
+
+*Note that we do not support other clients other than the Go client that already included in this repository.*
