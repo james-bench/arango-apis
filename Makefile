@@ -90,9 +90,9 @@ docs: $(CACHEVOL) $(MODVOL)
 	$(DOCKERENV) \
 		protoc -I.:vendor:vendor/googleapis/:vendor/github.com/gogo/protobuf/protobuf/ \
 			--doc_out=docs $(PROTOSOURCES) \
-			--doc_opt=html,apis-raw.html
-	cat docs/header.txt docs/apis-raw.html > docs/apis.html
-	rm docs/apis-raw.html
+			--doc_opt=html,index-raw.html
+	cat docs/header.txt docs/index-raw.html > docs/index.html
+	rm docs/index-raw.html
 
 # Generate API as typescript
 .PHONY: ts
