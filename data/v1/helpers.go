@@ -143,6 +143,7 @@ func DeploymentServerStatusEqual(a, b *Deployment_ServerStatus, ignoreTimestamps
 		a.GetMemberOfCluster() == b.GetMemberOfCluster() &&
 		a.GetFailed() == b.GetFailed() &&
 		a.GetVersion() == b.GetVersion() &&
+		a.GetLastStartedAt().Equal(b.GetLastStartedAt()) &&
 		DataVolumeInfoEqual(a.GetDataVolumeInfo(), b.GetDataVolumeInfo(), ignoreTimestamps)
 }
 

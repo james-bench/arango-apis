@@ -128,7 +128,7 @@ service DataService {
     // Required permissions:
     // - data.limits.get on the requested project
     // - data.deployment.get on the specified deployment (if deployment_id is set)
-    // This method is deprecated.
+    // This method is deprecated and will be remove in the very near future, do not use this method anymore
     rpc GetServersSpecLimits(ServersSpecLimitsRequest) returns (ServersSpecLimits) {
         option (google.api.http) = {
             get: "/api/data/v1/projects/{project_id}/regions/{region_id}/limits"
@@ -367,6 +367,8 @@ message Deployment {
         // Latest known ArangoDB version used by this server.
         // Initially this field is empty.
         string version = 11;
+        // The last started timestamp of the server
+        google.protobuf.Timestamp last_started_at = 12;
         // Information about the data volume used to store the data
         DataVolumeInfo data_volume_info = 20;
     }
