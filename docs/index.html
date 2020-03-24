@@ -6881,7 +6881,7 @@ owned by the given projected, created in the given region.
 Required permissions:
 - data.limits.get on the requested project
 - data.deployment.get on the specified deployment (if deployment_id is set)
-This method is deprecated.</p></td>
+This method is deprecated and will be remove in the very near future, do not use this method anymore</p></td>
               </tr>
             
               <tr>
@@ -12647,8 +12647,8 @@ This field is only set when the usage item is of kind BackupStorageSize. </p></t
                   <td>destination</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>The destination (or source) the network traffic going to (or comming from)
-Can be &#39;Internet&#39; or &#39;SameRegion&#39;
+                  <td><p>The destination (or source) the network traffic going to (or coming from)
+Can be &#39;Internet&#39; or &#39;InCluster&#39;
 An empty string means &#39;Internet&#39; </p></td>
                 </tr>
               
@@ -12658,7 +12658,7 @@ An empty string means &#39;Internet&#39; </p></td>
                   <td></td>
                   <td><p>Total amount of network ingress traffic (in bytes) caused by the use of a deployment.
 Destination &#39;Internet&#39;: This is traffic coming from the internet, so excluding inner cluster traffic 
-Destination &#39;SameRegion&#39;: This is inner cluster traffic only
+Destination &#39;InCluster&#39;: This is in-cluster traffic only
 This is always excluding backup traffic (downloads). </p></td>
                 </tr>
               
@@ -12668,7 +12668,7 @@ This is always excluding backup traffic (downloads). </p></td>
                   <td></td>
                   <td><p>Total amount of network egress traffic (in bytes) caused by the use of a deployment.
 Destination &#39;Internet&#39;: This is traffic going to the internet, so excluding inner cluster traffic 
-Destination &#39;SameRegion&#39;: This is inner cluster traffic only
+Destination &#39;InCluster&#39;: This is in-cluster traffic only
 This is always excluding backup traffic (uploads).
 
 Note: In the future we want to split between cross_region_transfer_x and inner_region_transfer_x, 

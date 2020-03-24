@@ -3816,7 +3816,7 @@ type DataServiceClient interface {
 	// Required permissions:
 	// - data.limits.get on the requested project
 	// - data.deployment.get on the specified deployment (if deployment_id is set)
-	// This method is deprecated.
+	// This method is deprecated and will be remove in the very near future, do not use this method anymore
 	GetServersSpecLimits(ctx context.Context, in *ServersSpecLimitsRequest, opts ...grpc.CallOption) (*ServersSpecLimits, error)
 	// Fetch the node sizes available for deployments
 	// owned by the project with given ID, created in the given region with given ID.
@@ -4090,7 +4090,7 @@ type DataServiceServer interface {
 	// Required permissions:
 	// - data.limits.get on the requested project
 	// - data.deployment.get on the specified deployment (if deployment_id is set)
-	// This method is deprecated.
+	// This method is deprecated and will be remove in the very near future, do not use this method anymore
 	GetServersSpecLimits(context.Context, *ServersSpecLimitsRequest) (*ServersSpecLimits, error)
 	// Fetch the node sizes available for deployments
 	// owned by the project with given ID, created in the given region with given ID.

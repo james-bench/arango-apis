@@ -1042,7 +1042,7 @@ export interface IDataService {
   // Required permissions:
   // - data.limits.get on the requested project
   // - data.deployment.get on the specified deployment (if deployment_id is set)
-  // This method is deprecated.
+  // This method is deprecated and will be remove in the very near future, do not use this method anymore
   GetServersSpecLimits: (req: ServersSpecLimitsRequest) => Promise<ServersSpecLimits>;
   
   // Fetch the node sizes available for deployments
@@ -1189,7 +1189,7 @@ export class DataService implements IDataService {
   // Required permissions:
   // - data.limits.get on the requested project
   // - data.deployment.get on the specified deployment (if deployment_id is set)
-  // This method is deprecated.
+  // This method is deprecated and will be remove in the very near future, do not use this method anymore
   async GetServersSpecLimits(req: ServersSpecLimitsRequest): Promise<ServersSpecLimits> {
     const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id || '')}/regions/${encodeURIComponent(req.region_id || '')}/limits`;
     const url = path + api.queryString(req, [`project_id`, `region_id`]);

@@ -488,18 +488,18 @@ func (m *UsageItem_DeploymentSize) GetAddonIds() []string {
 }
 
 type UsageItem_NetworkTransferSize struct {
-	// The destination (or source) the network traffic going to (or comming from)
-	// Can be 'Internet' or 'SameRegion'
+	// The destination (or source) the network traffic going to (or coming from)
+	// Can be 'Internet' or 'InCluster'
 	// An empty string means 'Internet'
 	Destination string `protobuf:"bytes,1,opt,name=destination,proto3" json:"destination,omitempty"`
 	// Total amount of network ingress traffic (in bytes) caused by the use of a deployment.
 	// Destination 'Internet': This is traffic coming from the internet, so excluding inner cluster traffic
-	// Destination 'SameRegion': This is inner cluster traffic only
+	// Destination 'InCluster': This is in-cluster traffic only
 	// This is always excluding backup traffic (downloads).
 	TotalTransferIngressSize int64 `protobuf:"varint,2,opt,name=total_transfer_ingress_size,json=totalTransferIngressSize,proto3" json:"total_transfer_ingress_size,omitempty"`
 	// Total amount of network egress traffic (in bytes) caused by the use of a deployment.
 	// Destination 'Internet': This is traffic going to the internet, so excluding inner cluster traffic
-	// Destination 'SameRegion': This is inner cluster traffic only
+	// Destination 'InCluster': This is in-cluster traffic only
 	// This is always excluding backup traffic (uploads).
 	TotalTransferEgressSize int64    `protobuf:"varint,3,opt,name=total_transfer_egress_size,json=totalTransferEgressSize,proto3" json:"total_transfer_egress_size,omitempty"`
 	XXX_NoUnkeyedLiteral    struct{} `json:"-"`

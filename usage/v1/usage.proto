@@ -143,18 +143,18 @@ message UsageItem {
     DeploymentSize deployment_size = 101;
 
     message NetworkTransferSize {
-        // The destination (or source) the network traffic going to (or comming from)
-        // Can be 'Internet' or 'SameRegion'
+        // The destination (or source) the network traffic going to (or coming from)
+        // Can be 'Internet' or 'InCluster'
         // An empty string means 'Internet' 
         string destination = 1;
         // Total amount of network ingress traffic (in bytes) caused by the use of a deployment.
         // Destination 'Internet': This is traffic coming from the internet, so excluding inner cluster traffic 
-        // Destination 'SameRegion': This is inner cluster traffic only
+        // Destination 'InCluster': This is in-cluster traffic only
         // This is always excluding backup traffic (downloads).
         int64 total_transfer_ingress_size = 2;
         // Total amount of network egress traffic (in bytes) caused by the use of a deployment.
         // Destination 'Internet': This is traffic going to the internet, so excluding inner cluster traffic 
-        // Destination 'SameRegion': This is inner cluster traffic only
+        // Destination 'InCluster': This is in-cluster traffic only
         // This is always excluding backup traffic (uploads).
         int64 total_transfer_egress_size = 3;
         // Note: In the future we want to split between cross_region_transfer_x and inner_region_transfer_x, 

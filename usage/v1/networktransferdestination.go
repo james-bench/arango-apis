@@ -13,6 +13,6 @@ const (
 
 	// NetworkTransferDestinationInternet specifies the destination (or source) from the ingress/egress as internet data transfer.
 	NetworkTransferDestinationInternet = "Internet"
-	// NetworkTransferDestinationSameRegion specifies the destination (or source) from the ingress/egress as inner region data transfer.
-	NetworkTransferDestinationSameRegion = "SameRegion"
+	// NetworkTransferDestinationInCluster specifies the destination (or source) from the ingress/egress as in-cluster data transfer.
+	NetworkTransferDestinationInCluster = "InCluster"
 )
