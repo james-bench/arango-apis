@@ -125,7 +125,7 @@ export interface ListExampleDatasetsRequest {
   options?: arangodb_cloud_common_v1_ListOptions;
 }
 
-// ExampleDatasetService is the API used to query for example datasets..
+// ExampleDatasetService is the API used to query for example datasets.
 export interface IExampleDatasetService {
   // Get the current API version of this service.
   // Required permissions:
@@ -169,7 +169,7 @@ export interface IExampleDatasetService {
   DeleteExampleDatasetInstallation: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
 }
 
-// ExampleDatasetService is the API used to query for example datasets..
+// ExampleDatasetService is the API used to query for example datasets.
 export class ExampleDatasetService implements IExampleDatasetService {
   // Get the current API version of this service.
   // Required permissions:
