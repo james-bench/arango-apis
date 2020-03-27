@@ -26,16 +26,20 @@ package v1
 func (source *ExampleDataset) Equals(other *ExampleDataset) bool {
 	return source.GetName() == other.GetName() &&
 		source.GetDescription() == other.GetDescription() &&
-		source.GetIsDeleted() == other.GetIsDeleted() &&
 		source.GetGuide() == other.GetGuide()
 }
 
 // Equals returns true when source & other have the same values
 func (source *ExampleDatasetInstallation) Equals(other *ExampleDatasetInstallation) bool {
-	return source.GetName() == other.GetName() &&
-		source.GetDeploymentId() == other.GetDeploymentId() &&
-		source.GetDescription() == other.GetDescription() &&
-		source.GetDatabaseName() == other.GetDatabaseName() &&
+	return source.GetDeploymentId() == other.GetDeploymentId() &&
 		source.GetExampledatasetId() == other.GetExampledatasetId() &&
-		(source.GetStatus() != nil && other.GetStatus() != nil) && (source.GetStatus().GetState() == other.GetStatus().GetState())
+		source.GetStatus().Equals(other.GetStatus())
+}
+
+// Equals returns true when source & other have the same values
+func (source *ExampleDatasetInstallation_Status) Equals(other *ExampleDatasetInstallation_Status) bool {
+	return source.GetState() == other.GetState() &&
+		source.GetDatabaseName() == other.GetDatabaseName() &&
+		source.GetIsAvailable() == other.GetIsAvailable() &&
+		source.GetIsFailed() == other.GetIsFailed()
 }

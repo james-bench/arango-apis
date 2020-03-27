@@ -21,3 +21,65 @@
 //
 
 package v1
+
+import context "context"
+
+type (
+	// ExampleDatasetInstallationCallback is a callback for individual example dataset installations.
+	ExampleDatasetInstallationCallback func(context.Context, *ExampleDatasetInstallation) error
+
+	// ExampleDatasetCallback is a callback for individual example datasets.
+	ExampleDatasetCallback func(context.Context, *ExampleDataset) error
+)
+
+// ForEachExampleDatasetInstallation iterates over all example dataset installations for a specific deployment,
+// invoking the given callback for each of them.
+func ForEachExampleDatasetInstallation(ctx context.Context, listFunc func(ctx context.Context, req *ListExampleDatasetInstallationsRequest) (*ExampleDatasetInstallationList, error),
+	req ListExampleDatasetInstallationsRequest, cb ExampleDatasetInstallationCallback) error {
+	req.Options = req.GetOptions().CloneOrDefault()
+	for {
+		list, err := listFunc(ctx, &req)
+		if err != nil {
+			return err
+		}
+		for _, item := range list.GetItems() {
+			if err := cb(ctx, item); err != nil {
+				return err
+			}
+			if err := ctx.Err(); err != nil {
+				return err
+			}
+		}
+		if len(list.GetItems()) < int(req.Options.PageSize) {
+			// We're done
+			return nil
+		}
+		req.Options.Page++
+	}
+}
+
+// ForEachExampleDataset iterates over all example datasets,
+// invoking the given callback for each of them.
+func ForEachExampleDataset(ctx context.Context, listFunc func(ctx context.Context, req *ListExampleDatasetsRequest) (*ExampleDatasetList, error),
+	req ListExampleDatasetsRequest, cb ExampleDatasetCallback) error {
+	req.Options = req.GetOptions().CloneOrDefault()
+	for {
+		list, err := listFunc(ctx, &req)
+		if err != nil {
+			return err
+		}
+		for _, item := range list.GetItems() {
+			if err := cb(ctx, item); err != nil {
+				return err
+			}
+			if err := ctx.Err(); err != nil {
+				return err
+			}
+		}
+		if len(list.GetItems()) < int(req.Options.PageSize) {
+			// We're done
+			return nil
+		}
+		req.Options.Page++
+	}
+}

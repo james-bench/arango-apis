@@ -28,12 +28,6 @@ const (
 	PermissionExampleDatasetList = "example.exampledataset.list"
 	// PermissionExampleDatasetGet is needed to get a single example dataset.
 	PermissionExampleDatasetGet = "example.exampledataset.get"
-	// PermissionExampleDatasetCreate is needed to create an example dataset.
-	PermissionExampleDatasetCreate = "example.exampledataset.create"
-	// PermissionExampleDatasetDelete is needed to delete an example dataset.
-	PermissionExampleDatasetDelete = "example.exampledataset.delete"
-	// PermissionExampleDatasetUpdate is needed to update an example dataset.
-	PermissionExampleDatasetUpdate = "example.exampledataset.update"
 )
 
 const (

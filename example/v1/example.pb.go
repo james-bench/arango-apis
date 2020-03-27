@@ -42,19 +42,14 @@ type ExampleDataset struct {
 	// Description of the example dataset
 	Description string `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
 	// Guide contains description of the example dataset including several example queries.
+	// Content type of guide is markdown.
 	Guide string `protobuf:"bytes,6,opt,name=guide,proto3" json:"guide,omitempty"`
 	// The creation timestamp of the example dataset (database object)
 	// This is a read-only value.
-	CreatedAt *types.Timestamp `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	// The deletion timestamp of the example dataset
-	// This is a read-only value.
-	DeletedAt *types.Timestamp `protobuf:"bytes,8,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`
-	// Set when this example dataset is deleted.
-	// This is a read-only value.
-	IsDeleted            bool     `protobuf:"varint,9,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	CreatedAt            *types.Timestamp `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
 }
 
 func (m *ExampleDataset) Reset()         { *m = ExampleDataset{} }
@@ -132,20 +127,7 @@ func (m *ExampleDataset) GetCreatedAt() *types.Timestamp {
 	return nil
 }
 
-func (m *ExampleDataset) GetDeletedAt() *types.Timestamp {
-	if m != nil {
-		return m.DeletedAt
-	}
-	return nil
-}
-
-func (m *ExampleDataset) GetIsDeleted() bool {
-	if m != nil {
-		return m.IsDeleted
-	}
-	return false
-}
-
+// ExampleDatasetInstallation represents an installation of a dataset initiated by the user.
 type ExampleDatasetInstallation struct {
 	// System identifier of the installation.
 	// This is a read-only value.
@@ -153,18 +135,14 @@ type ExampleDatasetInstallation struct {
 	// URL of this resource
 	// This is a read-only value.
 	Url string `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty"`
-	// Name of the installation
-	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
-	// Description of the installation.
-	Description string `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
 	// Identifier of the deployment that owns this installation.
 	// After creation, this value cannot be changed.
-	DeploymentId string `protobuf:"bytes,5,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
+	DeploymentId string `protobuf:"bytes,3,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
 	// Identifier of the example dataset which will be installed.
 	// After creation, this value cannot be changed.
-	ExampledatasetId string `protobuf:"bytes,6,opt,name=exampledataset_id,json=exampledatasetId,proto3" json:"exampledataset_id,omitempty"`
-	// Name of the database into which this example dataset was installed.
-	DatabaseName string `protobuf:"bytes,7,opt,name=database_name,json=databaseName,proto3" json:"database_name,omitempty"`
+	ExampledatasetId string `protobuf:"bytes,4,opt,name=exampledataset_id,json=exampledatasetId,proto3" json:"exampledataset_id,omitempty"`
+	// The creation timestamp of the installation.
+	CreatedAt *types.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	// Status of the actual installation.
 	Status               *ExampleDatasetInstallation_Status `protobuf:"bytes,100,opt,name=status,proto3" json:"status,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                           `json:"-"`
@@ -219,20 +197,6 @@ func (m *ExampleDatasetInstallation) GetUrl() string {
 	return ""
 }
 
-func (m *ExampleDatasetInstallation) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
-
-func (m *ExampleDatasetInstallation) GetDescription() string {
-	if m != nil {
-		return m.Description
-	}
-	return ""
-}
-
 func (m *ExampleDatasetInstallation) GetDeploymentId() string {
 	if m != nil {
 		return m.DeploymentId
@@ -247,11 +211,11 @@ func (m *ExampleDatasetInstallation) GetExampledatasetId() string {
 	return ""
 }
 
-func (m *ExampleDatasetInstallation) GetDatabaseName() string {
+func (m *ExampleDatasetInstallation) GetCreatedAt() *types.Timestamp {
 	if m != nil {
-		return m.DatabaseName
+		return m.CreatedAt
 	}
-	return ""
+	return nil
 }
 
 func (m *ExampleDatasetInstallation) GetStatus() *ExampleDatasetInstallation_Status {
@@ -264,13 +228,15 @@ func (m *ExampleDatasetInstallation) GetStatus() *ExampleDatasetInstallation_Sta
 // Status of the installation.
 // All members of this field are read-only.
 type ExampleDatasetInstallation_Status struct {
-	// The creation timestamp of the installation.
-	CreatedAt *types.Timestamp `protobuf:"bytes,1,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	// Name of the database into which this example dataset was installed.
+	DatabaseName string `protobuf:"bytes,1,opt,name=database_name,json=databaseName,proto3" json:"database_name,omitempty"`
 	// The state of the installation.
 	// Will be one of the following: "InProgress|Create|Ready|Failed"
-	State string `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
+	State string `protobuf:"bytes,3,opt,name=state,proto3" json:"state,omitempty"`
 	// Set when the installation is failed.
-	IsFailed             bool     `protobuf:"varint,3,opt,name=is_failed,json=isFailed,proto3" json:"is_failed,omitempty"`
+	IsFailed bool `protobuf:"varint,4,opt,name=is_failed,json=isFailed,proto3" json:"is_failed,omitempty"`
+	// Set when once the installation finished successfully and the dataset is available to be used.
+	IsAvailable          bool     `protobuf:"varint,5,opt,name=is_available,json=isAvailable,proto3" json:"is_available,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -309,11 +275,11 @@ func (m *ExampleDatasetInstallation_Status) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_ExampleDatasetInstallation_Status proto.InternalMessageInfo
 
-func (m *ExampleDatasetInstallation_Status) GetCreatedAt() *types.Timestamp {
+func (m *ExampleDatasetInstallation_Status) GetDatabaseName() string {
 	if m != nil {
-		return m.CreatedAt
+		return m.DatabaseName
 	}
-	return nil
+	return ""
 }
 
 func (m *ExampleDatasetInstallation_Status) GetState() string {
@@ -330,6 +296,62 @@ func (m *ExampleDatasetInstallation_Status) GetIsFailed() bool {
 	return false
 }
 
+func (m *ExampleDatasetInstallation_Status) GetIsAvailable() bool {
+	if m != nil {
+		return m.IsAvailable
+	}
+	return false
+}
+
+// ListExampleDatasetsRequest provides an extendable list request for listing datasets.
+type ListExampleDatasetsRequest struct {
+	// Optional common list options, the context_id is ignored.
+	Options              *v1.ListOptions `protobuf:"bytes,1,opt,name=options,proto3" json:"options,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *ListExampleDatasetsRequest) Reset()         { *m = ListExampleDatasetsRequest{} }
+func (m *ListExampleDatasetsRequest) String() string { return proto.CompactTextString(m) }
+func (*ListExampleDatasetsRequest) ProtoMessage()    {}
+func (*ListExampleDatasetsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_15a1dc8d40dadaa6, []int{2}
+}
+func (m *ListExampleDatasetsRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ListExampleDatasetsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ListExampleDatasetsRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ListExampleDatasetsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListExampleDatasetsRequest.Merge(m, src)
+}
+func (m *ListExampleDatasetsRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *ListExampleDatasetsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListExampleDatasetsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListExampleDatasetsRequest proto.InternalMessageInfo
+
+func (m *ListExampleDatasetsRequest) GetOptions() *v1.ListOptions {
+	if m != nil {
+		return m.Options
+	}
+	return nil
+}
+
 // List of example datasets.
 type ExampleDatasetList struct {
 	Items                []*ExampleDataset `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
@@ -342,7 +364,7 @@ func (m *ExampleDatasetList) Reset()         { *m = ExampleDatasetList{} }
 func (m *ExampleDatasetList) String() string { return proto.CompactTextString(m) }
 func (*ExampleDatasetList) ProtoMessage()    {}
 func (*ExampleDatasetList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_15a1dc8d40dadaa6, []int{2}
+	return fileDescriptor_15a1dc8d40dadaa6, []int{3}
 }
 func (m *ExampleDatasetList) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -390,7 +412,7 @@ func (m *ExampleDatasetInstallationList) Reset()         { *m = ExampleDatasetIn
 func (m *ExampleDatasetInstallationList) String() string { return proto.CompactTextString(m) }
 func (*ExampleDatasetInstallationList) ProtoMessage()    {}
 func (*ExampleDatasetInstallationList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_15a1dc8d40dadaa6, []int{3}
+	return fileDescriptor_15a1dc8d40dadaa6, []int{4}
 }
 func (m *ExampleDatasetInstallationList) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -443,7 +465,7 @@ func (m *ListExampleDatasetInstallationsRequest) Reset() {
 func (m *ListExampleDatasetInstallationsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListExampleDatasetInstallationsRequest) ProtoMessage()    {}
 func (*ListExampleDatasetInstallationsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_15a1dc8d40dadaa6, []int{4}
+	return fileDescriptor_15a1dc8d40dadaa6, []int{5}
 }
 func (m *ListExampleDatasetInstallationsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -490,6 +512,7 @@ func init() {
 	proto.RegisterType((*ExampleDataset)(nil), "arangodb.cloud.example.v1.ExampleDataset")
 	proto.RegisterType((*ExampleDatasetInstallation)(nil), "arangodb.cloud.example.v1.ExampleDatasetInstallation")
 	proto.RegisterType((*ExampleDatasetInstallation_Status)(nil), "arangodb.cloud.example.v1.ExampleDatasetInstallation.Status")
+	proto.RegisterType((*ListExampleDatasetsRequest)(nil), "arangodb.cloud.example.v1.ListExampleDatasetsRequest")
 	proto.RegisterType((*ExampleDatasetList)(nil), "arangodb.cloud.example.v1.ExampleDatasetList")
 	proto.RegisterType((*ExampleDatasetInstallationList)(nil), "arangodb.cloud.example.v1.ExampleDatasetInstallationList")
 	proto.RegisterType((*ListExampleDatasetInstallationsRequest)(nil), "arangodb.cloud.example.v1.ListExampleDatasetInstallationsRequest")
@@ -498,64 +521,61 @@ func init() {
 func init() { proto.RegisterFile("example.proto", fileDescriptor_15a1dc8d40dadaa6) }
 
 var fileDescriptor_15a1dc8d40dadaa6 = []byte{
-	// 906 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x57, 0x4d, 0x6f, 0x1b, 0x45,
-	0x18, 0x66, 0x9c, 0x26, 0xb1, 0xdf, 0x90, 0xa8, 0x1d, 0x0c, 0x5a, 0xb6, 0xc4, 0x5d, 0xd6, 0x6a,
-	0xe5, 0x26, 0xca, 0xae, 0x6c, 0x40, 0xa8, 0x05, 0x54, 0x19, 0x12, 0x22, 0xf3, 0x59, 0x6d, 0x5b,
-	0x0e, 0x5c, 0xac, 0xb1, 0x67, 0xba, 0x8c, 0xb4, 0x5f, 0x78, 0xc6, 0x56, 0xa3, 0x2a, 0x17, 0x6e,
-	0x5c, 0x10, 0x52, 0x0e, 0x70, 0xe0, 0xc2, 0x7f, 0xe0, 0xc2, 0x3f, 0xe0, 0xc0, 0x01, 0x89, 0x3f,
-	0x80, 0x0c, 0x67, 0xfe, 0x02, 0x68, 0x67, 0x77, 0x15, 0xaf, 0x63, 0xc7, 0x6b, 0x8b, 0x8f, 0xdb,
-	0x7c, 0xbd, 0xef, 0xfb, 0x3c, 0xcf, 0xfb, 0xb1, 0x36, 0x6c, 0xb3, 0x27, 0xc4, 0x8f, 0x3c, 0x66,
-	0x45, 0x83, 0x50, 0x86, 0xf8, 0x45, 0x32, 0x20, 0x81, 0x1b, 0xd2, 0x9e, 0xd5, 0xf7, 0xc2, 0x21,
-	0xb5, 0xb2, 0xdb, 0x51, 0x53, 0x7f, 0xa1, 0x1f, 0xfa, 0x7e, 0x18, 0xd8, 0xa3, 0xa6, 0x9d, 0xac,
-	0x12, 0x13, 0xfd, 0x0d, 0x97, 0xcb, 0xcf, 0x86, 0x3d, 0xab, 0x1f, 0xfa, 0xb6, 0x1b, 0x7a, 0x24,
-	0x70, 0x6d, 0x75, 0xd1, 0x1b, 0x3e, 0xb6, 0x23, 0x79, 0x12, 0x31, 0x61, 0x4b, 0xee, 0x33, 0x21,
-	0x89, 0x1f, 0x9d, 0xaf, 0x52, 0xe3, 0x97, 0xdc, 0x30, 0x74, 0x3d, 0x66, 0x93, 0x88, 0xdb, 0x24,
-	0x08, 0x42, 0x49, 0x24, 0x0f, 0x03, 0x91, 0xdc, 0x9a, 0x67, 0x25, 0xd8, 0x39, 0x4a, 0x10, 0x1c,
-	0x12, 0x49, 0x04, 0x93, 0x78, 0x07, 0x4a, 0x9c, 0x6a, 0xc8, 0x40, 0x8d, 0x8a, 0x53, 0xe2, 0x14,
-	0x5f, 0x85, 0xb5, 0xe1, 0xc0, 0xd3, 0x4a, 0xea, 0x20, 0x5e, 0x62, 0x0c, 0x57, 0x02, 0xe2, 0x33,
-	0x6d, 0x4d, 0x1d, 0xa9, 0x35, 0x36, 0x60, 0x8b, 0x32, 0xd1, 0x1f, 0xf0, 0x28, 0x76, 0xaf, 0x5d,
-	0x51, 0x57, 0x93, 0x47, 0xb8, 0x0a, 0xeb, 0xee, 0x90, 0x53, 0xa6, 0x6d, 0xa8, 0xbb, 0x64, 0x83,
-	0xef, 0x00, 0xf4, 0x07, 0x8c, 0x48, 0x46, 0xbb, 0x44, 0x6a, 0x9b, 0x06, 0x6a, 0x6c, 0xb5, 0x74,
-	0x2b, 0xc1, 0x6c, 0x65, 0x2c, 0xad, 0x87, 0x19, 0x29, 0xa7, 0x92, 0xbe, 0x6e, 0xcb, 0xd8, 0x94,
-	0x32, 0x8f, 0xa5, 0xa6, 0xe5, 0xc5, 0xa6, 0xe9, 0xeb, 0xb6, 0xc4, 0xbb, 0x00, 0x5c, 0x74, 0xd3,
-	0xbd, 0x56, 0x31, 0x50, 0xa3, 0xec, 0x54, 0xb8, 0x38, 0x4c, 0x0e, 0xcc, 0x1f, 0xd7, 0x40, 0xcf,
-	0xab, 0xd2, 0x09, 0x84, 0x24, 0x9e, 0xa7, 0xb4, 0xfb, 0xd7, 0x14, 0xaa, 0xc3, 0x36, 0x65, 0x91,
-	0x17, 0x9e, 0xf8, 0x2c, 0x90, 0x5d, 0x4e, 0xb5, 0x75, 0xf5, 0xe6, 0xd9, 0xf3, 0xc3, 0x0e, 0xc5,
-	0xfb, 0x70, 0x2d, 0x2d, 0x19, 0x9a, 0x40, 0x8b, 0x1f, 0x26, 0x92, 0x5e, 0xcd, 0x5f, 0x74, 0xa8,
-	0xf2, 0x48, 0x24, 0xe9, 0x11, 0xc1, 0xba, 0x0a, 0xd0, 0x66, 0xea, 0x31, 0x3d, 0xfc, 0x28, 0x06,
-	0xf6, 0x10, 0x36, 0x84, 0x24, 0x72, 0x28, 0x34, 0xaa, 0x34, 0x7c, 0xd3, 0x9a, 0x5b, 0xa2, 0xd6,
-	0x7c, 0x55, 0xac, 0x07, 0xca, 0x87, 0x93, 0xfa, 0xd2, 0x47, 0xb0, 0x91, 0x9c, 0x4c, 0xa5, 0x18,
-	0x2d, 0x93, 0xe2, 0x2a, 0xac, 0xc7, 0xee, 0x58, 0xaa, 0x6d, 0xb2, 0xc1, 0xd7, 0xa1, 0xc2, 0x45,
-	0xf7, 0x31, 0xe1, 0x1e, 0xa3, 0x4a, 0xe2, 0xb2, 0x53, 0xe6, 0xe2, 0x5d, 0xb5, 0x37, 0x1f, 0x01,
-	0xce, 0x83, 0xfc, 0x80, 0x0b, 0x89, 0xef, 0xc1, 0x3a, 0x97, 0xcc, 0x17, 0x1a, 0x32, 0xd6, 0x1a,
-	0x5b, 0xad, 0xdb, 0x85, 0x29, 0x3a, 0x89, 0x9d, 0xe9, 0x43, 0x6d, 0x3e, 0x77, 0x15, 0xe2, 0xfd,
-	0x7c, 0x88, 0xd7, 0x56, 0x52, 0x31, 0x0b, 0xf7, 0x15, 0x82, 0x5b, 0xb1, 0xd7, 0xf9, 0x2f, 0x85,
-	0xc3, 0x3e, 0x1f, 0x32, 0x21, 0x2f, 0x56, 0x0d, 0x9a, 0x51, 0x35, 0xf7, 0x60, 0x33, 0x54, 0x45,
-	0x26, 0x34, 0x50, 0x09, 0xb8, 0x39, 0x0d, 0x2f, 0x9d, 0x38, 0xa3, 0xa6, 0x15, 0xc7, 0xfd, 0x38,
-	0x79, 0xec, 0x64, 0x56, 0xad, 0xbf, 0x76, 0xe0, 0xf9, 0x3c, 0x98, 0x07, 0x6c, 0x30, 0xe2, 0x7d,
-	0x86, 0x9f, 0xc0, 0xf6, 0x31, 0x93, 0xed, 0xfb, 0x9d, 0x4f, 0xd8, 0x40, 0xc4, 0x65, 0x7c, 0x63,
-	0xbe, 0xeb, 0x23, 0x3f, 0x92, 0x27, 0xfa, 0xcb, 0xf3, 0x1f, 0xa4, 0x3e, 0xcc, 0xfa, 0x17, 0xbf,
-	0xfe, 0x71, 0x56, 0xda, 0xc5, 0xd7, 0xd5, 0xdc, 0x4a, 0xa5, 0x8b, 0x07, 0x23, 0x89, 0xf8, 0xc1,
-	0x28, 0x0d, 0x74, 0x86, 0xe0, 0xb9, 0x8b, 0x22, 0x09, 0x5c, 0x8c, 0x9b, 0x7e, 0x50, 0x38, 0x43,
-	0xb1, 0x95, 0x79, 0x4b, 0x41, 0x32, 0x70, 0x6d, 0x1a, 0x52, 0xbe, 0xeb, 0xf0, 0xd7, 0x08, 0xae,
-	0x1d, 0xb3, 0x29, 0x50, 0xb8, 0x3e, 0x1f, 0x53, 0xe7, 0x30, 0x43, 0x54, 0xbc, 0x2c, 0xcd, 0x7d,
-	0x85, 0xe6, 0x26, 0xae, 0x5f, 0x8e, 0xc6, 0x7e, 0xca, 0xe9, 0x29, 0xfe, 0x06, 0x41, 0xf5, 0x1d,
-	0xd5, 0x54, 0x53, 0xa8, 0x8a, 0x07, 0x5c, 0x06, 0xdb, 0x6d, 0x85, 0xad, 0x6e, 0x2e, 0x50, 0xea,
-	0x2e, 0xda, 0xc3, 0xdf, 0x21, 0xa8, 0x3e, 0x8a, 0xe8, 0x7f, 0x85, 0xcc, 0x52, 0xc8, 0x1a, 0xad,
-	0x22, 0xaa, 0xc5, 0xf0, 0xbe, 0x44, 0x50, 0x4d, 0x3e, 0x0a, 0xab, 0xa4, 0x73, 0x51, 0x23, 0x64,
-	0x49, 0xdc, 0x2b, 0x94, 0xc4, 0x3f, 0x11, 0xdc, 0x58, 0x30, 0x12, 0x70, 0xfb, 0x12, 0x29, 0x8a,
-	0x8d, 0x13, 0xfd, 0xce, 0x4a, 0x73, 0x4b, 0x75, 0xc8, 0x87, 0x8a, 0xce, 0x31, 0x3e, 0x9a, 0xa6,
-	0x73, 0x3e, 0x8a, 0xec, 0xa7, 0xb9, 0x59, 0x75, 0x3a, 0xc5, 0x94, 0x4f, 0x7e, 0x66, 0x7f, 0x40,
-	0xb0, 0x7b, 0xa1, 0x91, 0x72, 0x1f, 0xe2, 0x42, 0x59, 0x58, 0x6d, 0x10, 0x9b, 0xaf, 0x2b, 0x32,
-	0x4d, 0x6c, 0x5f, 0x9e, 0x9b, 0x49, 0xc4, 0x49, 0x9e, 0xc6, 0x08, 0x8c, 0x59, 0xcd, 0x96, 0x43,
-	0xbe, 0x1a, 0xa8, 0x55, 0xb9, 0xdc, 0x57, 0x5c, 0xde, 0x33, 0xff, 0x99, 0xc4, 0xc4, 0x8d, 0xf1,
-	0x33, 0x02, 0x63, 0x56, 0xdf, 0xfe, 0x8f, 0x24, 0xef, 0x2a, 0x92, 0xaf, 0xb6, 0x96, 0x4d, 0x58,
-	0x4c, 0xe7, 0x7b, 0x04, 0xc6, 0xac, 0x3e, 0x5f, 0xbe, 0xda, 0x16, 0xf6, 0x7c, 0x5a, 0x57, 0x7b,
-	0xcb, 0xc2, 0x7c, 0xfb, 0xad, 0x9f, 0xc6, 0x35, 0xf4, 0xcb, 0xb8, 0x86, 0x7e, 0x1b, 0xd7, 0xd0,
-	0xb7, 0xbf, 0xd7, 0x9e, 0xf9, 0x74, 0x7f, 0xe2, 0x7f, 0x41, 0x16, 0xf5, 0xc0, 0x27, 0x01, 0x71,
-	0x19, 0x8d, 0xbd, 0x8b, 0x09, 0xf7, 0xbd, 0x0d, 0xf5, 0x4b, 0xeb, 0x95, 0xbf, 0x03, 0x00, 0x00,
-	0xff, 0xff, 0xb6, 0x25, 0xbe, 0x43, 0x8f, 0x0c, 0x00, 0x00,
+	// 856 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x56, 0x4f, 0x4f, 0x33, 0x45,
+	0x18, 0x77, 0xda, 0xb7, 0x7d, 0xe1, 0xe9, 0xcb, 0x1b, 0x18, 0xd1, 0xd4, 0x45, 0x4a, 0xd9, 0x06,
+	0x82, 0x10, 0x76, 0xd3, 0xaa, 0x31, 0xa0, 0x86, 0x54, 0x41, 0x52, 0xff, 0x92, 0x05, 0x3c, 0x98,
+	0x98, 0x66, 0xda, 0x19, 0xd6, 0x49, 0xf6, 0x9f, 0x9d, 0x69, 0x03, 0x21, 0x5c, 0xf4, 0x6e, 0x4c,
+	0xbc, 0x78, 0x35, 0x1e, 0xfc, 0x02, 0x5e, 0xfc, 0x06, 0xc6, 0x78, 0x30, 0xf1, 0x0b, 0x98, 0xea,
+	0xd9, 0xcf, 0x60, 0x76, 0x76, 0x57, 0xba, 0x85, 0x96, 0xb6, 0xf1, 0xe0, 0x6d, 0xe6, 0x99, 0x99,
+	0xe7, 0xf9, 0xfd, 0x9e, 0xdf, 0x6f, 0x66, 0x17, 0x16, 0xd8, 0x25, 0x71, 0x03, 0x87, 0x19, 0x41,
+	0xc7, 0x97, 0x3e, 0x7e, 0x81, 0x74, 0x88, 0x67, 0xfb, 0xb4, 0x65, 0xb4, 0x1d, 0xbf, 0x4b, 0x8d,
+	0x64, 0xb5, 0x57, 0xd5, 0x9e, 0x6f, 0xfb, 0xae, 0xeb, 0x7b, 0x66, 0xaf, 0x6a, 0x46, 0xa3, 0xe8,
+	0x88, 0xf6, 0xba, 0xcd, 0xe5, 0x67, 0xdd, 0x96, 0xd1, 0xf6, 0x5d, 0xd3, 0xf6, 0x1d, 0xe2, 0xd9,
+	0xa6, 0x5a, 0x68, 0x75, 0x2f, 0xcc, 0x40, 0x5e, 0x05, 0x4c, 0x98, 0x92, 0xbb, 0x4c, 0x48, 0xe2,
+	0x06, 0xb7, 0xa3, 0xf8, 0xf0, 0x8b, 0xb6, 0xef, 0xdb, 0x0e, 0x33, 0x49, 0xc0, 0x4d, 0xe2, 0x79,
+	0xbe, 0x24, 0x92, 0xfb, 0x9e, 0x88, 0x56, 0xf5, 0x9f, 0x10, 0x3c, 0x3d, 0x8a, 0x10, 0x1c, 0x12,
+	0x49, 0x04, 0x93, 0xf8, 0x29, 0x64, 0x38, 0x2d, 0xa2, 0x32, 0xda, 0x9a, 0xb7, 0x32, 0x9c, 0xe2,
+	0x45, 0xc8, 0x76, 0x3b, 0x4e, 0x31, 0xa3, 0x02, 0xe1, 0x10, 0x63, 0x78, 0xe4, 0x11, 0x97, 0x15,
+	0xb3, 0x2a, 0xa4, 0xc6, 0xb8, 0x0c, 0x05, 0xca, 0x44, 0xbb, 0xc3, 0x83, 0x30, 0x7d, 0xf1, 0x91,
+	0x5a, 0x1a, 0x0c, 0xe1, 0x65, 0xc8, 0xd9, 0x5d, 0x4e, 0x59, 0x31, 0xaf, 0xd6, 0xa2, 0x09, 0xde,
+	0x03, 0x68, 0x77, 0x18, 0x91, 0x8c, 0x36, 0x89, 0x2c, 0x3e, 0x2e, 0xa3, 0xad, 0x42, 0x4d, 0x33,
+	0x22, 0xcc, 0x46, 0xc2, 0xd2, 0x38, 0x4b, 0x48, 0x59, 0xf3, 0xf1, 0xee, 0xba, 0xd4, 0x7f, 0xc8,
+	0x82, 0x96, 0xc6, 0xde, 0xf0, 0x84, 0x24, 0x8e, 0xa3, 0x18, 0x4e, 0xc0, 0xa3, 0x02, 0x0b, 0x94,
+	0x05, 0x8e, 0x7f, 0xe5, 0x32, 0x4f, 0x36, 0x39, 0x8d, 0x09, 0x3d, 0xb9, 0x0d, 0x36, 0x28, 0xde,
+	0x81, 0xa5, 0x58, 0x22, 0x1a, 0x15, 0x09, 0x37, 0x46, 0xf4, 0x16, 0xd3, 0x0b, 0x0d, 0x3a, 0xc4,
+	0x26, 0x37, 0x05, 0x1b, 0x7c, 0x06, 0x79, 0x21, 0x89, 0xec, 0x8a, 0x22, 0x55, 0xc7, 0xde, 0x30,
+	0x46, 0x1a, 0xc5, 0x18, 0xcd, 0xda, 0x38, 0x55, 0x39, 0xac, 0x38, 0x97, 0xf6, 0x25, 0x82, 0x7c,
+	0x14, 0x52, 0x6c, 0x89, 0x24, 0x2d, 0x22, 0x58, 0x53, 0xc9, 0x87, 0x62, 0xb6, 0x71, 0xf0, 0xc3,
+	0x50, 0xc6, 0x65, 0xc8, 0x85, 0x27, 0x13, 0x6d, 0xa3, 0x09, 0x5e, 0x81, 0x79, 0x2e, 0x9a, 0x17,
+	0x84, 0x3b, 0x2c, 0xe2, 0x3e, 0x67, 0xcd, 0x71, 0xf1, 0x8e, 0x9a, 0xe3, 0x75, 0x78, 0xc2, 0x45,
+	0x93, 0xf4, 0x08, 0x77, 0x48, 0xcb, 0x61, 0x8a, 0xf5, 0x9c, 0x55, 0xe0, 0xa2, 0x9e, 0x84, 0xf4,
+	0x4f, 0x41, 0x7b, 0x9f, 0x0b, 0x99, 0x86, 0x2d, 0x2c, 0xf6, 0x79, 0x97, 0x09, 0x89, 0x0f, 0xe0,
+	0xb1, 0xaf, 0x2c, 0x22, 0x14, 0xa4, 0x42, 0x6d, 0x63, 0x98, 0x7a, 0x7c, 0x1b, 0x7a, 0x55, 0x23,
+	0x4c, 0xf3, 0x51, 0xb4, 0xd9, 0x4a, 0x4e, 0xe9, 0xe7, 0x80, 0xd3, 0xa9, 0xc3, 0x5d, 0xf8, 0x00,
+	0x72, 0x5c, 0x32, 0x37, 0x4c, 0x9a, 0xdd, 0x2a, 0xd4, 0x5e, 0x9a, 0xb8, 0x9f, 0x56, 0x74, 0x4e,
+	0x77, 0xa1, 0x34, 0xba, 0xd1, 0xaa, 0xc4, 0x7b, 0xe9, 0x12, 0xaf, 0xce, 0x24, 0x59, 0x52, 0xee,
+	0x2b, 0x04, 0x9b, 0x77, 0xbb, 0x34, 0xb8, 0xf3, 0xdf, 0x8e, 0xdd, 0x31, 0x2e, 0xba, 0xc7, 0xb8,
+	0x03, 0x6d, 0x85, 0x59, 0xda, 0x5a, 0xfb, 0xa5, 0x00, 0xcf, 0xa5, 0xc1, 0x9c, 0xb2, 0x4e, 0x8f,
+	0xb7, 0x19, 0xbe, 0x84, 0x85, 0x63, 0x26, 0xeb, 0x27, 0x8d, 0x8f, 0x59, 0x47, 0x84, 0x77, 0x6d,
+	0x6d, 0x74, 0xea, 0x23, 0x37, 0x90, 0x57, 0xda, 0xfa, 0xe8, 0x0d, 0x71, 0x0e, 0xbd, 0xf2, 0xc5,
+	0xef, 0x7f, 0x7d, 0x93, 0x59, 0xc5, 0x2b, 0xea, 0xa9, 0x8a, 0x5b, 0x17, 0xbe, 0x85, 0x24, 0xe0,
+	0xbb, 0xbd, 0xb8, 0xd0, 0xf7, 0x08, 0x9e, 0xbd, 0xc7, 0x4a, 0x78, 0x5c, 0xeb, 0x47, 0x5b, 0x4f,
+	0xdb, 0x9d, 0x58, 0xb1, 0x30, 0x89, 0xbe, 0xa9, 0x20, 0x96, 0x71, 0x69, 0x18, 0x62, 0xfa, 0x21,
+	0xc0, 0x5f, 0x23, 0x58, 0x3a, 0x66, 0x43, 0x45, 0x71, 0x65, 0x74, 0x0f, 0x1a, 0x87, 0x71, 0xf7,
+	0xb5, 0xc9, 0x6d, 0xaa, 0xef, 0x28, 0x34, 0x1b, 0xb8, 0x32, 0x1e, 0x8d, 0x79, 0xcd, 0xe9, 0x0d,
+	0xfe, 0x1b, 0xc1, 0xda, 0x03, 0xee, 0xc2, 0xf5, 0xa9, 0x9a, 0x78, 0x9f, 0x33, 0xb5, 0xbd, 0x99,
+	0xae, 0x80, 0x6a, 0xee, 0x07, 0x8a, 0xce, 0x31, 0x3e, 0x1a, 0xa6, 0x73, 0xeb, 0x6a, 0xf3, 0x3a,
+	0x65, 0xfb, 0x9b, 0x21, 0xa6, 0x7c, 0xf0, 0xf9, 0xff, 0x11, 0xc1, 0xea, 0x1d, 0x0d, 0x52, 0x1f,
+	0x88, 0x89, 0xf4, 0x98, 0xed, 0x4e, 0xeb, 0xaf, 0x29, 0x32, 0x55, 0x6c, 0x8e, 0xd7, 0x66, 0x10,
+	0x71, 0xa4, 0x53, 0x1f, 0x41, 0xf9, 0x6d, 0xf5, 0x51, 0x18, 0x83, 0x7c, 0x36, 0x50, 0xb3, 0x72,
+	0x39, 0x51, 0x5c, 0xde, 0xd5, 0xff, 0x1b, 0x61, 0xf6, 0xd1, 0x36, 0xfe, 0x15, 0x41, 0xf9, 0x3c,
+	0xa0, 0xff, 0x27, 0x92, 0xfb, 0x8a, 0xe4, 0x2b, 0xb5, 0x69, 0x05, 0x0b, 0xe9, 0x7c, 0x87, 0xa0,
+	0x7c, 0xc8, 0x1c, 0x36, 0x96, 0xce, 0x44, 0x6e, 0x7b, 0xe8, 0x1d, 0x4d, 0x7c, 0xb5, 0x3d, 0x2d,
+	0xcc, 0xb7, 0xde, 0xfc, 0xb9, 0x5f, 0x42, 0xbf, 0xf5, 0x4b, 0xe8, 0x8f, 0x7e, 0x09, 0x7d, 0xfb,
+	0x67, 0xe9, 0x99, 0x4f, 0x76, 0x06, 0xfe, 0x2a, 0x93, 0xaa, 0xbb, 0x2e, 0xf1, 0x88, 0xcd, 0x68,
+	0x98, 0x5d, 0x0c, 0xa4, 0x6f, 0xe5, 0xd5, 0xcf, 0xcb, 0xcb, 0xff, 0x04, 0x00, 0x00, 0xff, 0xff,
+	0x93, 0x10, 0x79, 0x8e, 0xcd, 0x0a, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -577,23 +597,11 @@ type ExampleDatasetServiceClient interface {
 	// Fetch all example datasets.
 	// Required permissions:
 	// - example.exampledataset.list
-	ListExampleDatasets(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*ExampleDatasetList, error)
+	ListExampleDatasets(ctx context.Context, in *ListExampleDatasetsRequest, opts ...grpc.CallOption) (*ExampleDatasetList, error)
 	// Fetch an example dataset identified by the given ID.
 	// Required permissions:
 	// - example.exampledataset.get on the example identified by the given ID.
 	GetExampleDataset(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*ExampleDataset, error)
-	// Create a new example dataset.
-	// Required permissions:
-	// -  example.exampledataset.create
-	CreateExampleDataset(ctx context.Context, in *ExampleDataset, opts ...grpc.CallOption) (*ExampleDataset, error)
-	// Update an example dataset.
-	// Required permissions:
-	// -  example.exampledataset.update on the example identified by the given ID.
-	UpdateExampleDataset(ctx context.Context, in *ExampleDataset, opts ...grpc.CallOption) (*ExampleDataset, error)
-	// Delete an example dataset identified by the given ID.
-	// Required permissions:
-	// -  example.exampledataset.delete on the example identified by the given ID.
-	DeleteExampleDataset(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Fetch all installations for a specific deployment.
 	// Required permissions:
 	// - example.exampledatasetinstallation.list on the deployment that owns the installation and is identified by the given ID.
@@ -634,7 +642,7 @@ func (c *exampleDatasetServiceClient) GetAPIVersion(ctx context.Context, in *v1.
 	return out, nil
 }
 
-func (c *exampleDatasetServiceClient) ListExampleDatasets(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*ExampleDatasetList, error) {
+func (c *exampleDatasetServiceClient) ListExampleDatasets(ctx context.Context, in *ListExampleDatasetsRequest, opts ...grpc.CallOption) (*ExampleDatasetList, error) {
 	out := new(ExampleDatasetList)
 	err := c.cc.Invoke(ctx, "/arangodb.cloud.example.v1.ExampleDatasetService/ListExampleDatasets", in, out, opts...)
 	if err != nil {
@@ -646,33 +654,6 @@ func (c *exampleDatasetServiceClient) ListExampleDatasets(ctx context.Context, i
 func (c *exampleDatasetServiceClient) GetExampleDataset(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*ExampleDataset, error) {
 	out := new(ExampleDataset)
 	err := c.cc.Invoke(ctx, "/arangodb.cloud.example.v1.ExampleDatasetService/GetExampleDataset", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *exampleDatasetServiceClient) CreateExampleDataset(ctx context.Context, in *ExampleDataset, opts ...grpc.CallOption) (*ExampleDataset, error) {
-	out := new(ExampleDataset)
-	err := c.cc.Invoke(ctx, "/arangodb.cloud.example.v1.ExampleDatasetService/CreateExampleDataset", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *exampleDatasetServiceClient) UpdateExampleDataset(ctx context.Context, in *ExampleDataset, opts ...grpc.CallOption) (*ExampleDataset, error) {
-	out := new(ExampleDataset)
-	err := c.cc.Invoke(ctx, "/arangodb.cloud.example.v1.ExampleDatasetService/UpdateExampleDataset", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *exampleDatasetServiceClient) DeleteExampleDataset(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error) {
-	out := new(v1.Empty)
-	err := c.cc.Invoke(ctx, "/arangodb.cloud.example.v1.ExampleDatasetService/DeleteExampleDataset", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -733,23 +714,11 @@ type ExampleDatasetServiceServer interface {
 	// Fetch all example datasets.
 	// Required permissions:
 	// - example.exampledataset.list
-	ListExampleDatasets(context.Context, *v1.ListOptions) (*ExampleDatasetList, error)
+	ListExampleDatasets(context.Context, *ListExampleDatasetsRequest) (*ExampleDatasetList, error)
 	// Fetch an example dataset identified by the given ID.
 	// Required permissions:
 	// - example.exampledataset.get on the example identified by the given ID.
 	GetExampleDataset(context.Context, *v1.IDOptions) (*ExampleDataset, error)
-	// Create a new example dataset.
-	// Required permissions:
-	// -  example.exampledataset.create
-	CreateExampleDataset(context.Context, *ExampleDataset) (*ExampleDataset, error)
-	// Update an example dataset.
-	// Required permissions:
-	// -  example.exampledataset.update on the example identified by the given ID.
-	UpdateExampleDataset(context.Context, *ExampleDataset) (*ExampleDataset, error)
-	// Delete an example dataset identified by the given ID.
-	// Required permissions:
-	// -  example.exampledataset.delete on the example identified by the given ID.
-	DeleteExampleDataset(context.Context, *v1.IDOptions) (*v1.Empty, error)
 	// Fetch all installations for a specific deployment.
 	// Required permissions:
 	// - example.exampledatasetinstallation.list on the deployment that owns the installation and is identified by the given ID.
@@ -780,20 +749,11 @@ type UnimplementedExampleDatasetServiceServer struct {
 func (*UnimplementedExampleDatasetServiceServer) GetAPIVersion(ctx context.Context, req *v1.Empty) (*v1.Version, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAPIVersion not implemented")
 }
-func (*UnimplementedExampleDatasetServiceServer) ListExampleDatasets(ctx context.Context, req *v1.ListOptions) (*ExampleDatasetList, error) {
+func (*UnimplementedExampleDatasetServiceServer) ListExampleDatasets(ctx context.Context, req *ListExampleDatasetsRequest) (*ExampleDatasetList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListExampleDatasets not implemented")
 }
 func (*UnimplementedExampleDatasetServiceServer) GetExampleDataset(ctx context.Context, req *v1.IDOptions) (*ExampleDataset, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetExampleDataset not implemented")
-}
-func (*UnimplementedExampleDatasetServiceServer) CreateExampleDataset(ctx context.Context, req *ExampleDataset) (*ExampleDataset, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateExampleDataset not implemented")
-}
-func (*UnimplementedExampleDatasetServiceServer) UpdateExampleDataset(ctx context.Context, req *ExampleDataset) (*ExampleDataset, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateExampleDataset not implemented")
-}
-func (*UnimplementedExampleDatasetServiceServer) DeleteExampleDataset(ctx context.Context, req *v1.IDOptions) (*v1.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteExampleDataset not implemented")
 }
 func (*UnimplementedExampleDatasetServiceServer) ListExampleDatasetInstallations(ctx context.Context, req *ListExampleDatasetInstallationsRequest) (*ExampleDatasetInstallationList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListExampleDatasetInstallations not implemented")
@@ -834,7 +794,7 @@ func _ExampleDatasetService_GetAPIVersion_Handler(srv interface{}, ctx context.C
 }
 
 func _ExampleDatasetService_ListExampleDatasets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.ListOptions)
+	in := new(ListExampleDatasetsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -846,7 +806,7 @@ func _ExampleDatasetService_ListExampleDatasets_Handler(srv interface{}, ctx con
 		FullMethod: "/arangodb.cloud.example.v1.ExampleDatasetService/ListExampleDatasets",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExampleDatasetServiceServer).ListExampleDatasets(ctx, req.(*v1.ListOptions))
+		return srv.(ExampleDatasetServiceServer).ListExampleDatasets(ctx, req.(*ListExampleDatasetsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -865,60 +825,6 @@ func _ExampleDatasetService_GetExampleDataset_Handler(srv interface{}, ctx conte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ExampleDatasetServiceServer).GetExampleDataset(ctx, req.(*v1.IDOptions))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ExampleDatasetService_CreateExampleDataset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ExampleDataset)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ExampleDatasetServiceServer).CreateExampleDataset(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/arangodb.cloud.example.v1.ExampleDatasetService/CreateExampleDataset",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExampleDatasetServiceServer).CreateExampleDataset(ctx, req.(*ExampleDataset))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ExampleDatasetService_UpdateExampleDataset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ExampleDataset)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ExampleDatasetServiceServer).UpdateExampleDataset(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/arangodb.cloud.example.v1.ExampleDatasetService/UpdateExampleDataset",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExampleDatasetServiceServer).UpdateExampleDataset(ctx, req.(*ExampleDataset))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ExampleDatasetService_DeleteExampleDataset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.IDOptions)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ExampleDatasetServiceServer).DeleteExampleDataset(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/arangodb.cloud.example.v1.ExampleDatasetService/DeleteExampleDataset",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExampleDatasetServiceServer).DeleteExampleDataset(ctx, req.(*v1.IDOptions))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1030,18 +936,6 @@ var _ExampleDatasetService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _ExampleDatasetService_GetExampleDataset_Handler,
 		},
 		{
-			MethodName: "CreateExampleDataset",
-			Handler:    _ExampleDatasetService_CreateExampleDataset_Handler,
-		},
-		{
-			MethodName: "UpdateExampleDataset",
-			Handler:    _ExampleDatasetService_UpdateExampleDataset_Handler,
-		},
-		{
-			MethodName: "DeleteExampleDataset",
-			Handler:    _ExampleDatasetService_DeleteExampleDataset_Handler,
-		},
-		{
 			MethodName: "ListExampleDatasetInstallations",
 			Handler:    _ExampleDatasetService_ListExampleDatasetInstallations_Handler,
 		},
@@ -1089,28 +983,6 @@ func (m *ExampleDataset) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	if m.XXX_unrecognized != nil {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.IsDeleted {
-		i--
-		if m.IsDeleted {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i--
-		dAtA[i] = 0x48
-	}
-	if m.DeletedAt != nil {
-		{
-			size, err := m.DeletedAt.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintExample(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x42
 	}
 	if m.CreatedAt != nil {
 		{
@@ -1200,38 +1072,29 @@ func (m *ExampleDatasetInstallation) MarshalToSizedBuffer(dAtA []byte) (int, err
 		i--
 		dAtA[i] = 0xa2
 	}
-	if len(m.DatabaseName) > 0 {
-		i -= len(m.DatabaseName)
-		copy(dAtA[i:], m.DatabaseName)
-		i = encodeVarintExample(dAtA, i, uint64(len(m.DatabaseName)))
+	if m.CreatedAt != nil {
+		{
+			size, err := m.CreatedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintExample(dAtA, i, uint64(size))
+		}
 		i--
-		dAtA[i] = 0x3a
+		dAtA[i] = 0x2a
 	}
 	if len(m.ExampledatasetId) > 0 {
 		i -= len(m.ExampledatasetId)
 		copy(dAtA[i:], m.ExampledatasetId)
 		i = encodeVarintExample(dAtA, i, uint64(len(m.ExampledatasetId)))
 		i--
-		dAtA[i] = 0x32
+		dAtA[i] = 0x22
 	}
 	if len(m.DeploymentId) > 0 {
 		i -= len(m.DeploymentId)
 		copy(dAtA[i:], m.DeploymentId)
 		i = encodeVarintExample(dAtA, i, uint64(len(m.DeploymentId)))
-		i--
-		dAtA[i] = 0x2a
-	}
-	if len(m.Description) > 0 {
-		i -= len(m.Description)
-		copy(dAtA[i:], m.Description)
-		i = encodeVarintExample(dAtA, i, uint64(len(m.Description)))
-		i--
-		dAtA[i] = 0x22
-	}
-	if len(m.Name) > 0 {
-		i -= len(m.Name)
-		copy(dAtA[i:], m.Name)
-		i = encodeVarintExample(dAtA, i, uint64(len(m.Name)))
 		i--
 		dAtA[i] = 0x1a
 	}
@@ -1276,6 +1139,16 @@ func (m *ExampleDatasetInstallation_Status) MarshalToSizedBuffer(dAtA []byte) (i
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
+	if m.IsAvailable {
+		i--
+		if m.IsAvailable {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x28
+	}
 	if m.IsFailed {
 		i--
 		if m.IsFailed {
@@ -1284,18 +1157,52 @@ func (m *ExampleDatasetInstallation_Status) MarshalToSizedBuffer(dAtA []byte) (i
 			dAtA[i] = 0
 		}
 		i--
-		dAtA[i] = 0x18
+		dAtA[i] = 0x20
 	}
 	if len(m.State) > 0 {
 		i -= len(m.State)
 		copy(dAtA[i:], m.State)
 		i = encodeVarintExample(dAtA, i, uint64(len(m.State)))
 		i--
-		dAtA[i] = 0x12
+		dAtA[i] = 0x1a
 	}
-	if m.CreatedAt != nil {
+	if len(m.DatabaseName) > 0 {
+		i -= len(m.DatabaseName)
+		copy(dAtA[i:], m.DatabaseName)
+		i = encodeVarintExample(dAtA, i, uint64(len(m.DatabaseName)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ListExampleDatasetsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ListExampleDatasetsRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ListExampleDatasetsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Options != nil {
 		{
-			size, err := m.CreatedAt.MarshalToSizedBuffer(dAtA[:i])
+			size, err := m.Options.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
@@ -1477,13 +1384,6 @@ func (m *ExampleDataset) Size() (n int) {
 		l = m.CreatedAt.Size()
 		n += 1 + l + sovExample(uint64(l))
 	}
-	if m.DeletedAt != nil {
-		l = m.DeletedAt.Size()
-		n += 1 + l + sovExample(uint64(l))
-	}
-	if m.IsDeleted {
-		n += 2
-	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -1504,14 +1404,6 @@ func (m *ExampleDatasetInstallation) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovExample(uint64(l))
 	}
-	l = len(m.Name)
-	if l > 0 {
-		n += 1 + l + sovExample(uint64(l))
-	}
-	l = len(m.Description)
-	if l > 0 {
-		n += 1 + l + sovExample(uint64(l))
-	}
 	l = len(m.DeploymentId)
 	if l > 0 {
 		n += 1 + l + sovExample(uint64(l))
@@ -1520,8 +1412,8 @@ func (m *ExampleDatasetInstallation) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovExample(uint64(l))
 	}
-	l = len(m.DatabaseName)
-	if l > 0 {
+	if m.CreatedAt != nil {
+		l = m.CreatedAt.Size()
 		n += 1 + l + sovExample(uint64(l))
 	}
 	if m.Status != nil {
@@ -1540,8 +1432,8 @@ func (m *ExampleDatasetInstallation_Status) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.CreatedAt != nil {
-		l = m.CreatedAt.Size()
+	l = len(m.DatabaseName)
+	if l > 0 {
 		n += 1 + l + sovExample(uint64(l))
 	}
 	l = len(m.State)
@@ -1550,6 +1442,25 @@ func (m *ExampleDatasetInstallation_Status) Size() (n int) {
 	}
 	if m.IsFailed {
 		n += 2
+	}
+	if m.IsAvailable {
+		n += 2
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *ListExampleDatasetsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Options != nil {
+		l = m.Options.Size()
+		n += 1 + l + sovExample(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1844,62 +1755,6 @@ func (m *ExampleDataset) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 8:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DeletedAt", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExample
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthExample
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthExample
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.DeletedAt == nil {
-				m.DeletedAt = &types.Timestamp{}
-			}
-			if err := m.DeletedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 9:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field IsDeleted", wireType)
-			}
-			var v int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExample
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			m.IsDeleted = bool(v != 0)
 		default:
 			iNdEx = preIndex
 			skippy, err := skipExample(dAtA[iNdEx:])
@@ -2020,70 +1875,6 @@ func (m *ExampleDatasetInstallation) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExample
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthExample
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthExample
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Name = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 4:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowExample
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthExample
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthExample
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Description = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 5:
-			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DeploymentId", wireType)
 			}
 			var stringLen uint64
@@ -2114,7 +1905,7 @@ func (m *ExampleDatasetInstallation) Unmarshal(dAtA []byte) error {
 			}
 			m.DeploymentId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 6:
+		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExampledatasetId", wireType)
 			}
@@ -2146,11 +1937,11 @@ func (m *ExampleDatasetInstallation) Unmarshal(dAtA []byte) error {
 			}
 			m.ExampledatasetId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 7:
+		case 5:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DatabaseName", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowExample
@@ -2160,23 +1951,27 @@ func (m *ExampleDatasetInstallation) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthExample
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthExample
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.DatabaseName = string(dAtA[iNdEx:postIndex])
+			if m.CreatedAt == nil {
+				m.CreatedAt = &types.Timestamp{}
+			}
+			if err := m.CreatedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 100:
 			if wireType != 2 {
@@ -2270,9 +2065,9 @@ func (m *ExampleDatasetInstallation_Status) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field DatabaseName", wireType)
 			}
-			var msglen int
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowExample
@@ -2282,29 +2077,25 @@ func (m *ExampleDatasetInstallation_Status) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			if msglen < 0 {
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
 				return ErrInvalidLengthExample
 			}
-			postIndex := iNdEx + msglen
+			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
 				return ErrInvalidLengthExample
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.CreatedAt == nil {
-				m.CreatedAt = &types.Timestamp{}
-			}
-			if err := m.CreatedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.DatabaseName = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 2:
+		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
 			}
@@ -2336,7 +2127,7 @@ func (m *ExampleDatasetInstallation_Status) Unmarshal(dAtA []byte) error {
 			}
 			m.State = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 3:
+		case 4:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field IsFailed", wireType)
 			}
@@ -2356,6 +2147,116 @@ func (m *ExampleDatasetInstallation_Status) Unmarshal(dAtA []byte) error {
 				}
 			}
 			m.IsFailed = bool(v != 0)
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field IsAvailable", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowExample
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.IsAvailable = bool(v != 0)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipExample(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthExample
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthExample
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ListExampleDatasetsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowExample
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ListExampleDatasetsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ListExampleDatasetsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Options", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowExample
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthExample
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthExample
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Options == nil {
+				m.Options = &v1.ListOptions{}
+			}
+			if err := m.Options.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipExample(dAtA[iNdEx:])

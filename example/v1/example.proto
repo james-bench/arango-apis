@@ -31,7 +31,7 @@ import "common/v1/common.proto";
 import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
 import "google/api/annotations.proto";
 
-// ExampleDatasetService is the API used to configure example objects.
+// ExampleDatasetService is the API used to query for example datasets..
 service ExampleDatasetService {
     // Get the current API version of this service.
     // Required permissions:
@@ -45,7 +45,7 @@ service ExampleDatasetService {
     // Fetch all example datasets.
     // Required permissions:
     // - example.exampledataset.list
-    rpc ListExampleDatasets(common.v1.ListOptions) returns (ExampleDatasetList) {
+    rpc ListExampleDatasets(ListExampleDatasetsRequest) returns (ExampleDatasetList) {
         option (google.api.http) = {
             get: "/api/example/v1/exampledataset"
         };
@@ -57,35 +57,6 @@ service ExampleDatasetService {
     rpc GetExampleDataset(common.v1.IDOptions) returns (ExampleDataset) {
         option (google.api.http) = {
             get: "/api/example/v1/exampledataset/{id}"
-        };
-    }
-
-    // Create a new example dataset.
-    // Required permissions:
-    // -  example.exampledataset.create
-    rpc CreateExampleDataset(ExampleDataset) returns (ExampleDataset) {
-        option (google.api.http) = {
-            post: "/api/example/v1/exampledataset"
-            body: "*"
-        };
-    }
-
-    // Update an example dataset.
-    // Required permissions:
-    // -  example.exampledataset.update on the example identified by the given ID.
-    rpc UpdateExampleDataset(ExampleDataset) returns (ExampleDataset) {
-        option (google.api.http) = {
-            patch: "/api/example/v1/exampledataset/{id}"
-            body: "*"
-        };
-    }
-
-    // Delete an example dataset identified by the given ID.
-    // Required permissions:
-    // -  example.exampledataset.delete on the example identified by the given ID.
-    rpc DeleteExampleDataset(common.v1.IDOptions) returns (common.v1.Empty) {
-        option (google.api.http) = {
-            delete: "/api/example/v1/exampledataset/{id}"
         };
     }
 
@@ -151,18 +122,14 @@ message ExampleDataset {
     // Description of the example dataset
     string description = 4;
     // Guide contains description of the example dataset including several example queries.
+    // Content type of guide is markdown.
     string guide = 6;
     // The creation timestamp of the example dataset (database object)
     // This is a read-only value.
     google.protobuf.Timestamp created_at = 7;
-    // The deletion timestamp of the example dataset
-    // This is a read-only value.
-    google.protobuf.Timestamp deleted_at = 8;
-    // Set when this example dataset is deleted.
-    // This is a read-only value.
-    bool is_deleted = 9;
 }
 
+// ExampleDatasetInstallation represents an installation of a dataset initiated by the user.
 message ExampleDatasetInstallation {
     // System identifier of the installation.
     // This is a read-only value.
@@ -170,31 +137,35 @@ message ExampleDatasetInstallation {
     // URL of this resource
     // This is a read-only value.
     string url = 2;
-    // Name of the installation
-    string name = 3;
-    // Description of the installation.
-    string description = 4;
     // Identifier of the deployment that owns this installation.
     // After creation, this value cannot be changed.
-    string deployment_id = 5;
+    string deployment_id = 3;
     // Identifier of the example dataset which will be installed.
     // After creation, this value cannot be changed.
-    string exampledataset_id = 6;
-    // Name of the database into which this example dataset was installed.
-    string database_name = 7;
+    string exampledataset_id = 4;
+    // The creation timestamp of the installation.
+    google.protobuf.Timestamp created_at = 5;
     // Status of the installation.
     // All members of this field are read-only.
     message Status {
-        // The creation timestamp of the installation.
-        google.protobuf.Timestamp created_at = 1;
+        // Name of the database into which this example dataset was installed.
+        string database_name = 1;
         // The state of the installation.
         // Will be one of the following: "InProgress|Create|Ready|Failed"
-        string state = 2;
+        string state = 3;
         // Set when the installation is failed.
-        bool is_failed = 3;
+        bool is_failed = 4;
+        // Set when once the installation finished successfully and the dataset is available to be used.
+        bool is_available = 5;
     }
     // Status of the actual installation.
     Status status = 100;
+}
+
+// ListExampleDatasetsRequest provides an extendable list request for listing datasets.
+message ListExampleDatasetsRequest {
+    // Optional common list options, the context_id is ignored.
+    common.v1.ListOptions options = 1;
 }
 
 // List of example datasets.

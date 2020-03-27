@@ -384,6 +384,10 @@ title: "ArangoDB Oasis API"
                   <a href="#arangodb.cloud.example.v1.ListExampleDatasetInstallationsRequest"><span class="badge">M</span>ListExampleDatasetInstallationsRequest</a>
                 </li>
               
+                <li>
+                  <a href="#arangodb.cloud.example.v1.ListExampleDatasetsRequest"><span class="badge">M</span>ListExampleDatasetsRequest</a>
+                </li>
+              
               
               
               
@@ -4055,7 +4059,8 @@ This is a read-only value. </p></td>
                   <td>guide</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Guide contains description of the example dataset including several example queries. </p></td>
+                  <td><p>Guide contains description of the example dataset including several example queries.
+Content type of guide is markdown. </p></td>
                 </tr>
               
                 <tr>
@@ -4063,22 +4068,6 @@ This is a read-only value. </p></td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
                   <td><p>The creation timestamp of the example dataset (database object)
-This is a read-only value. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>deleted_at</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>The deletion timestamp of the example dataset
-This is a read-only value. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>is_deleted</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>Set when this example dataset is deleted.
 This is a read-only value. </p></td>
                 </tr>
               
@@ -4090,7 +4079,7 @@ This is a read-only value. </p></td>
         
       
         <h3 id="arangodb.cloud.example.v1.ExampleDatasetInstallation">ExampleDatasetInstallation</h3>
-        <p></p>
+        <p>ExampleDatasetInstallation represents an installation of a dataset initiated by the user.</p>
 
         
           <table class="field-table">
@@ -4116,20 +4105,6 @@ This is a read-only value. </p></td>
                 </tr>
               
                 <tr>
-                  <td>name</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Name of the installation </p></td>
-                </tr>
-              
-                <tr>
-                  <td>description</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Description of the installation. </p></td>
-                </tr>
-              
-                <tr>
                   <td>deployment_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
@@ -4146,10 +4121,10 @@ After creation, this value cannot be changed. </p></td>
                 </tr>
               
                 <tr>
-                  <td>database_name</td>
-                  <td><a href="#string">string</a></td>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
-                  <td><p>Name of the database into which this example dataset was installed. </p></td>
+                  <td><p>The creation timestamp of the installation. </p></td>
                 </tr>
               
                 <tr>
@@ -4177,10 +4152,10 @@ After creation, this value cannot be changed. </p></td>
             <tbody>
               
                 <tr>
-                  <td>created_at</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td>database_name</td>
+                  <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>The creation timestamp of the installation. </p></td>
+                  <td><p>Name of the database into which this example dataset was installed. </p></td>
                 </tr>
               
                 <tr>
@@ -4196,6 +4171,13 @@ Will be one of the following: &#34;InProgress|Create|Ready|Failed&#34; </p></td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>Set when the installation is failed. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_available</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Set when once the installation finished successfully and the dataset is available to be used. </p></td>
                 </tr>
               
             </tbody>
@@ -4284,6 +4266,30 @@ Will be one of the following: &#34;InProgress|Create|Ready|Failed&#34; </p></td>
 
         
       
+        <h3 id="arangodb.cloud.example.v1.ListExampleDatasetsRequest">ListExampleDatasetsRequest</h3>
+        <p>ListExampleDatasetsRequest provides an extendable list request for listing datasets.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>options</td>
+                  <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
+                  <td></td>
+                  <td><p>Optional common list options, the context_id is ignored. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
 
@@ -4291,7 +4297,7 @@ Will be one of the following: &#34;InProgress|Create|Ready|Failed&#34; </p></td>
 
       
         <h3 id="arangodb.cloud.example.v1.ExampleDatasetService">ExampleDatasetService</h3>
-        <p>ExampleDatasetService is the API used to configure example objects.</p>
+        <p>ExampleDatasetService is the API used to query for example datasets..</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
@@ -4309,7 +4315,7 @@ Required permissions:
             
               <tr>
                 <td>ListExampleDatasets</td>
-                <td><a href="#arangodb.cloud.common.v1.ListOptions">.arangodb.cloud.common.v1.ListOptions</a></td>
+                <td><a href="#arangodb.cloud.example.v1.ListExampleDatasetsRequest">ListExampleDatasetsRequest</a></td>
                 <td><a href="#arangodb.cloud.example.v1.ExampleDatasetList">ExampleDatasetList</a></td>
                 <td><p>Fetch all example datasets.
 Required permissions:
@@ -4323,33 +4329,6 @@ Required permissions:
                 <td><p>Fetch an example dataset identified by the given ID.
 Required permissions:
 - example.exampledataset.get on the example identified by the given ID.</p></td>
-              </tr>
-            
-              <tr>
-                <td>CreateExampleDataset</td>
-                <td><a href="#arangodb.cloud.example.v1.ExampleDataset">ExampleDataset</a></td>
-                <td><a href="#arangodb.cloud.example.v1.ExampleDataset">ExampleDataset</a></td>
-                <td><p>Create a new example dataset.
-Required permissions:
--  example.exampledataset.create</p></td>
-              </tr>
-            
-              <tr>
-                <td>UpdateExampleDataset</td>
-                <td><a href="#arangodb.cloud.example.v1.ExampleDataset">ExampleDataset</a></td>
-                <td><a href="#arangodb.cloud.example.v1.ExampleDataset">ExampleDataset</a></td>
-                <td><p>Update an example dataset.
-Required permissions:
--  example.exampledataset.update on the example identified by the given ID.</p></td>
-              </tr>
-            
-              <tr>
-                <td>DeleteExampleDataset</td>
-                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
-                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
-                <td><p>Delete an example dataset identified by the given ID.
-Required permissions:
--  example.exampledataset.delete on the example identified by the given ID.</p></td>
               </tr>
             
               <tr>
@@ -4441,36 +4420,6 @@ Required permissions:
               <tr>
                 <td>GetExampleDataset</td>
                 <td>GET</td>
-                <td>/api/example/v1/exampledataset/{id}</td>
-                <td></td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>CreateExampleDataset</td>
-                <td>POST</td>
-                <td>/api/example/v1/exampledataset</td>
-                <td>*</td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>UpdateExampleDataset</td>
-                <td>PATCH</td>
-                <td>/api/example/v1/exampledataset/{id}</td>
-                <td>*</td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>DeleteExampleDataset</td>
-                <td>DELETE</td>
                 <td>/api/example/v1/exampledataset/{id}</td>
                 <td></td>
               </tr>

@@ -30,18 +30,18 @@ import (
 )
 
 const (
-	// KindExample is a constants for the kind of Example resources.
-	KindExample = "Example"
+	// KindExampleDataset is a constants for the kind of ExampleDataset resources.
+	KindExampleDataset = "ExampleDataset"
 )
 
-// ExampleURL creates a resource URL for the Example with given ID
+// ExampleDatasetURL creates a resource URL for the ExampleDataset with given ID
 // in given context (as individual IDs).
-func ExampleURL(organizationID, projectID, deploymentID, exampleID string) string {
-	return ExampleURL2(data.DeploymentURL(organizationID, projectID, deploymentID), exampleID)
+func ExampleDatasetURL(organizationID, projectID, deploymentID, exampleID string) string {
+	return ExampleDatasetURL2(data.DeploymentURL(organizationID, projectID, deploymentID), exampleID)
 }
 
-// ExampleURL2 creates a resource URL for the Example with given ID
+// ExampleDatasetURL2 creates a resource URL for the ExampleDataset with given ID
 // in given context (as base URL).
-func ExampleURL2(deploymentURL, exampleID string) string {
-	return path.Join(deploymentURL, KindExample, url.PathEscape(exampleID))
+func ExampleDatasetURL2(deploymentURL, exampleID string) string {
+	return path.Join(deploymentURL, KindExampleDataset, url.PathEscape(exampleID))
 }
