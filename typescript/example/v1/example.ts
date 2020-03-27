@@ -69,6 +69,16 @@ export interface ExampleDatasetInstallation {
   // googleTypes.Timestamp
   created_at?: googleTypes.Timestamp;
   
+  // The deletion timestamp of the installation
+  // This is a read-only value.
+  // googleTypes.Timestamp
+  deleted_at?: googleTypes.Timestamp;
+  
+  // Set when this installation is deleted.
+  // This is a read-only value.
+  // boolean
+  is_deleted?: boolean;
+  
   // Status of the actual installation.
   // ExampleDatasetInstallation_Status
   status?: ExampleDatasetInstallation_Status;
