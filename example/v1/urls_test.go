@@ -29,7 +29,7 @@ import (
 )
 
 func TestExampleURL(t *testing.T) {
-	assert.Equal(t, "/Organization/123/Project/p1/Deployment/c1/Example/b1", ExampleDatasetURL("123", "p1", "c1", "b1"))
-	assert.Equal(t, "/Organization/123%2F567/Project/ab/Deployment/c2%2F3/Example/b%2F1", ExampleDatasetURL("123/567", "ab", "c2/3", "b/1"))
-	assert.Equal(t, "/Organization/123%2F567/Project/a%25b/Deployment/e%25f/Example/b%251", ExampleDatasetURL("123/567", "a%b", "e%f", "b%1"))
+	assert.Equal(t, "/Organization/123/Project/p1/Deployment/c1/ExampleDataset/b1", ExampleDatasetURL("123", "p1", "c1", "b1"))
+	assert.Equal(t, "/Organization/123%2F567/Project/ab/Deployment/c2%2F3/ExampleDataset/b%2F1", ExampleDatasetURL("123/567", "ab", "c2/3", "b/1"))
+	assert.Equal(t, "/Organization/123%2F567/Project/a%25b/Deployment/e%25f/ExampleDataset/b%251", ExampleDatasetURL("123/567", "a%b", "e%f", "b%1"))
 }
