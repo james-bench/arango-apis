@@ -29,9 +29,9 @@ import (
 )
 
 func TestExampleDatasetURL(t *testing.T) {
-	assert.Equal(t, "/Organization/123/ExampleDataset/b1", ExampleDatasetURL("123", "p1"))
-	assert.Equal(t, "/Organization/123%2F567/ExampleDataset/b%2F1", ExampleDatasetURL("123/567", "ab"))
-	assert.Equal(t, "/Organization/123%2F567/ExampleDataset/b%251", ExampleDatasetURL("123/567", "a%b"))
+	assert.Equal(t, "/Organization/123/ExampleDataset/p1", ExampleDatasetURL("123", "p1"))
+	assert.Equal(t, "/Organization/123%2F567/ExampleDataset/ab", ExampleDatasetURL("123/567", "ab"))
+	assert.Equal(t, "/Organization/123%2F567/ExampleDataset/a%25b", ExampleDatasetURL("123/567", "a%b"))
 }
 
 func TestExampleDatasetInstallationURL(t *testing.T) {
