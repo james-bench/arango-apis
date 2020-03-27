@@ -27,21 +27,37 @@ import (
 	"path"
 
 	data "github.com/arangodb-managed/apis/data/v1"
+
+	rm "github.com/arangodb-managed/apis/resourcemanager/v1"
 )
 
 const (
 	// KindExampleDataset is a constants for the kind of ExampleDataset resources.
 	KindExampleDataset = "ExampleDataset"
+	// KindExampleDatasetInstallation is a constants for the kind of ExampleDatasetInstallation resources.
+	KindExampleDatasetInstallation = "ExampleDatasetInstallation"
 )
 
 // ExampleDatasetURL creates a resource URL for the ExampleDataset with given ID
 // in given context (as individual IDs).
-func ExampleDatasetURL(organizationID, projectID, deploymentID, exampleID string) string {
-	return ExampleDatasetURL2(data.DeploymentURL(organizationID, projectID, deploymentID), exampleID)
+func ExampleDatasetURL(organizationID, exampleDatasetID string) string {
+	return ExampleDatasetURL2(rm.OrganizationURL(organizationID), exampleDatasetID)
 }
 
 // ExampleDatasetURL2 creates a resource URL for the ExampleDataset with given ID
 // in given context (as base URL).
-func ExampleDatasetURL2(deploymentURL, exampleID string) string {
-	return path.Join(deploymentURL, KindExampleDataset, url.PathEscape(exampleID))
+func ExampleDatasetURL2(organizationURL, exampleDatasetID string) string {
+	return path.Join(organizationURL, KindExampleDataset, url.PathEscape(exampleDatasetID))
+}
+
+// ExampleDatasetInstallationURL creates a resource URL for the ExampleDatasetInstallation with given ID
+// in given context (as individual IDs).
+func ExampleDatasetInstallationURL(organizationID, projectID, deploymentID, exampleInstallationID string) string {
+	return ExampleDatasetInstallationURL2(data.DeploymentURL(organizationID, projectID, deploymentID), exampleInstallationID)
+}
+
+// ExampleDatasetInstallationURL2 creates a resource URL for the ExampleDatasetInstallation with given ID
+// in given context (as base URL).
+func ExampleDatasetInstallationURL2(deploymentURL, exampleInstallationID string) string {
+	return path.Join(deploymentURL, KindExampleDatasetInstallation, url.PathEscape(exampleInstallationID))
 }
