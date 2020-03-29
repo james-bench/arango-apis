@@ -84,6 +84,11 @@ export interface Event {
   // This is a read-only value that can be empty.
   // string
   reason?: string;
+  
+  // If set, this event reflects only a status update of an entity.
+  // This is a read-only value.
+  // boolean
+  status_only?: boolean;
 }
 export interface Event_PayloadEntry {
   // string

@@ -536,6 +536,9 @@ message Event {
     // Optional human readable reason for the event.
     // This is a read-only value that can be empty.
     string reason = 11;
+    // If set, this event reflects only a status update of an entity.
+    // This is a read-only value.
+    bool status_only = 12;
 }
 
 // List of Events.
