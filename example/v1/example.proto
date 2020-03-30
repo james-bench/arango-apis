@@ -145,6 +145,12 @@ message ExampleDatasetInstallation {
     string exampledataset_id = 4;
     // The creation timestamp of the installation.
     google.protobuf.Timestamp created_at = 5;
+    // The deletion timestamp of the installation
+    // This is a read-only value.
+    google.protobuf.Timestamp deleted_at = 6;
+    // Set when this installation is deleted.
+    // This is a read-only value.
+    bool is_deleted = 7;
     // Status of the installation.
     // All members of this field are read-only.
     message Status {
