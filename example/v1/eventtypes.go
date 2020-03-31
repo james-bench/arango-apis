@@ -31,4 +31,7 @@ const (
 	// EventTypeInstallationDeleted is the type of event fired after an installations has been deleted
 	// SubjectID contains the ID of the installation.
 	EventTypeInstallationDeleted = "example.exampledatasetinstallation.deleted"
+	// EventTypeInstallationUpdated is the type of event fired after an installations has been updated
+	// SubjectID contains the ID of the installation.
+	EventTypeInstallationUpdated = "example.exampledatasetinstallation.updated"
 )
