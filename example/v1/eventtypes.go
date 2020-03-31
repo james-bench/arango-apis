@@ -25,13 +25,13 @@ package v1
 const (
 	// Example installations event types
 
-	// EventTypeInstallationCreated is the type of event fired after an installations has been created
+	// EventTypeExampleDatasetInstallationCreated is the type of event fired after an installations has been created
 	// SubjectID contains the ID of the installation.
-	EventTypeInstallationCreated = "example.exampledatasetinstallation.created"
-	// EventTypeInstallationDeleted is the type of event fired after an installations has been deleted
+	EventTypeExampleDatasetInstallationCreated = "example.exampledatasetinstallation.created"
+	// EventTypeExampleDatasetInstallationDeleted is the type of event fired after an installations has been deleted
 	// SubjectID contains the ID of the installation.
-	EventTypeInstallationDeleted = "example.exampledatasetinstallation.deleted"
-	// EventTypeInstallationUpdated is the type of event fired after an installations has been updated
+	EventTypeExampleDatasetInstallationDeleted = "example.exampledatasetinstallation.deleted"
+	// EventTypeExampleDatasetInstallationUpdated is the type of event fired after an installations has been updated
 	// SubjectID contains the ID of the installation.
-	EventTypeInstallationUpdated = "example.exampledatasetinstallation.updated"
+	EventTypeExampleDatasetInstallationUpdated = "example.exampledatasetinstallation.updated"
 )
