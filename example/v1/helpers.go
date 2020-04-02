@@ -47,7 +47,7 @@ func (source *ExampleDatasetInstallation_Status) Equals(other *ExampleDatasetIns
 }
 
 // CloneExampleDataset creates a deep copy of the given source
-func (source *ExampleDataset) CloneExampleDataset() *ExampleDataset {
+func (source *ExampleDataset) Clone() *ExampleDataset {
 	if source == nil {
 		return nil
 	}
@@ -57,19 +57,19 @@ func (source *ExampleDataset) CloneExampleDataset() *ExampleDataset {
 }
 
 // CloneExampleDatasetInstallation creates a deep copy of the given source
-func (source *ExampleDatasetInstallation) CloneExampleDatasetInstallation() *ExampleDatasetInstallation {
+func (source *ExampleDatasetInstallation) Clone() *ExampleDatasetInstallation {
 	if source == nil {
 		return nil
 	}
 	clone := *source
 	clone.CreatedAt = common.CloneTimestamp(source.GetCreatedAt())
 	clone.DeletedAt = common.CloneTimestamp(source.GetDeletedAt())
-	clone.Status = source.GetStatus().CloneExampleDatasetInstallationStatus()
+	clone.Status = source.GetStatus().Clone()
 	return &clone
 }
 
 // CloneExampleDatasetInstallationStatus creates a deep copy fo the given source
-func (source *ExampleDatasetInstallation_Status) CloneExampleDatasetInstallationStatus() *ExampleDatasetInstallation_Status {
+func (source *ExampleDatasetInstallation_Status) Clone() *ExampleDatasetInstallation_Status {
 	if source == nil {
 		return nil
 	}
