@@ -486,6 +486,14 @@ export interface Tier {
   // This is a read-only value and cannot be initialized.
   // boolean
   requires_terms_and_conditions?: boolean;
+  
+  // If set, this tier allows the user of support severity high.
+  // boolean
+  has_support_severity_high?: boolean;
+  
+  // If set, this tier allows the user of support severity critical.
+  // boolean
+  has_support_severity_critical?: boolean;
 }
 
 // ResourceManagerService is the API used to configure basic resource objects.

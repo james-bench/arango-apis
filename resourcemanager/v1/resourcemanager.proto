@@ -422,6 +422,10 @@ message Tier {
     // current terms & conditions.
     // This is a read-only value and cannot be initialized.
     bool requires_terms_and_conditions = 5;
+    // If set, this tier allows the user of support severity high.
+    bool has_support_severity_high = 6;
+    // If set, this tier allows the user of support severity critical.
+    bool has_support_severity_critical = 7;
 }
 
 // Member of an organization.
