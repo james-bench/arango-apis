@@ -276,6 +276,10 @@ message Deployment {
     // list of available versions is considered an invalid request.
     string version = 101;
 
+    // If set, it is highly recommended to update to the ArangoDB release with the
+	// version as listed in this field.
+    ReplaceVersionBy replace_version_by = 104;
+
     message CertificateSpec {
         // Identifier of the CACertificate used to sign TLS certificates for the deployment.
         // If you change this value after the creation of the deployment a complete
@@ -575,7 +579,21 @@ message DeploymentList {
 // Version of an ArangoDB release
 message Version {
     // Version in the format of major.minor.patch
+    // Format details can be found at: https://semver.org/
     string version = 1;
+    // If set, deployments using this version should be updated to the ArangoDB release with the
+    // version as listed in this message.
+    ReplaceVersionBy replace_by = 2;
+}
+
+// ReplaceVersionBy holds replacement instructions.
+message ReplaceVersionBy  {
+    // The version of the ArangoDB release that it should be upgraded to.
+    // Version in the format of major.minor.patch
+    // Format details can be found at: https://semver.org/
+    string version = 1;
+    // Human readable reason why this version should be replaced.
+    string reason = 2;
 }
 
 // List of Versions.

@@ -201,6 +201,11 @@ export interface Deployment {
   // string
   version?: string;
   
+  // If set, it is highly recommended to update to the ArangoDB release with the
+  // version as listed in this field.
+  // ReplaceVersionBy
+  replace_version_by?: ReplaceVersionBy;
+  
   // Deployment_CertificateSpec
   certificates?: Deployment_CertificateSpec;
   
@@ -905,6 +910,19 @@ export interface NodeSizesRequest {
   deployment_id?: string;
 }
 
+// ReplaceVersionBy holds replacement instructions.
+export interface ReplaceVersionBy {
+  // The version of the ArangoDB release that it should be upgraded to.
+  // Version in the format of major.minor.patch
+  // Format details can be found at: https://semver.org/
+  // string
+  version?: string;
+  
+  // Human readable reason why this version should be replaced.
+  // string
+  reason?: string;
+}
+
 // Limits of allowed values for fields of Deployment.ServersSpec.
 export interface ServersSpecLimits {
   // Limits for the number of coordinators of the deployment
@@ -973,8 +991,14 @@ export interface ServersSpecLimitsRequest {
 // Version of an ArangoDB release
 export interface Version {
   // Version in the format of major.minor.patch
+  // Format details can be found at: https://semver.org/
   // string
   version?: string;
+  
+  // If set, deployments using this version should be updated to the ArangoDB release with the
+  // version as listed in this message.
+  // ReplaceVersionBy
+  replace_by?: ReplaceVersionBy;
 }
 
 // List of Versions.
