@@ -618,7 +618,7 @@ type ExampleDatasetServiceClient interface {
 	GetAPIVersion(ctx context.Context, in *v1.Empty, opts ...grpc.CallOption) (*v1.Version, error)
 	// Fetch all example datasets.
 	// Required permissions:
-	// - example.exampledataset.list
+	// - None: Caller must be authenticated.
 	ListExampleDatasets(ctx context.Context, in *ListExampleDatasetsRequest, opts ...grpc.CallOption) (*ExampleDatasetList, error)
 	// Fetch an example dataset identified by the given ID.
 	// Required permissions:
@@ -735,7 +735,7 @@ type ExampleDatasetServiceServer interface {
 	GetAPIVersion(context.Context, *v1.Empty) (*v1.Version, error)
 	// Fetch all example datasets.
 	// Required permissions:
-	// - example.exampledataset.list
+	// - None: Caller must be authenticated.
 	ListExampleDatasets(context.Context, *ListExampleDatasetsRequest) (*ExampleDatasetList, error)
 	// Fetch an example dataset identified by the given ID.
 	// Required permissions:

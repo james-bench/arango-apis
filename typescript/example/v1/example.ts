@@ -144,7 +144,7 @@ export interface IExampleDatasetService {
   
   // Fetch all example datasets.
   // Required permissions:
-  // - example.exampledataset.list
+  // - None: Caller must be authenticated.
   ListExampleDatasets: (req: ListExampleDatasetsRequest) => Promise<ExampleDatasetList>;
   
   // Fetch an example dataset identified by the given ID.
@@ -192,7 +192,7 @@ export class ExampleDatasetService implements IExampleDatasetService {
   
   // Fetch all example datasets.
   // Required permissions:
-  // - example.exampledataset.list
+  // - None: Caller must be authenticated.
   async ListExampleDatasets(req: ListExampleDatasetsRequest): Promise<ExampleDatasetList> {
     const path = `/api/example/v1/exampledataset`;
     const url = path + api.queryString(req, []);
