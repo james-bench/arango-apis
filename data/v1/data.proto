@@ -582,7 +582,7 @@ message Version {
     // Format details can be found at: https://semver.org/
     string version = 1;
     // If set, deployments using this version should be updated to the ArangoDB release with the
-	// version as listed in this message.
+    // version as listed in this message.
     ReplaceVersionBy replace_by = 2;
 }
 
@@ -591,9 +591,9 @@ message ReplaceVersionBy  {
     // The version of the ArangoDB release that it should be upgraded to.
     // Version in the format of major.minor.patch
     // Format details can be found at: https://semver.org/
-	string version = 1;
-	// Human readable reason why this version should be replaced.
-	string reason = 2;
+    string version = 1;
+    // Human readable reason why this version should be replaced.
+    string reason = 2;
 }
 
 // List of Versions.
