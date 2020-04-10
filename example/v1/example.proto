@@ -53,7 +53,7 @@ service ExampleDatasetService {
 
     // Fetch an example dataset identified by the given ID.
     // Required permissions:
-    // - example.exampledataset.get on the example identified by the given ID.
+    // - None: Caller must be authenticated.
     rpc GetExampleDataset(common.v1.IDOptions) returns (ExampleDataset) {
         option (google.api.http) = {
             get: "/api/example/v1/exampledataset/{id}"

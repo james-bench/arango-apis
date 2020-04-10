@@ -23,15 +23,8 @@
 package v1
 
 const (
-	// ExampleDataset permissions
-	// PermissionExampleDatasetList is needed in order to be able to list example datasets.
-	PermissionExampleDatasetList = "example.exampledataset.list"
-	// PermissionExampleDatasetGet is needed to get a single example dataset.
-	PermissionExampleDatasetGet = "example.exampledataset.get"
-)
-
-const (
 	// ExampleDatasetInstallation permissions
+
 	// PermissionExampleDatasetInstallationList is needed in order to be able to list example datasets.
 	PermissionExampleDatasetInstallationList = "example.exampledatasetinstallation.list"
 	// PermissionExampleDatasetInstallationGet is needed to get a single example dataset.
