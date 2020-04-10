@@ -149,7 +149,7 @@ export interface IExampleDatasetService {
   
   // Fetch an example dataset identified by the given ID.
   // Required permissions:
-  // - example.exampledataset.get on the example identified by the given ID.
+  // - None: Caller must be authenticated.
   GetExampleDataset: (req: arangodb_cloud_common_v1_IDOptions) => Promise<ExampleDataset>;
   
   // Fetch all installations for a specific deployment.
@@ -201,7 +201,7 @@ export class ExampleDatasetService implements IExampleDatasetService {
   
   // Fetch an example dataset identified by the given ID.
   // Required permissions:
-  // - example.exampledataset.get on the example identified by the given ID.
+  // - None: Caller must be authenticated.
   async GetExampleDataset(req: arangodb_cloud_common_v1_IDOptions): Promise<ExampleDataset> {
     const path = `/api/example/v1/exampledataset/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);

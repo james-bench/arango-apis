@@ -622,7 +622,7 @@ type ExampleDatasetServiceClient interface {
 	ListExampleDatasets(ctx context.Context, in *ListExampleDatasetsRequest, opts ...grpc.CallOption) (*ExampleDatasetList, error)
 	// Fetch an example dataset identified by the given ID.
 	// Required permissions:
-	// - example.exampledataset.get on the example identified by the given ID.
+	// - None: Caller must be authenticated.
 	GetExampleDataset(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*ExampleDataset, error)
 	// Fetch all installations for a specific deployment.
 	// Required permissions:
@@ -739,7 +739,7 @@ type ExampleDatasetServiceServer interface {
 	ListExampleDatasets(context.Context, *ListExampleDatasetsRequest) (*ExampleDatasetList, error)
 	// Fetch an example dataset identified by the given ID.
 	// Required permissions:
-	// - example.exampledataset.get on the example identified by the given ID.
+	// - None: Caller must be authenticated.
 	GetExampleDataset(context.Context, *v1.IDOptions) (*ExampleDataset, error)
 	// Fetch all installations for a specific deployment.
 	// Required permissions:
