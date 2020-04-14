@@ -133,6 +133,12 @@ export interface ListExampleDatasetsRequest {
   // Optional common list options, the context_id is ignored.
   // arangodb.cloud.common.v1.ListOptions
   options?: arangodb_cloud_common_v1_ListOptions;
+  
+  // If set, the result includes all example datasets which are available for the
+  // organization identified by this ID.
+  // If not set, only datasets are returned that are available to all organizations.
+  // string
+  organization_id?: string;
 }
 
 // ExampleDatasetService is the API used to query for example datasets.
