@@ -172,6 +172,10 @@ message ExampleDatasetInstallation {
 message ListExampleDatasetsRequest {
     // Optional common list options, the context_id is ignored.
     common.v1.ListOptions options = 1;
+    // If set, the result includes all example datasets which are available for the
+    // organization identified by this ID.
+    // If not set, only datasets are returned that are available to all organizations.
+    string organization_id = 2;
 }
 
 // List of example datasets.
