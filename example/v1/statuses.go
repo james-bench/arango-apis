@@ -19,4 +19,6 @@ const (
 	ExampleInstallationStatusReady = "Ready"
 	// ExampleInstallationStatusFailed denotes a dataset which has failed to be created.
 	ExampleInstallationStatusFailed = "Failed"
+	// ExampleInstallationStatusDeleted denotes a dataset of which the database has been deleted.
+	ExampleInstallationStatusDeleted = "Deleted"
 )
