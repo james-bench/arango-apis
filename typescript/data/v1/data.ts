@@ -1109,6 +1109,11 @@ export interface IDataService {
   // - data.deployment.get on the deployment identified by the given ID
   GetImportDataInstructions: (req: arangodb_cloud_common_v1_IDOptions) => Promise<ImportDataInstructions>;
   
+  // Fetch instructions for importing data into the deployment using arangoimport, identified by the given id.
+  // Required permissions:
+  // - data.deployment.get on the deployment identified by the given ID
+  GetArangoimportDataInstructions: (req: arangodb_cloud_common_v1_IDOptions) => Promise<ImportDataInstructions>;
+  
   // Calculate the price of a deployment of given settings.
   // Required permissions:
   // - data.deploymentprice.calculate
@@ -1284,6 +1289,15 @@ export class DataService implements IDataService {
   // - data.deployment.get on the deployment identified by the given ID
   async GetImportDataInstructions(req: arangodb_cloud_common_v1_IDOptions): Promise<ImportDataInstructions> {
     const path = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}/import-data-instructions`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch instructions for importing data into the deployment using arangoimport, identified by the given id.
+  // Required permissions:
+  // - data.deployment.get on the deployment identified by the given ID
+  async GetArangoimportDataInstructions(req: arangodb_cloud_common_v1_IDOptions): Promise<ImportDataInstructions> {
+    const path = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}/arangoimport-data-instructions`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
