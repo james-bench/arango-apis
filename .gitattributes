@@ -1,0 +1,7 @@
+*.pb.go linguist-generated
+*.pb.gw.go linguist-generated
+typescript* linguist-generated
+
+docs/* linguist-documentation
+
+vendor/* linguist-vendored
