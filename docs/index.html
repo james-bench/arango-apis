@@ -10917,6 +10917,13 @@ Must be &gt;= 3 and &lt;= 5 </p></td>
                   <td><p>Lines of code to run arangorestore </p></td>
                 </tr>
               
+                <tr>
+                  <td>arango_import</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Lines of code to run arangoimport </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -11564,15 +11571,6 @@ Required permissions:
               </tr>
             
               <tr>
-                <td>GetArangoimportDataInstructions</td>
-                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
-                <td><a href="#arangodb.cloud.data.v1.ImportDataInstructions">ImportDataInstructions</a></td>
-                <td><p>Fetch instructions for importing data into the deployment using arangoimport, identified by the given id.
-Required permissions:
-- data.deployment.get on the deployment identified by the given ID</p></td>
-              </tr>
-            
-              <tr>
                 <td>CalculateDeploymentPrice</td>
                 <td><a href="#arangodb.cloud.data.v1.DeploymentPriceRequest">DeploymentPriceRequest</a></td>
                 <td><a href="#arangodb.cloud.data.v1.DeploymentPrice">DeploymentPrice</a></td>
@@ -11774,16 +11772,6 @@ Required permissions:
                 <td>GetImportDataInstructions</td>
                 <td>GET</td>
                 <td>/api/data/v1/deployments/{id}/import-data-instructions</td>
-                <td></td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>GetArangoimportDataInstructions</td>
-                <td>GET</td>
-                <td>/api/data/v1/deployments/{id}/arangoimport-data-instructions</td>
                 <td></td>
               </tr>
               

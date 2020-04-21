@@ -203,15 +203,6 @@ service DataService {
         };
     }
 
-    // Fetch instructions for importing data into the deployment using arangoimport, identified by the given id.
-    // Required permissions:
-    // - data.deployment.get on the deployment identified by the given ID
-    rpc GetArangoimportDataInstructions(common.v1.IDOptions) returns (ImportDataInstructions) {
-        option (google.api.http) = {
-            get: "/api/data/v1/deployments/{id}/arangoimport-data-instructions"
-        };
-    }
-
     // Calculate the price of a deployment of given settings.
     // Required permissions:
     // - data.deploymentprice.calculate
@@ -818,6 +809,8 @@ message ConnectDriverInstructions {
 message ImportDataInstructions {
     // Lines of code to run arangorestore
     repeated string import_dump = 2;
+    // Lines of code to run arangoimport
+    repeated string arango_import = 3;
 }
 
 // Arguments for requesting a price a deployment of given properties.
