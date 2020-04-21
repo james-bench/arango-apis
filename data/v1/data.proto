@@ -813,8 +813,8 @@ message ImportDataInstructions {
     repeated string arango_import_json = 3;
     // Lines of code to run arangoimport with csv file format
     repeated string arango_import_csv = 4;
-    // Lines of code to run arangoimport with xml file format
-    repeated string arango_import_xml = 5;
+    // Lines of code to run arangoimport with tsv file format
+    repeated string arango_import_tsv = 5;
 }
 
 // Arguments for requesting a price a deployment of given properties.

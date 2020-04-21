@@ -831,9 +831,9 @@ export interface ImportDataInstructions {
   // string
   arango_import_csv?: string[];
   
-  // Lines of code to run arangoimport with xml file format
+  // Lines of code to run arangoimport with tsv file format
   // string
-  arango_import_xml?: string[];
+  arango_import_tsv?: string[];
 }
 
 // Request arguments for ListCPUSizes
