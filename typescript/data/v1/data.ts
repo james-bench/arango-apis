@@ -822,6 +822,18 @@ export interface ImportDataInstructions {
   // Lines of code to run arangorestore
   // string
   import_dump?: string[];
+  
+  // Lines of code to run arangoimport with json file format
+  // string
+  arango_import_json?: string[];
+  
+  // Lines of code to run arangoimport with csv file format
+  // string
+  arango_import_csv?: string[];
+  
+  // Lines of code to run arangoimport with tsv file format
+  // string
+  arango_import_tsv?: string[];
 }
 
 // Request arguments for ListCPUSizes
