@@ -73,10 +73,6 @@ export interface Version {
   // Patch version (increased for fixed)
   // number
   patch?: number;
-  
-  // API ID contains identifier of this API
-  // string
-  api_id?: string;
 }
 
 // Response for single boolean.
