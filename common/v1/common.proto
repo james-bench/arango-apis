@@ -78,4 +78,6 @@ message Version {
     int32 minor = 2;
     // Patch version (increased for fixed)
     int32 patch = 3;
+    // API ID contains identifier of this API
+    string api_id = 4;
 }
