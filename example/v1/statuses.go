@@ -13,6 +13,8 @@ const (
 
 	// ExampleInstallationStatusInProgress means that the pod was created successfull and the data is being generated / imported
 	ExampleInstallationStatusInProgress = "InProgress"
+	// ExampleInstallationStatusCreating means that the database name has been created.
+	ExampleInstallationStatusCreating = "Creating"
 	// ExampleInstallationStatusCreated means that the database has been successfully created.
 	ExampleInstallationStatusCreated = "Created"
 	// ExampleInstallationStatusReady means that the data is ready to be used.
