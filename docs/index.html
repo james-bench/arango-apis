@@ -679,6 +679,29 @@ title: "ArangoDB Oasis API"
         
           
           <li>
+            <a href="#monitoring%2fv1%2fmonitoring.proto">monitoring/v1/monitoring.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#arangodb.cloud.monitoring.v1.DeploymentLogsChunk"><span class="badge">M</span>DeploymentLogsChunk</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.monitoring.v1.GetDeploymentLogsRequest"><span class="badge">M</span>GetDeploymentLogsRequest</a>
+                </li>
+              
+              
+              
+              
+                <li>
+                  <a href="#arangodb.cloud.monitoring.v1.MonitoringService"><span class="badge">S</span>MonitoringService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#backup%2fv1%2fbackup.proto">backup/v1/backup.proto</a>
             <ul>
               
@@ -7944,6 +7967,133 @@ Required permissions:
                 <td>POST</td>
                 <td>/api/support/v1/supportrequests</td>
                 <td>*</td>
+              </tr>
+              
+            
+            </tbody>
+          </table>
+          
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="monitoring/v1/monitoring.proto">monitoring/v1/monitoring.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="arangodb.cloud.monitoring.v1.DeploymentLogsChunk">DeploymentLogsChunk</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>chunk</td>
+                  <td><a href="#bytes">bytes</a></td>
+                  <td></td>
+                  <td><p>Chunk of bytes from the logs </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.monitoring.v1.GetDeploymentLogsRequest">GetDeploymentLogsRequest</h3>
+        <p>GetDeploymentLogsRequest contains request arguments for GetDeploymentLogs.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the deployment to get the logs from. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>role</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>If set, limit logs to servers of this role. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+
+      
+
+      
+        <h3 id="arangodb.cloud.monitoring.v1.MonitoringService">MonitoringService</h3>
+        <p>MonitoringService is the API used to monitor deployments.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GetAPIVersion</td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Version">.arangodb.cloud.common.v1.Version</a></td>
+                <td><p>Get the current API version of this service.
+Required permissions:
+- None</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetDeploymentLogs</td>
+                <td><a href="#arangodb.cloud.monitoring.v1.GetDeploymentLogsRequest">GetDeploymentLogsRequest</a></td>
+                <td><a href="#arangodb.cloud.monitoring.v1.DeploymentLogsChunk">DeploymentLogsChunk</a> stream</td>
+                <td><p>Fetch all logs of the deployment that matches the given request.
+Required permissions:
+- monitoring.logs.get on the deployment identified by the given deployment ID.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+          
+          
+          <h4>Methods with HTTP bindings</h4>
+          <table>
+            <thead>
+              <tr>
+                <td>Method Name</td>
+                <td>Method</td>
+                <td>Pattern</td>
+                <td>Body</td>
+              </tr>
+            </thead>
+            <tbody>
+            
+              
+              
+              <tr>
+                <td>GetAPIVersion</td>
+                <td>GET</td>
+                <td>/api/monitoring/v1/api-version</td>
+                <td></td>
               </tr>
               
             
