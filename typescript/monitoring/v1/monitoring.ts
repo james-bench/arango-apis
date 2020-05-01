@@ -24,6 +24,18 @@ export interface GetDeploymentLogsRequest {
   // If set, limit logs to servers of this role.
   // string
   role?: string;
+  
+  // The start time for the query. Defaults to one hour ago.
+  // googleTypes.Timestamp
+  start_at?: googleTypes.Timestamp;
+  
+  // The end time for the query. Defaults to now.
+  // googleTypes.Timestamp
+  end_at?: googleTypes.Timestamp;
+  
+  // Limit the number of log lines. Defaults to 1000.
+  // number
+  limit?: number;
 }
 
 // MonitoringService is the API used to monitor deployments.
