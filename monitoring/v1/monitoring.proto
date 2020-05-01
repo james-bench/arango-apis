@@ -54,6 +54,13 @@ message GetDeploymentLogsRequest {
     string deployment_id = 1;
     // If set, limit logs to servers of this role.
     string role = 2;
+
+	// The start time for the query. Defaults to one hour ago.
+    google.protobuf.Timestamp start_at = 100;
+	// The end time for the query. Defaults to now.
+    google.protobuf.Timestamp end_at = 101;
+    // Limit the number of log lines. Defaults to 1000.
+    int32 limit = 102;
 }
 
 message DeploymentLogsChunk {
