@@ -1140,7 +1140,7 @@ export interface IDataService {
   
   // Fetch the minimum node count which a deployment can be downgraded to.
   // Required permissions:
-  // - data.minimumnodecount.get on the deployment identified by the given ID
+  // - None: Caller must be authenticated.
   GetMinimumNodeCount: (req: arangodb_cloud_common_v1_IDOptions) => Promise<MinimumNodeCount>;
 }
 
@@ -1331,7 +1331,7 @@ export class DataService implements IDataService {
   
   // Fetch the minimum node count which a deployment can be downgraded to.
   // Required permissions:
-  // - data.minimumnodecount.get on the deployment identified by the given ID
+  // - None: Caller must be authenticated.
   async GetMinimumNodeCount(req: arangodb_cloud_common_v1_IDOptions): Promise<MinimumNodeCount> {
     const path = `/api/data/v1/minimum-node-count/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);

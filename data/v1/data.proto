@@ -224,7 +224,7 @@ service DataService {
 
     // Fetch the minimum node count which a deployment can be downgraded to.
     // Required permissions:
-    // - data.minimumnodecount.get on the deployment identified by the given ID
+    // - None: Caller must be authenticated.
     rpc GetMinimumNodeCount(common.v1.IDOptions) returns (MinimumNodeCount) {
         option (google.api.http) = {
             get: "/api/data/v1/minimum-node-count/{id}"

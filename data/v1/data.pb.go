@@ -4030,7 +4030,7 @@ type DataServiceClient interface {
 	GetDeploymentFeatures(ctx context.Context, in *DeploymentFeaturesRequest, opts ...grpc.CallOption) (*DeploymentFeatures, error)
 	// Fetch the minimum node count which a deployment can be downgraded to.
 	// Required permissions:
-	// - data.minimumnodecount.get on the deployment identified by the given ID
+	// - None: Caller must be authenticated.
 	GetMinimumNodeCount(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*MinimumNodeCount, error)
 }
 
@@ -4317,7 +4317,7 @@ type DataServiceServer interface {
 	GetDeploymentFeatures(context.Context, *DeploymentFeaturesRequest) (*DeploymentFeatures, error)
 	// Fetch the minimum node count which a deployment can be downgraded to.
 	// Required permissions:
-	// - data.minimumnodecount.get on the deployment identified by the given ID
+	// - None: Caller must be authenticated.
 	GetMinimumNodeCount(context.Context, *v1.IDOptions) (*MinimumNodeCount, error)
 }
 
