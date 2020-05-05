@@ -437,6 +437,11 @@ export interface Deployment_ServersSpec {
   // This field is ignored set unless the flexible model is used.
   // string
   dbserver_args?: string[];
+  
+  // The minimum number of nodes based on the highest replication factor
+  // defined by all databases and all collections.
+  // number
+  minimum_node_count?: number;
 }
 
 // Status of the deployment
@@ -867,13 +872,6 @@ export interface ListVersionsRequest {
   current_version?: string;
 }
 
-// MinimumNodeCount is the response for GetMinimumNodeCount.
-export interface MinimumNodeCount {
-  // The number which defines the minimum node count.
-  // number
-  count?: number;
-}
-
 // NodeSize specifies the size constraints of different data nodes.
 export interface NodeSize {
   // System identifier of the node size
@@ -1137,11 +1135,6 @@ export interface IDataService {
   // Required permissions:
   // - data.deploymentfeatures.get on the project that is given in the request.
   GetDeploymentFeatures: (req: DeploymentFeaturesRequest) => Promise<DeploymentFeatures>;
-  
-  // Fetch the minimum node count which a deployment can be downgraded to.
-  // Required permissions:
-  // - None: Caller must be authenticated.
-  GetMinimumNodeCount: (req: arangodb_cloud_common_v1_IDOptions) => Promise<MinimumNodeCount>;
 }
 
 // DataService is the API used to configure data objects.
@@ -1327,14 +1320,5 @@ export class DataService implements IDataService {
   async GetDeploymentFeatures(req: DeploymentFeaturesRequest): Promise<DeploymentFeatures> {
     const url = `/api/data/v1/deployment-features`;
     return api.post(url, req);
-  }
-  
-  // Fetch the minimum node count which a deployment can be downgraded to.
-  // Required permissions:
-  // - None: Caller must be authenticated.
-  async GetMinimumNodeCount(req: arangodb_cloud_common_v1_IDOptions): Promise<MinimumNodeCount> {
-    const path = `/api/data/v1/minimum-node-count/${encodeURIComponent(req.id || '')}`;
-    const url = path + api.queryString(req, [`id`]);
-    return api.get(url, undefined);
   }
 }
