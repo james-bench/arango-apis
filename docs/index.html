@@ -921,6 +921,10 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.data.v1.MinimumNodeCount"><span class="badge">M</span>MinimumNodeCount</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.data.v1.NodeSize"><span class="badge">M</span>NodeSize</a>
                 </li>
               
@@ -11204,6 +11208,30 @@ If not set, only versions are returned that are available to all organizations. 
 
         
       
+        <h3 id="arangodb.cloud.data.v1.MinimumNodeCount">MinimumNodeCount</h3>
+        <p>MinimumNodeCount is the response for GetMinimumNodeCount.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>count</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>The number which defines the minimum node count. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.data.v1.NodeSize">NodeSize</h3>
         <p>NodeSize specifies the size constraints of different data nodes.</p>
 
@@ -11773,6 +11801,15 @@ Required permissions:
 - data.deploymentfeatures.get on the project that is given in the request.</p></td>
               </tr>
             
+              <tr>
+                <td>GetMinimumNodeCount</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.data.v1.MinimumNodeCount">MinimumNodeCount</a></td>
+                <td><p>Fetch the minimum node count which a deployment can be downgraded to.
+Required permissions:
+- data.minimumnodecount.get on the deployment identified by the given ID</p></td>
+              </tr>
+            
           </tbody>
         </table>
 
@@ -11978,6 +12015,16 @@ Required permissions:
                 <td>POST</td>
                 <td>/api/data/v1/deployment-features</td>
                 <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetMinimumNodeCount</td>
+                <td>GET</td>
+                <td>/api/data/v1/minimum-node-count/{id}</td>
+                <td></td>
               </tr>
               
             
