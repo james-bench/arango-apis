@@ -438,7 +438,7 @@ export interface Deployment_ServersSpec {
   // string
   dbserver_args?: string[];
   
-  // The minimum number of nodes based on the highest replication factor
+  // The minimum number of dbservers based on the highest replication factor
   // defined by all databases and all collections.
   // number
   minimum_node_count?: number;

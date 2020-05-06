@@ -400,7 +400,7 @@ type Deployment_ServersSpec struct {
 	// Custom command line arguments passed to all dbservers.
 	// This field is ignored set unless the flexible model is used.
 	DbserverArgs []string `protobuf:"bytes,14,rep,name=dbserver_args,json=dbserverArgs,proto3" json:"dbserver_args,omitempty"`
-	// The minimum number of nodes based on the highest replication factor
+	// The minimum number of dbservers based on the highest replication factor
 	// defined by all databases and all collections.
 	MinimumNodeCount     int32    `protobuf:"varint,15,opt,name=minimum_node_count,json=minimumNodeCount,proto3" json:"minimum_node_count,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
