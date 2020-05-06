@@ -441,7 +441,7 @@ export interface Deployment_ServersSpec {
   // The minimum number of dbservers based on the highest replication factor
   // defined by all databases and all collections.
   // number
-  minimum_node_count?: number;
+  minimum_dbservers_count?: number;
 }
 
 // Status of the deployment

@@ -316,7 +316,7 @@ message Deployment {
 
         // The minimum number of dbservers based on the highest replication factor
         // defined by all databases and all collections.
-        int32 minimum_node_count = 15;
+        int32 minimum_dbservers_count = 15;
     }
     ServersSpec servers = 103;
 
