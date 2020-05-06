@@ -94,10 +94,3 @@ const (
 	// PermissionCPUSizeList is needed for listing CPU sizes in a project.
 	PermissionCPUSizeList = "data.cpusize.list"
 )
-
-const (
-	// Get minimum node size
-
-	// PermissionMinimumNodeSizeGet is needed to get the minimum allowed node size on a deployment when updating
-	PermissionMinimumNodeSizeGet = "data.minimumnodesize.get"
-)
