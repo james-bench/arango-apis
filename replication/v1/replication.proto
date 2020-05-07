@@ -1,0 +1,61 @@
+// 
+// DISCLAIMER
+// 
+// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+// http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// 
+// Copyright holder is ArangoDB GmbH, Cologne, Germany
+// 
+// Author Gergely Brautigam
+// 
+
+syntax = "proto3";
+
+package arangodb.cloud.replication.v1;
+
+option go_package = "github.com/arangodb-managed/apis/replication/v1";
+
+import "common/v1/common.proto";
+import "data/v1/data.proto";
+
+import "google/api/annotations.proto";
+
+// ReplicationService is the API used to clone a deployment from an existing backup.
+service ReplicationService {
+    // Get the current API version of this service.
+    // Required permissions:
+    // - None
+    rpc GetAPIVersion(common.v1.Empty) returns (common.v1.Version) {
+        option (google.api.http) = {
+            get: "/api/replication/v1/api-version"
+        };
+    }
+
+    // Takes a backup and creates a deployment from it. For all intents and purposes this new deployment
+    // will be the same as the deployment at that exact moment when the backup was taken from it. This means that
+    // the new deployment will be in the same region and in the same project and use the same provider as the old
+    // deployment did. Furthermore, the new deployment will have the same server settings ( count, mode, replication
+    // factor ) as the old deployment did at the time of taking the backup. After the new deployment successfuly
+    // started, the backup will be used to restore the data into the new deployment. The new deployment will have
+    // a different endpoint, and the password will also be reset for it. All other user settings will remain the same.
+    // The old deployment will not be touched.
+    // Required permissions:
+    // - replication.deployment.create
+    rpc CloneDeploymentFromBackup(common.v1.IDOptions) returns (data.v1.Deployment) {
+        option (google.api.http) = {
+            post: "/api/replication/v1/backup/{id}/create"
+            body: "*"
+        };
+    }
+}
