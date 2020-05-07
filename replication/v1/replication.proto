@@ -51,11 +51,17 @@ service ReplicationService {
     // a different endpoint, and the password will also be reset for it. All other user settings will remain the same.
     // The old deployment will not be touched.
     // Required permissions:
-    // - replication.deployment.create
-    rpc CloneDeploymentFromBackup(common.v1.IDOptions) returns (data.v1.Deployment) {
+    // - replication.deployment.create-from-backup
+    rpc CloneDeploymentFromBackup(CloneDeploymentFromBackupRequest) returns (data.v1.Deployment) {
         option (google.api.http) = {
-            post: "/api/replication/v1/backup/{id}/create"
+            post: "/api/replication/v1/backup/{backup_id}/create"
             body: "*"
         };
     }
+}
+
+// CloneDeploymentFromBackupRequest defines a request object for clone deployment call.
+message CloneDeploymentFromBackupRequest {
+    // The ID of the backup to clone a deployment from.
+    string backup_id = 1;
 }

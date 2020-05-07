@@ -26,5 +26,5 @@ const (
 	// CloneDeploymentFromBackup permissions
 
 	// PermissionCloneDeploymentFromBackup is needed to clone a deployment from an existing backup.
-	PermissionCloneDeploymentFromBackupCreate = "replication.deployment.create"
+	PermissionCloneDeploymentFromBackupCreate = "replication.deployment.create-from-backup"
 )

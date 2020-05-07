@@ -48,7 +48,7 @@ func local_request_ReplicationService_GetAPIVersion_0(ctx context.Context, marsh
 }
 
 func request_ReplicationService_CloneDeploymentFromBackup_0(ctx context.Context, marshaler runtime.Marshaler, client ReplicationServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq v1.IDOptions
+	var protoReq CloneDeploymentFromBackupRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -66,15 +66,15 @@ func request_ReplicationService_CloneDeploymentFromBackup_0(ctx context.Context,
 		_   = err
 	)
 
-	val, ok = pathParams["id"]
+	val, ok = pathParams["backup_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "backup_id")
 	}
 
-	protoReq.Id, err = runtime.String(val)
+	protoReq.BackupId, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "backup_id", err)
 	}
 
 	msg, err := client.CloneDeploymentFromBackup(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -83,7 +83,7 @@ func request_ReplicationService_CloneDeploymentFromBackup_0(ctx context.Context,
 }
 
 func local_request_ReplicationService_CloneDeploymentFromBackup_0(ctx context.Context, marshaler runtime.Marshaler, server ReplicationServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq v1.IDOptions
+	var protoReq CloneDeploymentFromBackupRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -101,15 +101,15 @@ func local_request_ReplicationService_CloneDeploymentFromBackup_0(ctx context.Co
 		_   = err
 	)
 
-	val, ok = pathParams["id"]
+	val, ok = pathParams["backup_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "backup_id")
 	}
 
-	protoReq.Id, err = runtime.String(val)
+	protoReq.BackupId, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "backup_id", err)
 	}
 
 	msg, err := server.CloneDeploymentFromBackup(ctx, &protoReq)
@@ -249,7 +249,7 @@ func RegisterReplicationServiceHandlerClient(ctx context.Context, mux *runtime.S
 var (
 	pattern_ReplicationService_GetAPIVersion_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "replication", "v1", "api-version"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ReplicationService_CloneDeploymentFromBackup_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "replication", "v1", "backup", "id", "create"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ReplicationService_CloneDeploymentFromBackup_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "replication", "v1", "backup", "backup_id", "create"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (

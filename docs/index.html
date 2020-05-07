@@ -682,6 +682,10 @@ title: "ArangoDB Oasis API"
             <a href="#replication%2fv1%2freplication.proto">replication/v1/replication.proto</a>
             <ul>
               
+                <li>
+                  <a href="#arangodb.cloud.replication.v1.CloneDeploymentFromBackupRequest"><span class="badge">M</span>CloneDeploymentFromBackupRequest</a>
+                </li>
+              
               
               
               
@@ -7997,6 +8001,30 @@ Required permissions:
       <p></p>
 
       
+        <h3 id="arangodb.cloud.replication.v1.CloneDeploymentFromBackupRequest">CloneDeploymentFromBackupRequest</h3>
+        <p>CloneDeploymentFromBackupRequest defines a request object for clone deployment call.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>backup_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The ID of the backup to clone a deployment from. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
 
@@ -8022,7 +8050,7 @@ Required permissions:
             
               <tr>
                 <td>CloneDeploymentFromBackup</td>
-                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.replication.v1.CloneDeploymentFromBackupRequest">CloneDeploymentFromBackupRequest</a></td>
                 <td><a href="#arangodb.cloud.data.v1.Deployment">.arangodb.cloud.data.v1.Deployment</a></td>
                 <td><p>Takes a backup and creates a deployment from it. For all intents and purposes this new deployment
 will be the same as the deployment at that exact moment when the backup was taken from it. This means that
@@ -8033,7 +8061,7 @@ started, the backup will be used to restore the data into the new deployment. Th
 a different endpoint, and the password will also be reset for it. All other user settings will remain the same.
 The old deployment will not be touched.
 Required permissions:
-- replication.deployment.create</p></td>
+- replication.deployment.create-from-backup</p></td>
               </tr>
             
           </tbody>
@@ -8069,7 +8097,7 @@ Required permissions:
               <tr>
                 <td>CloneDeploymentFromBackup</td>
                 <td>POST</td>
-                <td>/api/replication/v1/backup/{id}/create</td>
+                <td>/api/replication/v1/backup/{backup_id}/create</td>
                 <td>*</td>
               </tr>
               

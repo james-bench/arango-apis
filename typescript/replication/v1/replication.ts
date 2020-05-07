@@ -5,12 +5,18 @@
 import api from '../../api'
 import * as googleTypes from '../../googleTypes'
 import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
-import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1/common'
 import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 import { Deployment as arangodb_cloud_data_v1_Deployment } from '../../data/v1/data'
 
 // File: replication/v1/replication.proto
 // Package: arangodb.cloud.replication.v1
+
+// CloneDeploymentFromBackupRequest defines a request object for clone deployment call.
+export interface CloneDeploymentFromBackupRequest {
+  // The ID of the backup to clone a deployment from.
+  // string
+  backup_id?: string;
+}
 
 // ReplicationService is the API used to clone a deployment from an existing backup.
 export interface IReplicationService {
@@ -28,8 +34,8 @@ export interface IReplicationService {
   // a different endpoint, and the password will also be reset for it. All other user settings will remain the same.
   // The old deployment will not be touched.
   // Required permissions:
-  // - replication.deployment.create
-  CloneDeploymentFromBackup: (req: arangodb_cloud_common_v1_IDOptions) => Promise<arangodb_cloud_data_v1_Deployment>;
+  // - replication.deployment.create-from-backup
+  CloneDeploymentFromBackup: (req: CloneDeploymentFromBackupRequest) => Promise<arangodb_cloud_data_v1_Deployment>;
 }
 
 // ReplicationService is the API used to clone a deployment from an existing backup.
@@ -52,9 +58,9 @@ export class ReplicationService implements IReplicationService {
   // a different endpoint, and the password will also be reset for it. All other user settings will remain the same.
   // The old deployment will not be touched.
   // Required permissions:
-  // - replication.deployment.create
-  async CloneDeploymentFromBackup(req: arangodb_cloud_common_v1_IDOptions): Promise<arangodb_cloud_data_v1_Deployment> {
-    const url = `/api/replication/v1/backup/${encodeURIComponent(req.id || '')}/create`;
+  // - replication.deployment.create-from-backup
+  async CloneDeploymentFromBackup(req: CloneDeploymentFromBackupRequest): Promise<arangodb_cloud_data_v1_Deployment> {
+    const url = `/api/replication/v1/backup/${encodeURIComponent(req.backup_id || '')}/create`;
     return api.post(url, req);
   }
 }
