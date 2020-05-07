@@ -313,6 +313,10 @@ message Deployment {
         // Custom command line arguments passed to all dbservers.
         // This field is ignored set unless the flexible model is used.
         repeated string dbserver_args = 14;
+
+        // The minimum number of dbservers based on the highest replication factor
+        // defined by all databases and all collections.
+        int32 minimum_dbservers_count = 15;
     }
     ServersSpec servers = 103;
 

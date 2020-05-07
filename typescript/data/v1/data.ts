@@ -437,6 +437,11 @@ export interface Deployment_ServersSpec {
   // This field is ignored set unless the flexible model is used.
   // string
   dbserver_args?: string[];
+  
+  // The minimum number of dbservers based on the highest replication factor
+  // defined by all databases and all collections.
+  // number
+  minimum_dbservers_count?: number;
 }
 
 // Status of the deployment
