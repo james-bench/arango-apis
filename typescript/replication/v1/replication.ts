@@ -18,7 +18,7 @@ export interface CloneDeploymentFromBackupRequest {
   backup_id?: string;
 }
 
-// ReplicationService is the API used to clone a deployment from an existing backup.
+// ReplicationService is the API used to replicate a deployment.
 export interface IReplicationService {
   // Get the current API version of this service.
   // Required permissions:
@@ -29,16 +29,16 @@ export interface IReplicationService {
   // will be the same as the deployment at that exact moment when the backup was taken from it. This means that
   // the new deployment will be in the same region and in the same project and use the same provider as the old
   // deployment did. Furthermore, the new deployment will have the same server settings ( count, mode, replication
-  // factor ) as the old deployment did at the time of taking the backup. After the new deployment successfuly
+  // factor ) as the old deployment did at the time of taking the backup. After the new deployment successfully
   // started, the backup will be used to restore the data into the new deployment. The new deployment will have
   // a different endpoint, and the password will also be reset for it. All other user settings will remain the same.
   // The old deployment will not be touched.
   // Required permissions:
-  // - replication.deployment.create-from-backup
+  // - replication.deployment.clone-from-backup
   CloneDeploymentFromBackup: (req: CloneDeploymentFromBackupRequest) => Promise<arangodb_cloud_data_v1_Deployment>;
 }
 
-// ReplicationService is the API used to clone a deployment from an existing backup.
+// ReplicationService is the API used to replicate a deployment.
 export class ReplicationService implements IReplicationService {
   // Get the current API version of this service.
   // Required permissions:
@@ -53,14 +53,14 @@ export class ReplicationService implements IReplicationService {
   // will be the same as the deployment at that exact moment when the backup was taken from it. This means that
   // the new deployment will be in the same region and in the same project and use the same provider as the old
   // deployment did. Furthermore, the new deployment will have the same server settings ( count, mode, replication
-  // factor ) as the old deployment did at the time of taking the backup. After the new deployment successfuly
+  // factor ) as the old deployment did at the time of taking the backup. After the new deployment successfully
   // started, the backup will be used to restore the data into the new deployment. The new deployment will have
   // a different endpoint, and the password will also be reset for it. All other user settings will remain the same.
   // The old deployment will not be touched.
   // Required permissions:
-  // - replication.deployment.create-from-backup
+  // - replication.deployment.clone-from-backup
   async CloneDeploymentFromBackup(req: CloneDeploymentFromBackupRequest): Promise<arangodb_cloud_data_v1_Deployment> {
-    const url = `/api/replication/v1/backup/${encodeURIComponent(req.backup_id || '')}/create`;
+    const url = `/api/replication/v1/backup/${encodeURIComponent(req.backup_id || '')}/clone`;
     return api.post(url, req);
   }
 }

@@ -249,7 +249,7 @@ func RegisterReplicationServiceHandlerClient(ctx context.Context, mux *runtime.S
 var (
 	pattern_ReplicationService_GetAPIVersion_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "replication", "v1", "api-version"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ReplicationService_CloneDeploymentFromBackup_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "replication", "v1", "backup", "backup_id", "create"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ReplicationService_CloneDeploymentFromBackup_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "replication", "v1", "backup", "backup_id", "clone"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (

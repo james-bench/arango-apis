@@ -8032,7 +8032,7 @@ Required permissions:
 
       
         <h3 id="arangodb.cloud.replication.v1.ReplicationService">ReplicationService</h3>
-        <p>ReplicationService is the API used to clone a deployment from an existing backup.</p>
+        <p>ReplicationService is the API used to replicate a deployment.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
@@ -8056,12 +8056,12 @@ Required permissions:
 will be the same as the deployment at that exact moment when the backup was taken from it. This means that
 the new deployment will be in the same region and in the same project and use the same provider as the old
 deployment did. Furthermore, the new deployment will have the same server settings ( count, mode, replication
-factor ) as the old deployment did at the time of taking the backup. After the new deployment successfuly
+factor ) as the old deployment did at the time of taking the backup. After the new deployment successfully
 started, the backup will be used to restore the data into the new deployment. The new deployment will have
 a different endpoint, and the password will also be reset for it. All other user settings will remain the same.
 The old deployment will not be touched.
 Required permissions:
-- replication.deployment.create-from-backup</p></td>
+- replication.deployment.clone-from-backup</p></td>
               </tr>
             
           </tbody>
@@ -8097,7 +8097,7 @@ Required permissions:
               <tr>
                 <td>CloneDeploymentFromBackup</td>
                 <td>POST</td>
-                <td>/api/replication/v1/backup/{backup_id}/create</td>
+                <td>/api/replication/v1/backup/{backup_id}/clone</td>
                 <td>*</td>
               </tr>
               

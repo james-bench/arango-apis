@@ -23,8 +23,8 @@
 package v1
 
 const (
-	// CloneDeploymentFromBackup permissions
+	// Deployment permissions
 
-	// PermissionCloneDeploymentFromBackup is needed to clone a deployment from an existing backup.
-	PermissionCloneDeploymentFromBackupCreate = "replication.deployment.create-from-backup"
+	// PermissionDeploymentCloneFromBackup is needed to clone a deployment from an existing backup.
+	PermissionDeploymentCloneFromBackup = "replication.deployment.clone-from-backup"
 )
