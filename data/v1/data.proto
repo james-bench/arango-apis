@@ -423,8 +423,8 @@ message Deployment {
         // Set if there is any backup currently uploading data to the external source
         bool backup_upload_in_progress = 102;
         // Set if the deployment is bootstrapped but not ready yet as a replication
-        // operation is in progress / starting up.
-        bool replicating = 200;
+        // operation is starting up.
+        bool replicating = 103;
     }
     Status status = 201;
 
@@ -481,6 +481,10 @@ message Deployment {
 
     // Recommendations made for deployments using the "oneshard" or "sharded" model.
     repeated DeploymentSizeRecommendation deployment_recommendations = 501;
+
+    // Set if this deployment is a clone and should be handled differently. After bootstrapping a clone
+    // needs a restore operation.
+    bool is_clone = 600;
 }
 
 // NodeSize specifies the size constraints of different data nodes.

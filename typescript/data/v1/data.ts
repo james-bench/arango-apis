@@ -249,6 +249,11 @@ export interface Deployment {
   // Recommendations made for deployments using the "oneshard" or "sharded" model.
   // DeploymentSizeRecommendation
   deployment_recommendations?: DeploymentSizeRecommendation[];
+  
+  // Set if this deployment is a clone and should be handled differently. After bootstrapping a clone
+  // needs a restore operation.
+  // boolean
+  is_clone?: boolean;
 }
 
 // Information about a backup restore.
@@ -512,7 +517,7 @@ export interface Deployment_Status {
   backup_upload_in_progress?: boolean;
   
   // Set if the deployment is bootstrapped but not ready yet as a replication
-  // operation is in progress / starting up.
+  // operation is starting up.
   // boolean
   replicating?: boolean;
 }

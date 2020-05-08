@@ -9846,6 +9846,14 @@ This is a read-only field. To set this field please use the backup service Resto
                   <td><p>Recommendations made for deployments using the &#34;oneshard&#34; or &#34;sharded&#34; model. </p></td>
                 </tr>
               
+                <tr>
+                  <td>is_clone</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Set if this deployment is a clone and should be handled differently. After bootstrapping a clone
+needs a restore operation. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -10379,7 +10387,7 @@ This field will be set to empty if a new revision of the spec is available </p><
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>Set if the deployment is bootstrapped but not ready yet as a replication
-operation is in progress / starting up. </p></td>
+operation is starting up. </p></td>
                 </tr>
               
             </tbody>
