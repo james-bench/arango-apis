@@ -422,9 +422,6 @@ message Deployment {
         int64 total_backup_size_bytes = 101;
         // Set if there is any backup currently uploading data to the external source
         bool backup_upload_in_progress = 102;
-        // Set if the deployment is bootstrapped but not ready yet as a replication
-        // operation is starting up.
-        bool replicating = 103;
     }
     Status status = 201;
 
@@ -485,6 +482,8 @@ message Deployment {
     // Set if this deployment is a clone and should be handled differently. After bootstrapping a clone
     // needs a restore operation.
     bool is_clone = 600;
+    // Indicates that the a cloned deployment has been bootstrapped and a backup has been successfully restored to it.
+    bool cloning_done = 601;
 }
 
 // NodeSize specifies the size constraints of different data nodes.

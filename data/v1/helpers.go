@@ -110,8 +110,7 @@ func DeploymentStatusEqual(a, b *Deployment_Status, ignoreTimestamps bool) bool 
 		DeploymentServerStatusListEqual(a.GetServers(), b.GetServers(), ignoreTimestamps) &&
 		a.GetBackupRestoreStatus().Equals(b.GetBackupRestoreStatus()) &&
 		a.GetTotalBackupSizeBytes() == b.GetTotalBackupSizeBytes() &&
-		a.GetBackupUploadInProgress() == b.GetBackupUploadInProgress() &&
-		a.GetReplicating() == b.GetReplicating()
+		a.GetBackupUploadInProgress() == b.GetBackupUploadInProgress()
 }
 
 // Equals returns true when source & other have the same values

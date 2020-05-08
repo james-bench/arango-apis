@@ -254,6 +254,10 @@ export interface Deployment {
   // needs a restore operation.
   // boolean
   is_clone?: boolean;
+  
+  // Indicates that the a cloned deployment has been bootstrapped and a backup has been successfully restored to it.
+  // boolean
+  cloning_done?: boolean;
 }
 
 // Information about a backup restore.
@@ -515,11 +519,6 @@ export interface Deployment_Status {
   // Set if there is any backup currently uploading data to the external source
   // boolean
   backup_upload_in_progress?: boolean;
-  
-  // Set if the deployment is bootstrapped but not ready yet as a replication
-  // operation is starting up.
-  // boolean
-  replicating?: boolean;
 }
 
 // Result for GetDeploymentCredentials
