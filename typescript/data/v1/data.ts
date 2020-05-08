@@ -254,10 +254,6 @@ export interface Deployment {
   // needs a restore operation.
   // boolean
   is_clone?: boolean;
-  
-  // Indicates that the a cloned deployment has been bootstrapped and a backup has been successfully restored to it.
-  // boolean
-  cloning_done?: boolean;
 }
 
 // Information about a backup restore.
