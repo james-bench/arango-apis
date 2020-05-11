@@ -254,6 +254,10 @@ export interface Deployment {
   // needs a restore operation.
   // boolean
   is_clone?: boolean;
+  
+  // The ID of the backup to restore this clone deployment from.
+  // string
+  clone_backup_id?: string;
 }
 
 // Information about a backup restore.

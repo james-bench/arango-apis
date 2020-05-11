@@ -482,6 +482,8 @@ message Deployment {
     // Set if this deployment is a clone and should be handled differently. After bootstrapping a clone
     // needs a restore operation.
     bool is_clone = 600;
+    // The ID of the backup to restore this clone deployment from.
+    string clone_backup_id = 601;
 }
 
 // NodeSize specifies the size constraints of different data nodes.
