@@ -372,6 +372,8 @@ message Backup {
         string version = 1;
         // Servers spec of the deployment during backup.
         data.v1.Deployment.ServersSpec servers = 2;
+        // Model of the deployment during backup.
+        data.v1.Deployment.ModelSpec model = 3;
     }
     // Information about the deployment during backup 
     DeploymentInfo deployment_info = 11;
