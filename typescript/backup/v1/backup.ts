@@ -10,6 +10,7 @@ import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1
 import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
 import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 import { YesOrNo as arangodb_cloud_common_v1_YesOrNo } from '../../common/v1/common'
+import { Deployment_ModelSpec as arangodb_cloud_data_v1_Deployment_ModelSpec } from '../../data/v1/data'
 import { Deployment_ServersSpec as arangodb_cloud_data_v1_Deployment_ServersSpec } from '../../data/v1/data'
 
 // File: backup/v1/backup.proto
@@ -103,6 +104,10 @@ export interface Backup_DeploymentInfo {
   // Servers spec of the deployment during backup.
   // arangodb.cloud.data.v1.Deployment.ServersSpec
   servers?: arangodb_cloud_data_v1_Deployment_ServersSpec;
+  
+  // Model of the deployment during backup.
+  // arangodb.cloud.data.v1.Deployment.ModelSpec
+  model?: arangodb_cloud_data_v1_Deployment_ModelSpec;
 }
 
 // Information about a backup download.
