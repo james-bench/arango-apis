@@ -65,5 +65,6 @@ message CloneDeploymentFromBackupRequest {
     // The ID of the backup to clone a deployment from.
     string backup_id = 1;
     // Region ID
+    // This is an optional field
     string region_id = 2;
 }

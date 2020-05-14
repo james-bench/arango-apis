@@ -34,6 +34,7 @@ type CloneDeploymentFromBackupRequest struct {
 	// The ID of the backup to clone a deployment from.
 	BackupId string `protobuf:"bytes,1,opt,name=backup_id,json=backupId,proto3" json:"backup_id,omitempty"`
 	// Region ID
+	// This is an optional field
 	RegionId             string   `protobuf:"bytes,2,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`

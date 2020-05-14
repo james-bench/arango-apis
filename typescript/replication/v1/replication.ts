@@ -18,6 +18,7 @@ export interface CloneDeploymentFromBackupRequest {
   backup_id?: string;
   
   // Region ID
+  // This is an optional field
   // string
   region_id?: string;
 }
