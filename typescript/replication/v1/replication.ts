@@ -16,6 +16,11 @@ export interface CloneDeploymentFromBackupRequest {
   // The ID of the backup to clone a deployment from.
   // string
   backup_id?: string;
+  
+  // Target region.
+  // This is an optional field
+  // string
+  region_id?: string;
 }
 
 // ReplicationService is the API used to replicate a deployment.

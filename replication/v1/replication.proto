@@ -64,4 +64,7 @@ service ReplicationService {
 message CloneDeploymentFromBackupRequest {
     // The ID of the backup to clone a deployment from.
     string backup_id = 1;
+    // Target region.
+    // This is an optional field
+    string region_id = 2;
 }
