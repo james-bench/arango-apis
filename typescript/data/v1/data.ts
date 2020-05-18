@@ -188,6 +188,24 @@ export interface Deployment {
   // string
   accepted_terms_and_conditions_id?: string;
   
+  // Indicates that this deployment is paused.
+  // Use the data.ResumeDeployment method to resume (aka unpause) the deployment.
+  // This is a read-only value.
+  // boolean
+  is_paused?: boolean;
+  
+  // The last paused timestamp of the deployment.
+  // This is the timestamp that is_paused is transitioned from unset to set.
+  // This is a read-only value.
+  // googleTypes.Timestamp
+  last_paused_at?: googleTypes.Timestamp;
+  
+  // The last resumed  timestamp of the deployment.
+  // This is the timestamp that is_paused is transitioned from set to unset.
+  // This is a read-only value.
+  // googleTypes.Timestamp
+  last_resumed_at?: googleTypes.Timestamp;
+  
   // ArangoDB version to use for this deployment.
   // See Version.version.
   // If you change this value to a higher version,
@@ -1146,6 +1164,12 @@ export interface IDataService {
   // Required permissions:
   // - data.deploymentfeatures.get on the project that is given in the request.
   GetDeploymentFeatures: (req: DeploymentFeaturesRequest) => Promise<DeploymentFeatures>;
+  
+  // Resumes a paused deployment identified by the given id.
+  // When ResumeDeployment is invoked on a deployment that has is_paused not set, an PreconditionFailed error is returned.
+  // Required permissions:
+  // - data.deployment.resume on the deployment
+  ResumeDeployment: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
 }
 
 // DataService is the API used to configure data objects.
@@ -1331,5 +1355,15 @@ export class DataService implements IDataService {
   async GetDeploymentFeatures(req: DeploymentFeaturesRequest): Promise<DeploymentFeatures> {
     const url = `/api/data/v1/deployment-features`;
     return api.post(url, req);
+  }
+  
+  // Resumes a paused deployment identified by the given id.
+  // When ResumeDeployment is invoked on a deployment that has is_paused not set, an PreconditionFailed error is returned.
+  // Required permissions:
+  // - data.deployment.resume on the deployment
+  async ResumeDeployment(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
+    const path = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}/resume`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.post(url, undefined);
   }
 }
