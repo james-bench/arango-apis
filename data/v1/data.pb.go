@@ -108,8 +108,10 @@ type Deployment struct {
 	DeploymentRecommendations []*DeploymentSizeRecommendation `protobuf:"bytes,501,rep,name=deployment_recommendations,json=deploymentRecommendations,proto3" json:"deployment_recommendations,omitempty"`
 	// Set if this deployment is a clone and should be handled differently. After bootstrapping a clone
 	// needs a restore operation.
+	// This is a read-only property
 	IsClone bool `protobuf:"varint,600,opt,name=is_clone,json=isClone,proto3" json:"is_clone,omitempty"`
 	// The ID of the backup to restore this clone deployment from.
+	// This is a read-only property
 	CloneBackupId        string   `protobuf:"bytes,601,opt,name=clone_backup_id,json=cloneBackupId,proto3" json:"clone_backup_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
