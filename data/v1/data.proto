@@ -221,6 +221,16 @@ service DataService {
             body: "*"
         };
     }
+
+    // Resumes a paused deployment.
+    // This can be executed when deployment.is_paused is set only.
+    // Required permissions:
+    // - data.deployment.resume on the deployment
+    rpc ResumeDeployment(common.v1.IDOptions) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            post: "/api/data/v1/deployments/{id}/resume"
+        };
+    }
 }
 
 // A Deployment is represents one deployment of an ArangoDB cluster.
@@ -263,6 +273,20 @@ message Deployment {
     // identifier, this field may be left empty.
     // This is a read-only value after creation.
     string accepted_terms_and_conditions_id = 12;
+
+    // Indicates that this deployment is paused.
+    // Use the data.ResumeDeployment method to resume (aka unpause) the deployment.
+    // This is a read-only value.
+    bool is_paused = 20;
+    // The last paused timestamp of the deployment.
+    // This is the timestamp that is_paused is transitioned from unset to set.
+    // This is a read-only value.
+    google.protobuf.Timestamp last_paused_at = 21;
+    // The last resumed  timestamp of the deployment.
+    // This is the timestamp that is_paused is transitioned from set to unset.
+    // This is a read-only value.
+    google.protobuf.Timestamp last_resumed_at = 22;
+
 
     // ArangoDB version to use for this deployment.
     // See Version.version.
