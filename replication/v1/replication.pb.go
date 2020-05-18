@@ -139,11 +139,12 @@ type ReplicationServiceClient interface {
 	GetAPIVersion(ctx context.Context, in *v1.Empty, opts ...grpc.CallOption) (*v1.Version, error)
 	// Takes a backup and creates a deployment from it. For all intents and purposes this new deployment
 	// will be the same as the deployment at that exact moment when the backup was taken from it. This means that
-	// the new deployment will be in the same region and in the same project and use the same provider as the old
-	// deployment did. Furthermore, the new deployment will have the same server settings ( count, mode, replication
-	// factor ) as the old deployment did at the time of taking the backup. After the new deployment successfully
-	// started, the backup will be used to restore the data into the new deployment. The new deployment will have
-	// a different endpoint, and the password will also be reset for it. All other user settings will remain the same.
+	// the new deployment will be in the same project and use the same provider as the old deployment did. Optionally
+	// a different region can be provided using the region id field on the request. Furthermore, the new deployment
+	// will have the same server settings ( count, mode, replication factor ) as the old deployment did at the time
+	// of taking the backup. After the new deployment successfully started, the backup will be used to restore the
+	// data into the new deployment. The new deployment will have a different endpoint, and the password will also
+	// be reset for it. All other user settings will remain the same.
 	// The old deployment will not be touched.
 	// Required permissions:
 	// - replication.deployment.clone-from-backup
@@ -184,11 +185,12 @@ type ReplicationServiceServer interface {
 	GetAPIVersion(context.Context, *v1.Empty) (*v1.Version, error)
 	// Takes a backup and creates a deployment from it. For all intents and purposes this new deployment
 	// will be the same as the deployment at that exact moment when the backup was taken from it. This means that
-	// the new deployment will be in the same region and in the same project and use the same provider as the old
-	// deployment did. Furthermore, the new deployment will have the same server settings ( count, mode, replication
-	// factor ) as the old deployment did at the time of taking the backup. After the new deployment successfully
-	// started, the backup will be used to restore the data into the new deployment. The new deployment will have
-	// a different endpoint, and the password will also be reset for it. All other user settings will remain the same.
+	// the new deployment will be in the same project and use the same provider as the old deployment did. Optionally
+	// a different region can be provided using the region id field on the request. Furthermore, the new deployment
+	// will have the same server settings ( count, mode, replication factor ) as the old deployment did at the time
+	// of taking the backup. After the new deployment successfully started, the backup will be used to restore the
+	// data into the new deployment. The new deployment will have a different endpoint, and the password will also
+	// be reset for it. All other user settings will remain the same.
 	// The old deployment will not be touched.
 	// Required permissions:
 	// - replication.deployment.clone-from-backup
