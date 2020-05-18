@@ -4023,8 +4023,8 @@ type DataServiceClient interface {
 	// Required permissions:
 	// - data.deploymentfeatures.get on the project that is given in the request.
 	GetDeploymentFeatures(ctx context.Context, in *DeploymentFeaturesRequest, opts ...grpc.CallOption) (*DeploymentFeatures, error)
-	// Resumes a paused deployment.
-	// This can be executed when deployment.is_paused is set only.
+	// Resumes a paused deployment identified by the given id.
+	// When ResumeDeployment is invoked on a deployment that has is_paused not set, an PreconditionFailed error is returned.
 	// Required permissions:
 	// - data.deployment.resume on the deployment
 	ResumeDeployment(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
@@ -4311,8 +4311,8 @@ type DataServiceServer interface {
 	// Required permissions:
 	// - data.deploymentfeatures.get on the project that is given in the request.
 	GetDeploymentFeatures(context.Context, *DeploymentFeaturesRequest) (*DeploymentFeatures, error)
-	// Resumes a paused deployment.
-	// This can be executed when deployment.is_paused is set only.
+	// Resumes a paused deployment identified by the given id.
+	// When ResumeDeployment is invoked on a deployment that has is_paused not set, an PreconditionFailed error is returned.
 	// Required permissions:
 	// - data.deployment.resume on the deployment
 	ResumeDeployment(context.Context, *v1.IDOptions) (*v1.Empty, error)

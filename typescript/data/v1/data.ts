@@ -1154,8 +1154,8 @@ export interface IDataService {
   // - data.deploymentfeatures.get on the project that is given in the request.
   GetDeploymentFeatures: (req: DeploymentFeaturesRequest) => Promise<DeploymentFeatures>;
   
-  // Resumes a paused deployment.
-  // This can be executed when deployment.is_paused is set only.
+  // Resumes a paused deployment identified by the given id.
+  // When ResumeDeployment is invoked on a deployment that has is_paused not set, an PreconditionFailed error is returned.
   // Required permissions:
   // - data.deployment.resume on the deployment
   ResumeDeployment: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
@@ -1346,8 +1346,8 @@ export class DataService implements IDataService {
     return api.post(url, req);
   }
   
-  // Resumes a paused deployment.
-  // This can be executed when deployment.is_paused is set only.
+  // Resumes a paused deployment identified by the given id.
+  // When ResumeDeployment is invoked on a deployment that has is_paused not set, an PreconditionFailed error is returned.
   // Required permissions:
   // - data.deployment.resume on the deployment
   async ResumeDeployment(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {

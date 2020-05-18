@@ -7157,8 +7157,8 @@ Required permissions:
                 <td>ResumeDeployment</td>
                 <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
                 <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
-                <td><p>Resumes a paused deployment.
-This can be executed when deployment.is_paused is set only.
+                <td><p>Resumes a paused deployment identified by the given id.
+When ResumeDeployment is invoked on a deployment that has is_paused not set, an PreconditionFailed error is returned.
 Required permissions:
 - data.deployment.resume on the deployment</p></td>
               </tr>

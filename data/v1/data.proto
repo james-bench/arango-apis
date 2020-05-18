@@ -222,8 +222,8 @@ service DataService {
         };
     }
 
-    // Resumes a paused deployment.
-    // This can be executed when deployment.is_paused is set only.
+    // Resumes a paused deployment identified by the given id.
+    // When ResumeDeployment is invoked on a deployment that has is_paused not set, an PreconditionFailed error is returned.
     // Required permissions:
     // - data.deployment.resume on the deployment
     rpc ResumeDeployment(common.v1.IDOptions) returns (common.v1.Empty) {
