@@ -267,6 +267,17 @@ export interface Deployment {
   // Recommendations made for deployments using the "oneshard" or "sharded" model.
   // DeploymentSizeRecommendation
   deployment_recommendations?: DeploymentSizeRecommendation[];
+  
+  // Set if this deployment is a clone and should be handled differently. After bootstrapping a clone
+  // needs a restore operation.
+  // This is a read-only property
+  // boolean
+  is_clone?: boolean;
+  
+  // The ID of the backup to restore this clone deployment from.
+  // This is a read-only property
+  // string
+  clone_backup_id?: string;
 }
 
 // Information about a backup restore.

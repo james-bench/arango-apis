@@ -502,6 +502,14 @@ message Deployment {
 
     // Recommendations made for deployments using the "oneshard" or "sharded" model.
     repeated DeploymentSizeRecommendation deployment_recommendations = 501;
+
+    // Set if this deployment is a clone and should be handled differently. After bootstrapping a clone
+    // needs a restore operation.
+    // This is a read-only property
+    bool is_clone = 600;
+    // The ID of the backup to restore this clone deployment from.
+    // This is a read-only property
+    string clone_backup_id = 601;
 }
 
 // NodeSize specifies the size constraints of different data nodes.
