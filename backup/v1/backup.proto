@@ -179,8 +179,6 @@ service BackupService {
         };
     }
 
-    // TODO: Add functionality to restore to new deployment
-
     // Delete a backup identified by the given ID, after which removal of any remote storage of the backup is started.
     // Note that the backup are initially only marked for deletion.
     // Once all remote storage for the backup has been removed, the backup itself is removed.
