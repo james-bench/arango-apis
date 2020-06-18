@@ -17,18 +17,17 @@
 //
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
-// Author Ewout Prangsma
+// Author Gergrely Brautigam
 //
 
 package v1
 
 const (
-	// APIID contains identifier of this API
-	APIID = "monitoring/v1"
-	// APIMajorVersion contains major version of this API
-	APIMajorVersion = 1
-	// APIMinorVersion contains minor version of this API
-	APIMinorVersion = 1
-	// APIPatchVersion contains patch version of this API
-	APIPatchVersion = 1
+	// Formatting options
+
+	// FormatText defines the log format to be text
+	FormatText = "text"
+	// FormatJson defines the log format to be json.
+	// In JSON format, log lines are encoded as a single line JSON object.
+	FormatJSON = "json"
 )

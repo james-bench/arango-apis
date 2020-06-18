@@ -25,6 +25,11 @@ export interface GetDeploymentLogsRequest {
   // string
   role?: string;
   
+  // Formatting for log messages.
+  // The possible values are text and json, with default value being text.
+  // string
+  format?: string;
+  
   // The start time for the query. Defaults to one hour ago.
   // googleTypes.Timestamp
   start_at?: googleTypes.Timestamp;
