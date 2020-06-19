@@ -105,13 +105,6 @@ export interface ConnectDriverInstructions_DriverInstructions {
   driver_url?: string;
 }
 
-// CreateTutorialDatabaseRequest request for creating a tutorial database
-export interface CreateTutorialDatabaseRequest {
-  // The id of the deployment
-  // string
-  deployment_id?: string;
-}
-
 // CreateTutorialDatabaseOutput will contain the json formatted output of the create operation
 export interface CreateTutorialDatabaseResponse {
   // Output of the create call

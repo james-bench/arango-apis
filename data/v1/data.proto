@@ -243,12 +243,6 @@ service DataService {
     }
 }
 
-// CreateTutorialDatabaseRequest request for creating a tutorial database
-message CreateTutorialDatabaseRequest {
-    // The id of the deployment
-    string deployment_id = 1;
-}
-
 // CreateTutorialDatabaseOutput will contain the json formatted output of the create operation
 message CreateTutorialDatabaseResponse {
     // Output of the create call
