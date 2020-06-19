@@ -105,6 +105,20 @@ export interface ConnectDriverInstructions_DriverInstructions {
   driver_url?: string;
 }
 
+// CreateTutorialDatabaseRequest request for creating a tutorial database
+export interface CreateTutorialDatabaseRequest {
+  // The id of the deployment
+  // string
+  deployment_id?: string;
+}
+
+// CreateTutorialDatabaseOutput will contain the json formatted output of the create operation
+export interface CreateTutorialDatabaseResponse {
+  // Output of the create call
+  // string
+  output?: string;
+}
+
 // DataVolumeInfo provides information about a data volume
 export interface DataVolumeInfo {
   // The total number of bytes of the data volume.
@@ -1170,6 +1184,12 @@ export interface IDataService {
   // Required permissions:
   // - data.deployment.resume on the deployment
   ResumeDeployment: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Create a tutorial database and user for a deployment. Returns a JSON output containing the created
+  // database, password, username, host and port.
+  // Required permissions:
+  // - data.deployment.create-tutorial-database on the deployment
+  CreateTutorialDatabase: (req: arangodb_cloud_common_v1_IDOptions) => Promise<CreateTutorialDatabaseResponse>;
 }
 
 // DataService is the API used to configure data objects.
@@ -1363,6 +1383,16 @@ export class DataService implements IDataService {
   // - data.deployment.resume on the deployment
   async ResumeDeployment(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
     const path = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}/resume`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.post(url, undefined);
+  }
+  
+  // Create a tutorial database and user for a deployment. Returns a JSON output containing the created
+  // database, password, username, host and port.
+  // Required permissions:
+  // - data.deployment.create-tutorial-database on the deployment
+  async CreateTutorialDatabase(req: arangodb_cloud_common_v1_IDOptions): Promise<CreateTutorialDatabaseResponse> {
+    const path = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}/create-tutorial-database`;
     const url = path + api.queryString(req, [`id`]);
     return api.post(url, undefined);
   }

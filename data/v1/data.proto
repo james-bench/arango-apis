@@ -231,6 +231,28 @@ service DataService {
             post: "/api/data/v1/deployments/{id}/resume"
         };
     }
+
+    // Create a tutorial database and user for a deployment. Returns a JSON output containing the created
+    // database, password, username, host and port.
+    // Required permissions:
+    // - data.deployment.create-tutorial-database on the deployment
+    rpc CreateTutorialDatabase(common.v1.IDOptions) returns (CreateTutorialDatabaseResponse) {
+        option (google.api.http) = {
+            post: "/api/data/v1/deployments/{id}/create-tutorial-database"
+        };
+    }
+}
+
+// CreateTutorialDatabaseRequest request for creating a tutorial database
+message CreateTutorialDatabaseRequest {
+    // The id of the deployment
+    string deployment_id = 1;
+}
+
+// CreateTutorialDatabaseOutput will contain the json formatted output of the create operation
+message CreateTutorialDatabaseResponse {
+    // Output of the create call
+    string output = 1;
 }
 
 // A Deployment is represents one deployment of an ArangoDB cluster.

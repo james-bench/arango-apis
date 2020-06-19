@@ -828,6 +828,14 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.data.v1.CreateTutorialDatabaseRequest"><span class="badge">M</span>CreateTutorialDatabaseRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.data.v1.CreateTutorialDatabaseResponse"><span class="badge">M</span>CreateTutorialDatabaseResponse</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.data.v1.DataVolumeInfo"><span class="badge">M</span>DataVolumeInfo</a>
                 </li>
               
@@ -9743,6 +9751,54 @@ E.g. &#34;ArangoDB Go driver&#34; </p></td>
 
         
       
+        <h3 id="arangodb.cloud.data.v1.CreateTutorialDatabaseRequest">CreateTutorialDatabaseRequest</h3>
+        <p>CreateTutorialDatabaseRequest request for creating a tutorial database</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The id of the deployment </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.data.v1.CreateTutorialDatabaseResponse">CreateTutorialDatabaseResponse</h3>
+        <p>CreateTutorialDatabaseOutput will contain the json formatted output of the create operation</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>output</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Output of the create call </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.data.v1.DataVolumeInfo">DataVolumeInfo</h3>
         <p>DataVolumeInfo provides information about a data volume</p>
 
@@ -11991,6 +12047,16 @@ Required permissions:
 - data.deployment.resume on the deployment</p></td>
               </tr>
             
+              <tr>
+                <td>CreateTutorialDatabase</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.data.v1.CreateTutorialDatabaseResponse">CreateTutorialDatabaseResponse</a></td>
+                <td><p>Create a tutorial database and user for a deployment. Returns a JSON output containing the created
+database, password, username, host and port.
+Required permissions:
+- data.deployment.create-tutorial-database on the deployment</p></td>
+              </tr>
+            
           </tbody>
         </table>
 
@@ -12205,6 +12271,16 @@ Required permissions:
                 <td>ResumeDeployment</td>
                 <td>POST</td>
                 <td>/api/data/v1/deployments/{id}/resume</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>CreateTutorialDatabase</td>
+                <td>POST</td>
+                <td>/api/data/v1/deployments/{id}/create-tutorial-database</td>
                 <td></td>
               </tr>
               
