@@ -105,8 +105,8 @@ export interface ConnectDriverInstructions_DriverInstructions {
   driver_url?: string;
 }
 
-// CreateTutorialDatabaseOutput will contain the json formatted output of the create operation
-export interface CreateTutorialDatabaseResponse {
+// CreateTestDatabaseOutput will contain the json formatted output of the create operation
+export interface CreateTestDatabaseResponse {
   // Output of the create call
   // string
   output?: string;
@@ -1178,11 +1178,11 @@ export interface IDataService {
   // - data.deployment.resume on the deployment
   ResumeDeployment: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
   
-  // Create a tutorial database and user for a deployment. Returns a JSON output containing the created
+  // Create a test database and user for a deployment. Returns a JSON output containing the created
   // database, password, username, host and port.
   // Required permissions:
-  // - data.deployment.create-tutorial-database on the deployment
-  CreateTutorialDatabase: (req: arangodb_cloud_common_v1_IDOptions) => Promise<CreateTutorialDatabaseResponse>;
+  // - data.deployment.create-test-database on the deployment
+  CreateTestDatabase: (req: arangodb_cloud_common_v1_IDOptions) => Promise<CreateTestDatabaseResponse>;
 }
 
 // DataService is the API used to configure data objects.
@@ -1380,12 +1380,12 @@ export class DataService implements IDataService {
     return api.post(url, undefined);
   }
   
-  // Create a tutorial database and user for a deployment. Returns a JSON output containing the created
+  // Create a test database and user for a deployment. Returns a JSON output containing the created
   // database, password, username, host and port.
   // Required permissions:
-  // - data.deployment.create-tutorial-database on the deployment
-  async CreateTutorialDatabase(req: arangodb_cloud_common_v1_IDOptions): Promise<CreateTutorialDatabaseResponse> {
-    const path = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}/create-tutorial-database`;
+  // - data.deployment.create-test-database on the deployment
+  async CreateTestDatabase(req: arangodb_cloud_common_v1_IDOptions): Promise<CreateTestDatabaseResponse> {
+    const path = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}/create-test-database`;
     const url = path + api.queryString(req, [`id`]);
     return api.post(url, undefined);
   }

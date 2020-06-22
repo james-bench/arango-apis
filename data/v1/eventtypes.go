@@ -45,3 +45,10 @@ const (
 	// SubjectID contains the ID of the deployment.
 	EventTypeDeploymentCredentialsRead = "data.deploymentcredentials.read"
 )
+
+const (
+	// Test database event types
+	// EventTypeDeploymentCreateTestDatabase is the type of event fired after a test database has been created
+	// SubjectID contains the ID of the deployment.
+	EventTypeDeploymentCreateTestDatabase = "data.deployment.create-test-database"
+)

@@ -232,19 +232,19 @@ service DataService {
         };
     }
 
-    // Create a tutorial database and user for a deployment. Returns a JSON output containing the created
+    // Create a test database and user for a deployment. Returns a JSON output containing the created
     // database, password, username, host and port.
     // Required permissions:
-    // - data.deployment.create-tutorial-database on the deployment
-    rpc CreateTutorialDatabase(common.v1.IDOptions) returns (CreateTutorialDatabaseResponse) {
+    // - data.deployment.create-test-database on the deployment
+    rpc CreateTestDatabase(common.v1.IDOptions) returns (CreateTestDatabaseResponse) {
         option (google.api.http) = {
-            post: "/api/data/v1/deployments/{id}/create-tutorial-database"
+            post: "/api/data/v1/deployments/{id}/create-test-database"
         };
     }
 }
 
-// CreateTutorialDatabaseOutput will contain the json formatted output of the create operation
-message CreateTutorialDatabaseResponse {
+// CreateTestDatabaseOutput will contain the json formatted output of the create operation
+message CreateTestDatabaseResponse {
     // Output of the create call
     string output = 1;
 }

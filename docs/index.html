@@ -828,7 +828,7 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
-                  <a href="#arangodb.cloud.data.v1.CreateTutorialDatabaseResponse"><span class="badge">M</span>CreateTutorialDatabaseResponse</a>
+                  <a href="#arangodb.cloud.data.v1.CreateTestDatabaseResponse"><span class="badge">M</span>CreateTestDatabaseResponse</a>
                 </li>
               
                 <li>
@@ -9747,8 +9747,8 @@ E.g. &#34;ArangoDB Go driver&#34; </p></td>
 
         
       
-        <h3 id="arangodb.cloud.data.v1.CreateTutorialDatabaseResponse">CreateTutorialDatabaseResponse</h3>
-        <p>CreateTutorialDatabaseOutput will contain the json formatted output of the create operation</p>
+        <h3 id="arangodb.cloud.data.v1.CreateTestDatabaseResponse">CreateTestDatabaseResponse</h3>
+        <p>CreateTestDatabaseOutput will contain the json formatted output of the create operation</p>
 
         
           <table class="field-table">
@@ -12020,13 +12020,13 @@ Required permissions:
               </tr>
             
               <tr>
-                <td>CreateTutorialDatabase</td>
+                <td>CreateTestDatabase</td>
                 <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
-                <td><a href="#arangodb.cloud.data.v1.CreateTutorialDatabaseResponse">CreateTutorialDatabaseResponse</a></td>
-                <td><p>Create a tutorial database and user for a deployment. Returns a JSON output containing the created
+                <td><a href="#arangodb.cloud.data.v1.CreateTestDatabaseResponse">CreateTestDatabaseResponse</a></td>
+                <td><p>Create a test database and user for a deployment. Returns a JSON output containing the created
 database, password, username, host and port.
 Required permissions:
-- data.deployment.create-tutorial-database on the deployment</p></td>
+- data.deployment.create-test-database on the deployment</p></td>
               </tr>
             
           </tbody>
@@ -12250,9 +12250,9 @@ Required permissions:
               
               
               <tr>
-                <td>CreateTutorialDatabase</td>
+                <td>CreateTestDatabase</td>
                 <td>POST</td>
-                <td>/api/data/v1/deployments/{id}/create-tutorial-database</td>
+                <td>/api/data/v1/deployments/{id}/create-test-database</td>
                 <td></td>
               </tr>
               
