@@ -245,8 +245,16 @@ service DataService {
 
 // CreateTestDatabaseResponse will contain the json formatted output of the create operation
 message CreateTestDatabaseResponse {
-    // Output of the create call
-    string output = 1;
+    // Name of the created database
+    string db_name = 1;
+    // Username of the created user
+    string username = 2;
+    // Password of the created user
+    string password = 3;
+    // Hostname of the database
+    string hostname = 4;
+    // Port of the database
+    string port = 5;
 }
 
 // Request arguments for CreateTestDatabase

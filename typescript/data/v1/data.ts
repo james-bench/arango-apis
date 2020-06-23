@@ -114,9 +114,25 @@ export interface CreateTestDatabaseRequest {
 
 // CreateTestDatabaseResponse will contain the json formatted output of the create operation
 export interface CreateTestDatabaseResponse {
-  // Output of the create call
+  // Name of the created database
   // string
-  output?: string;
+  db_name?: string;
+  
+  // Username of the created user
+  // string
+  username?: string;
+  
+  // Password of the created user
+  // string
+  password?: string;
+  
+  // Hostname of the database
+  // string
+  hostname?: string;
+  
+  // Port of the database
+  // string
+  port?: string;
 }
 
 // DataVolumeInfo provides information about a data volume
