@@ -1201,8 +1201,8 @@ export interface IDataService {
   // - data.deployment.resume on the deployment
   ResumeDeployment: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
   
-  // Create a test database and user for a deployment. Returns a JSON output containing the created
-  // database, password, username, host and port.
+  // Create a test database and user for a deployment. Returns the output containing the created
+  // database name, password, username, host and port.
   // Required permissions:
   // - data.deployment.create-test-database on the deployment
   CreateTestDatabase: (req: CreateTestDatabaseRequest) => Promise<CreateTestDatabaseResponse>;
@@ -1403,8 +1403,8 @@ export class DataService implements IDataService {
     return api.post(url, undefined);
   }
   
-  // Create a test database and user for a deployment. Returns a JSON output containing the created
-  // database, password, username, host and port.
+  // Create a test database and user for a deployment. Returns the output containing the created
+  // database name, password, username, host and port.
   // Required permissions:
   // - data.deployment.create-test-database on the deployment
   async CreateTestDatabase(req: CreateTestDatabaseRequest): Promise<CreateTestDatabaseResponse> {

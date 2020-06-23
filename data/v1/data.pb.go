@@ -4195,8 +4195,8 @@ type DataServiceClient interface {
 	// Required permissions:
 	// - data.deployment.resume on the deployment
 	ResumeDeployment(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
-	// Create a test database and user for a deployment. Returns a JSON output containing the created
-	// database, password, username, host and port.
+	// Create a test database and user for a deployment. Returns the output containing the created
+	// database name, password, username, host and port.
 	// Required permissions:
 	// - data.deployment.create-test-database on the deployment
 	CreateTestDatabase(ctx context.Context, in *CreateTestDatabaseRequest, opts ...grpc.CallOption) (*CreateTestDatabaseResponse, error)
@@ -4497,8 +4497,8 @@ type DataServiceServer interface {
 	// Required permissions:
 	// - data.deployment.resume on the deployment
 	ResumeDeployment(context.Context, *v1.IDOptions) (*v1.Empty, error)
-	// Create a test database and user for a deployment. Returns a JSON output containing the created
-	// database, password, username, host and port.
+	// Create a test database and user for a deployment. Returns the output containing the created
+	// database name, password, username, host and port.
 	// Required permissions:
 	// - data.deployment.create-test-database on the deployment
 	CreateTestDatabase(context.Context, *CreateTestDatabaseRequest) (*CreateTestDatabaseResponse, error)

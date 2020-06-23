@@ -232,8 +232,8 @@ service DataService {
         };
     }
 
-    // Create a test database and user for a deployment. Returns a JSON output containing the created
-    // database, password, username, host and port.
+    // Create a test database and user for a deployment. Returns the output containing the created
+    // database name, password, username, host and port.
     // Required permissions:
     // - data.deployment.create-test-database on the deployment
     rpc CreateTestDatabase(CreateTestDatabaseRequest) returns (CreateTestDatabaseResponse) {
