@@ -30,12 +30,3 @@ const (
 	// CreateTestDatabaseDatabaseNameField name of the field containing the name of the database.
 	CreateTestDatabaseDatabaseNameField = "database"
 )
-
-// CreateTestDatabaseOutput represents the json output of creating a test database.
-type CreateTestDatabaseOutput struct {
-	DBName   string `json:"dbName"`
-	Username string `json:"username"`
-	Password string `json:"password"`
-	Hostname string `json:"hostname"`
-	Port     string `json:"port"`
-}
