@@ -105,6 +105,36 @@ export interface ConnectDriverInstructions_DriverInstructions {
   driver_url?: string;
 }
 
+// Request arguments for CreateTestDatabase
+export interface CreateTestDatabaseRequest {
+  // The id of the deployment
+  // string
+  deployment_id?: string;
+}
+
+// CreateTestDatabaseResponse will contain the json formatted output of the create operation
+export interface CreateTestDatabaseResponse {
+  // Name of the created database
+  // string
+  db_name?: string;
+  
+  // Username of the created user
+  // string
+  username?: string;
+  
+  // Password of the created user
+  // string
+  password?: string;
+  
+  // Hostname of the database
+  // string
+  hostname?: string;
+  
+  // Port of the database
+  // string
+  port?: string;
+}
+
 // DataVolumeInfo provides information about a data volume
 export interface DataVolumeInfo {
   // The total number of bytes of the data volume.
@@ -1170,6 +1200,12 @@ export interface IDataService {
   // Required permissions:
   // - data.deployment.resume on the deployment
   ResumeDeployment: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Create a test database and user for a deployment. Returns the output containing the created
+  // database name, password, username, host and port.
+  // Required permissions:
+  // - data.deployment.create-test-database on the deployment
+  CreateTestDatabase: (req: CreateTestDatabaseRequest) => Promise<CreateTestDatabaseResponse>;
 }
 
 // DataService is the API used to configure data objects.
@@ -1364,6 +1400,16 @@ export class DataService implements IDataService {
   async ResumeDeployment(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
     const path = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}/resume`;
     const url = path + api.queryString(req, [`id`]);
+    return api.post(url, undefined);
+  }
+  
+  // Create a test database and user for a deployment. Returns the output containing the created
+  // database name, password, username, host and port.
+  // Required permissions:
+  // - data.deployment.create-test-database on the deployment
+  async CreateTestDatabase(req: CreateTestDatabaseRequest): Promise<CreateTestDatabaseResponse> {
+    const path = `/api/data/v1/deployments/${encodeURIComponent(req.deployment_id || '')}/create-test-database`;
+    const url = path + api.queryString(req, [`deployment_id`]);
     return api.post(url, undefined);
   }
 }

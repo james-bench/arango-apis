@@ -828,6 +828,14 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.data.v1.CreateTestDatabaseRequest"><span class="badge">M</span>CreateTestDatabaseRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.data.v1.CreateTestDatabaseResponse"><span class="badge">M</span>CreateTestDatabaseResponse</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.data.v1.DataVolumeInfo"><span class="badge">M</span>DataVolumeInfo</a>
                 </li>
               
@@ -9743,6 +9751,82 @@ E.g. &#34;ArangoDB Go driver&#34; </p></td>
 
         
       
+        <h3 id="arangodb.cloud.data.v1.CreateTestDatabaseRequest">CreateTestDatabaseRequest</h3>
+        <p>Request arguments for CreateTestDatabase</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The id of the deployment </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.data.v1.CreateTestDatabaseResponse">CreateTestDatabaseResponse</h3>
+        <p>CreateTestDatabaseResponse will contain the json formatted output of the create operation</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>db_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Name of the created database </p></td>
+                </tr>
+              
+                <tr>
+                  <td>username</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Username of the created user </p></td>
+                </tr>
+              
+                <tr>
+                  <td>password</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Password of the created user </p></td>
+                </tr>
+              
+                <tr>
+                  <td>hostname</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Hostname of the database </p></td>
+                </tr>
+              
+                <tr>
+                  <td>port</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Port of the database </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.data.v1.DataVolumeInfo">DataVolumeInfo</h3>
         <p>DataVolumeInfo provides information about a data volume</p>
 
@@ -11991,6 +12075,16 @@ Required permissions:
 - data.deployment.resume on the deployment</p></td>
               </tr>
             
+              <tr>
+                <td>CreateTestDatabase</td>
+                <td><a href="#arangodb.cloud.data.v1.CreateTestDatabaseRequest">CreateTestDatabaseRequest</a></td>
+                <td><a href="#arangodb.cloud.data.v1.CreateTestDatabaseResponse">CreateTestDatabaseResponse</a></td>
+                <td><p>Create a test database and user for a deployment. Returns the output containing the created
+database name, password, username, host and port.
+Required permissions:
+- data.deployment.create-test-database on the deployment</p></td>
+              </tr>
+            
           </tbody>
         </table>
 
@@ -12205,6 +12299,16 @@ Required permissions:
                 <td>ResumeDeployment</td>
                 <td>POST</td>
                 <td>/api/data/v1/deployments/{id}/resume</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>CreateTestDatabase</td>
+                <td>POST</td>
+                <td>/api/data/v1/deployments/{deployment_id}/create-test-database</td>
                 <td></td>
               </tr>
               
