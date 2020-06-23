@@ -48,7 +48,8 @@ const (
 
 const (
 	// Test database event types
-	// EventTypeDeploymentCreateTestDatabase is the type of event fired after a test database has been created
+
+	// EventTypeDeploymentCreatedTestDatabase is the type of event fired after a test database has been created
 	// SubjectID contains the ID of the deployment.
-	EventTypeDeploymentCreateTestDatabase = "data.deployment.create-test-database"
+	EventTypeDeploymentCreatedTestDatabase = "data.deployment.created-test-database"
 )
