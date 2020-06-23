@@ -105,7 +105,14 @@ export interface ConnectDriverInstructions_DriverInstructions {
   driver_url?: string;
 }
 
-// CreateTestDatabaseOutput will contain the json formatted output of the create operation
+// Request arguments for CreateTestDatabase
+export interface CreateTestDatabaseRequest {
+  // The id of the deployment
+  // string
+  deployment_id?: string;
+}
+
+// CreateTestDatabaseResponse will contain the json formatted output of the create operation
 export interface CreateTestDatabaseResponse {
   // Output of the create call
   // string
@@ -1182,7 +1189,7 @@ export interface IDataService {
   // database, password, username, host and port.
   // Required permissions:
   // - data.deployment.create-test-database on the deployment
-  CreateTestDatabase: (req: arangodb_cloud_common_v1_IDOptions) => Promise<CreateTestDatabaseResponse>;
+  CreateTestDatabase: (req: CreateTestDatabaseRequest) => Promise<CreateTestDatabaseResponse>;
 }
 
 // DataService is the API used to configure data objects.
@@ -1384,9 +1391,9 @@ export class DataService implements IDataService {
   // database, password, username, host and port.
   // Required permissions:
   // - data.deployment.create-test-database on the deployment
-  async CreateTestDatabase(req: arangodb_cloud_common_v1_IDOptions): Promise<CreateTestDatabaseResponse> {
-    const path = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}/create-test-database`;
-    const url = path + api.queryString(req, [`id`]);
+  async CreateTestDatabase(req: CreateTestDatabaseRequest): Promise<CreateTestDatabaseResponse> {
+    const path = `/api/data/v1/deployments/${encodeURIComponent(req.deployment_id || '')}/create-test-database`;
+    const url = path + api.queryString(req, [`deployment_id`]);
     return api.post(url, undefined);
   }
 }

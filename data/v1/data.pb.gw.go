@@ -1070,7 +1070,7 @@ func local_request_DataService_ResumeDeployment_0(ctx context.Context, marshaler
 }
 
 func request_DataService_CreateTestDatabase_0(ctx context.Context, marshaler runtime.Marshaler, client DataServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq v1.IDOptions
+	var protoReq CreateTestDatabaseRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -1080,15 +1080,15 @@ func request_DataService_CreateTestDatabase_0(ctx context.Context, marshaler run
 		_   = err
 	)
 
-	val, ok = pathParams["id"]
+	val, ok = pathParams["deployment_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "deployment_id")
 	}
 
-	protoReq.Id, err = runtime.String(val)
+	protoReq.DeploymentId, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "deployment_id", err)
 	}
 
 	msg, err := client.CreateTestDatabase(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -1097,7 +1097,7 @@ func request_DataService_CreateTestDatabase_0(ctx context.Context, marshaler run
 }
 
 func local_request_DataService_CreateTestDatabase_0(ctx context.Context, marshaler runtime.Marshaler, server DataServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq v1.IDOptions
+	var protoReq CreateTestDatabaseRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -1107,15 +1107,15 @@ func local_request_DataService_CreateTestDatabase_0(ctx context.Context, marshal
 		_   = err
 	)
 
-	val, ok = pathParams["id"]
+	val, ok = pathParams["deployment_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "deployment_id")
 	}
 
-	protoReq.Id, err = runtime.String(val)
+	protoReq.DeploymentId, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "deployment_id", err)
 	}
 
 	msg, err := server.CreateTestDatabase(ctx, &protoReq)
@@ -2053,7 +2053,7 @@ var (
 
 	pattern_DataService_ResumeDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "data", "v1", "deployments", "id", "resume"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_DataService_CreateTestDatabase_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "data", "v1", "deployments", "id", "create-test-database"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_DataService_CreateTestDatabase_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "data", "v1", "deployments", "deployment_id", "create-test-database"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (

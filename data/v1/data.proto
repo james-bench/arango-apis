@@ -236,17 +236,23 @@ service DataService {
     // database, password, username, host and port.
     // Required permissions:
     // - data.deployment.create-test-database on the deployment
-    rpc CreateTestDatabase(common.v1.IDOptions) returns (CreateTestDatabaseResponse) {
+    rpc CreateTestDatabase(CreateTestDatabaseRequest) returns (CreateTestDatabaseResponse) {
         option (google.api.http) = {
-            post: "/api/data/v1/deployments/{id}/create-test-database"
+            post: "/api/data/v1/deployments/{deployment_id}/create-test-database"
         };
     }
 }
 
-// CreateTestDatabaseOutput will contain the json formatted output of the create operation
+// CreateTestDatabaseResponse will contain the json formatted output of the create operation
 message CreateTestDatabaseResponse {
     // Output of the create call
     string output = 1;
+}
+
+// Request arguments for CreateTestDatabase
+message CreateTestDatabaseRequest {
+    // The id of the deployment
+    string deployment_id = 1;
 }
 
 // A Deployment is represents one deployment of an ArangoDB cluster.

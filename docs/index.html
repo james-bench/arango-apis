@@ -828,6 +828,10 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.data.v1.CreateTestDatabaseRequest"><span class="badge">M</span>CreateTestDatabaseRequest</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.data.v1.CreateTestDatabaseResponse"><span class="badge">M</span>CreateTestDatabaseResponse</a>
                 </li>
               
@@ -9747,8 +9751,32 @@ E.g. &#34;ArangoDB Go driver&#34; </p></td>
 
         
       
+        <h3 id="arangodb.cloud.data.v1.CreateTestDatabaseRequest">CreateTestDatabaseRequest</h3>
+        <p>Request arguments for CreateTestDatabase</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The id of the deployment </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.data.v1.CreateTestDatabaseResponse">CreateTestDatabaseResponse</h3>
-        <p>CreateTestDatabaseOutput will contain the json formatted output of the create operation</p>
+        <p>CreateTestDatabaseResponse will contain the json formatted output of the create operation</p>
 
         
           <table class="field-table">
@@ -12021,7 +12049,7 @@ Required permissions:
             
               <tr>
                 <td>CreateTestDatabase</td>
-                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.data.v1.CreateTestDatabaseRequest">CreateTestDatabaseRequest</a></td>
                 <td><a href="#arangodb.cloud.data.v1.CreateTestDatabaseResponse">CreateTestDatabaseResponse</a></td>
                 <td><p>Create a test database and user for a deployment. Returns a JSON output containing the created
 database, password, username, host and port.
@@ -12252,7 +12280,7 @@ Required permissions:
               <tr>
                 <td>CreateTestDatabase</td>
                 <td>POST</td>
-                <td>/api/data/v1/deployments/{id}/create-test-database</td>
+                <td>/api/data/v1/deployments/{deployment_id}/create-test-database</td>
                 <td></td>
               </tr>
               
