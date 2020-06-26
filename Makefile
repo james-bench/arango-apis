@@ -13,6 +13,8 @@ DOCKERARGS := run -t --rm \
 	-v $(CACHEVOL):/usr/gocache \
 	-v $(MODVOL):/go/pkg/mod \
 	-e GOCACHE=/usr/gocache \
+	-e GOSUMDB=off \
+	-e GOPROXY=direct \
 	-e CGO_ENABLED=0 \
 	-w /usr/src \
 	$(BUILDIMAGE)
