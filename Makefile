@@ -79,6 +79,7 @@ generate: $(CACHEVOL) $(MODVOL)
 # Build go code 
 .PHONY: build
 build: generate
+	cat go.mod
 	go build ./...
 
 # Check go code 
