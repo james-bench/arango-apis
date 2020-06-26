@@ -2,7 +2,7 @@ module github.com/arangodb-managed/apis
 
 require (
 	github.com/antihax/optional v1.0.0 // indirect
-	github.com/arangodb-managed/protoc-gen-ts v0.1.0 // indirect
+	github.com/arangodb-managed/protoc-gen-ts v0.2.0 // indirect
 	github.com/atotto/clipboard v0.1.1 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/envoyproxy/go-control-plane v0.9.4 // indirect
