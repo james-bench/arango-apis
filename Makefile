@@ -13,6 +13,8 @@ DOCKERARGS := run -t --rm \
 	-v $(CACHEVOL):/usr/gocache \
 	-v $(MODVOL):/go/pkg/mod \
 	-e GOCACHE=/usr/gocache \
+	-e GOSUMDB=off \
+	-e GOPROXY=direct \
 	-e CGO_ENABLED=0 \
 	-w /usr/src \
 	$(BUILDIMAGE)
@@ -44,11 +46,11 @@ get-plugins:
 	go get github.com/gogo/protobuf/protoc-gen-gofast@v1.3.0
 	go get github.com/gogo/protobuf/protoc-gen-gogofaster@v1.3.0
 	go get golang.org/x/tools/cmd/goimports@v0.0.0-20190918214516-5a1a30219888
-	go get github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway@v1.11.0
 	go get github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger@v1.11.0
 	go get github.com/golang/protobuf/protoc-gen-go@v1.3.2
 	go get github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@v1.3.2
-	go get github.com/arangodb-managed/protoc-gen-ts/cmd/protoc-gen-ts@v0.1.0
+	go get github.com/arangodb-managed/protoc-gen-ts/cmd/protoc-gen-ts@v0.2.0
+	go get github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway@v1.14.6
 
 .PHONY: $(CACHEVOL)
 $(CACHEVOL):
@@ -77,6 +79,7 @@ generate: $(CACHEVOL) $(MODVOL)
 # Build go code 
 .PHONY: build
 build: generate
+	cat go.mod
 	go build ./...
 
 # Check go code 
