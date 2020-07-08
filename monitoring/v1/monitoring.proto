@@ -45,7 +45,12 @@ service MonitoringService {
     // Fetch all logs of the deployment that matches the given request.
     // Required permissions:
     // - monitoring.logs.get on the deployment identified by the given deployment ID.
-    rpc GetDeploymentLogs(GetDeploymentLogsRequest) returns (stream DeploymentLogsChunk);
+    rpc GetDeploymentLogs(GetDeploymentLogsRequest) returns (stream DeploymentLogsChunk) {
+        option (google.api.http) = {
+            post: "/api/monitoring/v1/streaming/deployment-logs"
+            body: "*"
+        };
+    }
 }
 
 // GetDeploymentLogsRequest contains request arguments for GetDeploymentLogs.
