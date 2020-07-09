@@ -848,6 +848,12 @@ message DataVolumeInfo {
     int64 used_bytes = 2;
     // The number of bytes available on the data volume.
     int64 available_bytes = 3;
+    // The total number of inodes of the data volume.
+    int64 total_inodes = 4;
+    // The number of inodes used on the data volume.
+    int64 used_inodes = 5;
+    // The number of inodes available on the data volume.
+    int64 available_inodes = 6;
     // When this info has been measused
     google.protobuf.Timestamp measured_at = 10;
 }
