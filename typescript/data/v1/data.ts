@@ -149,6 +149,18 @@ export interface DataVolumeInfo {
   // number
   available_bytes?: number;
   
+  // The total number of inodes of the data volume.
+  // number
+  total_inodes?: number;
+  
+  // The number of inodes used on the data volume.
+  // number
+  used_inodes?: number;
+  
+  // The number of inodes available on the data volume.
+  // number
+  available_inodes?: number;
+  
   // When this info has been measused
   // googleTypes.Timestamp
   measured_at?: googleTypes.Timestamp;

@@ -150,9 +150,13 @@ func DeploymentServerStatusEqual(a, b *Deployment_ServerStatus, ignoreTimestamps
 // DataVolumeInfoEqual returns true when the fields of a & b are equal.
 func DataVolumeInfoEqual(a, b *DataVolumeInfo, ignoreTimestamps bool) bool {
 	return a.GetAvailableBytes() == b.GetAvailableBytes() &&
-		(ignoreTimestamps || (a.GetMeasuredAt().Equal(b.GetMeasuredAt()))) &&
 		a.GetTotalBytes() == b.GetTotalBytes() &&
-		a.GetUsedBytes() == b.GetUsedBytes()
+		a.GetUsedBytes() == b.GetUsedBytes() &&
+		a.GetAvailableInodes() == b.GetAvailableInodes() &&
+		a.GetTotalInodes() == b.GetTotalInodes() &&
+		a.GetUsedInodes() == b.GetUsedInodes() &&
+		(ignoreTimestamps || (a.GetMeasuredAt().Equal(b.GetMeasuredAt())))
+
 }
 
 // GetOrCreateCertificates returns the Certificates field, creating it if needed.
