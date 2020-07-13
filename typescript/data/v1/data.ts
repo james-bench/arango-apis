@@ -469,6 +469,10 @@ export interface Deployment_ServerStatus {
   // googleTypes.Timestamp
   last_started_at?: googleTypes.Timestamp;
   
+  // If set, a rotation of this server has been requested.
+  // boolean
+  rotation_pending?: boolean;
+  
   // Information about the data volume used to store the data
   // DataVolumeInfo
   data_volume_info?: DataVolumeInfo;
