@@ -431,6 +431,8 @@ message Deployment {
         string version = 11;
         // The last started timestamp of the server
         google.protobuf.Timestamp last_started_at = 12;
+        // If set, a rotation of this server has been requested.
+        bool rotation_pending = 13;
         // Information about the data volume used to store the data
         DataVolumeInfo data_volume_info = 20;
     }
