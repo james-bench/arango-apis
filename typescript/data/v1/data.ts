@@ -796,10 +796,6 @@ export interface DeploymentSize {
   // number
   coordinator_memory_size?: number;
   
-  // Amount of disk space (in GB) to allocate for each coordinator.
-  // number
-  coordinator_disk_size?: number;
-  
   // Number of dbservers
   // number
   dbservers?: number;

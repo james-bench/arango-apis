@@ -773,8 +773,6 @@ message DeploymentSize {
     int32 coordinators = 21;
     // Amount of memory (in GB) to allocate for each coordinator.
     int32 coordinator_memory_size = 22;
-    // Amount of disk space (in GB) to allocate for each coordinator.
-    int32 coordinator_disk_size = 23;
     // Number of dbservers
     int32 dbservers = 31;
     // Amount of memory (in GB) to allocate for each dbserver.
