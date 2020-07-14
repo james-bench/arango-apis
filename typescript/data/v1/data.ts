@@ -787,6 +787,30 @@ export interface DeploymentSize {
   // Total (combined) amount of disk space (in GB) used by all servers (agents & dbservers)
   // number
   total_disk_size?: number;
+  
+  // Number of coordinators
+  // number
+  coordinators?: number;
+  
+  // Amount of memory (in GB) to allocate for each coordinator.
+  // number
+  coordinator_memory_size?: number;
+  
+  // Amount of disk space (in GB) to allocate for each coordinator.
+  // number
+  coordinator_disk_size?: number;
+  
+  // Number of dbservers
+  // number
+  dbservers?: number;
+  
+  // Amount of memory (in GB) to allocate for each dbserver.
+  // number
+  dbserver_memory_size?: number;
+  
+  // Amount of disk space (in GB) to allocate for each dbserver.
+  // number
+  dbserver_disk_size?: number;
 }
 
 // Response of RecommendDeploymentSize.
