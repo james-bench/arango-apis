@@ -769,6 +769,16 @@ message DeploymentSize {
     int32 total_memory_size = 11; 
     // Total (combined) amount of disk space (in GB) used by all servers (agents & dbservers)
     int32 total_disk_size = 12; 
+    // Number of coordinators
+    int32 coordinators = 21;
+    // Amount of memory (in GB) to allocate for each coordinator.
+    int32 coordinator_memory_size = 22;
+    // Number of dbservers
+    int32 dbservers = 31;
+    // Amount of memory (in GB) to allocate for each dbserver.
+    int32 dbserver_memory_size = 32;
+    // Amount of disk space (in GB) to allocate for each dbserver.
+    int32 dbserver_disk_size = 33;
 }
 
 // Request arguments for RecommendDeploymentSize.
