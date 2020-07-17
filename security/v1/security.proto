@@ -42,10 +42,62 @@ service SecurityService {
         };
     }
 
+    // Fetch all IP allowlists that belong to the project identified by the given
+    // context ID.
+    // Required permissions:
+    // - security.ipallowlist.list on the project identified by the given context ID.
+    rpc ListIPAllowlists(common.v1.ListOptions) returns (IPAllowlistList) {
+        option (google.api.http) = {
+            get: "/api/security/v1/projects/{context_id}/ipallowlists"
+        };
+    }
+    
+    // Fetch an IP allowlist by its id.
+    // Required permissions:
+    // - security.ipallowlist.get on the IP allowlist
+    rpc GetIPAllowlist(common.v1.IDOptions) returns (IPAllowlist) {
+        option (google.api.http) = {
+            get: "/api/security/v1/ipallowlists/{id}"
+        };
+    }
+
+    // Create a new IP allowlist
+    // Required permissions:
+    // - security.ipallowlist.create on the project that owns the IP allowlist.
+    rpc CreateIPAllowlist(IPAllowlist) returns (IPAllowlist) {
+        option (google.api.http) = {
+            post: "/api/security/v1/project/{project_id}/ipallowlists"
+            body: "*"
+        };
+    }
+
+    // Update an IP allowlist
+    // Required permissions:
+    // - security.ipallowlist.update on the IP allowlist
+    rpc UpdateIPAllowlist(IPAllowlist) returns (IPAllowlist) {
+        option (google.api.http) = {
+            patch: "/api/security/v1/ipallowlists/{id}"
+            body: "*"
+        };
+    }
+
+    // Delete an IP allowlist.
+    // Note that IP allowlists are initially only marked for deletion.
+    // Once all their dependent deployments are removed, the allowlist is removed.
+    // Required permissions:
+    // - security.ipallowlist.delete on the IP allowlist
+    rpc DeleteIPAllowlist(common.v1.IDOptions) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            delete: "/api/security/v1/ipallowlists/{id}"
+        };
+    }
+
     // Fetch all IP whitelists that belong to the project identified by the given
     // context ID.
     // Required permissions:
     // - security.ipwhitelist.list on the project identified by the given context ID.
+    // Note: The use of this method has been deprecated.
+    // In a future version, it will be removed.
     rpc ListIPWhitelists(common.v1.ListOptions) returns (IPWhitelistList) {
         option (google.api.http) = {
             get: "/api/security/v1/projects/{context_id}/ipwhitelists"
@@ -55,6 +107,8 @@ service SecurityService {
     // Fetch an IP whitelist by its id.
     // Required permissions:
     // - security.ipwhitelist.get on the IP whitelist
+    // Note: The use of this method has been deprecated.
+    // In a future version, it will be removed.
     rpc GetIPWhitelist(common.v1.IDOptions) returns (IPWhitelist) {
         option (google.api.http) = {
             get: "/api/security/v1/ipwhitelists/{id}"
@@ -64,6 +118,8 @@ service SecurityService {
     // Create a new IP whitelist
     // Required permissions:
     // - security.ipwhitelist.create on the project that owns the IP whitelist.
+    // Note: The use of this method has been deprecated.
+    // In a future version, it will be removed.
     rpc CreateIPWhitelist(IPWhitelist) returns (IPWhitelist) {
         option (google.api.http) = {
             post: "/api/security/v1/project/{project_id}/ipwhitelists"
@@ -74,6 +130,8 @@ service SecurityService {
     // Update an IP whitelist
     // Required permissions:
     // - security.ipwhitelist.update on the IP whitelist
+    // Note: The use of this method has been deprecated.
+    // In a future version, it will be removed.
     rpc UpdateIPWhitelist(IPWhitelist) returns (IPWhitelist) {
         option (google.api.http) = {
             patch: "/api/security/v1/ipwhitelists/{id}"
@@ -86,6 +144,8 @@ service SecurityService {
     // Once all their dependent deployments are removed, the whitelist is removed.
     // Required permissions:
     // - security.ipwhitelist.delete on the IP whitelist
+    // Note: The use of this method has been deprecated.
+    // In a future version, it will be removed.
     rpc DeleteIPWhitelist(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             delete: "/api/security/v1/ipwhitelists/{id}"
@@ -153,7 +213,45 @@ service SecurityService {
     }
 }
 
+// IPAllowlist represents a list of CIDR ranges from which a deployment is accessible.
+message IPAllowlist {
+    // System identifier of the allowlist.
+    // This is a read-only value.
+    string id = 1;
+    // URL of the allowlist.
+    // This is a read-only value.
+    string url = 2;
+    // Name of the allowlist.
+    string name = 3; 
+    // Description of the allowlist.
+    string description = 4; 
+    // Identifier of the project that contains this allowlist.
+    string project_id = 5;
+    // List of CIDR ranges.
+    // Values must follow format as defined in RFC 4632 and RFC 4291.
+    repeated string cidr_ranges = 6;
+    // The creation timestamp of this allowlist.
+    // This is a read-only value.
+    google.protobuf.Timestamp created_at = 7;
+    // The deletion timestamp of the allowlist
+    // This is a read-only value.
+    google.protobuf.Timestamp deleted_at = 8;
+    // Set when this allowlist is deleted.
+    // This is a read-only value.
+    bool is_deleted = 9;
+    // Identifier of the user who created this allowlist.
+    // This is a read-only value.
+    string created_by_id = 10;
+}
+
+// List of IP allowlists.
+message IPAllowlistList {
+    repeated IPAllowlist items = 1;
+}
+
 // IPWhitelist represents a list of CIDR ranges from which a deployment is accessible.
+// Note: The use of this message has been deprecated in favor of IPAllowlist.
+// In a future version, this message will be removed.
 message IPWhitelist {
     // System identifier of the whitelist.
     // This is a read-only value.
@@ -185,6 +283,8 @@ message IPWhitelist {
 }
 
 // List of IP whitelists.
+// Note: The use of this message has been deprecated in favor of IPAllowlistList.
+// In a future version, this message will be removed.
 message IPWhitelistList {
     repeated IPWhitelist items = 1;
 }

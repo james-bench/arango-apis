@@ -28,6 +28,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestIPAllowlistURL(t *testing.T) {
+	assert.Equal(t, "/Organization/123/Project/p1/IPAllowlist/c1", IPAllowlistURL("123", "p1", "c1"))
+	assert.Equal(t, "/Organization/123%2F567/Project/ab/IPAllowlist/c2%2F3", IPAllowlistURL("123/567", "ab", "c2/3"))
+	assert.Equal(t, "/Organization/123%2F567/Project/a%25b/IPAllowlist/e%25f", IPAllowlistURL("123/567", "a%b", "e%f"))
+}
+
 func TestIPWhitelistURL(t *testing.T) {
 	assert.Equal(t, "/Organization/123/Project/p1/IPWhitelist/c1", IPWhitelistURL("123", "p1", "c1"))
 	assert.Equal(t, "/Organization/123%2F567/Project/ab/IPWhitelist/c2%2F3", IPWhitelistURL("123/567", "ab", "c2/3"))

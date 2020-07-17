@@ -272,7 +272,13 @@ export interface Deployment {
   // Deployment_ServersSpec
   servers?: Deployment_ServersSpec;
   
+  // Optional identifier of IP allowlist to use for this deployment.
+  // string
+  ipallowlist_id?: string;
+  
   // Optional identifier of IP whitelist to use for this deployment.
+  // Note: The use of this field has been deprecated.
+  // In a future version, they will be removed.
   // string
   ipwhitelist_id?: string;
   
