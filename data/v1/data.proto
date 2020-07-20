@@ -377,8 +377,8 @@ message Deployment {
     // Optional identifier of IP allowlist to use for this deployment.
     string ipallowlist_id = 109;
     // Optional identifier of IP whitelist to use for this deployment.
-	// Note: The use of this field has been deprecated.
-	// In a future version, they will be removed.
+    // Note: The use of this field has been deprecated in favor of ipallowlist_id.
+    // In a future version, they will be removed.
     string ipwhitelist_id = 105;
 
     message ModelSpec {

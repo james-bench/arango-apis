@@ -277,7 +277,7 @@ export interface Deployment {
   ipallowlist_id?: string;
   
   // Optional identifier of IP whitelist to use for this deployment.
-  // Note: The use of this field has been deprecated.
+  // Note: The use of this field has been deprecated in favor of ipallowlist_id.
   // In a future version, they will be removed.
   // string
   ipwhitelist_id?: string;

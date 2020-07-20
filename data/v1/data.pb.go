@@ -235,7 +235,7 @@ type Deployment struct {
 	// Optional identifier of IP allowlist to use for this deployment.
 	IpallowlistId string `protobuf:"bytes,109,opt,name=ipallowlist_id,json=ipallowlistId,proto3" json:"ipallowlist_id,omitempty"`
 	// Optional identifier of IP whitelist to use for this deployment.
-	// Note: The use of this field has been deprecated.
+	// Note: The use of this field has been deprecated in favor of ipallowlist_id.
 	// In a future version, they will be removed.
 	IpwhitelistId string                `protobuf:"bytes,105,opt,name=ipwhitelist_id,json=ipwhitelistId,proto3" json:"ipwhitelist_id,omitempty"`
 	Model         *Deployment_ModelSpec `protobuf:"bytes,106,opt,name=model,proto3" json:"model,omitempty"`
