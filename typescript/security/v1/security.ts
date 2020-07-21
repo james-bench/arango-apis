@@ -200,7 +200,65 @@ export interface IAMProviderList {
   items?: IAMProvider[];
 }
 
+// IPAllowlist represents a list of CIDR ranges from which a deployment is accessible.
+export interface IPAllowlist {
+  // System identifier of the allowlist.
+  // This is a read-only value.
+  // string
+  id?: string;
+  
+  // URL of the allowlist.
+  // This is a read-only value.
+  // string
+  url?: string;
+  
+  // Name of the allowlist.
+  // string
+  name?: string;
+  
+  // Description of the allowlist.
+  // string
+  description?: string;
+  
+  // Identifier of the project that contains this allowlist.
+  // string
+  project_id?: string;
+  
+  // List of CIDR ranges.
+  // Values must follow format as defined in RFC 4632 and RFC 4291.
+  // string
+  cidr_ranges?: string[];
+  
+  // The creation timestamp of this allowlist.
+  // This is a read-only value.
+  // googleTypes.Timestamp
+  created_at?: googleTypes.Timestamp;
+  
+  // The deletion timestamp of the allowlist
+  // This is a read-only value.
+  // googleTypes.Timestamp
+  deleted_at?: googleTypes.Timestamp;
+  
+  // Set when this allowlist is deleted.
+  // This is a read-only value.
+  // boolean
+  is_deleted?: boolean;
+  
+  // Identifier of the user who created this allowlist.
+  // This is a read-only value.
+  // string
+  created_by_id?: string;
+}
+
+// List of IP allowlists.
+export interface IPAllowlistList {
+  // IPAllowlist
+  items?: IPAllowlist[];
+}
+
 // IPWhitelist represents a list of CIDR ranges from which a deployment is accessible.
+// Note: The use of this message has been deprecated in favor of IPAllowlist.
+// In a future version, this message will be removed.
 export interface IPWhitelist {
   // System identifier of the whitelist.
   // This is a read-only value.
@@ -251,6 +309,8 @@ export interface IPWhitelist {
 }
 
 // List of IP whitelists.
+// Note: The use of this message has been deprecated in favor of IPAllowlistList.
+// In a future version, this message will be removed.
 export interface IPWhitelistList {
   // IPWhitelist
   items?: IPWhitelist[];
@@ -263,25 +323,61 @@ export interface ISecurityService {
   // - None
   GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
   
+  // Fetch all IP allowlists that belong to the project identified by the given
+  // context ID.
+  // Required permissions:
+  // - security.ipallowlist.list on the project identified by the given context ID.
+  ListIPAllowlists: (req: arangodb_cloud_common_v1_ListOptions) => Promise<IPAllowlistList>;
+  
+  // Fetch an IP allowlist by its id.
+  // Required permissions:
+  // - security.ipallowlist.get on the IP allowlist
+  GetIPAllowlist: (req: arangodb_cloud_common_v1_IDOptions) => Promise<IPAllowlist>;
+  
+  // Create a new IP allowlist
+  // Required permissions:
+  // - security.ipallowlist.create on the project that owns the IP allowlist.
+  CreateIPAllowlist: (req: IPAllowlist) => Promise<IPAllowlist>;
+  
+  // Update an IP allowlist
+  // Required permissions:
+  // - security.ipallowlist.update on the IP allowlist
+  UpdateIPAllowlist: (req: IPAllowlist) => Promise<IPAllowlist>;
+  
+  // Delete an IP allowlist.
+  // Note that IP allowlists are initially only marked for deletion.
+  // Once all their dependent deployments are removed, the allowlist is removed.
+  // Required permissions:
+  // - security.ipallowlist.delete on the IP allowlist
+  DeleteIPAllowlist: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
   // Fetch all IP whitelists that belong to the project identified by the given
   // context ID.
   // Required permissions:
   // - security.ipwhitelist.list on the project identified by the given context ID.
+  // Note: The use of this method has been deprecated.
+  // In a future version, it will be removed.
   ListIPWhitelists: (req: arangodb_cloud_common_v1_ListOptions) => Promise<IPWhitelistList>;
   
   // Fetch an IP whitelist by its id.
   // Required permissions:
   // - security.ipwhitelist.get on the IP whitelist
+  // Note: The use of this method has been deprecated.
+  // In a future version, it will be removed.
   GetIPWhitelist: (req: arangodb_cloud_common_v1_IDOptions) => Promise<IPWhitelist>;
   
   // Create a new IP whitelist
   // Required permissions:
   // - security.ipwhitelist.create on the project that owns the IP whitelist.
+  // Note: The use of this method has been deprecated.
+  // In a future version, it will be removed.
   CreateIPWhitelist: (req: IPWhitelist) => Promise<IPWhitelist>;
   
   // Update an IP whitelist
   // Required permissions:
   // - security.ipwhitelist.update on the IP whitelist
+  // Note: The use of this method has been deprecated.
+  // In a future version, it will be removed.
   UpdateIPWhitelist: (req: IPWhitelist) => Promise<IPWhitelist>;
   
   // Delete an IP whitelist.
@@ -289,6 +385,8 @@ export interface ISecurityService {
   // Once all their dependent deployments are removed, the whitelist is removed.
   // Required permissions:
   // - security.ipwhitelist.delete on the IP whitelist
+  // Note: The use of this method has been deprecated.
+  // In a future version, it will be removed.
   DeleteIPWhitelist: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
   
   // Fetch all IAM providers that belong to the project identified by the given
@@ -336,10 +434,58 @@ export class SecurityService implements ISecurityService {
     return api.get(url, undefined);
   }
   
+  // Fetch all IP allowlists that belong to the project identified by the given
+  // context ID.
+  // Required permissions:
+  // - security.ipallowlist.list on the project identified by the given context ID.
+  async ListIPAllowlists(req: arangodb_cloud_common_v1_ListOptions): Promise<IPAllowlistList> {
+    const path = `/api/security/v1/projects/${encodeURIComponent(req.context_id || '')}/ipallowlists`;
+    const url = path + api.queryString(req, [`context_id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch an IP allowlist by its id.
+  // Required permissions:
+  // - security.ipallowlist.get on the IP allowlist
+  async GetIPAllowlist(req: arangodb_cloud_common_v1_IDOptions): Promise<IPAllowlist> {
+    const path = `/api/security/v1/ipallowlists/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Create a new IP allowlist
+  // Required permissions:
+  // - security.ipallowlist.create on the project that owns the IP allowlist.
+  async CreateIPAllowlist(req: IPAllowlist): Promise<IPAllowlist> {
+    const url = `/api/security/v1/project/${encodeURIComponent(req.project_id || '')}/ipallowlists`;
+    return api.post(url, req);
+  }
+  
+  // Update an IP allowlist
+  // Required permissions:
+  // - security.ipallowlist.update on the IP allowlist
+  async UpdateIPAllowlist(req: IPAllowlist): Promise<IPAllowlist> {
+    const url = `/api/security/v1/ipallowlists/${encodeURIComponent(req.id || '')}`;
+    return api.patch(url, req);
+  }
+  
+  // Delete an IP allowlist.
+  // Note that IP allowlists are initially only marked for deletion.
+  // Once all their dependent deployments are removed, the allowlist is removed.
+  // Required permissions:
+  // - security.ipallowlist.delete on the IP allowlist
+  async DeleteIPAllowlist(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
+    const path = `/api/security/v1/ipallowlists/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.delete(url, undefined);
+  }
+  
   // Fetch all IP whitelists that belong to the project identified by the given
   // context ID.
   // Required permissions:
   // - security.ipwhitelist.list on the project identified by the given context ID.
+  // Note: The use of this method has been deprecated.
+  // In a future version, it will be removed.
   async ListIPWhitelists(req: arangodb_cloud_common_v1_ListOptions): Promise<IPWhitelistList> {
     const path = `/api/security/v1/projects/${encodeURIComponent(req.context_id || '')}/ipwhitelists`;
     const url = path + api.queryString(req, [`context_id`]);
@@ -349,6 +495,8 @@ export class SecurityService implements ISecurityService {
   // Fetch an IP whitelist by its id.
   // Required permissions:
   // - security.ipwhitelist.get on the IP whitelist
+  // Note: The use of this method has been deprecated.
+  // In a future version, it will be removed.
   async GetIPWhitelist(req: arangodb_cloud_common_v1_IDOptions): Promise<IPWhitelist> {
     const path = `/api/security/v1/ipwhitelists/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
@@ -358,6 +506,8 @@ export class SecurityService implements ISecurityService {
   // Create a new IP whitelist
   // Required permissions:
   // - security.ipwhitelist.create on the project that owns the IP whitelist.
+  // Note: The use of this method has been deprecated.
+  // In a future version, it will be removed.
   async CreateIPWhitelist(req: IPWhitelist): Promise<IPWhitelist> {
     const url = `/api/security/v1/project/${encodeURIComponent(req.project_id || '')}/ipwhitelists`;
     return api.post(url, req);
@@ -366,6 +516,8 @@ export class SecurityService implements ISecurityService {
   // Update an IP whitelist
   // Required permissions:
   // - security.ipwhitelist.update on the IP whitelist
+  // Note: The use of this method has been deprecated.
+  // In a future version, it will be removed.
   async UpdateIPWhitelist(req: IPWhitelist): Promise<IPWhitelist> {
     const url = `/api/security/v1/ipwhitelists/${encodeURIComponent(req.id || '')}`;
     return api.patch(url, req);
@@ -376,6 +528,8 @@ export class SecurityService implements ISecurityService {
   // Once all their dependent deployments are removed, the whitelist is removed.
   // Required permissions:
   // - security.ipwhitelist.delete on the IP whitelist
+  // Note: The use of this method has been deprecated.
+  // In a future version, it will be removed.
   async DeleteIPWhitelist(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
     const path = `/api/security/v1/ipwhitelists/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);

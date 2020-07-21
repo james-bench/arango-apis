@@ -29,7 +29,194 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+// IPAllowlist represents a list of CIDR ranges from which a deployment is accessible.
+type IPAllowlist struct {
+	// System identifier of the allowlist.
+	// This is a read-only value.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// URL of the allowlist.
+	// This is a read-only value.
+	Url string `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty"`
+	// Name of the allowlist.
+	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	// Description of the allowlist.
+	Description string `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	// Identifier of the project that contains this allowlist.
+	ProjectId string `protobuf:"bytes,5,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
+	// List of CIDR ranges.
+	// Values must follow format as defined in RFC 4632 and RFC 4291.
+	CidrRanges []string `protobuf:"bytes,6,rep,name=cidr_ranges,json=cidrRanges,proto3" json:"cidr_ranges,omitempty"`
+	// The creation timestamp of this allowlist.
+	// This is a read-only value.
+	CreatedAt *types.Timestamp `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	// The deletion timestamp of the allowlist
+	// This is a read-only value.
+	DeletedAt *types.Timestamp `protobuf:"bytes,8,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`
+	// Set when this allowlist is deleted.
+	// This is a read-only value.
+	IsDeleted bool `protobuf:"varint,9,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
+	// Identifier of the user who created this allowlist.
+	// This is a read-only value.
+	CreatedById          string   `protobuf:"bytes,10,opt,name=created_by_id,json=createdById,proto3" json:"created_by_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *IPAllowlist) Reset()         { *m = IPAllowlist{} }
+func (m *IPAllowlist) String() string { return proto.CompactTextString(m) }
+func (*IPAllowlist) ProtoMessage()    {}
+func (*IPAllowlist) Descriptor() ([]byte, []int) {
+	return fileDescriptor_55a487c716a8b59c, []int{0}
+}
+func (m *IPAllowlist) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *IPAllowlist) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_IPAllowlist.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *IPAllowlist) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IPAllowlist.Merge(m, src)
+}
+func (m *IPAllowlist) XXX_Size() int {
+	return m.Size()
+}
+func (m *IPAllowlist) XXX_DiscardUnknown() {
+	xxx_messageInfo_IPAllowlist.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_IPAllowlist proto.InternalMessageInfo
+
+func (m *IPAllowlist) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *IPAllowlist) GetUrl() string {
+	if m != nil {
+		return m.Url
+	}
+	return ""
+}
+
+func (m *IPAllowlist) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *IPAllowlist) GetDescription() string {
+	if m != nil {
+		return m.Description
+	}
+	return ""
+}
+
+func (m *IPAllowlist) GetProjectId() string {
+	if m != nil {
+		return m.ProjectId
+	}
+	return ""
+}
+
+func (m *IPAllowlist) GetCidrRanges() []string {
+	if m != nil {
+		return m.CidrRanges
+	}
+	return nil
+}
+
+func (m *IPAllowlist) GetCreatedAt() *types.Timestamp {
+	if m != nil {
+		return m.CreatedAt
+	}
+	return nil
+}
+
+func (m *IPAllowlist) GetDeletedAt() *types.Timestamp {
+	if m != nil {
+		return m.DeletedAt
+	}
+	return nil
+}
+
+func (m *IPAllowlist) GetIsDeleted() bool {
+	if m != nil {
+		return m.IsDeleted
+	}
+	return false
+}
+
+func (m *IPAllowlist) GetCreatedById() string {
+	if m != nil {
+		return m.CreatedById
+	}
+	return ""
+}
+
+// List of IP allowlists.
+type IPAllowlistList struct {
+	Items                []*IPAllowlist `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *IPAllowlistList) Reset()         { *m = IPAllowlistList{} }
+func (m *IPAllowlistList) String() string { return proto.CompactTextString(m) }
+func (*IPAllowlistList) ProtoMessage()    {}
+func (*IPAllowlistList) Descriptor() ([]byte, []int) {
+	return fileDescriptor_55a487c716a8b59c, []int{1}
+}
+func (m *IPAllowlistList) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *IPAllowlistList) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_IPAllowlistList.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *IPAllowlistList) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IPAllowlistList.Merge(m, src)
+}
+func (m *IPAllowlistList) XXX_Size() int {
+	return m.Size()
+}
+func (m *IPAllowlistList) XXX_DiscardUnknown() {
+	xxx_messageInfo_IPAllowlistList.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_IPAllowlistList proto.InternalMessageInfo
+
+func (m *IPAllowlistList) GetItems() []*IPAllowlist {
+	if m != nil {
+		return m.Items
+	}
+	return nil
+}
+
 // IPWhitelist represents a list of CIDR ranges from which a deployment is accessible.
+// Note: The use of this message has been deprecated in favor of IPAllowlist.
+// In a future version, this message will be removed.
 type IPWhitelist struct {
 	// System identifier of the whitelist.
 	// This is a read-only value.
@@ -67,7 +254,7 @@ func (m *IPWhitelist) Reset()         { *m = IPWhitelist{} }
 func (m *IPWhitelist) String() string { return proto.CompactTextString(m) }
 func (*IPWhitelist) ProtoMessage()    {}
 func (*IPWhitelist) Descriptor() ([]byte, []int) {
-	return fileDescriptor_55a487c716a8b59c, []int{0}
+	return fileDescriptor_55a487c716a8b59c, []int{2}
 }
 func (m *IPWhitelist) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -167,6 +354,8 @@ func (m *IPWhitelist) GetCreatedById() string {
 }
 
 // List of IP whitelists.
+// Note: The use of this message has been deprecated in favor of IPAllowlistList.
+// In a future version, this message will be removed.
 type IPWhitelistList struct {
 	Items                []*IPWhitelist `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
@@ -178,7 +367,7 @@ func (m *IPWhitelistList) Reset()         { *m = IPWhitelistList{} }
 func (m *IPWhitelistList) String() string { return proto.CompactTextString(m) }
 func (*IPWhitelistList) ProtoMessage()    {}
 func (*IPWhitelistList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_55a487c716a8b59c, []int{1}
+	return fileDescriptor_55a487c716a8b59c, []int{3}
 }
 func (m *IPWhitelistList) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -256,7 +445,7 @@ func (m *IAMProvider) Reset()         { *m = IAMProvider{} }
 func (m *IAMProvider) String() string { return proto.CompactTextString(m) }
 func (*IAMProvider) ProtoMessage()    {}
 func (*IAMProvider) Descriptor() ([]byte, []int) {
-	return fileDescriptor_55a487c716a8b59c, []int{2}
+	return fileDescriptor_55a487c716a8b59c, []int{4}
 }
 func (m *IAMProvider) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -449,7 +638,7 @@ func (m *IAMProvider_LDAPSettings) Reset()         { *m = IAMProvider_LDAPSettin
 func (m *IAMProvider_LDAPSettings) String() string { return proto.CompactTextString(m) }
 func (*IAMProvider_LDAPSettings) ProtoMessage()    {}
 func (*IAMProvider_LDAPSettings) Descriptor() ([]byte, []int) {
-	return fileDescriptor_55a487c716a8b59c, []int{2, 0}
+	return fileDescriptor_55a487c716a8b59c, []int{4, 0}
 }
 func (m *IAMProvider_LDAPSettings) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -672,7 +861,7 @@ func (m *IAMProviderList) Reset()         { *m = IAMProviderList{} }
 func (m *IAMProviderList) String() string { return proto.CompactTextString(m) }
 func (*IAMProviderList) ProtoMessage()    {}
 func (*IAMProviderList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_55a487c716a8b59c, []int{3}
+	return fileDescriptor_55a487c716a8b59c, []int{5}
 }
 func (m *IAMProviderList) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -709,6 +898,8 @@ func (m *IAMProviderList) GetItems() []*IAMProvider {
 }
 
 func init() {
+	proto.RegisterType((*IPAllowlist)(nil), "arangodb.cloud.security.v1.IPAllowlist")
+	proto.RegisterType((*IPAllowlistList)(nil), "arangodb.cloud.security.v1.IPAllowlistList")
 	proto.RegisterType((*IPWhitelist)(nil), "arangodb.cloud.security.v1.IPWhitelist")
 	proto.RegisterType((*IPWhitelistList)(nil), "arangodb.cloud.security.v1.IPWhitelistList")
 	proto.RegisterType((*IAMProvider)(nil), "arangodb.cloud.security.v1.IAMProvider")
@@ -719,89 +910,95 @@ func init() {
 func init() { proto.RegisterFile("security.proto", fileDescriptor_55a487c716a8b59c) }
 
 var fileDescriptor_55a487c716a8b59c = []byte{
-	// 1307 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x57, 0xcf, 0x6f, 0x1b, 0x45,
-	0x14, 0x66, 0xf3, 0xab, 0xf5, 0xd8, 0x4e, 0x9a, 0x49, 0x93, 0x0e, 0xa6, 0xa4, 0xa9, 0x5b, 0xd4,
-	0x28, 0x50, 0x5b, 0x71, 0xf9, 0x21, 0x5a, 0x15, 0x91, 0x26, 0x6d, 0x65, 0xa9, 0x80, 0x65, 0xb7,
-	0x20, 0xb8, 0xac, 0xc6, 0xbb, 0xcf, 0xce, 0xc0, 0x7a, 0x77, 0x35, 0x33, 0x76, 0x6b, 0xaa, 0x5e,
-	0x90, 0xb8, 0x70, 0x02, 0xca, 0x81, 0x3b, 0x5c, 0x40, 0x70, 0xe6, 0x5f, 0x28, 0x9c, 0x90, 0xb8,
-	0x23, 0x54, 0xb8, 0xf0, 0x5f, 0xa0, 0xf9, 0xb1, 0xde, 0x4d, 0x42, 0x52, 0x07, 0x5a, 0x21, 0x6e,
-	0x3b, 0xdf, 0xfb, 0xde, 0x9b, 0x6f, 0xe7, 0x7d, 0xde, 0x37, 0x46, 0xb3, 0x02, 0xbc, 0x3e, 0x67,
-	0x72, 0x58, 0x89, 0x79, 0x24, 0x23, 0x5c, 0xa2, 0x9c, 0x86, 0xdd, 0xc8, 0x6f, 0x57, 0xbc, 0x20,
-	0xea, 0xfb, 0x95, 0x51, 0x78, 0xb0, 0x5e, 0x5a, 0xf2, 0xa2, 0x5e, 0x2f, 0x0a, 0xab, 0x83, 0xf5,
-	0xaa, 0x79, 0x32, 0x39, 0xa5, 0x4b, 0x5d, 0x26, 0xb7, 0xfb, 0xed, 0x8a, 0x17, 0xf5, 0xaa, 0xdd,
-	0x28, 0xa0, 0x61, 0xb7, 0xaa, 0x03, 0xed, 0x7e, 0xa7, 0x1a, 0xcb, 0x61, 0x0c, 0xa2, 0x2a, 0x59,
-	0x0f, 0x84, 0xa4, 0xbd, 0x38, 0x7d, 0xb2, 0xc9, 0x27, 0xbb, 0x51, 0xd4, 0x0d, 0xa0, 0x4a, 0x63,
-	0x56, 0xa5, 0x61, 0x18, 0x49, 0x2a, 0x59, 0x14, 0x0a, 0x13, 0x2d, 0xff, 0x3a, 0x81, 0xf2, 0xf5,
-	0xc6, 0x3b, 0xdb, 0x4c, 0x42, 0xc0, 0x84, 0xc4, 0xb3, 0x68, 0x82, 0xf9, 0xc4, 0x59, 0x71, 0x56,
-	0x73, 0xcd, 0x09, 0xe6, 0xe3, 0x63, 0x68, 0xb2, 0xcf, 0x03, 0x32, 0xa1, 0x01, 0xf5, 0x88, 0x31,
-	0x9a, 0x0a, 0x69, 0x0f, 0xc8, 0xa4, 0x86, 0xf4, 0x33, 0x5e, 0x41, 0x79, 0x1f, 0x84, 0xc7, 0x59,
-	0xac, 0x6a, 0x93, 0x29, 0x1d, 0xca, 0x42, 0xf8, 0x59, 0x84, 0x62, 0x1e, 0xbd, 0x0f, 0x9e, 0x74,
-	0x99, 0x4f, 0xa6, 0x35, 0x21, 0x67, 0x91, 0xba, 0x8f, 0x4f, 0xa1, 0xbc, 0xc7, 0x7c, 0xee, 0xaa,
-	0xb3, 0x01, 0x41, 0x66, 0x56, 0x26, 0x57, 0x73, 0x4d, 0xa4, 0xa0, 0xa6, 0x46, 0xf0, 0xab, 0x08,
-	0x79, 0x1c, 0xa8, 0x04, 0xdf, 0xa5, 0x92, 0x1c, 0x59, 0x71, 0x56, 0xf3, 0xb5, 0x52, 0xc5, 0xbc,
-	0x5a, 0x25, 0x39, 0x8c, 0xca, 0xcd, 0xe4, 0xdd, 0x9b, 0x39, 0xcb, 0xde, 0x90, 0x2a, 0xd5, 0x87,
-	0x00, 0x6c, 0xea, 0xd1, 0x47, 0xa7, 0x5a, 0xf6, 0x86, 0x54, 0xaa, 0x99, 0x70, 0xed, 0x9a, 0xe4,
-	0x56, 0x9c, 0xd5, 0xa3, 0xcd, 0x1c, 0x13, 0x5b, 0x06, 0xc0, 0x65, 0x54, 0x4c, 0x44, 0xb5, 0x87,
-	0xea, 0xbd, 0x90, 0x79, 0x71, 0x0b, 0x5e, 0x19, 0xd6, 0xfd, 0x72, 0x03, 0xcd, 0x65, 0xce, 0xf7,
-	0x86, 0x3a, 0xe3, 0xcb, 0x68, 0x9a, 0x49, 0xe8, 0x09, 0xe2, 0xac, 0x4c, 0xae, 0xe6, 0x6b, 0xe7,
-	0x2a, 0xfb, 0x5b, 0xa2, 0x92, 0xc9, 0x6d, 0x9a, 0xac, 0xf2, 0x0f, 0x79, 0x94, 0xaf, 0x6f, 0xbc,
-	0xd1, 0xe0, 0xd1, 0x80, 0xf9, 0xc0, 0xff, 0xab, 0x96, 0x61, 0x34, 0xa5, 0xac, 0x47, 0x66, 0x4c,
-	0x51, 0xf5, 0xfc, 0xbf, 0xed, 0xd2, 0xa8, 0x44, 0x87, 0xf6, 0x03, 0x49, 0xf2, 0x69, 0x09, 0x0d,
-	0xe0, 0x77, 0x51, 0x31, 0xf0, 0x69, 0xec, 0x0a, 0x90, 0x92, 0x85, 0x5d, 0x41, 0x40, 0xeb, 0x7b,
-	0xf1, 0xc0, 0xce, 0xa5, 0x2d, 0xaa, 0xdc, 0xd8, 0xda, 0x68, 0xb4, 0x6c, 0x6e, 0xb3, 0xa0, 0x4a,
-	0x25, 0xab, 0xd2, 0x9f, 0x47, 0x50, 0x21, 0x1b, 0xc6, 0x4b, 0x68, 0x46, 0x00, 0x1f, 0x00, 0xb7,
-	0x2d, 0xb5, 0x2b, 0x75, 0xde, 0x71, 0xc4, 0xa5, 0xee, 0xeb, 0x74, 0x53, 0x3f, 0xe3, 0x97, 0xd1,
-	0x89, 0x36, 0x15, 0xe0, 0xfa, 0x4c, 0xa8, 0xe4, 0x3e, 0x13, 0xdb, 0xe0, 0xbb, 0x99, 0x5e, 0x2f,
-	0xaa, 0xf0, 0x56, 0x36, 0xfa, 0xa6, 0x6a, 0xbe, 0xca, 0x63, 0xa1, 0xff, 0x77, 0x79, 0x53, 0x36,
-	0x8f, 0x85, 0xfe, 0xde, 0xbc, 0x33, 0xa8, 0xa8, 0xf3, 0x62, 0x2a, 0xc4, 0xed, 0x88, 0x27, 0xae,
-	0x28, 0x28, 0xb0, 0x61, 0x31, 0x7c, 0x1a, 0x15, 0x38, 0x74, 0x38, 0x88, 0x6d, 0x97, 0x53, 0x69,
-	0x0c, 0x32, 0xdd, 0xcc, 0x5b, 0xac, 0x49, 0x25, 0xe0, 0x0b, 0x68, 0x49, 0x06, 0xc2, 0xf5, 0xa8,
-	0xeb, 0x01, 0x97, 0xac, 0xc3, 0x3c, 0x2a, 0xc1, 0x8d, 0xa1, 0x67, 0x7b, 0xb3, 0x20, 0x03, 0xb1,
-	0x49, 0x37, 0xd3, 0x58, 0x03, 0x7a, 0x78, 0x19, 0x21, 0x01, 0x9c, 0xd1, 0x80, 0x7d, 0x08, 0x3e,
-	0x39, 0xae, 0x7b, 0x94, 0x41, 0x70, 0x0d, 0x2d, 0x8e, 0x56, 0xae, 0xfa, 0x0a, 0x46, 0x7d, 0xe9,
-	0x0a, 0xf0, 0xc8, 0xa2, 0x16, 0xb0, 0x30, 0x0a, 0xde, 0x34, 0xb1, 0x16, 0x78, 0x98, 0xa0, 0x23,
-	0x1c, 0x24, 0x67, 0x20, 0xc8, 0x92, 0x66, 0x25, 0x4b, 0x13, 0x11, 0x92, 0x72, 0x49, 0x4e, 0xe8,
-	0xad, 0x92, 0x25, 0x3e, 0x89, 0x72, 0x1c, 0x3a, 0xc0, 0x39, 0x0d, 0x04, 0x21, 0xc6, 0x2a, 0x23,
-	0x40, 0x7d, 0xc9, 0xb2, 0x7b, 0x3f, 0xad, 0xab, 0x22, 0x99, 0x6e, 0x59, 0x41, 0x0b, 0x21, 0xc8,
-	0xdb, 0x11, 0xff, 0x60, 0x87, 0xc8, 0x92, 0x26, 0xce, 0xdb, 0x50, 0x46, 0xe2, 0x19, 0x54, 0xa4,
-	0x62, 0x18, 0x7a, 0xae, 0x17, 0x85, 0x21, 0x78, 0x92, 0x3c, 0xa3, 0xb7, 0x2c, 0x68, 0x70, 0xd3,
-	0x60, 0xca, 0x34, 0x31, 0x87, 0x0e, 0xbb, 0x43, 0x7c, 0x63, 0x1a, 0xb3, 0xd2, 0x66, 0xea, 0x77,
-	0x14, 0x0e, 0xd6, 0x4c, 0x7a, 0x85, 0xcb, 0xa8, 0x20, 0x80, 0x72, 0x6f, 0xdb, 0x15, 0x5e, 0x14,
-	0x03, 0x79, 0x60, 0xbc, 0x96, 0x37, 0x60, 0x4b, 0x61, 0xf8, 0x2c, 0x2a, 0x5a, 0x4e, 0x87, 0x05,
-	0x12, 0x38, 0xf9, 0xd1, 0x90, 0x6c, 0xe6, 0x35, 0x0d, 0xe2, 0x35, 0x74, 0xcc, 0xb2, 0xa8, 0x94,
-	0x9c, 0xb5, 0xfb, 0x12, 0xc8, 0x4f, 0x86, 0x38, 0x67, 0x02, 0x1b, 0x09, 0x8e, 0xd7, 0xd1, 0x71,
-	0x1e, 0x05, 0x20, 0x52, 0xaa, 0xf1, 0xdc, 0x77, 0xe6, 0x5b, 0x85, 0x75, 0x70, 0x44, 0xd7, 0x8e,
-	0x2b, 0xa3, 0x82, 0x49, 0x31, 0xb5, 0xc8, 0xf7, 0x86, 0x9a, 0xd7, 0x60, 0x4b, 0x63, 0x4a, 0xa8,
-	0xe1, 0xb0, 0xd0, 0x0b, 0xfa, 0x3e, 0x90, 0x4f, 0x8d, 0xf9, 0x4d, 0x66, 0xdd, 0x80, 0x29, 0x0b,
-	0xee, 0x18, 0xd6, 0x67, 0x59, 0xd6, 0x55, 0x03, 0xe2, 0x5a, 0x22, 0x51, 0x72, 0x1a, 0x8a, 0x4e,
-	0xc4, 0x7b, 0x7a, 0x5c, 0x92, 0xcf, 0x0d, 0x79, 0x41, 0x07, 0x6f, 0xee, 0x88, 0xe1, 0x73, 0x68,
-	0x4e, 0xf4, 0x63, 0xe0, 0x6e, 0x5f, 0x00, 0x77, 0x15, 0x83, 0xdc, 0x37, 0xf4, 0xa2, 0xc6, 0x6f,
-	0x09, 0xe0, 0xcd, 0x28, 0x00, 0x3d, 0x0b, 0xd2, 0xaf, 0xc2, 0xe1, 0x67, 0x41, 0x9a, 0x6b, 0x67,
-	0x41, 0xed, 0xdb, 0x59, 0x34, 0xd7, 0xb2, 0x94, 0x16, 0xf0, 0x01, 0xf3, 0x00, 0x0f, 0x51, 0xf1,
-	0x3a, 0xc8, 0x8d, 0x46, 0xfd, 0x6d, 0xe0, 0x42, 0xe9, 0x3b, 0xb5, 0xbb, 0xa8, 0xbd, 0x5c, 0x0c,
-	0xd6, 0x2b, 0x57, 0x7b, 0xb1, 0x1c, 0x96, 0x4e, 0xef, 0x4f, 0xb0, 0x35, 0xca, 0x67, 0x3f, 0xfa,
-	0xe5, 0x8f, 0xfb, 0x13, 0xcb, 0xf8, 0xa4, 0xbe, 0x47, 0x24, 0xaa, 0xd4, 0x4d, 0x85, 0xc6, 0xec,
-	0xfc, 0xc0, 0xee, 0xf4, 0x95, 0x83, 0x8e, 0xa9, 0xd7, 0xca, 0x4c, 0x2d, 0x81, 0x9f, 0xdb, 0xbf,
-	0xba, 0xe2, 0xbe, 0xa5, 0xa7, 0x8d, 0x28, 0x3d, 0x3f, 0xe6, 0x18, 0x54, 0x39, 0xe5, 0x4b, 0x5a,
-	0xce, 0x4b, 0xf8, 0xc2, 0x1e, 0x39, 0x76, 0x40, 0x89, 0xea, 0x5d, 0x2f, 0x0a, 0x25, 0xdc, 0x51,
-	0xc3, 0xeb, 0x5e, 0x95, 0xc5, 0xb7, 0x53, 0x41, 0x9f, 0x38, 0x68, 0xf6, 0x3a, 0x64, 0x45, 0xe2,
-	0x33, 0xfb, 0x6b, 0xac, 0x6f, 0x25, 0x0a, 0xc7, 0x1d, 0xd4, 0xe5, 0x35, 0xad, 0xee, 0x2c, 0x2e,
-	0xef, 0x51, 0x97, 0xd5, 0x51, 0xbd, 0xcb, 0xfc, 0x7b, 0xf8, 0x6b, 0x07, 0xcd, 0x6f, 0xea, 0x49,
-	0x94, 0xd5, 0x33, 0xee, 0x56, 0xe3, 0x6b, 0xba, 0xac, 0x35, 0xbd, 0x52, 0xae, 0xed, 0x77, 0x62,
-	0xd5, 0xbb, 0xe9, 0xb4, 0xdf, 0x79, 0x60, 0x17, 0x9d, 0x35, 0xfc, 0x85, 0x83, 0xe6, 0x6f, 0xc5,
-	0xfe, 0x13, 0x97, 0x79, 0x5e, 0xcb, 0x3c, 0x57, 0x1b, 0xe3, 0xe8, 0x94, 0xac, 0x8f, 0x1d, 0x34,
-	0x6f, 0xe6, 0xfc, 0xa1, 0xbb, 0xf9, 0xa8, 0x5f, 0x45, 0xd2, 0xc5, 0xb5, 0x71, 0xba, 0x38, 0x32,
-	0x7e, 0xfa, 0x13, 0x7d, 0x4c, 0xc6, 0xdf, 0xf9, 0xbd, 0x38, 0xbc, 0xf1, 0x69, 0x2f, 0x1e, 0x09,
-	0x4a, 0x8c, 0x9f, 0xb9, 0x3c, 0x3e, 0x06, 0xe3, 0xa7, 0xd5, 0x0e, 0x32, 0x7e, 0x46, 0xc7, 0x1e,
-	0xe3, 0x67, 0xf4, 0x8c, 0xbb, 0xd5, 0xf8, 0x9a, 0x0e, 0x6b, 0xfc, 0x8c, 0xd0, 0x5d, 0xc6, 0x7f,
-	0xa2, 0x32, 0x0f, 0x30, 0xfe, 0xee, 0xa3, 0xdb, 0x65, 0xfc, 0xc3, 0x76, 0xf3, 0xdf, 0x18, 0x7f,
-	0x4f, 0x17, 0xbf, 0x71, 0xd0, 0x62, 0x0b, 0xa4, 0xbd, 0x28, 0xff, 0xa3, 0x23, 0x7a, 0xa4, 0x9e,
-	0x6b, 0x5a, 0xcf, 0xeb, 0xe5, 0x4b, 0x07, 0x78, 0x7e, 0xbf, 0x16, 0x56, 0xed, 0x9d, 0xfe, 0xa2,
-	0xb3, 0x76, 0xe5, 0xb5, 0x07, 0x0f, 0x97, 0x9d, 0x9f, 0x1f, 0x2e, 0x3b, 0xbf, 0x3d, 0x5c, 0x76,
-	0xbe, 0xfc, 0x7d, 0xf9, 0xa9, 0xf7, 0x5e, 0xc8, 0xfc, 0xb1, 0x4e, 0x44, 0x9c, 0xef, 0xd1, 0x90,
-	0x76, 0xc1, 0x57, 0x9b, 0x89, 0xec, 0x6e, 0xed, 0x19, 0xfd, 0x37, 0xe4, 0xc2, 0x5f, 0x01, 0x00,
-	0x00, 0xff, 0xff, 0xe3, 0xc9, 0x50, 0x90, 0xd3, 0x0f, 0x00, 0x00,
+	// 1399 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xec, 0x58, 0xcd, 0x6f, 0x1b, 0x45,
+	0x1b, 0x7f, 0x37, 0x5f, 0x6d, 0xc6, 0x49, 0xd3, 0x4c, 0x9a, 0x74, 0x5e, 0xbf, 0x7d, 0xd3, 0xd4,
+	0xed, 0xab, 0x46, 0x79, 0xa9, 0xad, 0xa4, 0x7c, 0x88, 0x56, 0x45, 0xb8, 0x49, 0x5b, 0x59, 0x2a,
+	0x60, 0xd9, 0x2d, 0x08, 0x2e, 0xab, 0xf1, 0xee, 0x63, 0x67, 0x60, 0xbd, 0xbb, 0x9a, 0x19, 0x3b,
+	0x35, 0x55, 0x2f, 0x48, 0x5c, 0x38, 0x01, 0xe5, 0xc0, 0xbd, 0x5c, 0x90, 0xe0, 0xcc, 0xbf, 0x50,
+	0x38, 0x21, 0x71, 0x47, 0xa8, 0x70, 0xe1, 0xbf, 0x40, 0xf3, 0xb1, 0xde, 0x8d, 0x43, 0x52, 0xbb,
+	0x4d, 0x84, 0x90, 0xb8, 0xcd, 0xfc, 0x9e, 0x8f, 0xf9, 0xed, 0xf3, 0xfc, 0xbc, 0xcf, 0xac, 0xd1,
+	0x09, 0x01, 0x5e, 0x87, 0x33, 0xd9, 0x2b, 0xc6, 0x3c, 0x92, 0x11, 0xce, 0x53, 0x4e, 0xc3, 0x56,
+	0xe4, 0x37, 0x8a, 0x5e, 0x10, 0x75, 0xfc, 0x62, 0xdf, 0xdc, 0x5d, 0xcf, 0x2f, 0x79, 0x51, 0xbb,
+	0x1d, 0x85, 0xa5, 0xee, 0x7a, 0xc9, 0xac, 0x4c, 0x4c, 0xfe, 0x6a, 0x8b, 0xc9, 0xed, 0x4e, 0xa3,
+	0xe8, 0x45, 0xed, 0x52, 0x2b, 0x0a, 0x68, 0xd8, 0x2a, 0x69, 0x43, 0xa3, 0xd3, 0x2c, 0xc5, 0xb2,
+	0x17, 0x83, 0x28, 0x49, 0xd6, 0x06, 0x21, 0x69, 0x3b, 0x4e, 0x57, 0x36, 0xf8, 0x4c, 0x2b, 0x8a,
+	0x5a, 0x01, 0x94, 0x68, 0xcc, 0x4a, 0x34, 0x0c, 0x23, 0x49, 0x25, 0x8b, 0x42, 0x61, 0xac, 0x85,
+	0x9f, 0xc7, 0x50, 0xae, 0x52, 0x2d, 0x07, 0x41, 0xb4, 0x13, 0x30, 0x21, 0xf1, 0x09, 0x34, 0xc6,
+	0x7c, 0xe2, 0xac, 0x38, 0xab, 0xd3, 0xb5, 0x31, 0xe6, 0xe3, 0x93, 0x68, 0xbc, 0xc3, 0x03, 0x32,
+	0xa6, 0x01, 0xb5, 0xc4, 0x18, 0x4d, 0x84, 0xb4, 0x0d, 0x64, 0x5c, 0x43, 0x7a, 0x8d, 0x57, 0x50,
+	0xce, 0x07, 0xe1, 0x71, 0x16, 0xab, 0xdc, 0x64, 0x42, 0x9b, 0xb2, 0x10, 0xfe, 0x2f, 0x42, 0x31,
+	0x8f, 0xde, 0x07, 0x4f, 0xba, 0xcc, 0x27, 0x93, 0xda, 0x61, 0xda, 0x22, 0x15, 0x1f, 0x9f, 0x45,
+	0x39, 0x8f, 0xf9, 0xdc, 0x55, 0xb5, 0x01, 0x41, 0xa6, 0x56, 0xc6, 0x57, 0xa7, 0x6b, 0x48, 0x41,
+	0x35, 0x8d, 0xe0, 0x57, 0x11, 0xf2, 0x38, 0x50, 0x09, 0xbe, 0x4b, 0x25, 0x39, 0xb6, 0xe2, 0xac,
+	0xe6, 0x36, 0xf2, 0x45, 0xf3, 0x68, 0xc5, 0xa4, 0x18, 0xc5, 0x3b, 0xc9, 0xb3, 0xd7, 0xa6, 0xad,
+	0x77, 0x59, 0xaa, 0x50, 0x1f, 0x02, 0xb0, 0xa1, 0xc7, 0x9f, 0x1e, 0x6a, 0xbd, 0xcb, 0x52, 0xb1,
+	0x66, 0xc2, 0xb5, 0x7b, 0x32, 0xbd, 0xe2, 0xac, 0x1e, 0xaf, 0x4d, 0x33, 0xb1, 0x65, 0x00, 0x5c,
+	0x40, 0xb3, 0x09, 0xa9, 0x46, 0x4f, 0x3d, 0x17, 0x32, 0x0f, 0x6e, 0xc1, 0xeb, 0xbd, 0x8a, 0x5f,
+	0xa8, 0xa2, 0xb9, 0x4c, 0x7d, 0x6f, 0xab, 0x1a, 0x5f, 0x43, 0x93, 0x4c, 0x42, 0x5b, 0x10, 0x67,
+	0x65, 0x7c, 0x35, 0xb7, 0x71, 0xb1, 0xb8, 0xbf, 0x24, 0x8a, 0x99, 0xd8, 0x9a, 0x89, 0xb2, 0x2d,
+	0x7b, 0x67, 0x9b, 0x49, 0xf8, 0xa7, 0x65, 0x47, 0xd6, 0xb2, 0x7e, 0x7d, 0x9f, 0xa1, 0x65, 0xfd,
+	0xd8, 0xa4, 0x65, 0xdf, 0xe5, 0x50, 0xae, 0x52, 0x7e, 0xa3, 0xca, 0xa3, 0x2e, 0xf3, 0x81, 0xff,
+	0x55, 0x2d, 0xc3, 0x68, 0x42, 0xbd, 0x2d, 0xc8, 0x94, 0x49, 0xaa, 0xd6, 0x7f, 0xdb, 0x2e, 0xf5,
+	0x53, 0x34, 0x69, 0x27, 0x90, 0x24, 0x97, 0xa6, 0xd0, 0x00, 0x7e, 0x17, 0xcd, 0x06, 0x3e, 0x8d,
+	0x5d, 0x01, 0x52, 0xb2, 0xb0, 0x25, 0x08, 0x68, 0x7e, 0x2f, 0x1e, 0xd8, 0xb9, 0xb4, 0x45, 0xc5,
+	0xdb, 0x5b, 0xe5, 0x6a, 0xdd, 0xc6, 0xd6, 0x66, 0x54, 0xaa, 0x64, 0x97, 0xff, 0xfd, 0x18, 0x9a,
+	0xc9, 0x9a, 0xf1, 0x12, 0x9a, 0x12, 0xc0, 0xbb, 0xc0, 0x6d, 0x4b, 0xed, 0x4e, 0xd5, 0x3b, 0x8e,
+	0xb8, 0xd4, 0x7d, 0x9d, 0xac, 0xe9, 0x35, 0x7e, 0x19, 0x9d, 0x6e, 0x50, 0x01, 0xae, 0xcf, 0x84,
+	0x0a, 0xee, 0x30, 0xb1, 0x0d, 0xbe, 0x9b, 0xe9, 0xf5, 0xa2, 0x32, 0x6f, 0x65, 0xad, 0x6f, 0xaa,
+	0xe6, 0xab, 0x38, 0x16, 0xfa, 0x7f, 0x16, 0x37, 0x61, 0xe3, 0x58, 0xe8, 0xef, 0x8d, 0x3b, 0x8f,
+	0x66, 0x75, 0x5c, 0x4c, 0x85, 0xd8, 0x89, 0x78, 0xa2, 0x8a, 0x19, 0x05, 0x56, 0x2d, 0x86, 0xcf,
+	0xa1, 0x19, 0x0e, 0x4d, 0x0e, 0x62, 0xdb, 0xe5, 0x54, 0x1a, 0x81, 0x4c, 0xd6, 0x72, 0x16, 0xab,
+	0x51, 0x09, 0xf8, 0x32, 0x5a, 0x92, 0x81, 0x70, 0x3d, 0xea, 0x7a, 0xc0, 0x25, 0x6b, 0x32, 0x8f,
+	0x4a, 0x70, 0x63, 0x68, 0xdb, 0xde, 0x2c, 0xc8, 0x40, 0x6c, 0xd2, 0xcd, 0xd4, 0x56, 0x85, 0x36,
+	0x5e, 0x46, 0x48, 0x00, 0x67, 0x34, 0x60, 0x1f, 0x82, 0x4f, 0x4e, 0xe9, 0x1e, 0x65, 0x10, 0xbc,
+	0x81, 0x16, 0xfb, 0x3b, 0x57, 0x0d, 0xae, 0xa8, 0x23, 0x5d, 0x01, 0x1e, 0x59, 0xd4, 0x04, 0x16,
+	0xfa, 0xc6, 0x3b, 0xc6, 0x56, 0x07, 0x0f, 0x13, 0x74, 0x8c, 0x83, 0xe4, 0x0c, 0x04, 0x59, 0xd2,
+	0x5e, 0xc9, 0xd6, 0x58, 0x84, 0xa4, 0x5c, 0x92, 0xd3, 0xfa, 0xa8, 0x64, 0x8b, 0xcf, 0xa0, 0x69,
+	0x0e, 0x4d, 0xe0, 0x9c, 0x06, 0x82, 0x10, 0x23, 0x95, 0x3e, 0xa0, 0xde, 0x64, 0xd9, 0xb3, 0xff,
+	0xad, 0xb3, 0x22, 0x99, 0x1e, 0x59, 0x44, 0x0b, 0x21, 0xc8, 0x9d, 0x88, 0x7f, 0xb0, 0x8b, 0x64,
+	0x5e, 0x3b, 0xce, 0x5b, 0x53, 0x86, 0xe2, 0x79, 0x34, 0x4b, 0x45, 0x2f, 0xf4, 0x5c, 0x2f, 0x0a,
+	0x43, 0xf0, 0x24, 0xf9, 0x8f, 0x3e, 0x72, 0x46, 0x83, 0x9b, 0x06, 0x53, 0xa2, 0x89, 0x39, 0x34,
+	0xd9, 0x3d, 0xe2, 0x1b, 0xd1, 0x98, 0x9d, 0x16, 0x53, 0xa7, 0xa9, 0x70, 0xb0, 0x62, 0xd2, 0x3b,
+	0x5c, 0x40, 0x33, 0x02, 0x28, 0xf7, 0xb6, 0x5d, 0xe1, 0x45, 0x31, 0x90, 0xc7, 0x46, 0x6b, 0x39,
+	0x03, 0xd6, 0x15, 0x86, 0x2f, 0xa0, 0x59, 0xeb, 0xd3, 0x64, 0x81, 0x04, 0x4e, 0xbe, 0x37, 0x4e,
+	0x36, 0xf2, 0xa6, 0x06, 0xf1, 0x1a, 0x3a, 0x69, 0xbd, 0xa8, 0x94, 0x9c, 0x35, 0x3a, 0x12, 0xc8,
+	0x0f, 0xc6, 0x71, 0xce, 0x18, 0xca, 0x09, 0x8e, 0xd7, 0xd1, 0x29, 0x1e, 0x05, 0x20, 0x52, 0x57,
+	0xa3, 0xb9, 0x6f, 0xcc, 0xbb, 0x0a, 0x6b, 0x63, 0xdf, 0x5d, 0x2b, 0xae, 0x80, 0x66, 0x4c, 0x88,
+	0xc9, 0x45, 0xbe, 0x35, 0xae, 0x39, 0x0d, 0xd6, 0x35, 0xa6, 0x88, 0x1a, 0x1f, 0x16, 0x7a, 0x41,
+	0xc7, 0x07, 0xf2, 0xa9, 0x11, 0xbf, 0x89, 0xac, 0x18, 0x30, 0xf5, 0x82, 0x7b, 0xc6, 0xeb, 0xb3,
+	0xac, 0xd7, 0x0d, 0x03, 0xe2, 0x8d, 0x84, 0xa2, 0xe4, 0x34, 0x14, 0xcd, 0x88, 0xb7, 0xf5, 0x0d,
+	0x87, 0x7c, 0x6e, 0x9c, 0x17, 0xb4, 0xf1, 0xce, 0x2e, 0x1b, 0xbe, 0x88, 0xe6, 0x44, 0x27, 0x06,
+	0xee, 0x76, 0x04, 0x70, 0x57, 0x79, 0x90, 0x87, 0xc6, 0x7d, 0x56, 0xe3, 0x77, 0x05, 0xf0, 0x5a,
+	0x14, 0x80, 0x9e, 0x05, 0xe9, 0x5b, 0x61, 0xf4, 0x59, 0x90, 0xc6, 0xda, 0x59, 0xb0, 0xf1, 0xe8,
+	0x14, 0x9a, 0xab, 0x5b, 0x97, 0x3a, 0xf0, 0x2e, 0xf3, 0x00, 0xf7, 0xd0, 0xec, 0x2d, 0x90, 0xe5,
+	0x6a, 0xe5, 0x6d, 0xe0, 0x42, 0xf1, 0x3b, 0x3b, 0x98, 0xd4, 0xde, 0x07, 0xbb, 0xeb, 0xc5, 0x1b,
+	0xed, 0x58, 0xf6, 0xf2, 0xe7, 0xf6, 0x77, 0xb0, 0x39, 0x0a, 0x17, 0x3e, 0xfa, 0xe9, 0xb7, 0x87,
+	0x63, 0xcb, 0xf8, 0x8c, 0xbe, 0xfa, 0x25, 0xac, 0xd4, 0xe5, 0x92, 0xc6, 0xec, 0x52, 0xd7, 0x9e,
+	0xf4, 0xc8, 0x41, 0x27, 0xd5, 0x63, 0x65, 0x2e, 0x1a, 0x02, 0xff, 0x6f, 0xff, 0xec, 0xca, 0xf7,
+	0x2d, 0x3d, 0x6d, 0x44, 0xfe, 0xff, 0x43, 0xde, 0x5c, 0x54, 0x4c, 0xe1, 0xaa, 0xa6, 0xf3, 0x12,
+	0xbe, 0xbc, 0x87, 0x8e, 0x1d, 0x50, 0xa2, 0x74, 0xdf, 0x8b, 0x42, 0x09, 0xf7, 0xd4, 0xf0, 0x7a,
+	0x50, 0x62, 0x31, 0x4d, 0x09, 0x7d, 0xe2, 0xa0, 0x13, 0xb7, 0x20, 0x4b, 0x12, 0x9f, 0xdf, 0x9f,
+	0x63, 0x65, 0x2b, 0x61, 0x38, 0xec, 0xdd, 0xaa, 0xb0, 0xa6, 0xd9, 0x5d, 0xc0, 0x85, 0x3d, 0xec,
+	0xb2, 0x3c, 0x4a, 0xf7, 0x99, 0xff, 0x00, 0x7f, 0xe5, 0xa0, 0xf9, 0x4d, 0x3d, 0x89, 0xb2, 0x7c,
+	0x86, 0x3d, 0x6a, 0x78, 0x4e, 0xd7, 0x34, 0xa7, 0x57, 0x0a, 0x1b, 0xfb, 0x55, 0xac, 0x74, 0x3f,
+	0x9d, 0xf6, 0xbb, 0x0b, 0x76, 0xc5, 0x59, 0xc3, 0x5f, 0x38, 0x68, 0xfe, 0x6e, 0xec, 0x1f, 0x39,
+	0xcd, 0x4b, 0x9a, 0xe6, 0xc5, 0x8d, 0x21, 0x4a, 0xa7, 0x68, 0x7d, 0xec, 0xa0, 0x79, 0x33, 0xe7,
+	0x47, 0xee, 0xe6, 0xd3, 0x7e, 0x15, 0x49, 0x17, 0xd7, 0x86, 0xe9, 0x62, 0x2a, 0xfc, 0xfe, 0x75,
+	0xed, 0xb0, 0x84, 0xbf, 0xeb, 0xee, 0xf8, 0x0c, 0xc2, 0xdf, 0x49, 0x09, 0xf5, 0x85, 0x9f, 0xde,
+	0xf7, 0x0f, 0x43, 0xf8, 0xfd, 0x6c, 0x07, 0x0a, 0x3f, 0xe5, 0xb1, 0x57, 0xf8, 0x29, 0x9f, 0x61,
+	0x8f, 0x1a, 0x9e, 0xd3, 0xc8, 0xc2, 0x4f, 0x89, 0x0e, 0x0a, 0xff, 0x28, 0x69, 0x1e, 0x24, 0xfc,
+	0x81, 0xd2, 0x0d, 0x0a, 0x7f, 0xc4, 0x6e, 0x3e, 0x97, 0xf0, 0x07, 0xbb, 0xd8, 0x17, 0x7e, 0x3a,
+	0x9b, 0x0e, 0x49, 0xf8, 0xbb, 0x07, 0xe5, 0xe8, 0xc2, 0xa7, 0xed, 0xb8, 0x4f, 0x28, 0x11, 0x7e,
+	0xe6, 0xab, 0xe9, 0x10, 0x84, 0x9f, 0x66, 0x3b, 0x48, 0xf8, 0x19, 0x1e, 0x7b, 0x84, 0x9f, 0xe1,
+	0x33, 0xec, 0x51, 0xc3, 0x73, 0x1a, 0x55, 0xf8, 0x19, 0xa2, 0x03, 0xc2, 0x3f, 0x52, 0x9a, 0x07,
+	0x08, 0x7f, 0xb0, 0x74, 0x03, 0xc2, 0x1f, 0xb5, 0x9b, 0xcf, 0x23, 0xfc, 0x3d, 0x5d, 0xfc, 0xda,
+	0x41, 0x8b, 0x75, 0x90, 0xf6, 0x0b, 0xf1, 0x99, 0x4a, 0xf4, 0x54, 0x3e, 0x37, 0x35, 0x9f, 0xd7,
+	0x0b, 0x57, 0x0f, 0xd0, 0xfc, 0x7e, 0x2d, 0x2c, 0xd9, 0x8f, 0xd9, 0x2b, 0xce, 0xda, 0xf5, 0xd7,
+	0x1e, 0x3f, 0x59, 0x76, 0x7e, 0x7c, 0xb2, 0xec, 0xfc, 0xf2, 0x64, 0xd9, 0xf9, 0xf2, 0xd7, 0xe5,
+	0x7f, 0xbd, 0xf7, 0x42, 0xe6, 0x4f, 0xc0, 0x84, 0xc4, 0xa5, 0x36, 0x0d, 0x69, 0x0b, 0x7c, 0x75,
+	0x98, 0xc8, 0x9e, 0xd6, 0x98, 0xd2, 0xdf, 0xdf, 0x97, 0xff, 0x08, 0x00, 0x00, 0xff, 0xff, 0x54,
+	0x00, 0x34, 0xce, 0x7f, 0x14, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -820,28 +1017,61 @@ type SecurityServiceClient interface {
 	// Required permissions:
 	// - None
 	GetAPIVersion(ctx context.Context, in *v1.Empty, opts ...grpc.CallOption) (*v1.Version, error)
+	// Fetch all IP allowlists that belong to the project identified by the given
+	// context ID.
+	// Required permissions:
+	// - security.ipallowlist.list on the project identified by the given context ID.
+	ListIPAllowlists(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*IPAllowlistList, error)
+	// Fetch an IP allowlist by its id.
+	// Required permissions:
+	// - security.ipallowlist.get on the IP allowlist
+	GetIPAllowlist(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*IPAllowlist, error)
+	// Create a new IP allowlist
+	// Required permissions:
+	// - security.ipallowlist.create on the project that owns the IP allowlist.
+	CreateIPAllowlist(ctx context.Context, in *IPAllowlist, opts ...grpc.CallOption) (*IPAllowlist, error)
+	// Update an IP allowlist
+	// Required permissions:
+	// - security.ipallowlist.update on the IP allowlist
+	UpdateIPAllowlist(ctx context.Context, in *IPAllowlist, opts ...grpc.CallOption) (*IPAllowlist, error)
+	// Delete an IP allowlist.
+	// Note that IP allowlists are initially only marked for deletion.
+	// Once all their dependent deployments are removed, the allowlist is removed.
+	// Required permissions:
+	// - security.ipallowlist.delete on the IP allowlist
+	DeleteIPAllowlist(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Fetch all IP whitelists that belong to the project identified by the given
 	// context ID.
 	// Required permissions:
 	// - security.ipwhitelist.list on the project identified by the given context ID.
+	// Note: The use of this method has been deprecated.
+	// In a future version, it will be removed.
 	ListIPWhitelists(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*IPWhitelistList, error)
 	// Fetch an IP whitelist by its id.
 	// Required permissions:
 	// - security.ipwhitelist.get on the IP whitelist
+	// Note: The use of this method has been deprecated.
+	// In a future version, it will be removed.
 	GetIPWhitelist(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*IPWhitelist, error)
 	// Create a new IP whitelist
 	// Required permissions:
 	// - security.ipwhitelist.create on the project that owns the IP whitelist.
+	// Note: The use of this method has been deprecated.
+	// In a future version, it will be removed.
 	CreateIPWhitelist(ctx context.Context, in *IPWhitelist, opts ...grpc.CallOption) (*IPWhitelist, error)
 	// Update an IP whitelist
 	// Required permissions:
 	// - security.ipwhitelist.update on the IP whitelist
+	// Note: The use of this method has been deprecated.
+	// In a future version, it will be removed.
 	UpdateIPWhitelist(ctx context.Context, in *IPWhitelist, opts ...grpc.CallOption) (*IPWhitelist, error)
 	// Delete an IP whitelist.
 	// Note that IP whitelists are initially only marked for deletion.
 	// Once all their dependent deployments are removed, the whitelist is removed.
 	// Required permissions:
 	// - security.ipwhitelist.delete on the IP whitelist
+	// Note: The use of this method has been deprecated.
+	// In a future version, it will be removed.
 	DeleteIPWhitelist(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Fetch all IAM providers that belong to the project identified by the given
 	// context ID.
@@ -883,6 +1113,51 @@ func NewSecurityServiceClient(cc *grpc.ClientConn) SecurityServiceClient {
 func (c *securityServiceClient) GetAPIVersion(ctx context.Context, in *v1.Empty, opts ...grpc.CallOption) (*v1.Version, error) {
 	out := new(v1.Version)
 	err := c.cc.Invoke(ctx, "/arangodb.cloud.security.v1.SecurityService/GetAPIVersion", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *securityServiceClient) ListIPAllowlists(ctx context.Context, in *v1.ListOptions, opts ...grpc.CallOption) (*IPAllowlistList, error) {
+	out := new(IPAllowlistList)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.security.v1.SecurityService/ListIPAllowlists", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *securityServiceClient) GetIPAllowlist(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*IPAllowlist, error) {
+	out := new(IPAllowlist)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.security.v1.SecurityService/GetIPAllowlist", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *securityServiceClient) CreateIPAllowlist(ctx context.Context, in *IPAllowlist, opts ...grpc.CallOption) (*IPAllowlist, error) {
+	out := new(IPAllowlist)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.security.v1.SecurityService/CreateIPAllowlist", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *securityServiceClient) UpdateIPAllowlist(ctx context.Context, in *IPAllowlist, opts ...grpc.CallOption) (*IPAllowlist, error) {
+	out := new(IPAllowlist)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.security.v1.SecurityService/UpdateIPAllowlist", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *securityServiceClient) DeleteIPAllowlist(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error) {
+	out := new(v1.Empty)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.security.v1.SecurityService/DeleteIPAllowlist", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -994,28 +1269,61 @@ type SecurityServiceServer interface {
 	// Required permissions:
 	// - None
 	GetAPIVersion(context.Context, *v1.Empty) (*v1.Version, error)
+	// Fetch all IP allowlists that belong to the project identified by the given
+	// context ID.
+	// Required permissions:
+	// - security.ipallowlist.list on the project identified by the given context ID.
+	ListIPAllowlists(context.Context, *v1.ListOptions) (*IPAllowlistList, error)
+	// Fetch an IP allowlist by its id.
+	// Required permissions:
+	// - security.ipallowlist.get on the IP allowlist
+	GetIPAllowlist(context.Context, *v1.IDOptions) (*IPAllowlist, error)
+	// Create a new IP allowlist
+	// Required permissions:
+	// - security.ipallowlist.create on the project that owns the IP allowlist.
+	CreateIPAllowlist(context.Context, *IPAllowlist) (*IPAllowlist, error)
+	// Update an IP allowlist
+	// Required permissions:
+	// - security.ipallowlist.update on the IP allowlist
+	UpdateIPAllowlist(context.Context, *IPAllowlist) (*IPAllowlist, error)
+	// Delete an IP allowlist.
+	// Note that IP allowlists are initially only marked for deletion.
+	// Once all their dependent deployments are removed, the allowlist is removed.
+	// Required permissions:
+	// - security.ipallowlist.delete on the IP allowlist
+	DeleteIPAllowlist(context.Context, *v1.IDOptions) (*v1.Empty, error)
 	// Fetch all IP whitelists that belong to the project identified by the given
 	// context ID.
 	// Required permissions:
 	// - security.ipwhitelist.list on the project identified by the given context ID.
+	// Note: The use of this method has been deprecated.
+	// In a future version, it will be removed.
 	ListIPWhitelists(context.Context, *v1.ListOptions) (*IPWhitelistList, error)
 	// Fetch an IP whitelist by its id.
 	// Required permissions:
 	// - security.ipwhitelist.get on the IP whitelist
+	// Note: The use of this method has been deprecated.
+	// In a future version, it will be removed.
 	GetIPWhitelist(context.Context, *v1.IDOptions) (*IPWhitelist, error)
 	// Create a new IP whitelist
 	// Required permissions:
 	// - security.ipwhitelist.create on the project that owns the IP whitelist.
+	// Note: The use of this method has been deprecated.
+	// In a future version, it will be removed.
 	CreateIPWhitelist(context.Context, *IPWhitelist) (*IPWhitelist, error)
 	// Update an IP whitelist
 	// Required permissions:
 	// - security.ipwhitelist.update on the IP whitelist
+	// Note: The use of this method has been deprecated.
+	// In a future version, it will be removed.
 	UpdateIPWhitelist(context.Context, *IPWhitelist) (*IPWhitelist, error)
 	// Delete an IP whitelist.
 	// Note that IP whitelists are initially only marked for deletion.
 	// Once all their dependent deployments are removed, the whitelist is removed.
 	// Required permissions:
 	// - security.ipwhitelist.delete on the IP whitelist
+	// Note: The use of this method has been deprecated.
+	// In a future version, it will be removed.
 	DeleteIPWhitelist(context.Context, *v1.IDOptions) (*v1.Empty, error)
 	// Fetch all IAM providers that belong to the project identified by the given
 	// context ID.
@@ -1052,6 +1360,21 @@ type UnimplementedSecurityServiceServer struct {
 
 func (*UnimplementedSecurityServiceServer) GetAPIVersion(ctx context.Context, req *v1.Empty) (*v1.Version, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAPIVersion not implemented")
+}
+func (*UnimplementedSecurityServiceServer) ListIPAllowlists(ctx context.Context, req *v1.ListOptions) (*IPAllowlistList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListIPAllowlists not implemented")
+}
+func (*UnimplementedSecurityServiceServer) GetIPAllowlist(ctx context.Context, req *v1.IDOptions) (*IPAllowlist, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetIPAllowlist not implemented")
+}
+func (*UnimplementedSecurityServiceServer) CreateIPAllowlist(ctx context.Context, req *IPAllowlist) (*IPAllowlist, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateIPAllowlist not implemented")
+}
+func (*UnimplementedSecurityServiceServer) UpdateIPAllowlist(ctx context.Context, req *IPAllowlist) (*IPAllowlist, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateIPAllowlist not implemented")
+}
+func (*UnimplementedSecurityServiceServer) DeleteIPAllowlist(ctx context.Context, req *v1.IDOptions) (*v1.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteIPAllowlist not implemented")
 }
 func (*UnimplementedSecurityServiceServer) ListIPWhitelists(ctx context.Context, req *v1.ListOptions) (*IPWhitelistList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListIPWhitelists not implemented")
@@ -1105,6 +1428,96 @@ func _SecurityService_GetAPIVersion_Handler(srv interface{}, ctx context.Context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SecurityServiceServer).GetAPIVersion(ctx, req.(*v1.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SecurityService_ListIPAllowlists_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.ListOptions)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SecurityServiceServer).ListIPAllowlists(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.security.v1.SecurityService/ListIPAllowlists",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SecurityServiceServer).ListIPAllowlists(ctx, req.(*v1.ListOptions))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SecurityService_GetIPAllowlist_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.IDOptions)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SecurityServiceServer).GetIPAllowlist(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.security.v1.SecurityService/GetIPAllowlist",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SecurityServiceServer).GetIPAllowlist(ctx, req.(*v1.IDOptions))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SecurityService_CreateIPAllowlist_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IPAllowlist)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SecurityServiceServer).CreateIPAllowlist(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.security.v1.SecurityService/CreateIPAllowlist",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SecurityServiceServer).CreateIPAllowlist(ctx, req.(*IPAllowlist))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SecurityService_UpdateIPAllowlist_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IPAllowlist)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SecurityServiceServer).UpdateIPAllowlist(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.security.v1.SecurityService/UpdateIPAllowlist",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SecurityServiceServer).UpdateIPAllowlist(ctx, req.(*IPAllowlist))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SecurityService_DeleteIPAllowlist_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.IDOptions)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SecurityServiceServer).DeleteIPAllowlist(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.security.v1.SecurityService/DeleteIPAllowlist",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SecurityServiceServer).DeleteIPAllowlist(ctx, req.(*v1.IDOptions))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1316,6 +1729,26 @@ var _SecurityService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _SecurityService_GetAPIVersion_Handler,
 		},
 		{
+			MethodName: "ListIPAllowlists",
+			Handler:    _SecurityService_ListIPAllowlists_Handler,
+		},
+		{
+			MethodName: "GetIPAllowlist",
+			Handler:    _SecurityService_GetIPAllowlist_Handler,
+		},
+		{
+			MethodName: "CreateIPAllowlist",
+			Handler:    _SecurityService_CreateIPAllowlist_Handler,
+		},
+		{
+			MethodName: "UpdateIPAllowlist",
+			Handler:    _SecurityService_UpdateIPAllowlist_Handler,
+		},
+		{
+			MethodName: "DeleteIPAllowlist",
+			Handler:    _SecurityService_DeleteIPAllowlist_Handler,
+		},
+		{
 			MethodName: "ListIPWhitelists",
 			Handler:    _SecurityService_ListIPWhitelists_Handler,
 		},
@@ -1362,6 +1795,159 @@ var _SecurityService_serviceDesc = grpc.ServiceDesc{
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "security.proto",
+}
+
+func (m *IPAllowlist) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *IPAllowlist) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *IPAllowlist) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.CreatedById) > 0 {
+		i -= len(m.CreatedById)
+		copy(dAtA[i:], m.CreatedById)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.CreatedById)))
+		i--
+		dAtA[i] = 0x52
+	}
+	if m.IsDeleted {
+		i--
+		if m.IsDeleted {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x48
+	}
+	if m.DeletedAt != nil {
+		{
+			size, err := m.DeletedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSecurity(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x42
+	}
+	if m.CreatedAt != nil {
+		{
+			size, err := m.CreatedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSecurity(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x3a
+	}
+	if len(m.CidrRanges) > 0 {
+		for iNdEx := len(m.CidrRanges) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.CidrRanges[iNdEx])
+			copy(dAtA[i:], m.CidrRanges[iNdEx])
+			i = encodeVarintSecurity(dAtA, i, uint64(len(m.CidrRanges[iNdEx])))
+			i--
+			dAtA[i] = 0x32
+		}
+	}
+	if len(m.ProjectId) > 0 {
+		i -= len(m.ProjectId)
+		copy(dAtA[i:], m.ProjectId)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.ProjectId)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.Description) > 0 {
+		i -= len(m.Description)
+		copy(dAtA[i:], m.Description)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.Description)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Url) > 0 {
+		i -= len(m.Url)
+		copy(dAtA[i:], m.Url)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.Url)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintSecurity(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *IPAllowlistList) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *IPAllowlistList) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *IPAllowlistList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Items) > 0 {
+		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Items[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintSecurity(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *IPWhitelist) Marshal() (dAtA []byte, err error) {
@@ -1950,6 +2536,77 @@ func encodeVarintSecurity(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
+func (m *IPAllowlist) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovSecurity(uint64(l))
+	}
+	l = len(m.Url)
+	if l > 0 {
+		n += 1 + l + sovSecurity(uint64(l))
+	}
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovSecurity(uint64(l))
+	}
+	l = len(m.Description)
+	if l > 0 {
+		n += 1 + l + sovSecurity(uint64(l))
+	}
+	l = len(m.ProjectId)
+	if l > 0 {
+		n += 1 + l + sovSecurity(uint64(l))
+	}
+	if len(m.CidrRanges) > 0 {
+		for _, s := range m.CidrRanges {
+			l = len(s)
+			n += 1 + l + sovSecurity(uint64(l))
+		}
+	}
+	if m.CreatedAt != nil {
+		l = m.CreatedAt.Size()
+		n += 1 + l + sovSecurity(uint64(l))
+	}
+	if m.DeletedAt != nil {
+		l = m.DeletedAt.Size()
+		n += 1 + l + sovSecurity(uint64(l))
+	}
+	if m.IsDeleted {
+		n += 2
+	}
+	l = len(m.CreatedById)
+	if l > 0 {
+		n += 1 + l + sovSecurity(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *IPAllowlistList) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Items) > 0 {
+		for _, e := range m.Items {
+			l = e.Size()
+			n += 1 + l + sovSecurity(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *IPWhitelist) Size() (n int) {
 	if m == nil {
 		return 0
@@ -2208,6 +2865,464 @@ func sovSecurity(x uint64) (n int) {
 }
 func sozSecurity(x uint64) (n int) {
 	return sovSecurity(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *IPAllowlist) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSecurity
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: IPAllowlist: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: IPAllowlist: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Url", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Url = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Description = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ProjectId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ProjectId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CidrRanges", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.CidrRanges = append(m.CidrRanges, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.CreatedAt == nil {
+				m.CreatedAt = &types.Timestamp{}
+			}
+			if err := m.CreatedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 8:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DeletedAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.DeletedAt == nil {
+				m.DeletedAt = &types.Timestamp{}
+			}
+			if err := m.DeletedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 9:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field IsDeleted", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.IsDeleted = bool(v != 0)
+		case 10:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CreatedById", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.CreatedById = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSecurity(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *IPAllowlistList) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSecurity
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: IPAllowlistList: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: IPAllowlistList: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Items", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSecurity
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Items = append(m.Items, &IPAllowlist{})
+			if err := m.Items[len(m.Items)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSecurity(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthSecurity
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
 }
 func (m *IPWhitelist) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)

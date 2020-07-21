@@ -30,14 +30,26 @@ import (
 )
 
 const (
+	// KindIPAllowlist is a constants for the kind of IPAllowlist resources.
+	KindIPAllowlist = "IPAllowlist"
 	// KindIPWhitelist is a constants for the kind of IPWhitelist resources.
+	// Note: The use of this constant has been deprecated.
+	// In a future version, they will be removed.
 	KindIPWhitelist = "IPWhitelist"
 	// KindIAMProvider is a constants for the kind of IAMProvider resources.
 	KindIAMProvider = "IAMProvider"
 )
 
+// IPAllowlistURL creates a resource URL for the IPAllowlist with given ID
+// in given context.
+func IPAllowlistURL(organizationID, projectID, ipallowlistID string) string {
+	return path.Join(rm.ProjectURL(organizationID, projectID), KindIPAllowlist, url.PathEscape(ipallowlistID))
+}
+
 // IPWhitelistURL creates a resource URL for the IPWhitelist with given ID
 // in given context.
+// Note: The use of this function has been deprecated.
+// In a future version, they will be removed.
 func IPWhitelistURL(organizationID, projectID, ipwhitelistID string) string {
 	return path.Join(rm.ProjectURL(organizationID, projectID), KindIPWhitelist, url.PathEscape(ipwhitelistID))
 }

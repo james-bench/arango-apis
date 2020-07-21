@@ -23,7 +23,23 @@
 package v1
 
 const (
+	// IPAllowlist event types
+
+	// EventTypeIPAllowlistCreated is the type of event fired after an IP allowlist has been created
+	// SubjectID contains the ID of the allowlist.
+	EventTypeIPAllowlistCreated = "security.ipallowlist.created"
+	// EventTypeIPAllowlistUpdated is the type of event fired after an IP allowlist has been updated
+	// SubjectID contains the ID of the allowlist.
+	EventTypeIPAllowlistUpdated = "security.ipallowlist.updated"
+	// EventTypeIPAllowlistDeleted is the type of event fired after an IP allowlist has been (marked for) deleted
+	// SubjectID contains the ID of the allowlist.
+	EventTypeIPAllowlistDeleted = "security.ipallowlist.deleted"
+)
+
+const (
 	// IPWhitelist event types
+	// Note: The use of these constants has been deprecated.
+	// In a future version, they will be removed.
 
 	// EventTypeIPWhitelistCreated is the type of event fired after an IP whitelist has been created
 	// SubjectID contains the ID of the whitelist.

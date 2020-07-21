@@ -23,7 +23,24 @@
 package v1
 
 const (
+	// IPAllowlist permissions
+
+	// PermissionIPAllowlistList is needed for listing IP allowlists in a project
+	PermissionIPAllowlistList = "security.ipallowlist.list"
+	// PermissionIPAllowlistGet is needed for fetching an individual IP allowlists in a project
+	PermissionIPAllowlistGet = "security.ipallowlist.get"
+	// PermissionIPAllowlistCreate is needed for create an IP allowlist
+	PermissionIPAllowlistCreate = "security.ipallowlist.create"
+	// PermissionIPAllowlistUpdate is needed for updating an IP allowlist
+	PermissionIPAllowlistUpdate = "security.ipallowlist.update"
+	// PermissionIPAllowlistDelete is needed for deleting an IP allowlist
+	PermissionIPAllowlistDelete = "security.ipallowlist.delete"
+)
+
+const (
 	// IPWhitelist permissions
+	// Note: The use of these constants has been deprecated.
+	// In a future version, they will be removed.
 
 	// PermissionIPWhitelistList is needed for listing IP whitelists in a project
 	PermissionIPWhitelistList = "security.ipwhitelist.list"
