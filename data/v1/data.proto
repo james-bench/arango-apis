@@ -419,16 +419,19 @@ message Deployment {
         // Set once the server has been known to be a member of the cluster
         bool member_of_cluster = 6;
         // Set if the server is in a failed state
-        // Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading.
+        // Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading.
         bool failed = 7;
         // Set if the server is still being created
-        // Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading.
+        // Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading.
         bool creating = 8;
         // Set if the server is in the ok state.
-        // Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading.
+        // Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading.
         bool ok = 9;
+        // Set if the server is in the bad state.
+        // Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading.
+        bool bad = 14;
         // Set if the server is still being upgraded
-        // Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading.
+        // Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading.
         bool upgrading = 10;
         // Latest known ArangoDB version used by this server.
         // Initially this field is empty.
@@ -437,6 +440,8 @@ message Deployment {
         google.protobuf.Timestamp last_started_at = 12;
         // If set, a rotation of this server has been requested.
         bool rotation_pending = 13;
+        // If set, this server reports that it can be deleted.
+        bool can_be_deleted = 15;
         // Information about the data volume used to store the data
         DataVolumeInfo data_volume_info = 20;
     }

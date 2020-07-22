@@ -447,22 +447,27 @@ export interface Deployment_ServerStatus {
   member_of_cluster?: boolean;
   
   // Set if the server is in a failed state
-  // Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading.
+  // Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading.
   // boolean
   failed?: boolean;
   
   // Set if the server is still being created
-  // Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading.
+  // Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading.
   // boolean
   creating?: boolean;
   
   // Set if the server is in the ok state.
-  // Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading.
+  // Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading.
   // boolean
   ok?: boolean;
   
+  // Set if the server is in the bad state.
+  // Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading.
+  // boolean
+  bad?: boolean;
+  
   // Set if the server is still being upgraded
-  // Every server is always in 1 (and only 1) of these state: failed/creating/ok/upgrading.
+  // Every server is always in 1 (and only 1) of these states: failed/creating/ok/bad/upgrading.
   // boolean
   upgrading?: boolean;
   
@@ -478,6 +483,10 @@ export interface Deployment_ServerStatus {
   // If set, a rotation of this server has been requested.
   // boolean
   rotation_pending?: boolean;
+  
+  // If set, this server reports that it can be deleted.
+  // boolean
+  can_be_deleted?: boolean;
   
   // Information about the data volume used to store the data
   // DataVolumeInfo
