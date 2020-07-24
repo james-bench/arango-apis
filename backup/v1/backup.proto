@@ -474,4 +474,8 @@ message ListBackupsRequest {
     google.protobuf.Timestamp to = 3;
     // Optional common list options, the context_id is ignored
     common.v1.ListOptions options = 10;
+    // If set, the results will be sorted by created timestamp.
+    bool sort_by_created = 20;
+    // Sort descending (default is ascending).
+    bool sort_descending = 21;
 }
