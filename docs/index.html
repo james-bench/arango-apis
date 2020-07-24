@@ -9381,6 +9381,16 @@ This is an optional field. </p></td>
                 </tr>
               
                 <tr>
+                  <td>good_only</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, only backups that can be recovered from are included in the result.
+A backup can be recovered from when:
+- It is available and restorable on the servers of the deployment or
+- It is uploaded and the upload has finised. </p></td>
+                </tr>
+              
+                <tr>
                   <td>options</td>
                   <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
                   <td></td>

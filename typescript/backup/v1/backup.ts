@@ -415,6 +415,13 @@ export interface ListBackupsRequest {
   // googleTypes.Timestamp
   to?: googleTypes.Timestamp;
   
+  // If set, only backups that can be recovered from are included in the result.
+  // A backup can be recovered from when:
+  // - It is available and restorable on the servers of the deployment or
+  // - It is uploaded and the upload has finised.
+  // boolean
+  good_only?: boolean;
+  
   // Optional common list options, the context_id is ignored
   // arangodb.cloud.common.v1.ListOptions
   options?: arangodb_cloud_common_v1_ListOptions;
