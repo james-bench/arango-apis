@@ -472,6 +472,15 @@ message ListBackupsRequest {
     // Request backups that are created before this timestamp.
     // This is an optional field.
     google.protobuf.Timestamp to = 3;
+    // If set, only backups that can be recovered from are included in the result.
+    // A backup can be recovered from when:
+    // - It is available and restorable on the servers of the deployment or
+    // - It is uploaded and the upload has finised.
+    bool good_only = 4;
     // Optional common list options, the context_id is ignored
     common.v1.ListOptions options = 10;
+    // If set, the results will be sorted by created timestamp.
+    bool sort_by_created = 20;
+    // Sort descending (default is ascending).
+    bool sort_descending = 21;
 }
