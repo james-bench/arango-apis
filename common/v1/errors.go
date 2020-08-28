@@ -140,6 +140,21 @@ func Unauthenticated(msg string, args ...interface{}) error {
 	return status.Error(codes.Unauthenticated, msg)
 }
 
+// IsResourceExhausted returns true if the given error signals a request that failed because of lack
+// of resources, e.g. user quotas.
+func IsResourceExhausted(err error) bool {
+	return status.Code(Cause(err)) == codes.ResourceExhausted
+}
+
+// ResourceExhausted creates a new error that signals  a request that failed because of lack
+// of resources, e.g. user quotas.
+func ResourceExhausted(msg string, args ...interface{}) error {
+	if len(args) > 0 {
+		return status.Errorf(codes.ResourceExhausted, msg, args...)
+	}
+	return status.Error(codes.ResourceExhausted, msg)
+}
+
 // IsUnknown returns true if the given error signals an unknown error.
 func IsUnknown(err error) bool {
 	return status.Code(Cause(err)) == codes.Unknown
