@@ -167,3 +167,32 @@ func Unknown(msg string, args ...interface{}) error {
 	}
 	return status.Error(codes.Unknown, msg)
 }
+
+// IsUnavailable returns true if the given error signals an unavailable error.
+// This is a most likely a transient condition and may be corrected
+// by retrying with a backoff. Note that it is not always safe to retry
+// non-idempotent operations.
+func IsUnavailable(err error) bool {
+	return status.Code(Cause(err)) == codes.Unavailable
+}
+
+// Unavailable creates a new error that signals an unavailable service.
+func Unavailable(msg string, args ...interface{}) error {
+	if len(args) > 0 {
+		return status.Errorf(codes.Unavailable, msg, args...)
+	}
+	return status.Error(codes.Unavailable, msg)
+}
+
+// IsAborted returns true if the given error signals that the operation was aborted.
+func IsAborted(err error) bool {
+	return status.Code(Cause(err)) == codes.Aborted
+}
+
+// Aborted creates a new error that signals that an operation was aborted.
+func Aborted(msg string, args ...interface{}) error {
+	if len(args) > 0 {
+		return status.Errorf(codes.Aborted, msg, args...)
+	}
+	return status.Error(codes.Aborted, msg)
+}
