@@ -447,7 +447,7 @@ message Deployment {
         // Recent number of restarts
         int32 recent_restarts = 30;
         // Last known memory usage in bytes
-        int32 last_memory_usage = 31;
+        int64 last_memory_usage = 31;
         // Last known CPU usage in vCPU units
         float last_cpu_usage = 32;
     }
