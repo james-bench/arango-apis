@@ -491,6 +491,18 @@ export interface Deployment_ServerStatus {
   // Information about the data volume used to store the data
   // DataVolumeInfo
   data_volume_info?: DataVolumeInfo;
+  
+  // Recent number of restarts
+  // number
+  recent_restarts?: number;
+  
+  // Last known memory usage in bytes
+  // number
+  last_memory_usage?: number;
+  
+  // Last known CPU usage in vCPU units
+  // number
+  last_cpu_usage?: number;
 }
 export interface Deployment_ServersSpec {
   // Number of coordinators of the deployment
