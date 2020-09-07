@@ -444,6 +444,12 @@ message Deployment {
         bool can_be_deleted = 15;
         // Information about the data volume used to store the data
         DataVolumeInfo data_volume_info = 20;
+        // Recent number of restarts
+        int32 recent_restarts = 30;
+        // Last known memory usage in bytes
+        int64 last_memory_usage = 31;
+        // Last known CPU usage in vCPU units
+        float last_cpu_usage = 32;
     }
 
     // Status of the deployment
