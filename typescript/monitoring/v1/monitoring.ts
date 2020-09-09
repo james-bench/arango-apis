@@ -30,6 +30,10 @@ export interface GetDeploymentLogsRequest {
   // string
   format?: string;
   
+  // If set limits logs to the server with this ID.
+  // string
+  server_id?: string;
+  
   // The start time for the query. Defaults to one hour ago.
   // googleTypes.Timestamp
   start_at?: googleTypes.Timestamp;

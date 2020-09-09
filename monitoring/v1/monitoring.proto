@@ -62,6 +62,8 @@ message GetDeploymentLogsRequest {
     // Formatting for log messages.
     // The possible values are text and json, with default value being text.
     string format = 3;
+    // If set limits logs to the server with this ID.
+    string server_id = 4;
 
 	// The start time for the query. Defaults to one hour ago.
     google.protobuf.Timestamp start_at = 100;
