@@ -71,7 +71,8 @@ func (source *Deployment) SpecEquals(other *Deployment) bool {
 		source.GetIpwhitelistId() == other.GetIpwhitelistId() &&
 		source.GetCertificates().Equals(other.GetCertificates()) &&
 		source.GetServers().Equals(other.GetServers()) &&
-		source.GetBackupRestore().Equals(other.GetBackupRestore())
+		source.GetBackupRestore().Equals(other.GetBackupRestore()) &&
+		source.GetLocked() == other.GetLocked()
 }
 
 // Equals returns true when source & other have the same values

@@ -394,6 +394,9 @@ message Organization {
     bool is_allowed_to_use_custom_images = 11;
     // If set, this organization is allowed to use IAMProviders on their deployments.
     bool is_allowed_to_use_iamproviders = 12;
+    // If set, this organization cannot be deleted.
+    // To delete, first update the with locked set to false.
+    bool locked = 13;
 }
 
 // List of organizations.
@@ -493,6 +496,9 @@ message Project {
     google.protobuf.Timestamp deleted_at = 8;
     // If set, this project is allowed to use deployments using the flexible model.
     bool is_flexible_deployments_enabled = 9;
+    // If set, this project cannot be deleted.
+    // To delete, first update the with locked set to false.
+    bool locked = 10;
 }
 
 // List of Projects.

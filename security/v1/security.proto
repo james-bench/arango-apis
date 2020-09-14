@@ -242,6 +242,9 @@ message IPAllowlist {
     // Identifier of the user who created this allowlist.
     // This is a read-only value.
     string created_by_id = 10;
+    // If set, this allow list cannot be deleted.
+    // To delete, first update the with locked set to false.
+    bool locked = 11;
 }
 
 // List of IP allowlists.
@@ -321,6 +324,9 @@ message IAMProvider {
     // Set when this provider is the default in its project.
     // This is a read-only value.
     bool is_default = 11;
+    // If set, this IAM provider cannot be deleted.
+    // To delete, first update the with locked set to false.
+    bool locked = 12;
 
     // LDAP provider specific settings
     message LDAPSettings {

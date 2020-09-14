@@ -238,6 +238,11 @@ export interface Organization {
   // If set, this organization is allowed to use IAMProviders on their deployments.
   // boolean
   is_allowed_to_use_iamproviders?: boolean;
+  
+  // If set, this organization cannot be deleted.
+  // To delete, first update the with locked set to false.
+  // boolean
+  locked?: boolean;
 }
 export interface Organization_TotalDeploymentsEntry {
   // string
@@ -386,6 +391,11 @@ export interface Project {
   // If set, this project is allowed to use deployments using the flexible model.
   // boolean
   is_flexible_deployments_enabled?: boolean;
+  
+  // If set, this project cannot be deleted.
+  // To delete, first update the with locked set to false.
+  // boolean
+  locked?: boolean;
 }
 
 // List of Projects.

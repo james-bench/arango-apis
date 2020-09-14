@@ -283,6 +283,11 @@ export interface BackupPolicy {
   // string
   email_notification?: string;
   
+  // If set, this backup policy cannot be deleted.
+  // To delete, first update the with locked set to false.
+  // boolean
+  locked?: boolean;
+  
   // Status of the backup policy
   // BackupPolicy_Status
   status?: BackupPolicy_Status;

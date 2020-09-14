@@ -288,6 +288,10 @@ message BackupPolicy {
     // This field support the following values: "Never|FailureOnly|Always"
     string email_notification = 13;
 
+    // If set, this backup policy cannot be deleted.
+    // To delete, first update the with locked set to false.
+    bool locked = 14;
+
     // Status of the backup policy
     // All members of this field are read-only.
     message Status {

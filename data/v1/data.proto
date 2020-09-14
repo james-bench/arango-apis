@@ -303,6 +303,9 @@ message Deployment {
     // identifier, this field may be left empty.
     // This is a read-only value after creation.
     string accepted_terms_and_conditions_id = 12;
+    // If set, this deployment cannot be deleted.
+    // To delete, first update the with locked set to false.
+    bool locked = 13;
 
     // Indicates that this deployment is paused.
     // Use the data.ResumeDeployment method to resume (aka unpause) the deployment.

@@ -1658,6 +1658,14 @@ This is a read-only value. </p></td>
                   <td><p>If set, this organization is allowed to use IAMProviders on their deployments. </p></td>
                 </tr>
               
+                <tr>
+                  <td>locked</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, this organization cannot be deleted.
+To delete, first update the with locked set to false. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -1979,6 +1987,14 @@ This is a read-only value. </p></td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>If set, this project is allowed to use deployments using the flexible model. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>locked</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, this project cannot be deleted.
+To delete, first update the with locked set to false. </p></td>
                 </tr>
               
             </tbody>
@@ -3061,6 +3077,14 @@ This is a read-only value. </p></td>
 The self-signed certificates is always hosted on port 18529. </p></td>
                 </tr>
               
+                <tr>
+                  <td>locked</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, this certificate cannot be deleted.
+To delete, first update the with locked set to false. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -3450,6 +3474,14 @@ This is a read-only value. </p></td>
                 </tr>
               
                 <tr>
+                  <td>locked</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, this IAM provider cannot be deleted.
+To delete, first update the with locked set to false. </p></td>
+                </tr>
+              
+                <tr>
                   <td>ldap_settings</td>
                   <td><a href="#arangodb.cloud.security.v1.IAMProvider.LDAPSettings">IAMProvider.LDAPSettings</a></td>
                   <td></td>
@@ -3788,6 +3820,14 @@ This is a read-only value. </p></td>
                   <td></td>
                   <td><p>Identifier of the user who created this allowlist.
 This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>locked</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, this allow list cannot be deleted.
+To delete, first update the with locked set to false. </p></td>
                 </tr>
               
             </tbody>
@@ -9067,6 +9107,14 @@ This field support the following values: &#34;Never|FailureOnly|Always&#34; </p>
                 </tr>
               
                 <tr>
+                  <td>locked</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, this backup policy cannot be deleted.
+To delete, first update the with locked set to false. </p></td>
+                </tr>
+              
+                <tr>
                   <td>status</td>
                   <td><a href="#arangodb.cloud.backup.v1.BackupPolicy.Status">BackupPolicy.Status</a></td>
                   <td></td>
@@ -10274,6 +10322,14 @@ when creating a deployment.
 If the tier of the organization does not require a non-empty Terms&amp;Condition
 identifier, this field may be left empty.
 This is a read-only value after creation. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>locked</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, this deployment cannot be deleted.
+To delete, first update the with locked set to false. </p></td>
                 </tr>
               
                 <tr>

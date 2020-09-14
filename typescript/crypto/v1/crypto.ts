@@ -87,6 +87,11 @@ export interface CACertificate {
   // The self-signed certificates is always hosted on port 18529.
   // boolean
   use_well_known_certificate?: boolean;
+  
+  // If set, this certificate cannot be deleted.
+  // To delete, first update the with locked set to false.
+  // boolean
+  locked?: boolean;
 }
 
 // Instructions for installing & uninstalling CA certificates
