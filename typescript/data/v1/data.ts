@@ -230,6 +230,11 @@ export interface Deployment {
   // string
   accepted_terms_and_conditions_id?: string;
   
+  // If set, this deployment cannot be deleted.
+  // To delete, first update the with locked set to false.
+  // boolean
+  locked?: boolean;
+  
   // Indicates that this deployment is paused.
   // Use the data.ResumeDeployment method to resume (aka unpause) the deployment.
   // This is a read-only value.

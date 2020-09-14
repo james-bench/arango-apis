@@ -160,6 +160,9 @@ message CACertificate {
     // When enabled, deployments using this certificate use a well known TLS certificate on the 8529 port.
     // The self-signed certificates is always hosted on port 18529.
     bool use_well_known_certificate = 15;
+    // If set, this certificate cannot be deleted.
+    // To delete, first update the with locked set to false.
+    bool locked = 16;
 }
 
 // List of CACertificates.

@@ -66,6 +66,11 @@ export interface IAMProvider {
   // boolean
   is_default?: boolean;
   
+  // If set, this IAM provider cannot be deleted.
+  // To delete, first update the with locked set to false.
+  // boolean
+  locked?: boolean;
+  
   // IAMProvider_LDAPSettings
   ldap_settings?: IAMProvider_LDAPSettings;
 }
@@ -248,6 +253,11 @@ export interface IPAllowlist {
   // This is a read-only value.
   // string
   created_by_id?: string;
+  
+  // If set, this allow list cannot be deleted.
+  // To delete, first update the with locked set to false.
+  // boolean
+  locked?: boolean;
 }
 
 // List of IP allowlists.
