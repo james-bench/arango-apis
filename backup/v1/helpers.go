@@ -30,7 +30,8 @@ func (source *BackupPolicy) SpecEquals(other *BackupPolicy) bool {
 		source.GetIsPaused() == other.GetIsPaused() &&
 		source.GetUpload() == other.GetUpload() &&
 		source.GetSchedule().Equals(other.GetSchedule()) &&
-		source.GetRetentionPeriod().Equal(other.GetRetentionPeriod())
+		source.GetRetentionPeriod().Equal(other.GetRetentionPeriod()) &&
+		source.GetLocked() == other.GetLocked()
 }
 
 // Equals returns true when source & other have the same values
