@@ -12346,6 +12346,15 @@ Required permissions:
               </tr>
             
               <tr>
+                <td>GetDeploymentUpdates</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.data.v1.Deployment">Deployment</a> stream</td>
+                <td><p>Fetch all updates (spec and/or status) of the deployment that matches the given request.
+Required permissions:
+- data.deployment.get on the deployment identified by the given ID</p></td>
+              </tr>
+            
+              <tr>
                 <td>CreateDeployment</td>
                 <td><a href="#arangodb.cloud.data.v1.Deployment">Deployment</a></td>
                 <td><a href="#arangodb.cloud.data.v1.Deployment">Deployment</a></td>
@@ -12569,6 +12578,16 @@ Required permissions:
                 <td>GET</td>
                 <td>/api/data/v1/deployments/{id}</td>
                 <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetDeploymentUpdates</td>
+                <td>POST</td>
+                <td>/api/data/v1/streaming/deployment</td>
+                <td>*</td>
               </tr>
               
             
