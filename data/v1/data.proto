@@ -60,6 +60,16 @@ service DataService {
         };
     }
 
+    // Fetch all updates (spec and/or status) of the deployment that matches the given request.
+    // Required permissions:
+    // - data.deployment.get on the deployment identified by the given ID
+    rpc GetDeploymentUpdates(common.v1.IDOptions) returns (stream Deployment) {
+        option (google.api.http) = {
+            post: "/api/data/v1/streaming/deployment"
+            body: "*"
+        };
+    }
+
     // Create a new deployment
     // Required permissions:
     // - data.deployment.create on the project that owns the deployment
