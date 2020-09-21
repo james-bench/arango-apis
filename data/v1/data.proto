@@ -455,6 +455,8 @@ message Deployment {
         bool rotation_pending = 13;
         // If set, this server reports that it can be deleted.
         bool can_be_deleted = 15;
+        // If set, this server is leader in its type (currently applies only to agents).
+        bool is_leader = 16;
         // Information about the data volume used to store the data
         DataVolumeInfo data_volume_info = 20;
         // Recent number of restarts
