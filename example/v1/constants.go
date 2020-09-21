@@ -23,7 +23,7 @@
 package v1
 
 const (
-	// ExampleInstallationIDPayloadLabel is the label used in the event payload for
-	// an example installation.
-	ExampleInstallationIDPayloadLabel = "exampledataset_id"
+	// ExampleDatasetIDPayloadLabel is the label used in the event payload for
+	// an example dataset.
+	ExampleDatasetIDPayloadLabel = "exampledataset_id"
 )
