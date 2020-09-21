@@ -149,7 +149,8 @@ func DeploymentServerStatusEqual(a, b *Deployment_ServerStatus, ignoreTimestamps
 		DataVolumeInfoEqual(a.GetDataVolumeInfo(), b.GetDataVolumeInfo(), ignoreTimestamps) &&
 		a.GetRecentRestarts() == b.GetRecentRestarts() &&
 		a.GetLastMemoryUsage() == b.GetLastMemoryUsage() &&
-		a.GetLastCpuUsage() == b.GetLastCpuUsage()
+		a.GetLastCpuUsage() == b.GetLastCpuUsage() &&
+		a.GetIsLeader() == b.GetIsLeader()
 }
 
 // DataVolumeInfoEqual returns true when the fields of a & b are equal.
