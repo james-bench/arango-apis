@@ -493,6 +493,10 @@ export interface Deployment_ServerStatus {
   // boolean
   can_be_deleted?: boolean;
   
+  // If set, this server is leader in its type (currently applies only to agents).
+  // boolean
+  is_leader?: boolean;
+  
   // Information about the data volume used to store the data
   // DataVolumeInfo
   data_volume_info?: DataVolumeInfo;
