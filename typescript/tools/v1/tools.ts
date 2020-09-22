@@ -7,7 +7,7 @@ import * as googleTypes from '../../googleTypes'
 import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 
 // File: tools/v1/tools.proto
-// Package: arangodb.cloud.internal.tools.v1
+// Package: arangodb.cloud.tools.v1
 
 // Request for GetLatestVersion
 export interface GetLatestVersionRequest {
@@ -46,10 +46,10 @@ export interface VersionPair {
   expected_version?: arangodb_cloud_common_v1_Version;
 }
 
-// InternalToolsService is the API used by the compatibility check for an ArangoDB Tool.
-export interface IInternalToolsService {
+// ToolsService is the API used by the compatibility check for an ArangoDB Tool.
+export interface IToolsService {
 }
 
-// InternalToolsService is the API used by the compatibility check for an ArangoDB Tool.
-export class InternalToolsService implements IInternalToolsService {
+// ToolsService is the API used by the compatibility check for an ArangoDB Tool.
+export class ToolsService implements IToolsService {
 }

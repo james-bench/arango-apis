@@ -326,22 +326,22 @@ title: "ArangoDB Oasis API"
             <ul>
               
                 <li>
-                  <a href="#arangodb.cloud.internal.tools.v1.GetLatestVersionRequest"><span class="badge">M</span>GetLatestVersionRequest</a>
+                  <a href="#arangodb.cloud.tools.v1.GetLatestVersionRequest"><span class="badge">M</span>GetLatestVersionRequest</a>
                 </li>
               
                 <li>
-                  <a href="#arangodb.cloud.internal.tools.v1.ToolsVersion"><span class="badge">M</span>ToolsVersion</a>
+                  <a href="#arangodb.cloud.tools.v1.ToolsVersion"><span class="badge">M</span>ToolsVersion</a>
                 </li>
               
                 <li>
-                  <a href="#arangodb.cloud.internal.tools.v1.VersionPair"><span class="badge">M</span>VersionPair</a>
+                  <a href="#arangodb.cloud.tools.v1.VersionPair"><span class="badge">M</span>VersionPair</a>
                 </li>
               
               
               
               
                 <li>
-                  <a href="#arangodb.cloud.internal.tools.v1.InternalToolsService"><span class="badge">S</span>InternalToolsService</a>
+                  <a href="#arangodb.cloud.tools.v1.ToolsService"><span class="badge">S</span>ToolsService</a>
                 </li>
               
             </ul>
@@ -3406,7 +3406,7 @@ Required permissions:
       <p></p>
 
       
-        <h3 id="arangodb.cloud.internal.tools.v1.GetLatestVersionRequest">GetLatestVersionRequest</h3>
+        <h3 id="arangodb.cloud.tools.v1.GetLatestVersionRequest">GetLatestVersionRequest</h3>
         <p>Request for GetLatestVersion</p>
 
         
@@ -3425,7 +3425,7 @@ Required permissions:
               
                 <tr>
                   <td>versions</td>
-                  <td><a href="#arangodb.cloud.internal.tools.v1.VersionPair">VersionPair</a></td>
+                  <td><a href="#arangodb.cloud.tools.v1.VersionPair">VersionPair</a></td>
                   <td>repeated</td>
                   <td><p>Version pair for the tool depicting compatibility with a given API. </p></td>
                 </tr>
@@ -3437,7 +3437,7 @@ Required permissions:
 
         
       
-        <h3 id="arangodb.cloud.internal.tools.v1.ToolsVersion">ToolsVersion</h3>
+        <h3 id="arangodb.cloud.tools.v1.ToolsVersion">ToolsVersion</h3>
         <p>Response for GetLatestVersion</p>
 
         
@@ -3475,7 +3475,7 @@ Required permissions:
 
         
       
-        <h3 id="arangodb.cloud.internal.tools.v1.VersionPair">VersionPair</h3>
+        <h3 id="arangodb.cloud.tools.v1.VersionPair">VersionPair</h3>
         <p>The version pair describing the tools compatibility with an API.</p>
 
         
@@ -3512,8 +3512,8 @@ Required permissions:
       
 
       
-        <h3 id="arangodb.cloud.internal.tools.v1.InternalToolsService">InternalToolsService</h3>
-        <p>InternalToolsService is the API used by the compatibility check for an ArangoDB Tool.</p>
+        <h3 id="arangodb.cloud.tools.v1.ToolsService">ToolsService</h3>
+        <p>ToolsService is the API used by the compatibility check for an ArangoDB Tool.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
@@ -3522,11 +3522,11 @@ Required permissions:
             
               <tr>
                 <td>GetLatestVersion</td>
-                <td><a href="#arangodb.cloud.internal.tools.v1.GetLatestVersionRequest">GetLatestVersionRequest</a></td>
-                <td><a href="#arangodb.cloud.internal.tools.v1.ToolsVersion">ToolsVersion</a></td>
+                <td><a href="#arangodb.cloud.tools.v1.GetLatestVersionRequest">GetLatestVersionRequest</a></td>
+                <td><a href="#arangodb.cloud.tools.v1.ToolsVersion">ToolsVersion</a></td>
                 <td><p>Get the latest version for a tool.
 Required permissions:
-- internal-tools.latest-version.get globally</p></td>
+- tools.latest-version.get globally</p></td>
               </tr>
             
           </tbody>

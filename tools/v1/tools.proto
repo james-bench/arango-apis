@@ -22,18 +22,18 @@
 
 syntax = "proto3";
 
-package arangodb.cloud.internal.tools.v1;
+package arangodb.cloud.tools.v1;
 
 option go_package = "github.com/arangodb-managed/apis/tools/v1";
 
 import "google/api/annotations.proto";
 import "common/v1/common.proto";
 
-// InternalToolsService is the API used by the compatibility check for an ArangoDB Tool.
-service InternalToolsService {
+// ToolsService is the API used by the compatibility check for an ArangoDB Tool.
+service ToolsService {
     // Get the latest version for a tool.
     // Required permissions:
-    // - internal-tools.latest-version.get globally
+    // - tools.latest-version.get globally
     rpc GetLatestVersion(GetLatestVersionRequest) returns (ToolsVersion);
 }
 
