@@ -4,10 +4,22 @@
 ///
 import api from '../../api'
 import * as googleTypes from '../../googleTypes'
+import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
 import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 
 // File: tools/v1/tools.proto
 // Package: arangodb.cloud.tools.v1
+
+// The version pair describing the tools compatibility with an API.
+export interface APIVersionPair {
+  // ID of the api.
+  // string
+  api_id?: string;
+  
+  // Expected version of the api.
+  // arangodb.cloud.common.v1.Version
+  expected_version?: arangodb_cloud_common_v1_Version;
+}
 
 // Request for GetLatestVersion
 export interface GetLatestVersionRequest {
@@ -16,8 +28,8 @@ export interface GetLatestVersionRequest {
   name?: string;
   
   // Version pair for the tool depicting compatibility with a given API.
-  // VersionPair
-  versions?: VersionPair[];
+  // APIVersionPair
+  expected_api_versions?: APIVersionPair[];
 }
 
 // Response for GetLatestVersion
@@ -35,21 +47,36 @@ export interface ToolsVersion {
   is_compatible?: boolean;
 }
 
-// The version pair describing the tools compatibility with an API.
-export interface VersionPair {
-  // ID of the api.
-  // string
-  api_id?: string;
-  
-  // Expected version of the api.
-  // arangodb.cloud.common.v1.Version
-  expected_version?: arangodb_cloud_common_v1_Version;
-}
-
 // ToolsService is the API used by the compatibility check for an ArangoDB Tool.
 export interface IToolsService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None
+  GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
+  
+  // Get the latest version for a tool.
+  // Required permissions:
+  // - tools.latest-version.get globally
+  GetLatestVersion: (req: GetLatestVersionRequest) => Promise<ToolsVersion>;
 }
 
 // ToolsService is the API used by the compatibility check for an ArangoDB Tool.
 export class ToolsService implements IToolsService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None
+  async GetAPIVersion(req?: arangodb_cloud_common_v1_Empty): Promise<arangodb_cloud_common_v1_Version> {
+    const path = `/api/tools/v1/api-version`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
+  // Get the latest version for a tool.
+  // Required permissions:
+  // - tools.latest-version.get globally
+  async GetLatestVersion(req: GetLatestVersionRequest): Promise<ToolsVersion> {
+    const path = `/api/tools/v1/latest-version`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
 }

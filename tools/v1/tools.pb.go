@@ -100,10 +100,10 @@ type GetLatestVersionRequest struct {
 	// Name of the tool
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// Version pair for the tool depicting compatibility with a given API.
-	Versions             []*VersionPair `protobuf:"bytes,2,rep,name=versions,proto3" json:"versions,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
+	ExpectedApiVersions  []*APIVersionPair `protobuf:"bytes,2,rep,name=expected_api_versions,json=expectedApiVersions,proto3" json:"expected_api_versions,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
 }
 
 func (m *GetLatestVersionRequest) Reset()         { *m = GetLatestVersionRequest{} }
@@ -146,15 +146,15 @@ func (m *GetLatestVersionRequest) GetName() string {
 	return ""
 }
 
-func (m *GetLatestVersionRequest) GetVersions() []*VersionPair {
+func (m *GetLatestVersionRequest) GetExpectedApiVersions() []*APIVersionPair {
 	if m != nil {
-		return m.Versions
+		return m.ExpectedApiVersions
 	}
 	return nil
 }
 
 // The version pair describing the tools compatibility with an API.
-type VersionPair struct {
+type APIVersionPair struct {
 	// ID of the api.
 	ApiId string `protobuf:"bytes,1,opt,name=api_id,json=apiId,proto3" json:"api_id,omitempty"`
 	// Expected version of the api.
@@ -164,18 +164,18 @@ type VersionPair struct {
 	XXX_sizecache        int32       `json:"-"`
 }
 
-func (m *VersionPair) Reset()         { *m = VersionPair{} }
-func (m *VersionPair) String() string { return proto.CompactTextString(m) }
-func (*VersionPair) ProtoMessage()    {}
-func (*VersionPair) Descriptor() ([]byte, []int) {
+func (m *APIVersionPair) Reset()         { *m = APIVersionPair{} }
+func (m *APIVersionPair) String() string { return proto.CompactTextString(m) }
+func (*APIVersionPair) ProtoMessage()    {}
+func (*APIVersionPair) Descriptor() ([]byte, []int) {
 	return fileDescriptor_71627f96184a6c71, []int{2}
 }
-func (m *VersionPair) XXX_Unmarshal(b []byte) error {
+func (m *APIVersionPair) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *VersionPair) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *APIVersionPair) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_VersionPair.Marshal(b, m, deterministic)
+		return xxx_messageInfo_APIVersionPair.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -185,26 +185,26 @@ func (m *VersionPair) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) 
 		return b[:n], nil
 	}
 }
-func (m *VersionPair) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_VersionPair.Merge(m, src)
+func (m *APIVersionPair) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_APIVersionPair.Merge(m, src)
 }
-func (m *VersionPair) XXX_Size() int {
+func (m *APIVersionPair) XXX_Size() int {
 	return m.Size()
 }
-func (m *VersionPair) XXX_DiscardUnknown() {
-	xxx_messageInfo_VersionPair.DiscardUnknown(m)
+func (m *APIVersionPair) XXX_DiscardUnknown() {
+	xxx_messageInfo_APIVersionPair.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_VersionPair proto.InternalMessageInfo
+var xxx_messageInfo_APIVersionPair proto.InternalMessageInfo
 
-func (m *VersionPair) GetApiId() string {
+func (m *APIVersionPair) GetApiId() string {
 	if m != nil {
 		return m.ApiId
 	}
 	return ""
 }
 
-func (m *VersionPair) GetExpectedVersion() *v1.Version {
+func (m *APIVersionPair) GetExpectedVersion() *v1.Version {
 	if m != nil {
 		return m.ExpectedVersion
 	}
@@ -214,37 +214,42 @@ func (m *VersionPair) GetExpectedVersion() *v1.Version {
 func init() {
 	proto.RegisterType((*ToolsVersion)(nil), "arangodb.cloud.tools.v1.ToolsVersion")
 	proto.RegisterType((*GetLatestVersionRequest)(nil), "arangodb.cloud.tools.v1.GetLatestVersionRequest")
-	proto.RegisterType((*VersionPair)(nil), "arangodb.cloud.tools.v1.VersionPair")
+	proto.RegisterType((*APIVersionPair)(nil), "arangodb.cloud.tools.v1.APIVersionPair")
 }
 
 func init() { proto.RegisterFile("tools.proto", fileDescriptor_71627f96184a6c71) }
 
 var fileDescriptor_71627f96184a6c71 = []byte{
-	// 380 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x52, 0xcd, 0xca, 0xd3, 0x40,
-	0x14, 0x35, 0xad, 0x96, 0x3a, 0x69, 0xb5, 0x0c, 0x68, 0x43, 0x91, 0xd0, 0x56, 0x0b, 0x75, 0x61,
-	0x62, 0xeb, 0xd2, 0x8d, 0xe8, 0x42, 0x84, 0x2e, 0x24, 0xfe, 0x2c, 0xdc, 0x84, 0x49, 0x66, 0x88,
-	0x83, 0x93, 0xb9, 0x71, 0x66, 0x12, 0x05, 0xf1, 0x3d, 0x7c, 0x24, 0x97, 0x3e, 0x82, 0xf4, 0x7b,
-	0x91, 0x8f, 0x24, 0x93, 0x7e, 0xa5, 0x90, 0xdd, 0x70, 0xee, 0x3d, 0xe7, 0xdc, 0x7b, 0xe6, 0x22,
-	0xd7, 0x00, 0x08, 0x1d, 0x14, 0x0a, 0x0c, 0xe0, 0x39, 0x51, 0x44, 0x66, 0x40, 0x93, 0x20, 0x15,
-	0x50, 0xd2, 0xa0, 0xad, 0x55, 0xbb, 0xc5, 0xa3, 0x0c, 0x20, 0x13, 0x2c, 0x24, 0x05, 0x0f, 0x89,
-	0x94, 0x60, 0x88, 0xe1, 0x20, 0x2d, 0x6d, 0xf1, 0x30, 0x85, 0x3c, 0x07, 0x19, 0x56, 0xbb, 0xb0,
-	0x7d, 0xb5, 0xf8, 0xfa, 0x37, 0x9a, 0x7c, 0xac, 0x15, 0x3e, 0x33, 0xa5, 0x39, 0x48, 0xbc, 0x41,
-	0xf7, 0x04, 0x31, 0x4c, 0x9b, 0xb8, 0x6a, 0x11, 0xcf, 0x59, 0x3a, 0xdb, 0xbb, 0xd1, 0xb4, 0x45,
-	0xbb, 0xb6, 0x15, 0x9a, 0x50, 0xf8, 0x21, 0x05, 0x10, 0x1a, 0x97, 0x4a, 0x78, 0x83, 0xa6, 0xc9,
-	0xed, 0xb0, 0x4f, 0x4a, 0xe0, 0xc7, 0x68, 0xca, 0x75, 0x9c, 0x42, 0x5e, 0x10, 0xc3, 0x13, 0xc1,
-	0xbc, 0xe1, 0xd2, 0xd9, 0x8e, 0xa3, 0x09, 0xd7, 0x6f, 0x4e, 0xd8, 0x1a, 0xd0, 0xfc, 0x2d, 0x33,
-	0x87, 0x73, 0xed, 0x88, 0x7d, 0x2f, 0x99, 0x36, 0x18, 0xa3, 0xdb, 0x92, 0xe4, 0xcc, 0xfa, 0x37,
-	0x6f, 0xfc, 0x0a, 0x8d, 0xed, 0x58, 0xda, 0x1b, 0x2c, 0x87, 0x5b, 0x77, 0xff, 0x24, 0xe8, 0xc9,
-	0x23, 0xb0, 0x72, 0xef, 0x09, 0x57, 0xd1, 0x89, 0xb5, 0x56, 0xc8, 0x3d, 0x2b, 0xe0, 0x07, 0x68,
-	0x44, 0x0a, 0x1e, 0x73, 0x6a, 0x6d, 0xee, 0x90, 0x82, 0xbf, 0xa3, 0xf8, 0x80, 0x66, 0xec, 0x67,
-	0xc1, 0x52, 0xc3, 0xe8, 0x29, 0x87, 0x7a, 0x45, 0x77, 0xbf, 0xba, 0xf4, 0xb3, 0x69, 0xde, 0x18,
-	0x46, 0xf7, 0x3b, 0xaa, 0x05, 0xf6, 0xbf, 0x6c, 0xc6, 0x1f, 0x98, 0xaa, 0x78, 0xca, 0xf0, 0x37,
-	0x34, 0xbb, 0x5c, 0x1a, 0x3f, 0xef, 0xdd, 0xa3, 0x27, 0x9f, 0xc5, 0xa6, 0x97, 0x71, 0xfe, 0xa1,
-	0xaf, 0x5f, 0xfe, 0x3d, 0xfa, 0xce, 0xbf, 0xa3, 0xef, 0xfc, 0x3f, 0xfa, 0xce, 0x9f, 0x2b, 0xff,
-	0xd6, 0x97, 0xa7, 0x19, 0x37, 0x5f, 0xcb, 0xa4, 0x9e, 0x3c, 0xec, 0x24, 0x9e, 0xe5, 0x44, 0x92,
-	0x8c, 0xd1, 0xfa, 0x7a, 0x74, 0xd8, 0x28, 0x85, 0xd5, 0x2e, 0x19, 0x35, 0x47, 0xf2, 0xe2, 0x3a,
-	0x00, 0x00, 0xff, 0xff, 0x2f, 0x2e, 0xa5, 0x98, 0x82, 0x02, 0x00, 0x00,
+	// 457 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x52, 0xcf, 0x6f, 0xd3, 0x30,
+	0x14, 0x26, 0x1d, 0x4c, 0xe0, 0xb6, 0x63, 0x32, 0x1a, 0x2b, 0x65, 0x0a, 0x6d, 0x60, 0xa2, 0x1c,
+	0x96, 0xd0, 0x72, 0xe4, 0x34, 0x10, 0x9a, 0x26, 0xed, 0x30, 0x95, 0x1f, 0x07, 0x38, 0x54, 0x4e,
+	0x6c, 0x05, 0x4b, 0x8e, 0x9f, 0x89, 0x9d, 0x00, 0x07, 0x2e, 0x1c, 0xb9, 0x21, 0x2e, 0x88, 0xbf,
+	0x88, 0x23, 0x12, 0xff, 0x00, 0x2a, 0xfc, 0x21, 0x28, 0x89, 0x5d, 0xb6, 0x4a, 0x11, 0x37, 0xeb,
+	0xf3, 0x7b, 0xdf, 0xfb, 0xde, 0xf7, 0x3e, 0xd4, 0x35, 0x00, 0x42, 0x87, 0x2a, 0x07, 0x03, 0x78,
+	0x97, 0xe4, 0x44, 0xa6, 0x40, 0xe3, 0x30, 0x11, 0x50, 0xd0, 0xb0, 0xf9, 0x2b, 0xa7, 0xc3, 0xbd,
+	0x14, 0x20, 0x15, 0x2c, 0x22, 0x8a, 0x47, 0x44, 0x4a, 0x30, 0xc4, 0x70, 0x90, 0xb6, 0x6d, 0x78,
+	0x3d, 0x81, 0x2c, 0x03, 0x19, 0x95, 0xd3, 0xa8, 0x79, 0x35, 0x78, 0xf0, 0x01, 0xf5, 0x9e, 0x55,
+	0x0c, 0x2f, 0x58, 0xae, 0x39, 0x48, 0xbc, 0x8f, 0xb6, 0x04, 0x31, 0x4c, 0x9b, 0x45, 0xd9, 0x20,
+	0x03, 0x6f, 0xe4, 0x4d, 0xae, 0xcc, 0xfb, 0x0d, 0xea, 0xca, 0xc6, 0xa8, 0x47, 0xe1, 0xad, 0x14,
+	0x40, 0xe8, 0xa2, 0xc8, 0xc5, 0xa0, 0x53, 0x17, 0x75, 0x1d, 0xf6, 0x3c, 0x17, 0xf8, 0x36, 0xea,
+	0x73, 0xbd, 0x48, 0x20, 0x53, 0xc4, 0xf0, 0x58, 0xb0, 0xc1, 0xc6, 0xc8, 0x9b, 0x5c, 0x9e, 0xf7,
+	0xb8, 0x7e, 0xbc, 0xc2, 0x82, 0x4f, 0x1e, 0xda, 0x3d, 0x62, 0xe6, 0xe4, 0x2c, 0xf9, 0x9c, 0xbd,
+	0x29, 0x98, 0x36, 0x18, 0xa3, 0x8b, 0x92, 0x64, 0xcc, 0x0a, 0xa8, 0xdf, 0xf8, 0x15, 0xda, 0x61,
+	0xef, 0x14, 0x4b, 0x0c, 0xa3, 0x0b, 0xa2, 0xb8, 0x13, 0xa9, 0x07, 0x9d, 0xd1, 0xc6, 0xa4, 0x3b,
+	0xbb, 0x1b, 0xb6, 0xb8, 0x13, 0x1e, 0x9e, 0x1e, 0x5b, 0xfa, 0x53, 0xc2, 0xf3, 0xf9, 0x35, 0xc7,
+	0x72, 0xa8, 0xb8, 0xc5, 0x75, 0x50, 0xa0, 0xad, 0xf3, 0x65, 0x78, 0x07, 0x6d, 0x56, 0x53, 0x38,
+	0xb5, 0x22, 0x2e, 0x11, 0xc5, 0x8f, 0x29, 0x3e, 0x41, 0xdb, 0x2b, 0x15, 0xce, 0xa6, 0xca, 0x81,
+	0xee, 0x6c, 0xbc, 0x2e, 0xc0, 0x9a, 0x5d, 0x4e, 0x43, 0xb7, 0xdd, 0x55, 0xd7, 0x6a, 0x81, 0xd9,
+	0xb7, 0x8e, 0xbd, 0xc1, 0x53, 0x96, 0x97, 0x3c, 0x61, 0xb8, 0x44, 0xfd, 0x23, 0x66, 0xfe, 0x49,
+	0xc1, 0xb7, 0xda, 0x59, 0x9f, 0x64, 0xca, 0xbc, 0x1f, 0xfe, 0x7f, 0x6c, 0x30, 0xfe, 0xf8, 0xf3,
+	0xcf, 0x97, 0xce, 0x4d, 0x7c, 0xa3, 0x0e, 0x48, 0xed, 0x4b, 0x15, 0x06, 0xa2, 0xf8, 0x81, 0x5d,
+	0x01, 0x7f, 0xf6, 0xd0, 0xf6, 0xfa, 0x31, 0xf0, 0xfd, 0x56, 0x4b, 0x5b, 0xee, 0x36, 0xdc, 0x6f,
+	0xed, 0x38, 0x9b, 0xb4, 0xe0, 0x4e, 0x2d, 0xc8, 0xc7, 0x7b, 0xe7, 0x05, 0x35, 0x39, 0x73, 0x9a,
+	0x1e, 0x3d, 0xfc, 0xbe, 0xf4, 0xbd, 0x1f, 0x4b, 0xdf, 0xfb, 0xb5, 0xf4, 0xbd, 0xaf, 0xbf, 0xfd,
+	0x0b, 0x2f, 0xef, 0xa5, 0xdc, 0xbc, 0x2e, 0xe2, 0x6a, 0xc5, 0xc8, 0x0d, 0x3a, 0xc8, 0x88, 0x24,
+	0x29, 0xa3, 0x15, 0x95, 0x5e, 0x71, 0xc5, 0x9b, 0x75, 0xc6, 0x1f, 0xfc, 0x0d, 0x00, 0x00, 0xff,
+	0xff, 0xc7, 0xc6, 0x82, 0x26, 0x41, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -259,6 +264,10 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type ToolsServiceClient interface {
+	// Get the current API version of this service.
+	// Required permissions:
+	// - None
+	GetAPIVersion(ctx context.Context, in *v1.Empty, opts ...grpc.CallOption) (*v1.Version, error)
 	// Get the latest version for a tool.
 	// Required permissions:
 	// - tools.latest-version.get globally
@@ -273,6 +282,15 @@ func NewToolsServiceClient(cc *grpc.ClientConn) ToolsServiceClient {
 	return &toolsServiceClient{cc}
 }
 
+func (c *toolsServiceClient) GetAPIVersion(ctx context.Context, in *v1.Empty, opts ...grpc.CallOption) (*v1.Version, error) {
+	out := new(v1.Version)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.tools.v1.ToolsService/GetAPIVersion", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *toolsServiceClient) GetLatestVersion(ctx context.Context, in *GetLatestVersionRequest, opts ...grpc.CallOption) (*ToolsVersion, error) {
 	out := new(ToolsVersion)
 	err := c.cc.Invoke(ctx, "/arangodb.cloud.tools.v1.ToolsService/GetLatestVersion", in, out, opts...)
@@ -284,6 +302,10 @@ func (c *toolsServiceClient) GetLatestVersion(ctx context.Context, in *GetLatest
 
 // ToolsServiceServer is the server API for ToolsService service.
 type ToolsServiceServer interface {
+	// Get the current API version of this service.
+	// Required permissions:
+	// - None
+	GetAPIVersion(context.Context, *v1.Empty) (*v1.Version, error)
 	// Get the latest version for a tool.
 	// Required permissions:
 	// - tools.latest-version.get globally
@@ -294,12 +316,33 @@ type ToolsServiceServer interface {
 type UnimplementedToolsServiceServer struct {
 }
 
+func (*UnimplementedToolsServiceServer) GetAPIVersion(ctx context.Context, req *v1.Empty) (*v1.Version, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAPIVersion not implemented")
+}
 func (*UnimplementedToolsServiceServer) GetLatestVersion(ctx context.Context, req *GetLatestVersionRequest) (*ToolsVersion, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLatestVersion not implemented")
 }
 
 func RegisterToolsServiceServer(s *grpc.Server, srv ToolsServiceServer) {
 	s.RegisterService(&_ToolsService_serviceDesc, srv)
+}
+
+func _ToolsService_GetAPIVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ToolsServiceServer).GetAPIVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.tools.v1.ToolsService/GetAPIVersion",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ToolsServiceServer).GetAPIVersion(ctx, req.(*v1.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _ToolsService_GetLatestVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -324,6 +367,10 @@ var _ToolsService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "arangodb.cloud.tools.v1.ToolsService",
 	HandlerType: (*ToolsServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetAPIVersion",
+			Handler:    _ToolsService_GetAPIVersion_Handler,
+		},
 		{
 			MethodName: "GetLatestVersion",
 			Handler:    _ToolsService_GetLatestVersion_Handler,
@@ -408,10 +455,10 @@ func (m *GetLatestVersionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error)
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.Versions) > 0 {
-		for iNdEx := len(m.Versions) - 1; iNdEx >= 0; iNdEx-- {
+	if len(m.ExpectedApiVersions) > 0 {
+		for iNdEx := len(m.ExpectedApiVersions) - 1; iNdEx >= 0; iNdEx-- {
 			{
-				size, err := m.Versions[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				size, err := m.ExpectedApiVersions[iNdEx].MarshalToSizedBuffer(dAtA[:i])
 				if err != nil {
 					return 0, err
 				}
@@ -432,7 +479,7 @@ func (m *GetLatestVersionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	return len(dAtA) - i, nil
 }
 
-func (m *VersionPair) Marshal() (dAtA []byte, err error) {
+func (m *APIVersionPair) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -442,12 +489,12 @@ func (m *VersionPair) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *VersionPair) MarshalTo(dAtA []byte) (int, error) {
+func (m *APIVersionPair) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *VersionPair) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *APIVersionPair) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -522,8 +569,8 @@ func (m *GetLatestVersionRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTools(uint64(l))
 	}
-	if len(m.Versions) > 0 {
-		for _, e := range m.Versions {
+	if len(m.ExpectedApiVersions) > 0 {
+		for _, e := range m.ExpectedApiVersions {
 			l = e.Size()
 			n += 1 + l + sovTools(uint64(l))
 		}
@@ -534,7 +581,7 @@ func (m *GetLatestVersionRequest) Size() (n int) {
 	return n
 }
 
-func (m *VersionPair) Size() (n int) {
+func (m *APIVersionPair) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -761,7 +808,7 @@ func (m *GetLatestVersionRequest) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Versions", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ExpectedApiVersions", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -788,8 +835,8 @@ func (m *GetLatestVersionRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Versions = append(m.Versions, &VersionPair{})
-			if err := m.Versions[len(m.Versions)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			m.ExpectedApiVersions = append(m.ExpectedApiVersions, &APIVersionPair{})
+			if err := m.ExpectedApiVersions[len(m.ExpectedApiVersions)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -818,7 +865,7 @@ func (m *GetLatestVersionRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *VersionPair) Unmarshal(dAtA []byte) error {
+func (m *APIVersionPair) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -841,10 +888,10 @@ func (m *VersionPair) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: VersionPair: wiretype end group for non-group")
+			return fmt.Errorf("proto: APIVersionPair: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: VersionPair: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: APIVersionPair: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:

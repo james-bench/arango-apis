@@ -326,15 +326,15 @@ title: "ArangoDB Oasis API"
             <ul>
               
                 <li>
+                  <a href="#arangodb.cloud.tools.v1.APIVersionPair"><span class="badge">M</span>APIVersionPair</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.tools.v1.GetLatestVersionRequest"><span class="badge">M</span>GetLatestVersionRequest</a>
                 </li>
               
                 <li>
                   <a href="#arangodb.cloud.tools.v1.ToolsVersion"><span class="badge">M</span>ToolsVersion</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.tools.v1.VersionPair"><span class="badge">M</span>VersionPair</a>
                 </li>
               
               
@@ -3406,6 +3406,37 @@ Required permissions:
       <p></p>
 
       
+        <h3 id="arangodb.cloud.tools.v1.APIVersionPair">APIVersionPair</h3>
+        <p>The version pair describing the tools compatibility with an API.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>api_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the api. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>expected_version</td>
+                  <td><a href="#arangodb.cloud.common.v1.Version">arangodb.cloud.common.v1.Version</a></td>
+                  <td></td>
+                  <td><p>Expected version of the api. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.tools.v1.GetLatestVersionRequest">GetLatestVersionRequest</h3>
         <p>Request for GetLatestVersion</p>
 
@@ -3424,8 +3455,8 @@ Required permissions:
                 </tr>
               
                 <tr>
-                  <td>versions</td>
-                  <td><a href="#arangodb.cloud.tools.v1.VersionPair">VersionPair</a></td>
+                  <td>expected_api_versions</td>
+                  <td><a href="#arangodb.cloud.tools.v1.APIVersionPair">APIVersionPair</a></td>
                   <td>repeated</td>
                   <td><p>Version pair for the tool depicting compatibility with a given API. </p></td>
                 </tr>
@@ -3475,37 +3506,6 @@ Required permissions:
 
         
       
-        <h3 id="arangodb.cloud.tools.v1.VersionPair">VersionPair</h3>
-        <p>The version pair describing the tools compatibility with an API.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>api_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>ID of the api. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>expected_version</td>
-                  <td><a href="#arangodb.cloud.common.v1.Version">arangodb.cloud.common.v1.Version</a></td>
-                  <td></td>
-                  <td><p>Expected version of the api. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
 
       
 
@@ -3521,6 +3521,15 @@ Required permissions:
           <tbody>
             
               <tr>
+                <td>GetAPIVersion</td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Version">.arangodb.cloud.common.v1.Version</a></td>
+                <td><p>Get the current API version of this service.
+Required permissions:
+- None</p></td>
+              </tr>
+            
+              <tr>
                 <td>GetLatestVersion</td>
                 <td><a href="#arangodb.cloud.tools.v1.GetLatestVersionRequest">GetLatestVersionRequest</a></td>
                 <td><a href="#arangodb.cloud.tools.v1.ToolsVersion">ToolsVersion</a></td>
@@ -3532,6 +3541,44 @@ Required permissions:
           </tbody>
         </table>
 
+        
+          
+          
+          <h4>Methods with HTTP bindings</h4>
+          <table>
+            <thead>
+              <tr>
+                <td>Method Name</td>
+                <td>Method</td>
+                <td>Pattern</td>
+                <td>Body</td>
+              </tr>
+            </thead>
+            <tbody>
+            
+              
+              
+              <tr>
+                <td>GetAPIVersion</td>
+                <td>GET</td>
+                <td>/api/tools/v1/api-version</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetLatestVersion</td>
+                <td>GET</td>
+                <td>/api/tools/v1/latest-version</td>
+                <td></td>
+              </tr>
+              
+            
+            </tbody>
+          </table>
+          
         
     
       

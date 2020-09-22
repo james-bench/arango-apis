@@ -31,10 +31,23 @@ import "common/v1/common.proto";
 
 // ToolsService is the API used by the compatibility check for an ArangoDB Tool.
 service ToolsService {
+    // Get the current API version of this service.
+    // Required permissions:
+    // - None
+    rpc GetAPIVersion(common.v1.Empty) returns (common.v1.Version) {
+        option (google.api.http) = {
+            get: "/api/tools/v1/api-version"
+        };
+    }
+
     // Get the latest version for a tool.
     // Required permissions:
     // - tools.latest-version.get globally
-    rpc GetLatestVersion(GetLatestVersionRequest) returns (ToolsVersion);
+    rpc GetLatestVersion(GetLatestVersionRequest) returns (ToolsVersion) {
+        option (google.api.http) = {
+            get: "/api/tools/v1/latest-version"
+        };
+    }
 }
 
 // Response for GetLatestVersion
@@ -52,11 +65,11 @@ message GetLatestVersionRequest {
     // Name of the tool
     string name = 1;
     // Version pair for the tool depicting compatibility with a given API.
-    repeated VersionPair versions = 2;
+    repeated APIVersionPair expected_api_versions = 2;
 }
 
 // The version pair describing the tools compatibility with an API.
-message VersionPair {
+message APIVersionPair {
     // ID of the api.
     string api_id = 1;
     // Expected version of the api.
