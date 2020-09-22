@@ -24,5 +24,5 @@ package v1
 
 const (
 	// The name of the official Oasis Cloud CLI management tool.
-	Oasisctl = "oasisctl"
+	ToolNameOasisctl = "oasisctl"
 )
