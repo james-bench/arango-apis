@@ -322,6 +322,33 @@ title: "ArangoDB Oasis API"
         
           
           <li>
+            <a href="#tools%2fv1%2ftools.proto">tools/v1/tools.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#arangodb.cloud.internal.tools.v1.GetLatestVersionRequest"><span class="badge">M</span>GetLatestVersionRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.internal.tools.v1.ToolsVersion"><span class="badge">M</span>ToolsVersion</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.internal.tools.v1.VersionPair"><span class="badge">M</span>VersionPair</a>
+                </li>
+              
+              
+              
+              
+                <li>
+                  <a href="#arangodb.cloud.internal.tools.v1.InternalToolsService"><span class="badge">S</span>InternalToolsService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#security%2fv1%2fsecurity.proto">security/v1/security.proto</a>
             <ul>
               
@@ -3370,6 +3397,141 @@ Required permissions:
             </tbody>
           </table>
           
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="tools/v1/tools.proto">tools/v1/tools.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="arangodb.cloud.internal.tools.v1.GetLatestVersionRequest">GetLatestVersionRequest</h3>
+        <p>Request for GetLatestVersion</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Name of the tool </p></td>
+                </tr>
+              
+                <tr>
+                  <td>versions</td>
+                  <td><a href="#arangodb.cloud.internal.tools.v1.VersionPair">VersionPair</a></td>
+                  <td>repeated</td>
+                  <td><p>Version pair for the tool depicting compatibility with a given API. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.internal.tools.v1.ToolsVersion">ToolsVersion</h3>
+        <p>Response for GetLatestVersion</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>latest_version</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Semantic versioning format of the latest known version of the tool that is compatible with the current API. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>download_url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Download url of the latest version for a tool. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_compatible</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>True if the current list of API-ID&#43;versions is still compatible with current API. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.internal.tools.v1.VersionPair">VersionPair</h3>
+        <p>The version pair describing the tools compatibility with an API.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>api_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the api. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>expected_version</td>
+                  <td><a href="#arangodb.cloud.common.v1.Version">arangodb.cloud.common.v1.Version</a></td>
+                  <td></td>
+                  <td><p>Expected version of the api. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+
+      
+
+      
+        <h3 id="arangodb.cloud.internal.tools.v1.InternalToolsService">InternalToolsService</h3>
+        <p>InternalToolsService is the API used by the compatibility check for an ArangoDB Tool.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GetLatestVersion</td>
+                <td><a href="#arangodb.cloud.internal.tools.v1.GetLatestVersionRequest">GetLatestVersionRequest</a></td>
+                <td><a href="#arangodb.cloud.internal.tools.v1.ToolsVersion">ToolsVersion</a></td>
+                <td><p>Get the latest version for a tool.
+Required permissions:
+- internal-tools.latest-version.get globally</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
         
     
       
