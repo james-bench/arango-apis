@@ -23,12 +23,8 @@
 package v1
 
 const (
-	// APIID contains identifier of this API
-	APIID = "support/v1"
-	// APIMajorVersion contains major version of this API
-	APIMajorVersion = 1
-	// APIMinorVersion contains minor version of this API
-	APIMinorVersion = 1
-	// APIPatchVersion contains patch version of this API
-	APIPatchVersion = 0
+	// SupportHoursBusiness indicates that support is handled during business hours.
+	SupportHoursBusiness = "business"
+	// SupportHours24x7 indicates that support is handled 24/7.
+	SupportHours24x7 = "24x7"
 )
