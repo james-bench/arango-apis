@@ -18,7 +18,7 @@ export interface APIVersionPair {
   
   // Expected version of the api.
   // arangodb.cloud.common.v1.Version
-  expected_version?: arangodb_cloud_common_v1_Version;
+  version?: arangodb_cloud_common_v1_Version;
 }
 
 // Request for GetLatestVersion
