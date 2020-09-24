@@ -131,6 +131,9 @@ message Plan {
     // SLA times to first response for various situations.
     // When this plan is unavailable, this field is optional.
     ResponseTimes first_response_times = 6;
+    // Support hours applicable to the SLA.
+    // Possible values are "business" and "24x7".
+    string support_hours = 7;
 }
 
 // Response for various categories on situations.
