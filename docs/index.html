@@ -663,6 +663,81 @@ title: "ArangoDB Oasis API"
         
           
           <li>
+            <a href="#audit%2fv1%2faudit.proto">audit/v1/audit.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#arangodb.cloud.audit.v1.AttachProjectToAuditLogRequest"><span class="badge">M</span>AttachProjectToAuditLogRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.audit.v1.AuditLog"><span class="badge">M</span>AuditLog</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.audit.v1.AuditLog.Destination"><span class="badge">M</span>AuditLog.Destination</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.audit.v1.AuditLog.Filter"><span class="badge">M</span>AuditLog.Filter</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.audit.v1.AuditLogArchive"><span class="badge">M</span>AuditLogArchive</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.audit.v1.AuditLogArchiveChunk"><span class="badge">M</span>AuditLogArchiveChunk</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.audit.v1.AuditLogArchiveChunkList"><span class="badge">M</span>AuditLogArchiveChunkList</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.audit.v1.AuditLogArchiveList"><span class="badge">M</span>AuditLogArchiveList</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.audit.v1.AuditLogEvent"><span class="badge">M</span>AuditLogEvent</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.audit.v1.AuditLogEventList"><span class="badge">M</span>AuditLogEventList</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.audit.v1.AuditLogList"><span class="badge">M</span>AuditLogList</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.audit.v1.ListAuditLogArchiveChunksRequest"><span class="badge">M</span>ListAuditLogArchiveChunksRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.audit.v1.ListAuditLogArchivesRequest"><span class="badge">M</span>ListAuditLogArchivesRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.audit.v1.ListAuditLogEventsRequest"><span class="badge">M</span>ListAuditLogEventsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.audit.v1.ListAuditLogsRequest"><span class="badge">M</span>ListAuditLogsRequest</a>
+                </li>
+              
+              
+              
+              
+                <li>
+                  <a href="#arangodb.cloud.audit.v1.AuditService"><span class="badge">S</span>AuditService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#support%2fv1%2fsupport.proto">support/v1/support.proto</a>
             <ul>
               
@@ -7962,6 +8037,1085 @@ Required permissions:
                 <td>RevokeAPIKeyToken</td>
                 <td>POST</td>
                 <td>/api/iam/v1/tokens/{token}/revoke</td>
+                <td></td>
+              </tr>
+              
+            
+            </tbody>
+          </table>
+          
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="audit/v1/audit.proto">audit/v1/audit.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="arangodb.cloud.audit.v1.AttachProjectToAuditLogRequest">AttachProjectToAuditLogRequest</h3>
+        <p>Request arguments for AttachProjectToAuditLog.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>project_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of project to attach the AuditLog to. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>auditlog_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the AuditLog to attach. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.audit.v1.AuditLog">AuditLog</h3>
+        <p>AuditLog holds a specification for filtering audit events, a specification for</p><p>destinations that audit events should be sent to and it acts as a grouping</p><p>of audit log archives.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The ID of this resource. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>URL of this resource
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Name of the audit log </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Description of the audit log </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The creation timestamp of the resource
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>deleted_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The deletion timestamp of the resource
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_deleted</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Set when this resource is deleted.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_by_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the user who created this resource.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the organization that owns this audit log.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_default</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, this AuditLog is the default for the organization. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>filter</td>
+                  <td><a href="#arangodb.cloud.audit.v1.AuditLog.Filter">AuditLog.Filter</a></td>
+                  <td></td>
+                  <td><p>Audit event topic filter </p></td>
+                </tr>
+              
+                <tr>
+                  <td>destinations</td>
+                  <td><a href="#arangodb.cloud.audit.v1.AuditLog.Destination">AuditLog.Destination</a></td>
+                  <td>repeated</td>
+                  <td><p>Destinations that events of this AuditLog should be sent to.
+Note that there can only be 1 destination of type &#34;cloud&#34;. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.audit.v1.AuditLog.Destination">AuditLog.Destination</h3>
+        <p>Specification of a destination for audit events.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>type</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Type of destination.
+Possible values are: &#34;cloud&#34;, &#34;https-post&#34; </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.audit.v1.AuditLog.Filter">AuditLog.Filter</h3>
+        <p>Event filter specification</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>included_topics</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>If non-empty, only audit events with these topics will pass
+the filter. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>excluded_topics</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Audit events with these topics will not pass the filter.
+If a topic is in both included_topics &amp; excluded_topics,
+it will not pass the filter. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.audit.v1.AuditLogArchive">AuditLogArchive</h3>
+        <p>AuditLogArchive collects files of audit events in a specific region,</p><p>usually for a specific deployment.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The ID of this resource. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>URL of this resource
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The creation timestamp of the resource
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>deleted_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The deletion timestamp of the resource
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_deleted</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Set when this resource is deleted.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>auditlog_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the auditlog that owns this audit log archive.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>If set, this archive is collecting audit events for a deployment with this ID.
+Note that the deployment may have already been deleted. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.audit.v1.AuditLogArchiveChunk">AuditLogArchiveChunk</h3>
+        <p>AuditLogArchiveChunk collects audit events in a specific time frame</p><p>on an AuditLogArchive.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The ID of this resource. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>URL of this resource
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The creation timestamp of the resource
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>auditlogarchive_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the AuditLogArchive that owns this chunk.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>first_event</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The timestamp of the first event in the chunk.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_event</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The timestamp of the last event in the chunk.
+This is a read-only value. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.audit.v1.AuditLogArchiveChunkList">AuditLogArchiveChunkList</h3>
+        <p>List of AuditLogArchiveChunk's.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#arangodb.cloud.audit.v1.AuditLogArchiveChunk">AuditLogArchiveChunk</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.audit.v1.AuditLogArchiveList">AuditLogArchiveList</h3>
+        <p>List of AuditLogArchive's.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#arangodb.cloud.audit.v1.AuditLogArchive">AuditLogArchive</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.audit.v1.AuditLogEvent">AuditLogEvent</h3>
+        <p>Single audit log event</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>timestamp</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>When did the event happen </p></td>
+                </tr>
+              
+                <tr>
+                  <td>topic</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Topic of the event </p></td>
+                </tr>
+              
+                <tr>
+                  <td>project_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the project that the event happened in (if applicable) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the deployment that the event happened in (if applicable) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>server_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the server that the event happened in (if applicable) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>instance_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Instance ID of the server that the event happened in (if applicable) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>sequence</td>
+                  <td><a href="#uint64">uint64</a></td>
+                  <td></td>
+                  <td><p>Sequence number. Must be even increasing for (deployment_id, server_id, instance_id) pairs. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>user_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the user that caused the event </p></td>
+                </tr>
+              
+                <tr>
+                  <td>database</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Name of database the operation is in (if applicable) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>client_ip</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>IP address of source of operation (if available) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>authentication</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Authentication details </p></td>
+                </tr>
+              
+                <tr>
+                  <td>message</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Free format text describing the event </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.audit.v1.AuditLogEventList">AuditLogEventList</h3>
+        <p>List of AuditLogEvent's.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#arangodb.cloud.audit.v1.AuditLogEvent">AuditLogEvent</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.audit.v1.AuditLogList">AuditLogList</h3>
+        <p>List of AuditLog's.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#arangodb.cloud.audit.v1.AuditLog">AuditLog</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.audit.v1.ListAuditLogArchiveChunksRequest">ListAuditLogArchiveChunksRequest</h3>
+        <p>Request arguments for ListAuditLogArchiveChunks</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>auditlogarchive_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the audit log archive to request the chunks for. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>from</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Request chunks that contain events created at or after this timestamp.
+This is an optional field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>to</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Request chunks that contain events created before this timestamp.
+This is an optional field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>options</td>
+                  <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
+                  <td></td>
+                  <td><p>Optional common list options, the context_id is ignored </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.audit.v1.ListAuditLogArchivesRequest">ListAuditLogArchivesRequest</h3>
+        <p>Request arguments for ListAuditLogArchives</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>auditlog_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the audit log to request the audit log archives for. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>include_deleted</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, the result includes all audit log archives, including those who set to deleted, 
+however are not removed from the system currently.
+If not set, only audit log archives not indicated as deleted are returned. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>options</td>
+                  <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
+                  <td></td>
+                  <td><p>Optional common list options, the context_id is ignored </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.audit.v1.ListAuditLogEventsRequest">ListAuditLogEventsRequest</h3>
+        <p>Request arguments for ListAuditLogEvents.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>auditlog_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the audit log to request events for. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>auditlogarchive_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>If set, include only events from this AuditLogArchive. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>auditlogarchivechunk_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>If set, include only events from this AuditLogArchiveChunk. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>from</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Request events created at or after this timestamp.
+This is an optional field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>to</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Request events created before this timestamp.
+This is an optional field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>options</td>
+                  <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
+                  <td></td>
+                  <td><p>Optional common list options, the context_id is ignored </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.audit.v1.ListAuditLogsRequest">ListAuditLogsRequest</h3>
+        <p>Request arguments for ListAuditLogs</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the organization to request the audit logs for. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>include_deleted</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, the result includes all audit logs, including those who set to deleted, 
+however are not removed from the system currently.
+If not set, only audit logs not indicated as deleted are returned. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>options</td>
+                  <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
+                  <td></td>
+                  <td><p>Optional common list options, the context_id is ignored </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+
+      
+
+      
+        <h3 id="arangodb.cloud.audit.v1.AuditService">AuditService</h3>
+        <p>AuditService is the API used to provide access to audit events.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GetAPIVersion</td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Version">.arangodb.cloud.common.v1.Version</a></td>
+                <td><p>Get the current API version of this service.
+Required permissions:
+- None</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListAuditLogs</td>
+                <td><a href="#arangodb.cloud.audit.v1.ListAuditLogsRequest">ListAuditLogsRequest</a></td>
+                <td><a href="#arangodb.cloud.audit.v1.AuditLogList">AuditLogList</a></td>
+                <td><p>Fetch all audit logs in the organization identified by the given ID.
+Required permissions:
+- audit.auditlog.list on the organization identified by the given ID.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetAuditLog</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.audit.v1.AuditLog">AuditLog</a></td>
+                <td><p>Fetch a specific AuditLog identified by the given ID.
+Required permissions:
+- audit.auditlog.get on the audit log identified by the given ID.</p></td>
+              </tr>
+            
+              <tr>
+                <td>CreateAuditLog</td>
+                <td><a href="#arangodb.cloud.audit.v1.AuditLog">AuditLog</a></td>
+                <td><a href="#arangodb.cloud.audit.v1.AuditLog">AuditLog</a></td>
+                <td><p>Create a new audit log.
+Required permissions:
+- audit.auditlog.create on the organization identified by the given ID.</p></td>
+              </tr>
+            
+              <tr>
+                <td>UpdateAuditLog</td>
+                <td><a href="#arangodb.cloud.audit.v1.AuditLog">AuditLog</a></td>
+                <td><a href="#arangodb.cloud.audit.v1.AuditLog">AuditLog</a></td>
+                <td><p>Update an audit log.
+Required permissions:
+- audit.auditlog.update on the audit log identified by the given ID.</p></td>
+              </tr>
+            
+              <tr>
+                <td>DeleteAuditLog</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><p>Delete an audit log.
+Note that audit logs are initially only marked for deleted.
+Once all their resources are removed the audit log itself is deleted
+and cannot be restored.
+Required permissions:
+- audit.auditlog.delete on the audit log.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListAuditLogArchives</td>
+                <td><a href="#arangodb.cloud.audit.v1.ListAuditLogArchivesRequest">ListAuditLogArchivesRequest</a></td>
+                <td><a href="#arangodb.cloud.audit.v1.AuditLogArchiveList">AuditLogArchiveList</a></td>
+                <td><p>Fetch all audit log archives in the audit log identified by the given ID.
+Required permissions:
+- audit.auditlogarchive.list on the audit log identified by the given ID.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetAuditLogArchive</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.audit.v1.AuditLogArchive">AuditLogArchive</a></td>
+                <td><p>Fetch a specific AuditLogArchive identified by the given ID.
+Required permissions:
+- audit.auditlogarchive.get on the audit log archive identified by the given ID.</p></td>
+              </tr>
+            
+              <tr>
+                <td>DeleteAuditLogArchive</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><p>Delete an audit log archive.
+Note that audit log archives are initially only marked for deleted.
+Once all their resources are removed the audit log archive itself is deleted
+and cannot be restored.
+Required permissions:
+- audit.auditlogarchive.delete on the audit log archive.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListAuditLogArchiveChunks</td>
+                <td><a href="#arangodb.cloud.audit.v1.ListAuditLogArchiveChunksRequest">ListAuditLogArchiveChunksRequest</a></td>
+                <td><a href="#arangodb.cloud.audit.v1.AuditLogArchiveChunkList">AuditLogArchiveChunkList</a></td>
+                <td><p>Fetch all chunks of an audit log archive identified by the given ID.
+Required permissions:
+- audit.auditlogarchivechunk.list on the audit log archive identified by the given ID.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetAuditLogArchiveChunk</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.audit.v1.AuditLogArchiveChunk">AuditLogArchiveChunk</a></td>
+                <td><p>Fetch a specific AuditLogArchiveChunk identified by the given ID.
+Required permissions:
+- audit.auditlogarchivechunk.get on the audit log archive chunk identified by the given ID.</p></td>
+              </tr>
+            
+              <tr>
+                <td>DeleteAuditLogArchiveChunk</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><p>Delete an audit log archive chunk.
+Required permissions:
+- audit.auditlogarchivechunk.delete on the audit log archive chunk.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListAuditLogEvents</td>
+                <td><a href="#arangodb.cloud.audit.v1.ListAuditLogEventsRequest">ListAuditLogEventsRequest</a></td>
+                <td><a href="#arangodb.cloud.audit.v1.AuditLogEventList">AuditLogEventList</a></td>
+                <td><p>Fetch all audit events that match the given filter.
+Note that this method will return a precondition-failed error 
+if there is no destination of type &#34;cloud&#34; in the AuditLog.
+Required permissions:
+- audit.auditlogevent.list on the audit log identified by the given ID.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetAuditLogAttachedToProject</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.audit.v1.AuditLog">AuditLog</a></td>
+                <td><p>Fetch the AuditLog that is attached to the project identified by the given ID.
+If no AuditLog is attached to the project, a not-found error is returned.
+Required permissions:
+- audit.auditlogattachment.get on the project identified by the given ID.</p></td>
+              </tr>
+            
+              <tr>
+                <td>AttachProjectToAuditLog</td>
+                <td><a href="#arangodb.cloud.audit.v1.AttachProjectToAuditLogRequest">AttachProjectToAuditLogRequest</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><p>Attach the AuditLog identified by given ID to the project identified with given ID.
+This replaces any existing AuditLog attachment for the project.
+Required permissions:
+- audit.auditlogattachment.create on the project identified by the given ID.</p></td>
+              </tr>
+            
+              <tr>
+                <td>DetachProjectFromAuditLog</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><p>Detach the current AuditLog from the project identified with given ID.
+After a detachment, no audit events in the context of the project will be sent
+to an AuditLog.
+Required permissions:
+- audit.auditlogattachment.delete on the project identified by the given ID.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+          
+          
+          <h4>Methods with HTTP bindings</h4>
+          <table>
+            <thead>
+              <tr>
+                <td>Method Name</td>
+                <td>Method</td>
+                <td>Pattern</td>
+                <td>Body</td>
+              </tr>
+            </thead>
+            <tbody>
+            
+              
+              
+              <tr>
+                <td>GetAPIVersion</td>
+                <td>GET</td>
+                <td>/api/audit/v1/api-version</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>ListAuditLogs</td>
+                <td>GET</td>
+                <td>/api/audit/v1/organizations/{organization_id}/auditlogs</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetAuditLog</td>
+                <td>GET</td>
+                <td>/api/audit/v1/auditlogs/{id}</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>CreateAuditLog</td>
+                <td>POST</td>
+                <td>/api/audit/v1/organizations/{organization_id}/auditlogs</td>
+                <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>UpdateAuditLog</td>
+                <td>PATCH</td>
+                <td>/api/audit/v1/auditlogs/{id}</td>
+                <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>DeleteAuditLog</td>
+                <td>DELETE</td>
+                <td>/api/audit/v1/auditlogs/{id}</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>ListAuditLogArchives</td>
+                <td>GET</td>
+                <td>/api/audit/v1/auditlogs/{auditlog_id}/auditlogarchives</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetAuditLogArchive</td>
+                <td>GET</td>
+                <td>/api/audit/v1/auditlogarchives/{id}</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>DeleteAuditLogArchive</td>
+                <td>DELETE</td>
+                <td>/api/audit/v1/auditlogarchives/{id}</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>ListAuditLogArchiveChunks</td>
+                <td>GET</td>
+                <td>/api/audit/v1/auditlogarchives/{auditlogarchive_id}/auditlogarchivechunks</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetAuditLogArchiveChunk</td>
+                <td>GET</td>
+                <td>/api/audit/v1/auditlogarchivechunks/{id}</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>DeleteAuditLogArchiveChunk</td>
+                <td>DELETE</td>
+                <td>/api/audit/v1/auditlogarchivechunks/{id}</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>ListAuditLogEvents</td>
+                <td>GET</td>
+                <td>/api/audit/v1/auditlogs/{auditlog_id}/events</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetAuditLogAttachedToProject</td>
+                <td>GET</td>
+                <td>/api/audit/v1/projects/{id}/auditlog</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>AttachProjectToAuditLog</td>
+                <td>POST</td>
+                <td>/api/audit/v1/projects/{project_id}/auditlogs/{auditlog_id}/attach</td>
+                <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>DetachProjectFromAuditLog</td>
+                <td>DELETE</td>
+                <td>/api/audit/v1/projects/{id}/auditlogs</td>
                 <td></td>
               </tr>
               
