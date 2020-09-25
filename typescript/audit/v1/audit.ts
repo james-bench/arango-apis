@@ -23,9 +23,8 @@ export interface AttachProjectToAuditLogRequest {
   auditlog_id?: string;
 }
 
-// AuditLog holds a specification for filtering audit events, a specification for
-// destinations that audit events should be sent to and it acts as a grouping
-// of audit log archives.
+// AuditLog holds a specification destinations that audit events should be
+// sent to and it acts as a grouping of audit log archives.
 export interface AuditLog {
   // The ID of this resource.
   // string
@@ -128,7 +127,7 @@ export interface AuditLog_HttpsPostSettings {
   client_key_pem?: string;
   
   // HTTP headers to add to the request.
-  // If it allowed to pass multiple headers with the same key.
+  // It is allowed to pass multiple headers with the same key.
   // AuditLog_Header
   headers?: AuditLog_Header[];
   
@@ -372,6 +371,8 @@ export interface IAuditService {
   // Note that audit logs are initially only marked for deleted.
   // Once all their resources are removed the audit log itself is deleted
   // and cannot be restored.
+  // Note that deleting an AuditLog will detach it from all Projects that
+  // it was attached to.
   // Required permissions:
   // - audit.auditlog.delete on the audit log.
   DeleteAuditLog: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
@@ -480,6 +481,8 @@ export class AuditService implements IAuditService {
   // Note that audit logs are initially only marked for deleted.
   // Once all their resources are removed the audit log itself is deleted
   // and cannot be restored.
+  // Note that deleting an AuditLog will detach it from all Projects that
+  // it was attached to.
   // Required permissions:
   // - audit.auditlog.delete on the audit log.
   async DeleteAuditLog(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {

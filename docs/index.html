@@ -8081,7 +8081,7 @@ Required permissions:
         
       
         <h3 id="arangodb.cloud.audit.v1.AuditLog">AuditLog</h3>
-        <p>AuditLog holds a specification for filtering audit events, a specification for</p><p>destinations that audit events should be sent to and it acts as a grouping</p><p>of audit log archives.</p>
+        <p>AuditLog holds a specification destinations that audit events should be</p><p>sent to and it acts as a grouping of audit log archives.</p>
 
         
           <table class="field-table">
@@ -8294,7 +8294,7 @@ used to make the request. </p></td>
                   <td><a href="#arangodb.cloud.audit.v1.AuditLog.Header">AuditLog.Header</a></td>
                   <td>repeated</td>
                   <td><p>HTTP headers to add to the request.
-If it allowed to pass multiple headers with the same key. </p></td>
+It is allowed to pass multiple headers with the same key. </p></td>
                 </tr>
               
                 <tr>
@@ -8830,6 +8830,8 @@ Required permissions:
 Note that audit logs are initially only marked for deleted.
 Once all their resources are removed the audit log itself is deleted
 and cannot be restored.
+Note that deleting an AuditLog will detach it from all Projects that
+it was attached to.
 Required permissions:
 - audit.auditlog.delete on the audit log.</p></td>
               </tr>

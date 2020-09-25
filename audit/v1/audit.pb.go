@@ -29,9 +29,8 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-// AuditLog holds a specification for filtering audit events, a specification for
-// destinations that audit events should be sent to and it acts as a grouping
-// of audit log archives.
+// AuditLog holds a specification destinations that audit events should be
+// sent to and it acts as a grouping of audit log archives.
 type AuditLog struct {
 	// The ID of this resource.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -195,7 +194,7 @@ type AuditLog_HttpsPostSettings struct {
 	// used to make the request.
 	ClientKeyPem string `protobuf:"bytes,4,opt,name=client_key_pem,json=clientKeyPem,proto3" json:"client_key_pem,omitempty"`
 	// HTTP headers to add to the request.
-	// If it allowed to pass multiple headers with the same key.
+	// It is allowed to pass multiple headers with the same key.
 	Headers []*AuditLog_Header `protobuf:"bytes,5,rep,name=headers,proto3" json:"headers,omitempty"`
 	// Do not send audit events with these topics to this destination.
 	ExcludedTopics       []string `protobuf:"bytes,100,rep,name=excluded_topics,json=excludedTopics,proto3" json:"excluded_topics,omitempty"`
@@ -1350,6 +1349,8 @@ type AuditServiceClient interface {
 	// Note that audit logs are initially only marked for deleted.
 	// Once all their resources are removed the audit log itself is deleted
 	// and cannot be restored.
+	// Note that deleting an AuditLog will detach it from all Projects that
+	// it was attached to.
 	// Required permissions:
 	// - audit.auditlog.delete on the audit log.
 	DeleteAuditLog(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
@@ -1561,6 +1562,8 @@ type AuditServiceServer interface {
 	// Note that audit logs are initially only marked for deleted.
 	// Once all their resources are removed the audit log itself is deleted
 	// and cannot be restored.
+	// Note that deleting an AuditLog will detach it from all Projects that
+	// it was attached to.
 	// Required permissions:
 	// - audit.auditlog.delete on the audit log.
 	DeleteAuditLog(context.Context, *v1.IDOptions) (*v1.Empty, error)
