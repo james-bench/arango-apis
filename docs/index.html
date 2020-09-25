@@ -679,7 +679,11 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
-                  <a href="#arangodb.cloud.audit.v1.AuditLog.Filter"><span class="badge">M</span>AuditLog.Filter</a>
+                  <a href="#arangodb.cloud.audit.v1.AuditLog.Header"><span class="badge">M</span>AuditLog.Header</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.audit.v1.AuditLog.HttpsPostSettings"><span class="badge">M</span>AuditLog.HttpsPostSettings</a>
                 </li>
               
                 <li>
@@ -8163,13 +8167,6 @@ This is a read-only value. </p></td>
                 </tr>
               
                 <tr>
-                  <td>filter</td>
-                  <td><a href="#arangodb.cloud.audit.v1.AuditLog.Filter">AuditLog.Filter</a></td>
-                  <td></td>
-                  <td><p>Audit event topic filter </p></td>
-                </tr>
-              
-                <tr>
                   <td>destinations</td>
                   <td><a href="#arangodb.cloud.audit.v1.AuditLog.Destination">AuditLog.Destination</a></td>
                   <td>repeated</td>
@@ -8202,6 +8199,13 @@ Note that there can only be 1 destination of type &#34;cloud&#34;. </p></td>
 Possible values are: &#34;cloud&#34;, &#34;https-post&#34; </p></td>
                 </tr>
               
+                <tr>
+                  <td>http_post</td>
+                  <td><a href="#arangodb.cloud.audit.v1.AuditLog.HttpsPostSettings">AuditLog.HttpsPostSettings</a></td>
+                  <td></td>
+                  <td><p>Settings for destinations of type &#34;https-post&#34; </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -8209,8 +8213,8 @@ Possible values are: &#34;cloud&#34;, &#34;https-post&#34; </p></td>
 
         
       
-        <h3 id="arangodb.cloud.audit.v1.AuditLog.Filter">AuditLog.Filter</h3>
-        <p>Event filter specification</p>
+        <h3 id="arangodb.cloud.audit.v1.AuditLog.Header">AuditLog.Header</h3>
+        <p>HTTP header pair</p>
 
         
           <table class="field-table">
@@ -8220,20 +8224,84 @@ Possible values are: &#34;cloud&#34;, &#34;https-post&#34; </p></td>
             <tbody>
               
                 <tr>
-                  <td>included_topics</td>
+                  <td>key</td>
                   <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Key of the header </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Value of the header </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.audit.v1.AuditLog.HttpsPostSettings">AuditLog.HttpsPostSettings</h3>
+        <p>Settings for a destination of type "https-post"</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>URL of the server to POST to.
+The scheme of the URL must be &#34;https&#34;. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>trusted_server_ca_pem</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>PEM encoded public key of the CA used to sign
+the server TLS certificate.
+This public key will be used to verify the
+TLS connection provided by the server.
+If this field is empty, a well known CA is expected. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>client_certificate_pem</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>PEM encoded public key of the client certificate
+used to make the request. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>client_key_pem</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>PEM encoded private key of the client certificate
+used to make the request. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>headers</td>
+                  <td><a href="#arangodb.cloud.audit.v1.AuditLog.Header">AuditLog.Header</a></td>
                   <td>repeated</td>
-                  <td><p>If non-empty, only audit events with these topics will pass
-the filter. </p></td>
+                  <td><p>HTTP headers to add to the request.
+If it allowed to pass multiple headers with the same key. </p></td>
                 </tr>
               
                 <tr>
                   <td>excluded_topics</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>Audit events with these topics will not pass the filter.
-If a topic is in both included_topics &amp; excluded_topics,
-it will not pass the filter. </p></td>
+                  <td><p>Do not send audit events with these topics to this destination. </p></td>
                 </tr>
               
             </tbody>
@@ -8451,6 +8519,13 @@ This is a read-only value. </p></td>
                   <td><p>Free format text describing the event </p></td>
                 </tr>
               
+                <tr>
+                  <td>auditlogarchive_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the AuditLogArchive that contains this event (if applicable) </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -8619,6 +8694,22 @@ This is an optional field. </p></td>
                 </tr>
               
                 <tr>
+                  <td>included_topics</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>If non-empty, only request events with one of these topics. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>excluded_topics</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>If non-empty, leave out events with one of these topics.
+If a topic is specified in included_topics as well as excluded_topics,
+events of that topic will not be included in the results. </p></td>
+                </tr>
+              
+                <tr>
                   <td>options</td>
                   <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
                   <td></td>
@@ -8766,6 +8857,8 @@ Required permissions:
                 <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
                 <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
                 <td><p>Delete an audit log archive.
+Note that this method will return a precondition-failed error 
+if there is a non-deleted deployment using this archive.
 Note that audit log archives are initially only marked for deleted.
 Once all their resources are removed the audit log archive itself is deleted
 and cannot be restored.

@@ -73,10 +73,6 @@ export interface AuditLog {
   // boolean
   is_default?: boolean;
   
-  // Audit event topic filter
-  // AuditLog_Filter
-  filter?: AuditLog_Filter;
-  
   // Destinations that events of this AuditLog should be sent to.
   // Note that there can only be 1 destination of type "cloud".
   // AuditLog_Destination
@@ -89,18 +85,54 @@ export interface AuditLog_Destination {
   // Possible values are: "cloud", "https-post"
   // string
   type?: string;
+  
+  // Settings for destinations of type "https-post"
+  // AuditLog_HttpsPostSettings
+  http_post?: AuditLog_HttpsPostSettings;
 }
 
-// Event filter specification
-export interface AuditLog_Filter {
-  // If non-empty, only audit events with these topics will pass
-  // the filter.
+// HTTP header pair
+export interface AuditLog_Header {
+  // Key of the header
   // string
-  included_topics?: string[];
+  key?: string;
   
-  // Audit events with these topics will not pass the filter.
-  // If a topic is in both included_topics & excluded_topics,
-  // it will not pass the filter.
+  // Value of the header
+  // string
+  value?: string;
+}
+
+// Settings for a destination of type "https-post"
+export interface AuditLog_HttpsPostSettings {
+  // URL of the server to POST to.
+  // The scheme of the URL must be "https".
+  // string
+  url?: string;
+  
+  // PEM encoded public key of the CA used to sign
+  // the server TLS certificate.
+  // This public key will be used to verify the
+  // TLS connection provided by the server.
+  // If this field is empty, a well known CA is expected.
+  // string
+  trusted_server_ca_pem?: string;
+  
+  // PEM encoded public key of the client certificate
+  // used to make the request.
+  // string
+  client_certificate_pem?: string;
+  
+  // PEM encoded private key of the client certificate
+  // used to make the request.
+  // string
+  client_key_pem?: string;
+  
+  // HTTP headers to add to the request.
+  // If it allowed to pass multiple headers with the same key.
+  // AuditLog_Header
+  headers?: AuditLog_Header[];
+  
+  // Do not send audit events with these topics to this destination.
   // string
   excluded_topics?: string[];
 }
@@ -210,6 +242,10 @@ export interface AuditLogEvent {
   // Free format text describing the event
   // string
   message?: string;
+  
+  // ID of the AuditLogArchive that contains this event (if applicable)
+  // string
+  auditlogarchive_id?: string;
 }
 
 // List of AuditLogEvent's.
@@ -272,6 +308,16 @@ export interface ListAuditLogEventsRequest {
   // This is an optional field.
   // googleTypes.Timestamp
   to?: googleTypes.Timestamp;
+  
+  // If non-empty, only request events with one of these topics.
+  // string
+  included_topics?: string[];
+  
+  // If non-empty, leave out events with one of these topics.
+  // If a topic is specified in included_topics as well as excluded_topics,
+  // events of that topic will not be included in the results.
+  // string
+  excluded_topics?: string[];
   
   // Optional common list options, the context_id is ignored
   // arangodb.cloud.common.v1.ListOptions
@@ -341,6 +387,8 @@ export interface IAuditService {
   GetAuditLogArchive: (req: arangodb_cloud_common_v1_IDOptions) => Promise<AuditLogArchive>;
   
   // Delete an audit log archive.
+  // Note that this method will return a precondition-failed error
+  // if there is a non-deleted deployment using this archive.
   // Note that audit log archives are initially only marked for deleted.
   // Once all their resources are removed the audit log archive itself is deleted
   // and cannot be restored.
@@ -459,6 +507,8 @@ export class AuditService implements IAuditService {
   }
   
   // Delete an audit log archive.
+  // Note that this method will return a precondition-failed error
+  // if there is a non-deleted deployment using this archive.
   // Note that audit log archives are initially only marked for deleted.
   // Once all their resources are removed the audit log archive itself is deleted
   // and cannot be restored.

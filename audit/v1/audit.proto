@@ -111,6 +111,8 @@ service AuditService {
     }
 
     // Delete an audit log archive.
+    // Note that this method will return a precondition-failed error 
+    // if there is a non-deleted deployment using this archive.
     // Note that audit log archives are initially only marked for deleted.
     // Once all their resources are removed the audit log archive itself is deleted
     // and cannot be restored.
@@ -210,28 +212,49 @@ message AuditLog {
     // If set, this AuditLog is the default for the organization.
     bool is_default = 10;
 
-    // Event filter specification
-    message Filter {
-        // If non-empty, only audit events with these topics will pass
-        // the filter.
-        repeated string included_topics = 1;
-        // Audit events with these topics will not pass the filter.
-        // If a topic is in both included_topics & excluded_topics,
-        // it will not pass the filter.
-        repeated string excluded_topics = 2;
+    // Settings for a destination of type "https-post"
+    message HttpsPostSettings {
+        // URL of the server to POST to.
+        // The scheme of the URL must be "https".
+        string url = 1;
+        // PEM encoded public key of the CA used to sign
+        // the server TLS certificate.
+        // This public key will be used to verify the
+        // TLS connection provided by the server.
+        // If this field is empty, a well known CA is expected.
+        string trusted_server_ca_pem = 2;
+        // PEM encoded public key of the client certificate
+        // used to make the request.
+        string client_certificate_pem = 3;
+        // PEM encoded private key of the client certificate
+        // used to make the request.
+        string client_key_pem = 4;
+        // HTTP headers to add to the request.
+        // If it allowed to pass multiple headers with the same key.
+        repeated Header headers = 5;
+        // Do not send audit events with these topics to this destination.
+        repeated string excluded_topics = 100;
     }
-    // Audit event topic filter
-    Filter filter = 100;
+
+    // HTTP header pair
+    message Header {
+        // Key of the header
+        string key = 1;
+        // Value of the header
+        string value = 2;
+    }
 
     // Specification of a destination for audit events.
     message Destination {
         // Type of destination.
         // Possible values are: "cloud", "https-post"
         string type = 1;
+        // Settings for destinations of type "https-post"
+        HttpsPostSettings http_post = 10;
     }
     // Destinations that events of this AuditLog should be sent to.
     // Note that there can only be 1 destination of type "cloud".
-    repeated Destination destinations = 200;
+    repeated Destination destinations = 100;
 }
 
 // List of AuditLog's.
@@ -327,6 +350,8 @@ message AuditLogEvent {
     string authentication = 11;
     // Free format text describing the event
     string message = 12;
+    // ID of the AuditLogArchive that contains this event (if applicable)
+    string auditlogarchive_id = 13;
 }
 
 // List of AuditLogEvent's.
@@ -346,6 +371,12 @@ message ListAuditLogEventsRequest {
     // Request events created before this timestamp.
     // This is an optional field.
     google.protobuf.Timestamp to = 4;
+    // If non-empty, only request events with one of these topics.
+    repeated string included_topics = 5;
+    // If non-empty, leave out events with one of these topics.
+    // If a topic is specified in included_topics as well as excluded_topics,
+    // events of that topic will not be included in the results.
+    repeated string excluded_topics = 6;
     // Optional common list options, the context_id is ignored
     common.v1.ListOptions options = 10;
 }
