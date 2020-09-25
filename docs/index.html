@@ -687,14 +687,6 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
-                  <a href="#arangodb.cloud.audit.v1.AuditLogArchiveChunk"><span class="badge">M</span>AuditLogArchiveChunk</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.audit.v1.AuditLogArchiveChunkList"><span class="badge">M</span>AuditLogArchiveChunkList</a>
-                </li>
-              
-                <li>
                   <a href="#arangodb.cloud.audit.v1.AuditLogArchiveList"><span class="badge">M</span>AuditLogArchiveList</a>
                 </li>
               
@@ -711,7 +703,7 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
-                  <a href="#arangodb.cloud.audit.v1.ListAuditLogArchiveChunksRequest"><span class="badge">M</span>ListAuditLogArchiveChunksRequest</a>
+                  <a href="#arangodb.cloud.audit.v1.DeleteAuditLogArchiveEventsRequest"><span class="badge">M</span>DeleteAuditLogArchiveEventsRequest</a>
                 </li>
               
                 <li>
@@ -8265,7 +8257,8 @@ it will not pass the filter. </p></td>
                   <td>id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>The ID of this resource. </p></td>
+                  <td><p>The ID of this resource.
+This is a read-only value. </p></td>
                 </tr>
               
                 <tr>
@@ -8316,92 +8309,21 @@ This is a read-only value. </p></td>
 Note that the deployment may have already been deleted. </p></td>
                 </tr>
               
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.audit.v1.AuditLogArchiveChunk">AuditLogArchiveChunk</h3>
-        <p>AuditLogArchiveChunk collects audit events in a specific time frame</p><p>on an AuditLogArchive.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
                 <tr>
-                  <td>id</td>
-                  <td><a href="#string">string</a></td>
+                  <td>size_in_bytes</td>
+                  <td><a href="#uint64">uint64</a></td>
                   <td></td>
-                  <td><p>The ID of this resource. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>url</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>URL of this resource
+                  <td><p>Last known size of this archive in bytes.
+Note that this field is only update periodically.
 This is a read-only value. </p></td>
                 </tr>
               
                 <tr>
-                  <td>created_at</td>
+                  <td>size_in_bytes_changed_at</td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
-                  <td><p>The creation timestamp of the resource
+                  <td><p>The timestamp of the last modification of size_in_bytes.
 This is a read-only value. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>auditlogarchive_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Identifier of the AuditLogArchive that owns this chunk.
-This is a read-only value. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>first_event</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>The timestamp of the first event in the chunk.
-This is a read-only value. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>last_event</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>The timestamp of the last event in the chunk.
-This is a read-only value. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.audit.v1.AuditLogArchiveChunkList">AuditLogArchiveChunkList</h3>
-        <p>List of AuditLogArchiveChunk's.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>items</td>
-                  <td><a href="#arangodb.cloud.audit.v1.AuditLogArchiveChunk">AuditLogArchiveChunk</a></td>
-                  <td>repeated</td>
-                  <td><p> </p></td>
                 </tr>
               
             </tbody>
@@ -8584,8 +8506,8 @@ This is a read-only value. </p></td>
 
         
       
-        <h3 id="arangodb.cloud.audit.v1.ListAuditLogArchiveChunksRequest">ListAuditLogArchiveChunksRequest</h3>
-        <p>Request arguments for ListAuditLogArchiveChunks</p>
+        <h3 id="arangodb.cloud.audit.v1.DeleteAuditLogArchiveEventsRequest">DeleteAuditLogArchiveEventsRequest</h3>
+        <p>Request arguments for DeleteAuditLogArchiveEvents.</p>
 
         
           <table class="field-table">
@@ -8598,30 +8520,15 @@ This is a read-only value. </p></td>
                   <td>auditlogarchive_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Identifier of the audit log archive to request the chunks for. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>from</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>Request chunks that contain events created at or after this timestamp.
-This is an optional field. </p></td>
+                  <td><p>Identifier of the audit log archive to delete events from. </p></td>
                 </tr>
               
                 <tr>
                   <td>to</td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
-                  <td><p>Request chunks that contain events created before this timestamp.
-This is an optional field. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>options</td>
-                  <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
-                  <td></td>
-                  <td><p>Optional common list options, the context_id is ignored </p></td>
+                  <td><p>Remove events created before this timestamp.
+Note that this timestamp will be rounded down to the nearest hour. </p></td>
                 </tr>
               
             </tbody>
@@ -8693,13 +8600,6 @@ If not set, only audit log archives not indicated as deleted are returned. </p><
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>If set, include only events from this AuditLogArchive. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>auditlogarchivechunk_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>If set, include only events from this AuditLogArchiveChunk. </p></td>
                 </tr>
               
                 <tr>
@@ -8874,30 +8774,15 @@ Required permissions:
               </tr>
             
               <tr>
-                <td>ListAuditLogArchiveChunks</td>
-                <td><a href="#arangodb.cloud.audit.v1.ListAuditLogArchiveChunksRequest">ListAuditLogArchiveChunksRequest</a></td>
-                <td><a href="#arangodb.cloud.audit.v1.AuditLogArchiveChunkList">AuditLogArchiveChunkList</a></td>
-                <td><p>Fetch all chunks of an audit log archive identified by the given ID.
-Required permissions:
-- audit.auditlogarchivechunk.list on the audit log archive identified by the given ID.</p></td>
-              </tr>
-            
-              <tr>
-                <td>GetAuditLogArchiveChunk</td>
-                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
-                <td><a href="#arangodb.cloud.audit.v1.AuditLogArchiveChunk">AuditLogArchiveChunk</a></td>
-                <td><p>Fetch a specific AuditLogArchiveChunk identified by the given ID.
-Required permissions:
-- audit.auditlogarchivechunk.get on the audit log archive chunk identified by the given ID.</p></td>
-              </tr>
-            
-              <tr>
-                <td>DeleteAuditLogArchiveChunk</td>
-                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td>DeleteAuditLogArchiveEvents</td>
+                <td><a href="#arangodb.cloud.audit.v1.DeleteAuditLogArchiveEventsRequest">DeleteAuditLogArchiveEventsRequest</a></td>
                 <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
-                <td><p>Delete an audit log archive chunk.
+                <td><p>Remove all audit events that match the given filter from the AuditLogArchive
+identified by the given ID.
+Note that this method will return a precondition-failed error 
+if there is no destination of type &#34;cloud&#34; in the AuditLog.
 Required permissions:
-- audit.auditlogarchivechunk.delete on the audit log archive chunk.</p></td>
+- audit.auditlogevent.delete on the audit log archive identified by the given ID.</p></td>
               </tr>
             
               <tr>
@@ -9053,30 +8938,10 @@ Required permissions:
               
               
               <tr>
-                <td>ListAuditLogArchiveChunks</td>
-                <td>GET</td>
-                <td>/api/audit/v1/auditlogarchives/{auditlogarchive_id}/auditlogarchivechunks</td>
-                <td></td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>GetAuditLogArchiveChunk</td>
-                <td>GET</td>
-                <td>/api/audit/v1/auditlogarchivechunks/{id}</td>
-                <td></td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>DeleteAuditLogArchiveChunk</td>
+                <td>DeleteAuditLogArchiveEvents</td>
                 <td>DELETE</td>
-                <td>/api/audit/v1/auditlogarchivechunks/{id}</td>
-                <td></td>
+                <td>/api/audit/v1/auditlogarchives/{auditlogarchive_id}/events</td>
+                <td>*</td>
               </tr>
               
             

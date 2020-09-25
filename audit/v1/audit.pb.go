@@ -418,6 +418,7 @@ func (m *ListAuditLogsRequest) GetOptions() *v1.ListOptions {
 // usually for a specific deployment.
 type AuditLogArchive struct {
 	// The ID of this resource.
+	// This is a read-only value.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// URL of this resource
 	// This is a read-only value.
@@ -436,10 +437,17 @@ type AuditLogArchive struct {
 	AuditlogId string `protobuf:"bytes,6,opt,name=auditlog_id,json=auditlogId,proto3" json:"auditlog_id,omitempty"`
 	// If set, this archive is collecting audit events for a deployment with this ID.
 	// Note that the deployment may have already been deleted.
-	DeploymentId         string   `protobuf:"bytes,7,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	DeploymentId string `protobuf:"bytes,7,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
+	// Last known size of this archive in bytes.
+	// Note that this field is only update periodically.
+	// This is a read-only value.
+	SizeInBytes uint64 `protobuf:"varint,8,opt,name=size_in_bytes,json=sizeInBytes,proto3" json:"size_in_bytes,omitempty"`
+	// The timestamp of the last modification of size_in_bytes.
+	// This is a read-only value.
+	SizeInBytesChangedAt *types.Timestamp `protobuf:"bytes,9,opt,name=size_in_bytes_changed_at,json=sizeInBytesChangedAt,proto3" json:"size_in_bytes_changed_at,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
 }
 
 func (m *AuditLogArchive) Reset()         { *m = AuditLogArchive{} }
@@ -522,6 +530,20 @@ func (m *AuditLogArchive) GetDeploymentId() string {
 		return m.DeploymentId
 	}
 	return ""
+}
+
+func (m *AuditLogArchive) GetSizeInBytes() uint64 {
+	if m != nil {
+		return m.SizeInBytes
+	}
+	return 0
+}
+
+func (m *AuditLogArchive) GetSizeInBytesChangedAt() *types.Timestamp {
+	if m != nil {
+		return m.SizeInBytesChangedAt
+	}
+	return nil
 }
 
 // List of AuditLogArchive's.
@@ -641,232 +663,6 @@ func (m *ListAuditLogArchivesRequest) GetOptions() *v1.ListOptions {
 	return nil
 }
 
-// AuditLogArchiveChunk collects audit events in a specific time frame
-// on an AuditLogArchive.
-type AuditLogArchiveChunk struct {
-	// The ID of this resource.
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// URL of this resource
-	// This is a read-only value.
-	Url string `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty"`
-	// The creation timestamp of the resource
-	// This is a read-only value.
-	CreatedAt *types.Timestamp `protobuf:"bytes,3,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	// Identifier of the AuditLogArchive that owns this chunk.
-	// This is a read-only value.
-	AuditlogarchiveId string `protobuf:"bytes,4,opt,name=auditlogarchive_id,json=auditlogarchiveId,proto3" json:"auditlogarchive_id,omitempty"`
-	// The timestamp of the first event in the chunk.
-	// This is a read-only value.
-	FirstEvent *types.Timestamp `protobuf:"bytes,5,opt,name=first_event,json=firstEvent,proto3" json:"first_event,omitempty"`
-	// The timestamp of the last event in the chunk.
-	// This is a read-only value.
-	LastEvent            *types.Timestamp `protobuf:"bytes,6,opt,name=last_event,json=lastEvent,proto3" json:"last_event,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
-	XXX_unrecognized     []byte           `json:"-"`
-	XXX_sizecache        int32            `json:"-"`
-}
-
-func (m *AuditLogArchiveChunk) Reset()         { *m = AuditLogArchiveChunk{} }
-func (m *AuditLogArchiveChunk) String() string { return proto.CompactTextString(m) }
-func (*AuditLogArchiveChunk) ProtoMessage()    {}
-func (*AuditLogArchiveChunk) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5594839dd8e38a1b, []int{6}
-}
-func (m *AuditLogArchiveChunk) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *AuditLogArchiveChunk) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_AuditLogArchiveChunk.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *AuditLogArchiveChunk) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AuditLogArchiveChunk.Merge(m, src)
-}
-func (m *AuditLogArchiveChunk) XXX_Size() int {
-	return m.Size()
-}
-func (m *AuditLogArchiveChunk) XXX_DiscardUnknown() {
-	xxx_messageInfo_AuditLogArchiveChunk.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_AuditLogArchiveChunk proto.InternalMessageInfo
-
-func (m *AuditLogArchiveChunk) GetId() string {
-	if m != nil {
-		return m.Id
-	}
-	return ""
-}
-
-func (m *AuditLogArchiveChunk) GetUrl() string {
-	if m != nil {
-		return m.Url
-	}
-	return ""
-}
-
-func (m *AuditLogArchiveChunk) GetCreatedAt() *types.Timestamp {
-	if m != nil {
-		return m.CreatedAt
-	}
-	return nil
-}
-
-func (m *AuditLogArchiveChunk) GetAuditlogarchiveId() string {
-	if m != nil {
-		return m.AuditlogarchiveId
-	}
-	return ""
-}
-
-func (m *AuditLogArchiveChunk) GetFirstEvent() *types.Timestamp {
-	if m != nil {
-		return m.FirstEvent
-	}
-	return nil
-}
-
-func (m *AuditLogArchiveChunk) GetLastEvent() *types.Timestamp {
-	if m != nil {
-		return m.LastEvent
-	}
-	return nil
-}
-
-// List of AuditLogArchiveChunk's.
-type AuditLogArchiveChunkList struct {
-	Items                []*AuditLogArchiveChunk `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
-	XXX_unrecognized     []byte                  `json:"-"`
-	XXX_sizecache        int32                   `json:"-"`
-}
-
-func (m *AuditLogArchiveChunkList) Reset()         { *m = AuditLogArchiveChunkList{} }
-func (m *AuditLogArchiveChunkList) String() string { return proto.CompactTextString(m) }
-func (*AuditLogArchiveChunkList) ProtoMessage()    {}
-func (*AuditLogArchiveChunkList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5594839dd8e38a1b, []int{7}
-}
-func (m *AuditLogArchiveChunkList) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *AuditLogArchiveChunkList) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_AuditLogArchiveChunkList.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *AuditLogArchiveChunkList) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AuditLogArchiveChunkList.Merge(m, src)
-}
-func (m *AuditLogArchiveChunkList) XXX_Size() int {
-	return m.Size()
-}
-func (m *AuditLogArchiveChunkList) XXX_DiscardUnknown() {
-	xxx_messageInfo_AuditLogArchiveChunkList.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_AuditLogArchiveChunkList proto.InternalMessageInfo
-
-func (m *AuditLogArchiveChunkList) GetItems() []*AuditLogArchiveChunk {
-	if m != nil {
-		return m.Items
-	}
-	return nil
-}
-
-// Request arguments for ListAuditLogArchiveChunks
-type ListAuditLogArchiveChunksRequest struct {
-	// Identifier of the audit log archive to request the chunks for.
-	AuditlogarchiveId string `protobuf:"bytes,1,opt,name=auditlogarchive_id,json=auditlogarchiveId,proto3" json:"auditlogarchive_id,omitempty"`
-	// Request chunks that contain events created at or after this timestamp.
-	// This is an optional field.
-	From *types.Timestamp `protobuf:"bytes,2,opt,name=from,proto3" json:"from,omitempty"`
-	// Request chunks that contain events created before this timestamp.
-	// This is an optional field.
-	To *types.Timestamp `protobuf:"bytes,3,opt,name=to,proto3" json:"to,omitempty"`
-	// Optional common list options, the context_id is ignored
-	Options              *v1.ListOptions `protobuf:"bytes,10,opt,name=options,proto3" json:"options,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
-	XXX_unrecognized     []byte          `json:"-"`
-	XXX_sizecache        int32           `json:"-"`
-}
-
-func (m *ListAuditLogArchiveChunksRequest) Reset()         { *m = ListAuditLogArchiveChunksRequest{} }
-func (m *ListAuditLogArchiveChunksRequest) String() string { return proto.CompactTextString(m) }
-func (*ListAuditLogArchiveChunksRequest) ProtoMessage()    {}
-func (*ListAuditLogArchiveChunksRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5594839dd8e38a1b, []int{8}
-}
-func (m *ListAuditLogArchiveChunksRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *ListAuditLogArchiveChunksRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_ListAuditLogArchiveChunksRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *ListAuditLogArchiveChunksRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ListAuditLogArchiveChunksRequest.Merge(m, src)
-}
-func (m *ListAuditLogArchiveChunksRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *ListAuditLogArchiveChunksRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_ListAuditLogArchiveChunksRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_ListAuditLogArchiveChunksRequest proto.InternalMessageInfo
-
-func (m *ListAuditLogArchiveChunksRequest) GetAuditlogarchiveId() string {
-	if m != nil {
-		return m.AuditlogarchiveId
-	}
-	return ""
-}
-
-func (m *ListAuditLogArchiveChunksRequest) GetFrom() *types.Timestamp {
-	if m != nil {
-		return m.From
-	}
-	return nil
-}
-
-func (m *ListAuditLogArchiveChunksRequest) GetTo() *types.Timestamp {
-	if m != nil {
-		return m.To
-	}
-	return nil
-}
-
-func (m *ListAuditLogArchiveChunksRequest) GetOptions() *v1.ListOptions {
-	if m != nil {
-		return m.Options
-	}
-	return nil
-}
-
 // Single audit log event
 type AuditLogEvent struct {
 	// When did the event happen
@@ -902,7 +698,7 @@ func (m *AuditLogEvent) Reset()         { *m = AuditLogEvent{} }
 func (m *AuditLogEvent) String() string { return proto.CompactTextString(m) }
 func (*AuditLogEvent) ProtoMessage()    {}
 func (*AuditLogEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5594839dd8e38a1b, []int{9}
+	return fileDescriptor_5594839dd8e38a1b, []int{6}
 }
 func (m *AuditLogEvent) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1027,7 +823,7 @@ func (m *AuditLogEventList) Reset()         { *m = AuditLogEventList{} }
 func (m *AuditLogEventList) String() string { return proto.CompactTextString(m) }
 func (*AuditLogEventList) ProtoMessage()    {}
 func (*AuditLogEventList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5594839dd8e38a1b, []int{10}
+	return fileDescriptor_5594839dd8e38a1b, []int{7}
 }
 func (m *AuditLogEventList) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1069,14 +865,12 @@ type ListAuditLogEventsRequest struct {
 	AuditlogId string `protobuf:"bytes,1,opt,name=auditlog_id,json=auditlogId,proto3" json:"auditlog_id,omitempty"`
 	// If set, include only events from this AuditLogArchive.
 	AuditlogarchiveId string `protobuf:"bytes,2,opt,name=auditlogarchive_id,json=auditlogarchiveId,proto3" json:"auditlogarchive_id,omitempty"`
-	// If set, include only events from this AuditLogArchiveChunk.
-	AuditlogarchivechunkId string `protobuf:"bytes,3,opt,name=auditlogarchivechunk_id,json=auditlogarchivechunkId,proto3" json:"auditlogarchivechunk_id,omitempty"`
 	// Request events created at or after this timestamp.
 	// This is an optional field.
-	From *types.Timestamp `protobuf:"bytes,4,opt,name=from,proto3" json:"from,omitempty"`
+	From *types.Timestamp `protobuf:"bytes,3,opt,name=from,proto3" json:"from,omitempty"`
 	// Request events created before this timestamp.
 	// This is an optional field.
-	To *types.Timestamp `protobuf:"bytes,5,opt,name=to,proto3" json:"to,omitempty"`
+	To *types.Timestamp `protobuf:"bytes,4,opt,name=to,proto3" json:"to,omitempty"`
 	// Optional common list options, the context_id is ignored
 	Options              *v1.ListOptions `protobuf:"bytes,10,opt,name=options,proto3" json:"options,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
@@ -1088,7 +882,7 @@ func (m *ListAuditLogEventsRequest) Reset()         { *m = ListAuditLogEventsReq
 func (m *ListAuditLogEventsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListAuditLogEventsRequest) ProtoMessage()    {}
 func (*ListAuditLogEventsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5594839dd8e38a1b, []int{11}
+	return fileDescriptor_5594839dd8e38a1b, []int{8}
 }
 func (m *ListAuditLogEventsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1131,13 +925,6 @@ func (m *ListAuditLogEventsRequest) GetAuditlogarchiveId() string {
 	return ""
 }
 
-func (m *ListAuditLogEventsRequest) GetAuditlogarchivechunkId() string {
-	if m != nil {
-		return m.AuditlogarchivechunkId
-	}
-	return ""
-}
-
 func (m *ListAuditLogEventsRequest) GetFrom() *types.Timestamp {
 	if m != nil {
 		return m.From
@@ -1159,6 +946,65 @@ func (m *ListAuditLogEventsRequest) GetOptions() *v1.ListOptions {
 	return nil
 }
 
+// Request arguments for DeleteAuditLogArchiveEvents.
+type DeleteAuditLogArchiveEventsRequest struct {
+	// Identifier of the audit log archive to delete events from.
+	AuditlogarchiveId string `protobuf:"bytes,1,opt,name=auditlogarchive_id,json=auditlogarchiveId,proto3" json:"auditlogarchive_id,omitempty"`
+	// Remove events created before this timestamp.
+	// Note that this timestamp will be rounded down to the nearest hour.
+	To                   *types.Timestamp `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
+}
+
+func (m *DeleteAuditLogArchiveEventsRequest) Reset()         { *m = DeleteAuditLogArchiveEventsRequest{} }
+func (m *DeleteAuditLogArchiveEventsRequest) String() string { return proto.CompactTextString(m) }
+func (*DeleteAuditLogArchiveEventsRequest) ProtoMessage()    {}
+func (*DeleteAuditLogArchiveEventsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_5594839dd8e38a1b, []int{9}
+}
+func (m *DeleteAuditLogArchiveEventsRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DeleteAuditLogArchiveEventsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DeleteAuditLogArchiveEventsRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *DeleteAuditLogArchiveEventsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeleteAuditLogArchiveEventsRequest.Merge(m, src)
+}
+func (m *DeleteAuditLogArchiveEventsRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *DeleteAuditLogArchiveEventsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_DeleteAuditLogArchiveEventsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DeleteAuditLogArchiveEventsRequest proto.InternalMessageInfo
+
+func (m *DeleteAuditLogArchiveEventsRequest) GetAuditlogarchiveId() string {
+	if m != nil {
+		return m.AuditlogarchiveId
+	}
+	return ""
+}
+
+func (m *DeleteAuditLogArchiveEventsRequest) GetTo() *types.Timestamp {
+	if m != nil {
+		return m.To
+	}
+	return nil
+}
+
 // Request arguments for AttachProjectToAuditLog.
 type AttachProjectToAuditLogRequest struct {
 	// ID of project to attach the AuditLog to.
@@ -1174,7 +1020,7 @@ func (m *AttachProjectToAuditLogRequest) Reset()         { *m = AttachProjectToA
 func (m *AttachProjectToAuditLogRequest) String() string { return proto.CompactTextString(m) }
 func (*AttachProjectToAuditLogRequest) ProtoMessage()    {}
 func (*AttachProjectToAuditLogRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5594839dd8e38a1b, []int{12}
+	return fileDescriptor_5594839dd8e38a1b, []int{10}
 }
 func (m *AttachProjectToAuditLogRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1226,116 +1072,107 @@ func init() {
 	proto.RegisterType((*AuditLogArchive)(nil), "arangodb.cloud.audit.v1.AuditLogArchive")
 	proto.RegisterType((*AuditLogArchiveList)(nil), "arangodb.cloud.audit.v1.AuditLogArchiveList")
 	proto.RegisterType((*ListAuditLogArchivesRequest)(nil), "arangodb.cloud.audit.v1.ListAuditLogArchivesRequest")
-	proto.RegisterType((*AuditLogArchiveChunk)(nil), "arangodb.cloud.audit.v1.AuditLogArchiveChunk")
-	proto.RegisterType((*AuditLogArchiveChunkList)(nil), "arangodb.cloud.audit.v1.AuditLogArchiveChunkList")
-	proto.RegisterType((*ListAuditLogArchiveChunksRequest)(nil), "arangodb.cloud.audit.v1.ListAuditLogArchiveChunksRequest")
 	proto.RegisterType((*AuditLogEvent)(nil), "arangodb.cloud.audit.v1.AuditLogEvent")
 	proto.RegisterType((*AuditLogEventList)(nil), "arangodb.cloud.audit.v1.AuditLogEventList")
 	proto.RegisterType((*ListAuditLogEventsRequest)(nil), "arangodb.cloud.audit.v1.ListAuditLogEventsRequest")
+	proto.RegisterType((*DeleteAuditLogArchiveEventsRequest)(nil), "arangodb.cloud.audit.v1.DeleteAuditLogArchiveEventsRequest")
 	proto.RegisterType((*AttachProjectToAuditLogRequest)(nil), "arangodb.cloud.audit.v1.AttachProjectToAuditLogRequest")
 }
 
 func init() { proto.RegisterFile("audit.proto", fileDescriptor_5594839dd8e38a1b) }
 
 var fileDescriptor_5594839dd8e38a1b = []byte{
-	// 1540 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x58, 0xcf, 0x73, 0xdb, 0x44,
-	0x1b, 0xfe, 0xd6, 0x71, 0x7e, 0xf8, 0x75, 0xe2, 0x7e, 0xdd, 0xf6, 0x6b, 0x54, 0xb7, 0x5f, 0x9a,
-	0xa8, 0x4d, 0x1b, 0x4c, 0x63, 0x93, 0xd0, 0x21, 0x2d, 0xed, 0xb4, 0x24, 0x4d, 0xdb, 0xf1, 0x50,
-	0x86, 0xd6, 0xa4, 0x1c, 0x7a, 0x09, 0x8a, 0xb4, 0x71, 0x04, 0xb6, 0x24, 0xa4, 0xb5, 0x87, 0x50,
-	0x3a, 0xcc, 0x70, 0xe4, 0xc0, 0x94, 0xa1, 0x07, 0xa6, 0x17, 0x6e, 0x0c, 0xf0, 0x27, 0x70, 0x83,
-	0x53, 0x8f, 0xcc, 0x70, 0x62, 0x86, 0x03, 0x53, 0x38, 0x73, 0xe6, 0xc8, 0xec, 0xbb, 0x5a, 0xdb,
-	0x52, 0xec, 0x48, 0x2e, 0xa5, 0x37, 0xeb, 0xd5, 0xbb, 0xbb, 0xcf, 0xbe, 0xcf, 0xb3, 0xef, 0x3e,
-	0x32, 0xe4, 0x8d, 0x96, 0x65, 0xf3, 0xb2, 0xe7, 0xbb, 0xdc, 0xa5, 0xd3, 0x86, 0x6f, 0x38, 0x75,
-	0xd7, 0xda, 0x2a, 0x9b, 0x0d, 0xb7, 0x65, 0x95, 0xe5, 0xbb, 0xf6, 0x52, 0xf1, 0x88, 0xe9, 0x36,
-	0x9b, 0xae, 0x53, 0x69, 0x2f, 0x55, 0xe4, 0x2f, 0x39, 0xa0, 0x78, 0xb1, 0x6e, 0xf3, 0x9d, 0xd6,
-	0x56, 0xd9, 0x74, 0x9b, 0x95, 0xba, 0xdb, 0x30, 0x9c, 0x7a, 0x05, 0x5f, 0x6c, 0xb5, 0xb6, 0x2b,
-	0x1e, 0xdf, 0xf5, 0x58, 0x50, 0xe1, 0x76, 0x93, 0x05, 0xdc, 0x68, 0x7a, 0xdd, 0x5f, 0xe1, 0xe0,
-	0xe3, 0x75, 0xd7, 0xad, 0x37, 0x58, 0xc5, 0xf0, 0xec, 0x8a, 0xe1, 0x38, 0x2e, 0x37, 0xb8, 0xed,
-	0x3a, 0x81, 0x7c, 0xab, 0xff, 0x95, 0x85, 0x89, 0x55, 0xb1, 0xfe, 0x4d, 0xb7, 0x4e, 0x0b, 0x90,
-	0xb1, 0x2d, 0x8d, 0xcc, 0x92, 0x85, 0x5c, 0x2d, 0x63, 0x5b, 0xf4, 0xbf, 0x30, 0xd2, 0xf2, 0x1b,
-	0x5a, 0x06, 0x03, 0xe2, 0x27, 0xa5, 0x90, 0x75, 0x8c, 0x26, 0xd3, 0x46, 0x30, 0x84, 0xbf, 0xe9,
-	0x2c, 0xe4, 0x2d, 0x16, 0x98, 0xbe, 0xed, 0x89, 0x89, 0xb5, 0x2c, 0xbe, 0xea, 0x0d, 0xd1, 0x0b,
-	0x00, 0xa6, 0xcf, 0x0c, 0xce, 0xac, 0x4d, 0x83, 0x6b, 0xa3, 0xb3, 0x64, 0x21, 0xbf, 0x5c, 0x2c,
-	0x4b, 0x5c, 0x65, 0xb5, 0x93, 0xf2, 0x86, 0x02, 0x5e, 0xcb, 0x85, 0xd9, 0xab, 0x5c, 0x0c, 0xb5,
-	0x58, 0x83, 0x85, 0x43, 0xc7, 0x92, 0x87, 0x86, 0xd9, 0xab, 0x9c, 0xfe, 0x1f, 0xc0, 0x0e, 0x36,
-	0xc3, 0x67, 0x6d, 0x7c, 0x96, 0x2c, 0x4c, 0xd4, 0x72, 0x76, 0xb0, 0x2e, 0x03, 0x54, 0x87, 0x29,
-	0x05, 0x6a, 0x6b, 0x77, 0xd3, 0xb6, 0xb4, 0x09, 0x09, 0x3c, 0x0c, 0xae, 0xed, 0x56, 0x2d, 0x7a,
-	0x06, 0x0e, 0xb8, 0x7e, 0xdd, 0x70, 0xec, 0x0f, 0xb1, 0x68, 0x22, 0x2b, 0x87, 0x59, 0x85, 0xde,
-	0x70, 0xd5, 0xea, 0xac, 0xb5, 0x6d, 0xb4, 0x1a, 0x5c, 0x83, 0xee, 0x5a, 0x18, 0xa0, 0xaf, 0xc1,
-	0xd8, 0xb6, 0xdd, 0xe0, 0xcc, 0xd7, 0x2c, 0xdc, 0xc1, 0x42, 0x79, 0x80, 0x04, 0xca, 0x8a, 0x8b,
-	0xf2, 0x75, 0xcc, 0xaf, 0x85, 0xe3, 0x68, 0x0d, 0x26, 0x2d, 0x16, 0x70, 0xdb, 0x91, 0xec, 0x69,
-	0x8f, 0xc9, 0xec, 0xc8, 0x42, 0x7e, 0x79, 0x31, 0x79, 0xa2, 0xf5, 0xee, 0xb0, 0x5a, 0x64, 0x8e,
-	0xe2, 0x5d, 0x18, 0x93, 0xab, 0x88, 0x7d, 0xda, 0x8e, 0xd9, 0x68, 0x59, 0xcc, 0xda, 0xe4, 0xae,
-	0x67, 0x9b, 0x81, 0x26, 0xe6, 0xcf, 0xd5, 0x0a, 0x2a, 0xbc, 0x81, 0x51, 0x91, 0xc8, 0x3e, 0x88,
-	0x26, 0x66, 0x64, 0xa2, 0x0a, 0xcb, 0xc4, 0xe2, 0x1c, 0xe4, 0x7b, 0x16, 0x16, 0xba, 0x11, 0x3a,
-	0x0d, 0xb5, 0x85, 0xbf, 0xf5, 0x1b, 0x30, 0xa9, 0x40, 0xde, 0xb4, 0x03, 0x4e, 0x57, 0x60, 0xd4,
-	0xe6, 0xac, 0x29, 0x97, 0xce, 0x2f, 0xcf, 0x25, 0x6e, 0xad, 0x26, 0xf3, 0xf5, 0x6f, 0x09, 0x1c,
-	0x16, 0x33, 0xa8, 0x78, 0x50, 0x63, 0xef, 0xb7, 0x58, 0xc0, 0xfb, 0xd1, 0x47, 0xfa, 0xd2, 0xd7,
-	0xdd, 0x7f, 0x47, 0x2f, 0x19, 0xe4, 0x50, 0xed, 0x5f, 0x89, 0xe6, 0x0a, 0x8c, 0xbb, 0x9e, 0x64,
-	0x00, 0x90, 0xc9, 0xf9, 0x38, 0xca, 0xf0, 0xe0, 0xb6, 0x97, 0xca, 0x02, 0xd2, 0x9b, 0x32, 0xb9,
-	0xa6, 0x46, 0xe9, 0x9f, 0x65, 0xe0, 0x80, 0xc2, 0xb9, 0xea, 0x9b, 0x3b, 0x76, 0x9b, 0xa5, 0x38,
-	0x76, 0xd1, 0x03, 0x34, 0xf2, 0xf4, 0x07, 0x28, 0xfb, 0xf4, 0x07, 0x68, 0x34, 0x7e, 0x80, 0x4e,
-	0x84, 0x5d, 0xad, 0xe1, 0xd6, 0x45, 0x65, 0xc7, 0x10, 0x2e, 0xa8, 0x50, 0xd5, 0xa2, 0x27, 0x61,
-	0xca, 0x62, 0x5e, 0xc3, 0xdd, 0x6d, 0x32, 0x87, 0x8b, 0x94, 0x71, 0x4c, 0x99, 0xec, 0x06, 0xab,
-	0x96, 0x7e, 0x07, 0x0e, 0xc5, 0xea, 0x81, 0x62, 0xb8, 0x1c, 0x15, 0x43, 0xf2, 0x81, 0x09, 0x07,
-	0x2b, 0x4d, 0x7c, 0x43, 0xe0, 0x58, 0xaf, 0x26, 0xc2, 0xd7, 0x1d, 0x69, 0xc4, 0xc0, 0x93, 0x3d,
-	0xe0, 0x9f, 0x9f, 0x24, 0x1e, 0x65, 0xe0, 0x70, 0x0c, 0xe6, 0xd5, 0x9d, 0x96, 0xf3, 0xde, 0xbf,
-	0xab, 0x8b, 0x45, 0xa0, 0x6a, 0xb7, 0x86, 0x5c, 0x54, 0xd4, 0x41, 0x36, 0xef, 0x83, 0xb1, 0x37,
-	0x55, 0x8b, 0x5e, 0x84, 0xfc, 0xb6, 0xed, 0x07, 0x7c, 0x93, 0xb5, 0x99, 0x93, 0xa6, 0x87, 0x03,
-	0xa6, 0x5f, 0x13, 0xd9, 0x02, 0x66, 0xc3, 0xe8, 0x8c, 0x4d, 0xd1, 0xc4, 0x45, 0x36, 0x0e, 0xd5,
-	0x37, 0x41, 0xeb, 0x57, 0x1b, 0xd4, 0xc8, 0xd5, 0xa8, 0x46, 0x16, 0xd3, 0x6a, 0x04, 0x67, 0x50,
-	0x42, 0xf9, 0x93, 0xc0, 0x6c, 0x1f, 0xa1, 0x60, 0x4e, 0x47, 0x2d, 0xfd, 0x8b, 0x45, 0x06, 0x15,
-	0xab, 0x0c, 0xd9, 0x6d, 0xdf, 0x6d, 0x22, 0x53, 0xfb, 0xef, 0x14, 0xf3, 0x68, 0x09, 0x32, 0xdc,
-	0x4d, 0x41, 0x5f, 0x86, 0xbb, 0xff, 0x5c, 0x6e, 0x9f, 0x8f, 0xc0, 0x94, 0xda, 0xac, 0xa4, 0xe7,
-	0x3c, 0xe4, 0x3a, 0xa6, 0x01, 0x37, 0x95, 0xc0, 0x4e, 0x27, 0x99, 0x1e, 0x86, 0x51, 0xbc, 0x05,
-	0x42, 0x4d, 0xca, 0x07, 0xd1, 0x37, 0x3c, 0xdf, 0x7d, 0x97, 0x99, 0x78, 0xe8, 0xa5, 0x55, 0xc8,
-	0x85, 0x91, 0x7e, 0x6d, 0x21, 0xbb, 0xb7, 0x2d, 0xd0, 0x63, 0x90, 0x0b, 0x98, 0xdf, 0x66, 0xbe,
-	0x48, 0x18, 0xc5, 0x84, 0x09, 0x19, 0xa8, 0x62, 0xe7, 0xb1, 0x9d, 0x80, 0x1b, 0x8e, 0xc9, 0x7a,
-	0x3a, 0x8f, 0x0a, 0x55, 0x2d, 0x5a, 0x84, 0x89, 0x40, 0x50, 0xe7, 0x98, 0x0c, 0x9b, 0x4e, 0xb6,
-	0xd6, 0x79, 0xa6, 0xd3, 0x30, 0xde, 0x0a, 0xe4, 0xbc, 0xf2, 0xc6, 0x1f, 0x13, 0x8f, 0x72, 0x90,
-	0x65, 0x70, 0x63, 0xcb, 0x08, 0x58, 0x78, 0xcb, 0x77, 0x9e, 0x05, 0x1c, 0xb3, 0x61, 0x23, 0x5e,
-	0x0f, 0xeb, 0x9e, 0xab, 0x4d, 0xc8, 0x40, 0xd5, 0xa3, 0xa7, 0xa1, 0x60, 0xb4, 0xf8, 0x0e, 0x73,
-	0xb8, 0x6d, 0xe2, 0x8d, 0xa2, 0xe5, 0xe5, 0x2d, 0x13, 0x8d, 0x52, 0x0d, 0xc6, 0x9b, 0x2c, 0x08,
-	0x8c, 0x3a, 0xd3, 0x26, 0x31, 0x41, 0x3d, 0xea, 0xb7, 0xe1, 0x60, 0x84, 0x12, 0x94, 0xf7, 0xa5,
-	0xa8, 0xbc, 0x4f, 0x27, 0xca, 0x1b, 0x87, 0x2a, 0x5d, 0xff, 0x90, 0x81, 0xa3, 0xbd, 0xba, 0xc6,
-	0x97, 0xe9, 0xdb, 0x5f, 0x7f, 0xc5, 0x67, 0x06, 0x29, 0x7e, 0x05, 0xa6, 0x63, 0x41, 0x53, 0x1c,
-	0xa0, 0x2e, 0xff, 0x47, 0xfa, 0xbd, 0xee, 0x39, 0x2a, 0xd9, 0xa1, 0x8e, 0xca, 0xe8, 0xf3, 0x39,
-	0x2a, 0xef, 0xc0, 0xcc, 0x2a, 0xe7, 0x86, 0xb9, 0x73, 0x4b, 0x8a, 0x77, 0xc3, 0xed, 0x58, 0x8f,
-	0xb0, 0x8e, 0x51, 0xa9, 0x93, 0xb8, 0xd4, 0x63, 0x65, 0xce, 0xc4, 0xcb, 0xbc, 0xfc, 0xcb, 0xa1,
-	0xd0, 0x04, 0xbd, 0xc5, 0xfc, 0xb6, 0x6d, 0x32, 0xda, 0x86, 0xa9, 0x1b, 0x8c, 0xaf, 0xde, 0xaa,
-	0xbe, 0xcd, 0xfc, 0x40, 0x88, 0xe6, 0xc4, 0x60, 0xcc, 0xd7, 0x9a, 0x1e, 0xdf, 0x2d, 0xce, 0x0d,
-	0x4e, 0x08, 0xe7, 0xd0, 0xe7, 0x3e, 0xf9, 0xf9, 0x8f, 0x2f, 0x32, 0xc7, 0xe8, 0x51, 0xf9, 0x11,
-	0x20, 0xd6, 0x13, 0xdf, 0x18, 0x86, 0x67, 0x2f, 0xb6, 0xc3, 0x65, 0xbe, 0x26, 0x30, 0x15, 0xf1,
-	0x50, 0x74, 0x70, 0x3b, 0xed, 0xe7, 0xb5, 0x8a, 0xf3, 0x89, 0xf2, 0x14, 0xc3, 0xf4, 0x2b, 0x08,
-	0xe5, 0x02, 0x5d, 0x89, 0x42, 0xe9, 0xf5, 0x63, 0x41, 0xe5, 0x5e, 0xcc, 0xb5, 0xdd, 0xaf, 0xa8,
-	0x92, 0x05, 0xf4, 0x1e, 0xe4, 0x45, 0x81, 0xd4, 0x27, 0xcb, 0xc9, 0xc1, 0xbb, 0xaf, 0xae, 0x87,
-	0x84, 0x16, 0x93, 0xad, 0xa4, 0x7e, 0x0a, 0x71, 0xcd, 0xd0, 0xe3, 0xb1, 0x12, 0xa9, 0x75, 0x2b,
-	0xf7, 0x6c, 0xeb, 0x3e, 0x7d, 0x44, 0xa0, 0x70, 0x15, 0xaf, 0xd0, 0x0e, 0x80, 0xe4, 0xb9, 0xd3,
-	0x2c, 0xbf, 0x86, 0xcb, 0x5f, 0xd2, 0x9f, 0xb6, 0x2c, 0xaf, 0x92, 0x12, 0xfd, 0x18, 0x0a, 0x77,
-	0x3c, 0xeb, 0xd9, 0x63, 0x3b, 0x83, 0xd8, 0xe6, 0x96, 0xf7, 0x2d, 0x8d, 0x00, 0xf0, 0x11, 0x14,
-	0xa4, 0x29, 0x1a, 0x8e, 0x9d, 0x24, 0x85, 0x2b, 0x6e, 0x4a, 0xfb, 0x73, 0xf3, 0x7d, 0xec, 0x2b,
-	0x40, 0x39, 0x3e, 0x7a, 0x2e, 0x95, 0x90, 0x63, 0x06, 0xb1, 0x78, 0x36, 0xad, 0x9b, 0x40, 0x59,
-	0x5f, 0x46, 0x88, 0xe7, 0xe9, 0x2b, 0x03, 0x21, 0xf6, 0xf4, 0x81, 0x2e, 0x6f, 0x86, 0xc2, 0xf8,
-	0x80, 0x00, 0xed, 0x91, 0xb5, 0xfa, 0x32, 0x48, 0x55, 0xbf, 0xd4, 0xde, 0x58, 0x7f, 0x11, 0x51,
-	0xce, 0xd3, 0x93, 0xfd, 0x51, 0x2a, 0x34, 0xb2, 0x9e, 0x9f, 0x12, 0xf8, 0x5f, 0x94, 0xce, 0xa1,
-	0x50, 0x25, 0xb2, 0x1a, 0x82, 0x29, 0xa5, 0x02, 0xf3, 0x2b, 0x89, 0xde, 0x66, 0x11, 0x97, 0x46,
-	0x2f, 0x0c, 0xc3, 0x70, 0xc4, 0xd9, 0x15, 0x97, 0x86, 0x32, 0x8d, 0xc8, 0xf5, 0x6d, 0x04, 0xfe,
-	0x3a, 0xad, 0x26, 0x01, 0xdf, 0x7b, 0x81, 0xee, 0x61, 0xde, 0x94, 0x1b, 0xf8, 0x8a, 0xc0, 0xf4,
-	0x5e, 0xfa, 0xe5, 0x57, 0x40, 0xaa, 0x6a, 0x0f, 0xe7, 0x7d, 0xf5, 0x97, 0x70, 0x0b, 0x25, 0xba,
-	0xb0, 0xef, 0x16, 0x24, 0x38, 0x49, 0xc0, 0x43, 0x02, 0xc5, 0xbe, 0x6a, 0x18, 0x02, 0x64, 0xa2,
-	0x24, 0x42, 0x58, 0xa5, 0xf4, 0xb0, 0xbe, 0x23, 0x40, 0xf7, 0xba, 0x1c, 0xba, 0x9c, 0x4a, 0x10,
-	0x11, 0x4b, 0x54, 0x2c, 0xa5, 0xf3, 0x57, 0x28, 0x81, 0x73, 0x08, 0xb4, 0x4c, 0xcf, 0xa6, 0x3b,
-	0xee, 0x4c, 0xa2, 0x7a, 0x48, 0xe0, 0x78, 0x2f, 0xcb, 0x68, 0x2d, 0x98, 0xb5, 0xe1, 0x86, 0xf6,
-	0xe2, 0x99, 0x5d, 0x66, 0x67, 0x11, 0xde, 0x69, 0x7a, 0x2a, 0x0a, 0x2f, 0xf4, 0x25, 0xb2, 0x74,
-	0x1d, 0xb0, 0xf4, 0x47, 0x02, 0xd3, 0x03, 0x6c, 0x0e, 0x5d, 0x19, 0xbc, 0xd8, 0xbe, 0xc6, 0x28,
-	0x99, 0xeb, 0x37, 0x10, 0xe3, 0x0d, 0x7d, 0x6d, 0x10, 0xc6, 0xae, 0xaf, 0xba, 0x3f, 0xb8, 0x8f,
-	0x22, 0x08, 0x71, 0xf7, 0x3c, 0x20, 0x70, 0x74, 0x9d, 0xf5, 0x40, 0xba, 0xee, 0xbb, 0xcd, 0x67,
-	0x7c, 0x0f, 0x2d, 0x22, 0xe4, 0x33, 0xa5, 0xf9, 0x34, 0x65, 0x0d, 0xd6, 0x2e, 0x3e, 0x7e, 0x32,
-	0x43, 0x7e, 0x7a, 0x32, 0x43, 0x7e, 0x7b, 0x32, 0x43, 0xbe, 0xfc, 0x7d, 0xe6, 0x3f, 0x77, 0x5f,
-	0xe8, 0xf9, 0x1f, 0x57, 0xad, 0xb5, 0xd8, 0x34, 0x1c, 0xa3, 0xce, 0x2c, 0x31, 0x67, 0xd0, 0x99,
-	0x74, 0x6b, 0x0c, 0x3d, 0xed, 0xcb, 0x7f, 0x07, 0x00, 0x00, 0xff, 0xff, 0x06, 0xd9, 0xe3, 0xdc,
-	0x39, 0x16, 0x00, 0x00,
+	// 1436 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x58, 0x4f, 0x6f, 0x1b, 0x45,
+	0x14, 0x67, 0x1d, 0xe7, 0x8f, 0x9f, 0x13, 0x97, 0x0e, 0x85, 0x6e, 0x9d, 0x92, 0x26, 0xdb, 0xa6,
+	0x0d, 0xa6, 0xb1, 0xd5, 0x50, 0xd1, 0xbf, 0x6a, 0x71, 0x9a, 0xb6, 0xb2, 0x54, 0x44, 0x59, 0x5a,
+	0x0e, 0xbd, 0x98, 0xf1, 0xee, 0xc4, 0x19, 0xe4, 0xfd, 0xc3, 0xee, 0xd8, 0x22, 0x2d, 0x51, 0x25,
+	0x0e, 0x15, 0xe2, 0x54, 0x04, 0x07, 0xc4, 0x07, 0x40, 0xc0, 0x47, 0xe0, 0xc8, 0xa9, 0x47, 0x24,
+	0xbe, 0x00, 0x2a, 0x7c, 0x08, 0x8e, 0x68, 0x66, 0x76, 0xec, 0xdd, 0xad, 0x9d, 0x5d, 0x95, 0x88,
+	0xdb, 0xce, 0x9b, 0x37, 0xf3, 0x7e, 0xef, 0xbd, 0xdf, 0x9b, 0xf7, 0x6c, 0x28, 0xe3, 0xbe, 0x4d,
+	0x59, 0xdd, 0x0f, 0x3c, 0xe6, 0xa1, 0xa3, 0x38, 0xc0, 0x6e, 0xd7, 0xb3, 0x3b, 0x75, 0xab, 0xe7,
+	0xf5, 0xed, 0xba, 0xdc, 0x1b, 0x9c, 0xab, 0xbe, 0x61, 0x79, 0x8e, 0xe3, 0xb9, 0x8d, 0xc1, 0xb9,
+	0x86, 0xfc, 0x92, 0x07, 0xaa, 0x57, 0xba, 0x94, 0xed, 0xf4, 0x3b, 0x75, 0xcb, 0x73, 0x1a, 0x5d,
+	0xaf, 0x87, 0xdd, 0x6e, 0x43, 0x6c, 0x74, 0xfa, 0xdb, 0x0d, 0x9f, 0xed, 0xfa, 0x24, 0x6c, 0x30,
+	0xea, 0x90, 0x90, 0x61, 0xc7, 0x1f, 0x7d, 0x45, 0x87, 0x8f, 0x77, 0x3d, 0xaf, 0xdb, 0x23, 0x0d,
+	0xec, 0xd3, 0x06, 0x76, 0x5d, 0x8f, 0x61, 0x46, 0x3d, 0x37, 0x94, 0xbb, 0xc6, 0x3f, 0x45, 0x98,
+	0x6b, 0x72, 0xfb, 0x77, 0xbc, 0x2e, 0xaa, 0x40, 0x81, 0xda, 0xba, 0xb6, 0xac, 0xad, 0x95, 0xcc,
+	0x02, 0xb5, 0xd1, 0xab, 0x30, 0xd5, 0x0f, 0x7a, 0x7a, 0x41, 0x08, 0xf8, 0x27, 0x42, 0x50, 0x74,
+	0xb1, 0x43, 0xf4, 0x29, 0x21, 0x12, 0xdf, 0x68, 0x19, 0xca, 0x36, 0x09, 0xad, 0x80, 0xfa, 0xfc,
+	0x62, 0xbd, 0x28, 0xb6, 0xe2, 0x22, 0x74, 0x09, 0xc0, 0x0a, 0x08, 0x66, 0xc4, 0x6e, 0x63, 0xa6,
+	0x4f, 0x2f, 0x6b, 0x6b, 0xe5, 0x8d, 0x6a, 0x5d, 0xe2, 0xaa, 0x2b, 0x4f, 0xea, 0xf7, 0x14, 0x70,
+	0xb3, 0x14, 0x69, 0x37, 0x19, 0x3f, 0x6a, 0x93, 0x1e, 0x89, 0x8e, 0xce, 0x64, 0x1f, 0x8d, 0xb4,
+	0x9b, 0x0c, 0xbd, 0x09, 0x40, 0xc3, 0x76, 0xb4, 0xd6, 0x67, 0x97, 0xb5, 0xb5, 0x39, 0xb3, 0x44,
+	0xc3, 0x2d, 0x29, 0x40, 0x06, 0x2c, 0x28, 0x50, 0x9d, 0xdd, 0x36, 0xb5, 0xf5, 0x39, 0x09, 0x3c,
+	0x12, 0x6e, 0xee, 0xb6, 0x6c, 0x74, 0x06, 0x0e, 0x79, 0x41, 0x17, 0xbb, 0xf4, 0xa1, 0x08, 0x1a,
+	0xd7, 0x2a, 0x09, 0xad, 0x4a, 0x5c, 0xdc, 0xb2, 0x87, 0xb6, 0xb6, 0x71, 0xbf, 0xc7, 0x74, 0x18,
+	0xd9, 0x12, 0x02, 0xf4, 0x1e, 0xcc, 0x6c, 0xd3, 0x1e, 0x23, 0x81, 0x6e, 0x0b, 0x0f, 0xd6, 0xea,
+	0x13, 0x28, 0x50, 0x57, 0xb9, 0xa8, 0xdf, 0x12, 0xfa, 0x66, 0x74, 0x0e, 0x99, 0x30, 0x6f, 0x93,
+	0x90, 0x51, 0x57, 0x66, 0x4f, 0x7f, 0xa6, 0x2d, 0x4f, 0xad, 0x95, 0x37, 0xd6, 0xb3, 0x2f, 0xda,
+	0x1a, 0x1d, 0x33, 0x13, 0x77, 0x54, 0x1f, 0xc0, 0x8c, 0xb4, 0xc2, 0xfd, 0xa4, 0xae, 0xd5, 0xeb,
+	0xdb, 0xc4, 0x6e, 0x33, 0xcf, 0xa7, 0x56, 0xa8, 0xf3, 0xfb, 0x4b, 0x66, 0x45, 0x89, 0xef, 0x09,
+	0x29, 0x57, 0x24, 0x9f, 0x27, 0x15, 0x0b, 0x52, 0x51, 0x89, 0xa5, 0x62, 0x75, 0x05, 0xca, 0x31,
+	0xc3, 0x9c, 0x37, 0x9c, 0xa7, 0x11, 0xb7, 0xc4, 0xb7, 0x71, 0x1b, 0xe6, 0x15, 0xc8, 0x3b, 0x34,
+	0x64, 0xe8, 0x02, 0x4c, 0x53, 0x46, 0x1c, 0x69, 0xba, 0xbc, 0xb1, 0x92, 0xe9, 0x9a, 0x29, 0xf5,
+	0x8d, 0x9f, 0x35, 0x38, 0xc2, 0x6f, 0x50, 0xf2, 0xd0, 0x24, 0x9f, 0xf5, 0x49, 0xc8, 0xc6, 0xa5,
+	0x4f, 0x1b, 0x9b, 0xbe, 0x91, 0xff, 0x43, 0xbe, 0x14, 0x44, 0x0e, 0x95, 0xff, 0x8a, 0x34, 0xd7,
+	0x61, 0xd6, 0xf3, 0x65, 0x06, 0x40, 0x64, 0x72, 0x35, 0x8d, 0x32, 0x2a, 0xdc, 0xc1, 0xb9, 0x3a,
+	0x87, 0xf4, 0x81, 0x54, 0x36, 0xd5, 0x29, 0xe3, 0xc9, 0x14, 0x1c, 0x52, 0x38, 0x9b, 0x81, 0xb5,
+	0x43, 0x07, 0x24, 0x47, 0xd9, 0x25, 0x0b, 0x68, 0xea, 0xe5, 0x0b, 0xa8, 0xf8, 0xf2, 0x05, 0x34,
+	0x9d, 0x2e, 0xa0, 0x13, 0xd1, 0xab, 0xd6, 0xf3, 0xba, 0x3c, 0xb2, 0x33, 0x02, 0x2e, 0x28, 0x51,
+	0xcb, 0x46, 0x27, 0x61, 0xc1, 0x26, 0x7e, 0xcf, 0xdb, 0x75, 0x88, 0xcb, 0xb8, 0xca, 0xac, 0x50,
+	0x99, 0x1f, 0x09, 0x5b, 0xa2, 0x0c, 0x43, 0xfa, 0x90, 0xb4, 0xa9, 0xdb, 0xee, 0xec, 0x32, 0x12,
+	0x8a, 0x32, 0x2c, 0x9a, 0x65, 0x2e, 0x6c, 0xb9, 0x9b, 0x5c, 0x84, 0x4c, 0xd0, 0x13, 0x3a, 0x6d,
+	0x6b, 0x07, 0xbb, 0x5d, 0xe9, 0x51, 0x29, 0xd3, 0xa3, 0x23, 0xb1, 0xab, 0x6e, 0xc8, 0x83, 0x4d,
+	0x66, 0xdc, 0x87, 0xd7, 0x52, 0x79, 0x10, 0x24, 0xbc, 0x96, 0x24, 0x61, 0x76, 0xa1, 0x46, 0x87,
+	0x15, 0x17, 0x7f, 0xd2, 0x60, 0x31, 0xce, 0xc5, 0x68, 0x7b, 0x48, 0xc9, 0x54, 0xd0, 0xb4, 0x17,
+	0x82, 0xf6, 0xff, 0x51, 0xf1, 0x9b, 0x29, 0x58, 0x50, 0x30, 0x6f, 0x0e, 0x88, 0xcb, 0xd0, 0x45,
+	0x28, 0x0d, 0xbb, 0x87, 0x80, 0x96, 0x41, 0x95, 0xa1, 0x32, 0x3a, 0x02, 0xd3, 0xe2, 0x39, 0x88,
+	0x48, 0x2b, 0x17, 0x9c, 0x40, 0x7e, 0xe0, 0x7d, 0x4a, 0x2c, 0x91, 0x7d, 0xd9, 0x33, 0x4a, 0x91,
+	0x64, 0x1c, 0x3f, 0x8a, 0x63, 0xf8, 0xb1, 0x08, 0xa5, 0x90, 0x04, 0x03, 0x12, 0x70, 0x85, 0x69,
+	0xa1, 0x30, 0x27, 0x05, 0x2d, 0x41, 0x41, 0xea, 0x86, 0x0c, 0xbb, 0x16, 0x89, 0x51, 0x50, 0x89,
+	0x5a, 0x36, 0xaa, 0xc2, 0x5c, 0xc8, 0x23, 0xef, 0x5a, 0x44, 0xb0, 0xaf, 0x68, 0x0e, 0xd7, 0xe8,
+	0x28, 0xcc, 0xf6, 0x43, 0x79, 0xaf, 0x7c, 0xfa, 0x67, 0xf8, 0x52, 0x1e, 0xb2, 0x31, 0xc3, 0x1d,
+	0x1c, 0x92, 0xe8, 0xb9, 0x1f, 0xae, 0x39, 0x1c, 0xab, 0x47, 0x05, 0x5e, 0x5f, 0xc4, 0xbd, 0x64,
+	0xce, 0x49, 0x41, 0xcb, 0x47, 0xa7, 0xa1, 0x82, 0xfb, 0x6c, 0x87, 0xb8, 0x8c, 0x5a, 0xe2, 0x69,
+	0xd1, 0xcb, 0xf2, 0xb9, 0x49, 0x4a, 0x91, 0x0e, 0xb3, 0x0e, 0x09, 0x43, 0xdc, 0x25, 0xfa, 0xbc,
+	0x50, 0x50, 0x4b, 0xe3, 0x43, 0x38, 0x9c, 0x48, 0x89, 0xe0, 0xe4, 0xd5, 0x24, 0x27, 0x4f, 0x67,
+	0x72, 0x52, 0x1c, 0x55, 0x8c, 0xfc, 0xaa, 0x00, 0xc7, 0xe2, 0x8c, 0x14, 0x9b, 0xf9, 0xf9, 0xb8,
+	0x0e, 0x48, 0xad, 0xb0, 0xe4, 0x32, 0xd7, 0x93, 0x69, 0x3e, 0x9c, 0xda, 0x69, 0xd9, 0xa8, 0x0e,
+	0xc5, 0xed, 0xc0, 0x73, 0x72, 0xbc, 0x51, 0x42, 0x0f, 0xd5, 0xa0, 0xc0, 0xbc, 0x1c, 0xcf, 0x52,
+	0x81, 0x79, 0xff, 0x9d, 0xf1, 0x8f, 0xc1, 0x90, 0xd5, 0x93, 0xaa, 0xce, 0x64, 0x48, 0xc6, 0x7b,
+	0xac, 0x4d, 0xf2, 0x58, 0x7a, 0x50, 0xc8, 0xe3, 0x81, 0xf1, 0x09, 0x2c, 0x35, 0x19, 0xc3, 0xd6,
+	0xce, 0x5d, 0x59, 0x04, 0xf7, 0xbc, 0x61, 0x2f, 0x8b, 0x8c, 0x27, 0x4b, 0x46, 0x4b, 0x97, 0x4c,
+	0x2a, 0x5d, 0x85, 0x74, 0xba, 0x36, 0x9e, 0x1c, 0x8e, 0xba, 0xea, 0x47, 0x24, 0x18, 0x50, 0x8b,
+	0xa0, 0x01, 0x2c, 0xdc, 0x26, 0xac, 0x79, 0xb7, 0xf5, 0x31, 0x09, 0x42, 0x4e, 0xbe, 0x13, 0x93,
+	0x83, 0x76, 0xd3, 0xf1, 0xd9, 0x6e, 0x75, 0x65, 0xb2, 0x42, 0x74, 0x87, 0xb1, 0xf2, 0xe5, 0x1f,
+	0x7f, 0x7f, 0x5b, 0x58, 0x44, 0xc7, 0xe4, 0x54, 0xc9, 0xed, 0xf1, 0xa1, 0x15, 0xfb, 0x74, 0x7d,
+	0x10, 0x99, 0xf9, 0x51, 0x83, 0x85, 0x44, 0x53, 0x46, 0x93, 0x67, 0x95, 0x71, 0xcd, 0xbb, 0xba,
+	0x9a, 0x49, 0x73, 0x7e, 0xcc, 0xb8, 0x2e, 0xa0, 0x5c, 0x42, 0x17, 0x92, 0x50, 0xe2, 0x0d, 0x3e,
+	0x6c, 0x3c, 0x4a, 0x8d, 0x01, 0x7b, 0x0d, 0x15, 0xb2, 0x10, 0x3d, 0x82, 0x32, 0x0f, 0x90, 0x9a,
+	0x81, 0x4f, 0x4e, 0xf6, 0xbe, 0xb5, 0x15, 0x31, 0xaa, 0x9a, 0x3d, 0x9b, 0x18, 0xa7, 0x04, 0xae,
+	0x25, 0x74, 0x3c, 0x15, 0x22, 0x65, 0xb7, 0xf1, 0x88, 0xda, 0x7b, 0xe8, 0x07, 0x0d, 0x2a, 0x37,
+	0x44, 0xaf, 0x1e, 0x02, 0xc8, 0xbe, 0x3b, 0x8f, 0xf9, 0x4d, 0x61, 0xfe, 0xaa, 0xf1, 0xb2, 0x61,
+	0xb9, 0xac, 0xd5, 0xd0, 0x63, 0xa8, 0xdc, 0xf7, 0xed, 0x83, 0xc7, 0x76, 0x46, 0x60, 0x5b, 0xd9,
+	0xd8, 0x37, 0x34, 0x1c, 0xc0, 0x17, 0x50, 0x49, 0xd6, 0x6b, 0xbe, 0xec, 0x64, 0x31, 0x5c, 0xe5,
+	0xa6, 0xb6, 0x7f, 0x6e, 0x7e, 0x4d, 0x8d, 0x95, 0xaa, 0x95, 0xa3, 0xf3, 0xb9, 0x88, 0x9c, 0xea,
+	0xfc, 0xd5, 0xb3, 0x79, 0x47, 0x09, 0x41, 0xeb, 0x6b, 0x02, 0xe2, 0x45, 0xf4, 0xee, 0x44, 0x88,
+	0xb1, 0x77, 0x60, 0x94, 0x37, 0xac, 0x30, 0x3e, 0xd5, 0x00, 0xc5, 0x68, 0xad, 0x46, 0xcd, 0x5c,
+	0xf1, 0xcb, 0x3d, 0xf4, 0x18, 0x6f, 0x0b, 0x94, 0xab, 0xe8, 0xe4, 0x78, 0x94, 0x0a, 0x8d, 0x8c,
+	0xe7, 0xd7, 0x1a, 0xbc, 0x3e, 0xf6, 0xf9, 0x3d, 0xa0, 0xac, 0x46, 0x60, 0x6a, 0xb9, 0xc0, 0xfc,
+	0xa6, 0xc1, 0xe2, 0x3e, 0xbd, 0x00, 0x5d, 0x99, 0x18, 0x83, 0xec, 0x0e, 0x92, 0x0d, 0xf5, 0xa6,
+	0x80, 0x7a, 0xbd, 0x76, 0x39, 0x0b, 0xea, 0x8b, 0x8d, 0x68, 0xaf, 0x41, 0x84, 0x2d, 0x5e, 0x1f,
+	0xbf, 0x68, 0x80, 0x5e, 0x6c, 0xed, 0x68, 0x23, 0x17, 0x3f, 0x93, 0x90, 0x6b, 0xf9, 0x86, 0x0a,
+	0xc1, 0xcd, 0xf3, 0x02, 0x7d, 0x1d, 0x9d, 0xcd, 0xc7, 0x4d, 0x89, 0x17, 0x7d, 0xa7, 0xc1, 0xf1,
+	0x38, 0x23, 0x45, 0x1f, 0xe4, 0xbf, 0x17, 0xa3, 0x5e, 0x78, 0x60, 0x2f, 0xef, 0x59, 0x01, 0xef,
+	0x34, 0x3a, 0x95, 0x84, 0x17, 0x35, 0x51, 0x99, 0xff, 0x21, 0x58, 0x4e, 0x84, 0xa3, 0x13, 0x7a,
+	0x32, 0xba, 0x30, 0xd9, 0xd8, 0xbe, 0x5d, 0x3c, 0x9b, 0x00, 0xef, 0x0b, 0x8c, 0xb7, 0x8d, 0xcd,
+	0x49, 0x18, 0x47, 0x43, 0xc0, 0xde, 0xe4, 0xa2, 0x17, 0x20, 0x38, 0x11, 0x9e, 0x6a, 0x70, 0x6c,
+	0x8b, 0xc4, 0x20, 0xdd, 0x0a, 0x3c, 0xe7, 0x80, 0x1f, 0xcd, 0x75, 0x01, 0xf9, 0x4c, 0x6d, 0x35,
+	0x4f, 0x58, 0xc3, 0xcd, 0x2b, 0xcf, 0x9e, 0x2f, 0x69, 0xbf, 0x3f, 0x5f, 0xd2, 0xfe, 0x7c, 0xbe,
+	0xa4, 0x7d, 0xff, 0xd7, 0xd2, 0x2b, 0x0f, 0xde, 0x8a, 0xfd, 0x8b, 0xa5, 0x6c, 0xad, 0x3b, 0xd8,
+	0xc5, 0x5d, 0x62, 0xf3, 0x3b, 0xc3, 0xe1, 0xa5, 0x9d, 0x19, 0x31, 0x3f, 0xbd, 0xf3, 0x6f, 0x00,
+	0x00, 0x00, 0xff, 0xff, 0xfe, 0xd1, 0x2d, 0x62, 0x37, 0x13, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1392,18 +1229,13 @@ type AuditServiceClient interface {
 	// Required permissions:
 	// - audit.auditlogarchive.delete on the audit log archive.
 	DeleteAuditLogArchive(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
-	// Fetch all chunks of an audit log archive identified by the given ID.
+	// Remove all audit events that match the given filter from the AuditLogArchive
+	// identified by the given ID.
+	// Note that this method will return a precondition-failed error
+	// if there is no destination of type "cloud" in the AuditLog.
 	// Required permissions:
-	// - audit.auditlogarchivechunk.list on the audit log archive identified by the given ID.
-	ListAuditLogArchiveChunks(ctx context.Context, in *ListAuditLogArchiveChunksRequest, opts ...grpc.CallOption) (*AuditLogArchiveChunkList, error)
-	// Fetch a specific AuditLogArchiveChunk identified by the given ID.
-	// Required permissions:
-	// - audit.auditlogarchivechunk.get on the audit log archive chunk identified by the given ID.
-	GetAuditLogArchiveChunk(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*AuditLogArchiveChunk, error)
-	// Delete an audit log archive chunk.
-	// Required permissions:
-	// - audit.auditlogarchivechunk.delete on the audit log archive chunk.
-	DeleteAuditLogArchiveChunk(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
+	// - audit.auditlogevent.delete on the audit log archive identified by the given ID.
+	DeleteAuditLogArchiveEvents(ctx context.Context, in *DeleteAuditLogArchiveEventsRequest, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Fetch all audit events that match the given filter.
 	// Note that this method will return a precondition-failed error
 	// if there is no destination of type "cloud" in the AuditLog.
@@ -1517,27 +1349,9 @@ func (c *auditServiceClient) DeleteAuditLogArchive(ctx context.Context, in *v1.I
 	return out, nil
 }
 
-func (c *auditServiceClient) ListAuditLogArchiveChunks(ctx context.Context, in *ListAuditLogArchiveChunksRequest, opts ...grpc.CallOption) (*AuditLogArchiveChunkList, error) {
-	out := new(AuditLogArchiveChunkList)
-	err := c.cc.Invoke(ctx, "/arangodb.cloud.audit.v1.AuditService/ListAuditLogArchiveChunks", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *auditServiceClient) GetAuditLogArchiveChunk(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*AuditLogArchiveChunk, error) {
-	out := new(AuditLogArchiveChunk)
-	err := c.cc.Invoke(ctx, "/arangodb.cloud.audit.v1.AuditService/GetAuditLogArchiveChunk", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *auditServiceClient) DeleteAuditLogArchiveChunk(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error) {
+func (c *auditServiceClient) DeleteAuditLogArchiveEvents(ctx context.Context, in *DeleteAuditLogArchiveEventsRequest, opts ...grpc.CallOption) (*v1.Empty, error) {
 	out := new(v1.Empty)
-	err := c.cc.Invoke(ctx, "/arangodb.cloud.audit.v1.AuditService/DeleteAuditLogArchiveChunk", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.audit.v1.AuditService/DeleteAuditLogArchiveEvents", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1624,18 +1438,13 @@ type AuditServiceServer interface {
 	// Required permissions:
 	// - audit.auditlogarchive.delete on the audit log archive.
 	DeleteAuditLogArchive(context.Context, *v1.IDOptions) (*v1.Empty, error)
-	// Fetch all chunks of an audit log archive identified by the given ID.
+	// Remove all audit events that match the given filter from the AuditLogArchive
+	// identified by the given ID.
+	// Note that this method will return a precondition-failed error
+	// if there is no destination of type "cloud" in the AuditLog.
 	// Required permissions:
-	// - audit.auditlogarchivechunk.list on the audit log archive identified by the given ID.
-	ListAuditLogArchiveChunks(context.Context, *ListAuditLogArchiveChunksRequest) (*AuditLogArchiveChunkList, error)
-	// Fetch a specific AuditLogArchiveChunk identified by the given ID.
-	// Required permissions:
-	// - audit.auditlogarchivechunk.get on the audit log archive chunk identified by the given ID.
-	GetAuditLogArchiveChunk(context.Context, *v1.IDOptions) (*AuditLogArchiveChunk, error)
-	// Delete an audit log archive chunk.
-	// Required permissions:
-	// - audit.auditlogarchivechunk.delete on the audit log archive chunk.
-	DeleteAuditLogArchiveChunk(context.Context, *v1.IDOptions) (*v1.Empty, error)
+	// - audit.auditlogevent.delete on the audit log archive identified by the given ID.
+	DeleteAuditLogArchiveEvents(context.Context, *DeleteAuditLogArchiveEventsRequest) (*v1.Empty, error)
 	// Fetch all audit events that match the given filter.
 	// Note that this method will return a precondition-failed error
 	// if there is no destination of type "cloud" in the AuditLog.
@@ -1691,14 +1500,8 @@ func (*UnimplementedAuditServiceServer) GetAuditLogArchive(ctx context.Context, 
 func (*UnimplementedAuditServiceServer) DeleteAuditLogArchive(ctx context.Context, req *v1.IDOptions) (*v1.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAuditLogArchive not implemented")
 }
-func (*UnimplementedAuditServiceServer) ListAuditLogArchiveChunks(ctx context.Context, req *ListAuditLogArchiveChunksRequest) (*AuditLogArchiveChunkList, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListAuditLogArchiveChunks not implemented")
-}
-func (*UnimplementedAuditServiceServer) GetAuditLogArchiveChunk(ctx context.Context, req *v1.IDOptions) (*AuditLogArchiveChunk, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAuditLogArchiveChunk not implemented")
-}
-func (*UnimplementedAuditServiceServer) DeleteAuditLogArchiveChunk(ctx context.Context, req *v1.IDOptions) (*v1.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteAuditLogArchiveChunk not implemented")
+func (*UnimplementedAuditServiceServer) DeleteAuditLogArchiveEvents(ctx context.Context, req *DeleteAuditLogArchiveEventsRequest) (*v1.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteAuditLogArchiveEvents not implemented")
 }
 func (*UnimplementedAuditServiceServer) ListAuditLogEvents(ctx context.Context, req *ListAuditLogEventsRequest) (*AuditLogEventList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAuditLogEvents not implemented")
@@ -1879,56 +1682,20 @@ func _AuditService_DeleteAuditLogArchive_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuditService_ListAuditLogArchiveChunks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListAuditLogArchiveChunksRequest)
+func _AuditService_DeleteAuditLogArchiveEvents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteAuditLogArchiveEventsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuditServiceServer).ListAuditLogArchiveChunks(ctx, in)
+		return srv.(AuditServiceServer).DeleteAuditLogArchiveEvents(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/arangodb.cloud.audit.v1.AuditService/ListAuditLogArchiveChunks",
+		FullMethod: "/arangodb.cloud.audit.v1.AuditService/DeleteAuditLogArchiveEvents",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuditServiceServer).ListAuditLogArchiveChunks(ctx, req.(*ListAuditLogArchiveChunksRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AuditService_GetAuditLogArchiveChunk_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.IDOptions)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AuditServiceServer).GetAuditLogArchiveChunk(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/arangodb.cloud.audit.v1.AuditService/GetAuditLogArchiveChunk",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuditServiceServer).GetAuditLogArchiveChunk(ctx, req.(*v1.IDOptions))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AuditService_DeleteAuditLogArchiveChunk_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.IDOptions)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AuditServiceServer).DeleteAuditLogArchiveChunk(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/arangodb.cloud.audit.v1.AuditService/DeleteAuditLogArchiveChunk",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuditServiceServer).DeleteAuditLogArchiveChunk(ctx, req.(*v1.IDOptions))
+		return srv.(AuditServiceServer).DeleteAuditLogArchiveEvents(ctx, req.(*DeleteAuditLogArchiveEventsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2046,16 +1813,8 @@ var _AuditService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _AuditService_DeleteAuditLogArchive_Handler,
 		},
 		{
-			MethodName: "ListAuditLogArchiveChunks",
-			Handler:    _AuditService_ListAuditLogArchiveChunks_Handler,
-		},
-		{
-			MethodName: "GetAuditLogArchiveChunk",
-			Handler:    _AuditService_GetAuditLogArchiveChunk_Handler,
-		},
-		{
-			MethodName: "DeleteAuditLogArchiveChunk",
-			Handler:    _AuditService_DeleteAuditLogArchiveChunk_Handler,
+			MethodName: "DeleteAuditLogArchiveEvents",
+			Handler:    _AuditService_DeleteAuditLogArchiveEvents_Handler,
 		},
 		{
 			MethodName: "ListAuditLogEvents",
@@ -2421,6 +2180,23 @@ func (m *AuditLogArchive) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
+	if m.SizeInBytesChangedAt != nil {
+		{
+			size, err := m.SizeInBytesChangedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintAudit(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x4a
+	}
+	if m.SizeInBytes != 0 {
+		i = encodeVarintAudit(dAtA, i, uint64(m.SizeInBytes))
+		i--
+		dAtA[i] = 0x40
+	}
 	if len(m.DeploymentId) > 0 {
 		i -= len(m.DeploymentId)
 		copy(dAtA[i:], m.DeploymentId)
@@ -2577,201 +2353,6 @@ func (m *ListAuditLogArchivesRequest) MarshalToSizedBuffer(dAtA []byte) (int, er
 		i -= len(m.AuditlogId)
 		copy(dAtA[i:], m.AuditlogId)
 		i = encodeVarintAudit(dAtA, i, uint64(len(m.AuditlogId)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *AuditLogArchiveChunk) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *AuditLogArchiveChunk) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *AuditLogArchiveChunk) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.LastEvent != nil {
-		{
-			size, err := m.LastEvent.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintAudit(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x32
-	}
-	if m.FirstEvent != nil {
-		{
-			size, err := m.FirstEvent.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintAudit(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x2a
-	}
-	if len(m.AuditlogarchiveId) > 0 {
-		i -= len(m.AuditlogarchiveId)
-		copy(dAtA[i:], m.AuditlogarchiveId)
-		i = encodeVarintAudit(dAtA, i, uint64(len(m.AuditlogarchiveId)))
-		i--
-		dAtA[i] = 0x22
-	}
-	if m.CreatedAt != nil {
-		{
-			size, err := m.CreatedAt.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintAudit(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x1a
-	}
-	if len(m.Url) > 0 {
-		i -= len(m.Url)
-		copy(dAtA[i:], m.Url)
-		i = encodeVarintAudit(dAtA, i, uint64(len(m.Url)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.Id) > 0 {
-		i -= len(m.Id)
-		copy(dAtA[i:], m.Id)
-		i = encodeVarintAudit(dAtA, i, uint64(len(m.Id)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *AuditLogArchiveChunkList) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *AuditLogArchiveChunkList) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *AuditLogArchiveChunkList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if len(m.Items) > 0 {
-		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Items[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintAudit(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0xa
-		}
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *ListAuditLogArchiveChunksRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *ListAuditLogArchiveChunksRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ListAuditLogArchiveChunksRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.Options != nil {
-		{
-			size, err := m.Options.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintAudit(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x52
-	}
-	if m.To != nil {
-		{
-			size, err := m.To.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintAudit(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x1a
-	}
-	if m.From != nil {
-		{
-			size, err := m.From.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintAudit(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.AuditlogarchiveId) > 0 {
-		i -= len(m.AuditlogarchiveId)
-		copy(dAtA[i:], m.AuditlogarchiveId)
-		i = encodeVarintAudit(dAtA, i, uint64(len(m.AuditlogarchiveId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -2979,7 +2560,7 @@ func (m *ListAuditLogEventsRequest) MarshalToSizedBuffer(dAtA []byte) (int, erro
 			i = encodeVarintAudit(dAtA, i, uint64(size))
 		}
 		i--
-		dAtA[i] = 0x2a
+		dAtA[i] = 0x22
 	}
 	if m.From != nil {
 		{
@@ -2990,13 +2571,6 @@ func (m *ListAuditLogEventsRequest) MarshalToSizedBuffer(dAtA []byte) (int, erro
 			i -= size
 			i = encodeVarintAudit(dAtA, i, uint64(size))
 		}
-		i--
-		dAtA[i] = 0x22
-	}
-	if len(m.AuditlogarchivechunkId) > 0 {
-		i -= len(m.AuditlogarchivechunkId)
-		copy(dAtA[i:], m.AuditlogarchivechunkId)
-		i = encodeVarintAudit(dAtA, i, uint64(len(m.AuditlogarchivechunkId)))
 		i--
 		dAtA[i] = 0x1a
 	}
@@ -3011,6 +2585,52 @@ func (m *ListAuditLogEventsRequest) MarshalToSizedBuffer(dAtA []byte) (int, erro
 		i -= len(m.AuditlogId)
 		copy(dAtA[i:], m.AuditlogId)
 		i = encodeVarintAudit(dAtA, i, uint64(len(m.AuditlogId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *DeleteAuditLogArchiveEventsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *DeleteAuditLogArchiveEventsRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DeleteAuditLogArchiveEventsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.To != nil {
+		{
+			size, err := m.To.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintAudit(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.AuditlogarchiveId) > 0 {
+		i -= len(m.AuditlogarchiveId)
+		copy(dAtA[i:], m.AuditlogarchiveId)
+		i = encodeVarintAudit(dAtA, i, uint64(len(m.AuditlogarchiveId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -3243,6 +2863,13 @@ func (m *AuditLogArchive) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovAudit(uint64(l))
 	}
+	if m.SizeInBytes != 0 {
+		n += 1 + sovAudit(uint64(m.SizeInBytes))
+	}
+	if m.SizeInBytesChangedAt != nil {
+		l = m.SizeInBytesChangedAt.Size()
+		n += 1 + l + sovAudit(uint64(l))
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -3279,88 +2906,6 @@ func (m *ListAuditLogArchivesRequest) Size() (n int) {
 	}
 	if m.IncludeDeleted {
 		n += 2
-	}
-	if m.Options != nil {
-		l = m.Options.Size()
-		n += 1 + l + sovAudit(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *AuditLogArchiveChunk) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.Id)
-	if l > 0 {
-		n += 1 + l + sovAudit(uint64(l))
-	}
-	l = len(m.Url)
-	if l > 0 {
-		n += 1 + l + sovAudit(uint64(l))
-	}
-	if m.CreatedAt != nil {
-		l = m.CreatedAt.Size()
-		n += 1 + l + sovAudit(uint64(l))
-	}
-	l = len(m.AuditlogarchiveId)
-	if l > 0 {
-		n += 1 + l + sovAudit(uint64(l))
-	}
-	if m.FirstEvent != nil {
-		l = m.FirstEvent.Size()
-		n += 1 + l + sovAudit(uint64(l))
-	}
-	if m.LastEvent != nil {
-		l = m.LastEvent.Size()
-		n += 1 + l + sovAudit(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *AuditLogArchiveChunkList) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if len(m.Items) > 0 {
-		for _, e := range m.Items {
-			l = e.Size()
-			n += 1 + l + sovAudit(uint64(l))
-		}
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *ListAuditLogArchiveChunksRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.AuditlogarchiveId)
-	if l > 0 {
-		n += 1 + l + sovAudit(uint64(l))
-	}
-	if m.From != nil {
-		l = m.From.Size()
-		n += 1 + l + sovAudit(uint64(l))
-	}
-	if m.To != nil {
-		l = m.To.Size()
-		n += 1 + l + sovAudit(uint64(l))
 	}
 	if m.Options != nil {
 		l = m.Options.Size()
@@ -3463,10 +3008,6 @@ func (m *ListAuditLogEventsRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovAudit(uint64(l))
 	}
-	l = len(m.AuditlogarchivechunkId)
-	if l > 0 {
-		n += 1 + l + sovAudit(uint64(l))
-	}
 	if m.From != nil {
 		l = m.From.Size()
 		n += 1 + l + sovAudit(uint64(l))
@@ -3477,6 +3018,26 @@ func (m *ListAuditLogEventsRequest) Size() (n int) {
 	}
 	if m.Options != nil {
 		l = m.Options.Size()
+		n += 1 + l + sovAudit(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *DeleteAuditLogArchiveEventsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.AuditlogarchiveId)
+	if l > 0 {
+		n += 1 + l + sovAudit(uint64(l))
+	}
+	if m.To != nil {
+		l = m.To.Size()
 		n += 1 + l + sovAudit(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
@@ -4622,6 +4183,61 @@ func (m *AuditLogArchive) Unmarshal(dAtA []byte) error {
 			}
 			m.DeploymentId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 8:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SizeInBytes", wireType)
+			}
+			m.SizeInBytes = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAudit
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SizeInBytes |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 9:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SizeInBytesChangedAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAudit
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthAudit
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthAudit
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.SizeInBytesChangedAt == nil {
+				m.SizeInBytesChangedAt = &types.Timestamp{}
+			}
+			if err := m.SizeInBytesChangedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipAudit(dAtA[iNdEx:])
@@ -4816,546 +4432,6 @@ func (m *ListAuditLogArchivesRequest) Unmarshal(dAtA []byte) error {
 				}
 			}
 			m.IncludeDeleted = bool(v != 0)
-		case 10:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Options", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowAudit
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthAudit
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthAudit
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Options == nil {
-				m.Options = &v1.ListOptions{}
-			}
-			if err := m.Options.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipAudit(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthAudit
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthAudit
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *AuditLogArchiveChunk) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowAudit
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: AuditLogArchiveChunk: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: AuditLogArchiveChunk: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowAudit
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthAudit
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthAudit
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Id = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Url", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowAudit
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthAudit
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthAudit
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Url = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowAudit
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthAudit
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthAudit
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.CreatedAt == nil {
-				m.CreatedAt = &types.Timestamp{}
-			}
-			if err := m.CreatedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 4:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AuditlogarchiveId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowAudit
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthAudit
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthAudit
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.AuditlogarchiveId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 5:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field FirstEvent", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowAudit
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthAudit
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthAudit
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.FirstEvent == nil {
-				m.FirstEvent = &types.Timestamp{}
-			}
-			if err := m.FirstEvent.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 6:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field LastEvent", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowAudit
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthAudit
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthAudit
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.LastEvent == nil {
-				m.LastEvent = &types.Timestamp{}
-			}
-			if err := m.LastEvent.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipAudit(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthAudit
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthAudit
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *AuditLogArchiveChunkList) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowAudit
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: AuditLogArchiveChunkList: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: AuditLogArchiveChunkList: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Items", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowAudit
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthAudit
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthAudit
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Items = append(m.Items, &AuditLogArchiveChunk{})
-			if err := m.Items[len(m.Items)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipAudit(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthAudit
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthAudit
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *ListAuditLogArchiveChunksRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowAudit
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: ListAuditLogArchiveChunksRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ListAuditLogArchiveChunksRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AuditlogarchiveId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowAudit
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthAudit
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthAudit
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.AuditlogarchiveId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field From", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowAudit
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthAudit
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthAudit
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.From == nil {
-				m.From = &types.Timestamp{}
-			}
-			if err := m.From.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field To", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowAudit
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthAudit
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthAudit
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.To == nil {
-				m.To = &types.Timestamp{}
-			}
-			if err := m.To.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
 		case 10:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Options", wireType)
@@ -6029,38 +5105,6 @@ func (m *ListAuditLogEventsRequest) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AuditlogarchivechunkId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowAudit
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthAudit
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthAudit
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.AuditlogarchivechunkId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 4:
-			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field From", wireType)
 			}
 			var msglen int
@@ -6095,7 +5139,7 @@ func (m *ListAuditLogEventsRequest) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 5:
+		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field To", wireType)
 			}
@@ -6164,6 +5208,128 @@ func (m *ListAuditLogEventsRequest) Unmarshal(dAtA []byte) error {
 				m.Options = &v1.ListOptions{}
 			}
 			if err := m.Options.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipAudit(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthAudit
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthAudit
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *DeleteAuditLogArchiveEventsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAudit
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: DeleteAuditLogArchiveEventsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: DeleteAuditLogArchiveEventsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AuditlogarchiveId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAudit
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthAudit
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAudit
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.AuditlogarchiveId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field To", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAudit
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthAudit
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthAudit
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.To == nil {
+				m.To = &types.Timestamp{}
+			}
+			if err := m.To.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

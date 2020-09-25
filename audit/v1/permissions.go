@@ -49,21 +49,12 @@ const (
 )
 
 const (
-	// AuditLogArchiveChunk permissions
-
-	// PermissionAuditLogArchiveChunkList is needed to list AuditLogArchiveChunks.
-	PermissionAuditLogArchiveChunkList = "audit.auditlogarchivechunk.list"
-	// PermissionAuditLogArchiveChunkGet is needed to get an individual AuditLogArchiveChunk.
-	PermissionAuditLogArchiveChunkGet = "audit.auditlogarchivechunk.get"
-	// PermissionAuditLogArchiveChunkDelete is needed to delete an existing AuditLogArchiveChunk.
-	PermissionAuditLogArchiveChunkDelete = "audit.auditlogarchivechunk.delete"
-)
-
-const (
 	// AuditLogEvent permissions
 
 	// PermissionAuditLogEventList is needed to list AuditLogEvents.
 	PermissionAuditLogEventList = "audit.auditlogevent.list"
+	// PermissionAuditLogEventDelete is needed to delete AuditLogEvents from an archive.
+	PermissionAuditLogEventDelete = "audit.auditlogevent.delete"
 )
 
 const (

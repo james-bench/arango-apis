@@ -109,6 +109,7 @@ export interface AuditLog_Filter {
 // usually for a specific deployment.
 export interface AuditLogArchive {
   // The ID of this resource.
+  // This is a read-only value.
   // string
   id?: string;
   
@@ -141,45 +142,17 @@ export interface AuditLogArchive {
   // Note that the deployment may have already been deleted.
   // string
   deployment_id?: string;
-}
-
-// AuditLogArchiveChunk collects audit events in a specific time frame
-// on an AuditLogArchive.
-export interface AuditLogArchiveChunk {
-  // The ID of this resource.
-  // string
-  id?: string;
   
-  // URL of this resource
+  // Last known size of this archive in bytes.
+  // Note that this field is only update periodically.
   // This is a read-only value.
-  // string
-  url?: string;
+  // number
+  size_in_bytes?: number;
   
-  // The creation timestamp of the resource
+  // The timestamp of the last modification of size_in_bytes.
   // This is a read-only value.
   // googleTypes.Timestamp
-  created_at?: googleTypes.Timestamp;
-  
-  // Identifier of the AuditLogArchive that owns this chunk.
-  // This is a read-only value.
-  // string
-  auditlogarchive_id?: string;
-  
-  // The timestamp of the first event in the chunk.
-  // This is a read-only value.
-  // googleTypes.Timestamp
-  first_event?: googleTypes.Timestamp;
-  
-  // The timestamp of the last event in the chunk.
-  // This is a read-only value.
-  // googleTypes.Timestamp
-  last_event?: googleTypes.Timestamp;
-}
-
-// List of AuditLogArchiveChunk's.
-export interface AuditLogArchiveChunkList {
-  // AuditLogArchiveChunk
-  items?: AuditLogArchiveChunk[];
+  size_in_bytes_changed_at?: googleTypes.Timestamp;
 }
 
 // List of AuditLogArchive's.
@@ -251,25 +224,16 @@ export interface AuditLogList {
   items?: AuditLog[];
 }
 
-// Request arguments for ListAuditLogArchiveChunks
-export interface ListAuditLogArchiveChunksRequest {
-  // Identifier of the audit log archive to request the chunks for.
+// Request arguments for DeleteAuditLogArchiveEvents.
+export interface DeleteAuditLogArchiveEventsRequest {
+  // Identifier of the audit log archive to delete events from.
   // string
   auditlogarchive_id?: string;
   
-  // Request chunks that contain events created at or after this timestamp.
-  // This is an optional field.
-  // googleTypes.Timestamp
-  from?: googleTypes.Timestamp;
-  
-  // Request chunks that contain events created before this timestamp.
-  // This is an optional field.
+  // Remove events created before this timestamp.
+  // Note that this timestamp will be rounded down to the nearest hour.
   // googleTypes.Timestamp
   to?: googleTypes.Timestamp;
-  
-  // Optional common list options, the context_id is ignored
-  // arangodb.cloud.common.v1.ListOptions
-  options?: arangodb_cloud_common_v1_ListOptions;
 }
 
 // Request arguments for ListAuditLogArchives
@@ -298,10 +262,6 @@ export interface ListAuditLogEventsRequest {
   // If set, include only events from this AuditLogArchive.
   // string
   auditlogarchive_id?: string;
-  
-  // If set, include only events from this AuditLogArchiveChunk.
-  // string
-  auditlogarchivechunk_id?: string;
   
   // Request events created at or after this timestamp.
   // This is an optional field.
@@ -388,20 +348,13 @@ export interface IAuditService {
   // - audit.auditlogarchive.delete on the audit log archive.
   DeleteAuditLogArchive: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
   
-  // Fetch all chunks of an audit log archive identified by the given ID.
+  // Remove all audit events that match the given filter from the AuditLogArchive
+  // identified by the given ID.
+  // Note that this method will return a precondition-failed error
+  // if there is no destination of type "cloud" in the AuditLog.
   // Required permissions:
-  // - audit.auditlogarchivechunk.list on the audit log archive identified by the given ID.
-  ListAuditLogArchiveChunks: (req: ListAuditLogArchiveChunksRequest) => Promise<AuditLogArchiveChunkList>;
-  
-  // Fetch a specific AuditLogArchiveChunk identified by the given ID.
-  // Required permissions:
-  // - audit.auditlogarchivechunk.get on the audit log archive chunk identified by the given ID.
-  GetAuditLogArchiveChunk: (req: arangodb_cloud_common_v1_IDOptions) => Promise<AuditLogArchiveChunk>;
-  
-  // Delete an audit log archive chunk.
-  // Required permissions:
-  // - audit.auditlogarchivechunk.delete on the audit log archive chunk.
-  DeleteAuditLogArchiveChunk: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  // - audit.auditlogevent.delete on the audit log archive identified by the given ID.
+  DeleteAuditLogArchiveEvents: (req: DeleteAuditLogArchiveEventsRequest) => Promise<void>;
   
   // Fetch all audit events that match the given filter.
   // Note that this method will return a precondition-failed error
@@ -517,31 +470,15 @@ export class AuditService implements IAuditService {
     return api.delete(url, undefined);
   }
   
-  // Fetch all chunks of an audit log archive identified by the given ID.
+  // Remove all audit events that match the given filter from the AuditLogArchive
+  // identified by the given ID.
+  // Note that this method will return a precondition-failed error
+  // if there is no destination of type "cloud" in the AuditLog.
   // Required permissions:
-  // - audit.auditlogarchivechunk.list on the audit log archive identified by the given ID.
-  async ListAuditLogArchiveChunks(req: ListAuditLogArchiveChunksRequest): Promise<AuditLogArchiveChunkList> {
-    const path = `/api/audit/v1/auditlogarchives/${encodeURIComponent(req.auditlogarchive_id || '')}/auditlogarchivechunks`;
-    const url = path + api.queryString(req, [`auditlogarchive_id`]);
-    return api.get(url, undefined);
-  }
-  
-  // Fetch a specific AuditLogArchiveChunk identified by the given ID.
-  // Required permissions:
-  // - audit.auditlogarchivechunk.get on the audit log archive chunk identified by the given ID.
-  async GetAuditLogArchiveChunk(req: arangodb_cloud_common_v1_IDOptions): Promise<AuditLogArchiveChunk> {
-    const path = `/api/audit/v1/auditlogarchivechunks/${encodeURIComponent(req.id || '')}`;
-    const url = path + api.queryString(req, [`id`]);
-    return api.get(url, undefined);
-  }
-  
-  // Delete an audit log archive chunk.
-  // Required permissions:
-  // - audit.auditlogarchivechunk.delete on the audit log archive chunk.
-  async DeleteAuditLogArchiveChunk(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
-    const path = `/api/audit/v1/auditlogarchivechunks/${encodeURIComponent(req.id || '')}`;
-    const url = path + api.queryString(req, [`id`]);
-    return api.delete(url, undefined);
+  // - audit.auditlogevent.delete on the audit log archive identified by the given ID.
+  async DeleteAuditLogArchiveEvents(req: DeleteAuditLogArchiveEventsRequest): Promise<void> {
+    const url = `/api/audit/v1/auditlogarchives/${encodeURIComponent(req.auditlogarchive_id || '')}/events`;
+    return api.delete(url, req);
   }
   
   // Fetch all audit events that match the given filter.

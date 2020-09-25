@@ -122,30 +122,16 @@ service AuditService {
         };
     }
 
-    // Fetch all chunks of an audit log archive identified by the given ID.
+    // Remove all audit events that match the given filter from the AuditLogArchive
+    // identified by the given ID.
+    // Note that this method will return a precondition-failed error 
+    // if there is no destination of type "cloud" in the AuditLog.
     // Required permissions:
-    // - audit.auditlogarchivechunk.list on the audit log archive identified by the given ID.
-    rpc ListAuditLogArchiveChunks(ListAuditLogArchiveChunksRequest) returns (AuditLogArchiveChunkList) {
+    // - audit.auditlogevent.delete on the audit log archive identified by the given ID.
+    rpc DeleteAuditLogArchiveEvents(DeleteAuditLogArchiveEventsRequest) returns (common.v1.Empty) {
         option (google.api.http) = {
-            get: "/api/audit/v1/auditlogarchives/{auditlogarchive_id}/auditlogarchivechunks"
-        };
-    }
-
-    // Fetch a specific AuditLogArchiveChunk identified by the given ID.
-    // Required permissions:
-    // - audit.auditlogarchivechunk.get on the audit log archive chunk identified by the given ID.
-    rpc GetAuditLogArchiveChunk(common.v1.IDOptions) returns (AuditLogArchiveChunk) {
-        option (google.api.http) = {
-            get: "/api/audit/v1/auditlogarchivechunks/{id}"
-        };
-    }
-
-    // Delete an audit log archive chunk.
-    // Required permissions:
-    // - audit.auditlogarchivechunk.delete on the audit log archive chunk.
-    rpc DeleteAuditLogArchiveChunk(common.v1.IDOptions) returns (common.v1.Empty) {
-        option (google.api.http) = {
-            delete: "/api/audit/v1/auditlogarchivechunks/{id}"
+            delete: "/api/audit/v1/auditlogarchives/{auditlogarchive_id}/events"
+            body: "*"
         };
     }
 
@@ -269,6 +255,7 @@ message ListAuditLogsRequest {
 // usually for a specific deployment.
 message AuditLogArchive {
     // The ID of this resource.
+    // This is a read-only value.
     string id = 1;
     // URL of this resource
     // This is a read-only value.
@@ -288,6 +275,13 @@ message AuditLogArchive {
     // If set, this archive is collecting audit events for a deployment with this ID.
     // Note that the deployment may have already been deleted.
     string deployment_id = 7;
+    // Last known size of this archive in bytes.
+    // Note that this field is only update periodically.
+    // This is a read-only value.
+    uint64 size_in_bytes = 8;
+    // The timestamp of the last modification of size_in_bytes.
+    // This is a read-only value.
+    google.protobuf.Timestamp size_in_bytes_changed_at = 9;
 }
 
 // List of AuditLogArchive's.
@@ -303,47 +297,6 @@ message ListAuditLogArchivesRequest {
     // however are not removed from the system currently.
     // If not set, only audit log archives not indicated as deleted are returned.
     bool include_deleted = 2;
-    // Optional common list options, the context_id is ignored
-    common.v1.ListOptions options = 10;
-}
-
-// AuditLogArchiveChunk collects audit events in a specific time frame
-// on an AuditLogArchive.
-message AuditLogArchiveChunk {
-    // The ID of this resource.
-    string id = 1;
-    // URL of this resource
-    // This is a read-only value.
-    string url = 2;
-    // The creation timestamp of the resource
-    // This is a read-only value.
-    google.protobuf.Timestamp created_at = 3;
-    // Identifier of the AuditLogArchive that owns this chunk.
-    // This is a read-only value.
-    string auditlogarchive_id = 4;
-    // The timestamp of the first event in the chunk.
-    // This is a read-only value.
-    google.protobuf.Timestamp first_event = 5;
-    // The timestamp of the last event in the chunk.
-    // This is a read-only value.
-    google.protobuf.Timestamp last_event = 6;
-}
-
-// List of AuditLogArchiveChunk's.
-message AuditLogArchiveChunkList {
-    repeated AuditLogArchiveChunk items = 1;
-}
-
-// Request arguments for ListAuditLogArchiveChunks
-message ListAuditLogArchiveChunksRequest {
-    // Identifier of the audit log archive to request the chunks for.
-    string auditlogarchive_id = 1;
-    // Request chunks that contain events created at or after this timestamp.
-    // This is an optional field.
-    google.protobuf.Timestamp from = 2;
-    // Request chunks that contain events created before this timestamp.
-    // This is an optional field.
-    google.protobuf.Timestamp to = 3;
     // Optional common list options, the context_id is ignored
     common.v1.ListOptions options = 10;
 }
@@ -387,16 +340,23 @@ message ListAuditLogEventsRequest {
     string auditlog_id = 1;
     // If set, include only events from this AuditLogArchive.
     string auditlogarchive_id = 2;
-    // If set, include only events from this AuditLogArchiveChunk.
-    string auditlogarchivechunk_id = 3;
     // Request events created at or after this timestamp.
     // This is an optional field.
-    google.protobuf.Timestamp from = 4;
+    google.protobuf.Timestamp from = 3;
     // Request events created before this timestamp.
     // This is an optional field.
-    google.protobuf.Timestamp to = 5;
+    google.protobuf.Timestamp to = 4;
     // Optional common list options, the context_id is ignored
     common.v1.ListOptions options = 10;
+}
+
+// Request arguments for DeleteAuditLogArchiveEvents.
+message DeleteAuditLogArchiveEventsRequest {
+    // Identifier of the audit log archive to delete events from.
+    string auditlogarchive_id = 1;
+    // Remove events created before this timestamp.
+    // Note that this timestamp will be rounded down to the nearest hour.
+    google.protobuf.Timestamp to = 2;
 }
 
 // Request arguments for AttachProjectToAuditLog.
