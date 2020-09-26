@@ -56,7 +56,7 @@ export interface IToolsService {
   
   // Get the latest version for a tool.
   // Required permissions:
-  // - tools.latest-version.get globally
+  // - None: Caller must be authenticated.
   GetLatestVersion: (req: GetLatestVersionRequest) => Promise<ToolsVersion>;
 }
 
@@ -73,7 +73,7 @@ export class ToolsService implements IToolsService {
   
   // Get the latest version for a tool.
   // Required permissions:
-  // - tools.latest-version.get globally
+  // - None: Caller must be authenticated.
   async GetLatestVersion(req: GetLatestVersionRequest): Promise<ToolsVersion> {
     const path = `/api/tools/v1/latest-version`;
     const url = path + api.queryString(req, []);
