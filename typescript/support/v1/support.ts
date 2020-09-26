@@ -83,6 +83,11 @@ export interface Plan {
   // When this plan is unavailable, this field is optional.
   // ResponseTimes
   first_response_times?: ResponseTimes;
+  
+  // Support hours applicable to the SLA.
+  // Possible values are "business" and "24x7".
+  // string
+  support_hours?: string;
 }
 
 // List of plans.

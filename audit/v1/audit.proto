@@ -1,0 +1,400 @@
+// 
+// DISCLAIMER
+// 
+// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+// http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// 
+// Copyright holder is ArangoDB GmbH, Cologne, Germany
+// 
+// Author Ewout Prangsma
+// 
+
+syntax = "proto3";
+
+package arangodb.cloud.audit.v1;
+
+option go_package = "github.com/arangodb-managed/apis/audit/v1";
+
+import "common/v1/common.proto";
+
+import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
+import "google/api/annotations.proto";
+
+// AuditService is the API used to provide access to audit events.
+service AuditService {
+    // Get the current API version of this service.
+    // Required permissions:
+    // - None
+    rpc GetAPIVersion(common.v1.Empty) returns (common.v1.Version) {
+        option (google.api.http) = {
+            get: "/api/audit/v1/api-version"
+        };
+    }
+
+    // Fetch all audit logs in the organization identified by the given ID.
+    // Required permissions:
+    // - audit.auditlog.list on the organization identified by the given ID.
+    rpc ListAuditLogs(ListAuditLogsRequest) returns (AuditLogList) {
+        option (google.api.http) = {
+            get: "/api/audit/v1/organizations/{organization_id}/auditlogs"
+        };
+    }
+
+    // Fetch a specific AuditLog identified by the given ID.
+    // Required permissions:
+    // - audit.auditlog.get on the audit log identified by the given ID.
+    rpc GetAuditLog(common.v1.IDOptions) returns (AuditLog) {
+        option (google.api.http) = {
+            get: "/api/audit/v1/auditlogs/{id}"
+        };
+    }
+
+    // Create a new audit log.
+    // Required permissions:
+    // - audit.auditlog.create on the organization identified by the given ID.
+    rpc CreateAuditLog(AuditLog) returns (AuditLog) {
+        option (google.api.http) = {
+            post: "/api/audit/v1/organizations/{organization_id}/auditlogs"
+            body: "*"
+        };
+    }
+
+    // Update an audit log.
+    // Required permissions:
+    // - audit.auditlog.update on the audit log identified by the given ID.
+    rpc UpdateAuditLog(AuditLog) returns (AuditLog) {
+        option (google.api.http) = {
+            patch: "/api/audit/v1/auditlogs/{id}"
+            body: "*"
+        };
+    }
+
+    // Delete an audit log.
+    // Note that audit logs are initially only marked for deleted.
+    // Once all their resources are removed the audit log itself is deleted
+    // and cannot be restored.
+    // Note that deleting an AuditLog will detach it from all Projects that
+    // it was attached to.
+    // Required permissions:
+    // - audit.auditlog.delete on the audit log.
+    rpc DeleteAuditLog(common.v1.IDOptions) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            delete: "/api/audit/v1/auditlogs/{id}"
+        };
+    }
+
+    // Fetch all audit log archives in the audit log identified by the given ID.
+    // Required permissions:
+    // - audit.auditlogarchive.list on the audit log identified by the given ID.
+    rpc ListAuditLogArchives(ListAuditLogArchivesRequest) returns (AuditLogArchiveList) {
+        option (google.api.http) = {
+            get: "/api/audit/v1/auditlogs/{auditlog_id}/auditlogarchives"
+        };
+    }
+
+    // Fetch a specific AuditLogArchive identified by the given ID.
+    // Required permissions:
+    // - audit.auditlogarchive.get on the audit log archive identified by the given ID.
+    rpc GetAuditLogArchive(common.v1.IDOptions) returns (AuditLogArchive) {
+        option (google.api.http) = {
+            get: "/api/audit/v1/auditlogarchives/{id}"
+        };
+    }
+
+    // Delete an audit log archive.
+    // Note that this method will return a precondition-failed error 
+    // if there is a non-deleted deployment using this archive.
+    // Note that audit log archives are initially only marked for deleted.
+    // Once all their resources are removed the audit log archive itself is deleted
+    // and cannot be restored.
+    // Required permissions:
+    // - audit.auditlogarchive.delete on the audit log archive.
+    rpc DeleteAuditLogArchive(common.v1.IDOptions) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            delete: "/api/audit/v1/auditlogarchives/{id}"
+        };
+    }
+
+    // Remove all audit events that match the given filter from the AuditLogArchive
+    // identified by the given ID.
+    // Note that this method will return a precondition-failed error 
+    // if there is no destination of type "cloud" in the AuditLog.
+    // Required permissions:
+    // - audit.auditlogevent.delete on the audit log archive identified by the given ID.
+    rpc DeleteAuditLogArchiveEvents(DeleteAuditLogArchiveEventsRequest) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            delete: "/api/audit/v1/auditlogarchives/{auditlogarchive_id}/events"
+            body: "*"
+        };
+    }
+
+    // Fetch all audit events that match the given filter.
+    // Note that this method will return a precondition-failed error 
+    // if there is no destination of type "cloud" in the AuditLog.
+    // Required permissions:
+    // - audit.auditlogevent.list on the audit log identified by the given ID.
+    rpc ListAuditLogEvents(ListAuditLogEventsRequest) returns (AuditLogEventList) {
+        option (google.api.http) = {
+            get: "/api/audit/v1/auditlogs/{auditlog_id}/events"
+        };
+    }
+
+    // Fetch the AuditLog that is attached to the project identified by the given ID.
+    // If no AuditLog is attached to the project, a not-found error is returned.
+    // Required permissions:
+    // - audit.auditlogattachment.get on the project identified by the given ID.
+    rpc GetAuditLogAttachedToProject(common.v1.IDOptions) returns (AuditLog) {
+        option (google.api.http) = {
+            get: "/api/audit/v1/projects/{id}/auditlog"
+        };
+    }
+
+    // Attach the AuditLog identified by given ID to the project identified with given ID.
+    // This replaces any existing AuditLog attachment for the project.
+    // Required permissions:
+    // - audit.auditlogattachment.create on the project identified by the given ID.
+    rpc AttachProjectToAuditLog(AttachProjectToAuditLogRequest) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            post: "/api/audit/v1/projects/{project_id}/auditlogs/{auditlog_id}/attach"
+            body: "*"
+        };
+    }
+
+    // Detach the current AuditLog from the project identified with given ID.
+    // After a detachment, no audit events in the context of the project will be sent
+    // to an AuditLog.
+    // Required permissions:
+    // - audit.auditlogattachment.delete on the project identified by the given ID.
+    rpc DetachProjectFromAuditLog(common.v1.IDOptions) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            delete: "/api/audit/v1/projects/{id}/auditlogs"
+        };
+    }
+}
+
+// AuditLog holds a specification destinations that audit events should be
+// sent to and it acts as a grouping of audit log archives.
+message AuditLog {
+    // The ID of this resource.
+    string id = 1;
+    // URL of this resource
+    // This is a read-only value.
+    string url = 2;
+    // Name of the audit log
+    string name = 3; 
+    // Description of the audit log
+    string description = 4; 
+    // The creation timestamp of the resource
+    // This is a read-only value.
+    google.protobuf.Timestamp created_at = 5;
+    // The deletion timestamp of the resource
+    // This is a read-only value.
+    google.protobuf.Timestamp deleted_at = 6;
+    // Set when this resource is deleted.
+    // This is a read-only value.
+    bool is_deleted = 7;
+    // Identifier of the user who created this resource.
+    // This is a read-only value.
+    string created_by_id = 8;
+    // Identifier of the organization that owns this audit log.
+    // This is a read-only value.
+    string organization_id = 9;
+    // If set, this AuditLog is the default for the organization.
+    bool is_default = 10;
+
+    // Settings for a destination of type "https-post"
+    message HttpsPostSettings {
+        // URL of the server to POST to.
+        // The scheme of the URL must be "https".
+        string url = 1;
+        // PEM encoded public key of the CA used to sign
+        // the server TLS certificate.
+        // This public key will be used to verify the
+        // TLS connection provided by the server.
+        // If this field is empty, a well known CA is expected.
+        string trusted_server_ca_pem = 2;
+        // PEM encoded public key of the client certificate
+        // used to make the request.
+        string client_certificate_pem = 3;
+        // PEM encoded private key of the client certificate
+        // used to make the request.
+        string client_key_pem = 4;
+        // HTTP headers to add to the request.
+        // It is allowed to pass multiple headers with the same key.
+        repeated Header headers = 5;
+        // Do not send audit events with these topics to this destination.
+        repeated string excluded_topics = 100;
+    }
+
+    // HTTP header pair
+    message Header {
+        // Key of the header
+        string key = 1;
+        // Value of the header
+        string value = 2;
+    }
+
+    // Specification of a destination for audit events.
+    message Destination {
+        // Type of destination.
+        // Possible values are: "cloud", "https-post"
+        string type = 1;
+        // Settings for destinations of type "https-post"
+        HttpsPostSettings http_post = 10;
+    }
+    // Destinations that events of this AuditLog should be sent to.
+    // Note that there can only be 1 destination of type "cloud".
+    repeated Destination destinations = 100;
+}
+
+// List of AuditLog's.
+message AuditLogList {
+    repeated AuditLog items = 1;
+}
+
+// Request arguments for ListAuditLogs
+message ListAuditLogsRequest {
+    // Identifier of the organization to request the audit logs for.
+    string organization_id = 1;
+    // If set, the result includes all audit logs, including those who set to deleted, 
+    // however are not removed from the system currently.
+    // If not set, only audit logs not indicated as deleted are returned.
+    bool include_deleted = 2;
+    // Optional common list options, the context_id is ignored
+    common.v1.ListOptions options = 10;
+}
+
+// AuditLogArchive collects files of audit events in a specific region,
+// usually for a specific deployment.
+message AuditLogArchive {
+    // The ID of this resource.
+    // This is a read-only value.
+    string id = 1;
+    // URL of this resource
+    // This is a read-only value.
+    string url = 2;
+    // The creation timestamp of the resource
+    // This is a read-only value.
+    google.protobuf.Timestamp created_at = 3;
+    // The deletion timestamp of the resource
+    // This is a read-only value.
+    google.protobuf.Timestamp deleted_at = 4;
+    // Set when this resource is deleted.
+    // This is a read-only value.
+    bool is_deleted = 5;
+    // Identifier of the auditlog that owns this audit log archive.
+    // This is a read-only value.
+    string auditlog_id = 6;
+    // If set, this archive is collecting audit events for a deployment with this ID.
+    // Note that the deployment may have already been deleted.
+    string deployment_id = 7;
+    // Last known size of this archive in bytes.
+    // Note that this field is only update periodically.
+    // This is a read-only value.
+    uint64 size_in_bytes = 8;
+    // The timestamp of the last modification of size_in_bytes.
+    // This is a read-only value.
+    google.protobuf.Timestamp size_in_bytes_changed_at = 9;
+}
+
+// List of AuditLogArchive's.
+message AuditLogArchiveList {
+    repeated AuditLogArchive items = 1;
+}
+
+// Request arguments for ListAuditLogArchives
+message ListAuditLogArchivesRequest {
+    // Identifier of the audit log to request the audit log archives for.
+    string auditlog_id = 1;
+    // If set, the result includes all audit log archives, including those who set to deleted, 
+    // however are not removed from the system currently.
+    // If not set, only audit log archives not indicated as deleted are returned.
+    bool include_deleted = 2;
+    // Optional common list options, the context_id is ignored
+    common.v1.ListOptions options = 10;
+}
+
+// Single audit log event
+message AuditLogEvent {
+    // When did the event happen
+    google.protobuf.Timestamp timestamp = 1;
+    // Topic of the event
+    string topic = 2;
+    // ID of the project that the event happened in (if applicable)
+    string project_id = 3;
+    // ID of the deployment that the event happened in (if applicable)
+    string deployment_id = 4;
+    // ID of the server that the event happened in (if applicable)
+    string server_id = 5;
+    // Instance ID of the server that the event happened in (if applicable)
+    string instance_id = 6;
+    // Sequence number. Must be even increasing for (deployment_id, server_id, instance_id) pairs.
+    uint64 sequence = 7;
+    // ID of the user that caused the event
+    string user_id = 8;
+    // Name of database the operation is in (if applicable)
+    string database = 9;
+    // IP address of source of operation (if available)
+    string client_ip = 10;
+    // Authentication details
+    string authentication = 11;
+    // Free format text describing the event
+    string message = 12;
+    // ID of the AuditLogArchive that contains this event (if applicable)
+    string auditlogarchive_id = 13;
+}
+
+// List of AuditLogEvent's.
+message AuditLogEventList {
+    repeated AuditLogEvent items = 1;
+}
+
+// Request arguments for ListAuditLogEvents.
+message ListAuditLogEventsRequest {
+    // Identifier of the audit log to request events for.
+    string auditlog_id = 1;
+    // If set, include only events from this AuditLogArchive.
+    string auditlogarchive_id = 2;
+    // Request events created at or after this timestamp.
+    // This is an optional field.
+    google.protobuf.Timestamp from = 3;
+    // Request events created before this timestamp.
+    // This is an optional field.
+    google.protobuf.Timestamp to = 4;
+    // If non-empty, only request events with one of these topics.
+    repeated string included_topics = 5;
+    // If non-empty, leave out events with one of these topics.
+    // If a topic is specified in included_topics as well as excluded_topics,
+    // events of that topic will not be included in the results.
+    repeated string excluded_topics = 6;
+    // Optional common list options, the context_id is ignored
+    common.v1.ListOptions options = 10;
+}
+
+// Request arguments for DeleteAuditLogArchiveEvents.
+message DeleteAuditLogArchiveEventsRequest {
+    // Identifier of the audit log archive to delete events from.
+    string auditlogarchive_id = 1;
+    // Remove events created before this timestamp.
+    // Note that this timestamp will be rounded down to the nearest hour.
+    google.protobuf.Timestamp to = 2;
+}
+
+// Request arguments for AttachProjectToAuditLog.
+message AttachProjectToAuditLogRequest {
+    // ID of project to attach the AuditLog to.
+    string project_id = 1;
+    // ID of the AuditLog to attach.
+    string auditlog_id = 2;
+}

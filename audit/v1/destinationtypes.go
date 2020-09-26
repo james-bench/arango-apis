@@ -23,12 +23,10 @@
 package v1
 
 const (
-	// APIID contains identifier of this API
-	APIID = "support/v1"
-	// APIMajorVersion contains major version of this API
-	APIMajorVersion = 1
-	// APIMinorVersion contains minor version of this API
-	APIMinorVersion = 1
-	// APIPatchVersion contains patch version of this API
-	APIPatchVersion = 0
+	// Destination types
+
+	// DestinationCloud indicates that the destination of an AuditLog is cloud storage.
+	DestinationCloud = "cloud"
+	// DestinationHTTPSPost indicates that the destination of an AuditLog is an HTTPS POST service.
+	DestinationHTTPSPost = "https-post"
 )

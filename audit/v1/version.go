@@ -24,11 +24,11 @@ package v1
 
 const (
 	// APIID contains identifier of this API
-	APIID = "support/v1"
+	APIID = "audit/v1"
 	// APIMajorVersion contains major version of this API
-	APIMajorVersion = 1
+	APIMajorVersion = 0
 	// APIMinorVersion contains minor version of this API
-	APIMinorVersion = 1
+	APIMinorVersion = 0
 	// APIPatchVersion contains patch version of this API
-	APIPatchVersion = 0
+	APIPatchVersion = 1
 )
