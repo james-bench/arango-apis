@@ -270,7 +270,7 @@ type ToolsServiceClient interface {
 	GetAPIVersion(ctx context.Context, in *v1.Empty, opts ...grpc.CallOption) (*v1.Version, error)
 	// Get the latest version for a tool.
 	// Required permissions:
-	// - None: Caller must be authenticated.
+	// - None
 	GetLatestVersion(ctx context.Context, in *GetLatestVersionRequest, opts ...grpc.CallOption) (*ToolsVersion, error)
 }
 
@@ -308,7 +308,7 @@ type ToolsServiceServer interface {
 	GetAPIVersion(context.Context, *v1.Empty) (*v1.Version, error)
 	// Get the latest version for a tool.
 	// Required permissions:
-	// - None: Caller must be authenticated.
+	// - None
 	GetLatestVersion(context.Context, *GetLatestVersionRequest) (*ToolsVersion, error)
 }
 
