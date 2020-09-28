@@ -42,7 +42,7 @@ service ToolsService {
 
     // Get the latest version for a tool.
     // Required permissions:
-    // - tools.latest-version.get globally
+    // - None
     rpc GetLatestVersion(GetLatestVersionRequest) returns (ToolsVersion) {
         option (google.api.http) = {
             get: "/api/tools/v1/latest-version"
