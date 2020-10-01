@@ -25,6 +25,8 @@ package v1
 const (
 	// AuditLog permissions
 
+	// PermissionAuditLogList is needed to list AuditLogs.
+	PermissionAuditLogList = "audit.auditlog.list"
 	// PermissionAuditLogGet is needed to get an individual AuditLog.
 	PermissionAuditLogGet = "audit.auditlog.get"
 	// PermissionAuditLogCreate is needed to create a new AuditLog.
