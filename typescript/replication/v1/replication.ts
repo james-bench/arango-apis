@@ -26,8 +26,7 @@ export interface CloneDeploymentFromBackupRequest {
   // when cloning a deployment.
   // If the tier of the organization does not require a non-empty Terms&Condition
   // identifier, this field may be left empty.
-  // If this field is not set the terms and conditions of the backup will be used.
-  // This is a read-only value after creation.
+  // If this field is not set the terms and conditions of the source deployment will be used.
   // string
   accepted_terms_and_conditions_id?: string;
 }

@@ -40,8 +40,7 @@ type CloneDeploymentFromBackupRequest struct {
 	// when cloning a deployment.
 	// If the tier of the organization does not require a non-empty Terms&Condition
 	// identifier, this field may be left empty.
-	// If this field is not set the terms and conditions of the backup will be used.
-	// This is a read-only value after creation.
+	// If this field is not set the terms and conditions of the source deployment will be used.
 	AcceptedTermsAndConditionsId string   `protobuf:"bytes,3,opt,name=accepted_terms_and_conditions_id,json=acceptedTermsAndConditionsId,proto3" json:"accepted_terms_and_conditions_id,omitempty"`
 	XXX_NoUnkeyedLiteral         struct{} `json:"-"`
 	XXX_unrecognized             []byte   `json:"-"`
