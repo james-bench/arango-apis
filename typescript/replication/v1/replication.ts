@@ -21,6 +21,15 @@ export interface CloneDeploymentFromBackupRequest {
   // This is an optional field
   // string
   region_id?: string;
+  
+  // This field must be set to the identifier of the current Terms&Conditions
+  // when cloning a deployment.
+  // If the tier of the organization does not require a non-empty Terms&Condition
+  // identifier, this field may be left empty.
+  // If this field is not set the terms and conditions of the backup will be used.
+  // This is a read-only value after creation.
+  // string
+  accepted_terms_and_conditions_id?: string;
 }
 
 // ReplicationService is the API used to replicate a deployment.
