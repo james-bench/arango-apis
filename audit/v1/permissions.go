@@ -25,8 +25,6 @@ package v1
 const (
 	// AuditLog permissions
 
-	// PermissionAuditLogList is needed to list AuditLogs.
-	PermissionAuditLogList = "audit.auditlog.list"
 	// PermissionAuditLogGet is needed to get an individual AuditLog.
 	PermissionAuditLogGet = "audit.auditlog.get"
 	// PermissionAuditLogCreate is needed to create a new AuditLog.
@@ -35,6 +33,13 @@ const (
 	PermissionAuditLogUpdate = "audit.auditlog.update"
 	// PermissionAuditLogDelete is needed to delete an existing AuditLog.
 	PermissionAuditLogDelete = "audit.auditlog.delete"
+)
+
+const (
+	// AuditLogs permissions
+
+	// PermissionAuditLogsGet is needed to fetching AuditLogs.
+	PermissionAuditLogsGet = "audit.auditlogs.get"
 )
 
 const (

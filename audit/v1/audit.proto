@@ -143,10 +143,11 @@ service AuditService {
     // Note that this method will return a precondition-failed error 
     // if there is no destination of type "cloud" in the AuditLog.
     // Required permissions:
-    // - audit.auditlogevent.list on the audit log identified by the given ID.
-    rpc ListAuditLogEvents(ListAuditLogEventsRequest) returns (AuditLogEventList) {
+    // - audit.auditlogevents.get on the audit log identified by the given ID.
+    rpc GetAuditLogEvents(GetAuditLogEventsRequest) returns (stream AuditLogEventList) {
         option (google.api.http) = {
-            get: "/api/audit/v1/auditlogs/{auditlog_id}/events"
+            post: "/api/audit/v1/auditlogs/{auditlog_id}/events"
+            body: "*"
         };
     }
 
@@ -361,7 +362,7 @@ message AuditLogEventList {
 }
 
 // Request arguments for ListAuditLogEvents.
-message ListAuditLogEventsRequest {
+message GetAuditLogEventsRequest {
     // Identifier of the audit log to request events for.
     string auditlog_id = 1;
     // If set, include only events from this AuditLogArchive.
@@ -378,8 +379,8 @@ message ListAuditLogEventsRequest {
     // If a topic is specified in included_topics as well as excluded_topics,
     // events of that topic will not be included in the results.
     repeated string excluded_topics = 6;
-    // Optional common list options, the context_id is ignored
-    common.v1.ListOptions options = 10;
+    // Limit the number of audit log events. Defaults to 0, meaning no limit.
+    int32 limit = 10;
 }
 
 // Request arguments for DeleteAuditLogArchiveEvents.
