@@ -51,10 +51,15 @@ const (
 const (
 	// AuditLogEvent permissions
 
-	// PermissionAuditLogEventList is needed to list AuditLogEvents.
-	PermissionAuditLogEventList = "audit.auditlogevent.list"
 	// PermissionAuditLogEventDelete is needed to delete AuditLogEvents from an archive.
 	PermissionAuditLogEventDelete = "audit.auditlogevent.delete"
+)
+
+const (
+	// AuditLogEvents permissions
+
+	// PermissionAuditLogEventsGet is needed to fetching AuditLogEvents.
+	PermissionAuditLogEventsGet = "audit.auditlogevents.get"
 )
 
 const (
