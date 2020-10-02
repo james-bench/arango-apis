@@ -68,4 +68,10 @@ message CloneDeploymentFromBackupRequest {
     // Target region.
     // This is an optional field
     string region_id = 2;
+    // This field must be set to the identifier of the current Terms&Conditions
+    // when cloning a deployment.
+    // If the tier of the organization does not require a non-empty Terms&Condition
+    // identifier, this field may be left empty.
+    // If this field is not set the terms and conditions of the source deployment will be used.
+    string accepted_terms_and_conditions_id = 3;
 }

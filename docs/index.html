@@ -8920,6 +8920,17 @@ Content type of guide is markdown. </p></td>
 This is a read-only value. </p></td>
                 </tr>
               
+                <tr>
+                  <td>accepted_terms_and_conditions_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>This field must be set to the identifier of the current Terms&amp;Conditions
+when cloning a deployment.
+If the tier of the organization does not require a non-empty Terms&amp;Condition
+identifier, this field may be left empty.
+If this field is not set the terms and conditions of the source deployment will be used. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
