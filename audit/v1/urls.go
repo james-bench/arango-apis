@@ -34,6 +34,8 @@ const (
 	KindAuditLog = "AuditLog"
 	// KindAuditLogArchive is a constants for the kind of AuditLogArchive resources.
 	KindAuditLogArchive = "AuditLogArchive"
+	// KindAuditLogAttachment is a constants for the kind of AuditLogAttachment resources.
+	KindAuditLogAttachment = "AuditLogAttachment"
 )
 
 // AuditLogURL creates a resource URL for the AuditLog with given ID
@@ -46,4 +48,10 @@ func AuditLogURL(organizationID, auditLogID string) string {
 // in given context.
 func AuditLogArchiveURL(organizationID, auditLogID, auditLogArchiveID string) string {
 	return path.Join(AuditLogURL(organizationID, auditLogID), KindAuditLogArchive, url.PathEscape(auditLogArchiveID))
+}
+
+// AuditLogAttachmentURL creates a resource URL for the AuditLogAttachment with given ID
+// in given context.
+func AuditLogAttachmentURL(organizationID, projectID, auditLogID string) string {
+	return path.Join(rm.ProjectURL(organizationID, projectID), KindAuditLogAttachment, url.PathEscape(auditLogID))
 }

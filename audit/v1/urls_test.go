@@ -39,3 +39,9 @@ func TestAuditLogArchiveURL(t *testing.T) {
 	assert.Equal(t, "/Organization/123%2F567/AuditLog/c2%2F3/AuditLogArchive/d%2F5", AuditLogArchiveURL("123/567", "c2/3", "d/5"))
 	assert.Equal(t, "/Organization/123%2F567/AuditLog/e%25f/AuditLogArchive/t%25T", AuditLogArchiveURL("123/567", "e%f", "t%T"))
 }
+
+func TestAuditLogAttachmentURL(t *testing.T) {
+	assert.Equal(t, "/Organization/123/Project/c1/AuditLogAttachment/a1", AuditLogAttachmentURL("123", "c1", "a1"))
+	assert.Equal(t, "/Organization/123%2F567/Project/c2%2F3/AuditLogAttachment/d%2F5", AuditLogAttachmentURL("123/567", "c2/3", "d/5"))
+	assert.Equal(t, "/Organization/123%2F567/Project/e%25f/AuditLogAttachment/t%25T", AuditLogAttachmentURL("123/567", "e%f", "t%T"))
+}
