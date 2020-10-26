@@ -8920,17 +8920,6 @@ Content type of guide is markdown. </p></td>
 This is a read-only value. </p></td>
                 </tr>
               
-                <tr>
-                  <td>accepted_terms_and_conditions_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>This field must be set to the identifier of the current Terms&amp;Conditions
-when cloning a deployment.
-If the tier of the organization does not require a non-empty Terms&amp;Condition
-identifier, this field may be left empty.
-If this field is not set the terms and conditions of the source deployment will be used. </p></td>
-                </tr>
-              
             </tbody>
           </table>
 
@@ -11653,6 +11642,17 @@ Required permissions:
 This is an optional field </p></td>
                 </tr>
               
+                <tr>
+                  <td>accepted_terms_and_conditions_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>This field must be set to the identifier of the current Terms&amp;Conditions
+when cloning a deployment.
+If the tier of the organization does not require a non-empty Terms&amp;Condition
+identifier, this field may be left empty.
+If this field is not set the terms and conditions of the source deployment will be used. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -12875,6 +12875,32 @@ This is a read-only value and cannot be initialized. </p></td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>If set, this tier allows the user of support severity critical. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>has_auditlog_feature</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, this tier has the auditlog feature.
+This is a read-only value and cannot be initialized. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>has_auditlog_destination_cloud</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, this tier supports the auditlog destination &#39;cloud&#39;.
+This fields is only relevant if has_auditlog_feature is set.
+This is a read-only value and cannot be initialized. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>has_auditlog_destination_https_post</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, this tier supports the auditlog destination &#39;https-post&#39;.
+This fields is only relevant if has_auditlog_feature is set.
+This is a read-only value and cannot be initialized. </p></td>
                 </tr>
               
             </tbody>
