@@ -429,6 +429,17 @@ message Tier {
     bool has_support_severity_high = 6;
     // If set, this tier allows the user of support severity critical.
     bool has_support_severity_critical = 7;
+    // If set, this tier has the auditlog feature.
+    // This is a read-only value and cannot be initialized.
+    bool has_auditlog_feature = 8;
+    // If set, this tier supports the auditlog destination 'cloud'.
+    // This fields is only relevant if has_auditlog_feature is set.
+    // This is a read-only value and cannot be initialized.
+    bool has_auditlog_destination_cloud = 9;
+    // If set, this tier supports the auditlog destination 'https-post'.
+    // This fields is only relevant if has_auditlog_feature is set.
+    // This is a read-only value and cannot be initialized.
+    bool has_auditlog_destination_https_post = 10;
 }
 
 // Member of an organization.

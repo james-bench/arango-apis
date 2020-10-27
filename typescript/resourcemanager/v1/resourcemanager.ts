@@ -504,6 +504,23 @@ export interface Tier {
   // If set, this tier allows the user of support severity critical.
   // boolean
   has_support_severity_critical?: boolean;
+  
+  // If set, this tier has the auditlog feature.
+  // This is a read-only value and cannot be initialized.
+  // boolean
+  has_auditlog_feature?: boolean;
+  
+  // If set, this tier supports the auditlog destination 'cloud'.
+  // This fields is only relevant if has_auditlog_feature is set.
+  // This is a read-only value and cannot be initialized.
+  // boolean
+  has_auditlog_destination_cloud?: boolean;
+  
+  // If set, this tier supports the auditlog destination 'https-post'.
+  // This fields is only relevant if has_auditlog_feature is set.
+  // This is a read-only value and cannot be initialized.
+  // boolean
+  has_auditlog_destination_https_post?: boolean;
 }
 
 // ResourceManagerService is the API used to configure basic resource objects.
