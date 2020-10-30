@@ -27,16 +27,17 @@ check_file() {
         exit 1
     fi
 
-    status=`git status ${version_file}`
-    if [[ ! "${status}" == *"modified"* ]]; then
+    status=`git diff-tree --no-commit-id --name-only -r HEAD ${version_file}`
+    if [[ -z "${status}" ]]; then
         echo "no version change found in ${version_file} but proto file was changed."
         exit 1
     fi
     echo "done. All good."
 }
 
-# Get last changes and see if the list contains the corresponding version go file.
+# Get last commit and check to see if it contained a version change as well.
+# This is convenient and will check changes on every commit.
 git diff-tree --no-commit-id --name-only -r HEAD |
     while read line ; do
-        check_file $file
+        check_file $line
     done
