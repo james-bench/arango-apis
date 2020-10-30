@@ -312,7 +312,7 @@ message Deployment {
     // If the tier of the organization does not require a non-empty Terms&Condition
     // identifier, this field may be left empty.
     // This is a read-only value after creation.
-    string accepted_terms_and_conditions_id = 12;
+    string accepted_terms_and_conditions_id = 12; 
     // If set, this deployment cannot be deleted.
     // To delete, first update the with locked set to false.
     bool locked = 13;
