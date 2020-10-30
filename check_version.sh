@@ -41,7 +41,7 @@ echo "Running check for version.go consistency..."
 echo "To ignore a commit, add '${ignore_string}' at the begin of he commit message."
 
 commit_message=`git log -1 --pretty=%B`
-if [[ "${ignore_string}" == "${commit_message}"* ]]; then
+if [[ $commit_message == $ignore_string* ]]; then
     echo "Ignore directive found in commit message."
     exit 0
 fi
