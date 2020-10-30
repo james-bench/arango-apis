@@ -30,5 +30,5 @@ const (
 	// APIMinorVersion contains minor version of this API
 	APIMinorVersion = 7
 	// APIPatchVersion contains patch version of this API
-	APIPatchVersion = 1
+	APIPatchVersion = 0
 )
