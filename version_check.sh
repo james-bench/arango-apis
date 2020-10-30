@@ -35,12 +35,8 @@ check_file() {
     echo "done. All good."
 }
 
-git status | grep -Ev "typescript|vendor|docs" |
+# Get last changes and see if the list contains the corresponding version go file.
+git diff-tree --no-commit-id --name-only -r HEAD |
     while read line ; do
-        case "${line}" in
-            *modified**)
-                file=`echo "${line}" | awk '{print $2}'`
-                check_file $file
-                ;;
-        esac
+        check_file $file
     done
