@@ -32,6 +32,7 @@ import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
 import "google/api/annotations.proto";
 
 // BillingService is the API used to fetch billing information.
+// Modification
 service BillingService {
     // Get the current API version of this service.
     // Required permissions:
