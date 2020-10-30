@@ -9,6 +9,8 @@ set -o errexit
 # Use the error status of the first failure, rather than that of the last item in a pipeline.
 set -o pipefail
 
+ignore_string="ignore-ci:"
+
 check_file() {
     fullpath=$1
     file=`basename ${fullpath}`
@@ -36,6 +38,13 @@ check_file() {
 }
 
 echo "Running check for version.go consistency..."
+echo "To ignore a commit, add '${ignore_string}' at the begin of he commit message."
+
+commit_message=`git log -1 --pretty=%B`
+if [[ "${ignore_string}" == "${commit_message}"* ]]; then
+    echo "Ignore directive found in commit message."
+    exit 0
+fi
 
 # Get last commit and check to see if it contained a version change as well.
 # This is convenient and will check changes on every commit.
