@@ -35,9 +35,13 @@ check_file() {
     echo "done. All good."
 }
 
+echo "Running check for version.go consistency..."
+
 # Get last commit and check to see if it contained a version change as well.
 # This is convenient and will check changes on every commit.
 git diff-tree --no-commit-id --name-only -r HEAD |
     while read line ; do
         check_file $line
     done
+
+echo "Finished."
