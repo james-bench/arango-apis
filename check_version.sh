@@ -59,7 +59,7 @@ check_file() {
 }
 
 echo "Running check for version.go consistency..."
-echo "To ignore a commit, add '${ignore_string}' at the begin of he commit message."
+echo "To ignore a commit, add '${ignore_string}' at the begin of the commit message."
 
 commit_message=`git log -1 --pretty=%B`
 if [[ $commit_message == $ignore_string* ]]; then
