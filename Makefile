@@ -117,3 +117,6 @@ test:
 bootstrap:
 	go get github.com/arangodb-managed/zutano
 	go get github.com/jstemmer/go-junit-report
+
+check-version:
+	./check_version.sh
