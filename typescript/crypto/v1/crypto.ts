@@ -92,6 +92,11 @@ export interface CACertificate {
   // To delete, first update the with locked set to false.
   // boolean
   locked?: boolean;
+  
+  // Set when this CA certificate will expire in the next 48 hours.
+  // This is a read-only value.
+  // boolean
+  rotation_needed?: boolean;
 }
 
 // Instructions for installing & uninstalling CA certificates
