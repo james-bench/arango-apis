@@ -163,6 +163,9 @@ message CACertificate {
     // If set, this certificate cannot be deleted.
     // To delete, first update the with locked set to false.
     bool locked = 16;
+    // Set when this CA certificate will expire in the next 48 hours.
+    // This is a read-only value.
+    bool rotation_needed = 17;
 }
 
 // List of CACertificates.
