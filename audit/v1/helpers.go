@@ -28,6 +28,36 @@ import (
 )
 
 // Equals returns true when source & other have the same values.
+func (source *AuditLog) Equals(other *AuditLog) bool {
+	return source.GetId() == other.GetId() &&
+		source.GetUrl() == other.GetUrl() &&
+		source.GetName() == other.GetName() &&
+		source.GetDescription() == other.GetDescription() &&
+		source.GetCreatedAt().Equal(other.GetCreatedAt()) &&
+		source.GetDeletedAt().Equal(other.GetDeletedAt()) &&
+		source.GetCreatedById() == other.GetCreatedById() &&
+		source.GetOrganizationId() == other.GetOrganizationId() &&
+		source.GetCreatedById() == other.GetCreatedById() &&
+		source.GetIsDefault() == other.GetIsDefault() &&
+		auditLogDestinationList(source.GetDestinations()).Equals(other.GetDestinations())
+}
+
+type auditLogDestinationList []*AuditLog_Destination
+
+// Equals returns true when source & other have the same values
+func (source auditLogDestinationList) Equals(other auditLogDestinationList) bool {
+	if len(source) != len(other) {
+		return false
+	}
+	for i, x := range source {
+		if !x.Equals(other[i]) {
+			return false
+		}
+	}
+	return true
+}
+
+// Equals returns true when source & other have the same values.
 func (source *AuditLog_Destination) Equals(other *AuditLog_Destination) bool {
 	return source.GetType() == other.GetType() &&
 		source.GetHttpPost().Equals(other.GetHttpPost())
