@@ -186,7 +186,7 @@ export interface ICryptoService {
   
   // Clone a CA certificate identified by given id.
   // Required permissions:
-  // - crypto.cacertificate.clone on the CA certificate identified by the given ID
+  // - crypto.cacertificate.clone on the project that owns the CA certificate identified by the given ID
   CloneCACertificate: (req: arangodb_cloud_common_v1_IDOptions) => Promise<CACertificate>;
   
   // Update a CA certificate
@@ -266,7 +266,7 @@ export class CryptoService implements ICryptoService {
   
   // Clone a CA certificate identified by given id.
   // Required permissions:
-  // - crypto.cacertificate.clone on the CA certificate identified by the given ID
+  // - crypto.cacertificate.clone on the project that owns the CA certificate identified by the given ID
   async CloneCACertificate(req: arangodb_cloud_common_v1_IDOptions): Promise<CACertificate> {
     const path = `/api/crypto/v1/cacertificates/${encodeURIComponent(req.id || '')}/clone`;
     const url = path + api.queryString(req, [`id`]);

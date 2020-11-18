@@ -94,7 +94,7 @@ service CryptoService {
 
     // Clone a CA certificate identified by given id.
     // Required permissions:
-    // - crypto.cacertificate.clone on the CA certificate identified by the given ID
+    // - crypto.cacertificate.clone on the project that owns the CA certificate identified by the given ID
     rpc CloneCACertificate(common.v1.IDOptions) returns (CACertificate) {
         option (google.api.http) = {
             post: "/api/crypto/v1/cacertificates/{id}/clone"

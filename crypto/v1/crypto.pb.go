@@ -606,7 +606,7 @@ type CryptoServiceClient interface {
 	CreateCACertificate(ctx context.Context, in *CACertificate, opts ...grpc.CallOption) (*CACertificate, error)
 	// Clone a CA certificate identified by given id.
 	// Required permissions:
-	// - crypto.cacertificate.clone on the CA certificate identified by the given ID
+	// - crypto.cacertificate.clone on the project that owns the CA certificate identified by the given ID
 	CloneCACertificate(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*CACertificate, error)
 	// Update a CA certificate
 	// Required permissions:
@@ -753,7 +753,7 @@ type CryptoServiceServer interface {
 	CreateCACertificate(context.Context, *CACertificate) (*CACertificate, error)
 	// Clone a CA certificate identified by given id.
 	// Required permissions:
-	// - crypto.cacertificate.clone on the CA certificate identified by the given ID
+	// - crypto.cacertificate.clone on the project that owns the CA certificate identified by the given ID
 	CloneCACertificate(context.Context, *v1.IDOptions) (*CACertificate, error)
 	// Update a CA certificate
 	// Required permissions:
