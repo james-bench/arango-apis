@@ -97,6 +97,11 @@ export interface CACertificate {
   // This is a read-only value.
   // boolean
   rotation_needed?: boolean;
+  
+  // If set, contains the ID of a CA certificate from which this certificate was cloned.
+  // This is a read-only value.
+  // string
+  cloned_from_id?: string;
 }
 
 // Instructions for installing & uninstalling CA certificates
@@ -128,6 +133,23 @@ export interface CACertificateList {
   items?: CACertificate[];
 }
 
+// Request arguments for ListCACertificatesWithFilter.
+export interface ListCACertificatesRequest {
+  // Common list options.
+  // Context_id is ignored.
+  // arangodb.cloud.common.v1.ListOptions
+  options?: arangodb_cloud_common_v1_ListOptions;
+  
+  // Required ID of project to list certificates for.
+  // string
+  project_id?: string;
+  
+  // If set, include only certificates that were cloned from the certificate
+  // with this ID.
+  // string
+  cloned_from_id?: string;
+}
+
 // CryptoService is the API used to configure various crypto objects.
 export interface ICryptoService {
   // Get the current API version of this service.
@@ -139,6 +161,12 @@ export interface ICryptoService {
   // Required permissions:
   // - crypto.cacertificate.list on the project identified by the given context ID
   ListCACertificates: (req: arangodb_cloud_common_v1_ListOptions) => Promise<CACertificateList>;
+  
+  // Fetch all CA certificates in the project identified by the given project ID
+  // that match the given filter.
+  // Required permissions:
+  // - crypto.cacertificate.list on the project identified by the given context ID
+  ListCACertificatesWithFilter: (req: ListCACertificatesRequest) => Promise<CACertificateList>;
   
   // Fetch a CA certificate by its id.
   // Required permissions:
@@ -155,6 +183,11 @@ export interface ICryptoService {
   // Required permissions:
   // - crypto.cacertificate.create on the project that owns the CA certificate
   CreateCACertificate: (req: CACertificate) => Promise<CACertificate>;
+  
+  // Clone a CA certificate identified by given id.
+  // Required permissions:
+  // - crypto.cacertificate.clone on the CA certificate identified by the given ID
+  CloneCACertificate: (req: arangodb_cloud_common_v1_IDOptions) => Promise<CACertificate>;
   
   // Update a CA certificate
   // Required permissions:
@@ -195,6 +228,15 @@ export class CryptoService implements ICryptoService {
     return api.get(url, undefined);
   }
   
+  // Fetch all CA certificates in the project identified by the given project ID
+  // that match the given filter.
+  // Required permissions:
+  // - crypto.cacertificate.list on the project identified by the given context ID
+  async ListCACertificatesWithFilter(req: ListCACertificatesRequest): Promise<CACertificateList> {
+    const url = `/api/crypto/v1/projects/${encodeURIComponent(req.project_id || '')}/cacertificates`;
+    return api.post(url, req);
+  }
+  
   // Fetch a CA certificate by its id.
   // Required permissions:
   // - crypto.cacertificate.get on the CA certificate identified by the given ID
@@ -220,6 +262,15 @@ export class CryptoService implements ICryptoService {
   async CreateCACertificate(req: CACertificate): Promise<CACertificate> {
     const url = `/api/crypto/v1/projects/${encodeURIComponent(req.project_id || '')}/cacertificates`;
     return api.post(url, req);
+  }
+  
+  // Clone a CA certificate identified by given id.
+  // Required permissions:
+  // - crypto.cacertificate.clone on the CA certificate identified by the given ID
+  async CloneCACertificate(req: arangodb_cloud_common_v1_IDOptions): Promise<CACertificate> {
+    const path = `/api/crypto/v1/cacertificates/${encodeURIComponent(req.id || '')}/clone`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.post(url, undefined);
   }
   
   // Update a CA certificate

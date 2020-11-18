@@ -52,6 +52,17 @@ service CryptoService {
         };
     }
 
+    // Fetch all CA certificates in the project identified by the given project ID
+    // that match the given filter.
+    // Required permissions:
+    // - crypto.cacertificate.list on the project identified by the given context ID
+    rpc ListCACertificatesWithFilter(ListCACertificatesRequest) returns (CACertificateList) {
+        option (google.api.http) = {
+            post: "/api/crypto/v1/projects/{project_id}/cacertificates"
+            body: "*"
+        };
+    }
+
     // Fetch a CA certificate by its id.
     // Required permissions:
     // - crypto.cacertificate.get on the CA certificate identified by the given ID
@@ -78,6 +89,15 @@ service CryptoService {
         option (google.api.http) = {
             post: "/api/crypto/v1/projects/{project_id}/cacertificates"
             body: "*"
+        };
+    }
+
+    // Clone a CA certificate identified by given id.
+    // Required permissions:
+    // - crypto.cacertificate.clone on the CA certificate identified by the given ID
+    rpc CloneCACertificate(common.v1.IDOptions) returns (CACertificate) {
+        option (google.api.http) = {
+            post: "/api/crypto/v1/cacertificates/{id}/clone"
         };
     }
 
@@ -166,11 +186,26 @@ message CACertificate {
     // Set when this CA certificate will expire in the next 48 hours.
     // This is a read-only value.
     bool rotation_needed = 17;
+    // If set, contains the ID of a CA certificate from which this certificate was cloned.
+    // This is a read-only value.
+    string cloned_from_id = 18;
 }
 
 // List of CACertificates.
 message CACertificateList {
     repeated CACertificate items = 1;
+}
+
+// Request arguments for ListCACertificatesWithFilter.
+message ListCACertificatesRequest {
+    // Common list options.
+    // Context_id is ignored.
+    common.v1.ListOptions options = 1;
+    // Required ID of project to list certificates for.
+    string project_id = 2;
+    // If set, include only certificates that were cloned from the certificate
+    // with this ID.
+    string cloned_from_id = 10;
 }
 
 // Instructions for installing & uninstalling CA certificates

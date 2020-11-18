@@ -31,6 +31,8 @@ const (
 	PermissionCACertificateGet = "crypto.cacertificate.get"
 	// PermissionCACertificateCreate is needed for create a CA certificate
 	PermissionCACertificateCreate = "crypto.cacertificate.create"
+	// PermissionCACertificateClone is needed for cloning a CA certificate
+	PermissionCACertificateClone = "crypto.cacertificate.clone"
 	// PermissionCACertificateUpdate is needed for updating a CA certificate
 	PermissionCACertificateUpdate = "crypto.cacertificate.update"
 	// PermissionCACertificateDelete is needed for deleting a CA certificate
