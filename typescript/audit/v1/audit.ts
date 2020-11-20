@@ -184,6 +184,10 @@ export interface AuditLogArchive {
   // This is a read-only value.
   // googleTypes.Timestamp
   size_in_bytes_changed_at?: googleTypes.Timestamp;
+  
+  // If set, this archive is collecting audit events for a project with this ID.
+  // string
+  project_id?: string;
 }
 
 // List of AuditLogArchive's.
