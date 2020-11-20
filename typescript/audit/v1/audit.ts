@@ -185,7 +185,8 @@ export interface AuditLogArchive {
   // googleTypes.Timestamp
   size_in_bytes_changed_at?: googleTypes.Timestamp;
   
-  // If set, this archive is collecting audit events for a project with this ID.
+  // If set, this archive is collecting audit events for a deployment in the project with this ID.
+  // This is a read-only value.
   // string
   project_id?: string;
 }

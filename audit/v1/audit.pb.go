@@ -543,7 +543,8 @@ type AuditLogArchive struct {
 	// The timestamp of the last modification of size_in_bytes.
 	// This is a read-only value.
 	SizeInBytesChangedAt *types.Timestamp `protobuf:"bytes,9,opt,name=size_in_bytes_changed_at,json=sizeInBytesChangedAt,proto3" json:"size_in_bytes_changed_at,omitempty"`
-	// If set, this archive is collecting audit events for a project with this ID.
+	// If set, this archive is collecting audit events for a deployment in the project with this ID.
+	// This is a read-only value.
 	ProjectId            string   `protobuf:"bytes,10,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
