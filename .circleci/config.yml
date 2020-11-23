@@ -9,7 +9,6 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run: make check-version # fail early if there is a version inconsistency
       - run: cp go.sum go.sum.orig
       - restore_cache:
           keys:
@@ -20,6 +19,7 @@ jobs:
       - run: make build-image
       - run: |
           make bootstrap
+          make check-version # fail early if there is a version inconsistency
           make all
       - save_cache:
           key: go-mod-v1-{{ checksum "go.sum.orig" }}
