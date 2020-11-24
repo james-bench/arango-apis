@@ -228,6 +228,21 @@ export interface Invoice_Payment {
   // Human readable reason for the rejection.
   // string
   rejection_reason?: string;
+  
+  // If the currency of the payment method differs from the currency of the
+  // invoice, the amount is converted from the currency of the invoice
+  // to the currency of the payment method.
+  // If such a converted was needed, this field is set to the currency
+  // of the payment method.
+  // string
+  converted_currency_id?: string;
+  
+  // If the converted_currency_id is non-empty, this field it set to the
+  // the amount (in converted currency) that the customer is charged for.
+  // This is the total_amount_incl_taxes converted into the payment
+  // method currency.
+  // number
+  converted_amount?: number;
 }
 
 // Status of the invoice
@@ -412,6 +427,10 @@ export interface PaymentMethod {
   // boolean
   is_default?: boolean;
   
+  // Currency for invoices using this payment method
+  // string
+  currency_id?: string;
+  
   // PaymentMethod_CreditCardInfo
   credit_card_info?: PaymentMethod_CreditCardInfo;
 }
@@ -468,6 +487,10 @@ export interface PreparePaymentMethodRequest {
   // ID of the organization that will own the future payment method
   // string
   organization_id?: string;
+  
+  // Currency for the future payment payment method
+  // string
+  currency_id?: string;
 }
 
 // Response data for PreparePaymentMethod.
@@ -479,6 +502,10 @@ export interface PreparedPaymentMethod {
   // ID of the organization that will own the future payment method
   // string
   organization_id?: string;
+  
+  // Currency for this payment method
+  // string
+  currency_id?: string;
   
   // Token (semantics depends on payment provider)
   // string

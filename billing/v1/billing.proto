@@ -323,6 +323,17 @@ message Invoice {
         google.protobuf.Timestamp rejected_at = 21;
         // Human readable reason for the rejection.
         string rejection_reason = 22;
+        // If the currency of the payment method differs from the currency of the 
+        // invoice, the amount is converted from the currency of the invoice
+        // to the currency of the payment method.
+        // If such a converted was needed, this field is set to the currency
+        // of the payment method.
+        string converted_currency_id = 30;
+        // If the converted_currency_id is non-empty, this field it set to the
+        // the amount (in converted currency) that the customer is charged for.
+        // This is the total_amount_incl_taxes converted into the payment 
+        // method currency.
+        float converted_amount = 31;
     }
     // All payment attempts for this invoice, ordered by created_at.
     repeated Payment payments = 201;
@@ -373,6 +384,8 @@ message PreparePaymentMethodRequest {
     string provider_id = 1;
     // ID of the organization that will own the future payment method
     string organization_id = 2;
+    // Currency for the future payment payment method
+    string currency_id = 3;
 }
 
 // Response data for PreparePaymentMethod.
@@ -381,6 +394,8 @@ message PreparedPaymentMethod {
     string provider_id = 1;
     // ID of the organization that will own the future payment method
     string organization_id = 2;
+    // Currency for this payment method
+    string currency_id = 3;
     // Token (semantics depends on payment provider)
     string token = 11;
     // URL of custom script to load to create the payment method
@@ -442,6 +457,8 @@ message PaymentMethod {
     // If set, this payment method is the default for its organization.
     // This is a read-only field.
     bool is_default = 16;
+    // Currency for invoices using this payment method
+    string currency_id = 17;
 
     // Information of the creditcard.
     // Only set when type == "creditcard"

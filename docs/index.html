@@ -14927,6 +14927,27 @@ This is the amount that the customer will be charged for. </p></td>
                   <td><p>Human readable reason for the rejection. </p></td>
                 </tr>
               
+                <tr>
+                  <td>converted_currency_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>If the currency of the payment method differs from the currency of the 
+invoice, the amount is converted from the currency of the invoice
+to the currency of the payment method.
+If such a converted was needed, this field is set to the currency
+of the payment method. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>converted_amount</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>If the converted_currency_id is non-empty, this field it set to the
+the amount (in converted currency) that the customer is charged for.
+This is the total_amount_incl_taxes converted into the payment 
+method currency. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -15333,6 +15354,13 @@ This is a read-only field. </p></td>
                 </tr>
               
                 <tr>
+                  <td>currency_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Currency for invoices using this payment method </p></td>
+                </tr>
+              
+                <tr>
                   <td>credit_card_info</td>
                   <td><a href="#arangodb.cloud.billing.v1.PaymentMethod.CreditCardInfo">PaymentMethod.CreditCardInfo</a></td>
                   <td></td>
@@ -15494,6 +15522,13 @@ This is a read-only field. </p></td>
                   <td><p>ID of the organization that will own the future payment method </p></td>
                 </tr>
               
+                <tr>
+                  <td>currency_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Currency for the future payment payment method </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -15523,6 +15558,13 @@ This is a read-only field. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>ID of the organization that will own the future payment method </p></td>
+                </tr>
+              
+                <tr>
+                  <td>currency_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Currency for this payment method </p></td>
                 </tr>
               
                 <tr>
