@@ -412,6 +412,10 @@ export interface PaymentMethod {
   // boolean
   is_default?: boolean;
   
+  // Currency for invoices using this payment method
+  // string
+  currency_id?: string;
+  
   // PaymentMethod_CreditCardInfo
   credit_card_info?: PaymentMethod_CreditCardInfo;
 }
@@ -479,6 +483,10 @@ export interface PreparedPaymentMethod {
   // ID of the organization that will own the future payment method
   // string
   organization_id?: string;
+  
+  // Currency for this payment method
+  // string
+  currency_id?: string;
   
   // Token (semantics depends on payment provider)
   // string

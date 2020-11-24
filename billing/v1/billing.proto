@@ -381,6 +381,8 @@ message PreparedPaymentMethod {
     string provider_id = 1;
     // ID of the organization that will own the future payment method
     string organization_id = 2;
+    // Currency for this payment method
+    string currency_id = 3;
     // Token (semantics depends on payment provider)
     string token = 11;
     // URL of custom script to load to create the payment method
@@ -442,6 +444,8 @@ message PaymentMethod {
     // If set, this payment method is the default for its organization.
     // This is a read-only field.
     bool is_default = 16;
+    // Currency for invoices using this payment method
+    string currency_id = 17;
 
     // Information of the creditcard.
     // Only set when type == "creditcard"
