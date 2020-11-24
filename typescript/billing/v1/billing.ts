@@ -472,6 +472,10 @@ export interface PreparePaymentMethodRequest {
   // ID of the organization that will own the future payment method
   // string
   organization_id?: string;
+  
+  // Currency for the future payment payment method
+  // string
+  currency_id?: string;
 }
 
 // Response data for PreparePaymentMethod.
