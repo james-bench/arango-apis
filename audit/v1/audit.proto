@@ -307,6 +307,9 @@ message AuditLogArchive {
     // The timestamp of the last modification of size_in_bytes.
     // This is a read-only value.
     google.protobuf.Timestamp size_in_bytes_changed_at = 9;
+    // If set, this archive is collecting audit events for a deployment in the project with this ID.
+    // This is a read-only value.
+    string project_id = 10;
 }
 
 // List of AuditLogArchive's.
