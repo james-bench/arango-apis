@@ -237,9 +237,10 @@ message AuditLog {
         repeated Header headers = 5;
         // Do not send audit events with these topics to this destination.
         repeated string excluded_topics = 100;
-        // The period this https-post destination will retry to deliver audit events when a deployment is in deleted state.
-        // Not specifying this value will default to 15 minutes, the maximum allowed value is 2 hours.
-        google.protobuf.Duration retry_period_deleted_deployment = 200;
+        // The period this https-post destination will retry to deliver audit events.
+        // Not specifying this value will default to 4 hours, the maximum allowed value is 24 hours.
+        // When this time is exceeded for an event this event will be discarded, however newer events will still be delivered.
+        google.protobuf.Duration retry_period = 200;
     }
 
     // HTTP header pair

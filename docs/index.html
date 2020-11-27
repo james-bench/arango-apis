@@ -1501,11 +1501,12 @@ It is allowed to pass multiple headers with the same key. </p></td>
                 </tr>
               
                 <tr>
-                  <td>retry_period_deleted_deployment</td>
+                  <td>retry_period</td>
                   <td><a href="#google.protobuf.Duration">google.protobuf.Duration</a></td>
                   <td></td>
-                  <td><p>The period this https-post destination will retry to deliver audit events when a deployment is in deleted state.
-Not specifying this value will default to 15 minutes, the maximum allowed value is 2 hours. </p></td>
+                  <td><p>The period this https-post destination will retry to deliver audit events.
+Not specifying this value will default to 4 hours, the maximum allowed value is 24 hours.
+When this time is exceeded for an event this event will be discarded, however newer events will still be delivered. </p></td>
                 </tr>
               
             </tbody>
