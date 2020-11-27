@@ -134,6 +134,11 @@ export interface AuditLog_HttpsPostSettings {
   // Do not send audit events with these topics to this destination.
   // string
   excluded_topics?: string[];
+  
+  // The period this https-post destination will retry to deliver audit events when a deployment is in deleted state.
+  // Not specifying this value will default to 15 minutes, the maximum allowed value is 2 hours.
+  // googleTypes.Duration
+  retry_period_deleted_deployment?: googleTypes.Duration;
 }
 
 // AuditLogArchive collects files of audit events in a specific region,
