@@ -134,6 +134,12 @@ export interface AuditLog_HttpsPostSettings {
   // Do not send audit events with these topics to this destination.
   // string
   excluded_topics?: string[];
+  
+  // The period this https-post destination will retry to deliver audit events.
+  // Not specifying this value will default to 4 hours, the maximum allowed value is 24 hours.
+  // When this time is exceeded for an event this event will be discarded, however newer events will still be delivered.
+  // googleTypes.Duration
+  retry_period?: googleTypes.Duration;
 }
 
 // AuditLogArchive collects files of audit events in a specific region,

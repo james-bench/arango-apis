@@ -29,6 +29,7 @@ option go_package = "github.com/arangodb-managed/apis/audit/v1";
 import "common/v1/common.proto";
 
 import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
+import "github.com/golang/protobuf/ptypes/duration/duration.proto";
 import "google/api/annotations.proto";
 
 // AuditService is the API used to provide access to audit events.
@@ -236,6 +237,10 @@ message AuditLog {
         repeated Header headers = 5;
         // Do not send audit events with these topics to this destination.
         repeated string excluded_topics = 100;
+        // The period this https-post destination will retry to deliver audit events.
+        // Not specifying this value will default to 4 hours, the maximum allowed value is 24 hours.
+        // When this time is exceeded for an event this event will be discarded, however newer events will still be delivered.
+        google.protobuf.Duration retry_period = 200;
     }
 
     // HTTP header pair
