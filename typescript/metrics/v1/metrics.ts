@@ -118,7 +118,7 @@ export interface IMetricsService {
   // Create a new metrics token.
   // Required permissions:
   // - metrics.token.create on the deployment that owns the token
-  CreateCACertificate: (req: Token) => Promise<Token>;
+  CreateToken: (req: Token) => Promise<Token>;
   
   // Update a metrics token.
   // Note that you can only change the metadata (name & description) of the
@@ -168,7 +168,7 @@ export class MetricsService implements IMetricsService {
   // Create a new metrics token.
   // Required permissions:
   // - metrics.token.create on the deployment that owns the token
-  async CreateCACertificate(req: Token): Promise<Token> {
+  async CreateToken(req: Token): Promise<Token> {
     const url = `/api/metrics/v1/deployments/${encodeURIComponent(req.deployment_id || '')}/tokens`;
     return api.post(url, req);
   }

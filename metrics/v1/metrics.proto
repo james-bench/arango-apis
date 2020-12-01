@@ -64,7 +64,7 @@ service MetricsService {
     // Create a new metrics token.
     // Required permissions:
     // - metrics.token.create on the deployment that owns the token
-    rpc CreateCACertificate(Token) returns (Token) {
+    rpc CreateToken(Token) returns (Token) {
         option (google.api.http) = {
             post: "/api/metrics/v1/deployments/{deployment_id}/tokens"
             body: "*"
