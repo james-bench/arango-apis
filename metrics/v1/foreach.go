@@ -24,8 +24,6 @@ package v1
 
 import (
 	context "context"
-
-	common "github.com/arangodb-managed/apis/common/v1"
 )
 
 type (
@@ -36,11 +34,11 @@ type (
 // ForEachToken iterates over all metrics tokens in the deployment
 // identified by the given context ID,
 // invoking the given callback for each certificate.
-func ForEachToken(ctx context.Context, listFunc func(ctx context.Context, req *common.ListOptions) (*TokenList, error),
-	opts *common.ListOptions, cb TokenCallback) error {
-	opts = opts.CloneOrDefault()
+func ForEachToken(ctx context.Context, listFunc func(ctx context.Context, req *ListTokensRequest) (*TokenList, error),
+	opts ListTokensRequest, cb TokenCallback) error {
+	opts.Options = opts.Options.CloneOrDefault()
 	for {
-		list, err := listFunc(ctx, opts)
+		list, err := listFunc(ctx, &opts)
 		if err != nil {
 			return err
 		}
@@ -52,10 +50,10 @@ func ForEachToken(ctx context.Context, listFunc func(ctx context.Context, req *c
 				return err
 			}
 		}
-		if len(list.GetItems()) < int(opts.PageSize) {
+		if len(list.GetItems()) < int(opts.GetOptions().PageSize) {
 			// We're done
 			return nil
 		}
-		opts.Page++
+		opts.GetOptions().Page++
 	}
 }
