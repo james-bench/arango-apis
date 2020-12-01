@@ -33,3 +33,9 @@ func TestTokenURL(t *testing.T) {
 	assert.Equal(t, "/Organization/123%2F567/Project/ab/Deployment/c2%2F3/Token/t2%2F3", TokenURL("123/567", "ab", "c2/3", "t2/3"))
 	assert.Equal(t, "/Organization/123%2F567/Project/a%25b/Deployment/e%25f/Token/t%25a", TokenURL("123/567", "a%b", "e%f", "t%a"))
 }
+
+func TestTokenURL2(t *testing.T) {
+	assert.Equal(t, "/foo/Token/t1", TokenURL2("/foo", "t1"))
+	assert.Equal(t, "/bar/Token/t2%2F3", TokenURL2("/bar", "t2/3"))
+	assert.Equal(t, "/123/567/Token/t%25a", TokenURL2("/123/567", "t%a"))
+}

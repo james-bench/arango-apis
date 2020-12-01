@@ -39,3 +39,9 @@ const (
 func TokenURL(organizationID, projectID, deploymentID, tokenID string) string {
 	return path.Join(data.DeploymentURL(organizationID, projectID, deploymentID), KindToken, url.PathEscape(tokenID))
 }
+
+// TokenURL2 creates a resource URL for the token with given ID
+// in given context.
+func TokenURL2(deploymentURL, tokenID string) string {
+	return path.Join(deploymentURL, KindToken, url.PathEscape(tokenID))
+}
