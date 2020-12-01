@@ -25,9 +25,9 @@ package v1
 const (
 	// Token permissions
 
-	// PermissionTokenList is needed for listing metrics tokens in a project
+	// PermissionTokenList is needed for listing metrics tokens in a deployment
 	PermissionTokenList = "metrics.token.list"
-	// PermissionTokenGet is needed for fetching an individual metrics token in a project
+	// PermissionTokenGet is needed for fetching an individual metrics token in a deployment
 	PermissionTokenGet = "metrics.token.get"
 	// PermissionTokenCreate is needed for create a metrics token
 	PermissionTokenCreate = "metrics.token.create"

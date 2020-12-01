@@ -51,6 +51,7 @@ export interface Token {
   
   // Time from creation of the token to expiration.
   // This value cannot be changed after creation.
+  // If no value is set, a default value of 90 days is used.
   // googleTypes.Duration
   lifetime?: googleTypes.Duration;
   
@@ -105,9 +106,9 @@ export interface IMetricsService {
   // - None
   GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
   
-  // Fetch all metrics token in the deployment identified by the given context ID.
+  // Fetch all metrics token in the deployment identified by the given deployment ID.
   // Required permissions:
-  // - metrics.token.list on the deployment identified by the given context ID
+  // - metrics.token.list on the deployment identified by the given deployment ID
   ListTokens: (req: ListTokensRequest) => Promise<TokenList>;
   
   // Fetch a metrics token by its id.
@@ -147,9 +148,9 @@ export class MetricsService implements IMetricsService {
     return api.get(url, undefined);
   }
   
-  // Fetch all metrics token in the deployment identified by the given context ID.
+  // Fetch all metrics token in the deployment identified by the given deployment ID.
   // Required permissions:
-  // - metrics.token.list on the deployment identified by the given context ID
+  // - metrics.token.list on the deployment identified by the given deployment ID
   async ListTokens(req: ListTokensRequest): Promise<TokenList> {
     const path = `/api/metrics/v1/deployments/${encodeURIComponent(req.deployment_id || '')}/tokens`;
     const url = path + api.queryString(req, [`deployment_id`]);

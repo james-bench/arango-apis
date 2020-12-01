@@ -43,9 +43,9 @@ service MetricsService {
         };
     }
 
-    // Fetch all metrics token in the deployment identified by the given context ID.
+    // Fetch all metrics token in the deployment identified by the given deployment ID.
     // Required permissions:
-    // - metrics.token.list on the deployment identified by the given context ID
+    // - metrics.token.list on the deployment identified by the given deployment ID
     rpc ListTokens(ListTokensRequest) returns (TokenList) {
         option (google.api.http) = {
             get: "/api/metrics/v1/deployments/{deployment_id}/tokens"
@@ -113,6 +113,7 @@ message Token {
     string deployment_id = 5;
     // Time from creation of the token to expiration.
     // This value cannot be changed after creation.
+    // If no value is set, a default value of 90 days is used.
     google.protobuf.Duration lifetime = 6;
     // The creation timestamp of the token.
     // This is a read-only value.

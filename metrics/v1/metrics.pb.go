@@ -46,6 +46,7 @@ type Token struct {
 	DeploymentId string `protobuf:"bytes,5,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
 	// Time from creation of the token to expiration.
 	// This value cannot be changed after creation.
+	// If no value is set, a default value of 90 days is used.
 	Lifetime *types.Duration `protobuf:"bytes,6,opt,name=lifetime,proto3" json:"lifetime,omitempty"`
 	// The creation timestamp of the token.
 	// This is a read-only value.
@@ -379,9 +380,9 @@ type MetricsServiceClient interface {
 	// Required permissions:
 	// - None
 	GetAPIVersion(ctx context.Context, in *v1.Empty, opts ...grpc.CallOption) (*v1.Version, error)
-	// Fetch all metrics token in the deployment identified by the given context ID.
+	// Fetch all metrics token in the deployment identified by the given deployment ID.
 	// Required permissions:
-	// - metrics.token.list on the deployment identified by the given context ID
+	// - metrics.token.list on the deployment identified by the given deployment ID
 	ListTokens(ctx context.Context, in *ListTokensRequest, opts ...grpc.CallOption) (*TokenList, error)
 	// Fetch a metrics token by its id.
 	// Required permissions:
@@ -474,9 +475,9 @@ type MetricsServiceServer interface {
 	// Required permissions:
 	// - None
 	GetAPIVersion(context.Context, *v1.Empty) (*v1.Version, error)
-	// Fetch all metrics token in the deployment identified by the given context ID.
+	// Fetch all metrics token in the deployment identified by the given deployment ID.
 	// Required permissions:
-	// - metrics.token.list on the deployment identified by the given context ID
+	// - metrics.token.list on the deployment identified by the given deployment ID
 	ListTokens(context.Context, *ListTokensRequest) (*TokenList, error)
 	// Fetch a metrics token by its id.
 	// Required permissions:

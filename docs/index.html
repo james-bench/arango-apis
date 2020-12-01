@@ -3189,7 +3189,8 @@ This value cannot be changed after creation. </p></td>
                   <td><a href="#google.protobuf.Duration">google.protobuf.Duration</a></td>
                   <td></td>
                   <td><p>Time from creation of the token to expiration.
-This value cannot be changed after creation. </p></td>
+This value cannot be changed after creation.
+If no value is set, a default value of 90 days is used. </p></td>
                 </tr>
               
                 <tr>
@@ -3308,9 +3309,9 @@ Required permissions:
                 <td>ListTokens</td>
                 <td><a href="#arangodb.cloud.metrics.v1.ListTokensRequest">ListTokensRequest</a></td>
                 <td><a href="#arangodb.cloud.metrics.v1.TokenList">TokenList</a></td>
-                <td><p>Fetch all metrics token in the deployment identified by the given context ID.
+                <td><p>Fetch all metrics token in the deployment identified by the given deployment ID.
 Required permissions:
-- metrics.token.list on the deployment identified by the given context ID</p></td>
+- metrics.token.list on the deployment identified by the given deployment ID</p></td>
               </tr>
             
               <tr>
