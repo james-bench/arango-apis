@@ -109,6 +109,7 @@ export interface TokenList {
 }
 
 // MetricsService is the API used to configure various metrics objects.
+// Prerelease: This Service is not yet available in production
 export interface IMetricsService {
   // Get the current API version of this service.
   // Required permissions:
@@ -153,6 +154,7 @@ export interface IMetricsService {
 }
 
 // MetricsService is the API used to configure various metrics objects.
+// Prerelease: This Service is not yet available in production
 export class MetricsService implements IMetricsService {
   // Get the current API version of this service.
   // Required permissions:
