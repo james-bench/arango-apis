@@ -22,6 +22,10 @@ export interface ListTokensRequest {
   // Required ID of deployment to list tokens for.
   // string
   deployment_id?: string;
+  
+  // If set, do not return revoked tokens.
+  // boolean
+  exclude_revoked?: boolean;
 }
 
 // A Token is represents an access token used to authenticate requests for metrics.
@@ -91,6 +95,11 @@ export interface Token {
   // This is a read-only value.
   // boolean
   will_expire_soon?: boolean;
+  
+  // Set when this token is revoked.
+  // This is a read-only value.
+  // boolean
+  is_revoked?: boolean;
 }
 
 // List of Tokens.
@@ -127,6 +136,12 @@ export interface IMetricsService {
   // Required permissions:
   // - metrics.token.update on the token
   UpdateToken: (req: Token) => Promise<Token>;
+  
+  // Revoke a metrics token.
+  // Once a token is revoked, it can no longer be used for authentication.
+  // Required permissions:
+  // - metrics.token.revoke on the token
+  RevokeToken: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
   
   // Delete a metrics token.
   // Note that token are initially only marked for deleted.
@@ -182,6 +197,16 @@ export class MetricsService implements IMetricsService {
   async UpdateToken(req: Token): Promise<Token> {
     const url = `/api/metrics/v1/tokens/${encodeURIComponent(req.id || '')}`;
     return api.patch(url, req);
+  }
+  
+  // Revoke a metrics token.
+  // Once a token is revoked, it can no longer be used for authentication.
+  // Required permissions:
+  // - metrics.token.revoke on the token
+  async RevokeToken(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
+    const path = `/api/metrics/v1/tokens/${encodeURIComponent(req.id || '')}/revoke`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.post(url, undefined);
   }
   
   // Delete a metrics token.

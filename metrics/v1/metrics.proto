@@ -83,6 +83,16 @@ service MetricsService {
         };
     }
 
+    // Revoke a metrics token.
+    // Once a token is revoked, it can no longer be used for authentication.
+    // Required permissions:
+    // - metrics.token.revoke on the token
+    rpc RevokeToken(common.v1.IDOptions) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            post: "/api/metrics/v1/tokens/{id}/revoke"
+        };
+    }
+
     // Delete a metrics token.
     // Note that token are initially only marked for deleted.
     // Once all the resources that depend on it are removed the token itself is deleted
@@ -138,6 +148,9 @@ message Token {
     // Set when this token will expire in the next month.
     // This is a read-only value.
     bool will_expire_soon = 13;
+    // Set when this token is revoked.
+    // This is a read-only value.
+    bool is_revoked = 14;
 }
 
 // List of Tokens.
@@ -152,4 +165,6 @@ message ListTokensRequest {
     common.v1.ListOptions options = 1;
     // Required ID of deployment to list tokens for.
     string deployment_id = 2;
+    // If set, do not return revoked tokens.
+    bool exclude_revoked = 3;
 }

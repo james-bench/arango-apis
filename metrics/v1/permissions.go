@@ -34,7 +34,7 @@ const (
 	// PermissionTokenUpdate is needed for updating a metrics token
 	PermissionTokenUpdate = "metrics.token.update"
 	// PermissionTokenRevoke is needed for revoking a metrics token
-	PermissionTokenRevoke = "metrics.token.update"
+	PermissionTokenRevoke = "metrics.token.revoke"
 	// PermissionTokenDelete is needed for deleting a metrics token
 	PermissionTokenDelete = "metrics.token.delete"
 )

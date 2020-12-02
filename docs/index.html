@@ -3129,6 +3129,13 @@ Context_id is ignored. </p></td>
                   <td><p>Required ID of deployment to list tokens for. </p></td>
                 </tr>
               
+                <tr>
+                  <td>exclude_revoked</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, do not return revoked tokens. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -3251,6 +3258,14 @@ This is a read-only value. </p></td>
 This is a read-only value. </p></td>
                 </tr>
               
+                <tr>
+                  <td>is_revoked</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Set when this token is revoked.
+This is a read-only value. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -3344,6 +3359,16 @@ Required permissions:
               </tr>
             
               <tr>
+                <td>RevokeToken</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><p>Revoke a metrics token.
+Once a token is revoked, it can no longer be used for authentication.
+Required permissions:
+- metrics.token.revoke on the token</p></td>
+              </tr>
+            
+              <tr>
                 <td>DeleteToken</td>
                 <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
                 <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
@@ -3420,6 +3445,16 @@ Required permissions:
                 <td>PATCH</td>
                 <td>/api/metrics/v1/tokens/{id}</td>
                 <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>RevokeToken</td>
+                <td>POST</td>
+                <td>/api/metrics/v1/tokens/{id}/revoke</td>
+                <td></td>
               </tr>
               
             
