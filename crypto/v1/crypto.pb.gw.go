@@ -1072,7 +1072,7 @@ var (
 
 	pattern_CryptoService_ListCACertificates_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "crypto", "v1", "projects", "context_id", "cacertificates"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_CryptoService_ListCACertificatesWithFilter_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "crypto", "v1", "projects", "project_id", "cacertificates"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_CryptoService_ListCACertificatesWithFilter_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 6}, []string{"api", "crypto", "v1", "projects", "project_id", "cacertificates", "list"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_CryptoService_GetCACertificate_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "crypto", "v1", "cacertificates", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 

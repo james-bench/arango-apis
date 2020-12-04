@@ -58,7 +58,7 @@ service CryptoService {
     // - crypto.cacertificate.list on the project identified by the given context ID
     rpc ListCACertificatesWithFilter(ListCACertificatesRequest) returns (CACertificateList) {
         option (google.api.http) = {
-            post: "/api/crypto/v1/projects/{project_id}/cacertificates"
+            post: "/api/crypto/v1/projects/{project_id}/cacertificates/list"
             body: "*"
         };
     }

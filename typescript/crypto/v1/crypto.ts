@@ -233,7 +233,7 @@ export class CryptoService implements ICryptoService {
   // Required permissions:
   // - crypto.cacertificate.list on the project identified by the given context ID
   async ListCACertificatesWithFilter(req: ListCACertificatesRequest): Promise<CACertificateList> {
-    const url = `/api/crypto/v1/projects/${encodeURIComponent(req.project_id || '')}/cacertificates`;
+    const url = `/api/crypto/v1/projects/${encodeURIComponent(req.project_id || '')}/cacertificates/list`;
     return api.post(url, req);
   }
   
