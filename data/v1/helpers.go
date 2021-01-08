@@ -68,7 +68,7 @@ func (s *DataVolumeInfo) Clone() *DataVolumeInfo {
 func (source *Deployment) SpecEquals(other *Deployment) bool {
 	return source.GetVersion() == other.GetVersion() &&
 		source.GetRegionId() == other.GetRegionId() &&
-		source.GetIpwhitelistId() == other.GetIpwhitelistId() &&
+		source.GetIpallowlistId() == other.GetIpallowlistId() &&
 		source.GetCertificates().Equals(other.GetCertificates()) &&
 		source.GetServers().Equals(other.GetServers()) &&
 		source.GetBackupRestore().Equals(other.GetBackupRestore()) &&

@@ -92,66 +92,6 @@ service SecurityService {
         };
     }
 
-    // Fetch all IP whitelists that belong to the project identified by the given
-    // context ID.
-    // Required permissions:
-    // - security.ipwhitelist.list on the project identified by the given context ID.
-    // Note: The use of this method has been deprecated.
-    // In a future version, it will be removed.
-    rpc ListIPWhitelists(common.v1.ListOptions) returns (IPWhitelistList) {
-        option (google.api.http) = {
-            get: "/api/security/v1/projects/{context_id}/ipwhitelists"
-        };
-    }
-    
-    // Fetch an IP whitelist by its id.
-    // Required permissions:
-    // - security.ipwhitelist.get on the IP whitelist
-    // Note: The use of this method has been deprecated.
-    // In a future version, it will be removed.
-    rpc GetIPWhitelist(common.v1.IDOptions) returns (IPWhitelist) {
-        option (google.api.http) = {
-            get: "/api/security/v1/ipwhitelists/{id}"
-        };
-    }
-
-    // Create a new IP whitelist
-    // Required permissions:
-    // - security.ipwhitelist.create on the project that owns the IP whitelist.
-    // Note: The use of this method has been deprecated.
-    // In a future version, it will be removed.
-    rpc CreateIPWhitelist(IPWhitelist) returns (IPWhitelist) {
-        option (google.api.http) = {
-            post: "/api/security/v1/project/{project_id}/ipwhitelists"
-            body: "*"
-        };
-    }
-
-    // Update an IP whitelist
-    // Required permissions:
-    // - security.ipwhitelist.update on the IP whitelist
-    // Note: The use of this method has been deprecated.
-    // In a future version, it will be removed.
-    rpc UpdateIPWhitelist(IPWhitelist) returns (IPWhitelist) {
-        option (google.api.http) = {
-            patch: "/api/security/v1/ipwhitelists/{id}"
-            body: "*"
-        };
-    }
-
-    // Delete an IP whitelist.
-    // Note that IP whitelists are initially only marked for deletion.
-    // Once all their dependent deployments are removed, the whitelist is removed.
-    // Required permissions:
-    // - security.ipwhitelist.delete on the IP whitelist
-    // Note: The use of this method has been deprecated.
-    // In a future version, it will be removed.
-    rpc DeleteIPWhitelist(common.v1.IDOptions) returns (common.v1.Empty) {
-        option (google.api.http) = {
-            delete: "/api/security/v1/ipwhitelists/{id}"
-        };
-    }
-
     // Fetch all IAM providers that belong to the project identified by the given
     // context ID.
     // Required permissions:
@@ -250,46 +190,6 @@ message IPAllowlist {
 // List of IP allowlists.
 message IPAllowlistList {
     repeated IPAllowlist items = 1;
-}
-
-// IPWhitelist represents a list of CIDR ranges from which a deployment is accessible.
-// Note: The use of this message has been deprecated in favor of IPAllowlist.
-// In a future version, this message will be removed.
-message IPWhitelist {
-    // System identifier of the whitelist.
-    // This is a read-only value.
-    string id = 1;
-    // URL of the whitelist.
-    // This is a read-only value.
-    string url = 2;
-    // Name of the whitelist.
-    string name = 3; 
-    // Description of the whitelist.
-    string description = 4; 
-    // Identifier of the project that contains this whitelist.
-    string project_id = 5;
-    // List of CIDR ranges.
-    // Values must follow format as defined in RFC 4632 and RFC 4291.
-    repeated string cidr_ranges = 6;
-    // The creation timestamp of this whitelist.
-    // This is a read-only value.
-    google.protobuf.Timestamp created_at = 7;
-    // The deletion timestamp of the whitelist
-    // This is a read-only value.
-    google.protobuf.Timestamp deleted_at = 8;
-    // Set when this whitelist is deleted.
-    // This is a read-only value.
-    bool is_deleted = 9;
-    // Identifier of the user who created this whitelist.
-    // This is a read-only value.
-    string created_by_id = 10;
-}
-
-// List of IP whitelists.
-// Note: The use of this message has been deprecated in favor of IPAllowlistList.
-// In a future version, this message will be removed.
-message IPWhitelistList {
-    repeated IPWhitelist items = 1;
 }
 
 // IAMProvider provides configuration for a custom Identity & Access management provider

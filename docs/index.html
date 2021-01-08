@@ -403,14 +403,6 @@ title: "ArangoDB Oasis API"
                   <a href="#arangodb.cloud.security.v1.IPAllowlistList"><span class="badge">M</span>IPAllowlistList</a>
                 </li>
               
-                <li>
-                  <a href="#arangodb.cloud.security.v1.IPWhitelist"><span class="badge">M</span>IPWhitelist</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.security.v1.IPWhitelistList"><span class="badge">M</span>IPWhitelistList</a>
-                </li>
-              
               
               
               
@@ -4669,124 +4661,6 @@ To delete, first update the with locked set to false. </p></td>
 
         
       
-        <h3 id="arangodb.cloud.security.v1.IPWhitelist">IPWhitelist</h3>
-        <p>IPWhitelist represents a list of CIDR ranges from which a deployment is accessible.</p><p>Note: The use of this message has been deprecated in favor of IPAllowlist.</p><p>In a future version, this message will be removed.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>System identifier of the whitelist.
-This is a read-only value. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>url</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>URL of the whitelist.
-This is a read-only value. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>name</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Name of the whitelist. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>description</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Description of the whitelist. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>project_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Identifier of the project that contains this whitelist. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>cidr_ranges</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>List of CIDR ranges.
-Values must follow format as defined in RFC 4632 and RFC 4291. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>created_at</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>The creation timestamp of this whitelist.
-This is a read-only value. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>deleted_at</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>The deletion timestamp of the whitelist
-This is a read-only value. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>is_deleted</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>Set when this whitelist is deleted.
-This is a read-only value. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>created_by_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Identifier of the user who created this whitelist.
-This is a read-only value. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.security.v1.IPWhitelistList">IPWhitelistList</h3>
-        <p>List of IP whitelists.</p><p>Note: The use of this message has been deprecated in favor of IPAllowlistList.</p><p>In a future version, this message will be removed.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>items</td>
-                  <td><a href="#arangodb.cloud.security.v1.IPWhitelist">IPWhitelist</a></td>
-                  <td>repeated</td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
 
       
 
@@ -4856,64 +4730,6 @@ Note that IP allowlists are initially only marked for deletion.
 Once all their dependent deployments are removed, the allowlist is removed.
 Required permissions:
 - security.ipallowlist.delete on the IP allowlist</p></td>
-              </tr>
-            
-              <tr>
-                <td>ListIPWhitelists</td>
-                <td><a href="#arangodb.cloud.common.v1.ListOptions">.arangodb.cloud.common.v1.ListOptions</a></td>
-                <td><a href="#arangodb.cloud.security.v1.IPWhitelistList">IPWhitelistList</a></td>
-                <td><p>Fetch all IP whitelists that belong to the project identified by the given
-context ID.
-Required permissions:
-- security.ipwhitelist.list on the project identified by the given context ID.
-Note: The use of this method has been deprecated.
-In a future version, it will be removed.</p></td>
-              </tr>
-            
-              <tr>
-                <td>GetIPWhitelist</td>
-                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
-                <td><a href="#arangodb.cloud.security.v1.IPWhitelist">IPWhitelist</a></td>
-                <td><p>Fetch an IP whitelist by its id.
-Required permissions:
-- security.ipwhitelist.get on the IP whitelist
-Note: The use of this method has been deprecated.
-In a future version, it will be removed.</p></td>
-              </tr>
-            
-              <tr>
-                <td>CreateIPWhitelist</td>
-                <td><a href="#arangodb.cloud.security.v1.IPWhitelist">IPWhitelist</a></td>
-                <td><a href="#arangodb.cloud.security.v1.IPWhitelist">IPWhitelist</a></td>
-                <td><p>Create a new IP whitelist
-Required permissions:
-- security.ipwhitelist.create on the project that owns the IP whitelist.
-Note: The use of this method has been deprecated.
-In a future version, it will be removed.</p></td>
-              </tr>
-            
-              <tr>
-                <td>UpdateIPWhitelist</td>
-                <td><a href="#arangodb.cloud.security.v1.IPWhitelist">IPWhitelist</a></td>
-                <td><a href="#arangodb.cloud.security.v1.IPWhitelist">IPWhitelist</a></td>
-                <td><p>Update an IP whitelist
-Required permissions:
-- security.ipwhitelist.update on the IP whitelist
-Note: The use of this method has been deprecated.
-In a future version, it will be removed.</p></td>
-              </tr>
-            
-              <tr>
-                <td>DeleteIPWhitelist</td>
-                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
-                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
-                <td><p>Delete an IP whitelist.
-Note that IP whitelists are initially only marked for deletion.
-Once all their dependent deployments are removed, the whitelist is removed.
-Required permissions:
-- security.ipwhitelist.delete on the IP whitelist
-Note: The use of this method has been deprecated.
-In a future version, it will be removed.</p></td>
               </tr>
             
               <tr>
@@ -5047,56 +4863,6 @@ Required permissions:
                 <td>DeleteIPAllowlist</td>
                 <td>DELETE</td>
                 <td>/api/security/v1/ipallowlists/{id}</td>
-                <td></td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>ListIPWhitelists</td>
-                <td>GET</td>
-                <td>/api/security/v1/projects/{context_id}/ipwhitelists</td>
-                <td></td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>GetIPWhitelist</td>
-                <td>GET</td>
-                <td>/api/security/v1/ipwhitelists/{id}</td>
-                <td></td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>CreateIPWhitelist</td>
-                <td>POST</td>
-                <td>/api/security/v1/project/{project_id}/ipwhitelists</td>
-                <td>*</td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>UpdateIPWhitelist</td>
-                <td>PATCH</td>
-                <td>/api/security/v1/ipwhitelists/{id}</td>
-                <td>*</td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>DeleteIPWhitelist</td>
-                <td>DELETE</td>
-                <td>/api/security/v1/ipwhitelists/{id}</td>
                 <td></td>
               </tr>
               
@@ -12289,15 +12055,6 @@ version as listed in this field. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Optional identifier of IP allowlist to use for this deployment. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>ipwhitelist_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Optional identifier of IP whitelist to use for this deployment.
-Note: The use of this field has been deprecated in favor of ipallowlist_id.
-In a future version, they will be removed. </p></td>
                 </tr>
               
                 <tr>
