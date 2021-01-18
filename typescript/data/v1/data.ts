@@ -1065,6 +1065,17 @@ export interface ReplaceVersionBy {
   reason?: string;
 }
 
+// RotateDeploymentServerRequest request for rotating out servers for a deployment
+export interface RotateDeploymentServerRequest {
+  // The id of the deployment this server belongs to.
+  // string
+  deployment_id?: string;
+  
+  // The id of the server to rotate out.
+  // string
+  server_id?: string;
+}
+
 // Limits of allowed values for fields of Deployment.ServersSpec.
 export interface ServersSpecLimits {
   // Limits for the number of coordinators of the deployment

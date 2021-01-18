@@ -242,6 +242,12 @@ service DataService {
         };
     }
 
+    // Rotate a server for a deployment. Takes a deployment id and a server id and tells the operator
+    // to cycle out the pod which belongs to that server.
+    // Required permissions:
+    // - internal-data.deployment.rotate-server globally
+    rpc RotateDeploymentServer(RotateDeploymentServerRequest) returns (arangodb.cloud.common.v1.Empty);
+
     // Create a test database and user for a deployment. Returns the output containing the created
     // database name, password, username, host and port.
     // Required permissions:
@@ -251,6 +257,14 @@ service DataService {
             post: "/api/data/v1/deployments/{deployment_id}/create-test-database"
         };
     }
+}
+
+// RotateDeploymentServerRequest request for rotating out servers for a deployment
+message RotateDeploymentServerRequest {
+    // The id of the deployment this server belongs to.
+    string deployment_id = 1;
+    // The id of the server to rotate out.
+    string server_id = 2;
 }
 
 // CreateTestDatabaseResponse will contain the json formatted output of the create operation
