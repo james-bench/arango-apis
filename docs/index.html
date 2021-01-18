@@ -14213,10 +14213,10 @@ Required permissions:
                 <td>RotateDeploymentServer</td>
                 <td><a href="#arangodb.cloud.data.v1.RotateDeploymentServerRequest">RotateDeploymentServerRequest</a></td>
                 <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
-                <td><p>Rotate a server for a deployment. Takes a deployment id and a server id and tells the operator
-to cycle out the pod which belongs to that server.
+                <td><p>Rotate a server for a deployment. 
+This causes the server to restart after condition are deemed safe for a restart.
 Required permissions:
-- internal-data.deployment.rotate-server globally</p></td>
+- data.deployment.rotate-server on the deployment</p></td>
               </tr>
             
               <tr>
@@ -14453,6 +14453,16 @@ Required permissions:
                 <td>ResumeDeployment</td>
                 <td>POST</td>
                 <td>/api/data/v1/deployments/{id}/resume</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>RotateDeploymentServer</td>
+                <td>POST</td>
+                <td>/api/data/v1/deployments/{deployment_id}/rotate/{server_id}</td>
                 <td></td>
               </tr>
               

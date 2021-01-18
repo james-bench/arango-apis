@@ -1283,6 +1283,12 @@ export interface IDataService {
   // - data.deployment.resume on the deployment
   ResumeDeployment: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
   
+  // Rotate a server for a deployment.
+  // This causes the server to restart after condition are deemed safe for a restart.
+  // Required permissions:
+  // - data.deployment.rotate-server on the deployment
+  RotateDeploymentServer: (req: RotateDeploymentServerRequest) => Promise<void>;
+  
   // Create a test database and user for a deployment. Returns the output containing the created
   // database name, password, username, host and port.
   // Required permissions:
@@ -1490,6 +1496,16 @@ export class DataService implements IDataService {
   async ResumeDeployment(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
     const path = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}/resume`;
     const url = path + api.queryString(req, [`id`]);
+    return api.post(url, undefined);
+  }
+  
+  // Rotate a server for a deployment.
+  // This causes the server to restart after condition are deemed safe for a restart.
+  // Required permissions:
+  // - data.deployment.rotate-server on the deployment
+  async RotateDeploymentServer(req: RotateDeploymentServerRequest): Promise<void> {
+    const path = `/api/data/v1/deployments/${encodeURIComponent(req.deployment_id || '')}/rotate/${encodeURIComponent(req.server_id || '')}`;
+    const url = path + api.queryString(req, [`deployment_id`, `server_id`]);
     return api.post(url, undefined);
   }
   

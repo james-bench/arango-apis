@@ -242,11 +242,15 @@ service DataService {
         };
     }
 
-    // Rotate a server for a deployment. Takes a deployment id and a server id and tells the operator
-    // to cycle out the pod which belongs to that server.
+    // Rotate a server for a deployment. 
+    // This causes the server to restart after condition are deemed safe for a restart.
     // Required permissions:
-    // - internal-data.deployment.rotate-server globally
-    rpc RotateDeploymentServer(RotateDeploymentServerRequest) returns (arangodb.cloud.common.v1.Empty);
+    // - data.deployment.rotate-server on the deployment
+    rpc RotateDeploymentServer(RotateDeploymentServerRequest) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            post: "/api/data/v1/deployments/{deployment_id}/rotate/{server_id}"
+        };
+    }
 
     // Create a test database and user for a deployment. Returns the output containing the created
     // database name, password, username, host and port.
