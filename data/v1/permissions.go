@@ -39,6 +39,8 @@ const (
 	PermissionDeploymentRestoreBackup = "data.deployment.restore-backup"
 	// PermissionDeploymentResume is needed for resuming a paused deployment
 	PermissionDeploymentResume = "data.deployment.resume"
+	// PermissionDeploymentRotateServer is needed to rotate a server belonging to a deployment
+	PermissionDeploymentRotateServer = "data.deployment.rotate-server"
 	// PermissionDeploymentCreateTestDatabase is needed for creating a test database
 	PermissionDeploymentCreateTestDatabase = "data.deployment.create-test-database"
 )
