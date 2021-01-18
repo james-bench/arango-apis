@@ -242,6 +242,16 @@ service DataService {
         };
     }
 
+    // Rotate a server for a deployment. 
+    // This causes the server to restart after condition are deemed safe for a restart.
+    // Required permissions:
+    // - data.deployment.rotate-server on the deployment
+    rpc RotateDeploymentServer(RotateDeploymentServerRequest) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            post: "/api/data/v1/deployments/{deployment_id}/rotate/{server_id}"
+        };
+    }
+
     // Create a test database and user for a deployment. Returns the output containing the created
     // database name, password, username, host and port.
     // Required permissions:
@@ -251,6 +261,14 @@ service DataService {
             post: "/api/data/v1/deployments/{deployment_id}/create-test-database"
         };
     }
+}
+
+// RotateDeploymentServerRequest request for rotating out servers for a deployment
+message RotateDeploymentServerRequest {
+    // The id of the deployment this server belongs to.
+    string deployment_id = 1;
+    // The id of the server to rotate out.
+    string server_id = 2;
 }
 
 // CreateTestDatabaseResponse will contain the json formatted output of the create operation

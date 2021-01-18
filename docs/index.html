@@ -1093,6 +1093,10 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.data.v1.RotateDeploymentServerRequest"><span class="badge">M</span>RotateDeploymentServerRequest</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.data.v1.ServersSpecLimits"><span class="badge">M</span>ServersSpecLimits</a>
                 </li>
               
@@ -13750,6 +13754,37 @@ Format details can be found at: https://semver.org/ </p></td>
 
         
       
+        <h3 id="arangodb.cloud.data.v1.RotateDeploymentServerRequest">RotateDeploymentServerRequest</h3>
+        <p>RotateDeploymentServerRequest request for rotating out servers for a deployment</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The id of the deployment this server belongs to. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>server_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The id of the server to rotate out. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.data.v1.ServersSpecLimits">ServersSpecLimits</h3>
         <p>Limits of allowed values for fields of Deployment.ServersSpec.</p>
 
@@ -14175,6 +14210,16 @@ Required permissions:
               </tr>
             
               <tr>
+                <td>RotateDeploymentServer</td>
+                <td><a href="#arangodb.cloud.data.v1.RotateDeploymentServerRequest">RotateDeploymentServerRequest</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><p>Rotate a server for a deployment. 
+This causes the server to restart after condition are deemed safe for a restart.
+Required permissions:
+- data.deployment.rotate-server on the deployment</p></td>
+              </tr>
+            
+              <tr>
                 <td>CreateTestDatabase</td>
                 <td><a href="#arangodb.cloud.data.v1.CreateTestDatabaseRequest">CreateTestDatabaseRequest</a></td>
                 <td><a href="#arangodb.cloud.data.v1.CreateTestDatabaseResponse">CreateTestDatabaseResponse</a></td>
@@ -14408,6 +14453,16 @@ Required permissions:
                 <td>ResumeDeployment</td>
                 <td>POST</td>
                 <td>/api/data/v1/deployments/{id}/resume</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>RotateDeploymentServer</td>
+                <td>POST</td>
+                <td>/api/data/v1/deployments/{deployment_id}/rotate/{server_id}</td>
                 <td></td>
               </tr>
               
