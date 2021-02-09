@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
 // Author Gergely Brautigam
+// Author Robert Stam
 //
 
 package v1
@@ -27,8 +28,8 @@ import (
 	"strings"
 )
 
-// Equals returns true when source & other have the same values.
-func (source *AuditLog) Equals(other *AuditLog) bool {
+// Equals returns true when source & other have the same values, the destination statuses are compared depending of the provided bool.
+func (source *AuditLog) Equals(other *AuditLog, includeStatuses bool) bool {
 	return source.GetId() == other.GetId() &&
 		source.GetUrl() == other.GetUrl() &&
 		source.GetName() == other.GetName() &&
@@ -39,13 +40,44 @@ func (source *AuditLog) Equals(other *AuditLog) bool {
 		source.GetOrganizationId() == other.GetOrganizationId() &&
 		source.GetCreatedById() == other.GetCreatedById() &&
 		source.GetIsDefault() == other.GetIsDefault() &&
-		auditLogDestinationList(source.GetDestinations()).Equals(other.GetDestinations())
+		auditLogDestinationList(source.GetDestinations()).Equals(other.GetDestinations(), includeStatuses)
 }
 
 type auditLogDestinationList []*AuditLog_Destination
 
+// Equals returns true when source & other have the same values, the statuses are compared depending of the provided bool.
+func (source auditLogDestinationList) Equals(other auditLogDestinationList, includeStatuses bool) bool {
+	if len(source) != len(other) {
+		return false
+	}
+	for i, x := range source {
+		if !x.Equals(other[i], includeStatuses) {
+			return false
+		}
+	}
+	return true
+}
+
+// Equals returns true when source & other have the same values, the statuses are compared depending of the provided bool.
+func (source *AuditLog_Destination) Equals(other *AuditLog_Destination, includeStatuses bool) bool {
+	return source.GetType() == other.GetType() &&
+		strings.Join(source.GetExcludedTopics(), ",") == strings.Join(other.GetExcludedTopics(), ",") &&
+		source.GetHttpPost().Equals(other.GetHttpPost()) &&
+		(!includeStatuses || auditLogDestinationStatusList(source.GetStatuses()).Equals(other.Statuses))
+}
+
+// Equals returns true when source & other have the same values.
+func (source *AuditLog_HttpsPostSettings) Equals(other *AuditLog_HttpsPostSettings) bool {
+	return source.GetClientCertificatePem() == other.GetClientCertificatePem() &&
+		source.GetClientKeyPem() == other.GetClientKeyPem() &&
+		source.GetTrustedServerCaPem() == other.GetTrustedServerCaPem() &&
+		HeaderListEquals(source.GetHeaders(), other.GetHeaders())
+}
+
+type auditLogDestinationStatusList []*AuditLog_DestinationStatus
+
 // Equals returns true when source & other have the same values
-func (source auditLogDestinationList) Equals(other auditLogDestinationList) bool {
+func (source auditLogDestinationStatusList) Equals(other auditLogDestinationStatusList) bool {
 	if len(source) != len(other) {
 		return false
 	}
@@ -58,18 +90,18 @@ func (source auditLogDestinationList) Equals(other auditLogDestinationList) bool
 }
 
 // Equals returns true when source & other have the same values.
-func (source *AuditLog_Destination) Equals(other *AuditLog_Destination) bool {
-	return source.GetType() == other.GetType() &&
-		source.GetHttpPost().Equals(other.GetHttpPost())
-}
-
-// Equals returns true when source & other have the same values.
-func (source *AuditLog_HttpsPostSettings) Equals(other *AuditLog_HttpsPostSettings) bool {
-	return source.GetClientCertificatePem() == other.GetClientCertificatePem() &&
-		source.GetClientKeyPem() == other.GetClientKeyPem() &&
-		strings.Join(source.GetExcludedTopics(), ",") == strings.Join(other.GetExcludedTopics(), ",") &&
-		source.GetTrustedServerCaPem() == other.GetTrustedServerCaPem() &&
-		HeaderListEquals(source.GetHeaders(), other.GetHeaders())
+func (source *AuditLog_DestinationStatus) Equals(other *AuditLog_DestinationStatus) bool {
+	return source.GetDeploymentId() == other.GetDeploymentId() &&
+		source.GetHasErrors() == other.GetHasErrors() &&
+		source.GetErrorDetails() == other.GetErrorDetails() &&
+		source.GetEventsSinceMidnight() == other.GetEventsSinceMidnight() &&
+		source.GetEventsExcludedSinceMidnight() == other.GetEventsExcludedSinceMidnight() &&
+		source.GetEventsUndeliverableSinceMidnight() == other.GetEventsUndeliverableSinceMidnight() &&
+		source.GetBytesSucceededSinceMidnight() == other.GetBytesSucceededSinceMidnight() &&
+		source.GetBytesFailedSinceMidnight() == other.GetBytesFailedSinceMidnight() &&
+		source.GetHttpsPostsSucceededSinceMidnight() == other.GetHttpsPostsSucceededSinceMidnight() &&
+		source.GetHttpsPostsFailedSinceMidnight() == other.GetHttpsPostsFailedSinceMidnight() &&
+		source.GetUpdatedAt().Equal(other.GetUpdatedAt())
 }
 
 // Equals returns true when source & other have the same values.
