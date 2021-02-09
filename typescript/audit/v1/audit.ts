@@ -117,39 +117,37 @@ export interface AuditLog_DestinationStatus {
   // googleTypes.Timestamp
   updated_at?: googleTypes.Timestamp;
   
-  // The events this destination (for the provided deployment) has been processed
+  // The number of successfull audit log events this destination (for the provided deployment) has been processed
   // on the day as specified by updated_at.
   // number
-  events_since_midnight?: number;
+  events_succeeded_since_midnight?: number;
   
-  // The bytes this destination (for the provided deployment) has been processed
+  // The number of unsuccessfull audit log events this destination (for the provided deployment) has been trying to process
   // on the day as specified by updated_at.
   // number
-  bytes_since_midnight?: number;
+  events_failed_since_midnight?: number;
+  
+  // The bytes of successfull audit log events this destination (for the provided deployment) has been processed
+  // on the day as specified by updated_at.
+  // number
+  bytes_succeeded_since_midnight?: number;
+  
+  // The bytes of successfull audit log events this destination (for the provided deployment) has been trying to process
+  // on the day as specified by updated_at.
+  // number
+  bytes_failed_since_midnight?: number;
   
   // The number of successfull HTTPS posts this destination (for the provided deployment) has been sent
   // on the day as specified by updated_at.
-  // This field is used when the destination type is "https-post" only
+  // This field is used when the destination type is "https-post" only.
   // number
-  https_post_succeeded_count_since_midnight?: number;
-  
-  // The number of bytes of successfull HTTPS post this destination (for the provided deployment) has been sent
-  // on the day as specified by updated_at.
-  // This field is used when the destination type is "https-post" only
-  // number
-  https_post_succeeded_bytes_since_midnight?: number;
+  https_posts_succeeded_since_midnight?: number;
   
   // The number of unsuccessfull HTTPS posts this destination (for the provided deployment) has been trying to sent
   // on the day as specified by updated_at.
-  // This field is used when the destination type is "https-post" only
+  // This field is used when the destination type is "https-post" only.
   // number
-  https_post_failed_count_since_midnight?: number;
-  
-  // The number of bytes of unsuccessfull HTTPS post this destination (for the provided deployment) has been trying to sent
-  // on the day as specified by updated_at.
-  // This field is used when the destination type is "https-post" only
-  // number
-  https_post_failed_bytes_since_midnight?: number;
+  https_posts_failed_since_midnight?: number;
 }
 
 // HTTP header pair
