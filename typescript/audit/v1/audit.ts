@@ -178,6 +178,7 @@ export interface AuditLog_Header {
 export interface AuditLog_HttpsPostSettings {
   // URL of the server to POST to.
   // The scheme of the URL must be "https".
+  // The used URLs within a single audit log should be unique.
   // string
   url?: string;
   

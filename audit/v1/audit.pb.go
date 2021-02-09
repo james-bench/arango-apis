@@ -180,6 +180,7 @@ func (m *AuditLog) GetDestinations() []*AuditLog_Destination {
 type AuditLog_HttpsPostSettings struct {
 	// URL of the server to POST to.
 	// The scheme of the URL must be "https".
+	// The used URLs within a single audit log should be unique.
 	Url string `protobuf:"bytes,1,opt,name=url,proto3" json:"url,omitempty"`
 	// PEM encoded public key of the CA used to sign
 	// the server TLS certificate.
