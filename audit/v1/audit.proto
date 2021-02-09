@@ -260,12 +260,11 @@ message AuditLog {
         // one destination status is allowed to be empty, meaning the Oasis status,
         // all others will be bound to a specific deployment as indicated by this ID.
         string deployment_id = 1;
+        
         // Set if this destination (for the provided deployment) has errors 
         bool has_errors = 2;
         // Human readable error message (if any)
         string details = 3;
-        // Timestamp when this status has been last updated
-        google.protobuf.Timestamp updated_at = 4;
         
         // The number of successfull audit log events this destination (for the provided deployment) has been processed
         // on the day as specified by updated_at.
@@ -289,6 +288,9 @@ message AuditLog {
         // on the day as specified by updated_at.
         // This field is used when the destination type is "https-post" only.
         int64 https_posts_failed_since_midnight = 31;
+
+        // Timestamp when this status has been last updated
+        google.protobuf.Timestamp updated_at = 100;
     }
 
     // Specification of a destination for audit events.

@@ -113,10 +113,6 @@ export interface AuditLog_DestinationStatus {
   // string
   details?: string;
   
-  // Timestamp when this status has been last updated
-  // googleTypes.Timestamp
-  updated_at?: googleTypes.Timestamp;
-  
   // The number of successfull audit log events this destination (for the provided deployment) has been processed
   // on the day as specified by updated_at.
   // number
@@ -148,6 +144,10 @@ export interface AuditLog_DestinationStatus {
   // This field is used when the destination type is "https-post" only.
   // number
   https_posts_failed_since_midnight?: number;
+  
+  // Timestamp when this status has been last updated
+  // googleTypes.Timestamp
+  updated_at?: googleTypes.Timestamp;
 }
 
 // HTTP header pair
