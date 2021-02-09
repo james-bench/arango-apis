@@ -88,6 +88,39 @@ export interface AuditLog_Destination {
   // Settings for destinations of type "https-post"
   // AuditLog_HttpsPostSettings
   http_post?: AuditLog_HttpsPostSettings;
+  
+  // Status of this destination (per deployment)
+  // This is a read-only value.
+  // AuditLog_DestinationStatus
+  Statusses?: AuditLog_DestinationStatus[];
+}
+
+// The status of a destination for audit events (for a deployment).
+// All fields in this message are read-only values.
+export interface AuditLog_DestinationStatus {
+  // ID of the deployment that the status applied to (if applicable)
+  // The deployment ID of the status is optional, inside the list at most
+  // one destination status is allowed to be empty, meaning the Oasis status,
+  // all others will be bound to a specific deployment as indicated by this ID.
+  // string
+  deployment_id?: string;
+  
+  // Set if this destination has errors
+  // boolean
+  has_errors?: boolean;
+  
+  // Human readable error message (if any)
+  // string
+  details?: string;
+  
+  // The events this destination (for the provided deployment) has been processed
+  // on the day as specified by updated_at.
+  // number
+  events_since_midnight?: number;
+  
+  // Timestamp when this status has been last updated
+  // googleTypes.Timestamp
+  updated_at?: googleTypes.Timestamp;
 }
 
 // HTTP header pair
