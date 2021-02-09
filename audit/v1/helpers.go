@@ -28,8 +28,8 @@ import (
 	"strings"
 )
 
-// Equals returns true when source & other have the same values.
-func (source *AuditLog) Equals(other *AuditLog) bool {
+// Equals returns true when source & other have the same values, the destination statusses are compared depending of the provided bool.
+func (source *AuditLog) Equals(other *AuditLog, includeStatusses bool) bool {
 	return source.GetId() == other.GetId() &&
 		source.GetUrl() == other.GetUrl() &&
 		source.GetName() == other.GetName() &&
@@ -40,29 +40,30 @@ func (source *AuditLog) Equals(other *AuditLog) bool {
 		source.GetOrganizationId() == other.GetOrganizationId() &&
 		source.GetCreatedById() == other.GetCreatedById() &&
 		source.GetIsDefault() == other.GetIsDefault() &&
-		auditLogDestinationList(source.GetDestinations()).Equals(other.GetDestinations())
+		auditLogDestinationList(source.GetDestinations()).Equals(other.GetDestinations(), includeStatusses)
 }
 
 type auditLogDestinationList []*AuditLog_Destination
 
-// Equals returns true when source & other have the same values
-func (source auditLogDestinationList) Equals(other auditLogDestinationList) bool {
+// Equals returns true when source & other have the same values, the statusses are compared depending of the provided bool.
+func (source auditLogDestinationList) Equals(other auditLogDestinationList, includeStatusses bool) bool {
 	if len(source) != len(other) {
 		return false
 	}
 	for i, x := range source {
-		if !x.Equals(other[i]) {
+		if !x.Equals(other[i], includeStatusses) {
 			return false
 		}
 	}
 	return true
 }
 
-// Equals returns true when source & other have the same values.
-func (source *AuditLog_Destination) Equals(other *AuditLog_Destination) bool {
+// Equals returns true when source & other have the same values, the statusses are compared depending of the provided bool.
+func (source *AuditLog_Destination) Equals(other *AuditLog_Destination, includeStatusses bool) bool {
 	return source.GetType() == other.GetType() &&
 		strings.Join(source.GetExcludedTopics(), ",") == strings.Join(other.GetExcludedTopics(), ",") &&
-		source.GetHttpPost().Equals(other.GetHttpPost())
+		source.GetHttpPost().Equals(other.GetHttpPost()) &&
+		(!includeStatusses || auditLogDestinationStatusList(source.GetStatusses()).Equals(other.Statusses))
 }
 
 // Equals returns true when source & other have the same values.
