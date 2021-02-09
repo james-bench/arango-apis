@@ -1423,6 +1423,13 @@ Possible values are: &#34;cloud&#34;, &#34;https-post&#34; </p></td>
                 </tr>
               
                 <tr>
+                  <td>excluded_topics</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Do not send audit events with these topics to this destination. </p></td>
+                </tr>
+              
+                <tr>
                   <td>http_post</td>
                   <td><a href="#arangodb.cloud.audit.v1.AuditLog.HttpsPostSettings">AuditLog.HttpsPostSettings</a></td>
                   <td></td>
@@ -1445,7 +1452,7 @@ This is a read-only value. </p></td>
         
       
         <h3 id="arangodb.cloud.audit.v1.AuditLog.DestinationStatus">AuditLog.DestinationStatus</h3>
-        <p>The status of a destination for audit events (for a deployment).</p><p>All fields in this message are read-only values.</p>
+        <p>The status of a destination for audit events (for a deployment).</p><p>All fields in this message are read-only values.</p><p>The fields which end with since_midnight, will be reset at midnight UTC.</p>
 
         
           <table class="field-table">
@@ -1479,19 +1486,29 @@ all others will be bound to a specific deployment as indicated by this ID. </p><
                 </tr>
               
                 <tr>
-                  <td>events_succeeded_since_midnight</td>
+                  <td>events_since_midnight</td>
                   <td><a href="#int64">int64</a></td>
                   <td></td>
-                  <td><p>The number of successfull audit log events this destination (for the provided deployment) has been processed
-on the day as specified by updated_at. </p></td>
+                  <td><p>The number of audit log events this destination (for the provided deployment) has been processed
+on the day as specified by updated_at.
+This number will not include the excluded events, so contain events which are relevant after filtering only. </p></td>
                 </tr>
               
                 <tr>
-                  <td>events_failed_since_midnight</td>
+                  <td>events_excluded_since_midnight</td>
                   <td><a href="#int64">int64</a></td>
                   <td></td>
-                  <td><p>The number of unsuccessfull audit log events this destination (for the provided deployment) has been trying to process
-on the day as specified by updated_at. </p></td>
+                  <td><p>The number of audit log events this destination (for the provided deployment) has been excluded based on the provided 
+&#39;excluded_topics&#39; filter on the day as specified by updated_at. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>events_undeliverable_since_midnight</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>The number of undeliverable audit log events for this destination (for the provided deployment) 
+on the day as specified by updated_at.
+Undeliverable means that they are removed without being successfully processed, retries are not taken into account here. </p></td>
                 </tr>
               
                 <tr>
@@ -1506,8 +1523,9 @@ on the day as specified by updated_at. </p></td>
                   <td>bytes_failed_since_midnight</td>
                   <td><a href="#int64">int64</a></td>
                   <td></td>
-                  <td><p>The bytes of successfull audit log events this destination (for the provided deployment) has been trying to process
-on the day as specified by updated_at. </p></td>
+                  <td><p>The bytes of unsuccessfull audit log events this destination (for the provided deployment) has been trying to process
+on the day as specified by updated_at.
+This include retries, however not any filtered events or undeliverable events which are discarded based on retry_period period without being ever sent. </p></td>
                 </tr>
               
                 <tr>
@@ -1515,7 +1533,7 @@ on the day as specified by updated_at. </p></td>
                   <td><a href="#int64">int64</a></td>
                   <td></td>
                   <td><p>The number of successfull HTTPS posts this destination (for the provided deployment) has been sent
-on the day as specified by updated_at.
+on the day as specified by updated_at. 2xx
 This field is used when the destination type is &#34;https-post&#34; only. </p></td>
                 </tr>
               
@@ -1624,13 +1642,6 @@ used to make the request. </p></td>
                   <td>repeated</td>
                   <td><p>HTTP headers to add to the request.
 It is allowed to pass multiple headers with the same key. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>excluded_topics</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>Do not send audit events with these topics to this destination. </p></td>
                 </tr>
               
                 <tr>

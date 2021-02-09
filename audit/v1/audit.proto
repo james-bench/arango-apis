@@ -236,8 +236,7 @@ message AuditLog {
         // HTTP headers to add to the request.
         // It is allowed to pass multiple headers with the same key.
         repeated Header headers = 5;
-        // Do not send audit events with these topics to this destination.
-        repeated string excluded_topics = 100;
+        
         // The period this https-post destination will retry to deliver audit events.
         // Not specifying this value will default to 4 hours, the maximum allowed value is 24 hours.
         // When this time is exceeded for an event this event will be discarded, however newer events will still be delivered.
@@ -254,6 +253,7 @@ message AuditLog {
 
     // The status of a destination for audit events (for a deployment).
     // All fields in this message are read-only values.
+    // The fields which end with since_midnight, will be reset at midnight UTC.
     message DestinationStatus {
         // ID of the deployment that the status applied to (if applicable)
         // The deployment ID of the status is optional, inside the list at most 
@@ -266,22 +266,28 @@ message AuditLog {
         // Human readable error message (if any)
         string details = 3;
         
-        // The number of successfull audit log events this destination (for the provided deployment) has been processed
+        // The number of audit log events this destination (for the provided deployment) has been processed
         // on the day as specified by updated_at.
-        int64 events_succeeded_since_midnight = 10;
-        // The number of unsuccessfull audit log events this destination (for the provided deployment) has been trying to process
+        // This number will not include the excluded events, so contain events which are relevant after filtering only.
+        int64 events_since_midnight = 10;
+        // The number of audit log events this destination (for the provided deployment) has been excluded based on the provided 
+        // 'excluded_topics' filter on the day as specified by updated_at.
+        int64 events_excluded_since_midnight = 11;
+        // The number of undeliverable audit log events for this destination (for the provided deployment) 
         // on the day as specified by updated_at.
-        int64 events_failed_since_midnight = 11;
+        // Undeliverable means that they are removed without being successfully processed, retries are not taken into account here.
+        int64 events_undeliverable_since_midnight = 12;
 
         // The bytes of successfull audit log events this destination (for the provided deployment) has been processed
         // on the day as specified by updated_at.
         int64 bytes_succeeded_since_midnight = 20;
-        // The bytes of successfull audit log events this destination (for the provided deployment) has been trying to process
+        // The bytes of unsuccessfull audit log events this destination (for the provided deployment) has been trying to process
         // on the day as specified by updated_at.
+        // This include retries, however not any filtered events or undeliverable events which are discarded based on retry_period period without being ever sent.
         int64 bytes_failed_since_midnight = 21;
-        
+          
         // The number of successfull HTTPS posts this destination (for the provided deployment) has been sent
-        // on the day as specified by updated_at.
+        // on the day as specified by updated_at. 2xx
         // This field is used when the destination type is "https-post" only.
         int64 https_posts_succeeded_since_midnight = 30;
         // The number of unsuccessfull HTTPS posts this destination (for the provided deployment) has been trying to sent
@@ -298,6 +304,8 @@ message AuditLog {
         // Type of destination.
         // Possible values are: "cloud", "https-post"
         string type = 1;
+        // Do not send audit events with these topics to this destination.
+        repeated string excluded_topics = 2;
         // Settings for destinations of type "https-post"
         HttpsPostSettings http_post = 10;
         // Status of this destination (per deployment)

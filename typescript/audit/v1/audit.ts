@@ -85,6 +85,10 @@ export interface AuditLog_Destination {
   // string
   type?: string;
   
+  // Do not send audit events with these topics to this destination.
+  // string
+  excluded_topics?: string[];
+  
   // Settings for destinations of type "https-post"
   // AuditLog_HttpsPostSettings
   http_post?: AuditLog_HttpsPostSettings;
@@ -97,6 +101,7 @@ export interface AuditLog_Destination {
 
 // The status of a destination for audit events (for a deployment).
 // All fields in this message are read-only values.
+// The fields which end with since_midnight, will be reset at midnight UTC.
 export interface AuditLog_DestinationStatus {
   // ID of the deployment that the status applied to (if applicable)
   // The deployment ID of the status is optional, inside the list at most
@@ -113,28 +118,36 @@ export interface AuditLog_DestinationStatus {
   // string
   details?: string;
   
-  // The number of successfull audit log events this destination (for the provided deployment) has been processed
+  // The number of audit log events this destination (for the provided deployment) has been processed
   // on the day as specified by updated_at.
+  // This number will not include the excluded events, so contain events which are relevant after filtering only.
   // number
-  events_succeeded_since_midnight?: number;
+  events_since_midnight?: number;
   
-  // The number of unsuccessfull audit log events this destination (for the provided deployment) has been trying to process
-  // on the day as specified by updated_at.
+  // The number of audit log events this destination (for the provided deployment) has been excluded based on the provided
+  // 'excluded_topics' filter on the day as specified by updated_at.
   // number
-  events_failed_since_midnight?: number;
+  events_excluded_since_midnight?: number;
+  
+  // The number of undeliverable audit log events for this destination (for the provided deployment)
+  // on the day as specified by updated_at.
+  // Undeliverable means that they are removed without being successfully processed, retries are not taken into account here.
+  // number
+  events_undeliverable_since_midnight?: number;
   
   // The bytes of successfull audit log events this destination (for the provided deployment) has been processed
   // on the day as specified by updated_at.
   // number
   bytes_succeeded_since_midnight?: number;
   
-  // The bytes of successfull audit log events this destination (for the provided deployment) has been trying to process
+  // The bytes of unsuccessfull audit log events this destination (for the provided deployment) has been trying to process
   // on the day as specified by updated_at.
+  // This include retries, however not any filtered events or undeliverable events which are discarded based on retry_period period without being ever sent.
   // number
   bytes_failed_since_midnight?: number;
   
   // The number of successfull HTTPS posts this destination (for the provided deployment) has been sent
-  // on the day as specified by updated_at.
+  // on the day as specified by updated_at. 2xx
   // This field is used when the destination type is "https-post" only.
   // number
   https_posts_succeeded_since_midnight?: number;
@@ -190,10 +203,6 @@ export interface AuditLog_HttpsPostSettings {
   // It is allowed to pass multiple headers with the same key.
   // AuditLog_Header
   headers?: AuditLog_Header[];
-  
-  // Do not send audit events with these topics to this destination.
-  // string
-  excluded_topics?: string[];
   
   // The period this https-post destination will retry to deliver audit events.
   // Not specifying this value will default to 4 hours, the maximum allowed value is 24 hours.
