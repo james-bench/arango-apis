@@ -1437,7 +1437,7 @@ Possible values are: &#34;cloud&#34;, &#34;https-post&#34; </p></td>
                 </tr>
               
                 <tr>
-                  <td>Statusses</td>
+                  <td>Statuses</td>
                   <td><a href="#arangodb.cloud.audit.v1.AuditLog.DestinationStatus">AuditLog.DestinationStatus</a></td>
                   <td>repeated</td>
                   <td><p>Status of this destination (per deployment)
@@ -1479,7 +1479,7 @@ all others will be bound to a specific deployment as indicated by this ID. </p><
                 </tr>
               
                 <tr>
-                  <td>details</td>
+                  <td>error_details</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Human readable error message (if any) </p></td>
@@ -1533,7 +1533,8 @@ This include retries, however not any filtered events or undeliverable events wh
                   <td><a href="#int64">int64</a></td>
                   <td></td>
                   <td><p>The number of successfull HTTPS posts this destination (for the provided deployment) has been sent
-on the day as specified by updated_at. 2xx
+on the day as specified by updated_at. 
+An HTTPS POST request is considered successful when a status code between 200 and 299 is returned.
 This field is used when the destination type is &#34;https-post&#34; only. </p></td>
                 </tr>
               

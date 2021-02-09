@@ -96,7 +96,7 @@ export interface AuditLog_Destination {
   // Status of this destination (per deployment)
   // This is a read-only value.
   // AuditLog_DestinationStatus
-  Statusses?: AuditLog_DestinationStatus[];
+  Statuses?: AuditLog_DestinationStatus[];
 }
 
 // The status of a destination for audit events (for a deployment).
@@ -116,7 +116,7 @@ export interface AuditLog_DestinationStatus {
   
   // Human readable error message (if any)
   // string
-  details?: string;
+  error_details?: string;
   
   // The number of audit log events this destination (for the provided deployment) has been processed
   // on the day as specified by updated_at.
@@ -147,7 +147,8 @@ export interface AuditLog_DestinationStatus {
   bytes_failed_since_midnight?: number;
   
   // The number of successfull HTTPS posts this destination (for the provided deployment) has been sent
-  // on the day as specified by updated_at. 2xx
+  // on the day as specified by updated_at.
+  // An HTTPS POST request is considered successful when a status code between 200 and 299 is returned.
   // This field is used when the destination type is "https-post" only.
   // number
   https_posts_succeeded_since_midnight?: number;

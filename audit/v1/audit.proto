@@ -265,7 +265,7 @@ message AuditLog {
         // Set if this destination (for the provided deployment) has errors 
         bool has_errors = 2;
         // Human readable error message (if any)
-        string details = 3;
+        string error_details = 3;
         
         // The number of audit log events this destination (for the provided deployment) has been processed
         // on the day as specified by updated_at.
@@ -288,7 +288,8 @@ message AuditLog {
         int64 bytes_failed_since_midnight = 21;
           
         // The number of successfull HTTPS posts this destination (for the provided deployment) has been sent
-        // on the day as specified by updated_at. 2xx
+        // on the day as specified by updated_at. 
+        // An HTTPS POST request is considered successful when a status code between 200 and 299 is returned.
         // This field is used when the destination type is "https-post" only.
         int64 https_posts_succeeded_since_midnight = 30;
         // The number of unsuccessfull HTTPS posts this destination (for the provided deployment) has been trying to sent
@@ -311,7 +312,7 @@ message AuditLog {
         HttpsPostSettings http_post = 10;
         // Status of this destination (per deployment)
         // This is a read-only value.
-        repeated DestinationStatus Statusses = 100;
+        repeated DestinationStatus Statuses = 100;
     }
     // Destinations that events of this AuditLog should be sent to.
     // Note that there can only be 1 destination of type "cloud".

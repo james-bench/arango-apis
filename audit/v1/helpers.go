@@ -28,8 +28,8 @@ import (
 	"strings"
 )
 
-// Equals returns true when source & other have the same values, the destination statusses are compared depending of the provided bool.
-func (source *AuditLog) Equals(other *AuditLog, includeStatusses bool) bool {
+// Equals returns true when source & other have the same values, the destination statuses are compared depending of the provided bool.
+func (source *AuditLog) Equals(other *AuditLog, includeStatuses bool) bool {
 	return source.GetId() == other.GetId() &&
 		source.GetUrl() == other.GetUrl() &&
 		source.GetName() == other.GetName() &&
@@ -40,30 +40,30 @@ func (source *AuditLog) Equals(other *AuditLog, includeStatusses bool) bool {
 		source.GetOrganizationId() == other.GetOrganizationId() &&
 		source.GetCreatedById() == other.GetCreatedById() &&
 		source.GetIsDefault() == other.GetIsDefault() &&
-		auditLogDestinationList(source.GetDestinations()).Equals(other.GetDestinations(), includeStatusses)
+		auditLogDestinationList(source.GetDestinations()).Equals(other.GetDestinations(), includeStatuses)
 }
 
 type auditLogDestinationList []*AuditLog_Destination
 
-// Equals returns true when source & other have the same values, the statusses are compared depending of the provided bool.
-func (source auditLogDestinationList) Equals(other auditLogDestinationList, includeStatusses bool) bool {
+// Equals returns true when source & other have the same values, the statuses are compared depending of the provided bool.
+func (source auditLogDestinationList) Equals(other auditLogDestinationList, includeStatuses bool) bool {
 	if len(source) != len(other) {
 		return false
 	}
 	for i, x := range source {
-		if !x.Equals(other[i], includeStatusses) {
+		if !x.Equals(other[i], includeStatuses) {
 			return false
 		}
 	}
 	return true
 }
 
-// Equals returns true when source & other have the same values, the statusses are compared depending of the provided bool.
-func (source *AuditLog_Destination) Equals(other *AuditLog_Destination, includeStatusses bool) bool {
+// Equals returns true when source & other have the same values, the statuses are compared depending of the provided bool.
+func (source *AuditLog_Destination) Equals(other *AuditLog_Destination, includeStatuses bool) bool {
 	return source.GetType() == other.GetType() &&
 		strings.Join(source.GetExcludedTopics(), ",") == strings.Join(other.GetExcludedTopics(), ",") &&
 		source.GetHttpPost().Equals(other.GetHttpPost()) &&
-		(!includeStatusses || auditLogDestinationStatusList(source.GetStatusses()).Equals(other.Statusses))
+		(!includeStatuses || auditLogDestinationStatusList(source.GetStatuses()).Equals(other.Statuses))
 }
 
 // Equals returns true when source & other have the same values.
@@ -93,7 +93,7 @@ func (source auditLogDestinationStatusList) Equals(other auditLogDestinationStat
 func (source *AuditLog_DestinationStatus) Equals(other *AuditLog_DestinationStatus) bool {
 	return source.GetDeploymentId() == other.GetDeploymentId() &&
 		source.GetHasErrors() == other.GetHasErrors() &&
-		source.GetDetails() == other.GetDetails() &&
+		source.GetErrorDetails() == other.GetErrorDetails() &&
 		source.GetEventsSinceMidnight() == other.GetEventsSinceMidnight() &&
 		source.GetEventsExcludedSinceMidnight() == other.GetEventsExcludedSinceMidnight() &&
 		source.GetEventsUndeliverableSinceMidnight() == other.GetEventsUndeliverableSinceMidnight() &&
