@@ -258,6 +258,10 @@ export interface IPAllowlist {
   // To delete, first update the with locked set to false.
   // boolean
   locked?: boolean;
+  
+  // The list of warnings which are related to the IP allow list.
+  // string
+  warnings?: string[];
 }
 
 // List of IP allowlists.
