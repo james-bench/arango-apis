@@ -62,6 +62,7 @@ type IPAllowlist struct {
 	// To delete, first update the with locked set to false.
 	Locked bool `protobuf:"varint,11,opt,name=locked,proto3" json:"locked,omitempty"`
 	// The list of warnings which are related to the IP allow list.
+	// This is a read-only value.
 	Warnings             []string `protobuf:"bytes,12,rep,name=warnings,proto3" json:"warnings,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`

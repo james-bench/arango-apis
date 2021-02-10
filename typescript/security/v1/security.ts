@@ -260,6 +260,7 @@ export interface IPAllowlist {
   locked?: boolean;
   
   // The list of warnings which are related to the IP allow list.
+  // This is a read-only value.
   // string
   warnings?: string[];
 }
