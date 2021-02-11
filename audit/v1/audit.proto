@@ -254,7 +254,6 @@ message AuditLog {
 
     // The status of a destination for audit events (for a deployment).
     // All fields in this message are read-only values.
-    // The fields which end with since_midnight, will be reset at midnight UTC.
     message DestinationStatus {
         // ID of the deployment that the status applied to (if applicable)
         // The deployment ID of the status is optional, inside the list at most 
@@ -262,43 +261,49 @@ message AuditLog {
         // all others will be bound to a specific deployment as indicated by this ID.
         string deployment_id = 1;
         
-        // Set if this destination (for the provided deployment) has errors 
+        // Set if this destination (for the provided deployment) has errors.
         bool has_errors = 2;
-        // Human readable error message (if any)
+        // Human readable error message (if any).
         string error_details = 3;
-        
-        // The number of audit log events this destination (for the provided deployment) has been processed
-        // on the day as specified by updated_at.
-        // This number will not include the excluded events, so contain events which are relevant after filtering only.
-        int64 events_since_midnight = 10;
-        // The number of audit log events this destination (for the provided deployment) has been excluded based on the provided 
-        // 'excluded_topics' filter on the day as specified by updated_at.
-        int64 events_excluded_since_midnight = 11;
-        // The number of undeliverable audit log events for this destination (for the provided deployment) 
-        // on the day as specified by updated_at.
-        // Undeliverable means that they are removed without being successfully processed, retries are not taken into account here.
-        int64 events_undeliverable_since_midnight = 12;
+    
+        // The counters of a destination for audit events (for the provided deployment) for today since midnight.
+        // The fields inside this message will be reset at midnight UTC.
+        // The updated_at timestamp will be used as baseline for the time.
+        DestinationCounters counters_since_midnight = 10;
+        // The counters of a destination for audit events (for the provided deployment) for yesterday.
+        // The updated_at timestamp will be used as baseline for the time.
+        DestinationCounters counters_yesterday = 11;
 
-        // The bytes of successfull audit log events this destination (for the provided deployment) has been processed
-        // on the day as specified by updated_at.
-        int64 bytes_succeeded_since_midnight = 20;
-        // The bytes of unsuccessfull audit log events this destination (for the provided deployment) has been trying to process
-        // on the day as specified by updated_at.
+        // Timestamp when this status has been last updated.
+        // This is used as baseline for the counters_since_midnight and counters_yesterday fields.
+        google.protobuf.Timestamp updated_at = 100;
+    }
+
+    // The counters of a destination for audit events (for the provided deployment).
+    // All fields in this message are read-only values.
+    message DestinationCounters { 
+        // The number of audit log events this destination has been processed.
+        // This number will not include the excluded events, so contain events which are relevant after filtering only.
+        int64 events = 1;
+        // The number of audit log events this destination has been excluded based on the provided 'excluded_topics' filter.
+        int64 events_excluded = 2;
+        // The number of undeliverable audit log events for this destination.
+        // Undeliverable means that they are removed without being successfully processed, retries are not taken into account here.
+        int64 events_undeliverable = 3;
+
+        // The bytes of successfull audit log events this destination has been processed.
+        int64 bytes_succeeded = 10;
+        // The bytes of unsuccessfull audit log events this destination has been trying to process.
         // This include retries, however not any filtered events or undeliverable events which are discarded based on retry_period period without being ever sent.
-        int64 bytes_failed_since_midnight = 21;
+        int64 bytes_failed = 11;
           
-        // The number of successfull HTTPS posts this destination (for the provided deployment) has been sent
-        // on the day as specified by updated_at. 
+        // The number of successfull HTTPS posts this destination has been sent.
         // An HTTPS POST request is considered successful when a status code between 200 and 299 is returned.
         // This field is used when the destination type is "https-post" only.
-        int64 https_posts_succeeded_since_midnight = 30;
-        // The number of unsuccessfull HTTPS posts this destination (for the provided deployment) has been trying to sent
-        // on the day as specified by updated_at.
+        int64 https_posts_succeeded = 20;
+        // The number of unsuccessfull HTTPS posts this destination has been trying to sent.
         // This field is used when the destination type is "https-post" only.
-        int64 https_posts_failed_since_midnight = 31;
-
-        // Timestamp when this status has been last updated
-        google.protobuf.Timestamp updated_at = 100;
+        int64 https_posts_failed = 21;
     }
 
     // Specification of a destination for audit events.

@@ -99,9 +99,46 @@ export interface AuditLog_Destination {
   Statuses?: AuditLog_DestinationStatus[];
 }
 
+// The counters of a destination for audit events (for the provided deployment).
+// All fields in this message are read-only values.
+export interface AuditLog_DestinationCounters {
+  // The number of audit log events this destination has been processed.
+  // This number will not include the excluded events, so contain events which are relevant after filtering only.
+  // number
+  events?: number;
+  
+  // The number of audit log events this destination has been excluded based on the provided 'excluded_topics' filter.
+  // number
+  events_excluded?: number;
+  
+  // The number of undeliverable audit log events for this destination.
+  // Undeliverable means that they are removed without being successfully processed, retries are not taken into account here.
+  // number
+  events_undeliverable?: number;
+  
+  // The bytes of successfull audit log events this destination has been processed.
+  // number
+  bytes_succeeded?: number;
+  
+  // The bytes of unsuccessfull audit log events this destination has been trying to process.
+  // This include retries, however not any filtered events or undeliverable events which are discarded based on retry_period period without being ever sent.
+  // number
+  bytes_failed?: number;
+  
+  // The number of successfull HTTPS posts this destination has been sent.
+  // An HTTPS POST request is considered successful when a status code between 200 and 299 is returned.
+  // This field is used when the destination type is "https-post" only.
+  // number
+  https_posts_succeeded?: number;
+  
+  // The number of unsuccessfull HTTPS posts this destination has been trying to sent.
+  // This field is used when the destination type is "https-post" only.
+  // number
+  https_posts_failed?: number;
+}
+
 // The status of a destination for audit events (for a deployment).
 // All fields in this message are read-only values.
-// The fields which end with since_midnight, will be reset at midnight UTC.
 export interface AuditLog_DestinationStatus {
   // ID of the deployment that the status applied to (if applicable)
   // The deployment ID of the status is optional, inside the list at most
@@ -110,56 +147,27 @@ export interface AuditLog_DestinationStatus {
   // string
   deployment_id?: string;
   
-  // Set if this destination (for the provided deployment) has errors
+  // Set if this destination (for the provided deployment) has errors.
   // boolean
   has_errors?: boolean;
   
-  // Human readable error message (if any)
+  // Human readable error message (if any).
   // string
   error_details?: string;
   
-  // The number of audit log events this destination (for the provided deployment) has been processed
-  // on the day as specified by updated_at.
-  // This number will not include the excluded events, so contain events which are relevant after filtering only.
-  // number
-  events_since_midnight?: number;
+  // The counters of a destination for audit events (for the provided deployment) for today since midnight.
+  // The fields inside this message will be reset at midnight UTC.
+  // The updated_at timestamp will be used as baseline for the time.
+  // AuditLog_DestinationCounters
+  counters_since_midnight?: AuditLog_DestinationCounters;
   
-  // The number of audit log events this destination (for the provided deployment) has been excluded based on the provided
-  // 'excluded_topics' filter on the day as specified by updated_at.
-  // number
-  events_excluded_since_midnight?: number;
+  // The counters of a destination for audit events (for the provided deployment) for yesterday.
+  // The updated_at timestamp will be used as baseline for the time.
+  // AuditLog_DestinationCounters
+  counters_yesterday?: AuditLog_DestinationCounters;
   
-  // The number of undeliverable audit log events for this destination (for the provided deployment)
-  // on the day as specified by updated_at.
-  // Undeliverable means that they are removed without being successfully processed, retries are not taken into account here.
-  // number
-  events_undeliverable_since_midnight?: number;
-  
-  // The bytes of successfull audit log events this destination (for the provided deployment) has been processed
-  // on the day as specified by updated_at.
-  // number
-  bytes_succeeded_since_midnight?: number;
-  
-  // The bytes of unsuccessfull audit log events this destination (for the provided deployment) has been trying to process
-  // on the day as specified by updated_at.
-  // This include retries, however not any filtered events or undeliverable events which are discarded based on retry_period period without being ever sent.
-  // number
-  bytes_failed_since_midnight?: number;
-  
-  // The number of successfull HTTPS posts this destination (for the provided deployment) has been sent
-  // on the day as specified by updated_at.
-  // An HTTPS POST request is considered successful when a status code between 200 and 299 is returned.
-  // This field is used when the destination type is "https-post" only.
-  // number
-  https_posts_succeeded_since_midnight?: number;
-  
-  // The number of unsuccessfull HTTPS posts this destination (for the provided deployment) has been trying to sent
-  // on the day as specified by updated_at.
-  // This field is used when the destination type is "https-post" only.
-  // number
-  https_posts_failed_since_midnight?: number;
-  
-  // Timestamp when this status has been last updated
+  // Timestamp when this status has been last updated.
+  // This is used as baseline for the counters_since_midnight and counters_yesterday fields.
   // googleTypes.Timestamp
   updated_at?: googleTypes.Timestamp;
 }
