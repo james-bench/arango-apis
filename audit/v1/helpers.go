@@ -94,14 +94,20 @@ func (source *AuditLog_DestinationStatus) Equals(other *AuditLog_DestinationStat
 	return source.GetDeploymentId() == other.GetDeploymentId() &&
 		source.GetHasErrors() == other.GetHasErrors() &&
 		source.GetErrorDetails() == other.GetErrorDetails() &&
-		source.GetEventsSinceMidnight() == other.GetEventsSinceMidnight() &&
-		source.GetEventsExcludedSinceMidnight() == other.GetEventsExcludedSinceMidnight() &&
-		source.GetEventsUndeliverableSinceMidnight() == other.GetEventsUndeliverableSinceMidnight() &&
-		source.GetBytesSucceededSinceMidnight() == other.GetBytesSucceededSinceMidnight() &&
-		source.GetBytesFailedSinceMidnight() == other.GetBytesFailedSinceMidnight() &&
-		source.GetHttpsPostsSucceededSinceMidnight() == other.GetHttpsPostsSucceededSinceMidnight() &&
-		source.GetHttpsPostsFailedSinceMidnight() == other.GetHttpsPostsFailedSinceMidnight() &&
+		source.GetCountersSinceMidnight().Equals(other.GetCountersSinceMidnight()) &&
+		source.GetCountersYesterday().Equals(other.GetCountersYesterday()) &&
 		source.GetUpdatedAt().Equal(other.GetUpdatedAt())
+}
+
+// Equals returns true when source & other have the same values.
+func (source *AuditLog_DestinationCounters) Equals(other *AuditLog_DestinationCounters) bool {
+	return source.GetEvents() == other.GetEvents() &&
+		source.GetEventsExcluded() == other.GetEventsExcluded() &&
+		source.GetEventsUndeliverable() == other.GetEventsUndeliverable() &&
+		source.GetBytesSucceeded() == other.GetBytesSucceeded() &&
+		source.GetBytesFailed() == other.GetBytesFailed() &&
+		source.GetHttpsPostsSucceeded() == other.GetHttpsPostsSucceeded() &&
+		source.GetHttpsPostsFailed() == other.GetHttpsPostsFailed()
 }
 
 // Equals returns true when source & other have the same values.
