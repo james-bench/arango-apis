@@ -263,6 +263,7 @@ service DataService {
     }
 
     // RebalanceDeploymentShards rebalances shards for deployment across the DB servers.
+    // Prerelease: This function is not yet available in production.
     // Required permissions:
     // - data.deployment.rebalance-shards on the deployment
     rpc RebalanceDeploymentShards(RebalanceDeploymentShardsRequest) returns (common.v1.Empty) {

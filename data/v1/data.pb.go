@@ -4486,6 +4486,7 @@ type DataServiceClient interface {
 	// - data.deployment.create-test-database on the deployment
 	CreateTestDatabase(ctx context.Context, in *CreateTestDatabaseRequest, opts ...grpc.CallOption) (*CreateTestDatabaseResponse, error)
 	// RebalanceDeploymentShards rebalances shards for deployment across the DB servers.
+	// Prerelease: This function is not yet available in production.
 	// Required permissions:
 	// - data.deployment.rebalance-shards on the deployment
 	RebalanceDeploymentShards(ctx context.Context, in *RebalanceDeploymentShardsRequest, opts ...grpc.CallOption) (*v1.Empty, error)
@@ -4851,6 +4852,7 @@ type DataServiceServer interface {
 	// - data.deployment.create-test-database on the deployment
 	CreateTestDatabase(context.Context, *CreateTestDatabaseRequest) (*CreateTestDatabaseResponse, error)
 	// RebalanceDeploymentShards rebalances shards for deployment across the DB servers.
+	// Prerelease: This function is not yet available in production.
 	// Required permissions:
 	// - data.deployment.rebalance-shards on the deployment
 	RebalanceDeploymentShards(context.Context, *RebalanceDeploymentShardsRequest) (*v1.Empty, error)

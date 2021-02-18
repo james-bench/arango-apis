@@ -1303,6 +1303,7 @@ export interface IDataService {
   CreateTestDatabase: (req: CreateTestDatabaseRequest) => Promise<CreateTestDatabaseResponse>;
   
   // RebalanceDeploymentShards rebalances shards for deployment across the DB servers.
+  // Prerelease: This function is not yet available in production.
   // Required permissions:
   // - data.deployment.rebalance-shards on the deployment
   RebalanceDeploymentShards: (req: RebalanceDeploymentShardsRequest) => Promise<void>;
@@ -1532,6 +1533,7 @@ export class DataService implements IDataService {
   }
   
   // RebalanceDeploymentShards rebalances shards for deployment across the DB servers.
+  // Prerelease: This function is not yet available in production.
   // Required permissions:
   // - data.deployment.rebalance-shards on the deployment
   async RebalanceDeploymentShards(req: RebalanceDeploymentShardsRequest): Promise<void> {
