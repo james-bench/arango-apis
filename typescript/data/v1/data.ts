@@ -1052,6 +1052,13 @@ export interface NodeSizesRequest {
   deployment_id?: string;
 }
 
+// RebalanceDeploymentShardsRequest request for rebalancing shards for a deployment
+export interface RebalanceDeploymentShardsRequest {
+  // The id of the deployment
+  // string
+  deployment_id?: string;
+}
+
 // ReplaceVersionBy holds replacement instructions.
 export interface ReplaceVersionBy {
   // The version of the ArangoDB release that it should be upgraded to.
@@ -1294,6 +1301,11 @@ export interface IDataService {
   // Required permissions:
   // - data.deployment.create-test-database on the deployment
   CreateTestDatabase: (req: CreateTestDatabaseRequest) => Promise<CreateTestDatabaseResponse>;
+  
+  // RebalanceDeploymentShards rebalances shards for deployment across the DB servers.
+  // Required permissions:
+  // - data.deployment.rebalance-shards on the deployment
+  RebalanceDeploymentShards: (req: RebalanceDeploymentShardsRequest) => Promise<void>;
 }
 
 // DataService is the API used to configure data objects.
@@ -1515,6 +1527,15 @@ export class DataService implements IDataService {
   // - data.deployment.create-test-database on the deployment
   async CreateTestDatabase(req: CreateTestDatabaseRequest): Promise<CreateTestDatabaseResponse> {
     const path = `/api/data/v1/deployments/${encodeURIComponent(req.deployment_id || '')}/create-test-database`;
+    const url = path + api.queryString(req, [`deployment_id`]);
+    return api.post(url, undefined);
+  }
+  
+  // RebalanceDeploymentShards rebalances shards for deployment across the DB servers.
+  // Required permissions:
+  // - data.deployment.rebalance-shards on the deployment
+  async RebalanceDeploymentShards(req: RebalanceDeploymentShardsRequest): Promise<void> {
+    const path = `/api/data/v1/deployments/${encodeURIComponent(req.deployment_id || '')}/rebalance-shards`;
     const url = path + api.queryString(req, [`deployment_id`]);
     return api.post(url, undefined);
   }
