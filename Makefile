@@ -4,7 +4,7 @@ ROOTDIR := $(shell cd $(SCRIPTDIR) && pwd)
 BUILDIMAGE := arangodb-cloud-apis-build
 CACHEVOL := arangodb-cloud-apis-gocache
 MODVOL := arangodb-cloud-apis-pkg-mod
-PROTOSOURCES := $(shell find .  -name '*.proto' -not -path './vendor/*')
+PROTOSOURCES := $(shell find .  -name '*.proto' -not -path './vendor/*' | sort)
 
 DOCKERARGS := run -t --rm \
 	-u $(shell id -u):$(shell id -g) \

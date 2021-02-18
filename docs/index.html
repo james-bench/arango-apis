@@ -702,6 +702,10 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.data.v1.RebalanceDeploymentShardsRequest"><span class="badge">M</span>RebalanceDeploymentShardsRequest</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.data.v1.ReplaceVersionBy"><span class="badge">M</span>ReplaceVersionBy</a>
                 </li>
               
@@ -8474,6 +8478,30 @@ in the result, if it it would not match for new deployments. </p></td>
 
         
       
+        <h3 id="arangodb.cloud.data.v1.RebalanceDeploymentShardsRequest">RebalanceDeploymentShardsRequest</h3>
+        <p>RebalanceDeploymentShardsRequest request for rebalancing shards for a deployment</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The id of the deployment </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.data.v1.ReplaceVersionBy">ReplaceVersionBy</h3>
         <p>ReplaceVersionBy holds replacement instructions.</p>
 
@@ -8966,7 +8994,7 @@ Required permissions:
                 <td>RotateDeploymentServer</td>
                 <td><a href="#arangodb.cloud.data.v1.RotateDeploymentServerRequest">RotateDeploymentServerRequest</a></td>
                 <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
-                <td><p>Rotate a server for a deployment. 
+                <td><p>Rotate a server for a deployment.
 This causes the server to restart after condition are deemed safe for a restart.
 Required permissions:
 - data.deployment.rotate-server on the deployment</p></td>
@@ -8980,6 +9008,16 @@ Required permissions:
 database name, password, username, host and port.
 Required permissions:
 - data.deployment.create-test-database on the deployment</p></td>
+              </tr>
+            
+              <tr>
+                <td>RebalanceDeploymentShards</td>
+                <td><a href="#arangodb.cloud.data.v1.RebalanceDeploymentShardsRequest">RebalanceDeploymentShardsRequest</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><p>RebalanceDeploymentShards rebalances shards for deployment across the DB servers.
+Prerelease: This function is not yet available in production.
+Required permissions:
+- data.deployment.rebalance-shards on the deployment</p></td>
               </tr>
             
           </tbody>
@@ -9226,6 +9264,16 @@ Required permissions:
                 <td>CreateTestDatabase</td>
                 <td>POST</td>
                 <td>/api/data/v1/deployments/{deployment_id}/create-test-database</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>RebalanceDeploymentShards</td>
+                <td>POST</td>
+                <td>/api/data/v1/deployments/{deployment_id}/rebalance-shards</td>
                 <td></td>
               </tr>
               

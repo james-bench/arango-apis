@@ -43,6 +43,8 @@ const (
 	PermissionDeploymentRotateServer = "data.deployment.rotate-server"
 	// PermissionDeploymentCreateTestDatabase is needed for creating a test database
 	PermissionDeploymentCreateTestDatabase = "data.deployment.create-test-database"
+	// PermissionDeploymentRebalanceShards is needed for rebalancing shards for a deployment
+	PermissionDeploymentRebalanceShards = "data.deployment.rebalance-shards"
 )
 
 const (
