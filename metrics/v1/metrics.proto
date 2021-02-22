@@ -1,7 +1,7 @@
 // 
 // DISCLAIMER
 // 
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -105,6 +105,15 @@ service MetricsService {
             delete: "/api/metrics/v1/tokens/{id}"
         };
     }
+
+    // Fetch the endpoint to use for getting metrics for a deployment with given id.
+    // Required permissions:
+    // - metrics.endpoint.get on the deployment identified by the given ID
+    rpc GetMetricsEndpoint(GetMetricsEndpointRequest) returns (MetricsEndpoint) {
+        option (google.api.http) = {
+            get: "/api/metrics/v1/endpoints/{deployment_id}"
+        };
+    }
 }
 
 // A Token is represents an access token used to authenticate requests for metrics.
@@ -168,4 +177,17 @@ message ListTokensRequest {
     string deployment_id = 2;
     // If set, do not return revoked tokens.
     bool exclude_revoked = 3;
+}
+
+// Request arguments for GetMetricsEndpoint
+message GetMetricsEndpointRequest {
+    // ID of the deployment to get the endpoint for.
+    string deployment_id = 1;
+}
+
+// Response for GetMetricsEndpoint
+message MetricsEndpoint {
+    // Endpoint (url) to get metrics from.
+    // If no valid metrics tokens are configured this field is empty.
+    string endpoint = 1;
 }

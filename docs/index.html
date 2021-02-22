@@ -899,7 +899,15 @@ title: "ArangoDB Oasis API"
             <ul>
               
                 <li>
+                  <a href="#arangodb.cloud.metrics.v1.GetMetricsEndpointRequest"><span class="badge">M</span>GetMetricsEndpointRequest</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.metrics.v1.ListTokensRequest"><span class="badge">M</span>ListTokensRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.metrics.v1.MetricsEndpoint"><span class="badge">M</span>MetricsEndpoint</a>
                 </li>
               
                 <li>
@@ -11501,6 +11509,30 @@ Required permissions:
       <p></p>
 
       
+        <h3 id="arangodb.cloud.metrics.v1.GetMetricsEndpointRequest">GetMetricsEndpointRequest</h3>
+        <p>Request arguments for GetMetricsEndpoint</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the deployment to get the endpoint for. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.metrics.v1.ListTokensRequest">ListTokensRequest</h3>
         <p>Request arguments for ListTokens.</p>
 
@@ -11531,6 +11563,31 @@ Context_id is ignored. </p></td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>If set, do not return revoked tokens. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.metrics.v1.MetricsEndpoint">MetricsEndpoint</h3>
+        <p>Response for GetMetricsEndpoint</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>endpoint</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Endpoint (url) to get metrics from.
+If no valid metrics tokens are configured this field is empty. </p></td>
                 </tr>
               
             </tbody>
@@ -11777,6 +11834,15 @@ Required permissions:
 - metrics.token.delete on the token</p></td>
               </tr>
             
+              <tr>
+                <td>GetMetricsEndpoint</td>
+                <td><a href="#arangodb.cloud.metrics.v1.GetMetricsEndpointRequest">GetMetricsEndpointRequest</a></td>
+                <td><a href="#arangodb.cloud.metrics.v1.MetricsEndpoint">MetricsEndpoint</a></td>
+                <td><p>Fetch the endpoint to use for getting metrics for a deployment with given id.
+Required permissions:
+- metrics.endpoint.get on the deployment identified by the given ID</p></td>
+              </tr>
+            
           </tbody>
         </table>
 
@@ -11861,6 +11927,16 @@ Required permissions:
                 <td>DeleteToken</td>
                 <td>DELETE</td>
                 <td>/api/metrics/v1/tokens/{id}</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetMetricsEndpoint</td>
+                <td>GET</td>
+                <td>/api/metrics/v1/endpoints/{deployment_id}</td>
                 <td></td>
               </tr>
               
