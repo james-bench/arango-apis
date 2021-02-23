@@ -130,12 +130,40 @@ export interface UsageItem {
   // This field is only set when the usage item is of kind BackupStorageSize.
   // UsageItem_BackupStorageSize
   backup_storage_size?: UsageItem_BackupStorageSize;
+  
+  // Amount of audit log related resources used by the resource covered by this usage item.
+  // This field is only set when the usage item is of kind AuditLogSize.
+  // UsageItem_AuditLogSize
+  auditlog_size?: UsageItem_AuditLogSize;
 }
+
+// Amount of audit log related resources used by the resource covered by this usage item.
+export interface UsageItem_AuditLogSize {
+  // Number of cloud events used by audit log.
+  // number
+  cloud_event_count?: number;
+  
+  // Amount of cloud storage (in bytes) used by audit log.
+  // number
+  cloud_storage_size?: number;
+  
+  // Number of https post invocations used by audit log.
+  // number
+  https_post_count?: number;
+  
+  // Amount of https post body (in bytes) used by audit log.
+  // number
+  https_post_body_size?: number;
+}
+
+// Amount of backup related cloud storage used by the resource covered by this usage item.
 export interface UsageItem_BackupStorageSize {
   // Amount of cloud storage (in bytes) used by backups of a deployment.
   // number
   cloud_storage_size?: number;
 }
+
+// Amount of (computer) resources used by the resource covered by this usage item.
 export interface UsageItem_DeploymentSize {
   // Number of coordinators of the deployment
   // number
@@ -177,6 +205,8 @@ export interface UsageItem_DeploymentSize {
   // string
   addon_ids?: string[];
 }
+
+// Amount of network traffic used by the resource covered by this usage item.
 export interface UsageItem_NetworkTransferSize {
   // The destination (or source) the network traffic going to (or coming from)
   // Can be 'Internet' or 'InCluster'
@@ -226,18 +256,22 @@ export interface UsageItem_Resource {
   organization_name?: string;
   
   // Identifier of the project that owns the resource that this usage item covers.
+  // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
   // string
   project_id?: string;
   
   // Name of the project that owns the resource that this usage item covers.
+  // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
   // string
   project_name?: string;
   
   // Identifier of the deployment that owns the resource that this usage item covers.
+  // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
   // string
   deployment_id?: string;
   
   // Name of the deployment that owns the resource that this usage item covers.
+  // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
   // string
   deployment_name?: string;
   
@@ -247,18 +281,22 @@ export interface UsageItem_Resource {
   deployment_member_name?: string;
   
   // Identifier of the cloud provider that is used to run the deployment.
+  // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
   // string
   cloud_provider_id?: string;
   
   // Identifier of the cloud region that is used to run the deployment.
+  // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
   // string
   cloud_region_id?: string;
   
   // Identifier of the support plan that is attached to the deployment.
+  // This field is not filled-out when the kind is AuditLogSize
   // string
   support_plan_id?: string;
   
   // Model of the deployment
+  // This field is not filled-out when the kind is AuditLogSize
   // string
   deployment_model?: string;
 }
