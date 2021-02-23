@@ -16092,7 +16092,7 @@ This field is only set when the usage item is of kind AuditLogSize. </p></td>
         
       
         <h3 id="arangodb.cloud.usage.v1.UsageItem.AuditLogSize">UsageItem.AuditLogSize</h3>
-        <p></p>
+        <p>Amount of audit log related resources used by the resource covered by this usage item.</p>
 
         
           <table class="field-table">
@@ -16102,7 +16102,7 @@ This field is only set when the usage item is of kind AuditLogSize. </p></td>
             <tbody>
               
                 <tr>
-                  <td>cloud_count</td>
+                  <td>cloud_event_count</td>
                   <td><a href="#int64">int64</a></td>
                   <td></td>
                   <td><p>Number of cloud events used by audit log. </p></td>
@@ -16137,7 +16137,7 @@ This field is only set when the usage item is of kind AuditLogSize. </p></td>
         
       
         <h3 id="arangodb.cloud.usage.v1.UsageItem.BackupStorageSize">UsageItem.BackupStorageSize</h3>
-        <p></p>
+        <p>Amount of backup related cloud storage used by the resource covered by this usage item.</p>
 
         
           <table class="field-table">
@@ -16161,7 +16161,7 @@ This field is only set when the usage item is of kind AuditLogSize. </p></td>
         
       
         <h3 id="arangodb.cloud.usage.v1.UsageItem.DeploymentSize">UsageItem.DeploymentSize</h3>
-        <p></p>
+        <p>Amount of (computer) resources used by the resource covered by this usage item.</p>
 
         
           <table class="field-table">
@@ -16248,7 +16248,7 @@ This field is only set when the usage item is of kind AuditLogSize. </p></td>
         
       
         <h3 id="arangodb.cloud.usage.v1.UsageItem.NetworkTransferSize">UsageItem.NetworkTransferSize</h3>
-        <p></p>
+        <p>Amount of network traffic used by the resource covered by this usage item.</p>
 
         
           <table class="field-table">
@@ -16352,28 +16352,32 @@ Note: In the future we want to split between cross_region_transfer_x and inner_r
                   <td>project_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Identifier of the project that owns the resource that this usage item covers. </p></td>
+                  <td><p>Identifier of the project that owns the resource that this usage item covers.
+This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty) </p></td>
                 </tr>
               
                 <tr>
                   <td>project_name</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Name of the project that owns the resource that this usage item covers. </p></td>
+                  <td><p>Name of the project that owns the resource that this usage item covers.
+This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty) </p></td>
                 </tr>
               
                 <tr>
                   <td>deployment_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Identifier of the deployment that owns the resource that this usage item covers. </p></td>
+                  <td><p>Identifier of the deployment that owns the resource that this usage item covers.
+This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty) </p></td>
                 </tr>
               
                 <tr>
                   <td>deployment_name</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Name of the deployment that owns the resource that this usage item covers. </p></td>
+                  <td><p>Name of the deployment that owns the resource that this usage item covers.
+This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty) </p></td>
                 </tr>
               
                 <tr>
@@ -16388,28 +16392,32 @@ This field is only set when the usage item is specific for a member of the deplo
                   <td>cloud_provider_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Identifier of the cloud provider that is used to run the deployment. </p></td>
+                  <td><p>Identifier of the cloud provider that is used to run the deployment.
+This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty) </p></td>
                 </tr>
               
                 <tr>
                   <td>cloud_region_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Identifier of the cloud region that is used to run the deployment. </p></td>
+                  <td><p>Identifier of the cloud region that is used to run the deployment.
+This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty) </p></td>
                 </tr>
               
                 <tr>
                   <td>support_plan_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Identifier of the support plan that is attached to the deployment. </p></td>
+                  <td><p>Identifier of the support plan that is attached to the deployment.
+This field is not filled-out when the kind is AuditLogSize </p></td>
                 </tr>
               
                 <tr>
                   <td>deployment_model</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Model of the deployment </p></td>
+                  <td><p>Model of the deployment
+This field is not filled-out when the kind is AuditLogSize </p></td>
                 </tr>
               
             </tbody>
