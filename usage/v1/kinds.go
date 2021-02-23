@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
 // Author Ewout Prangsma
+// Author Robert Stam
 //
 
 package v1
@@ -34,4 +35,7 @@ const (
 	// UsageItemKindBackupStorageSize indicates a UsageItem that contains
 	// the amount of cloud storage used by backups of a deployment.
 	UsageItemKindBackupStorageSize = "BackupStorageSize"
+	// UsageItemKindAuditLogSize indicates a UsageItem that contains
+	// the amount of resources used by audit log (of a deployment).
+	UsageItemKindAuditLogSize = "AuditLogSize"
 )

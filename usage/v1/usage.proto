@@ -1,7 +1,7 @@
 // 
 // DISCLAIMER
 // 
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 // 
 // Author Ewout Prangsma
+// Author Robert Stam
 // 
 
 syntax = "proto3";
@@ -171,6 +172,20 @@ message UsageItem {
     // Amount of backup related cloud storage used by the resource covered by this usage item.
     // This field is only set when the usage item is of kind BackupStorageSize.
     BackupStorageSize backup_storage_size = 103;
+
+    message AuditLogSize {
+        // Number of cloud events used by audit log.
+        int64 cloud_count = 1;
+        // Amount of cloud storage (in bytes) used by audit log.
+        int64 cloud_storage_size = 2;
+        // Number of https post invocations used by audit log.
+        int64 https_post_count = 11;
+        // Amount of https post body (in bytes) used by audit log.
+        int64 https_post_body_size = 12;
+    }
+    // Amount of audit log related resources used by the resource covered by this usage item.
+    // This field is only set when the usage item is of kind AuditLogSize.
+    AuditLogSize auditlog_size = 104;
 }
 
 // List of UsageItems.

@@ -130,6 +130,28 @@ export interface UsageItem {
   // This field is only set when the usage item is of kind BackupStorageSize.
   // UsageItem_BackupStorageSize
   backup_storage_size?: UsageItem_BackupStorageSize;
+  
+  // Amount of audit log related resources used by the resource covered by this usage item.
+  // This field is only set when the usage item is of kind AuditLogSize.
+  // UsageItem_AuditLogSize
+  auditlog_size?: UsageItem_AuditLogSize;
+}
+export interface UsageItem_AuditLogSize {
+  // Number of cloud events used by audit log.
+  // number
+  cloud_count?: number;
+  
+  // Amount of cloud storage (in bytes) used by audit log.
+  // number
+  cloud_storage_size?: number;
+  
+  // Number of https post invocations used by audit log.
+  // number
+  https_post_count?: number;
+  
+  // Amount of https post body (in bytes) used by audit log.
+  // number
+  https_post_body_size?: number;
 }
 export interface UsageItem_BackupStorageSize {
   // Amount of cloud storage (in bytes) used by backups of a deployment.
