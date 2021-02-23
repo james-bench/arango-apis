@@ -177,6 +177,10 @@ message ListTokensRequest {
     string deployment_id = 2;
     // If set, do not return revoked tokens.
     bool exclude_revoked = 3;
+    // If set, do not return expired tokens.
+    bool exclude_expired = 4;
+    // If set, do not return deleted (marked for deletion) tokens.
+    bool exclude_deleted = 5;
 }
 
 // Request arguments for GetMetricsEndpoint

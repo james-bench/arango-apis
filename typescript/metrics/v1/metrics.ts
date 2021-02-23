@@ -33,6 +33,14 @@ export interface ListTokensRequest {
   // If set, do not return revoked tokens.
   // boolean
   exclude_revoked?: boolean;
+  
+  // If set, do not return expired tokens.
+  // boolean
+  exclude_expired?: boolean;
+  
+  // If set, do not return deleted (marked for deletion) tokens.
+  // boolean
+  exclude_deleted?: boolean;
 }
 
 // Response for GetMetricsEndpoint
