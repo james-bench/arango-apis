@@ -12,6 +12,13 @@ import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/com
 // File: metrics/v1/metrics.proto
 // Package: arangodb.cloud.metrics.v1
 
+// Request arguments for GetMetricsEndpoint
+export interface GetMetricsEndpointRequest {
+  // ID of the deployment to get the endpoint for.
+  // string
+  deployment_id?: string;
+}
+
 // Request arguments for ListTokens.
 export interface ListTokensRequest {
   // Common list options.
@@ -26,6 +33,22 @@ export interface ListTokensRequest {
   // If set, do not return revoked tokens.
   // boolean
   exclude_revoked?: boolean;
+  
+  // If set, do not return expired tokens.
+  // boolean
+  exclude_expired?: boolean;
+  
+  // If set, do not return deleted (marked for deletion) tokens.
+  // boolean
+  exclude_deleted?: boolean;
+}
+
+// Response for GetMetricsEndpoint
+export interface MetricsEndpoint {
+  // Endpoint (url) to get metrics from.
+  // If no valid metrics tokens are configured this field is empty.
+  // string
+  endpoint?: string;
 }
 
 // A Token is represents an access token used to authenticate requests for metrics.
@@ -151,6 +174,11 @@ export interface IMetricsService {
   // Required permissions:
   // - metrics.token.delete on the token
   DeleteToken: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Fetch the endpoint to use for getting metrics for a deployment with given id.
+  // Required permissions:
+  // - metrics.endpoint.get on the deployment identified by the given ID
+  GetMetricsEndpoint: (req: GetMetricsEndpointRequest) => Promise<MetricsEndpoint>;
 }
 
 // MetricsService is the API used to configure various metrics objects.
@@ -221,5 +249,14 @@ export class MetricsService implements IMetricsService {
     const path = `/api/metrics/v1/tokens/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.delete(url, undefined);
+  }
+  
+  // Fetch the endpoint to use for getting metrics for a deployment with given id.
+  // Required permissions:
+  // - metrics.endpoint.get on the deployment identified by the given ID
+  async GetMetricsEndpoint(req: GetMetricsEndpointRequest): Promise<MetricsEndpoint> {
+    const path = `/api/metrics/v1/endpoints/${encodeURIComponent(req.deployment_id || '')}`;
+    const url = path + api.queryString(req, [`deployment_id`]);
+    return api.get(url, undefined);
   }
 }

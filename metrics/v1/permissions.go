@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -37,4 +37,11 @@ const (
 	PermissionTokenRevoke = "metrics.token.revoke"
 	// PermissionTokenDelete is needed for deleting a metrics token
 	PermissionTokenDelete = "metrics.token.delete"
+)
+
+const (
+	// Metrics endpoint permissions
+
+	// PermissionEndpointGet is needed for fetching the metrics endpoint for a deployment
+	PermissionEndpointGet = "metrics.endpoint.get"
 )
