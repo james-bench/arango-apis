@@ -117,6 +117,7 @@ test:
 bootstrap:
 	go get github.com/arangodb-managed/zutano
 	go get github.com/jstemmer/go-junit-report
+	go get github.com/stretchr/testify
 
 check-version:
 	zutano check api branch
