@@ -266,10 +266,15 @@ export interface Deployment {
   // string
   version?: string;
   
-  // If set, it is highly recommended to update to the ArangoDB release with the
+  // If set, this deployment will be upgraded to the ArangoDB release with the
   // version as listed in this field.
   // ReplaceVersionBy
   replace_version_by?: ReplaceVersionBy;
+  
+  // If set, it is recommended to upgrade to the ArangoDB release with the
+  // version as listed in this field.
+  // UpgradeVersionRecommendation
+  upgrade_recommendation?: UpgradeVersionRecommendation;
   
   // Deployment_CertificateSpec
   certificates?: Deployment_CertificateSpec;
@@ -1061,13 +1066,13 @@ export interface RebalanceDeploymentShardsRequest {
 
 // ReplaceVersionBy holds replacement instructions.
 export interface ReplaceVersionBy {
-  // The version of the ArangoDB release that it should be upgraded to.
+  // The version of the ArangoDB release that it will be upgraded to.
   // Version in the format of major.minor.patch
   // Format details can be found at: https://semver.org/
   // string
   version?: string;
   
-  // Human readable reason why this version should be replaced.
+  // Human readable reason why this version will be replaced.
   // string
   reason?: string;
 }
@@ -1148,6 +1153,19 @@ export interface ServersSpecLimitsRequest {
   deployment_id?: string;
 }
 
+// UpgradeVersionRecommendation holds a recommendation for updating this version.
+export interface UpgradeVersionRecommendation {
+  // The version of the ArangoDB release that it it is recommend to upgraded to.
+  // Version in the format of major.minor.patch
+  // Format details can be found at: https://semver.org/
+  // string
+  version?: string;
+  
+  // Human readable reason why this version should be upgraded.
+  // string
+  reason?: string;
+}
+
 // Version of an ArangoDB release
 export interface Version {
   // Version in the format of major.minor.patch
@@ -1155,10 +1173,15 @@ export interface Version {
   // string
   version?: string;
   
-  // If set, deployments using this version should be updated to the ArangoDB release with the
+  // If set, deployments using this version will be upgraded to the ArangoDB release with the
   // version as listed in this message.
   // ReplaceVersionBy
   replace_by?: ReplaceVersionBy;
+  
+  // If set, deployments using this version are recommend to be upgraded to the ArangoDB release with the
+  // version as listed in this message.
+  // UpgradeVersionRecommendation
+  upgrade_recommendation?: UpgradeVersionRecommendation;
 }
 
 // List of Versions.
