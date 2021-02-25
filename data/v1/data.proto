@@ -1,7 +1,7 @@
 // 
 // DISCLAIMER
 // 
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -377,9 +377,12 @@ message Deployment {
     // list of available versions is considered an invalid request.
     string version = 101;
 
-    // If set, it is highly recommended to update to the ArangoDB release with the
+    // If set, this deployment will be upgraded to the ArangoDB release with the
 	// version as listed in this field.
     ReplaceVersionBy replace_version_by = 104;
+    // If set, it is recommended to upgrade to the ArangoDB release with the
+	// version as listed in this field.
+    UpgradeVersionRecommendation upgrade_recommendation = 105;
 
     message CertificateSpec {
         // Identifier of the CACertificate used to sign TLS certificates for the deployment.
@@ -709,18 +712,31 @@ message Version {
     // Version in the format of major.minor.patch
     // Format details can be found at: https://semver.org/
     string version = 1;
-    // If set, deployments using this version should be updated to the ArangoDB release with the
+    // If set, deployments using this version will be upgraded to the ArangoDB release with the
     // version as listed in this message.
     ReplaceVersionBy replace_by = 2;
+    // If set, deployments using this version are recommend to be upgraded to the ArangoDB release with the
+    // version as listed in this message.
+    UpgradeVersionRecommendation upgrade_recommendation = 3;
 }
 
 // ReplaceVersionBy holds replacement instructions.
 message ReplaceVersionBy  {
-    // The version of the ArangoDB release that it should be upgraded to.
+    // The version of the ArangoDB release that it will be upgraded to.
     // Version in the format of major.minor.patch
     // Format details can be found at: https://semver.org/
     string version = 1;
-    // Human readable reason why this version should be replaced.
+    // Human readable reason why this version will be replaced.
+    string reason = 2;
+}
+
+// UpgradeVersionRecommendation holds a recommendation for updating this version.
+message UpgradeVersionRecommendation  {
+    // The version of the ArangoDB release that it it is recommend to upgraded to.
+    // Version in the format of major.minor.patch
+    // Format details can be found at: https://semver.org/
+    string version = 1;
+    // Human readable reason why this version should be upgraded.
     string reason = 2;
 }
 

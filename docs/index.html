@@ -726,6 +726,10 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.data.v1.UpgradeVersionRecommendation"><span class="badge">M</span>UpgradeVersionRecommendation</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.data.v1.Version"><span class="badge">M</span>Version</a>
                 </li>
               
@@ -6805,7 +6809,15 @@ list of available versions is considered an invalid request. </p></td>
                   <td>replace_version_by</td>
                   <td><a href="#arangodb.cloud.data.v1.ReplaceVersionBy">ReplaceVersionBy</a></td>
                   <td></td>
-                  <td><p>If set, it is highly recommended to update to the ArangoDB release with the
+                  <td><p>If set, this deployment will be upgraded to the ArangoDB release with the
+version as listed in this field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>upgrade_recommendation</td>
+                  <td><a href="#arangodb.cloud.data.v1.UpgradeVersionRecommendation">UpgradeVersionRecommendation</a></td>
+                  <td></td>
+                  <td><p>If set, it is recommended to upgrade to the ArangoDB release with the
 version as listed in this field. </p></td>
                 </tr>
               
@@ -8528,7 +8540,7 @@ in the result, if it it would not match for new deployments. </p></td>
                   <td>version</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>The version of the ArangoDB release that it should be upgraded to.
+                  <td><p>The version of the ArangoDB release that it will be upgraded to.
 Version in the format of major.minor.patch
 Format details can be found at: https://semver.org/ </p></td>
                 </tr>
@@ -8537,7 +8549,7 @@ Format details can be found at: https://semver.org/ </p></td>
                   <td>reason</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Human readable reason why this version should be replaced. </p></td>
+                  <td><p>Human readable reason why this version will be replaced. </p></td>
                 </tr>
               
             </tbody>
@@ -8726,6 +8738,39 @@ is allowed. </p></td>
 
         
       
+        <h3 id="arangodb.cloud.data.v1.UpgradeVersionRecommendation">UpgradeVersionRecommendation</h3>
+        <p>UpgradeVersionRecommendation holds a recommendation for updating this version.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>version</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The version of the ArangoDB release that it it is recommend to upgraded to.
+Version in the format of major.minor.patch
+Format details can be found at: https://semver.org/ </p></td>
+                </tr>
+              
+                <tr>
+                  <td>reason</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Human readable reason why this version should be upgraded. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.data.v1.Version">Version</h3>
         <p>Version of an ArangoDB release</p>
 
@@ -8748,7 +8793,15 @@ Format details can be found at: https://semver.org/ </p></td>
                   <td>replace_by</td>
                   <td><a href="#arangodb.cloud.data.v1.ReplaceVersionBy">ReplaceVersionBy</a></td>
                   <td></td>
-                  <td><p>If set, deployments using this version should be updated to the ArangoDB release with the
+                  <td><p>If set, deployments using this version will be upgraded to the ArangoDB release with the
+version as listed in this message. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>upgrade_recommendation</td>
+                  <td><a href="#arangodb.cloud.data.v1.UpgradeVersionRecommendation">UpgradeVersionRecommendation</a></td>
+                  <td></td>
+                  <td><p>If set, deployments using this version are recommend to be upgraded to the ArangoDB release with the
 version as listed in this message. </p></td>
                 </tr>
               
