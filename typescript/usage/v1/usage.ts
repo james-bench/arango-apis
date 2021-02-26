@@ -135,25 +135,44 @@ export interface UsageItem {
   // This field is only set when the usage item is of kind AuditLogSize.
   // UsageItem_AuditLogSize
   auditlog_size?: UsageItem_AuditLogSize;
+  
+  // Amount of audit log storage related resources used by the resource covered by this usage item.
+  // This field is only set when the usage item is of kind AuditLogCloudSize.
+  // UsageItem_AuditLogStorageSize
+  auditlog_storage_size?: UsageItem_AuditLogStorageSize;
 }
 
 // Amount of audit log related resources used by the resource covered by this usage item.
 export interface UsageItem_AuditLogSize {
-  // Number of cloud events used by audit log.
-  // number
-  cloud_event_count?: number;
+  // Type of destination.
+  // Possible values are: "cloud", "https-post"
+  // string
+  destination_type?: string;
   
+  // Number of events used by audit log.
+  // This is the value of DestinationCounters.events (of the timespan covered by this usage item).
+  // number
+  event_count?: number;
+  
+  // Number of bytes used by audit log.
+  // This is the total of DestinationCounters.bytes_succeeded and bytes_failed (of the timespan covered by this usage item)
+  // and depending on the destination type send to the cloud or used as the body of a https post request.
+  // number
+  event_size?: number;
+  
+  // Number of https post invocations used by audit log.
+  // This is the total of DestinationCounters.https_posts_succeeded and https_posts_failed (of the timespan covered by this usage item).
+  // Set when destination_type is "https-post" only
+  // number
+  https_post_count?: number;
+}
+
+// Amount of audit log storage related resources used by the resource covered by this usage item.
+// When this usage type is used, the audit log destination_type is "cloud".
+export interface UsageItem_AuditLogStorageSize {
   // Amount of cloud storage (in bytes) used by audit log.
   // number
   cloud_storage_size?: number;
-  
-  // Number of https post invocations used by audit log.
-  // number
-  https_post_count?: number;
-  
-  // Amount of https post body (in bytes) used by audit log.
-  // number
-  https_post_body_size?: number;
 }
 
 // Amount of backup related cloud storage used by the resource covered by this usage item.

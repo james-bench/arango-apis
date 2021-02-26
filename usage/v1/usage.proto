@@ -186,18 +186,35 @@ message UsageItem {
 
     // Amount of audit log related resources used by the resource covered by this usage item.
     message AuditLogSize {
-        // Number of cloud events used by audit log.
-        int64 cloud_event_count = 1;
-        // Amount of cloud storage (in bytes) used by audit log.
-        int64 cloud_storage_size = 2;
+        // Type of destination.
+        // Possible values are: "cloud", "https-post"
+        string destination_type = 1;
+        // Number of events used by audit log.
+        // This is the value of DestinationCounters.events (of the timespan covered by this usage item).
+        int64 event_count = 11;
+        // Number of bytes used by audit log.
+        // This is the total of DestinationCounters.bytes_succeeded and bytes_failed (of the timespan covered by this usage item)
+        // and depending on the destination type send to the cloud or used as the body of a https post request.
+        int64 event_size = 12;
         // Number of https post invocations used by audit log.
-        int64 https_post_count = 11;
-        // Amount of https post body (in bytes) used by audit log.
-        int64 https_post_body_size = 12;
+        // This is the total of DestinationCounters.https_posts_succeeded and https_posts_failed (of the timespan covered by this usage item).
+        // Set when destination_type is "https-post" only
+        int64 https_post_count = 21;
+       
     }
     // Amount of audit log related resources used by the resource covered by this usage item.
     // This field is only set when the usage item is of kind AuditLogSize.
     AuditLogSize auditlog_size = 104;
+
+     // Amount of audit log storage related resources used by the resource covered by this usage item.
+     // When this usage type is used, the audit log destination_type is "cloud".
+     message AuditLogStorageSize {
+        // Amount of cloud storage (in bytes) used by audit log.
+        int64 cloud_storage_size = 1;
+    }
+    // Amount of audit log storage related resources used by the resource covered by this usage item.
+    // This field is only set when the usage item is of kind AuditLogCloudSize.
+    AuditLogStorageSize auditlog_storage_size = 105;
 }
 
 // List of UsageItems.

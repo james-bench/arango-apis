@@ -1255,6 +1255,10 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.usage.v1.UsageItem.AuditLogStorageSize"><span class="badge">M</span>UsageItem.AuditLogStorageSize</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.usage.v1.UsageItem.BackupStorageSize"><span class="badge">M</span>UsageItem.BackupStorageSize</a>
                 </li>
               
@@ -16227,6 +16231,14 @@ This field is only set when the usage item is of kind BackupStorageSize. </p></t
 This field is only set when the usage item is of kind AuditLogSize. </p></td>
                 </tr>
               
+                <tr>
+                  <td>auditlog_storage_size</td>
+                  <td><a href="#arangodb.cloud.usage.v1.UsageItem.AuditLogStorageSize">UsageItem.AuditLogStorageSize</a></td>
+                  <td></td>
+                  <td><p>Amount of audit log storage related resources used by the resource covered by this usage item.
+This field is only set when the usage item is of kind AuditLogCloudSize. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -16245,31 +16257,61 @@ This field is only set when the usage item is of kind AuditLogSize. </p></td>
             <tbody>
               
                 <tr>
-                  <td>cloud_event_count</td>
-                  <td><a href="#int64">int64</a></td>
+                  <td>destination_type</td>
+                  <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Number of cloud events used by audit log. </p></td>
+                  <td><p>Type of destination.
+Possible values are: &#34;cloud&#34;, &#34;https-post&#34; </p></td>
                 </tr>
               
                 <tr>
-                  <td>cloud_storage_size</td>
+                  <td>event_count</td>
                   <td><a href="#int64">int64</a></td>
                   <td></td>
-                  <td><p>Amount of cloud storage (in bytes) used by audit log. </p></td>
+                  <td><p>Number of events used by audit log.
+This is the value of DestinationCounters.events (of the timespan covered by this usage item). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>event_size</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>Number of bytes used by audit log.
+This is the total of DestinationCounters.bytes_succeeded and bytes_failed (of the timespan covered by this usage item)
+and depending on the destination type send to the cloud or used as the body of a https post request. </p></td>
                 </tr>
               
                 <tr>
                   <td>https_post_count</td>
                   <td><a href="#int64">int64</a></td>
                   <td></td>
-                  <td><p>Number of https post invocations used by audit log. </p></td>
+                  <td><p>Number of https post invocations used by audit log.
+This is the total of DestinationCounters.https_posts_succeeded and https_posts_failed (of the timespan covered by this usage item).
+Set when destination_type is &#34;https-post&#34; only </p></td>
                 </tr>
               
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.usage.v1.UsageItem.AuditLogStorageSize">UsageItem.AuditLogStorageSize</h3>
+        <p>Amount of audit log storage related resources used by the resource covered by this usage item.</p><p>When this usage type is used, the audit log destination_type is "cloud".</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
                 <tr>
-                  <td>https_post_body_size</td>
+                  <td>cloud_storage_size</td>
                   <td><a href="#int64">int64</a></td>
                   <td></td>
-                  <td><p>Amount of https post body (in bytes) used by audit log. </p></td>
+                  <td><p>Amount of cloud storage (in bytes) used by audit log. </p></td>
                 </tr>
               
             </tbody>
