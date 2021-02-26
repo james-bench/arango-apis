@@ -27,9 +27,9 @@ const (
 	// APIID contains identifier of this API
 	APIID = "usage/v1"
 	// APIMajorVersion contains major version of this API
-	APIMajorVersion = 2
+	APIMajorVersion = 1
 	// APIMinorVersion contains minor version of this API
-	APIMinorVersion = 0
+	APIMinorVersion = 2
 	// APIPatchVersion contains patch version of this API
 	APIPatchVersion = 0
 )
