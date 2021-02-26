@@ -38,4 +38,7 @@ const (
 	// UsageItemKindAuditLogSize indicates a UsageItem that contains
 	// the amount of resources used by audit log (of a deployment).
 	UsageItemKindAuditLogSize = "AuditLogSize"
+	// UsageItemKindAuditLogStorageSize indicates a UsageItem that contains
+	// the amount of cloud storage used by audit log (of a deployment).
+	UsageItemKindAuditLogStorageSize = "AuditLogStorageSize"
 )
