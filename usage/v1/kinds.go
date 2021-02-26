@@ -28,17 +28,24 @@ const (
 
 	// UsageItemKindDeploymentSize indicates a UsageItem that contains cloud
 	// resources for Deployment.
+	// UsageItems from this kind will not be closed automatically, so open items can exists.
 	UsageItemKindDeploymentSize = "DeploymentSize"
 	// UsageItemKindNetworkTransferSize indicates a UsageItem that contains
 	// the amount of network traffic caused by a deployment (or member of a deployment).
+	// UsageItems from this kind will be closed automatically, so no open items can exists.
+	// The timespan of this UsageItem is normally 24h (unless the deployment is deleted)
 	UsageItemKindNetworkTransferSize = "NetworkTransferSize"
 	// UsageItemKindBackupStorageSize indicates a UsageItem that contains
 	// the amount of cloud storage used by backups of a deployment.
+	// UsageItems from this kind will not be closed automatically, so open items can exists.
 	UsageItemKindBackupStorageSize = "BackupStorageSize"
 	// UsageItemKindAuditLogSize indicates a UsageItem that contains
 	// the amount of resources used by audit log (of a deployment).
+	// UsageItems from this kind will be closed automatically, so no open items can exists.
+	// The timespan of this UsageItem is normally 24h (unless the auditlog or deployment is deleted)
 	UsageItemKindAuditLogSize = "AuditLogSize"
 	// UsageItemKindAuditLogStorageSize indicates a UsageItem that contains
 	// the amount of cloud storage used by audit log (of a deployment).
+	// UsageItems from this kind will not be closed automatically, so open items can exists.
 	UsageItemKindAuditLogStorageSize = "AuditLogStorageSize"
 )
