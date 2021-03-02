@@ -708,13 +708,30 @@ export interface DeploymentPrice {
   // DeploymentPrice_NetworkTransferPrice
   network_transfer_prices?: DeploymentPrice_NetworkTransferPrice[];
   
-  // Network transfer prices (variable depending on usage)
+  // Backup prices (variable depending on usage)
   // DeploymentPrice_BackupPrice
   backup_price?: DeploymentPrice_BackupPrice;
   
   // Identifier of the currency in which the price is specified.
   // string
   currency_id?: string;
+  
+  // AuditLog prices (variable depending on usage)
+  // DeploymentPrice_AuditLogPrice
+  auditlog_price?: DeploymentPrice_AuditLogPrice;
+}
+export interface DeploymentPrice_AuditLogPrice {
+  // Price per GB/hour of audit logs in cloud storage (destination=cloud)
+  // number
+  price_per_gb_per_hour?: number;
+  
+  // Price per 1.000 HTTPS Post invocations (destination=https-post)
+  // number
+  https_post_invocation_price_per_1000?: number;
+  
+  // Price per GB HTTPS Post body size (destination=https-post)
+  // number
+  https_post_body_size_price_per_gb?: number;
 }
 export interface DeploymentPrice_BackupPrice {
   // Price per GB/hour of uploaded backup storage
