@@ -650,6 +650,10 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.data.v1.DeploymentPrice.AuditLogPrice"><span class="badge">M</span>DeploymentPrice.AuditLogPrice</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.data.v1.DeploymentPrice.BackupPrice"><span class="badge">M</span>DeploymentPrice.BackupPrice</a>
                 </li>
               
@@ -7755,7 +7759,7 @@ Default to username of root user. </p></td>
                   <td>backup_price</td>
                   <td><a href="#arangodb.cloud.data.v1.DeploymentPrice.BackupPrice">DeploymentPrice.BackupPrice</a></td>
                   <td></td>
-                  <td><p>Network transfer prices (variable depending on usage) </p></td>
+                  <td><p>Backup prices (variable depending on usage) </p></td>
                 </tr>
               
                 <tr>
@@ -7763,6 +7767,51 @@ Default to username of root user. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Identifier of the currency in which the price is specified. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>auditlog_price</td>
+                  <td><a href="#arangodb.cloud.data.v1.DeploymentPrice.AuditLogPrice">DeploymentPrice.AuditLogPrice</a></td>
+                  <td></td>
+                  <td><p>AuditLog prices (variable depending on usage) </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.data.v1.DeploymentPrice.AuditLogPrice">DeploymentPrice.AuditLogPrice</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>price_per_gb_per_hour</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Price per GB/hour of audit logs in cloud storage (destination=cloud) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>https_post_invocation_price_per_1000</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Price per 1.000 HTTPS Post invocations (destination=https-post) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>https_post_body_size_price_per_gb</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Price per GB HTTPS Post body size (destination=https-post) </p></td>
                 </tr>
               
             </tbody>

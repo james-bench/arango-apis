@@ -18,6 +18,7 @@
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 // 
 // Author Ewout Prangsma
+// Author Robert Stam
 // 
 
 syntax = "proto3";
@@ -1023,10 +1024,12 @@ message DeploymentPrice {
     float price_per_hour = 1;
     // Network transfer prices (variable depending on usage)
     repeated NetworkTransferPrice network_transfer_prices = 2;
-    // Network transfer prices (variable depending on usage)
+    // Backup prices (variable depending on usage)
     BackupPrice backup_price = 3;
     // Identifier of the currency in which the price is specified.
     string currency_id = 4;
+    // AuditLog prices (variable depending on usage)
+    AuditLogPrice auditlog_price = 5;
 
     message NetworkTransferPrice {
         // Price per GB of network transfer into the database
@@ -1040,6 +1043,15 @@ message DeploymentPrice {
     message BackupPrice {
         // Price per GB/hour of uploaded backup storage
         float price_per_gb_per_hour = 1;
+    }
+
+    message AuditLogPrice {
+        // Price per GB/hour of audit logs in cloud storage (destination=cloud)
+        float price_per_gb_per_hour = 1;
+        // Price per 1.000 HTTPS Post invocations (destination=https-post)
+        float https_post_invocation_price_per_1000 = 2;
+        // Price per GB HTTPS Post body size (destination=https-post)
+        float https_post_body_size_price_per_gb = 3;
     }
 }
 

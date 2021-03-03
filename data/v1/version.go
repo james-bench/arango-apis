@@ -18,6 +18,7 @@
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
 // Author Ewout Prangsma
+// Author Robert Stam
 //
 
 package v1
@@ -28,7 +29,7 @@ const (
 	// APIMajorVersion contains major version of this API
 	APIMajorVersion = 2
 	// APIMinorVersion contains minor version of this API
-	APIMinorVersion = 3
+	APIMinorVersion = 4
 	// APIPatchVersion contains patch version of this API
 	APIPatchVersion = 0
 )
