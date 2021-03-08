@@ -27,6 +27,7 @@ export interface AttachProjectToAuditLogRequest {
 // sent to and it acts as a grouping of audit log archives.
 export interface AuditLog {
   // The ID of this resource.
+  // This is a read-only value.
   // string
   id?: string;
   
@@ -64,7 +65,7 @@ export interface AuditLog {
   created_by_id?: string;
   
   // Identifier of the organization that owns this audit log.
-  // This is a read-only value.
+  // After creation, this value cannot be changed.
   // string
   organization_id?: string;
   
@@ -430,6 +431,28 @@ export interface ListAuditLogsRequest {
   options?: arangodb_cloud_common_v1_ListOptions;
 }
 
+// Request arguments for TestAuditLogHttpsPostDestination.
+export interface TestAuditLogHttpsPostDestinationRequest {
+  // Identifier of the organization.
+  // string
+  organization_id?: string;
+  
+  // The HTTPS post settings to test.
+  // AuditLog_HttpsPostSettings
+  settings?: AuditLog_HttpsPostSettings;
+}
+
+// Result arguments for TestAuditLogHttpsPostDestination.
+export interface TestAuditLogHttpsPostDestinationResult {
+  // Set if this destination has errors.
+  // boolean
+  has_errors?: boolean;
+  
+  // Human readable error message (if any).
+  // string
+  error_details?: string;
+}
+
 // AuditService is the API used to provide access to audit events.
 export interface IAuditService {
   // Get the current API version of this service.
@@ -466,6 +489,13 @@ export interface IAuditService {
   // Required permissions:
   // - audit.auditlog.delete on the audit log.
   DeleteAuditLog: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Test an audit log destination of type HTTPS Post.
+  // Note that only 1 item is returned, but this can take a while.
+  // To recognize test events: The Topic will be "test-topic" and the Sequence 0
+  // Required permissions:
+  // - audit.auditlog.test-https-post-destination on the organization identified by the given ID.
+  TestAuditLogHttpsPostDestination: (req: TestAuditLogHttpsPostDestinationRequest, cb: (obj: IStreamMessage<TestAuditLogHttpsPostDestinationResult>) => void) => Promise<IServerStream>;
   
   // Fetch all audit log archives in the audit log identified by the given ID.
   // Required permissions:
@@ -579,6 +609,16 @@ export class AuditService implements IAuditService {
     const path = `/api/audit/v1/auditlogs/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.delete(url, undefined);
+  }
+  
+  // Test an audit log destination of type HTTPS Post.
+  // Note that only 1 item is returned, but this can take a while.
+  // To recognize test events: The Topic will be "test-topic" and the Sequence 0
+  // Required permissions:
+  // - audit.auditlog.test-https-post-destination on the organization identified by the given ID.
+  async TestAuditLogHttpsPostDestination(req: TestAuditLogHttpsPostDestinationRequest, cb: (obj: IStreamMessage<TestAuditLogHttpsPostDestinationResult>) => void): Promise<IServerStream> {
+    const url = `/api/audit/v1/auditlog/test-https-post-destination`;
+    return api.server_stream(url, "POST", req, cb);
   }
   
   // Fetch all audit log archives in the audit log identified by the given ID.
