@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
 // Author Ewout Prangsma
+// Author Robert Stam
 //
 
 package v1
@@ -35,6 +36,8 @@ const (
 	PermissionAuditLogUpdate = "audit.auditlog.update"
 	// PermissionAuditLogDelete is needed to delete an existing AuditLog.
 	PermissionAuditLogDelete = "audit.auditlog.delete"
+	// PermissionAuditLogTestHttpsPostDestination is needed to test an AuditLog HTTPS post destination.
+	PermissionAuditLogTestHttpsPostDestination = "audit.auditlog.test-https-post-destination"
 )
 
 const (
