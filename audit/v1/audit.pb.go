@@ -1752,7 +1752,7 @@ type AuditServiceClient interface {
 	DeleteAuditLog(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Test an audit log destination of type HTTPS Post.
 	// Note that only 1 item is returned, but this can take a while.
-	// To recognise test events: The Topic will be "test-topic" and the Sequence 0
+	// To recognize test events: The Topic will be "test-topic" and the Sequence 0
 	// Required permissions:
 	// - audit.auditlog.test-https-post-destination on the organization identified by the given ID.
 	TestAuditLogHttpsPostDestination(ctx context.Context, in *TestAuditLogHttpsPostDestinationRequest, opts ...grpc.CallOption) (AuditService_TestAuditLogHttpsPostDestinationClient, error)
@@ -2026,7 +2026,7 @@ type AuditServiceServer interface {
 	DeleteAuditLog(context.Context, *v1.IDOptions) (*v1.Empty, error)
 	// Test an audit log destination of type HTTPS Post.
 	// Note that only 1 item is returned, but this can take a while.
-	// To recognise test events: The Topic will be "test-topic" and the Sequence 0
+	// To recognize test events: The Topic will be "test-topic" and the Sequence 0
 	// Required permissions:
 	// - audit.auditlog.test-https-post-destination on the organization identified by the given ID.
 	TestAuditLogHttpsPostDestination(*TestAuditLogHttpsPostDestinationRequest, AuditService_TestAuditLogHttpsPostDestinationServer) error

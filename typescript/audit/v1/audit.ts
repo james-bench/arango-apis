@@ -492,7 +492,7 @@ export interface IAuditService {
   
   // Test an audit log destination of type HTTPS Post.
   // Note that only 1 item is returned, but this can take a while.
-  // To recognise test events: The Topic will be "test-topic" and the Sequence 0
+  // To recognize test events: The Topic will be "test-topic" and the Sequence 0
   // Required permissions:
   // - audit.auditlog.test-https-post-destination on the organization identified by the given ID.
   TestAuditLogHttpsPostDestination: (req: TestAuditLogHttpsPostDestinationRequest, cb: (obj: IStreamMessage<TestAuditLogHttpsPostDestinationResult>) => void) => Promise<IServerStream>;
@@ -613,7 +613,7 @@ export class AuditService implements IAuditService {
   
   // Test an audit log destination of type HTTPS Post.
   // Note that only 1 item is returned, but this can take a while.
-  // To recognise test events: The Topic will be "test-topic" and the Sequence 0
+  // To recognize test events: The Topic will be "test-topic" and the Sequence 0
   // Required permissions:
   // - audit.auditlog.test-https-post-destination on the organization identified by the given ID.
   async TestAuditLogHttpsPostDestination(req: TestAuditLogHttpsPostDestinationRequest, cb: (obj: IStreamMessage<TestAuditLogHttpsPostDestinationResult>) => void): Promise<IServerStream> {
