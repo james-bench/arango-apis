@@ -232,6 +232,14 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.audit.v1.AuditLogTopic"><span class="badge">M</span>AuditLogTopic</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.audit.v1.AuditLogTopicList"><span class="badge">M</span>AuditLogTopicList</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.audit.v1.DeleteAuditLogArchiveEventsRequest"><span class="badge">M</span>DeleteAuditLogArchiveEventsRequest</a>
                 </li>
               
@@ -241,6 +249,10 @@ title: "ArangoDB Oasis API"
               
                 <li>
                   <a href="#arangodb.cloud.audit.v1.ListAuditLogArchivesRequest"><span class="badge">M</span>ListAuditLogArchivesRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.audit.v1.ListAuditLogTopicsRequest"><span class="badge">M</span>ListAuditLogTopicsRequest</a>
                 </li>
               
                 <li>
@@ -1954,6 +1966,13 @@ This is a read-only value. </p></td>
                   <td><p>ID of the AuditLogArchive that contains this event (if applicable) </p></td>
                 </tr>
               
+                <tr>
+                  <td>verb</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Verb of the event (if applicable) </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -1998,6 +2017,68 @@ This is a read-only value. </p></td>
                 <tr>
                   <td>items</td>
                   <td><a href="#arangodb.cloud.audit.v1.AuditLog">AuditLog</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.audit.v1.AuditLogTopic">AuditLogTopic</h3>
+        <p>Information about a possible topic of an audit log event.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>topic</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the topic </p></td>
+                </tr>
+              
+                <tr>
+                  <td>for_deployment</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, this topic is used in audit log events of deployments. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>for_platform</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, this topic is used in audit log events of the Oasis platform. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.audit.v1.AuditLogTopicList">AuditLogTopicList</h3>
+        <p>List of AuditLogTopic's</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#arangodb.cloud.audit.v1.AuditLogTopic">AuditLogTopic</a></td>
                   <td>repeated</td>
                   <td><p> </p></td>
                 </tr>
@@ -2151,6 +2232,44 @@ If not set, only audit log archives not indicated as deleted are returned. </p><
 
         
       
+        <h3 id="arangodb.cloud.audit.v1.ListAuditLogTopicsRequest">ListAuditLogTopicsRequest</h3>
+        <p>Request arguments for ListAuditLogTopics.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>options</td>
+                  <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
+                  <td></td>
+                  <td><p>Optional common list options, the context_id is ignored </p></td>
+                </tr>
+              
+                <tr>
+                  <td>for_deployment_only</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, only topics used in audit log events of deployments are returned. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>for_platform_only</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, only topics used in audit log events of the Oasis platform are returned. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.audit.v1.ListAuditLogsRequest">ListAuditLogsRequest</h3>
         <p>Request arguments for ListAuditLogs</p>
 
@@ -2272,6 +2391,15 @@ If not set, only audit logs not indicated as deleted are returned. </p></td>
                 <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
                 <td><a href="#arangodb.cloud.common.v1.Version">.arangodb.cloud.common.v1.Version</a></td>
                 <td><p>Get the current API version of this service.
+Required permissions:
+- None</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListAuditLogTopics</td>
+                <td><a href="#arangodb.cloud.audit.v1.ListAuditLogTopicsRequest">ListAuditLogTopicsRequest</a></td>
+                <td><a href="#arangodb.cloud.audit.v1.AuditLogTopicList">AuditLogTopicList</a></td>
+                <td><p>Fetch all topics that can be found in an audit log event.
 Required permissions:
 - None</p></td>
               </tr>
@@ -2447,6 +2575,16 @@ Required permissions:
                 <td>GetAPIVersion</td>
                 <td>GET</td>
                 <td>/api/audit/v1/api-version</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>ListAuditLogTopics</td>
+                <td>GET</td>
+                <td>/api/audit/v1/topics</td>
                 <td></td>
               </tr>
               
