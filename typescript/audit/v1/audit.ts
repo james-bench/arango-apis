@@ -350,6 +350,27 @@ export interface AuditLogList {
   items?: AuditLog[];
 }
 
+// Information about a possible topic of an audit log event.
+export interface AuditLogTopic {
+  // Identifier of the topic
+  // string
+  topic?: string;
+  
+  // If set, this topic is used in audit log events of deployments.
+  // boolean
+  for_deployment?: boolean;
+  
+  // If set, this topic is used in audit log events of the Oasis platform.
+  // boolean
+  for_platform?: boolean;
+}
+
+// List of AuditLogTopic's
+export interface AuditLogTopicList {
+  // AuditLogTopic
+  items?: AuditLogTopic[];
+}
+
 // Request arguments for DeleteAuditLogArchiveEvents.
 export interface DeleteAuditLogArchiveEventsRequest {
   // Identifier of the audit log archive to delete events from.
@@ -414,6 +435,21 @@ export interface ListAuditLogArchivesRequest {
   options?: arangodb_cloud_common_v1_ListOptions;
 }
 
+// Request arguments for ListAuditLogTopics.
+export interface ListAuditLogTopicsRequest {
+  // Optional common list options, the context_id is ignored
+  // arangodb.cloud.common.v1.ListOptions
+  options?: arangodb_cloud_common_v1_ListOptions;
+  
+  // If set, only topics used in audit log events of deployments are returned.
+  // boolean
+  for_deployment_only?: boolean;
+  
+  // If set, only topics used in audit log events of the Oasis platform are returned.
+  // boolean
+  for_platform_only?: boolean;
+}
+
 // Request arguments for ListAuditLogs
 export interface ListAuditLogsRequest {
   // Identifier of the organization to request the audit logs for.
@@ -459,6 +495,11 @@ export interface IAuditService {
   // Required permissions:
   // - None
   GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
+  
+  // Fetch all topics that can be found in an audit log event.
+  // Required permissions:
+  // - None
+  ListAuditLogTopics: (req: ListAuditLogTopicsRequest) => Promise<AuditLogTopicList>;
   
   // Fetch all audit logs in the organization identified by the given ID.
   // Required permissions:
@@ -559,6 +600,15 @@ export class AuditService implements IAuditService {
   // - None
   async GetAPIVersion(req?: arangodb_cloud_common_v1_Empty): Promise<arangodb_cloud_common_v1_Version> {
     const path = `/api/audit/v1/api-version`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch all topics that can be found in an audit log event.
+  // Required permissions:
+  // - None
+  async ListAuditLogTopics(req: ListAuditLogTopicsRequest): Promise<AuditLogTopicList> {
+    const path = `/api/audit/v1/topics`;
     const url = path + api.queryString(req, []);
     return api.get(url, undefined);
   }

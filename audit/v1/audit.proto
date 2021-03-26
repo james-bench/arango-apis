@@ -44,6 +44,15 @@ service AuditService {
         };
     }
 
+    // Fetch all topics that can be found in an audit log event.
+    // Required permissions:
+    // - None
+    rpc ListAuditLogTopics(ListAuditLogTopicsRequest) returns (AuditLogTopicList) {
+        option (google.api.http) = {
+            get: "/api/audit/v1/topics"
+        };
+    }
+
     // Fetch all audit logs in the organization identified by the given ID.
     // Required permissions:
     // - audit.auditlog.list on the organization identified by the given ID.
@@ -496,4 +505,29 @@ message TestAuditLogHttpsPostDestinationResult {
      bool has_errors = 1;
      // Human readable error message (if any).
      string error_details = 2;
+}
+
+// Information about a possible topic of an audit log event.
+message AuditLogTopic {
+    // Identifier of the topic
+    string topic = 1;
+    // If set, this topic is used in audit log events of deployments.
+    bool for_deployment = 2;
+    // If set, this topic is used in audit log events of the Oasis platform.
+    bool for_platform = 3;
+}
+
+// List of AuditLogTopic's
+message AuditLogTopicList {
+    repeated AuditLogTopic items = 1;
+}
+
+// Request arguments for ListAuditLogTopics.
+message ListAuditLogTopicsRequest {
+    // Optional common list options, the context_id is ignored
+    common.v1.ListOptions options = 1;
+    // If set, only topics used in audit log events of deployments are returned.
+    bool for_deployment_only = 2;
+    // If set, only topics used in audit log events of the Oasis platform are returned.
+    bool for_platform_only = 3;
 }
