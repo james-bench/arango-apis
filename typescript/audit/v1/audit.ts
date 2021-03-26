@@ -336,6 +336,10 @@ export interface AuditLogEvent {
   // ID of the AuditLogArchive that contains this event (if applicable)
   // string
   auditlogarchive_id?: string;
+  
+  // Verb of the event (if applicable)
+  // string
+  verb?: string;
 }
 
 // List of AuditLogEvent's.

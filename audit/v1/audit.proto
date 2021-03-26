@@ -445,6 +445,8 @@ message AuditLogEvent {
     string message = 12;
     // ID of the AuditLogArchive that contains this event (if applicable)
     string auditlogarchive_id = 13;
+    // Verb of the event (if applicable)
+    string verb = 14;
 }
 
 // List of AuditLogEvent's.
