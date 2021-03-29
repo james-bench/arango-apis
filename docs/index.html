@@ -260,6 +260,10 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.audit.v1.SetDefaultAuditLogRequest"><span class="badge">M</span>SetDefaultAuditLogRequest</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.audit.v1.TestAuditLogHttpsPostDestinationRequest"><span class="badge">M</span>TestAuditLogHttpsPostDestinationRequest</a>
                 </li>
               
@@ -1439,7 +1443,8 @@ After creation, this value cannot be changed. </p></td>
                   <td>is_default</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>If set, this AuditLog is the default for the organization. </p></td>
+                  <td><p>If set, this AuditLog is the default for the organization.
+This is a read-only value. </p></td>
                 </tr>
               
                 <tr>
@@ -2310,6 +2315,38 @@ If not set, only audit logs not indicated as deleted are returned. </p></td>
 
         
       
+        <h3 id="arangodb.cloud.audit.v1.SetDefaultAuditLogRequest">SetDefaultAuditLogRequest</h3>
+        <p>Request arguments for SetDefaultAuditLog.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the organization to set the default for. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>auditlog_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the new default auditlog.
+If empty, there will be no default auditlog for the organization. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.audit.v1.TestAuditLogHttpsPostDestinationRequest">TestAuditLogHttpsPostDestinationRequest</h3>
         <p>Request arguments for TestAuditLogHttpsPostDestination.</p>
 
@@ -2452,6 +2489,16 @@ Note that deleting an AuditLog will detach it from all Projects that
 it was attached to.
 Required permissions:
 - audit.auditlog.delete on the audit log.</p></td>
+              </tr>
+            
+              <tr>
+                <td>SetDefaultAuditLog</td>
+                <td><a href="#arangodb.cloud.audit.v1.SetDefaultAuditLogRequest">SetDefaultAuditLogRequest</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><p>Change the default audit log of an organization.
+The default audit log is automatically attached to new projects in the organization.
+Required permissions:
+- audit.auditlog.set-default on the organization.</p></td>
               </tr>
             
               <tr>
@@ -2635,6 +2682,16 @@ Required permissions:
                 <td>DeleteAuditLog</td>
                 <td>DELETE</td>
                 <td>/api/audit/v1/auditlogs/{id}</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>SetDefaultAuditLog</td>
+                <td>PUT</td>
+                <td>/api/audit/v1/auditlogs/{organization_id}/default</td>
                 <td></td>
               </tr>
               

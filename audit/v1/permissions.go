@@ -38,6 +38,8 @@ const (
 	PermissionAuditLogDelete = "audit.auditlog.delete"
 	// PermissionAuditLogTestHttpsPostDestination is needed to test an AuditLog HTTPS post destination.
 	PermissionAuditLogTestHttpsPostDestination = "audit.auditlog.test-https-post-destination"
+	// PermissionAuditLogSetDefault is needed to change the default AuditLog of an organization.
+	PermissionAuditLogSetDefault = "audit.auditlog.set-default"
 )
 
 const (
