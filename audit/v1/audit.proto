@@ -105,6 +105,19 @@ service AuditService {
         };
     }
 
+    // Change the default audit log of an organization.
+    // The default AuditLog for an organization is used to capture audit events
+    // from the Oasis platform. If there is no default AuditLog, audit events
+    // from the Oasis platform are not captured.
+    // The default AuditLog is also attached to new projects in the organization.
+    // Required permissions:
+    // - audit.auditlog.set-default on the organization.
+    rpc SetDefaultAuditLog(SetDefaultAuditLogRequest) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            put: "/api/audit/v1/auditlogs/{organization_id}/default"
+        };
+    }
+
     // Test an audit log destination of type HTTPS Post.
     // Note that only 1 item is returned, but this can take a while.
     // To recognize test events: The Topic will be "test-topic" and the Sequence 0
@@ -237,6 +250,11 @@ message AuditLog {
     // After creation, this value cannot be changed.
     string organization_id = 9;
     // If set, this AuditLog is the default for the organization.
+    // This is a read-only value.
+    // The default AuditLog for an organization is used to capture audit events
+    // from the Oasis platform. If there is no default AuditLog, audit events
+    // from the Oasis platform are not captured.
+    // The default AuditLog is also attached to new projects in the organization.
     bool is_default = 10;
 
     // Settings for a destination of type "https-post"
@@ -532,4 +550,13 @@ message ListAuditLogTopicsRequest {
     bool for_deployment_only = 2;
     // If set, only topics used in audit log events of the Oasis platform are returned.
     bool for_platform_only = 3;
+}
+
+// Request arguments for SetDefaultAuditLog.
+message SetDefaultAuditLogRequest {
+    // Identifier of the organization to set the default for.
+    string organization_id = 1;
+    // Identifier of the new default auditlog.
+    // If empty, there will be no default auditlog for the organization.
+    string auditlog_id = 2;
 }

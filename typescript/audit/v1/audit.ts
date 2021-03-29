@@ -70,6 +70,11 @@ export interface AuditLog {
   organization_id?: string;
   
   // If set, this AuditLog is the default for the organization.
+  // This is a read-only value.
+  // The default AuditLog for an organization is used to capture audit events
+  // from the Oasis platform. If there is no default AuditLog, audit events
+  // from the Oasis platform are not captured.
+  // The default AuditLog is also attached to new projects in the organization.
   // boolean
   is_default?: boolean;
   
@@ -471,6 +476,18 @@ export interface ListAuditLogsRequest {
   options?: arangodb_cloud_common_v1_ListOptions;
 }
 
+// Request arguments for SetDefaultAuditLog.
+export interface SetDefaultAuditLogRequest {
+  // Identifier of the organization to set the default for.
+  // string
+  organization_id?: string;
+  
+  // Identifier of the new default auditlog.
+  // If empty, there will be no default auditlog for the organization.
+  // string
+  auditlog_id?: string;
+}
+
 // Request arguments for TestAuditLogHttpsPostDestination.
 export interface TestAuditLogHttpsPostDestinationRequest {
   // Identifier of the organization.
@@ -534,6 +551,15 @@ export interface IAuditService {
   // Required permissions:
   // - audit.auditlog.delete on the audit log.
   DeleteAuditLog: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Change the default audit log of an organization.
+  // The default AuditLog for an organization is used to capture audit events
+  // from the Oasis platform. If there is no default AuditLog, audit events
+  // from the Oasis platform are not captured.
+  // The default AuditLog is also attached to new projects in the organization.
+  // Required permissions:
+  // - audit.auditlog.set-default on the organization.
+  SetDefaultAuditLog: (req: SetDefaultAuditLogRequest) => Promise<void>;
   
   // Test an audit log destination of type HTTPS Post.
   // Note that only 1 item is returned, but this can take a while.
@@ -663,6 +689,19 @@ export class AuditService implements IAuditService {
     const path = `/api/audit/v1/auditlogs/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.delete(url, undefined);
+  }
+  
+  // Change the default audit log of an organization.
+  // The default AuditLog for an organization is used to capture audit events
+  // from the Oasis platform. If there is no default AuditLog, audit events
+  // from the Oasis platform are not captured.
+  // The default AuditLog is also attached to new projects in the organization.
+  // Required permissions:
+  // - audit.auditlog.set-default on the organization.
+  async SetDefaultAuditLog(req: SetDefaultAuditLogRequest): Promise<void> {
+    const path = `/api/audit/v1/auditlogs/${encodeURIComponent(req.organization_id || '')}/default`;
+    const url = path + api.queryString(req, [`organization_id`]);
+    return api.put(url, undefined);
   }
   
   // Test an audit log destination of type HTTPS Post.

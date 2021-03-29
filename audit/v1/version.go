@@ -27,9 +27,9 @@ const (
 	// APIID contains identifier of this API
 	APIID = "audit/v1"
 	// APIMajorVersion contains major version of this API
-	APIMajorVersion = 2
+	APIMajorVersion = 3
 	// APIMinorVersion contains minor version of this API
-	APIMinorVersion = 2
+	APIMinorVersion = 0
 	// APIPatchVersion contains patch version of this API
 	APIPatchVersion = 0
 )
