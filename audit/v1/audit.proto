@@ -106,7 +106,10 @@ service AuditService {
     }
 
     // Change the default audit log of an organization.
-    // The default audit log is automatically attached to new projects in the organization.
+    // The default AuditLog for an organization is used to capture audit events
+    // from the Oasis platform. If there is no default AuditLog, audit events
+    // from the Oasis platform are not captured.
+    // The default AuditLog is also attached to new projects in the organization.
     // Required permissions:
     // - audit.auditlog.set-default on the organization.
     rpc SetDefaultAuditLog(SetDefaultAuditLogRequest) returns (common.v1.Empty) {
@@ -248,6 +251,10 @@ message AuditLog {
     string organization_id = 9;
     // If set, this AuditLog is the default for the organization.
     // This is a read-only value.
+    // The default AuditLog for an organization is used to capture audit events
+    // from the Oasis platform. If there is no default AuditLog, audit events
+    // from the Oasis platform are not captured.
+    // The default AuditLog is also attached to new projects in the organization.
     bool is_default = 10;
 
     // Settings for a destination of type "https-post"

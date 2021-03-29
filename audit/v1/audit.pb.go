@@ -59,6 +59,10 @@ type AuditLog struct {
 	OrganizationId string `protobuf:"bytes,9,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
 	// If set, this AuditLog is the default for the organization.
 	// This is a read-only value.
+	// The default AuditLog for an organization is used to capture audit events
+	// from the Oasis platform. If there is no default AuditLog, audit events
+	// from the Oasis platform are not captured.
+	// The default AuditLog is also attached to new projects in the organization.
 	IsDefault bool `protobuf:"varint,10,opt,name=is_default,json=isDefault,proto3" json:"is_default,omitempty"`
 	// Destinations that events of this AuditLog should be sent to.
 	// Note that there can only be 1 destination of type "cloud".
@@ -2022,7 +2026,10 @@ type AuditServiceClient interface {
 	// - audit.auditlog.delete on the audit log.
 	DeleteAuditLog(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Change the default audit log of an organization.
-	// The default audit log is automatically attached to new projects in the organization.
+	// The default AuditLog for an organization is used to capture audit events
+	// from the Oasis platform. If there is no default AuditLog, audit events
+	// from the Oasis platform are not captured.
+	// The default AuditLog is also attached to new projects in the organization.
 	// Required permissions:
 	// - audit.auditlog.set-default on the organization.
 	SetDefaultAuditLog(ctx context.Context, in *SetDefaultAuditLogRequest, opts ...grpc.CallOption) (*v1.Empty, error)
@@ -2323,7 +2330,10 @@ type AuditServiceServer interface {
 	// - audit.auditlog.delete on the audit log.
 	DeleteAuditLog(context.Context, *v1.IDOptions) (*v1.Empty, error)
 	// Change the default audit log of an organization.
-	// The default audit log is automatically attached to new projects in the organization.
+	// The default AuditLog for an organization is used to capture audit events
+	// from the Oasis platform. If there is no default AuditLog, audit events
+	// from the Oasis platform are not captured.
+	// The default AuditLog is also attached to new projects in the organization.
 	// Required permissions:
 	// - audit.auditlog.set-default on the organization.
 	SetDefaultAuditLog(context.Context, *SetDefaultAuditLogRequest) (*v1.Empty, error)

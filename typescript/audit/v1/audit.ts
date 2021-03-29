@@ -71,6 +71,10 @@ export interface AuditLog {
   
   // If set, this AuditLog is the default for the organization.
   // This is a read-only value.
+  // The default AuditLog for an organization is used to capture audit events
+  // from the Oasis platform. If there is no default AuditLog, audit events
+  // from the Oasis platform are not captured.
+  // The default AuditLog is also attached to new projects in the organization.
   // boolean
   is_default?: boolean;
   
@@ -549,7 +553,10 @@ export interface IAuditService {
   DeleteAuditLog: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
   
   // Change the default audit log of an organization.
-  // The default audit log is automatically attached to new projects in the organization.
+  // The default AuditLog for an organization is used to capture audit events
+  // from the Oasis platform. If there is no default AuditLog, audit events
+  // from the Oasis platform are not captured.
+  // The default AuditLog is also attached to new projects in the organization.
   // Required permissions:
   // - audit.auditlog.set-default on the organization.
   SetDefaultAuditLog: (req: SetDefaultAuditLogRequest) => Promise<void>;
@@ -685,7 +692,10 @@ export class AuditService implements IAuditService {
   }
   
   // Change the default audit log of an organization.
-  // The default audit log is automatically attached to new projects in the organization.
+  // The default AuditLog for an organization is used to capture audit events
+  // from the Oasis platform. If there is no default AuditLog, audit events
+  // from the Oasis platform are not captured.
+  // The default AuditLog is also attached to new projects in the organization.
   // Required permissions:
   // - audit.auditlog.set-default on the organization.
   async SetDefaultAuditLog(req: SetDefaultAuditLogRequest): Promise<void> {
