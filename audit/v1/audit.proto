@@ -416,6 +416,16 @@ message AuditLogArchive {
     // If set, this archive is collecting audit events for a deployment in the project with this ID.
     // This is a read-only value.
     string project_id = 10;
+    // Last known name of the deployment identified by deployment_id.
+    // This is a read-only value.
+    string deployment_name = 11;
+    // Last known name of the project identified by project_id.
+    // This is a read-only value.
+    string project_name = 12;
+    // If set, it is safe to delete this archive.
+    // It does not mean that the caller has permission to delete the archive.
+    // This is a read-only value.
+    bool can_delete = 13;
 }
 
 // List of AuditLogArchive's.

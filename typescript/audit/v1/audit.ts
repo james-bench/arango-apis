@@ -280,6 +280,22 @@ export interface AuditLogArchive {
   // This is a read-only value.
   // string
   project_id?: string;
+  
+  // Last known name of the deployment identified by deployment_id.
+  // This is a read-only value.
+  // string
+  deployment_name?: string;
+  
+  // Last known name of the project identified by project_id.
+  // This is a read-only value.
+  // string
+  project_name?: string;
+  
+  // If set, it is safe to delete this archive.
+  // It does not mean that the caller has permission to delete the archive.
+  // This is a read-only value.
+  // boolean
+  can_delete?: boolean;
 }
 
 // List of AuditLogArchive's.
