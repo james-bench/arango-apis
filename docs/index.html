@@ -2179,7 +2179,7 @@ Note that this timestamp will be rounded down to the nearest hour. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Identifier of the audit log to request events for.
-This field is optional when an auditlogarchive_id or cursor is specified, however if specified, it should match. </p></td>
+This field is optional when an auditlogarchive_id is specified, however if specified, it should match. </p></td>
                 </tr>
               
                 <tr>
@@ -2187,7 +2187,7 @@ This field is optional when an auditlogarchive_id or cursor is specified, howeve
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>If set, include only events from this AuditLogArchive.
-This field is optional when a cursor is specified, however if specified, it should match. </p></td>
+If this identifier is provided the auditlog_id is optional. </p></td>
                 </tr>
               
                 <tr>
@@ -2233,8 +2233,7 @@ events of that topic will not be included in the results. </p></td>
                   <td>cursor</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>A cursor is opaq information provided by a previous call to GetAuditLogEvents, to continue from that point on.
-If a cursor is specified both auditlog_id and auditlogarchive_id are optional, however if specified, they should match the information available in the cursor </p></td>
+                  <td><p>A cursor is opaq information provided by a previous call to GetAuditLogEvents, to continue from that point on. </p></td>
                 </tr>
               
             </tbody>

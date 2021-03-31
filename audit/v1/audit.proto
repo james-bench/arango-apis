@@ -489,10 +489,10 @@ message AuditLogEventList {
 // Request arguments for GetAuditLogEvents.
 message GetAuditLogEventsRequest {
     // Identifier of the audit log to request events for.
-    // This field is optional when an auditlogarchive_id or cursor is specified, however if specified, it should match.
+    // This field is optional when an auditlogarchive_id is specified, however if specified, it should match.
     string auditlog_id = 1;
     // If set, include only events from this AuditLogArchive.
-    // This field is optional when a cursor is specified, however if specified, it should match.
+    // If this identifier is provided the auditlog_id is optional.
     string auditlogarchive_id = 2;
     // Request events created at or after this timestamp.
     // This is an optional field.
@@ -509,7 +509,6 @@ message GetAuditLogEventsRequest {
     // Limit the number of audit log events. Defaults to 0, meaning no limit.
     int32 limit = 10;
     // A cursor is opaq information provided by a previous call to GetAuditLogEvents, to continue from that point on.
-    // If a cursor is specified both auditlog_id and auditlogarchive_id are optional, however if specified, they should match the information available in the cursor
     string cursor = 11;
 }
 

@@ -417,12 +417,12 @@ export interface DeleteAuditLogArchiveEventsRequest {
 // Request arguments for GetAuditLogEvents.
 export interface GetAuditLogEventsRequest {
   // Identifier of the audit log to request events for.
-  // This field is optional when an auditlogarchive_id or cursor is specified, however if specified, it should match.
+  // This field is optional when an auditlogarchive_id is specified, however if specified, it should match.
   // string
   auditlog_id?: string;
   
   // If set, include only events from this AuditLogArchive.
-  // This field is optional when a cursor is specified, however if specified, it should match.
+  // If this identifier is provided the auditlog_id is optional.
   // string
   auditlogarchive_id?: string;
   
@@ -451,7 +451,6 @@ export interface GetAuditLogEventsRequest {
   limit?: number;
   
   // A cursor is opaq information provided by a previous call to GetAuditLogEvents, to continue from that point on.
-  // If a cursor is specified both auditlog_id and auditlogarchive_id are optional, however if specified, they should match the information available in the cursor
   // string
   cursor?: string;
 }

@@ -1270,10 +1270,10 @@ func (m *AuditLogEventList) GetCursor() string {
 // Request arguments for GetAuditLogEvents.
 type GetAuditLogEventsRequest struct {
 	// Identifier of the audit log to request events for.
-	// This field is optional when an auditlogarchive_id or cursor is specified, however if specified, it should match.
+	// This field is optional when an auditlogarchive_id is specified, however if specified, it should match.
 	AuditlogId string `protobuf:"bytes,1,opt,name=auditlog_id,json=auditlogId,proto3" json:"auditlog_id,omitempty"`
 	// If set, include only events from this AuditLogArchive.
-	// This field is optional when a cursor is specified, however if specified, it should match.
+	// If this identifier is provided the auditlog_id is optional.
 	AuditlogarchiveId string `protobuf:"bytes,2,opt,name=auditlogarchive_id,json=auditlogarchiveId,proto3" json:"auditlogarchive_id,omitempty"`
 	// Request events created at or after this timestamp.
 	// This is an optional field.
@@ -1290,7 +1290,6 @@ type GetAuditLogEventsRequest struct {
 	// Limit the number of audit log events. Defaults to 0, meaning no limit.
 	Limit int32 `protobuf:"varint,10,opt,name=limit,proto3" json:"limit,omitempty"`
 	// A cursor is opaq information provided by a previous call to GetAuditLogEvents, to continue from that point on.
-	// If a cursor is specified both auditlog_id and auditlogarchive_id are optional, however if specified, they should match the information available in the cursor
 	Cursor               string   `protobuf:"bytes,11,opt,name=cursor,proto3" json:"cursor,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
