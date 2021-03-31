@@ -365,8 +365,14 @@ export interface AuditLogEvent {
 
 // List of AuditLogEvent's.
 export interface AuditLogEventList {
+  // The audit log event items.
   // AuditLogEvent
   items?: AuditLogEvent[];
+  
+  // A cursor is opaq information to be provided by a next call to GetAuditLogEvents, to continue from this point on
+  // (meaning after the last item in the provided items).
+  // string
+  cursor?: string;
 }
 
 // List of AuditLog's.
@@ -408,13 +414,15 @@ export interface DeleteAuditLogArchiveEventsRequest {
   to?: googleTypes.Timestamp;
 }
 
-// Request arguments for ListAuditLogEvents.
+// Request arguments for GetAuditLogEvents.
 export interface GetAuditLogEventsRequest {
   // Identifier of the audit log to request events for.
+  // This field is optional when an auditlogarchive_id or cursor is specified, however if specified, it should match.
   // string
   auditlog_id?: string;
   
   // If set, include only events from this AuditLogArchive.
+  // This field is optional when a cursor is specified, however if specified, it should match.
   // string
   auditlogarchive_id?: string;
   
@@ -441,6 +449,11 @@ export interface GetAuditLogEventsRequest {
   // Limit the number of audit log events. Defaults to 0, meaning no limit.
   // number
   limit?: number;
+  
+  // A cursor is opaq information provided by a previous call to GetAuditLogEvents, to continue from that point on.
+  // If a cursor is specified both auditlog_id and auditlogarchive_id are optional, however if specified, they should match the information available in the cursor
+  // string
+  cursor?: string;
 }
 
 // Request arguments for ListAuditLogArchives

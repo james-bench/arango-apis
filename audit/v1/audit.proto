@@ -486,7 +486,7 @@ message AuditLogEventList {
     string cursor = 2;
 }
 
-// Request arguments for ListAuditLogEvents.
+// Request arguments for GetAuditLogEvents.
 message GetAuditLogEventsRequest {
     // Identifier of the audit log to request events for.
     // This field is optional when an auditlogarchive_id or cursor is specified, however if specified, it should match.
