@@ -2028,7 +2028,15 @@ This is a read-only value. </p></td>
                   <td>items</td>
                   <td><a href="#arangodb.cloud.audit.v1.AuditLogEvent">AuditLogEvent</a></td>
                   <td>repeated</td>
-                  <td><p> </p></td>
+                  <td><p>The audit log event items. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cursor</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>A cursor is opaq information to be provided by a next call to GetAuditLogEvents, to continue from this point on 
+(meaning after the last item in the provided items). </p></td>
                 </tr>
               
             </tbody>
@@ -2157,7 +2165,7 @@ Note that this timestamp will be rounded down to the nearest hour. </p></td>
         
       
         <h3 id="arangodb.cloud.audit.v1.GetAuditLogEventsRequest">GetAuditLogEventsRequest</h3>
-        <p>Request arguments for ListAuditLogEvents.</p>
+        <p>Request arguments for GetAuditLogEvents.</p>
 
         
           <table class="field-table">
@@ -2170,14 +2178,16 @@ Note that this timestamp will be rounded down to the nearest hour. </p></td>
                   <td>auditlog_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Identifier of the audit log to request events for. </p></td>
+                  <td><p>Identifier of the audit log to request events for.
+This field is optional when an auditlogarchive_id is specified, however if specified, it should match. </p></td>
                 </tr>
               
                 <tr>
                   <td>auditlogarchive_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>If set, include only events from this AuditLogArchive. </p></td>
+                  <td><p>If set, include only events from this AuditLogArchive.
+If this identifier is provided the auditlog_id is optional. </p></td>
                 </tr>
               
                 <tr>
@@ -2217,6 +2227,13 @@ events of that topic will not be included in the results. </p></td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
                   <td><p>Limit the number of audit log events. Defaults to 0, meaning no limit. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cursor</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>A cursor is opaq information provided by a previous call to GetAuditLogEvents, to continue from that point on. </p></td>
                 </tr>
               
             </tbody>
