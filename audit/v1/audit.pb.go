@@ -1214,6 +1214,7 @@ type AuditLogEventList struct {
 	Items []*AuditLogEvent `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
 	// A cursor is opaq information to be provided by a next call to GetAuditLogEvents, to continue from this point on
 	// (meaning after the last item in the provided items).
+	// If the string has a non empty value there is (potentially) more data, if the string is empty (""), no more data is available.
 	Cursor               string   `protobuf:"bytes,2,opt,name=cursor,proto3" json:"cursor,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`

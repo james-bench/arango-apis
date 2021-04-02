@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,7 +26,17 @@ import (
 	"strings"
 
 	common "github.com/arangodb-managed/apis/common/v1"
+	rm "github.com/arangodb-managed/apis/resourcemanager/v1"
 )
+
+// GetOrganizationID returns the organization ID of a deployment based on the URL.
+func (depl *Deployment) GetOrganizationID() (string, error) {
+	resURL, err := rm.ParseResourceURL(depl.GetUrl())
+	if err != nil {
+		return "", err
+	}
+	return resURL.OrganizationID(), nil
+}
 
 // Clone creates a deep clone of the given source
 func (s *Deployment_Status) Clone() *Deployment_Status {
