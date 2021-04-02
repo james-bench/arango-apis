@@ -371,6 +371,7 @@ export interface AuditLogEventList {
   
   // A cursor is opaq information to be provided by a next call to GetAuditLogEvents, to continue from this point on
   // (meaning after the last item in the provided items).
+  // If the string has a non empty value there is (potentially) more data, if the string is empty (""), no more data is available.
   // string
   cursor?: string;
 }
