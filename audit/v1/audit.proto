@@ -441,6 +441,15 @@ message ListAuditLogArchivesRequest {
     // however are not removed from the system currently.
     // If not set, only audit log archives not indicated as deleted are returned.
     bool include_deleted = 2;
+	// If set, the results will only include archive items which belong to the
+    // deployment identified by this ID.
+    string deployment_id = 3;
+	// If set, the results will only include archive items which belong to no deployment.
+	// Setting this field and specifying a deployment_id will result in an empty list.
+	bool without_deployments = 4;
+	// If set, the results will only include archive items which belong to the
+    // project identified by this ID.
+    string project_id = 5;
     // Optional common list options, the context_id is ignored
     common.v1.ListOptions options = 10;
 }

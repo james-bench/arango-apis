@@ -468,6 +468,21 @@ export interface ListAuditLogArchivesRequest {
   // boolean
   include_deleted?: boolean;
   
+  // If set, the results will only include archive items which belong to the
+  // deployment identified by this ID.
+  // string
+  deployment_id?: string;
+  
+  // If set, the results will only include archive items which belong to no deployment.
+  // Setting this field and specifying a deployment_id will result in an empty list.
+  // boolean
+  without_deployments?: boolean;
+  
+  // If set, the results will only include archive items which belong to the
+  // project identified by this ID.
+  // string
+  project_id?: string;
+  
   // Optional common list options, the context_id is ignored
   // arangodb.cloud.common.v1.ListOptions
   options?: arangodb_cloud_common_v1_ListOptions;

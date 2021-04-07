@@ -2271,6 +2271,30 @@ If not set, only audit log archives not indicated as deleted are returned. </p><
                 </tr>
               
                 <tr>
+                  <td>deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>If set, the results will only include archive items which belong to the
+deployment identified by this ID. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>without_deployments</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, the results will only include archive items which belong to no deployment.
+Setting this field and specifying a deployment_id will result in an empty list. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>project_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>If set, the results will only include archive items which belong to the
+project identified by this ID. </p></td>
+                </tr>
+              
+                <tr>
                   <td>options</td>
                   <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
                   <td></td>
