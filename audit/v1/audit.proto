@@ -318,6 +318,10 @@ message AuditLog {
         // Timestamp when this status has been last updated.
         // This is used as baseline for the counters_since_midnight and counters_yesterday fields.
         google.protobuf.Timestamp updated_at = 100;
+
+        // Last known name of the deployment identified by deployment_id (if any).
+        // This is a read-only value.
+        string deployment_name = 101;
     }
 
     // The counters of a destination for audit events (for the provided deployment).

@@ -176,6 +176,11 @@ export interface AuditLog_DestinationStatus {
   // This is used as baseline for the counters_since_midnight and counters_yesterday fields.
   // googleTypes.Timestamp
   updated_at?: googleTypes.Timestamp;
+  
+  // Last known name of the deployment identified by deployment_id (if any).
+  // This is a read-only value.
+  // string
+  deployment_name?: string;
 }
 
 // HTTP header pair
