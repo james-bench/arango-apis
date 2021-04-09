@@ -190,6 +190,8 @@ export interface AuditLog_Header {
   key?: string;
   
   // Value of the header
+  // This is a write-only value.
+  // On read requests, the value is mangled to something like "abc..."
   // string
   value?: string;
 }
@@ -217,6 +219,7 @@ export interface AuditLog_HttpsPostSettings {
   
   // PEM encoded private key of the client certificate
   // used to make the request.
+  // This is a write-only value.
   // string
   client_key_pem?: string;
   

@@ -274,6 +274,7 @@ message AuditLog {
         string client_certificate_pem = 3;
         // PEM encoded private key of the client certificate
         // used to make the request.
+        // This is a write-only value.
         string client_key_pem = 4;
         // HTTP headers to add to the request.
         // It is allowed to pass multiple headers with the same key.
@@ -290,6 +291,8 @@ message AuditLog {
         // Key of the header
         string key = 1;
         // Value of the header
+        // This is a write-only value.
+        // On read requests, the value is mangled to something like "abc..."
         string value = 2;
     }
 

@@ -1680,7 +1680,9 @@ This is a read-only value. </p></td>
                   <td>value</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Value of the header </p></td>
+                  <td><p>Value of the header
+This is a write-only value.
+On read requests, the value is mangled to something like &#34;abc...&#34; </p></td>
                 </tr>
               
             </tbody>
@@ -1733,7 +1735,8 @@ used to make the request. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>PEM encoded private key of the client certificate
-used to make the request. </p></td>
+used to make the request.
+This is a write-only value. </p></td>
                 </tr>
               
                 <tr>

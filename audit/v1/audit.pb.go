@@ -199,6 +199,7 @@ type AuditLog_HttpsPostSettings struct {
 	ClientCertificatePem string `protobuf:"bytes,3,opt,name=client_certificate_pem,json=clientCertificatePem,proto3" json:"client_certificate_pem,omitempty"`
 	// PEM encoded private key of the client certificate
 	// used to make the request.
+	// This is a write-only value.
 	ClientKeyPem string `protobuf:"bytes,4,opt,name=client_key_pem,json=clientKeyPem,proto3" json:"client_key_pem,omitempty"`
 	// HTTP headers to add to the request.
 	// It is allowed to pass multiple headers with the same key.
@@ -292,6 +293,8 @@ type AuditLog_Header struct {
 	// Key of the header
 	Key string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
 	// Value of the header
+	// This is a write-only value.
+	// On read requests, the value is mangled to something like "abc..."
 	Value                string   `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
