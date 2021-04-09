@@ -366,6 +366,10 @@ message AuditLog {
         // Status of this destination (per deployment)
         // This is a read-only value.
         repeated DestinationStatus Statuses = 100;
+        // Identifier of this destination.
+        // This is a read-only value. To ensure matching updates of destinations,
+        // include this field in calls to UpdateAuditLog.
+        string id = 101;
     }
     // Destinations that events of this AuditLog should be sent to.
     // Note that there can only be 1 destination of type "cloud".

@@ -103,6 +103,12 @@ export interface AuditLog_Destination {
   // This is a read-only value.
   // AuditLog_DestinationStatus
   Statuses?: AuditLog_DestinationStatus[];
+  
+  // Identifier of this destination.
+  // This is a read-only value. To ensure matching updates of destinations,
+  // include this field in calls to UpdateAuditLog.
+  // string
+  id?: string;
 }
 
 // The counters of a destination for audit events (for the provided deployment).
