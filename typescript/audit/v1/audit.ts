@@ -103,6 +103,12 @@ export interface AuditLog_Destination {
   // This is a read-only value.
   // AuditLog_DestinationStatus
   Statuses?: AuditLog_DestinationStatus[];
+  
+  // Identifier of this destination.
+  // This is a read-only value. To ensure matching updates of destinations,
+  // include this field in calls to UpdateAuditLog.
+  // string
+  id?: string;
 }
 
 // The counters of a destination for audit events (for the provided deployment).
@@ -190,6 +196,8 @@ export interface AuditLog_Header {
   key?: string;
   
   // Value of the header
+  // This is a write-only value.
+  // On read requests, the value is mangled to something like "abc..."
   // string
   value?: string;
 }
@@ -217,6 +225,7 @@ export interface AuditLog_HttpsPostSettings {
   
   // PEM encoded private key of the client certificate
   // used to make the request.
+  // This is a write-only value.
   // string
   client_key_pem?: string;
   
