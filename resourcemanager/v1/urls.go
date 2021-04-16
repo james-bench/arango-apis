@@ -27,7 +27,7 @@ import (
 	"net/url"
 	"strings"
 
-	rmurl "github.com/arangodb-managed/apis/resourcemanager/url"
+	rmurl "github.com/arangodb-managed/apis/internal/resourcemanager/url"
 )
 
 const (
