@@ -1,7 +1,7 @@
 // 
 // DISCLAIMER
 // 
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -488,6 +488,8 @@ message IsMemberOfGroupRequest {
 message GroupMemberList {
     // List of ID's of users that are member of the group.
     repeated string items = 1;
+    // List of users that are member of the group.
+    repeated User users = 2;
 }
 
 // Request arguments for Add/DeleteGroupMembers.

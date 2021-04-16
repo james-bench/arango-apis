@@ -25,32 +25,33 @@ package v1
 import (
 	fmt "fmt"
 	"net/url"
-	"path"
 	"strings"
+
+	rmurl "github.com/arangodb-managed/apis/internal/resourcemanager/url"
 )
 
 const (
 	// KindOrganization is a constants for the kind of Organization resources.
-	KindOrganization = "Organization"
+	KindOrganization = rmurl.KindOrganization
 	// KindProject is a constants for the kind of Project resources.
-	KindProject = "Project"
+	KindProject = rmurl.KindProject
 	// KindOrganizationInvite is a constants for the kind of OrganizationInvite resources.
-	KindOrganizationInvite = "OrganizationInvite"
+	KindOrganizationInvite = rmurl.KindOrganizationInvite
 )
 
 // OrganizationURL creates a resource URL for the organization with given ID.
 func OrganizationURL(organizationID string) string {
-	return path.Join("/", KindOrganization, url.PathEscape(organizationID))
+	return rmurl.OrganizationURL(organizationID)
 }
 
 // ProjectURL creates a resource URL for the project & organization with given IDs.
 func ProjectURL(organizationID, projectID string) string {
-	return path.Join(OrganizationURL(organizationID), KindProject, url.PathEscape(projectID))
+	return rmurl.ProjectURL(organizationID, projectID)
 }
 
 // OrganizationInviteURL creates a resource URL for the invite & organization with given IDs.
 func OrganizationInviteURL(organizationID, inviteID string) string {
-	return path.Join(OrganizationURL(organizationID), KindOrganizationInvite, url.PathEscape(inviteID))
+	return rmurl.OrganizationInviteURL(organizationID, inviteID)
 }
 
 // ResourceURL holds a parsed resource URL.

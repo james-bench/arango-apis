@@ -9,6 +9,7 @@ import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
 import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1/common'
 import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
 import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
+import { User as arangodb_cloud_iam_v1_User } from '../../iam/v1/iam'
 
 // File: resourcemanager/v1/resourcemanager.proto
 // Package: arangodb.cloud.resourcemanager.v1
@@ -174,6 +175,10 @@ export interface Member {
   // Set if this user is owner of the organization
   // boolean
   owner?: boolean;
+  
+  // The user.
+  // arangodb.cloud.iam.v1.User
+  user?: arangodb_cloud_iam_v1_User;
 }
 
 // List of Members.
