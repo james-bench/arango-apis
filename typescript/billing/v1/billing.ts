@@ -575,7 +575,7 @@ export interface IBillingService {
   GetInvoice: (req: arangodb_cloud_common_v1_IDOptions) => Promise<Invoice>;
   
   // Fetch a preliminary Invoice identified by the given organization ID.
-  // The preliminary invoice contains all costs from the last invoice (if any) until last night (midnight UTC).
+  // The preliminary invoice contains all costs from the last invoice (if any, otherwise the creation date of the organization) until last night (midnight UTC).
   // Required permissions:
   // - billing.invoice.get-preliminary on the organization identified by the given organization ID
   GetPreliminaryInvoice: (req: GetPreliminaryInvoiceRequest) => Promise<Invoice>;
@@ -695,7 +695,7 @@ export class BillingService implements IBillingService {
   }
   
   // Fetch a preliminary Invoice identified by the given organization ID.
-  // The preliminary invoice contains all costs from the last invoice (if any) until last night (midnight UTC).
+  // The preliminary invoice contains all costs from the last invoice (if any, otherwise the creation date of the organization) until last night (midnight UTC).
   // Required permissions:
   // - billing.invoice.get-preliminary on the organization identified by the given organization ID
   async GetPreliminaryInvoice(req: GetPreliminaryInvoiceRequest): Promise<Invoice> {

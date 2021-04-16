@@ -5430,7 +5430,7 @@ Required permissions:
                 <td><a href="#arangodb.cloud.billing.v1.GetPreliminaryInvoiceRequest">GetPreliminaryInvoiceRequest</a></td>
                 <td><a href="#arangodb.cloud.billing.v1.Invoice">Invoice</a></td>
                 <td><p>Fetch a preliminary Invoice identified by the given organization ID.
-The preliminary invoice contains all costs from the last invoice (if any) until last night (midnight UTC).
+The preliminary invoice contains all costs from the last invoice (if any, otherwise the creation date of the organization) until last night (midnight UTC).
 Required permissions:
 - billing.invoice.get-preliminary on the organization identified by the given organization ID</p></td>
               </tr>

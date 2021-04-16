@@ -72,7 +72,7 @@ service BillingService {
     }
 
     // Fetch a preliminary Invoice identified by the given organization ID.
-    // The preliminary invoice contains all costs from the last invoice (if any) until last night (midnight UTC).
+    // The preliminary invoice contains all costs from the last invoice (if any, otherwise the creation date of the organization) until last night (midnight UTC).
     // Required permissions:
     // - billing.invoice.get-preliminary on the organization identified by the given organization ID
     rpc GetPreliminaryInvoice(GetPreliminaryInvoiceRequest) returns (Invoice) {
@@ -80,7 +80,6 @@ service BillingService {
             get: "/api/billing/v1/invoices/{organization_id}/preliminary"
         };
     }
-
 
     // Fetch a specific Invoice identified by the given ID as PDF document.
     // Required permissions:

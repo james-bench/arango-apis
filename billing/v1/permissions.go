@@ -45,6 +45,8 @@ const (
 	PermissionInvoiceList = "billing.invoice.list"
 	// PermissionInvoiceGet is needed for getting indivual invoices in an organization
 	PermissionInvoiceGet = "billing.invoice.get"
+	// PermissionInvoiceGetPremiminary is needed for getting the preliminary invoice in an organization
+	PermissionInvoiceGetPremiminary = "billing.invoice.get-preliminary"
 )
 
 const (

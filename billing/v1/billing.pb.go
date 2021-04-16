@@ -2194,7 +2194,7 @@ type BillingServiceClient interface {
 	//   with given ID.
 	GetInvoice(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*Invoice, error)
 	// Fetch a preliminary Invoice identified by the given organization ID.
-	// The preliminary invoice contains all costs from the last invoice (if any) until last night (midnight UTC).
+	// The preliminary invoice contains all costs from the last invoice (if any, otherwise the creation date of the organization) until last night (midnight UTC).
 	// Required permissions:
 	// - billing.invoice.get-preliminary on the organization identified by the given organization ID
 	GetPreliminaryInvoice(ctx context.Context, in *GetPreliminaryInvoiceRequest, opts ...grpc.CallOption) (*Invoice, error)
@@ -2451,7 +2451,7 @@ type BillingServiceServer interface {
 	//   with given ID.
 	GetInvoice(context.Context, *v1.IDOptions) (*Invoice, error)
 	// Fetch a preliminary Invoice identified by the given organization ID.
-	// The preliminary invoice contains all costs from the last invoice (if any) until last night (midnight UTC).
+	// The preliminary invoice contains all costs from the last invoice (if any, otherwise the creation date of the organization) until last night (midnight UTC).
 	// Required permissions:
 	// - billing.invoice.get-preliminary on the organization identified by the given organization ID
 	GetPreliminaryInvoice(context.Context, *GetPreliminaryInvoiceRequest) (*Invoice, error)
