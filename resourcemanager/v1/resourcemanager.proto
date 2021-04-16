@@ -1,7 +1,7 @@
 // 
 // DISCLAIMER
 // 
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ package arangodb.cloud.resourcemanager.v1;
 option go_package = "github.com/arangodb-managed/apis/resourcemanager/v1";
 
 import "common/v1/common.proto";
+import "iam/v1/iam.proto";
 
 import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
 import "google/api/annotations.proto";
@@ -449,6 +450,8 @@ message Member {
     string user_id = 1;
     // Set if this user is owner of the organization
     bool owner = 2;
+    // The user.
+    iam.v1.User user = 3;
 }
 
 // List of Members.

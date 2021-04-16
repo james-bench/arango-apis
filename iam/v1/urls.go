@@ -26,7 +26,7 @@ import (
 	"net/url"
 	"path"
 
-	rm "github.com/arangodb-managed/apis/resourcemanager/v1"
+	rm "github.com/arangodb-managed/apis/resourcemanager/url"
 )
 
 const (

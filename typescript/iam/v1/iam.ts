@@ -176,6 +176,10 @@ export interface GroupMemberList {
   // List of ID's of users that are member of the group.
   // string
   items?: string[];
+  
+  // List of users that are member of the group.
+  // User
+  users?: User[];
 }
 
 // Request arguments for Add/DeleteGroupMembers.
