@@ -382,6 +382,10 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.billing.v1.GetPreliminaryInvoiceRequest"><span class="badge">M</span>GetPreliminaryInvoiceRequest</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.billing.v1.Invoice"><span class="badge">M</span>Invoice</a>
                 </li>
               
@@ -4308,6 +4312,31 @@ See https://en.wikipedia.org/wiki/List_of_U.S._state_abbreviations </p></td>
 
         
       
+        <h3 id="arangodb.cloud.billing.v1.GetPreliminaryInvoiceRequest">GetPreliminaryInvoiceRequest</h3>
+        <p>Request argument for GetPreliminaryInvoice</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the organization 
+This is a required field. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.billing.v1.Invoice">Invoice</h3>
         <p>An Invoice message describes a transaction for usage of ArangoDB Oasis.</p>
 
@@ -5397,6 +5426,16 @@ Required permissions:
               </tr>
             
               <tr>
+                <td>GetPreliminaryInvoice</td>
+                <td><a href="#arangodb.cloud.billing.v1.GetPreliminaryInvoiceRequest">GetPreliminaryInvoiceRequest</a></td>
+                <td><a href="#arangodb.cloud.billing.v1.Invoice">Invoice</a></td>
+                <td><p>Fetch a preliminary Invoice identified by the given organization ID.
+The preliminary invoice contains all costs from the last invoice (if any) until last night (midnight UTC).
+Required permissions:
+- billing.invoice.get-preliminary on the organization identified by the given organization ID</p></td>
+              </tr>
+            
+              <tr>
                 <td>GetInvoicePDF</td>
                 <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
                 <td><a href="#arangodb.cloud.billing.v1.PDFDocument">PDFDocument</a></td>
@@ -5575,6 +5614,16 @@ Required permissions:
                 <td>GetInvoice</td>
                 <td>GET</td>
                 <td>/api/billing/v1/invoices/{id}</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetPreliminaryInvoice</td>
+                <td>GET</td>
+                <td>/api/billing/v1/invoices/{organization_id}/preliminary</td>
                 <td></td>
               </tr>
               

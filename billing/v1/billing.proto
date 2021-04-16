@@ -71,6 +71,17 @@ service BillingService {
         };
     }
 
+    // Fetch a preliminary Invoice identified by the given organization ID.
+    // The preliminary invoice contains all costs from the last invoice (if any) until last night (midnight UTC).
+    // Required permissions:
+    // - billing.invoice.get-preliminary on the organization identified by the given organization ID
+    rpc GetPreliminaryInvoice(GetPreliminaryInvoiceRequest) returns (Invoice) {
+        option (google.api.http) = {
+            get: "/api/billing/v1/invoices/{organization_id}/preliminary"
+        };
+    }
+
+
     // Fetch a specific Invoice identified by the given ID as PDF document.
     // Required permissions:
     // - billing.invoice.get on the organization that owns the invoice
@@ -359,6 +370,13 @@ message ListInvoicesRequest {
     // Standard list options
     // This is an optional field.
     common.v1.ListOptions options = 10;
+}
+
+// Request argument for GetPreliminaryInvoice
+message GetPreliminaryInvoiceRequest {
+    // Identifier of the organization 
+    // This is a required field.
+    string organization_id = 1;
 }
 
 // Payment providers are services that handle payments.
