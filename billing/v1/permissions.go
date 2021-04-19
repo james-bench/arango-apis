@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
 // Author Ewout Prangsma
+// Author Robert Stam
 //
 
 package v1
@@ -45,6 +46,8 @@ const (
 	PermissionInvoiceList = "billing.invoice.list"
 	// PermissionInvoiceGet is needed for getting indivual invoices in an organization
 	PermissionInvoiceGet = "billing.invoice.get"
+	// PermissionInvoiceGetPremiminary is needed for getting the preliminary invoice in an organization
+	PermissionInvoiceGetPremiminary = "billing.invoice.get-preliminary"
 )
 
 const (

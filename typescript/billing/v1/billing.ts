@@ -71,6 +71,14 @@ export interface CreatePaymentMethodRequest {
   last_name?: string;
 }
 
+// Request argument for GetPreliminaryInvoice
+export interface GetPreliminaryInvoiceRequest {
+  // Identifier of the organization
+  // This is a required field.
+  // string
+  organization_id?: string;
+}
+
 // An Invoice message describes a transaction for usage of ArangoDB Oasis.
 export interface Invoice {
   // System identifier of the invoice.
@@ -566,6 +574,12 @@ export interface IBillingService {
   // with given ID.
   GetInvoice: (req: arangodb_cloud_common_v1_IDOptions) => Promise<Invoice>;
   
+  // Fetch a preliminary Invoice identified by the given organization ID.
+  // The preliminary invoice contains all costs from the last invoice (if any, otherwise the creation date of the organization) until last night (midnight UTC).
+  // Required permissions:
+  // - billing.invoice.get-preliminary on the organization identified by the given organization ID
+  GetPreliminaryInvoice: (req: GetPreliminaryInvoiceRequest) => Promise<Invoice>;
+  
   // Fetch a specific Invoice identified by the given ID as PDF document.
   // Required permissions:
   // - billing.invoice.get on the organization that owns the invoice
@@ -677,6 +691,16 @@ export class BillingService implements IBillingService {
   async GetInvoice(req: arangodb_cloud_common_v1_IDOptions): Promise<Invoice> {
     const path = `/api/billing/v1/invoices/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch a preliminary Invoice identified by the given organization ID.
+  // The preliminary invoice contains all costs from the last invoice (if any, otherwise the creation date of the organization) until last night (midnight UTC).
+  // Required permissions:
+  // - billing.invoice.get-preliminary on the organization identified by the given organization ID
+  async GetPreliminaryInvoice(req: GetPreliminaryInvoiceRequest): Promise<Invoice> {
+    const path = `/api/billing/v1/invoices/${encodeURIComponent(req.organization_id || '')}/preliminary`;
+    const url = path + api.queryString(req, [`organization_id`]);
     return api.get(url, undefined);
   }
   
