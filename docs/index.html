@@ -1516,7 +1516,7 @@ This is a read-only value. </p></td>
                   <td></td>
                   <td><p>Identifier of this destination.
 This is a read-only value. To ensure matching updates of destinations,
-include this field in calls to UpdateAuditLog. </p></td>
+include this field in calls to UpdateAuditLog and TestAuditLogHttpsPostDestination. </p></td>
                 </tr>
               
             </tbody>
@@ -2464,6 +2464,22 @@ If empty, there will be no default auditlog for the organization. </p></td>
                   <td><a href="#arangodb.cloud.audit.v1.AuditLog.HttpsPostSettings">AuditLog.HttpsPostSettings</a></td>
                   <td></td>
                   <td><p>The HTTPS post settings to test. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>auditlog_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the audit log.
+This field is optional, if specified this auditlog is used to revert the redacted content (if any). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>destination_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the destination.
+This field is optional, if specified this identifier is used, inside the provided audit log to revert the redacted content (if any). </p></td>
                 </tr>
               
             </tbody>

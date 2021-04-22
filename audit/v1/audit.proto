@@ -368,7 +368,7 @@ message AuditLog {
         repeated DestinationStatus Statuses = 100;
         // Identifier of this destination.
         // This is a read-only value. To ensure matching updates of destinations,
-        // include this field in calls to UpdateAuditLog.
+        // include this field in calls to UpdateAuditLog and TestAuditLogHttpsPostDestination.
         string id = 101;
     }
     // Destinations that events of this AuditLog should be sent to.
@@ -556,6 +556,12 @@ message TestAuditLogHttpsPostDestinationRequest {
     string organization_id = 1;
     // The HTTPS post settings to test.
     AuditLog.HttpsPostSettings settings = 2;
+    // Identifier of the audit log.
+    // This field is optional, if specified this auditlog is used to revert the redacted content (if any).
+    string auditlog_id = 100;
+    // Identifier of the destination.
+    // This field is optional, if specified this identifier is used, inside the provided audit log to revert the redacted content (if any).
+    string destination_id = 101;
 }
 
 // Result arguments for TestAuditLogHttpsPostDestination.
