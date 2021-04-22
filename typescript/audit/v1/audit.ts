@@ -564,7 +564,7 @@ export interface TestAuditLogHttpsPostDestinationRequest {
   // Identifier of the destination.
   // This field is optional, if specified this identifier is used, inside the provided audit log to revert the redacted content (if any).
   // string
-  id?: string;
+  destination_id?: string;
 }
 
 // Result arguments for TestAuditLogHttpsPostDestination.

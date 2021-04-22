@@ -561,7 +561,7 @@ message TestAuditLogHttpsPostDestinationRequest {
     string auditlog_id = 100;
     // Identifier of the destination.
     // This field is optional, if specified this identifier is used, inside the provided audit log to revert the redacted content (if any).
-    string id = 101;
+    string destination_id = 101;
 }
 
 // Result arguments for TestAuditLogHttpsPostDestination.
