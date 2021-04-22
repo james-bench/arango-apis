@@ -106,7 +106,7 @@ export interface AuditLog_Destination {
   
   // Identifier of this destination.
   // This is a read-only value. To ensure matching updates of destinations,
-  // include this field in calls to UpdateAuditLog.
+  // include this field in calls to UpdateAuditLog and TestAuditLogHttpsPostDestination.
   // string
   id?: string;
 }
@@ -555,6 +555,16 @@ export interface TestAuditLogHttpsPostDestinationRequest {
   // The HTTPS post settings to test.
   // AuditLog_HttpsPostSettings
   settings?: AuditLog_HttpsPostSettings;
+  
+  // Identifier of the audit log.
+  // This field is optional, if specified this auditlog is used to revert the redacted content (if any).
+  // string
+  auditlog_id?: string;
+  
+  // Identifier of the destination.
+  // This field is optional, if specified this identifier is used, inside the provided audit log to revert the redacted content (if any).
+  // string
+  id?: string;
 }
 
 // Result arguments for TestAuditLogHttpsPostDestination.
