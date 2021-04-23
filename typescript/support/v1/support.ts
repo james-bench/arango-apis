@@ -55,6 +55,10 @@ export interface ListPlansRequest {
   // If set, list plans as they are available for the organization identified by this ID.
   // string
   organization_id?: string;
+  
+  // If set, list plans as they are available for the deployment model identified by this field.
+  // string
+  model?: string;
 }
 
 // Plan represents a specific support plan such as Bronze, Silver or Gold.
