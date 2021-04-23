@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -161,6 +161,8 @@ message ListPlansRequest {
     common.v1.ListOptions options = 1;
     // If set, list plans as they are available for the organization identified by this ID.
     string organization_id = 2;
+    // If set, list plans as they are available for the deployment model identified by this field.
+    string model = 3;
 }
 
 // FaqGroup contains groups of faq entries
