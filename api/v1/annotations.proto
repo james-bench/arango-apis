@@ -28,10 +28,13 @@ option go_package = "github.com/arangodb-managed/apis/api/v1";
 
 import "google/protobuf/descriptor.proto";
 
+// This extends the options for Methods (RPC).
+// The magic number is taken to be unique within the space of GRPC extensions.
 extend google.protobuf.MethodOptions {
   MethodProfile profile = 75352262;
 }
 
+// MethodProfile specifies profile options for methods.
 message MethodProfile {
     // Maximum timeout in seconds.
     uint32 timeout = 1;

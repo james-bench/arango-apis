@@ -7,6 +7,8 @@ import * as googleTypes from '../../googleTypes'
 
 // File: api/v1/annotations.proto
 // Package: arangodb.cloud.api.v1
+
+// MethodProfile specifies profile options for methods.
 export interface MethodProfile {
   // Maximum timeout in seconds.
   // number
