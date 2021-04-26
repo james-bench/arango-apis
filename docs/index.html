@@ -180,6 +180,25 @@ title: "ArangoDB Oasis API"
         
           
           <li>
+            <a href="#api%2fv1%2fannotations.proto">api/v1/annotations.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#arangodb.cloud.api.v1.MethodProfile"><span class="badge">M</span>MethodProfile</a>
+                </li>
+              
+              
+              
+                <li>
+                  <a href="#api%2fv1%2fannotations.proto-extensions"><span class="badge">X</span>File-level Extensions</a>
+                </li>
+              
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#audit%2fv1%2faudit.proto">audit/v1/audit.proto</a>
             <ul>
               
@@ -1324,6 +1343,69 @@ title: "ArangoDB Oasis API"
       </ul>
     </div>
 
+    
+      
+      <div class="file-heading">
+        <h2 id="api/v1/annotations.proto">api/v1/annotations.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="arangodb.cloud.api.v1.MethodProfile">MethodProfile</h3>
+        <p>MethodProfile specifies profile options for methods.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>timeout</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p>Maximum timeout in seconds. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>retryable</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, the method can be retried automatically. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+
+      
+        <h3 id="api/v1/annotations.proto-extensions">File-level Extensions</h3>
+        <table class="extension-table">
+          <thead>
+            <tr><td>Extension</td><td>Type</td><td>Base</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>profile</td>
+                <td><a href="#arangodb.cloud.api.v1.MethodProfile">MethodProfile</a></td>
+                <td><a href="#google.protobuf.MethodOptions">.google.protobuf.MethodOptions</a></td>
+                <td>75352262</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
     
       
       <div class="file-heading">
