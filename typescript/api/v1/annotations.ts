@@ -19,4 +19,14 @@ export interface MethodProfile {
   retryable?: boolean;
 }
 
+// ServiceProfile specifies default profile options for methods in the service.
+export interface ServiceProfile {
+  // Maximum timeout in seconds.
+  // If a timeout is also set on method level, that timeout overrides this timeout.
+  // number
+  timeout?: number;
+}
+
 // Extension .google.protobuf.MethodOptions.profile: Not implemented
+
+// Extension .google.protobuf.ServiceOptions.default_profile: Not implemented

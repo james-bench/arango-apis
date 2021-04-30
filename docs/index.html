@@ -187,7 +187,15 @@ title: "ArangoDB Oasis API"
                   <a href="#arangodb.cloud.api.v1.MethodProfile"><span class="badge">M</span>MethodProfile</a>
                 </li>
               
+                <li>
+                  <a href="#arangodb.cloud.api.v1.ServiceProfile"><span class="badge">M</span>ServiceProfile</a>
+                </li>
               
+              
+              
+                <li>
+                  <a href="#api%2fv1%2fannotations.proto-extensions"><span class="badge">X</span>File-level Extensions</a>
+                </li>
               
                 <li>
                   <a href="#api%2fv1%2fannotations.proto-extensions"><span class="badge">X</span>File-level Extensions</a>
@@ -1382,6 +1390,31 @@ title: "ArangoDB Oasis API"
 
         
       
+        <h3 id="arangodb.cloud.api.v1.ServiceProfile">ServiceProfile</h3>
+        <p>ServiceProfile specifies default profile options for methods in the service.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>timeout</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p>Maximum timeout in seconds.
+If a timeout is also set on method level, that timeout overrides this timeout. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
 
@@ -1398,6 +1431,14 @@ title: "ArangoDB Oasis API"
                 <td><a href="#arangodb.cloud.api.v1.MethodProfile">MethodProfile</a></td>
                 <td><a href="#google.protobuf.MethodOptions">.google.protobuf.MethodOptions</a></td>
                 <td>75352262</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>default_profile</td>
+                <td><a href="#arangodb.cloud.api.v1.ServiceProfile">ServiceProfile</a></td>
+                <td><a href="#google.protobuf.ServiceOptions">.google.protobuf.ServiceOptions</a></td>
+                <td>75352263</td>
                 <td><p></p></td>
               </tr>
             

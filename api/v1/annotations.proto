@@ -34,10 +34,23 @@ extend google.protobuf.MethodOptions {
   MethodProfile profile = 75352262;
 }
 
+// This extends the options for Services (RPC).
+// The magic number is taken to be unique within the space of GRPC extensions.
+extend google.protobuf.ServiceOptions {
+  ServiceProfile default_profile = 75352263;
+}
+
 // MethodProfile specifies profile options for methods.
 message MethodProfile {
     // Maximum timeout in seconds.
     uint32 timeout = 1;
     // If set, the method can be retried automatically.
     bool retryable = 2;
+}
+
+// ServiceProfile specifies default profile options for methods in the service.
+message ServiceProfile {
+  // Maximum timeout in seconds.
+  // If a timeout is also set on method level, that timeout overrides this timeout.
+  uint32 timeout = 1;
 }
