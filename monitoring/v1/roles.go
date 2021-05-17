@@ -29,4 +29,6 @@ const (
 	ServerRoleCoordinators = "coordinators"
 	// ServerRoleDBServers defines the role filter for dbservers
 	ServerRoleDBServers = "dbservers"
+	// ServerRoleSingles defines the role filter for singles
+	ServerRoleSingles = "singles"
 )
