@@ -499,6 +499,10 @@ message Deployment {
         int64 last_memory_usage = 31;
         // Last known CPU usage in vCPU units
         float last_cpu_usage = 32;
+        // Last known memory limit in bytes
+        int64 last_memory_limit = 33;
+        // Last known CPU limit in vCPU units
+        float last_cpu_limit = 34;
     }
 
     // Status of the deployment
