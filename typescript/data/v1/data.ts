@@ -511,6 +511,14 @@ export interface Deployment_ServerStatus {
   // Last known CPU usage in vCPU units
   // number
   last_cpu_usage?: number;
+  
+  // Last known memory limit in bytes
+  // number
+  last_memory_limit?: number;
+  
+  // Last known CPU limit in vCPU units
+  // number
+  last_cpu_limit?: number;
 }
 export interface Deployment_ServersSpec {
   // Number of coordinators of the deployment
