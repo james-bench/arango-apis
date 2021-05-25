@@ -1080,6 +1080,12 @@ export interface NodeSizesRequest {
   // in the result, if it it would not match for new deployments.
   // string
   deployment_id?: string;
+  
+  // Identifier of a model of a new deployment will be created.
+  // If set, all node sizes available for this model will be returned,
+  // otherwise only node sizes that have no restrictions on model will be returned.
+  // string
+  model?: string;
 }
 
 // RebalanceDeploymentShardsRequest request for rebalancing shards for a deployment
