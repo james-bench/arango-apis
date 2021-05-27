@@ -25,6 +25,13 @@ package v1
 const (
 	// Deployment models
 
+	// ModelDeveloper is the model that yields a deployment with:
+	// - a single instance of nodes (1).
+	// - a variable node size.
+	// - not for production use
+	// - not highly available
+	ModelDeveloper = "developer"
+
 	// ModelOneShard is the model that yields a deployment with:
 	// - a fixed number of nodes (3).
 	// - a variable node size.
