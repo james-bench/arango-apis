@@ -642,7 +642,7 @@ func RegisterPrepaidServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 var (
 	pattern_PrepaidService_GetAPIVersion_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "prepaid", "v1", "api-version"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_PrepaidService_ListPrepaidDeployments_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "prepaid", "v1", "deployments"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_PrepaidService_ListPrepaidDeployments_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "prepaid", "v1", "prepaiddeployments"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_PrepaidService_GetPrepaidDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "prepaid", "v1", "prepaiddeployments", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 

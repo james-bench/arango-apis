@@ -13311,15 +13311,14 @@ Backup specification has to match prepaid_deployment specification in ordere to 
                   <td>prepaid_deployment_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Identifier of prepaid deployment </p></td>
+                  <td><p>Identifier of prepaid deployment to use as a specification and attach the newly created Deployment to </p></td>
                 </tr>
               
                 <tr>
                   <td>project_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Identifier of the project that owns this deployment.
-After creation, this value cannot be changed. </p></td>
+                  <td><p>Identifier of the project that owns the newly created deployment. </p></td>
                 </tr>
               
                 <tr>
@@ -13333,16 +13332,7 @@ After creation, this value cannot be changed. </p></td>
                   <td>version</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>ArangoDB version to use for this deployment.
-See Version.version.
-If you change this value to a higher version,
-the deployment will be upgraded.
-If you change this value to a lower patch value,
-the deployment will be downgraded.
-Any attempt to change to a lower minor or major version
-is considered an invalid request.
-Any attempt to change to a version that is not in the
-list of available versions is considered an invalid request. </p></td>
+                  <td><p>ArangoDB version to use for this deployment. </p></td>
                 </tr>
               
                 <tr>
@@ -13457,6 +13447,13 @@ This is a read-only value. </p></td>
                 </tr>
               
                 <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of an organization that owns this prepaid deployment </p></td>
+                </tr>
+              
+                <tr>
                   <td>region_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
@@ -13517,6 +13514,13 @@ This is a read-only value. </p></td>
                   <td><a href="#arangodb.cloud.data.v1.Deployment.ModelSpec">arangodb.cloud.data.v1.Deployment.ModelSpec</a></td>
                   <td></td>
                   <td><p>Model specification for created deployment </p></td>
+                </tr>
+              
+                <tr>
+                  <td>addons</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Identifies the addons that will be used on the deployment </p></td>
                 </tr>
               
                 <tr>
@@ -13635,7 +13639,7 @@ Required permissions:
                 <td><a href="#arangodb.cloud.prepaid.v1.PrepaidDeploymentList">PrepaidDeploymentList</a></td>
                 <td><p>Fetch all prepaid deployments for organization.
 Required permissions:
-- prepaid.deployment.list on the organization</p></td>
+- prepaid.prepaiddeployment.list on the organization</p></td>
               </tr>
             
               <tr>
@@ -13644,7 +13648,7 @@ Required permissions:
                 <td><a href="#arangodb.cloud.prepaid.v1.PrepaidDeployment">PrepaidDeployment</a></td>
                 <td><p>Fetch a deployment by its id.
 Required permissions:
-- prepaid.deployment.get on the deployment identified by the given ID</p></td>
+- prepaid.prepaiddeployment.get on the deployment identified by the given ID</p></td>
               </tr>
             
               <tr>
@@ -13653,7 +13657,8 @@ Required permissions:
                 <td><a href="#arangodb.cloud.data.v1.Deployment">.arangodb.cloud.data.v1.Deployment</a></td>
                 <td><p>Creates a new deployment from a prepaid deployment and attached the newly created deployment to the prepaid deployment.
 Required permissions:
-- prepaid.deployment.create on the organization that owns the deployment</p></td>
+- prepaid.prepaiddeployment.create on the project in which the deployment is going to be created
+- prepaid.prepaiddeployment.get on the deployment identified by the given ID</p></td>
               </tr>
             
               <tr>
@@ -13662,7 +13667,7 @@ Required permissions:
                 <td><a href="#arangodb.cloud.data.v1.Deployment">.arangodb.cloud.data.v1.Deployment</a></td>
                 <td><p>Update the deployment by prepaid deployment&#39;s id
 Required permissions:
-- prepaid.deployment.update on the organization that owns the deployment</p></td>
+- data.deployment.update on the deployment attached to the prepaid deployment</p></td>
               </tr>
             
               <tr>
@@ -13671,7 +13676,8 @@ Required permissions:
                 <td><a href="#arangodb.cloud.data.v1.Deployment">.arangodb.cloud.data.v1.Deployment</a></td>
                 <td><p>Creates a cloned deployment from a backup and attaches it to the prepaid deployment. This takes the deployment specification from the prepaid deployment, which must match the specification mentioned in the backup.
 Required permissions:
-- prepaid.deployment.create on the organization that owns the deployment</p></td>
+- prepaid.prepaiddeployment.create on the project in which the deployment is going to be created
+- prepaid.prepaiddeployment.get on the prepaid deployment identified by the given prepaid_deployment_id</p></td>
               </tr>
             
           </tbody>
@@ -13707,7 +13713,7 @@ Required permissions:
               <tr>
                 <td>ListPrepaidDeployments</td>
                 <td>GET</td>
-                <td>/api/prepaid/v1/deployments</td>
+                <td>/api/prepaid/v1/prepaiddeployments</td>
                 <td></td>
               </tr>
               

@@ -45,16 +45,16 @@ service PrepaidService {
 
     // Fetch all prepaid deployments for organization.
     // Required permissions:
-    // - prepaid.deployment.list on the organization
+    // - prepaid.prepaiddeployment.list on the organization
     rpc ListPrepaidDeployments(ListPrepaidDeploymentsRequest) returns (PrepaidDeploymentList) {
         option (google.api.http) = {
-            get: "/api/prepaid/v1/deployments"
+            get: "/api/prepaid/v1/prepaiddeployments"
         };
     }
 
     // Fetch a deployment by its id.
     // Required permissions:
-    // - prepaid.deployment.get on the deployment identified by the given ID
+    // - prepaid.prepaiddeployment.get on the deployment identified by the given ID
     rpc GetPrepaidDeployment(common.v1.IDOptions) returns (PrepaidDeployment) {
         option (google.api.http) = {
             get: "/api/prepaid/v1/prepaiddeployments/{id}"
@@ -63,7 +63,8 @@ service PrepaidService {
 
     // Creates a new deployment from a prepaid deployment and attached the newly created deployment to the prepaid deployment.
     // Required permissions:
-    // - prepaid.deployment.create on the organization that owns the deployment
+    // - prepaid.prepaiddeployment.create on the project in which the deployment is going to be created
+    // - prepaid.prepaiddeployment.get on the deployment identified by the given prepaid_deployment_id
     rpc CreateDeployment(CreateDeploymentRequest) returns (data.v1.Deployment) {
         option (google.api.http) = {
             post: "/api/prepaid/v1/prepaiddeployments/{prepaid_deployment_id}/create"
@@ -73,7 +74,7 @@ service PrepaidService {
 
     // Update the deployment by prepaid deployment's id
     // Required permissions:
-    // - prepaid.deployment.update on the organization that owns the deployment
+    // - data.deployment.update on the deployment attached to the prepaid deployment
     rpc UpdateDeployment(UpdateDeploymentRequest) returns (data.v1.Deployment) {
         option (google.api.http) = {
             post: "/api/prepaid/v1/prepaiddeployments/{prepaid_deployment_id}/update"
@@ -83,7 +84,8 @@ service PrepaidService {
 
     // Creates a cloned deployment from a backup and attaches it to the prepaid deployment. This takes the deployment specification from the prepaid deployment, which must match the specification mentioned in the backup.
     // Required permissions:
-    // - prepaid.deployment.create on the organization that owns the deployment
+    // - prepaid.prepaiddeployment.create on the project in which the deployment is going to be created
+	// - prepaid.prepaiddeployment.get on the prepaid deployment identified by the given prepaid_deployment_id
     rpc CloneDeploymentFromBackup(CloneFromBackupRequest) returns (data.v1.Deployment) {
         option (google.api.http) = {
             post: "/api/prepaid/v1/prepaiddeployments/{prepaid_deployment_id}/clone"
@@ -105,24 +107,29 @@ message PrepaidDeployment {
 	string name = 3;
 	// An optional description for prepaid deployment, not related to created deployment
 	string description = 4;
+	// Identifier of an organization that owns this prepaid deployment
+	string organization_id = 5;
     // Identifier of the region in which the deployment is going to be created.
-    string region_id = 5;
+    string region_id = 6;
     // The creation timestamp of the prepaid deployment
-    google.protobuf.Timestamp created_at = 6;
+    google.protobuf.Timestamp created_at = 7;
     // The deletion timestamp of the prepaid deployment
-    google.protobuf.Timestamp deleted_at = 7;
+    google.protobuf.Timestamp deleted_at = 8;
     // Set when this deployment is deleted.
-    bool is_deleted = 8;
+    bool is_deleted = 9;
 	// When the prepaid deployment was bought
-    google.protobuf.Timestamp starts_at = 9;
+    google.protobuf.Timestamp starts_at = 10;
 	// When the prepaid deployment is paid to.
-    google.protobuf.Timestamp ends_at = 10;
+    google.protobuf.Timestamp ends_at = 11;
     // Identifier of the support plan selected for this prepaid deployment.
-    string support_plan_id = 11;
+    string support_plan_id = 12;
     // Servers specification for created deployment
     data.v1.Deployment.ServersSpec servers = 101;
 	// Model specification for created deployment
     data.v1.Deployment.ModelSpec model = 102;
+	//Identifies the addons that will be used on the deployment
+	repeated string addons = 103;
+
     // Status of the prepaid deployment
     // All members of this field are read-only.
     message Status {
@@ -157,23 +164,13 @@ message CloneFromBackupRequest {
 }
 
 message CreateDeploymentRequest {
-	// Identifier of prepaid deployment
+	// Identifier of prepaid deployment to use as a specification and attach the newly created Deployment to
 	string prepaid_deployment_id = 1;
-    // Identifier of the project that owns this deployment.
-    // After creation, this value cannot be changed.
+    // Identifier of the project that owns the newly created deployment.
 	string project_id = 2;
     // Optional identifier of IP allowlist to use for this deployment.
     string ipallowlist_id = 3;
     // ArangoDB version to use for this deployment.
-    // See Version.version.
-    // If you change this value to a higher version,
-    // the deployment will be upgraded.
-    // If you change this value to a lower patch value,
-    // the deployment will be downgraded.
-    // Any attempt to change to a lower minor or major version
-    // is considered an invalid request.
-    // Any attempt to change to a version that is not in the
-    // list of available versions is considered an invalid request.
     string version = 4;
     message CertificateSpec {
         // Identifier of the CACertificate used to sign TLS certificates for the deployment.
