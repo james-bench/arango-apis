@@ -82,31 +82,27 @@ export interface PrepaidDeployment {
   // string
   url?: string;
   
-  // this is a name of prepaid deployment, not related to created deployment
+  // The name of prepaid deployment, not related to created deployment
   // string
   name?: string;
   
-  // this is an optional description for prepaid deployment, not related to created deployment
+  // An optional description for prepaid deployment, not related to created deployment
   // string
   description?: string;
   
-  // Identifier of the region in which the deployment is created.
-  // After creation, this value cannot be changed.
+  // Identifier of the region in which the deployment is going to be created.
   // string
   region_id?: string;
   
-  // The creation timestamp of the deployment
-  // This is a read-only value.
+  // The creation timestamp of the prepaid deployment
   // googleTypes.Timestamp
   created_at?: googleTypes.Timestamp;
   
-  // The deletion timestamp of the deployment
-  // This is a read-only value.
+  // The deletion timestamp of the prepaid deployment
   // googleTypes.Timestamp
   deleted_at?: googleTypes.Timestamp;
   
   // Set when this deployment is deleted.
-  // This is a read-only value.
   // boolean
   is_deleted?: boolean;
   
@@ -137,6 +133,8 @@ export interface PrepaidDeployment {
 // Status of the prepaid deployment
 // All members of this field are read-only.
 export interface PrepaidDeployment_Status {
+  // id of created deployment
+  // if there is no deployment associated with this prepaid deployment it's empty
   // string
   deployment_id?: string;
 }

@@ -101,21 +101,17 @@ message PrepaidDeployment {
     // URL of this resource
     // This is a read-only value.
     string url = 2;
-	// this is a name of prepaid deployment, not related to created deployment
+	// The name of prepaid deployment, not related to created deployment
 	string name = 3;
-	// this is an optional description for prepaid deployment, not related to created deployment
+	// An optional description for prepaid deployment, not related to created deployment
 	string description = 4;
-    // Identifier of the region in which the deployment is created.
-    // After creation, this value cannot be changed.
+    // Identifier of the region in which the deployment is going to be created.
     string region_id = 5;
-    // The creation timestamp of the deployment
-    // This is a read-only value.
+    // The creation timestamp of the prepaid deployment
     google.protobuf.Timestamp created_at = 6;
-    // The deletion timestamp of the deployment
-    // This is a read-only value.
+    // The deletion timestamp of the prepaid deployment
     google.protobuf.Timestamp deleted_at = 7;
     // Set when this deployment is deleted.
-    // This is a read-only value.
     bool is_deleted = 8;
 	// When the prepaid deployment was bought
     google.protobuf.Timestamp starts_at = 9;
@@ -130,6 +126,8 @@ message PrepaidDeployment {
     // Status of the prepaid deployment
     // All members of this field are read-only.
     message Status {
+		// id of created deployment
+		// if there is no deployment associated with this prepaid deployment it's empty
 		string deployment_id = 1;
     }
     Status status = 201;

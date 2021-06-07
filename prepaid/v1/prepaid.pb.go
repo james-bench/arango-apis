@@ -38,21 +38,17 @@ type PrepaidDeployment struct {
 	// URL of this resource
 	// This is a read-only value.
 	Url string `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty"`
-	// this is a name of prepaid deployment, not related to created deployment
+	// The name of prepaid deployment, not related to created deployment
 	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
-	// this is an optional description for prepaid deployment, not related to created deployment
+	// An optional description for prepaid deployment, not related to created deployment
 	Description string `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
-	// Identifier of the region in which the deployment is created.
-	// After creation, this value cannot be changed.
+	// Identifier of the region in which the deployment is going to be created.
 	RegionId string `protobuf:"bytes,5,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
-	// The creation timestamp of the deployment
-	// This is a read-only value.
+	// The creation timestamp of the prepaid deployment
 	CreatedAt *types.Timestamp `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	// The deletion timestamp of the deployment
-	// This is a read-only value.
+	// The deletion timestamp of the prepaid deployment
 	DeletedAt *types.Timestamp `protobuf:"bytes,7,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`
 	// Set when this deployment is deleted.
-	// This is a read-only value.
 	IsDeleted bool `protobuf:"varint,8,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
 	// When the prepaid deployment was bought
 	StartsAt *types.Timestamp `protobuf:"bytes,9,opt,name=starts_at,json=startsAt,proto3" json:"starts_at,omitempty"`
@@ -204,6 +200,8 @@ func (m *PrepaidDeployment) GetStatus() *PrepaidDeployment_Status {
 // Status of the prepaid deployment
 // All members of this field are read-only.
 type PrepaidDeployment_Status struct {
+	// id of created deployment
+	// if there is no deployment associated with this prepaid deployment it's empty
 	DeploymentId         string   `protobuf:"bytes,1,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`

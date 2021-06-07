@@ -13446,46 +13446,42 @@ This is a read-only value. </p></td>
                   <td>name</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>this is a name of prepaid deployment, not related to created deployment </p></td>
+                  <td><p>The name of prepaid deployment, not related to created deployment </p></td>
                 </tr>
               
                 <tr>
                   <td>description</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>this is an optional description for prepaid deployment, not related to created deployment </p></td>
+                  <td><p>An optional description for prepaid deployment, not related to created deployment </p></td>
                 </tr>
               
                 <tr>
                   <td>region_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Identifier of the region in which the deployment is created.
-After creation, this value cannot be changed. </p></td>
+                  <td><p>Identifier of the region in which the deployment is going to be created. </p></td>
                 </tr>
               
                 <tr>
                   <td>created_at</td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
-                  <td><p>The creation timestamp of the deployment
-This is a read-only value. </p></td>
+                  <td><p>The creation timestamp of the prepaid deployment </p></td>
                 </tr>
               
                 <tr>
                   <td>deleted_at</td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
-                  <td><p>The deletion timestamp of the deployment
-This is a read-only value. </p></td>
+                  <td><p>The deletion timestamp of the prepaid deployment </p></td>
                 </tr>
               
                 <tr>
                   <td>is_deleted</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>Set when this deployment is deleted.
-This is a read-only value. </p></td>
+                  <td><p>Set when this deployment is deleted. </p></td>
                 </tr>
               
                 <tr>
@@ -13551,7 +13547,8 @@ This is a read-only value. </p></td>
                   <td>deployment_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>id of created deployment
+if there is no deployment associated with this prepaid deployment it&#39;s empty </p></td>
                 </tr>
               
             </tbody>
