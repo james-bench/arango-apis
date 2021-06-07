@@ -109,7 +109,7 @@ message PrepaidDeployment {
     string description = 4;
     // Identifier of an organization that owns this prepaid deployment
     string organization_id = 5;
-    // Identifier of the region in which the deployment is going to be created.
+    // Identifier of the region in which a deployment is going to be created.
     string region_id = 6;
     // The creation timestamp of the prepaid deployment
     google.protobuf.Timestamp created_at = 7;
@@ -117,14 +117,12 @@ message PrepaidDeployment {
     google.protobuf.Timestamp deleted_at = 8;
     // Set when this deployment is deleted.
     bool is_deleted = 9;
-    // When the prepaid deployment was bought
+    // Start of the period for which the PrepaidDeployment was purchased
     google.protobuf.Timestamp starts_at = 10;
-    // When the prepaid deployment is paid to.
+    // End of the period for which the PrepaidDeployment was purchased
     google.protobuf.Timestamp ends_at = 11;
     // Identifier of the support plan selected for this prepaid deployment.
     string support_plan_id = 12;
-    // Servers specification for created deployment
-    data.v1.Deployment.ServersSpec servers = 101;
     // Model specification for created deployment
     data.v1.Deployment.ModelSpec model = 102;
     //Identifies the addons that will be used on the deployment
@@ -136,6 +134,10 @@ message PrepaidDeployment {
         // id of created deployment
         // if there is no deployment associated with this prepaid deployment it's empty
         string deployment_id = 1;
+        // timestamp when the deployment was created for or attached to PrepaidDeployment
+        google.protobuf.Timestamp attached_at = 2;
+        // timestamp when the deployment was detached from PrepaidDeployment
+        google.protobuf.Timestamp detached_at = 3;
     }
     Status status = 201;
 }
@@ -143,6 +145,7 @@ message PrepaidDeployment {
 message PrepaidDeploymentList {
     // prepaid deployment items
     repeated PrepaidDeployment items = 1;
+    common.v1.ListOptions options = 10;
 }
 
 message ListPrepaidDeploymentsRequest {
@@ -159,7 +162,7 @@ message CloneFromBackupRequest {
     // Identifier of prepaid deployment
     string prepaid_deployment_id = 1;
     // Identifier of the backup to restore from
-    // Backup specification has to match prepaid_deployment specification in ordere to succedd
+    // Backup specification has to match prepaid_deployment specification in order to succeed
     string backup_id = 2;
 }
 

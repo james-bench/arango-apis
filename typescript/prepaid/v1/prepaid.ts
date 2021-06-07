@@ -6,10 +6,10 @@ import api from '../../api'
 import * as googleTypes from '../../googleTypes'
 import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
 import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1/common'
+import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
 import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 import { Deployment as arangodb_cloud_data_v1_Deployment } from '../../data/v1/data'
 import { Deployment_ModelSpec as arangodb_cloud_data_v1_Deployment_ModelSpec } from '../../data/v1/data'
-import { Deployment_ServersSpec as arangodb_cloud_data_v1_Deployment_ServersSpec } from '../../data/v1/data'
 
 // File: prepaid/v1/prepaid.proto
 // Package: arangodb.cloud.prepaid.v1
@@ -19,7 +19,7 @@ export interface CloneFromBackupRequest {
   prepaid_deployment_id?: string;
   
   // Identifier of the backup to restore from
-  // Backup specification has to match prepaid_deployment specification in ordere to succedd
+  // Backup specification has to match prepaid_deployment specification in order to succeed
   // string
   backup_id?: string;
 }
@@ -84,7 +84,7 @@ export interface PrepaidDeployment {
   // string
   organization_id?: string;
   
-  // Identifier of the region in which the deployment is going to be created.
+  // Identifier of the region in which a deployment is going to be created.
   // string
   region_id?: string;
   
@@ -100,21 +100,17 @@ export interface PrepaidDeployment {
   // boolean
   is_deleted?: boolean;
   
-  // When the prepaid deployment was bought
+  // Start of the period for which the PrepaidDeployment was purchased
   // googleTypes.Timestamp
   starts_at?: googleTypes.Timestamp;
   
-  // When the prepaid deployment is paid to.
+  // End of the period for which the PrepaidDeployment was purchased
   // googleTypes.Timestamp
   ends_at?: googleTypes.Timestamp;
   
   // Identifier of the support plan selected for this prepaid deployment.
   // string
   support_plan_id?: string;
-  
-  // Servers specification for created deployment
-  // arangodb.cloud.data.v1.Deployment.ServersSpec
-  servers?: arangodb_cloud_data_v1_Deployment_ServersSpec;
   
   // Model specification for created deployment
   // arangodb.cloud.data.v1.Deployment.ModelSpec
@@ -135,11 +131,22 @@ export interface PrepaidDeployment_Status {
   // if there is no deployment associated with this prepaid deployment it's empty
   // string
   deployment_id?: string;
+  
+  // timestamp when the deployment was created for or attached to PrepaidDeployment
+  // googleTypes.Timestamp
+  attached_at?: googleTypes.Timestamp;
+  
+  // timestamp when the deployment was detached from PrepaidDeployment
+  // googleTypes.Timestamp
+  detached_at?: googleTypes.Timestamp;
 }
 export interface PrepaidDeploymentList {
   // prepaid deployment items
   // PrepaidDeployment
   items?: PrepaidDeployment[];
+  
+  // arangodb.cloud.common.v1.ListOptions
+  options?: arangodb_cloud_common_v1_ListOptions;
 }
 export interface UpdateDeploymentRequest {
   // Identifier of prepaid deployment
@@ -167,7 +174,7 @@ export interface IPrepaidService {
   // Creates a new deployment from a prepaid deployment and attached the newly created deployment to the prepaid deployment.
   // Required permissions:
   // - prepaid.prepaiddeployment.create on the project in which the deployment is going to be created
-  // - prepaid.prepaiddeployment.get on the deployment identified by the given ID
+  // - prepaid.prepaiddeployment.get on the deployment identified by the given prepaid_deployment_id
   CreateDeployment: (req: CreateDeploymentRequest) => Promise<arangodb_cloud_data_v1_Deployment>;
   
   // Update the deployment by prepaid deployment's id
@@ -214,7 +221,7 @@ export class PrepaidService implements IPrepaidService {
   // Creates a new deployment from a prepaid deployment and attached the newly created deployment to the prepaid deployment.
   // Required permissions:
   // - prepaid.prepaiddeployment.create on the project in which the deployment is going to be created
-  // - prepaid.prepaiddeployment.get on the deployment identified by the given ID
+  // - prepaid.prepaiddeployment.get on the deployment identified by the given prepaid_deployment_id
   async CreateDeployment(req: CreateDeploymentRequest): Promise<arangodb_cloud_data_v1_Deployment> {
     const url = `/api/prepaid/v1/prepaiddeployments/${encodeURIComponent(req.prepaid_deployment_id || '')}/create`;
     return api.post(url, req);

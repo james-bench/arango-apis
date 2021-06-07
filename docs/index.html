@@ -13287,7 +13287,7 @@ Required permissions:
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Identifier of the backup to restore from
-Backup specification has to match prepaid_deployment specification in ordere to succedd </p></td>
+Backup specification has to match prepaid_deployment specification in order to succeed </p></td>
                 </tr>
               
             </tbody>
@@ -13457,7 +13457,7 @@ This is a read-only value. </p></td>
                   <td>region_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Identifier of the region in which the deployment is going to be created. </p></td>
+                  <td><p>Identifier of the region in which a deployment is going to be created. </p></td>
                 </tr>
               
                 <tr>
@@ -13485,14 +13485,14 @@ This is a read-only value. </p></td>
                   <td>starts_at</td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
-                  <td><p>When the prepaid deployment was bought </p></td>
+                  <td><p>Start of the period for which the PrepaidDeployment was purchased </p></td>
                 </tr>
               
                 <tr>
                   <td>ends_at</td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
-                  <td><p>When the prepaid deployment is paid to. </p></td>
+                  <td><p>End of the period for which the PrepaidDeployment was purchased </p></td>
                 </tr>
               
                 <tr>
@@ -13500,13 +13500,6 @@ This is a read-only value. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Identifier of the support plan selected for this prepaid deployment. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>servers</td>
-                  <td><a href="#arangodb.cloud.data.v1.Deployment.ServersSpec">arangodb.cloud.data.v1.Deployment.ServersSpec</a></td>
-                  <td></td>
-                  <td><p>Servers specification for created deployment </p></td>
                 </tr>
               
                 <tr>
@@ -13555,6 +13548,20 @@ This is a read-only value. </p></td>
 if there is no deployment associated with this prepaid deployment it&#39;s empty </p></td>
                 </tr>
               
+                <tr>
+                  <td>attached_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>timestamp when the deployment was created for or attached to PrepaidDeployment </p></td>
+                </tr>
+              
+                <tr>
+                  <td>detached_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>timestamp when the deployment was detached from PrepaidDeployment </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -13577,6 +13584,13 @@ if there is no deployment associated with this prepaid deployment it&#39;s empty
                   <td><a href="#arangodb.cloud.prepaid.v1.PrepaidDeployment">PrepaidDeployment</a></td>
                   <td>repeated</td>
                   <td><p>prepaid deployment items </p></td>
+                </tr>
+              
+                <tr>
+                  <td>options</td>
+                  <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
+                  <td></td>
+                  <td><p> </p></td>
                 </tr>
               
             </tbody>
@@ -13658,7 +13672,7 @@ Required permissions:
                 <td><p>Creates a new deployment from a prepaid deployment and attached the newly created deployment to the prepaid deployment.
 Required permissions:
 - prepaid.prepaiddeployment.create on the project in which the deployment is going to be created
-- prepaid.prepaiddeployment.get on the deployment identified by the given ID</p></td>
+- prepaid.prepaiddeployment.get on the deployment identified by the given prepaid_deployment_id</p></td>
               </tr>
             
               <tr>
