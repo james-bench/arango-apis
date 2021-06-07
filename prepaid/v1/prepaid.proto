@@ -123,55 +123,10 @@ message PrepaidDeployment {
     google.protobuf.Timestamp ends_at = 10;
     // Identifier of the support plan selected for this prepaid deployment.
     string support_plan_id = 11;
-
-
-    message ServersSpec {
-        // Number of coordinators of the deployment
-        // This field is automatically set unless the flexible model is used.
-        int32 coordinators = 1;
-        // Amount of memory (in GB) to allocate for coordinators.
-        // This field is automatically set unless the flexible model is used.
-        int32 coordinator_memory_size = 2;
-        // Custom command line arguments passed to all coordinators.
-        // This field is ignored set unless the flexible model is used.
-        repeated string coordinator_args = 3;
-
-        // Number of dbservers of the deployment
-        // This field is automatically set unless the flexible model is used.
-        int32 dbservers = 11;
-        // Amount of memory (in GB) to allocate for dbservers.
-        // This field is automatically set unless the flexible model is used.
-        int32 dbserver_memory_size = 12;
-        // Amount of disk space (in GB) to allocate for dbservers.
-        // This field is automatically set unless the flexible model is used.
-        int32 dbserver_disk_size = 13;
-        // Custom command line arguments passed to all dbservers.
-        // This field is ignored set unless the flexible model is used.
-        repeated string dbserver_args = 14;
-
-        // The minimum number of dbservers based on the highest replication factor
-        // defined by all databases and all collections.
-        int32 minimum_dbservers_count = 15;
-    }
-    ServersSpec servers = 101;
-
-
-    message ModelSpec {
-        // Type of model being used
-        string model = 1;
-        // Size of nodes being used
-        // This field is ignored set in case the flexible model is used.
-        string node_size_id = 2;
-        // Number of nodes being used
-         // This field is ignored set in case the flexible model is used.
-        int32 node_count = 3;
-        // Amount of disk space per node (in GB)
-         // This field is ignored set in case the flexible model is used.
-        int32 node_disk_size = 4;
-    }
-    ModelSpec model = 102;
-
-
+    // Servers specification for created deployment
+    data.v1.Deployment.ServersSpec servers = 101;
+	// Model specification for created deployment
+    data.v1.Deployment.ModelSpec model = 102;
     // Status of the prepaid deployment
     // All members of this field are read-only.
     message Status {
@@ -181,19 +136,25 @@ message PrepaidDeployment {
 }
 
 message PrepaidDeploymentList {
+	// prepaid deployment items
 	repeated PrepaidDeployment items = 1;
 }
 
 message ListPrepaidDeploymentsRequest {
+	// identifier of the organization to get a list of prepaid deployments for
 	string organization_id = 1;
 }
 
 message UpdateDeploymentRequest {
+	// Identifier of prepaid deployment
 	string prepaid_deployment_id = 1;
 }
 
 message CloneFromBackupRequest {
+	// Identifier of prepaid deployment
 	string prepaid_deployment_id = 1;
+	// Identifier of the backup to restore from
+	// Backup specification has to match prepaid_deployment specification in ordere to succedd
 	string backup_id = 2;
 }
 

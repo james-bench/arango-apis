@@ -8,13 +8,18 @@ import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
 import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1/common'
 import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 import { Deployment as arangodb_cloud_data_v1_Deployment } from '../../data/v1/data'
+import { Deployment_ModelSpec as arangodb_cloud_data_v1_Deployment_ModelSpec } from '../../data/v1/data'
+import { Deployment_ServersSpec as arangodb_cloud_data_v1_Deployment_ServersSpec } from '../../data/v1/data'
 
 // File: prepaid/v1/prepaid.proto
 // Package: arangodb.cloud.prepaid.v1
 export interface CloneFromBackupRequest {
+  // Identifier of prepaid deployment
   // string
   prepaid_deployment_id?: string;
   
+  // Identifier of the backup to restore from
+  // Backup specification has to match prepaid_deployment specification in ordere to succedd
   // string
   backup_id?: string;
 }
@@ -60,6 +65,7 @@ export interface CreateDeploymentRequest_CertificateSpec {
   alternate_dns_names?: string[];
 }
 export interface ListPrepaidDeploymentsRequest {
+  // identifier of the organization to get a list of prepaid deployments for
   // string
   organization_id?: string;
 }
@@ -116,75 +122,16 @@ export interface PrepaidDeployment {
   // string
   support_plan_id?: string;
   
-  // PrepaidDeployment_ServersSpec
-  servers?: PrepaidDeployment_ServersSpec;
+  // Servers specification for created deployment
+  // arangodb.cloud.data.v1.Deployment.ServersSpec
+  servers?: arangodb_cloud_data_v1_Deployment_ServersSpec;
   
-  // PrepaidDeployment_ModelSpec
-  model?: PrepaidDeployment_ModelSpec;
+  // Model specification for created deployment
+  // arangodb.cloud.data.v1.Deployment.ModelSpec
+  model?: arangodb_cloud_data_v1_Deployment_ModelSpec;
   
   // PrepaidDeployment_Status
   status?: PrepaidDeployment_Status;
-}
-export interface PrepaidDeployment_ModelSpec {
-  // Type of model being used
-  // string
-  model?: string;
-  
-  // Size of nodes being used
-  // This field is ignored set in case the flexible model is used.
-  // string
-  node_size_id?: string;
-  
-  // Number of nodes being used
-  // This field is ignored set in case the flexible model is used.
-  // number
-  node_count?: number;
-  
-  // Amount of disk space per node (in GB)
-  // This field is ignored set in case the flexible model is used.
-  // number
-  node_disk_size?: number;
-}
-export interface PrepaidDeployment_ServersSpec {
-  // Number of coordinators of the deployment
-  // This field is automatically set unless the flexible model is used.
-  // number
-  coordinators?: number;
-  
-  // Amount of memory (in GB) to allocate for coordinators.
-  // This field is automatically set unless the flexible model is used.
-  // number
-  coordinator_memory_size?: number;
-  
-  // Custom command line arguments passed to all coordinators.
-  // This field is ignored set unless the flexible model is used.
-  // string
-  coordinator_args?: string[];
-  
-  // Number of dbservers of the deployment
-  // This field is automatically set unless the flexible model is used.
-  // number
-  dbservers?: number;
-  
-  // Amount of memory (in GB) to allocate for dbservers.
-  // This field is automatically set unless the flexible model is used.
-  // number
-  dbserver_memory_size?: number;
-  
-  // Amount of disk space (in GB) to allocate for dbservers.
-  // This field is automatically set unless the flexible model is used.
-  // number
-  dbserver_disk_size?: number;
-  
-  // Custom command line arguments passed to all dbservers.
-  // This field is ignored set unless the flexible model is used.
-  // string
-  dbserver_args?: string[];
-  
-  // The minimum number of dbservers based on the highest replication factor
-  // defined by all databases and all collections.
-  // number
-  minimum_dbservers_count?: number;
 }
 
 // Status of the prepaid deployment
@@ -194,10 +141,12 @@ export interface PrepaidDeployment_Status {
   deployment_id?: string;
 }
 export interface PrepaidDeploymentList {
+  // prepaid deployment items
   // PrepaidDeployment
   items?: PrepaidDeployment[];
 }
 export interface UpdateDeploymentRequest {
+  // Identifier of prepaid deployment
   // string
   prepaid_deployment_id?: string;
 }
