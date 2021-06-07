@@ -142,11 +142,14 @@ message PrepaidDeployment {
     Status status = 201;
 }
 
+// PrepaidDeploymentList contains a list of PrepaidDeployment items
 message PrepaidDeploymentList {
     // prepaid deployment items
     repeated PrepaidDeployment items = 1;
 }
 
+// ListPrepaidDeploymentsRequest is used to request a list of PrepaidDeployments for
+// organization with given organization_id
 message ListPrepaidDeploymentsRequest {
     // identifier of the organization to get a list of prepaid deployments for
     string organization_id = 1;
@@ -154,11 +157,15 @@ message ListPrepaidDeploymentsRequest {
     common.v1.ListOptions options = 10;
 }
 
+// UpdateDeploymentRequest is used to update deployment attached to PrepaidDeployment
+// with give prepaid_deployment_id
 message UpdateDeploymentRequest {
     // Identifier of prepaid deployment
     string prepaid_deployment_id = 1;
 }
 
+// CloneFromBackupRequest is used to create a new deployment based on PrepaidDeployment
+// with prepaid_deployment_id and restore data from Backup with given backup_id
 message CloneFromBackupRequest {
     // Identifier of prepaid deployment
     string prepaid_deployment_id = 1;
@@ -167,6 +174,8 @@ message CloneFromBackupRequest {
     string backup_id = 2;
 }
 
+// CreateDeploymentRequest is used to create a new deployment based on PrepaidDeployment
+// with given prepaid_deployment_id and attach it to this PrepaidDeployment
 message CreateDeploymentRequest {
     // Identifier of prepaid deployment to use as a specification and attach the newly created Deployment to
     string prepaid_deployment_id = 1;

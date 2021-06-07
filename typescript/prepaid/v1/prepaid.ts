@@ -13,6 +13,9 @@ import { Deployment_ModelSpec as arangodb_cloud_data_v1_Deployment_ModelSpec } f
 
 // File: prepaid/v1/prepaid.proto
 // Package: arangodb.cloud.prepaid.v1
+
+// CloneFromBackupRequest is used to create a new deployment based on PrepaidDeployment
+// with prepaid_deployment_id and restore data from Backup with given backup_id
 export interface CloneFromBackupRequest {
   // Identifier of prepaid deployment
   // string
@@ -23,6 +26,9 @@ export interface CloneFromBackupRequest {
   // string
   backup_id?: string;
 }
+
+// CreateDeploymentRequest is used to create a new deployment based on PrepaidDeployment
+// with given prepaid_deployment_id and attach it to this PrepaidDeployment
 export interface CreateDeploymentRequest {
   // Identifier of prepaid deployment to use as a specification and attach the newly created Deployment to
   // string
@@ -54,6 +60,9 @@ export interface CreateDeploymentRequest_CertificateSpec {
   // string
   alternate_dns_names?: string[];
 }
+
+// ListPrepaidDeploymentsRequest is used to request a list of PrepaidDeployments for
+// organization with given organization_id
 export interface ListPrepaidDeploymentsRequest {
   // identifier of the organization to get a list of prepaid deployments for
   // string
@@ -144,11 +153,16 @@ export interface PrepaidDeployment_Status {
   // googleTypes.Timestamp
   detached_at?: googleTypes.Timestamp;
 }
+
+// PrepaidDeploymentList contains a list of PrepaidDeployment items
 export interface PrepaidDeploymentList {
   // prepaid deployment items
   // PrepaidDeployment
   items?: PrepaidDeployment[];
 }
+
+// UpdateDeploymentRequest is used to update deployment attached to PrepaidDeployment
+// with give prepaid_deployment_id
 export interface UpdateDeploymentRequest {
   // Identifier of prepaid deployment
   // string

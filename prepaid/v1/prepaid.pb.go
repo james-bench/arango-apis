@@ -275,6 +275,7 @@ func (m *PrepaidDeployment_Status) GetDetachedAt() *types.Timestamp {
 	return nil
 }
 
+// PrepaidDeploymentList contains a list of PrepaidDeployment items
 type PrepaidDeploymentList struct {
 	// prepaid deployment items
 	Items                []*PrepaidDeployment `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
@@ -323,6 +324,8 @@ func (m *PrepaidDeploymentList) GetItems() []*PrepaidDeployment {
 	return nil
 }
 
+// ListPrepaidDeploymentsRequest is used to request a list of PrepaidDeployments for
+// organization with given organization_id
 type ListPrepaidDeploymentsRequest struct {
 	// identifier of the organization to get a list of prepaid deployments for
 	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
@@ -380,6 +383,8 @@ func (m *ListPrepaidDeploymentsRequest) GetOptions() *v11.ListOptions {
 	return nil
 }
 
+// UpdateDeploymentRequest is used to update deployment attached to PrepaidDeployment
+// with give prepaid_deployment_id
 type UpdateDeploymentRequest struct {
 	// Identifier of prepaid deployment
 	PrepaidDeploymentId  string   `protobuf:"bytes,1,opt,name=prepaid_deployment_id,json=prepaidDeploymentId,proto3" json:"prepaid_deployment_id,omitempty"`
@@ -428,6 +433,8 @@ func (m *UpdateDeploymentRequest) GetPrepaidDeploymentId() string {
 	return ""
 }
 
+// CloneFromBackupRequest is used to create a new deployment based on PrepaidDeployment
+// with prepaid_deployment_id and restore data from Backup with given backup_id
 type CloneFromBackupRequest struct {
 	// Identifier of prepaid deployment
 	PrepaidDeploymentId string `protobuf:"bytes,1,opt,name=prepaid_deployment_id,json=prepaidDeploymentId,proto3" json:"prepaid_deployment_id,omitempty"`
@@ -486,6 +493,8 @@ func (m *CloneFromBackupRequest) GetBackupId() string {
 	return ""
 }
 
+// CreateDeploymentRequest is used to create a new deployment based on PrepaidDeployment
+// with given prepaid_deployment_id and attach it to this PrepaidDeployment
 type CreateDeploymentRequest struct {
 	// Identifier of prepaid deployment to use as a specification and attach the newly created Deployment to
 	PrepaidDeploymentId string `protobuf:"bytes,1,opt,name=prepaid_deployment_id,json=prepaidDeploymentId,proto3" json:"prepaid_deployment_id,omitempty"`
