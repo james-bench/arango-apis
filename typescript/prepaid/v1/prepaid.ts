@@ -207,7 +207,7 @@ export class PrepaidService implements IPrepaidService {
   async ListPrepaidDeployments(req: ListPrepaidDeploymentsRequest): Promise<PrepaidDeploymentList> {
     const path = `/api/prepaid/v1/organizations/${encodeURIComponent(req.organization_id || '')}/prepaiddeployments`;
     const url = path + api.queryString(req, [`organization_id`]);
-    return api.get(url, undefined);
+    return api.post(url, undefined);
   }
   
   // Fetch a deployment by its id.

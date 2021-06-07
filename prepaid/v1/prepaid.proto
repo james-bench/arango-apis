@@ -48,7 +48,7 @@ service PrepaidService {
     // - prepaid.prepaiddeployment.list on the organization
     rpc ListPrepaidDeployments(ListPrepaidDeploymentsRequest) returns (PrepaidDeploymentList) {
         option (google.api.http) = {
-            get: "/api/prepaid/v1/organizations/{organization_id}/prepaiddeployments"
+            post: "/api/prepaid/v1/organizations/{organization_id}/prepaiddeployments"
         };
     }
 
