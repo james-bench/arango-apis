@@ -51,12 +51,30 @@ func local_request_PrepaidService_GetAPIVersion_0(ctx context.Context, marshaler
 }
 
 var (
-	filter_PrepaidService_ListPrepaidDeployments_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+	filter_PrepaidService_ListPrepaidDeployments_0 = &utilities.DoubleArray{Encoding: map[string]int{"organization_id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 )
 
 func request_PrepaidService_ListPrepaidDeployments_0(ctx context.Context, marshaler runtime.Marshaler, client PrepaidServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListPrepaidDeploymentsRequest
 	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["organization_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "organization_id")
+	}
+
+	protoReq.OrganizationId, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "organization_id", err)
+	}
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -73,6 +91,24 @@ func request_PrepaidService_ListPrepaidDeployments_0(ctx context.Context, marsha
 func local_request_PrepaidService_ListPrepaidDeployments_0(ctx context.Context, marshaler runtime.Marshaler, server PrepaidServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListPrepaidDeploymentsRequest
 	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["organization_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "organization_id")
+	}
+
+	protoReq.OrganizationId, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "organization_id", err)
+	}
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -642,7 +678,7 @@ func RegisterPrepaidServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 var (
 	pattern_PrepaidService_GetAPIVersion_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "prepaid", "v1", "api-version"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_PrepaidService_ListPrepaidDeployments_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "prepaid", "v1", "prepaiddeployments"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_PrepaidService_ListPrepaidDeployments_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "prepaid", "v1", "organizations", "organization_id", "prepaiddeployments"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_PrepaidService_GetPrepaidDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "prepaid", "v1", "prepaiddeployments", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 

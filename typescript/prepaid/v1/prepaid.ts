@@ -58,6 +58,10 @@ export interface ListPrepaidDeploymentsRequest {
   // identifier of the organization to get a list of prepaid deployments for
   // string
   organization_id?: string;
+  
+  // common listing options
+  // arangodb.cloud.common.v1.ListOptions
+  options?: arangodb_cloud_common_v1_ListOptions;
 }
 
 // A PrepaidDeployment contains all attributes of a future deployment that is already paid for.
@@ -144,9 +148,6 @@ export interface PrepaidDeploymentList {
   // prepaid deployment items
   // PrepaidDeployment
   items?: PrepaidDeployment[];
-  
-  // arangodb.cloud.common.v1.ListOptions
-  options?: arangodb_cloud_common_v1_ListOptions;
 }
 export interface UpdateDeploymentRequest {
   // Identifier of prepaid deployment
@@ -204,8 +205,8 @@ export class PrepaidService implements IPrepaidService {
   // Required permissions:
   // - prepaid.prepaiddeployment.list on the organization
   async ListPrepaidDeployments(req: ListPrepaidDeploymentsRequest): Promise<PrepaidDeploymentList> {
-    const path = `/api/prepaid/v1/prepaiddeployments`;
-    const url = path + api.queryString(req, []);
+    const path = `/api/prepaid/v1/organizations/${encodeURIComponent(req.organization_id || '')}/prepaiddeployments`;
+    const url = path + api.queryString(req, [`organization_id`]);
     return api.get(url, undefined);
   }
   

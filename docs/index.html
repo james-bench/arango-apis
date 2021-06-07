@@ -13399,6 +13399,13 @@ rotation of the deployment is required, which will result in some downtime. </p>
                   <td><p>identifier of the organization to get a list of prepaid deployments for </p></td>
                 </tr>
               
+                <tr>
+                  <td>options</td>
+                  <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
+                  <td></td>
+                  <td><p>common listing options </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -13586,13 +13593,6 @@ if there is no deployment associated with this prepaid deployment it&#39;s empty
                   <td><p>prepaid deployment items </p></td>
                 </tr>
               
-                <tr>
-                  <td>options</td>
-                  <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
             </tbody>
           </table>
 
@@ -13727,7 +13727,7 @@ Required permissions:
               <tr>
                 <td>ListPrepaidDeployments</td>
                 <td>GET</td>
-                <td>/api/prepaid/v1/prepaiddeployments</td>
+                <td>/api/prepaid/v1/organizations/{organization_id}/prepaiddeployments</td>
                 <td></td>
               </tr>
               

@@ -48,7 +48,7 @@ service PrepaidService {
     // - prepaid.prepaiddeployment.list on the organization
     rpc ListPrepaidDeployments(ListPrepaidDeploymentsRequest) returns (PrepaidDeploymentList) {
         option (google.api.http) = {
-            get: "/api/prepaid/v1/prepaiddeployments"
+            get: "/api/prepaid/v1/organizations/{organization_id}/prepaiddeployments"
         };
     }
 
@@ -125,7 +125,7 @@ message PrepaidDeployment {
     string support_plan_id = 12;
     // Model specification for created deployment
     data.v1.Deployment.ModelSpec model = 102;
-    //Identifies the addons that will be used on the deployment
+    // Identifies the addons that will be used on the deployment
     repeated string addons = 103;
 
     // Status of the prepaid deployment
@@ -145,12 +145,13 @@ message PrepaidDeployment {
 message PrepaidDeploymentList {
     // prepaid deployment items
     repeated PrepaidDeployment items = 1;
-    common.v1.ListOptions options = 10;
 }
 
 message ListPrepaidDeploymentsRequest {
     // identifier of the organization to get a list of prepaid deployments for
     string organization_id = 1;
+    // common listing options
+    common.v1.ListOptions options = 10;
 }
 
 message UpdateDeploymentRequest {
