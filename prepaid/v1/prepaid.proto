@@ -1,24 +1,24 @@
-// 
+//
 // DISCLAIMER
-// 
+//
 // Copyright 2021 ArangoDB GmbH, Cologne, Germany
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+//
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
-// 
+//
 // Author Marcin Swiderski
-// 
+//
 
 syntax = "proto3";
 
@@ -46,7 +46,7 @@ service PrepaidService {
     // Fetch all prepaid deployments for organization.
     // Required permissions:
     // - prepaid.deployment.list on the organization
-    rpc ListPrepaidDeployments(common.v1.ListOptions) returns (PrepaidDeploymentList) {
+    rpc ListPrepaidDeployments(ListPrepaidDeploymentsRequest) returns (PrepaidDeploymentList) {
         option (google.api.http) = {
             get: "/api/prepaid/v1/deployments"
         };
@@ -57,7 +57,7 @@ service PrepaidService {
     // - prepaid.deployment.get on the deployment identified by the given ID
     rpc GetPrepaidDeployment(common.v1.IDOptions) returns (PrepaidDeployment) {
         option (google.api.http) = {
-            get: "/api/prepaid/v1/deployments/{id}"
+            get: "/api/prepaid/v1/prepaiddeployments/{id}"
         };
     }
 
@@ -66,7 +66,7 @@ service PrepaidService {
     // - prepaid.deployment.create on the organization that owns the deployment
     rpc CreateDeployment(CreateDeploymentRequest) returns (data.v1.Deployment) {
         option (google.api.http) = {
-            post: "/api/prepaid/v1/deployments/{id}/create"
+            post: "/api/prepaid/v1/prepaiddeployments/{prepaid_deployment_id}/create"
             body: "*"
         };
     }
@@ -74,9 +74,9 @@ service PrepaidService {
     // Update the deployment by prepaid deployment's id
     // Required permissions:
     // - prepaid.deployment.update on the organization that owns the deployment
-    rpc UpdateDeployment(common.v1.IDOptions) returns (data.v1.Deployment) {
+    rpc UpdateDeployment(UpdateDeploymentRequest) returns (data.v1.Deployment) {
         option (google.api.http) = {
-            post: "/api/prepaid/v1/deployments/{id}/update"
+            post: "/api/prepaid/v1/prepaiddeployments/{prepaid_deployment_id}/update"
             body: "*"
         };
     }
@@ -84,53 +84,46 @@ service PrepaidService {
     // Creates a cloned deployment from a backup and attaches it to the prepaid deployment. This takes the deployment specification from the prepaid deployment, which must match the specification mentioned in the backup.
     // Required permissions:
     // - prepaid.deployment.create on the organization that owns the deployment
-    rpc CloneDeploymentFromBackup(common.v1.IDOptions) returns (data.v1.Deployment) {
+    rpc CloneDeploymentFromBackup(CloneFromBackupRequest) returns (data.v1.Deployment) {
         option (google.api.http) = {
-            post: "/api/prepaid/v1/deployments/{id}/clone"
+            post: "/api/prepaid/v1/prepaiddeployments/{prepaid_deployment_id}/clone"
             body: "*"
         };
     }
 }
 
 
-// A PrepaidDeployment is represents one deployment of an ArangoDB cluster.
+//  A PrepaidDeployment contains all attributes of a future deployment that is already paid for.
 message PrepaidDeployment {
-    // System identifier of the deployment.
+    // System identifier of the prepaid deployment.
     // This is a read-only value.
     string id = 1;
     // URL of this resource
     // This is a read-only value.
     string url = 2;
+	// this is a name of prepaid deployment, not related to created deployment
+	string name = 3;
+	// this is an optional description for prepaid deployment, not related to created deployment
+	string description = 4;
     // Identifier of the region in which the deployment is created.
     // After creation, this value cannot be changed.
-    string region_id = 6;
+    string region_id = 5;
     // The creation timestamp of the deployment
     // This is a read-only value.
-    google.protobuf.Timestamp created_at = 7;
+    google.protobuf.Timestamp created_at = 6;
     // The deletion timestamp of the deployment
     // This is a read-only value.
-    google.protobuf.Timestamp deleted_at = 8;
+    google.protobuf.Timestamp deleted_at = 7;
     // Set when this deployment is deleted.
     // This is a read-only value.
-    bool is_deleted = 9;
-    // Optional identifier of the support plan selected for this deployment.
-    // After creation, this value cannot be changed.
-    // If no support plan identifier is set, the default support plan is used.
-    string support_plan_id = 10;
-    // Identifier of the user who created this deployment.
-    // This is a read-only value.
-    string created_by_id = 11;
-    // If set, this deployment cannot be deleted.
-    // To delete, first update the with locked set to false.
-    bool locked = 13;
+    bool is_deleted = 8;
+	// When the prepaid deployment was bought
+    google.protobuf.Timestamp starts_at = 9;
+	// When the prepaid deployment is paid to.
+    google.protobuf.Timestamp ends_at = 10;
+    // Identifier of the support plan selected for this prepaid deployment.
+    string support_plan_id = 11;
 
-
-    // If set, this deployment will be upgraded to the ArangoDB release with the
-	// version as listed in this field.
-    data.v1.ReplaceVersionBy replace_version_by = 104;
-    // If set, it is recommended to upgrade to the ArangoDB release with the
-	// version as listed in this field.
-    data.v1.UpgradeVersionRecommendation upgrade_recommendation = 105;
 
     message ServersSpec {
         // Number of coordinators of the deployment
@@ -160,10 +153,8 @@ message PrepaidDeployment {
         // defined by all databases and all collections.
         int32 minimum_dbservers_count = 15;
     }
-    ServersSpec servers = 103;
+    ServersSpec servers = 101;
 
-    // Optional identifier of IP allowlist to use for this deployment.
-    string ipallowlist_id = 109;
 
     message ModelSpec {
         // Type of model being used
@@ -178,64 +169,39 @@ message PrepaidDeployment {
          // This field is ignored set in case the flexible model is used.
         int32 node_disk_size = 4;
     }
-    ModelSpec model = 106;
+    ModelSpec model = 102;
 
-    // If provided, dataclusterd will use this custom image tag instead of the configured one for a given version.
-    // Further, ImagePullPolicy will be set to Always.
-    // This field can only be set by selected organizations.
-    string custom_image = 107;
-
-    // Optional identifier of IAM provider to use for this deployment.
-    string iamprovider_id = 108;
 
     // Status of the prepaid deployment
     // All members of this field are read-only.
     message Status {
-		data.v1.Deployment deployment = 1;
+		string deployment_id = 1;
     }
     Status status = 201;
-
-
-    // Expiration of the deployment.
-    // All members of this message are read-only.
-    message Expiration {
-        // The expiration timestamp of the deployment
-        // If not set, the deployment will not expire.
-        google.protobuf.Timestamp expires_at = 1;
-        // Human readable reason for why the deployment expires (or does not expire).
-        string reason = 2;
-        // The timestamp of when the last "this deployment will expire at" email was
-        // send.
-        // If not set, no such email has been send.
-        google.protobuf.Timestamp last_warning_email_send_at = 3;
-        // List of email addresses to which the last warning email has been send.
-        // Not set when no such email has been send.
-        repeated string last_warning_email_send_to = 4;
-    }
-    Expiration expiration = 301;
-
-    // Information about a backup restore.
-    // All members of this message are read-only.
-    message BackupRestoreSpec {
-        // The revision of this BackupRestoreSpec
-        int32 revision = 1;
-        // The timestamp of when the last revision has been updated.
-        google.protobuf.Timestamp last_updated_at = 2;
-        // Identifier of a backup to restore to.
-        string backup_id = 10;
-    }
-    // Information about a backup restore.
-    // If this field is set the deployment will be restored to that backup.
-    // This is a read-only field. To set this field please use the backup service RestoreBackup method.
-    BackupRestoreSpec backup_restore = 401;
 }
 
 message PrepaidDeploymentList {
 	repeated PrepaidDeployment items = 1;
 }
 
+message ListPrepaidDeploymentsRequest {
+	string organization_id = 1;
+}
+
+message UpdateDeploymentRequest {
+	string prepaid_deployment_id = 1;
+}
+
+message CloneFromBackupRequest {
+	string prepaid_deployment_id = 1;
+	string backup_id = 2;
+}
+
 message CreateDeploymentRequest {
-	string id=1;
+	// Identifier of prepaid deployment
+	string prepaid_deployment_id = 1;
+    // Identifier of the project that owns this deployment.
+    // After creation, this value cannot be changed.
 	string project_id = 2;
     // Optional identifier of IP allowlist to use for this deployment.
     string ipallowlist_id = 3;

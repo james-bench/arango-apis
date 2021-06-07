@@ -55,7 +55,7 @@ var (
 )
 
 func request_PrepaidService_ListPrepaidDeployments_0(ctx context.Context, marshaler runtime.Marshaler, client PrepaidServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq v1.ListOptions
+	var protoReq ListPrepaidDeploymentsRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
@@ -71,7 +71,7 @@ func request_PrepaidService_ListPrepaidDeployments_0(ctx context.Context, marsha
 }
 
 func local_request_PrepaidService_ListPrepaidDeployments_0(ctx context.Context, marshaler runtime.Marshaler, server PrepaidServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq v1.ListOptions
+	var protoReq ListPrepaidDeploymentsRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
@@ -159,15 +159,15 @@ func request_PrepaidService_CreateDeployment_0(ctx context.Context, marshaler ru
 		_   = err
 	)
 
-	val, ok = pathParams["id"]
+	val, ok = pathParams["prepaid_deployment_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "prepaid_deployment_id")
 	}
 
-	protoReq.Id, err = runtime.String(val)
+	protoReq.PrepaidDeploymentId, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "prepaid_deployment_id", err)
 	}
 
 	msg, err := client.CreateDeployment(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -194,15 +194,15 @@ func local_request_PrepaidService_CreateDeployment_0(ctx context.Context, marsha
 		_   = err
 	)
 
-	val, ok = pathParams["id"]
+	val, ok = pathParams["prepaid_deployment_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "prepaid_deployment_id")
 	}
 
-	protoReq.Id, err = runtime.String(val)
+	protoReq.PrepaidDeploymentId, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "prepaid_deployment_id", err)
 	}
 
 	msg, err := server.CreateDeployment(ctx, &protoReq)
@@ -211,7 +211,7 @@ func local_request_PrepaidService_CreateDeployment_0(ctx context.Context, marsha
 }
 
 func request_PrepaidService_UpdateDeployment_0(ctx context.Context, marshaler runtime.Marshaler, client PrepaidServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq v1.IDOptions
+	var protoReq UpdateDeploymentRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -229,15 +229,15 @@ func request_PrepaidService_UpdateDeployment_0(ctx context.Context, marshaler ru
 		_   = err
 	)
 
-	val, ok = pathParams["id"]
+	val, ok = pathParams["prepaid_deployment_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "prepaid_deployment_id")
 	}
 
-	protoReq.Id, err = runtime.String(val)
+	protoReq.PrepaidDeploymentId, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "prepaid_deployment_id", err)
 	}
 
 	msg, err := client.UpdateDeployment(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -246,7 +246,7 @@ func request_PrepaidService_UpdateDeployment_0(ctx context.Context, marshaler ru
 }
 
 func local_request_PrepaidService_UpdateDeployment_0(ctx context.Context, marshaler runtime.Marshaler, server PrepaidServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq v1.IDOptions
+	var protoReq UpdateDeploymentRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -264,15 +264,15 @@ func local_request_PrepaidService_UpdateDeployment_0(ctx context.Context, marsha
 		_   = err
 	)
 
-	val, ok = pathParams["id"]
+	val, ok = pathParams["prepaid_deployment_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "prepaid_deployment_id")
 	}
 
-	protoReq.Id, err = runtime.String(val)
+	protoReq.PrepaidDeploymentId, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "prepaid_deployment_id", err)
 	}
 
 	msg, err := server.UpdateDeployment(ctx, &protoReq)
@@ -281,7 +281,7 @@ func local_request_PrepaidService_UpdateDeployment_0(ctx context.Context, marsha
 }
 
 func request_PrepaidService_CloneDeploymentFromBackup_0(ctx context.Context, marshaler runtime.Marshaler, client PrepaidServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq v1.IDOptions
+	var protoReq CloneFromBackupRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -299,15 +299,15 @@ func request_PrepaidService_CloneDeploymentFromBackup_0(ctx context.Context, mar
 		_   = err
 	)
 
-	val, ok = pathParams["id"]
+	val, ok = pathParams["prepaid_deployment_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "prepaid_deployment_id")
 	}
 
-	protoReq.Id, err = runtime.String(val)
+	protoReq.PrepaidDeploymentId, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "prepaid_deployment_id", err)
 	}
 
 	msg, err := client.CloneDeploymentFromBackup(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -316,7 +316,7 @@ func request_PrepaidService_CloneDeploymentFromBackup_0(ctx context.Context, mar
 }
 
 func local_request_PrepaidService_CloneDeploymentFromBackup_0(ctx context.Context, marshaler runtime.Marshaler, server PrepaidServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq v1.IDOptions
+	var protoReq CloneFromBackupRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -334,15 +334,15 @@ func local_request_PrepaidService_CloneDeploymentFromBackup_0(ctx context.Contex
 		_   = err
 	)
 
-	val, ok = pathParams["id"]
+	val, ok = pathParams["prepaid_deployment_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "prepaid_deployment_id")
 	}
 
-	protoReq.Id, err = runtime.String(val)
+	protoReq.PrepaidDeploymentId, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "prepaid_deployment_id", err)
 	}
 
 	msg, err := server.CloneDeploymentFromBackup(ctx, &protoReq)
@@ -644,13 +644,13 @@ var (
 
 	pattern_PrepaidService_ListPrepaidDeployments_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "prepaid", "v1", "deployments"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_PrepaidService_GetPrepaidDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "prepaid", "v1", "deployments", "id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_PrepaidService_GetPrepaidDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "prepaid", "v1", "prepaiddeployments", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_PrepaidService_CreateDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "prepaid", "v1", "deployments", "id", "create"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_PrepaidService_CreateDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "prepaid", "v1", "prepaiddeployments", "prepaid_deployment_id", "create"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_PrepaidService_UpdateDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "prepaid", "v1", "deployments", "id", "update"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_PrepaidService_UpdateDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "prepaid", "v1", "prepaiddeployments", "prepaid_deployment_id", "update"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_PrepaidService_CloneDeploymentFromBackup_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "prepaid", "v1", "deployments", "id", "clone"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_PrepaidService_CloneDeploymentFromBackup_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "prepaid", "v1", "prepaiddeployments", "prepaid_deployment_id", "clone"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (

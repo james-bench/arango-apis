@@ -6,8 +6,8 @@ package v1
 import (
 	context "context"
 	fmt "fmt"
-	v11 "github.com/arangodb-managed/apis/common/v1"
-	v1 "github.com/arangodb-managed/apis/data/v1"
+	v1 "github.com/arangodb-managed/apis/common/v1"
+	v11 "github.com/arangodb-managed/apis/data/v1"
 	types "github.com/gogo/protobuf/types"
 	proto "github.com/golang/protobuf/proto"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
@@ -30,61 +30,42 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-// A PrepaidDeployment is represents one deployment of an ArangoDB cluster.
+//  A PrepaidDeployment contains all attributes of a future deployment that is already paid for.
 type PrepaidDeployment struct {
-	// System identifier of the deployment.
+	// System identifier of the prepaid deployment.
 	// This is a read-only value.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// URL of this resource
 	// This is a read-only value.
 	Url string `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty"`
+	// this is a name of prepaid deployment, not related to created deployment
+	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	// this is an optional description for prepaid deployment, not related to created deployment
+	Description string `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
 	// Identifier of the region in which the deployment is created.
 	// After creation, this value cannot be changed.
-	RegionId string `protobuf:"bytes,6,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
+	RegionId string `protobuf:"bytes,5,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
 	// The creation timestamp of the deployment
 	// This is a read-only value.
-	CreatedAt *types.Timestamp `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	CreatedAt *types.Timestamp `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	// The deletion timestamp of the deployment
 	// This is a read-only value.
-	DeletedAt *types.Timestamp `protobuf:"bytes,8,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`
+	DeletedAt *types.Timestamp `protobuf:"bytes,7,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`
 	// Set when this deployment is deleted.
 	// This is a read-only value.
-	IsDeleted bool `protobuf:"varint,9,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
-	// Optional identifier of the support plan selected for this deployment.
-	// After creation, this value cannot be changed.
-	// If no support plan identifier is set, the default support plan is used.
-	SupportPlanId string `protobuf:"bytes,10,opt,name=support_plan_id,json=supportPlanId,proto3" json:"support_plan_id,omitempty"`
-	// Identifier of the user who created this deployment.
-	// This is a read-only value.
-	CreatedById string `protobuf:"bytes,11,opt,name=created_by_id,json=createdById,proto3" json:"created_by_id,omitempty"`
-	// If set, this deployment cannot be deleted.
-	// To delete, first update the with locked set to false.
-	Locked bool `protobuf:"varint,13,opt,name=locked,proto3" json:"locked,omitempty"`
-	// If set, this deployment will be upgraded to the ArangoDB release with the
-	// version as listed in this field.
-	ReplaceVersionBy *v1.ReplaceVersionBy `protobuf:"bytes,104,opt,name=replace_version_by,json=replaceVersionBy,proto3" json:"replace_version_by,omitempty"`
-	// If set, it is recommended to upgrade to the ArangoDB release with the
-	// version as listed in this field.
-	UpgradeRecommendation *v1.UpgradeVersionRecommendation `protobuf:"bytes,105,opt,name=upgrade_recommendation,json=upgradeRecommendation,proto3" json:"upgrade_recommendation,omitempty"`
-	Servers               *PrepaidDeployment_ServersSpec   `protobuf:"bytes,103,opt,name=servers,proto3" json:"servers,omitempty"`
-	// Optional identifier of IP allowlist to use for this deployment.
-	IpallowlistId string                       `protobuf:"bytes,109,opt,name=ipallowlist_id,json=ipallowlistId,proto3" json:"ipallowlist_id,omitempty"`
-	Model         *PrepaidDeployment_ModelSpec `protobuf:"bytes,106,opt,name=model,proto3" json:"model,omitempty"`
-	// If provided, dataclusterd will use this custom image tag instead of the configured one for a given version.
-	// Further, ImagePullPolicy will be set to Always.
-	// This field can only be set by selected organizations.
-	CustomImage string `protobuf:"bytes,107,opt,name=custom_image,json=customImage,proto3" json:"custom_image,omitempty"`
-	// Optional identifier of IAM provider to use for this deployment.
-	IamproviderId string                        `protobuf:"bytes,108,opt,name=iamprovider_id,json=iamproviderId,proto3" json:"iamprovider_id,omitempty"`
-	Status        *PrepaidDeployment_Status     `protobuf:"bytes,201,opt,name=status,proto3" json:"status,omitempty"`
-	Expiration    *PrepaidDeployment_Expiration `protobuf:"bytes,301,opt,name=expiration,proto3" json:"expiration,omitempty"`
-	// Information about a backup restore.
-	// If this field is set the deployment will be restored to that backup.
-	// This is a read-only field. To set this field please use the backup service RestoreBackup method.
-	BackupRestore        *PrepaidDeployment_BackupRestoreSpec `protobuf:"bytes,401,opt,name=backup_restore,json=backupRestore,proto3" json:"backup_restore,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}                             `json:"-"`
-	XXX_unrecognized     []byte                               `json:"-"`
-	XXX_sizecache        int32                                `json:"-"`
+	IsDeleted bool `protobuf:"varint,8,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
+	// When the prepaid deployment was bought
+	StartsAt *types.Timestamp `protobuf:"bytes,9,opt,name=starts_at,json=startsAt,proto3" json:"starts_at,omitempty"`
+	// When the prepaid deployment is paid to.
+	EndsAt *types.Timestamp `protobuf:"bytes,10,opt,name=ends_at,json=endsAt,proto3" json:"ends_at,omitempty"`
+	// Identifier of the support plan selected for this prepaid deployment.
+	SupportPlanId        string                         `protobuf:"bytes,11,opt,name=support_plan_id,json=supportPlanId,proto3" json:"support_plan_id,omitempty"`
+	Servers              *PrepaidDeployment_ServersSpec `protobuf:"bytes,101,opt,name=servers,proto3" json:"servers,omitempty"`
+	Model                *PrepaidDeployment_ModelSpec   `protobuf:"bytes,102,opt,name=model,proto3" json:"model,omitempty"`
+	Status               *PrepaidDeployment_Status      `protobuf:"bytes,201,opt,name=status,proto3" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                       `json:"-"`
+	XXX_unrecognized     []byte                         `json:"-"`
+	XXX_sizecache        int32                          `json:"-"`
 }
 
 func (m *PrepaidDeployment) Reset()         { *m = PrepaidDeployment{} }
@@ -134,6 +115,20 @@ func (m *PrepaidDeployment) GetUrl() string {
 	return ""
 }
 
+func (m *PrepaidDeployment) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *PrepaidDeployment) GetDescription() string {
+	if m != nil {
+		return m.Description
+	}
+	return ""
+}
+
 func (m *PrepaidDeployment) GetRegionId() string {
 	if m != nil {
 		return m.RegionId
@@ -162,39 +157,25 @@ func (m *PrepaidDeployment) GetIsDeleted() bool {
 	return false
 }
 
+func (m *PrepaidDeployment) GetStartsAt() *types.Timestamp {
+	if m != nil {
+		return m.StartsAt
+	}
+	return nil
+}
+
+func (m *PrepaidDeployment) GetEndsAt() *types.Timestamp {
+	if m != nil {
+		return m.EndsAt
+	}
+	return nil
+}
+
 func (m *PrepaidDeployment) GetSupportPlanId() string {
 	if m != nil {
 		return m.SupportPlanId
 	}
 	return ""
-}
-
-func (m *PrepaidDeployment) GetCreatedById() string {
-	if m != nil {
-		return m.CreatedById
-	}
-	return ""
-}
-
-func (m *PrepaidDeployment) GetLocked() bool {
-	if m != nil {
-		return m.Locked
-	}
-	return false
-}
-
-func (m *PrepaidDeployment) GetReplaceVersionBy() *v1.ReplaceVersionBy {
-	if m != nil {
-		return m.ReplaceVersionBy
-	}
-	return nil
-}
-
-func (m *PrepaidDeployment) GetUpgradeRecommendation() *v1.UpgradeVersionRecommendation {
-	if m != nil {
-		return m.UpgradeRecommendation
-	}
-	return nil
 }
 
 func (m *PrepaidDeployment) GetServers() *PrepaidDeployment_ServersSpec {
@@ -204,13 +185,6 @@ func (m *PrepaidDeployment) GetServers() *PrepaidDeployment_ServersSpec {
 	return nil
 }
 
-func (m *PrepaidDeployment) GetIpallowlistId() string {
-	if m != nil {
-		return m.IpallowlistId
-	}
-	return ""
-}
-
 func (m *PrepaidDeployment) GetModel() *PrepaidDeployment_ModelSpec {
 	if m != nil {
 		return m.Model
@@ -218,37 +192,9 @@ func (m *PrepaidDeployment) GetModel() *PrepaidDeployment_ModelSpec {
 	return nil
 }
 
-func (m *PrepaidDeployment) GetCustomImage() string {
-	if m != nil {
-		return m.CustomImage
-	}
-	return ""
-}
-
-func (m *PrepaidDeployment) GetIamproviderId() string {
-	if m != nil {
-		return m.IamproviderId
-	}
-	return ""
-}
-
 func (m *PrepaidDeployment) GetStatus() *PrepaidDeployment_Status {
 	if m != nil {
 		return m.Status
-	}
-	return nil
-}
-
-func (m *PrepaidDeployment) GetExpiration() *PrepaidDeployment_Expiration {
-	if m != nil {
-		return m.Expiration
-	}
-	return nil
-}
-
-func (m *PrepaidDeployment) GetBackupRestore() *PrepaidDeployment_BackupRestoreSpec {
-	if m != nil {
-		return m.BackupRestore
 	}
 	return nil
 }
@@ -453,10 +399,10 @@ func (m *PrepaidDeployment_ModelSpec) GetNodeDiskSize() int32 {
 // Status of the prepaid deployment
 // All members of this field are read-only.
 type PrepaidDeployment_Status struct {
-	Deployment           *v1.Deployment `protobuf:"bytes,1,opt,name=deployment,proto3" json:"deployment,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
+	DeploymentId         string   `protobuf:"bytes,1,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *PrepaidDeployment_Status) Reset()         { *m = PrepaidDeployment_Status{} }
@@ -492,158 +438,9 @@ func (m *PrepaidDeployment_Status) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_PrepaidDeployment_Status proto.InternalMessageInfo
 
-func (m *PrepaidDeployment_Status) GetDeployment() *v1.Deployment {
+func (m *PrepaidDeployment_Status) GetDeploymentId() string {
 	if m != nil {
-		return m.Deployment
-	}
-	return nil
-}
-
-// Expiration of the deployment.
-// All members of this message are read-only.
-type PrepaidDeployment_Expiration struct {
-	// The expiration timestamp of the deployment
-	// If not set, the deployment will not expire.
-	ExpiresAt *types.Timestamp `protobuf:"bytes,1,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
-	// Human readable reason for why the deployment expires (or does not expire).
-	Reason string `protobuf:"bytes,2,opt,name=reason,proto3" json:"reason,omitempty"`
-	// The timestamp of when the last "this deployment will expire at" email was
-	// send.
-	// If not set, no such email has been send.
-	LastWarningEmailSendAt *types.Timestamp `protobuf:"bytes,3,opt,name=last_warning_email_send_at,json=lastWarningEmailSendAt,proto3" json:"last_warning_email_send_at,omitempty"`
-	// List of email addresses to which the last warning email has been send.
-	// Not set when no such email has been send.
-	LastWarningEmailSendTo []string `protobuf:"bytes,4,rep,name=last_warning_email_send_to,json=lastWarningEmailSendTo,proto3" json:"last_warning_email_send_to,omitempty"`
-	XXX_NoUnkeyedLiteral   struct{} `json:"-"`
-	XXX_unrecognized       []byte   `json:"-"`
-	XXX_sizecache          int32    `json:"-"`
-}
-
-func (m *PrepaidDeployment_Expiration) Reset()         { *m = PrepaidDeployment_Expiration{} }
-func (m *PrepaidDeployment_Expiration) String() string { return proto.CompactTextString(m) }
-func (*PrepaidDeployment_Expiration) ProtoMessage()    {}
-func (*PrepaidDeployment_Expiration) Descriptor() ([]byte, []int) {
-	return fileDescriptor_862bc918d3ba4c11, []int{0, 3}
-}
-func (m *PrepaidDeployment_Expiration) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *PrepaidDeployment_Expiration) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_PrepaidDeployment_Expiration.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *PrepaidDeployment_Expiration) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PrepaidDeployment_Expiration.Merge(m, src)
-}
-func (m *PrepaidDeployment_Expiration) XXX_Size() int {
-	return m.Size()
-}
-func (m *PrepaidDeployment_Expiration) XXX_DiscardUnknown() {
-	xxx_messageInfo_PrepaidDeployment_Expiration.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_PrepaidDeployment_Expiration proto.InternalMessageInfo
-
-func (m *PrepaidDeployment_Expiration) GetExpiresAt() *types.Timestamp {
-	if m != nil {
-		return m.ExpiresAt
-	}
-	return nil
-}
-
-func (m *PrepaidDeployment_Expiration) GetReason() string {
-	if m != nil {
-		return m.Reason
-	}
-	return ""
-}
-
-func (m *PrepaidDeployment_Expiration) GetLastWarningEmailSendAt() *types.Timestamp {
-	if m != nil {
-		return m.LastWarningEmailSendAt
-	}
-	return nil
-}
-
-func (m *PrepaidDeployment_Expiration) GetLastWarningEmailSendTo() []string {
-	if m != nil {
-		return m.LastWarningEmailSendTo
-	}
-	return nil
-}
-
-// Information about a backup restore.
-// All members of this message are read-only.
-type PrepaidDeployment_BackupRestoreSpec struct {
-	// The revision of this BackupRestoreSpec
-	Revision int32 `protobuf:"varint,1,opt,name=revision,proto3" json:"revision,omitempty"`
-	// The timestamp of when the last revision has been updated.
-	LastUpdatedAt *types.Timestamp `protobuf:"bytes,2,opt,name=last_updated_at,json=lastUpdatedAt,proto3" json:"last_updated_at,omitempty"`
-	// Identifier of a backup to restore to.
-	BackupId             string   `protobuf:"bytes,10,opt,name=backup_id,json=backupId,proto3" json:"backup_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *PrepaidDeployment_BackupRestoreSpec) Reset()         { *m = PrepaidDeployment_BackupRestoreSpec{} }
-func (m *PrepaidDeployment_BackupRestoreSpec) String() string { return proto.CompactTextString(m) }
-func (*PrepaidDeployment_BackupRestoreSpec) ProtoMessage()    {}
-func (*PrepaidDeployment_BackupRestoreSpec) Descriptor() ([]byte, []int) {
-	return fileDescriptor_862bc918d3ba4c11, []int{0, 4}
-}
-func (m *PrepaidDeployment_BackupRestoreSpec) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *PrepaidDeployment_BackupRestoreSpec) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_PrepaidDeployment_BackupRestoreSpec.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *PrepaidDeployment_BackupRestoreSpec) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PrepaidDeployment_BackupRestoreSpec.Merge(m, src)
-}
-func (m *PrepaidDeployment_BackupRestoreSpec) XXX_Size() int {
-	return m.Size()
-}
-func (m *PrepaidDeployment_BackupRestoreSpec) XXX_DiscardUnknown() {
-	xxx_messageInfo_PrepaidDeployment_BackupRestoreSpec.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_PrepaidDeployment_BackupRestoreSpec proto.InternalMessageInfo
-
-func (m *PrepaidDeployment_BackupRestoreSpec) GetRevision() int32 {
-	if m != nil {
-		return m.Revision
-	}
-	return 0
-}
-
-func (m *PrepaidDeployment_BackupRestoreSpec) GetLastUpdatedAt() *types.Timestamp {
-	if m != nil {
-		return m.LastUpdatedAt
-	}
-	return nil
-}
-
-func (m *PrepaidDeployment_BackupRestoreSpec) GetBackupId() string {
-	if m != nil {
-		return m.BackupId
+		return m.DeploymentId
 	}
 	return ""
 }
@@ -695,8 +492,160 @@ func (m *PrepaidDeploymentList) GetItems() []*PrepaidDeployment {
 	return nil
 }
 
+type ListPrepaidDeploymentsRequest struct {
+	OrganizationId       string   `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ListPrepaidDeploymentsRequest) Reset()         { *m = ListPrepaidDeploymentsRequest{} }
+func (m *ListPrepaidDeploymentsRequest) String() string { return proto.CompactTextString(m) }
+func (*ListPrepaidDeploymentsRequest) ProtoMessage()    {}
+func (*ListPrepaidDeploymentsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_862bc918d3ba4c11, []int{2}
+}
+func (m *ListPrepaidDeploymentsRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ListPrepaidDeploymentsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ListPrepaidDeploymentsRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ListPrepaidDeploymentsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListPrepaidDeploymentsRequest.Merge(m, src)
+}
+func (m *ListPrepaidDeploymentsRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *ListPrepaidDeploymentsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListPrepaidDeploymentsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListPrepaidDeploymentsRequest proto.InternalMessageInfo
+
+func (m *ListPrepaidDeploymentsRequest) GetOrganizationId() string {
+	if m != nil {
+		return m.OrganizationId
+	}
+	return ""
+}
+
+type UpdateDeploymentRequest struct {
+	PrepaidDeploymentId  string   `protobuf:"bytes,1,opt,name=prepaid_deployment_id,json=prepaidDeploymentId,proto3" json:"prepaid_deployment_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *UpdateDeploymentRequest) Reset()         { *m = UpdateDeploymentRequest{} }
+func (m *UpdateDeploymentRequest) String() string { return proto.CompactTextString(m) }
+func (*UpdateDeploymentRequest) ProtoMessage()    {}
+func (*UpdateDeploymentRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_862bc918d3ba4c11, []int{3}
+}
+func (m *UpdateDeploymentRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *UpdateDeploymentRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_UpdateDeploymentRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *UpdateDeploymentRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateDeploymentRequest.Merge(m, src)
+}
+func (m *UpdateDeploymentRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *UpdateDeploymentRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdateDeploymentRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UpdateDeploymentRequest proto.InternalMessageInfo
+
+func (m *UpdateDeploymentRequest) GetPrepaidDeploymentId() string {
+	if m != nil {
+		return m.PrepaidDeploymentId
+	}
+	return ""
+}
+
+type CloneFromBackupRequest struct {
+	PrepaidDeploymentId  string   `protobuf:"bytes,1,opt,name=prepaid_deployment_id,json=prepaidDeploymentId,proto3" json:"prepaid_deployment_id,omitempty"`
+	BackupId             string   `protobuf:"bytes,2,opt,name=backup_id,json=backupId,proto3" json:"backup_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CloneFromBackupRequest) Reset()         { *m = CloneFromBackupRequest{} }
+func (m *CloneFromBackupRequest) String() string { return proto.CompactTextString(m) }
+func (*CloneFromBackupRequest) ProtoMessage()    {}
+func (*CloneFromBackupRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_862bc918d3ba4c11, []int{4}
+}
+func (m *CloneFromBackupRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *CloneFromBackupRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_CloneFromBackupRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *CloneFromBackupRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CloneFromBackupRequest.Merge(m, src)
+}
+func (m *CloneFromBackupRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *CloneFromBackupRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_CloneFromBackupRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CloneFromBackupRequest proto.InternalMessageInfo
+
+func (m *CloneFromBackupRequest) GetPrepaidDeploymentId() string {
+	if m != nil {
+		return m.PrepaidDeploymentId
+	}
+	return ""
+}
+
+func (m *CloneFromBackupRequest) GetBackupId() string {
+	if m != nil {
+		return m.BackupId
+	}
+	return ""
+}
+
 type CreateDeploymentRequest struct {
-	Id        string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Identifier of prepaid deployment
+	PrepaidDeploymentId string `protobuf:"bytes,1,opt,name=prepaid_deployment_id,json=prepaidDeploymentId,proto3" json:"prepaid_deployment_id,omitempty"`
+	// Identifier of the project that owns this deployment.
+	// After creation, this value cannot be changed.
 	ProjectId string `protobuf:"bytes,2,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
 	// Optional identifier of IP allowlist to use for this deployment.
 	IpallowlistId string `protobuf:"bytes,3,opt,name=ipallowlist_id,json=ipallowlistId,proto3" json:"ipallowlist_id,omitempty"`
@@ -721,7 +670,7 @@ func (m *CreateDeploymentRequest) Reset()         { *m = CreateDeploymentRequest
 func (m *CreateDeploymentRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateDeploymentRequest) ProtoMessage()    {}
 func (*CreateDeploymentRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_862bc918d3ba4c11, []int{2}
+	return fileDescriptor_862bc918d3ba4c11, []int{5}
 }
 func (m *CreateDeploymentRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -750,9 +699,9 @@ func (m *CreateDeploymentRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_CreateDeploymentRequest proto.InternalMessageInfo
 
-func (m *CreateDeploymentRequest) GetId() string {
+func (m *CreateDeploymentRequest) GetPrepaidDeploymentId() string {
 	if m != nil {
-		return m.Id
+		return m.PrepaidDeploymentId
 	}
 	return ""
 }
@@ -803,7 +752,7 @@ func (m *CreateDeploymentRequest_CertificateSpec) Reset() {
 func (m *CreateDeploymentRequest_CertificateSpec) String() string { return proto.CompactTextString(m) }
 func (*CreateDeploymentRequest_CertificateSpec) ProtoMessage()    {}
 func (*CreateDeploymentRequest_CertificateSpec) Descriptor() ([]byte, []int) {
-	return fileDescriptor_862bc918d3ba4c11, []int{2, 0}
+	return fileDescriptor_862bc918d3ba4c11, []int{5, 0}
 }
 func (m *CreateDeploymentRequest_CertificateSpec) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -851,9 +800,10 @@ func init() {
 	proto.RegisterType((*PrepaidDeployment_ServersSpec)(nil), "arangodb.cloud.prepaid.v1.PrepaidDeployment.ServersSpec")
 	proto.RegisterType((*PrepaidDeployment_ModelSpec)(nil), "arangodb.cloud.prepaid.v1.PrepaidDeployment.ModelSpec")
 	proto.RegisterType((*PrepaidDeployment_Status)(nil), "arangodb.cloud.prepaid.v1.PrepaidDeployment.Status")
-	proto.RegisterType((*PrepaidDeployment_Expiration)(nil), "arangodb.cloud.prepaid.v1.PrepaidDeployment.Expiration")
-	proto.RegisterType((*PrepaidDeployment_BackupRestoreSpec)(nil), "arangodb.cloud.prepaid.v1.PrepaidDeployment.BackupRestoreSpec")
 	proto.RegisterType((*PrepaidDeploymentList)(nil), "arangodb.cloud.prepaid.v1.PrepaidDeploymentList")
+	proto.RegisterType((*ListPrepaidDeploymentsRequest)(nil), "arangodb.cloud.prepaid.v1.ListPrepaidDeploymentsRequest")
+	proto.RegisterType((*UpdateDeploymentRequest)(nil), "arangodb.cloud.prepaid.v1.UpdateDeploymentRequest")
+	proto.RegisterType((*CloneFromBackupRequest)(nil), "arangodb.cloud.prepaid.v1.CloneFromBackupRequest")
 	proto.RegisterType((*CreateDeploymentRequest)(nil), "arangodb.cloud.prepaid.v1.CreateDeploymentRequest")
 	proto.RegisterType((*CreateDeploymentRequest_CertificateSpec)(nil), "arangodb.cloud.prepaid.v1.CreateDeploymentRequest.CertificateSpec")
 }
@@ -861,95 +811,83 @@ func init() {
 func init() { proto.RegisterFile("prepaid.proto", fileDescriptor_862bc918d3ba4c11) }
 
 var fileDescriptor_862bc918d3ba4c11 = []byte{
-	// 1396 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x57, 0x5f, 0x6f, 0x1b, 0xc5,
-	0x16, 0xbf, 0x6b, 0x37, 0x7f, 0x7c, 0x12, 0xe7, 0xcf, 0xdc, 0x36, 0xdd, 0xba, 0x6d, 0x6e, 0xea,
-	0xde, 0xf6, 0xe6, 0xf6, 0x8f, 0xdd, 0xa4, 0xa8, 0x40, 0x11, 0x48, 0x71, 0x52, 0x2a, 0x4b, 0x2d,
-	0x54, 0x9b, 0xb6, 0x20, 0x78, 0x58, 0x8d, 0x77, 0x26, 0xdb, 0x69, 0x76, 0x77, 0x96, 0x99, 0xb1,
-	0x5b, 0x17, 0xf1, 0xc2, 0x03, 0xf0, 0x06, 0xa8, 0x12, 0xf0, 0xc4, 0x37, 0xe0, 0x7b, 0xc0, 0x1b,
-	0x12, 0x5f, 0xa0, 0x2a, 0xbc, 0xf3, 0xc0, 0x17, 0x40, 0x33, 0xb3, 0x6b, 0x6f, 0x92, 0xba, 0xc1,
-	0x52, 0x9f, 0xe2, 0xf9, 0x9d, 0xf3, 0x3b, 0xe7, 0x37, 0x67, 0xce, 0x9e, 0x99, 0x40, 0x35, 0x15,
-	0x34, 0xc5, 0x8c, 0x34, 0x52, 0xc1, 0x15, 0x47, 0x27, 0xb0, 0xc0, 0x49, 0xc8, 0x49, 0xa7, 0x11,
-	0x44, 0xbc, 0xab, 0x51, 0x6b, 0xed, 0xad, 0xd5, 0x96, 0x02, 0x1e, 0xc7, 0x3c, 0x69, 0xf6, 0xd6,
-	0x9a, 0xf6, 0x97, 0xa5, 0xd4, 0x10, 0xc1, 0x0a, 0x6b, 0x54, 0xff, 0xcd, 0xb0, 0xb7, 0x42, 0xa6,
-	0x1e, 0x74, 0x3b, 0x8d, 0x80, 0xc7, 0xcd, 0x90, 0x47, 0x38, 0x09, 0x9b, 0xc6, 0xd0, 0xe9, 0xee,
-	0x34, 0x53, 0xd5, 0x4f, 0xa9, 0x6c, 0x2a, 0x16, 0x53, 0xa9, 0x70, 0x9c, 0x0e, 0x7f, 0x65, 0xe4,
-	0x53, 0x21, 0xe7, 0x61, 0x44, 0x9b, 0x38, 0x65, 0x4d, 0x9c, 0x24, 0x5c, 0x61, 0xc5, 0x78, 0x22,
-	0xad, 0xb5, 0xfe, 0xe5, 0x02, 0x2c, 0xde, 0xb1, 0xaa, 0xb6, 0x68, 0x1a, 0xf1, 0x7e, 0x4c, 0x13,
-	0x85, 0xe6, 0xa0, 0xc4, 0x88, 0xeb, 0xac, 0x38, 0xab, 0x15, 0xaf, 0xc4, 0x08, 0x5a, 0x80, 0x72,
-	0x57, 0x44, 0x6e, 0xc9, 0x00, 0xfa, 0x27, 0x3a, 0x09, 0x15, 0x41, 0x43, 0xc6, 0x13, 0x9f, 0x11,
-	0x77, 0xd2, 0xe0, 0xd3, 0x16, 0x68, 0x13, 0xf4, 0x26, 0x40, 0x20, 0x28, 0x56, 0x94, 0xf8, 0x58,
-	0xb9, 0x53, 0x2b, 0xce, 0xea, 0xcc, 0x7a, 0xad, 0x61, 0x75, 0x34, 0x72, 0xe5, 0x8d, 0xbb, 0xb9,
-	0x50, 0xaf, 0x92, 0x79, 0x6f, 0x28, 0x4d, 0x25, 0x34, 0xa2, 0x19, 0x75, 0xfa, 0x70, 0x6a, 0xe6,
-	0xbd, 0xa1, 0xd0, 0x69, 0x00, 0x26, 0xfd, 0x6c, 0xed, 0x56, 0x56, 0x9c, 0xd5, 0x69, 0xaf, 0xc2,
-	0xe4, 0x96, 0x05, 0xd0, 0x79, 0x98, 0x97, 0xdd, 0x34, 0xe5, 0x42, 0xf9, 0x69, 0x84, 0x8d, 0x6e,
-	0x30, 0xba, 0xab, 0x19, 0x7c, 0x27, 0xc2, 0x5a, 0x7c, 0x1d, 0xaa, 0xb9, 0xf8, 0x4e, 0x5f, 0x7b,
-	0xcd, 0x18, 0xaf, 0x99, 0x0c, 0x6c, 0xf5, 0xdb, 0x04, 0x2d, 0xc1, 0x64, 0xc4, 0x83, 0x5d, 0x4a,
-	0xdc, 0xaa, 0x49, 0x93, 0xad, 0xd0, 0x7d, 0x40, 0x82, 0xa6, 0x11, 0x0e, 0xa8, 0xdf, 0xa3, 0x42,
-	0xea, 0xf2, 0x74, 0xfa, 0xee, 0x03, 0xb3, 0x8b, 0xd5, 0xc6, 0xbe, 0x66, 0x30, 0x07, 0xdc, 0x5b,
-	0x6b, 0x78, 0x96, 0x71, 0xdf, 0x12, 0x5a, 0x7d, 0x6f, 0x41, 0xec, 0x43, 0xd0, 0x2e, 0x2c, 0x75,
-	0xd3, 0x50, 0x60, 0x42, 0x7d, 0x41, 0x75, 0xbb, 0xd0, 0x84, 0x98, 0x63, 0x74, 0x99, 0x89, 0xfd,
-	0xda, 0xa8, 0xd8, 0xf7, 0x2c, 0x2b, 0x8b, 0xe4, 0xed, 0xe1, 0x7a, 0xc7, 0xb2, 0x98, 0x7b, 0x61,
-	0xe4, 0xc1, 0x94, 0xa4, 0x42, 0xeb, 0x77, 0x43, 0x13, 0xfd, 0x8d, 0xc6, 0xc8, 0x36, 0x6e, 0x1c,
-	0xe8, 0x9d, 0xc6, 0xb6, 0xe5, 0x6e, 0xa7, 0x34, 0xf0, 0xf2, 0x40, 0xe8, 0x1c, 0xcc, 0xb1, 0x14,
-	0x47, 0x11, 0x7f, 0x14, 0x31, 0xa9, 0x74, 0x55, 0x63, 0x5b, 0xfb, 0x02, 0xda, 0x26, 0xe8, 0x16,
-	0x4c, 0xc4, 0x9c, 0xd0, 0xc8, 0x7d, 0x68, 0x12, 0x5f, 0x1b, 0x2b, 0xf1, 0x6d, 0xcd, 0x34, 0x69,
-	0x6d, 0x10, 0x74, 0x06, 0x66, 0x83, 0xae, 0x54, 0x3c, 0xf6, 0x59, 0x8c, 0x43, 0xea, 0xee, 0x66,
-	0x07, 0x69, 0xb0, 0xb6, 0x86, 0x8c, 0x2e, 0x1c, 0xa7, 0x82, 0xf7, 0x18, 0xa1, 0x42, 0xeb, 0x8a,
-	0x32, 0x5d, 0x43, 0xd4, 0xe8, 0x9a, 0x94, 0x0a, 0xab, 0xae, 0x74, 0x7f, 0x71, 0x8c, 0xb2, 0xab,
-	0xe3, 0x95, 0xc4, 0x70, 0xbd, 0x2c, 0x06, 0xfa, 0x10, 0x80, 0x3e, 0x4e, 0x99, 0xb0, 0x27, 0xf8,
-	0x53, 0xc9, 0x44, 0x7c, 0x7d, 0xac, 0x88, 0x37, 0x06, 0x7c, 0xaf, 0x10, 0x0b, 0xed, 0xc0, 0x5c,
-	0x07, 0x07, 0xbb, 0xdd, 0xd4, 0x17, 0x54, 0x2a, 0x2e, 0xa8, 0xfb, 0x6d, 0xd9, 0x44, 0x7f, 0x67,
-	0xac, 0xe8, 0x2d, 0x13, 0xc3, 0xb3, 0x21, 0x4c, 0x45, 0xab, 0x9d, 0x22, 0x54, 0xfb, 0xb3, 0x04,
-	0x33, 0x85, 0x73, 0x46, 0x75, 0x98, 0x0d, 0x38, 0x17, 0x84, 0x25, 0x58, 0x71, 0x21, 0xcd, 0xe4,
-	0x98, 0xf0, 0xf6, 0x60, 0xe8, 0x1a, 0x1c, 0x2f, 0xac, 0xfd, 0x98, 0xc6, 0x5c, 0xf4, 0x7d, 0xc9,
-	0x9e, 0x50, 0x33, 0x57, 0x26, 0xbc, 0x63, 0x05, 0xf3, 0x6d, 0x63, 0xdd, 0x66, 0x4f, 0x28, 0xfa,
-	0x3f, 0x2c, 0x14, 0x79, 0x58, 0x84, 0xd2, 0x2d, 0xaf, 0x94, 0x57, 0x2b, 0xde, 0x7c, 0x01, 0xdf,
-	0x10, 0xa1, 0x44, 0xa7, 0xa0, 0x42, 0x3a, 0x79, 0xef, 0xce, 0x98, 0xa0, 0x43, 0x00, 0x5d, 0x81,
-	0xa3, 0xf9, 0x62, 0x4f, 0xf6, 0x59, 0xe3, 0x88, 0x72, 0x5b, 0x21, 0xf5, 0x25, 0x18, 0xa0, 0x3e,
-	0x61, 0x72, 0xd7, 0xfa, 0x57, 0x8d, 0xff, 0x42, 0x6e, 0xd9, 0x62, 0x72, 0xd7, 0x78, 0x9f, 0x85,
-	0xea, 0xc0, 0xdb, 0xa8, 0x9c, 0x33, 0x2a, 0x67, 0x73, 0xd0, 0x48, 0xbc, 0x06, 0xc7, 0x63, 0x96,
-	0xb0, 0xb8, 0x1b, 0xfb, 0x03, 0x65, 0x7e, 0xc0, 0xbb, 0x89, 0x72, 0xe7, 0x6d, 0x15, 0x32, 0xf3,
-	0x56, 0x6e, 0xdd, 0xd4, 0xc6, 0xda, 0x57, 0x0e, 0x54, 0x06, 0x0d, 0x8e, 0x8e, 0xe6, 0xdf, 0x89,
-	0x1d, 0xd1, 0x59, 0xbf, 0xaf, 0xc0, 0x6c, 0xc2, 0x09, 0x35, 0x2a, 0x75, 0x2b, 0xdb, 0x71, 0x0d,
-	0x1a, 0xd3, 0x02, 0xdb, 0x44, 0x8f, 0x48, 0xe3, 0x61, 0x13, 0x96, 0x6d, 0x85, 0x34, 0x62, 0x92,
-	0xa0, 0xff, 0xc2, 0x9c, 0x31, 0x0f, 0xf7, 0x7a, 0xc4, 0x1e, 0xa4, 0x46, 0xf3, 0x7d, 0xd6, 0x6e,
-	0xc1, 0xa4, 0x6d, 0x68, 0xd4, 0xd2, 0xc3, 0x3a, 0xef, 0x1a, 0xd7, 0x7e, 0x19, 0xf5, 0x51, 0xa3,
-	0x68, 0xd8, 0x5f, 0x5e, 0x81, 0x55, 0xfb, 0xcb, 0x01, 0x18, 0x76, 0xb3, 0x9e, 0xff, 0xa6, 0x9f,
-	0xa9, 0xd4, 0xf3, 0xdf, 0x39, 0x7c, 0xfe, 0x67, 0xde, 0x1b, 0x4a, 0x0f, 0x65, 0x41, 0xb1, 0xe4,
-	0x49, 0xb6, 0xf1, 0x6c, 0x85, 0xee, 0x43, 0x2d, 0xc2, 0x52, 0xf9, 0x8f, 0xb0, 0x48, 0x58, 0x12,
-	0xfa, 0x34, 0xc6, 0x2c, 0xf2, 0x25, 0x4d, 0xcc, 0x15, 0x53, 0x3e, 0x34, 0xc5, 0x92, 0x66, 0x7f,
-	0x60, 0xc9, 0x37, 0x34, 0x77, 0x9b, 0x26, 0xfa, 0xbe, 0xb9, 0x3e, 0x3a, 0xae, 0xe2, 0xee, 0x11,
-	0x73, 0xf8, 0x2f, 0xe4, 0xde, 0xe5, 0xb5, 0x6f, 0x1c, 0x58, 0x3c, 0xf0, 0x95, 0xa1, 0x1a, 0x4c,
-	0x0b, 0xda, 0x63, 0x7a, 0x54, 0x67, 0x9f, 0xd0, 0x60, 0x8d, 0x5a, 0x30, 0x6f, 0xb2, 0x75, 0x53,
-	0x92, 0x5f, 0xac, 0xa5, 0x43, 0xa5, 0x57, 0x35, 0xe5, 0x9e, 0x65, 0x6c, 0x28, 0x7d, 0x69, 0x67,
-	0xe3, 0x61, 0x70, 0xf9, 0x4d, 0x5b, 0xa0, 0x4d, 0xea, 0x1f, 0xc3, 0xb1, 0x03, 0x93, 0xe0, 0x16,
-	0x93, 0x0a, 0xb5, 0x60, 0x82, 0x29, 0x1a, 0xeb, 0xaf, 0xba, 0xbc, 0x3a, 0xb3, 0x7e, 0x69, 0x9c,
-	0x51, 0xe2, 0x59, 0x6a, 0xfd, 0x59, 0x09, 0x8e, 0x6f, 0x9a, 0x0b, 0xb4, 0x60, 0xa3, 0x9f, 0x74,
-	0xa9, 0x3c, 0xf8, 0xd8, 0x38, 0x0d, 0x90, 0x0a, 0xfe, 0x90, 0x06, 0x6a, 0xd8, 0xc4, 0x95, 0x0c,
-	0x69, 0x93, 0x17, 0x5c, 0x25, 0xe5, 0x17, 0x5d, 0x25, 0x2e, 0x4c, 0x65, 0x57, 0xb0, 0x69, 0xe2,
-	0x8a, 0x97, 0x2f, 0xd1, 0x0e, 0xcc, 0x06, 0x54, 0x28, 0xb6, 0xc3, 0x02, 0xac, 0xa8, 0x74, 0x27,
-	0x4c, 0x19, 0x5b, 0x2f, 0xd9, 0xd6, 0x08, 0xe5, 0x8d, 0xcd, 0x61, 0x18, 0x33, 0x25, 0xf7, 0xc4,
-	0xad, 0xc5, 0x30, 0xbf, 0xcf, 0x01, 0x5d, 0x80, 0xc5, 0x00, 0xfb, 0x05, 0x2f, 0x7f, 0xb0, 0xf3,
-	0xf9, 0x00, 0x17, 0xbc, 0xdb, 0x04, 0x35, 0xe0, 0xdf, 0x38, 0x52, 0x54, 0x24, 0xda, 0x8d, 0x24,
-	0xd2, 0x4f, 0x70, 0x4c, 0xa5, 0x5b, 0x32, 0x7d, 0xb5, 0x38, 0x30, 0x6d, 0x25, 0xf2, 0x3d, 0x6d,
-	0x58, 0xff, 0x62, 0x0a, 0xe6, 0xb2, 0xfa, 0xeb, 0xd1, 0xcc, 0x02, 0x8a, 0x1e, 0x43, 0xf5, 0x26,
-	0x55, 0x1b, 0x77, 0xda, 0xd9, 0xfd, 0x8f, 0xfe, 0xb3, 0x7f, 0x93, 0xd9, 0xd3, 0xb3, 0xb7, 0xd6,
-	0xb8, 0x11, 0xa7, 0xaa, 0x5f, 0x3b, 0x33, 0xda, 0x21, 0x8b, 0x51, 0x3f, 0xfb, 0xf9, 0x6f, 0x7f,
-	0x3c, 0x2d, 0x9d, 0x46, 0x27, 0xcd, 0x8b, 0x32, 0xab, 0x92, 0x7e, 0xb0, 0xe2, 0x94, 0x5d, 0xce,
-	0x6b, 0xfc, 0x9d, 0x03, 0x4b, 0xba, 0x79, 0x0e, 0x34, 0x84, 0x44, 0xe7, 0x46, 0xa7, 0xd0, 0x8c,
-	0xf7, 0x53, 0xf3, 0x3c, 0xad, 0x5d, 0x19, 0xa7, 0xcd, 0x34, 0x71, 0xb4, 0x30, 0x52, 0xc8, 0xfe,
-	0xd4, 0x81, 0xa3, 0x37, 0xe9, 0x41, 0x5d, 0xe8, 0xec, 0x68, 0x59, 0xed, 0xad, 0x5c, 0xd4, 0x58,
-	0xbd, 0x5f, 0x5f, 0x35, 0x82, 0xea, 0x68, 0xe5, 0x25, 0x82, 0x9a, 0x9f, 0x32, 0xf2, 0x19, 0xfa,
-	0xd1, 0x81, 0x85, 0xfd, 0x4d, 0x86, 0xd6, 0xc7, 0xef, 0xc8, 0xda, 0x3f, 0x98, 0xbe, 0xf5, 0x75,
-	0x23, 0xeb, 0x52, 0xfd, 0x7f, 0x87, 0xc9, 0x6a, 0xda, 0x27, 0xef, 0x75, 0xe7, 0x02, 0xfa, 0xda,
-	0x81, 0x05, 0x3b, 0x47, 0xc6, 0x2d, 0xd9, 0xab, 0x55, 0x64, 0xa7, 0x9f, 0x56, 0xf4, 0xbd, 0x03,
-	0x27, 0x36, 0x23, 0x9e, 0x14, 0x04, 0xbd, 0x2b, 0x78, 0x6c, 0x87, 0xea, 0xab, 0x93, 0xb6, 0x66,
-	0xa4, 0x5d, 0xac, 0x9f, 0x3f, 0xbc, 0x58, 0x5a, 0xcc, 0x75, 0xe7, 0x42, 0xeb, 0xed, 0x9f, 0x9f,
-	0x2f, 0x3b, 0xbf, 0x3e, 0x5f, 0x76, 0x9e, 0x3d, 0x5f, 0x76, 0x7e, 0xf8, 0x7d, 0xf9, 0x5f, 0x1f,
-	0x5d, 0x2c, 0xfc, 0xff, 0x96, 0xa7, 0xbc, 0x1c, 0xe3, 0x04, 0x87, 0x94, 0xe8, 0xb8, 0xb2, 0x10,
-	0xb8, 0x33, 0x69, 0xe6, 0xf8, 0xd5, 0xbf, 0x03, 0x00, 0x00, 0xff, 0xff, 0xab, 0x4b, 0xba, 0xb6,
-	0x4b, 0x0e, 0x00, 0x00,
+	// 1204 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x57, 0x4f, 0x6f, 0x1b, 0x45,
+	0x14, 0x67, 0xed, 0x26, 0xb1, 0x9f, 0xff, 0xa5, 0xd3, 0x3f, 0xd9, 0xba, 0x6d, 0x30, 0x5b, 0xa0,
+	0x69, 0x69, 0xd7, 0x8d, 0x2b, 0x15, 0x28, 0x42, 0xc2, 0x89, 0xdb, 0x62, 0x91, 0x42, 0xe5, 0x02,
+	0x07, 0x38, 0xac, 0xc6, 0x3b, 0x13, 0x33, 0x74, 0x77, 0x67, 0xd9, 0x19, 0x07, 0x52, 0xd4, 0x0b,
+	0xe2, 0x80, 0xc4, 0x91, 0x0b, 0xe2, 0x1b, 0xf0, 0x0d, 0xb8, 0x71, 0x85, 0x13, 0x48, 0x7c, 0x01,
+	0x14, 0xb8, 0xf3, 0x15, 0xd0, 0xcc, 0xee, 0x7a, 0x37, 0x4e, 0x9c, 0xd4, 0x2a, 0xe2, 0xe4, 0xd9,
+	0xdf, 0xfb, 0xf7, 0x7b, 0x6f, 0xde, 0xbc, 0x19, 0x43, 0x2d, 0x8c, 0x68, 0x88, 0x19, 0xb1, 0xc3,
+	0x88, 0x4b, 0x8e, 0xce, 0xe1, 0x08, 0x07, 0x23, 0x4e, 0x86, 0xb6, 0xeb, 0xf1, 0xb1, 0x42, 0x63,
+	0xe9, 0xce, 0x7a, 0xf3, 0xac, 0xcb, 0x7d, 0x9f, 0x07, 0xed, 0x9d, 0xf5, 0x76, 0xbc, 0x8a, 0x4d,
+	0x9a, 0x88, 0x60, 0x89, 0x15, 0xaa, 0x7e, 0x13, 0xec, 0x8d, 0x11, 0x93, 0x9f, 0x8c, 0x87, 0xb6,
+	0xcb, 0xfd, 0xf6, 0x88, 0x7b, 0x38, 0x18, 0xb5, 0xb5, 0x60, 0x38, 0xde, 0x6e, 0x87, 0x72, 0x37,
+	0xa4, 0xa2, 0x2d, 0x99, 0x4f, 0x85, 0xc4, 0x7e, 0x98, 0xad, 0x12, 0xe3, 0x0b, 0x23, 0xce, 0x47,
+	0x1e, 0x6d, 0xe3, 0x90, 0xb5, 0x71, 0x10, 0x70, 0x89, 0x25, 0xe3, 0x81, 0x88, 0xa5, 0xd6, 0x6f,
+	0x65, 0x38, 0xf9, 0x20, 0x66, 0xd5, 0xa3, 0xa1, 0xc7, 0x77, 0x7d, 0x1a, 0x48, 0x54, 0x87, 0x02,
+	0x23, 0xa6, 0xd1, 0x32, 0xd6, 0xca, 0x83, 0x02, 0x23, 0x68, 0x19, 0x8a, 0xe3, 0xc8, 0x33, 0x0b,
+	0x1a, 0x50, 0x4b, 0x84, 0xe0, 0x44, 0x80, 0x7d, 0x6a, 0x16, 0x35, 0xa4, 0xd7, 0xa8, 0x05, 0x15,
+	0x42, 0x85, 0x1b, 0xb1, 0x50, 0x45, 0x30, 0x4f, 0x68, 0x51, 0x1e, 0x42, 0xe7, 0xa1, 0x1c, 0xd1,
+	0x11, 0xe3, 0x81, 0xc3, 0x88, 0xb9, 0xa0, 0xe5, 0xa5, 0x18, 0xe8, 0x13, 0xf4, 0x3a, 0x80, 0x1b,
+	0x51, 0x2c, 0x29, 0x71, 0xb0, 0x34, 0x17, 0x5b, 0xc6, 0x5a, 0xa5, 0xd3, 0xb4, 0x63, 0xf6, 0x76,
+	0x9a, 0xaf, 0xfd, 0x7e, 0x9a, 0xde, 0xa0, 0x9c, 0x68, 0x77, 0xa5, 0x32, 0x25, 0xd4, 0xa3, 0x89,
+	0xe9, 0xd2, 0xf1, 0xa6, 0x89, 0x76, 0x57, 0xa2, 0x8b, 0x00, 0x4c, 0x38, 0xc9, 0xb7, 0x59, 0x6a,
+	0x19, 0x6b, 0xa5, 0x41, 0x99, 0x89, 0x5e, 0x0c, 0xa0, 0x57, 0xa1, 0x2c, 0x24, 0x8e, 0xa4, 0x50,
+	0x8e, 0xcb, 0xc7, 0x3a, 0x2e, 0xc5, 0xca, 0x5d, 0x89, 0x6e, 0xc2, 0x12, 0x0d, 0x88, 0x36, 0x83,
+	0x63, 0xcd, 0x16, 0x95, 0x6a, 0x57, 0xa2, 0x97, 0xa1, 0x21, 0xc6, 0x61, 0xc8, 0x23, 0xe9, 0x84,
+	0x1e, 0xd6, 0x55, 0xaa, 0xe8, 0x2a, 0xd5, 0x12, 0xf8, 0x81, 0x87, 0x55, 0xa9, 0x06, 0xb0, 0x24,
+	0x68, 0xb4, 0x43, 0x23, 0x61, 0x52, 0xed, 0xfc, 0x35, 0x7b, 0x66, 0xa7, 0xd9, 0x07, 0xb6, 0xd7,
+	0x7e, 0x18, 0xdb, 0x3e, 0x0c, 0xa9, 0x3b, 0x48, 0x1d, 0xa1, 0x2d, 0x58, 0xf0, 0x39, 0xa1, 0x9e,
+	0xb9, 0xad, 0x3d, 0xde, 0x9a, 0xcb, 0xe3, 0x7d, 0x65, 0xa9, 0xfd, 0xc5, 0x4e, 0xd0, 0x16, 0x2c,
+	0x0a, 0x89, 0xe5, 0x58, 0x98, 0xbf, 0x1a, 0xda, 0xdf, 0xcd, 0xf9, 0x18, 0x6a, 0xdb, 0x41, 0xe2,
+	0xa3, 0xf9, 0x4f, 0x01, 0x2a, 0x39, 0xd2, 0xc8, 0x82, 0xaa, 0xcb, 0x79, 0x44, 0x58, 0x80, 0x25,
+	0x8f, 0x84, 0xee, 0xd4, 0x85, 0xc1, 0x3e, 0x0c, 0xdd, 0x82, 0x95, 0xdc, 0xb7, 0xe3, 0x53, 0x9f,
+	0x47, 0xbb, 0x8e, 0x60, 0x8f, 0xa9, 0xee, 0xe3, 0x85, 0xc1, 0x99, 0x9c, 0xf8, 0xbe, 0x96, 0x3e,
+	0x64, 0x8f, 0x29, 0xba, 0x02, 0xcb, 0x79, 0x3b, 0x1c, 0x8d, 0x84, 0x59, 0x6c, 0x15, 0xd7, 0xca,
+	0x83, 0x46, 0x0e, 0xef, 0x46, 0x23, 0x81, 0x2e, 0x40, 0x99, 0x0c, 0xd3, 0x8d, 0xa8, 0x68, 0xa7,
+	0x19, 0x80, 0x6e, 0xc0, 0xe9, 0xf4, 0x63, 0x5f, 0xf4, 0xaa, 0x56, 0x44, 0xa9, 0x2c, 0x17, 0xfa,
+	0x1a, 0x4c, 0x50, 0x87, 0x30, 0xf1, 0x28, 0xd6, 0xaf, 0x69, 0xfd, 0xe5, 0x54, 0xd2, 0x63, 0xe2,
+	0x91, 0xd6, 0xbe, 0x04, 0xb5, 0x89, 0xb6, 0x66, 0x59, 0xd7, 0x2c, 0xab, 0x29, 0xa8, 0x29, 0xde,
+	0x82, 0x15, 0x9f, 0x05, 0xcc, 0x1f, 0xfb, 0xce, 0x84, 0x99, 0xe3, 0xf2, 0x71, 0x20, 0xcd, 0x46,
+	0x5c, 0x85, 0x44, 0xdc, 0x4b, 0xa5, 0x9b, 0x4a, 0xd8, 0xfc, 0xc6, 0x80, 0xf2, 0x64, 0x53, 0xd1,
+	0xe9, 0xb4, 0x37, 0xe2, 0x91, 0x90, 0xec, 0x71, 0x0b, 0xaa, 0x01, 0x27, 0x54, 0xb3, 0x54, 0xad,
+	0x1a, 0x8f, 0x07, 0x50, 0x98, 0x22, 0xd8, 0x27, 0xea, 0x70, 0x69, 0x8d, 0x38, 0x60, 0x31, 0xae,
+	0x90, 0x42, 0x74, 0x10, 0xf4, 0x22, 0xd4, 0xb5, 0x38, 0xcb, 0xf5, 0x44, 0xbc, 0x91, 0x0a, 0x4d,
+	0xf3, 0x6c, 0x5e, 0x87, 0xc5, 0xb8, 0x1d, 0x74, 0xc6, 0x93, 0x1e, 0x71, 0x26, 0x13, 0xaa, 0x9a,
+	0x81, 0x7d, 0x62, 0x7d, 0x0c, 0x67, 0x0e, 0xf4, 0xd3, 0x16, 0x13, 0x12, 0x6d, 0xc0, 0x02, 0x93,
+	0xd4, 0x57, 0xdd, 0x52, 0x5c, 0xab, 0x74, 0xae, 0xcd, 0xd3, 0x90, 0x83, 0xd8, 0xd4, 0x7a, 0x1b,
+	0x2e, 0x2a, 0x5f, 0x07, 0xe4, 0x62, 0x40, 0x3f, 0x1b, 0x53, 0x21, 0xd1, 0x65, 0x68, 0xf0, 0x68,
+	0x84, 0x03, 0xf6, 0x58, 0x8f, 0xd9, 0x8c, 0x64, 0x3d, 0x0f, 0xf7, 0x89, 0x75, 0x1f, 0x56, 0x3e,
+	0x08, 0x09, 0x96, 0x34, 0x17, 0x24, 0xf1, 0xd1, 0x81, 0x33, 0x09, 0x17, 0xe7, 0xb0, 0x74, 0x4f,
+	0x85, 0xd3, 0xd1, 0xfb, 0xc4, 0x62, 0x70, 0x76, 0xd3, 0xe3, 0x01, 0xbd, 0x1b, 0x71, 0x7f, 0x03,
+	0xbb, 0x8f, 0xc6, 0xe1, 0x33, 0x78, 0x53, 0x73, 0x7a, 0xa8, 0x9d, 0x64, 0xdb, 0x5a, 0x8a, 0x81,
+	0x3e, 0xb1, 0xbe, 0x2e, 0xc2, 0xca, 0xa6, 0x1e, 0xbd, 0xff, 0x09, 0x75, 0xd5, 0x24, 0x61, 0xc4,
+	0x3f, 0xa5, 0xae, 0xcc, 0xa2, 0x95, 0x13, 0xa4, 0x4f, 0xd0, 0x4b, 0x50, 0x67, 0x21, 0xf6, 0x3c,
+	0xfe, 0xb9, 0xc7, 0x84, 0x56, 0x89, 0xef, 0x9c, 0x5a, 0x0e, 0xed, 0x13, 0x64, 0xc2, 0x92, 0xea,
+	0xde, 0xec, 0xe2, 0x49, 0x3f, 0xd1, 0x36, 0x54, 0x5d, 0x1a, 0x49, 0xb6, 0xcd, 0x5c, 0x2c, 0xa9,
+	0xd0, 0xf7, 0x4e, 0xa5, 0xb3, 0x71, 0xc4, 0xf6, 0xcf, 0xc8, 0xce, 0xde, 0xcc, 0xdc, 0xe8, 0x59,
+	0xb7, 0xcf, 0x6f, 0xd3, 0x87, 0xc6, 0x94, 0x02, 0xba, 0x0a, 0x27, 0x5d, 0xec, 0xe4, 0xb4, 0xb2,
+	0x52, 0x34, 0x5c, 0x9c, 0xd3, 0xee, 0x13, 0x64, 0xc3, 0x29, 0xec, 0x49, 0x1a, 0x05, 0x4a, 0x8d,
+	0x04, 0xc2, 0x51, 0x77, 0xaa, 0x30, 0x0b, 0xfa, 0x50, 0x9f, 0x9c, 0x88, 0x7a, 0x81, 0x78, 0x57,
+	0x09, 0x3a, 0xdf, 0x96, 0xa0, 0x9e, 0xf4, 0xa1, 0x1a, 0x8d, 0xcc, 0xa5, 0xe8, 0x0b, 0xa8, 0xdd,
+	0xa3, 0xb2, 0xfb, 0xa0, 0xff, 0x61, 0x92, 0xfa, 0xf3, 0xd3, 0x49, 0x26, 0x4f, 0x8d, 0x9d, 0x75,
+	0xfb, 0x8e, 0x1f, 0xca, 0xdd, 0xe6, 0x0b, 0xb3, 0x15, 0x12, 0x1f, 0xd6, 0xa5, 0xaf, 0xfe, 0xf8,
+	0xfb, 0xbb, 0xc2, 0x45, 0x74, 0x5e, 0xbf, 0x20, 0x92, 0x2a, 0xa9, 0x07, 0x0a, 0x0e, 0xd9, 0xf5,
+	0xb4, 0xc6, 0x3f, 0x1a, 0x70, 0xf6, 0xf0, 0x83, 0x81, 0x8e, 0xba, 0x9a, 0x8e, 0x3c, 0x4b, 0xcd,
+	0x1b, 0xf3, 0x9c, 0x50, 0xe5, 0x6a, 0x36, 0x57, 0x92, 0x23, 0xf4, 0x83, 0x01, 0xa7, 0xef, 0xd1,
+	0x83, 0x71, 0xd1, 0xa5, 0xd9, 0xc5, 0xe8, 0xf7, 0xde, 0xd3, 0x2f, 0x18, 0xd1, 0x9c, 0x6b, 0x6c,
+	0x58, 0x6d, 0x4d, 0xe8, 0x0a, 0xba, 0x3c, 0x4d, 0x28, 0x59, 0xe6, 0x78, 0xb5, 0xbf, 0x64, 0xe4,
+	0x09, 0xfa, 0xc9, 0x80, 0xe5, 0xe9, 0xf6, 0x43, 0x9d, 0xf9, 0x7b, 0xb5, 0x69, 0x4d, 0xdb, 0xe8,
+	0xf7, 0xe4, 0xce, 0xba, 0x9d, 0x63, 0xb7, 0xa5, 0xd9, 0xdd, 0xb5, 0xba, 0x4f, 0xc3, 0xee, 0xd0,
+	0x73, 0xfd, 0xa4, 0x1d, 0x3f, 0xc2, 0x6e, 0x1b, 0x57, 0x35, 0xf5, 0xe9, 0x91, 0x76, 0x24, 0xf5,
+	0x19, 0xf3, 0xef, 0x7f, 0xa3, 0x3e, 0xd6, 0xf1, 0x15, 0xf5, 0x9f, 0x0d, 0x38, 0xa7, 0xc7, 0x67,
+	0x16, 0x21, 0x1b, 0xa4, 0x68, 0xfd, 0xa8, 0xf2, 0x1f, 0x3a, 0x74, 0x9f, 0x2a, 0x85, 0x77, 0x74,
+	0x0a, 0x77, 0xac, 0xb7, 0x9e, 0xa5, 0xfa, 0x2a, 0xfc, 0x6d, 0xe3, 0xea, 0xc6, 0x9b, 0xbf, 0xec,
+	0xad, 0x1a, 0xbf, 0xef, 0xad, 0x1a, 0x7f, 0xee, 0xad, 0x1a, 0xdf, 0xff, 0xb5, 0xfa, 0xdc, 0x47,
+	0xaf, 0xe4, 0xfe, 0x34, 0xa4, 0x64, 0xae, 0xfb, 0x38, 0xc0, 0x23, 0x4a, 0x54, 0x44, 0x91, 0x0b,
+	0x39, 0x5c, 0xd4, 0x8f, 0xd2, 0x9b, 0xff, 0x06, 0x00, 0x00, 0xff, 0xff, 0x28, 0xe9, 0x9d, 0x22,
+	0xc0, 0x0c, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -967,27 +905,27 @@ type PrepaidServiceClient interface {
 	// Get the current API version of this service.
 	// Required permissions:
 	// - None
-	GetAPIVersion(ctx context.Context, in *v11.Empty, opts ...grpc.CallOption) (*v11.Version, error)
+	GetAPIVersion(ctx context.Context, in *v1.Empty, opts ...grpc.CallOption) (*v1.Version, error)
 	// Fetch all prepaid deployments for organization.
 	// Required permissions:
 	// - prepaid.deployment.list on the organization
-	ListPrepaidDeployments(ctx context.Context, in *v11.ListOptions, opts ...grpc.CallOption) (*PrepaidDeploymentList, error)
+	ListPrepaidDeployments(ctx context.Context, in *ListPrepaidDeploymentsRequest, opts ...grpc.CallOption) (*PrepaidDeploymentList, error)
 	// Fetch a deployment by its id.
 	// Required permissions:
 	// - prepaid.deployment.get on the deployment identified by the given ID
-	GetPrepaidDeployment(ctx context.Context, in *v11.IDOptions, opts ...grpc.CallOption) (*PrepaidDeployment, error)
+	GetPrepaidDeployment(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*PrepaidDeployment, error)
 	// Creates a new deployment from a prepaid deployment and attached the newly created deployment to the prepaid deployment.
 	// Required permissions:
 	// - prepaid.deployment.create on the organization that owns the deployment
-	CreateDeployment(ctx context.Context, in *CreateDeploymentRequest, opts ...grpc.CallOption) (*v1.Deployment, error)
+	CreateDeployment(ctx context.Context, in *CreateDeploymentRequest, opts ...grpc.CallOption) (*v11.Deployment, error)
 	// Update the deployment by prepaid deployment's id
 	// Required permissions:
 	// - prepaid.deployment.update on the organization that owns the deployment
-	UpdateDeployment(ctx context.Context, in *v11.IDOptions, opts ...grpc.CallOption) (*v1.Deployment, error)
+	UpdateDeployment(ctx context.Context, in *UpdateDeploymentRequest, opts ...grpc.CallOption) (*v11.Deployment, error)
 	// Creates a cloned deployment from a backup and attaches it to the prepaid deployment. This takes the deployment specification from the prepaid deployment, which must match the specification mentioned in the backup.
 	// Required permissions:
 	// - prepaid.deployment.create on the organization that owns the deployment
-	CloneDeploymentFromBackup(ctx context.Context, in *v11.IDOptions, opts ...grpc.CallOption) (*v1.Deployment, error)
+	CloneDeploymentFromBackup(ctx context.Context, in *CloneFromBackupRequest, opts ...grpc.CallOption) (*v11.Deployment, error)
 }
 
 type prepaidServiceClient struct {
@@ -998,8 +936,8 @@ func NewPrepaidServiceClient(cc *grpc.ClientConn) PrepaidServiceClient {
 	return &prepaidServiceClient{cc}
 }
 
-func (c *prepaidServiceClient) GetAPIVersion(ctx context.Context, in *v11.Empty, opts ...grpc.CallOption) (*v11.Version, error) {
-	out := new(v11.Version)
+func (c *prepaidServiceClient) GetAPIVersion(ctx context.Context, in *v1.Empty, opts ...grpc.CallOption) (*v1.Version, error) {
+	out := new(v1.Version)
 	err := c.cc.Invoke(ctx, "/arangodb.cloud.prepaid.v1.PrepaidService/GetAPIVersion", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1007,7 +945,7 @@ func (c *prepaidServiceClient) GetAPIVersion(ctx context.Context, in *v11.Empty,
 	return out, nil
 }
 
-func (c *prepaidServiceClient) ListPrepaidDeployments(ctx context.Context, in *v11.ListOptions, opts ...grpc.CallOption) (*PrepaidDeploymentList, error) {
+func (c *prepaidServiceClient) ListPrepaidDeployments(ctx context.Context, in *ListPrepaidDeploymentsRequest, opts ...grpc.CallOption) (*PrepaidDeploymentList, error) {
 	out := new(PrepaidDeploymentList)
 	err := c.cc.Invoke(ctx, "/arangodb.cloud.prepaid.v1.PrepaidService/ListPrepaidDeployments", in, out, opts...)
 	if err != nil {
@@ -1016,7 +954,7 @@ func (c *prepaidServiceClient) ListPrepaidDeployments(ctx context.Context, in *v
 	return out, nil
 }
 
-func (c *prepaidServiceClient) GetPrepaidDeployment(ctx context.Context, in *v11.IDOptions, opts ...grpc.CallOption) (*PrepaidDeployment, error) {
+func (c *prepaidServiceClient) GetPrepaidDeployment(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*PrepaidDeployment, error) {
 	out := new(PrepaidDeployment)
 	err := c.cc.Invoke(ctx, "/arangodb.cloud.prepaid.v1.PrepaidService/GetPrepaidDeployment", in, out, opts...)
 	if err != nil {
@@ -1025,8 +963,8 @@ func (c *prepaidServiceClient) GetPrepaidDeployment(ctx context.Context, in *v11
 	return out, nil
 }
 
-func (c *prepaidServiceClient) CreateDeployment(ctx context.Context, in *CreateDeploymentRequest, opts ...grpc.CallOption) (*v1.Deployment, error) {
-	out := new(v1.Deployment)
+func (c *prepaidServiceClient) CreateDeployment(ctx context.Context, in *CreateDeploymentRequest, opts ...grpc.CallOption) (*v11.Deployment, error) {
+	out := new(v11.Deployment)
 	err := c.cc.Invoke(ctx, "/arangodb.cloud.prepaid.v1.PrepaidService/CreateDeployment", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1034,8 +972,8 @@ func (c *prepaidServiceClient) CreateDeployment(ctx context.Context, in *CreateD
 	return out, nil
 }
 
-func (c *prepaidServiceClient) UpdateDeployment(ctx context.Context, in *v11.IDOptions, opts ...grpc.CallOption) (*v1.Deployment, error) {
-	out := new(v1.Deployment)
+func (c *prepaidServiceClient) UpdateDeployment(ctx context.Context, in *UpdateDeploymentRequest, opts ...grpc.CallOption) (*v11.Deployment, error) {
+	out := new(v11.Deployment)
 	err := c.cc.Invoke(ctx, "/arangodb.cloud.prepaid.v1.PrepaidService/UpdateDeployment", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1043,8 +981,8 @@ func (c *prepaidServiceClient) UpdateDeployment(ctx context.Context, in *v11.IDO
 	return out, nil
 }
 
-func (c *prepaidServiceClient) CloneDeploymentFromBackup(ctx context.Context, in *v11.IDOptions, opts ...grpc.CallOption) (*v1.Deployment, error) {
-	out := new(v1.Deployment)
+func (c *prepaidServiceClient) CloneDeploymentFromBackup(ctx context.Context, in *CloneFromBackupRequest, opts ...grpc.CallOption) (*v11.Deployment, error) {
+	out := new(v11.Deployment)
 	err := c.cc.Invoke(ctx, "/arangodb.cloud.prepaid.v1.PrepaidService/CloneDeploymentFromBackup", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1057,49 +995,49 @@ type PrepaidServiceServer interface {
 	// Get the current API version of this service.
 	// Required permissions:
 	// - None
-	GetAPIVersion(context.Context, *v11.Empty) (*v11.Version, error)
+	GetAPIVersion(context.Context, *v1.Empty) (*v1.Version, error)
 	// Fetch all prepaid deployments for organization.
 	// Required permissions:
 	// - prepaid.deployment.list on the organization
-	ListPrepaidDeployments(context.Context, *v11.ListOptions) (*PrepaidDeploymentList, error)
+	ListPrepaidDeployments(context.Context, *ListPrepaidDeploymentsRequest) (*PrepaidDeploymentList, error)
 	// Fetch a deployment by its id.
 	// Required permissions:
 	// - prepaid.deployment.get on the deployment identified by the given ID
-	GetPrepaidDeployment(context.Context, *v11.IDOptions) (*PrepaidDeployment, error)
+	GetPrepaidDeployment(context.Context, *v1.IDOptions) (*PrepaidDeployment, error)
 	// Creates a new deployment from a prepaid deployment and attached the newly created deployment to the prepaid deployment.
 	// Required permissions:
 	// - prepaid.deployment.create on the organization that owns the deployment
-	CreateDeployment(context.Context, *CreateDeploymentRequest) (*v1.Deployment, error)
+	CreateDeployment(context.Context, *CreateDeploymentRequest) (*v11.Deployment, error)
 	// Update the deployment by prepaid deployment's id
 	// Required permissions:
 	// - prepaid.deployment.update on the organization that owns the deployment
-	UpdateDeployment(context.Context, *v11.IDOptions) (*v1.Deployment, error)
+	UpdateDeployment(context.Context, *UpdateDeploymentRequest) (*v11.Deployment, error)
 	// Creates a cloned deployment from a backup and attaches it to the prepaid deployment. This takes the deployment specification from the prepaid deployment, which must match the specification mentioned in the backup.
 	// Required permissions:
 	// - prepaid.deployment.create on the organization that owns the deployment
-	CloneDeploymentFromBackup(context.Context, *v11.IDOptions) (*v1.Deployment, error)
+	CloneDeploymentFromBackup(context.Context, *CloneFromBackupRequest) (*v11.Deployment, error)
 }
 
 // UnimplementedPrepaidServiceServer can be embedded to have forward compatible implementations.
 type UnimplementedPrepaidServiceServer struct {
 }
 
-func (*UnimplementedPrepaidServiceServer) GetAPIVersion(ctx context.Context, req *v11.Empty) (*v11.Version, error) {
+func (*UnimplementedPrepaidServiceServer) GetAPIVersion(ctx context.Context, req *v1.Empty) (*v1.Version, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAPIVersion not implemented")
 }
-func (*UnimplementedPrepaidServiceServer) ListPrepaidDeployments(ctx context.Context, req *v11.ListOptions) (*PrepaidDeploymentList, error) {
+func (*UnimplementedPrepaidServiceServer) ListPrepaidDeployments(ctx context.Context, req *ListPrepaidDeploymentsRequest) (*PrepaidDeploymentList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPrepaidDeployments not implemented")
 }
-func (*UnimplementedPrepaidServiceServer) GetPrepaidDeployment(ctx context.Context, req *v11.IDOptions) (*PrepaidDeployment, error) {
+func (*UnimplementedPrepaidServiceServer) GetPrepaidDeployment(ctx context.Context, req *v1.IDOptions) (*PrepaidDeployment, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPrepaidDeployment not implemented")
 }
-func (*UnimplementedPrepaidServiceServer) CreateDeployment(ctx context.Context, req *CreateDeploymentRequest) (*v1.Deployment, error) {
+func (*UnimplementedPrepaidServiceServer) CreateDeployment(ctx context.Context, req *CreateDeploymentRequest) (*v11.Deployment, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateDeployment not implemented")
 }
-func (*UnimplementedPrepaidServiceServer) UpdateDeployment(ctx context.Context, req *v11.IDOptions) (*v1.Deployment, error) {
+func (*UnimplementedPrepaidServiceServer) UpdateDeployment(ctx context.Context, req *UpdateDeploymentRequest) (*v11.Deployment, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateDeployment not implemented")
 }
-func (*UnimplementedPrepaidServiceServer) CloneDeploymentFromBackup(ctx context.Context, req *v11.IDOptions) (*v1.Deployment, error) {
+func (*UnimplementedPrepaidServiceServer) CloneDeploymentFromBackup(ctx context.Context, req *CloneFromBackupRequest) (*v11.Deployment, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CloneDeploymentFromBackup not implemented")
 }
 
@@ -1108,7 +1046,7 @@ func RegisterPrepaidServiceServer(s *grpc.Server, srv PrepaidServiceServer) {
 }
 
 func _PrepaidService_GetAPIVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v11.Empty)
+	in := new(v1.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1120,13 +1058,13 @@ func _PrepaidService_GetAPIVersion_Handler(srv interface{}, ctx context.Context,
 		FullMethod: "/arangodb.cloud.prepaid.v1.PrepaidService/GetAPIVersion",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PrepaidServiceServer).GetAPIVersion(ctx, req.(*v11.Empty))
+		return srv.(PrepaidServiceServer).GetAPIVersion(ctx, req.(*v1.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _PrepaidService_ListPrepaidDeployments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v11.ListOptions)
+	in := new(ListPrepaidDeploymentsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1138,13 +1076,13 @@ func _PrepaidService_ListPrepaidDeployments_Handler(srv interface{}, ctx context
 		FullMethod: "/arangodb.cloud.prepaid.v1.PrepaidService/ListPrepaidDeployments",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PrepaidServiceServer).ListPrepaidDeployments(ctx, req.(*v11.ListOptions))
+		return srv.(PrepaidServiceServer).ListPrepaidDeployments(ctx, req.(*ListPrepaidDeploymentsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _PrepaidService_GetPrepaidDeployment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v11.IDOptions)
+	in := new(v1.IDOptions)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1156,7 +1094,7 @@ func _PrepaidService_GetPrepaidDeployment_Handler(srv interface{}, ctx context.C
 		FullMethod: "/arangodb.cloud.prepaid.v1.PrepaidService/GetPrepaidDeployment",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PrepaidServiceServer).GetPrepaidDeployment(ctx, req.(*v11.IDOptions))
+		return srv.(PrepaidServiceServer).GetPrepaidDeployment(ctx, req.(*v1.IDOptions))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1180,7 +1118,7 @@ func _PrepaidService_CreateDeployment_Handler(srv interface{}, ctx context.Conte
 }
 
 func _PrepaidService_UpdateDeployment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v11.IDOptions)
+	in := new(UpdateDeploymentRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1192,13 +1130,13 @@ func _PrepaidService_UpdateDeployment_Handler(srv interface{}, ctx context.Conte
 		FullMethod: "/arangodb.cloud.prepaid.v1.PrepaidService/UpdateDeployment",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PrepaidServiceServer).UpdateDeployment(ctx, req.(*v11.IDOptions))
+		return srv.(PrepaidServiceServer).UpdateDeployment(ctx, req.(*UpdateDeploymentRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _PrepaidService_CloneDeploymentFromBackup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v11.IDOptions)
+	in := new(CloneFromBackupRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1210,7 +1148,7 @@ func _PrepaidService_CloneDeploymentFromBackup_Handler(srv interface{}, ctx cont
 		FullMethod: "/arangodb.cloud.prepaid.v1.PrepaidService/CloneDeploymentFromBackup",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PrepaidServiceServer).CloneDeploymentFromBackup(ctx, req.(*v11.IDOptions))
+		return srv.(PrepaidServiceServer).CloneDeploymentFromBackup(ctx, req.(*CloneFromBackupRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1272,34 +1210,6 @@ func (m *PrepaidDeployment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if m.BackupRestore != nil {
-		{
-			size, err := m.BackupRestore.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintPrepaid(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x19
-		i--
-		dAtA[i] = 0x8a
-	}
-	if m.Expiration != nil {
-		{
-			size, err := m.Expiration.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintPrepaid(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x12
-		i--
-		dAtA[i] = 0xea
-	}
 	if m.Status != nil {
 		{
 			size, err := m.Status.MarshalToSizedBuffer(dAtA[:i])
@@ -1314,33 +1224,6 @@ func (m *PrepaidDeployment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0xca
 	}
-	if len(m.IpallowlistId) > 0 {
-		i -= len(m.IpallowlistId)
-		copy(dAtA[i:], m.IpallowlistId)
-		i = encodeVarintPrepaid(dAtA, i, uint64(len(m.IpallowlistId)))
-		i--
-		dAtA[i] = 0x6
-		i--
-		dAtA[i] = 0xea
-	}
-	if len(m.IamproviderId) > 0 {
-		i -= len(m.IamproviderId)
-		copy(dAtA[i:], m.IamproviderId)
-		i = encodeVarintPrepaid(dAtA, i, uint64(len(m.IamproviderId)))
-		i--
-		dAtA[i] = 0x6
-		i--
-		dAtA[i] = 0xe2
-	}
-	if len(m.CustomImage) > 0 {
-		i -= len(m.CustomImage)
-		copy(dAtA[i:], m.CustomImage)
-		i = encodeVarintPrepaid(dAtA, i, uint64(len(m.CustomImage)))
-		i--
-		dAtA[i] = 0x6
-		i--
-		dAtA[i] = 0xda
-	}
 	if m.Model != nil {
 		{
 			size, err := m.Model.MarshalToSizedBuffer(dAtA[:i])
@@ -1353,35 +1236,7 @@ func (m *PrepaidDeployment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x6
 		i--
-		dAtA[i] = 0xd2
-	}
-	if m.UpgradeRecommendation != nil {
-		{
-			size, err := m.UpgradeRecommendation.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintPrepaid(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x6
-		i--
-		dAtA[i] = 0xca
-	}
-	if m.ReplaceVersionBy != nil {
-		{
-			size, err := m.ReplaceVersionBy.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintPrepaid(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x6
-		i--
-		dAtA[i] = 0xc2
+		dAtA[i] = 0xb2
 	}
 	if m.Servers != nil {
 		{
@@ -1395,31 +1250,38 @@ func (m *PrepaidDeployment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x6
 		i--
-		dAtA[i] = 0xba
-	}
-	if m.Locked {
-		i--
-		if m.Locked {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i--
-		dAtA[i] = 0x68
-	}
-	if len(m.CreatedById) > 0 {
-		i -= len(m.CreatedById)
-		copy(dAtA[i:], m.CreatedById)
-		i = encodeVarintPrepaid(dAtA, i, uint64(len(m.CreatedById)))
-		i--
-		dAtA[i] = 0x5a
+		dAtA[i] = 0xaa
 	}
 	if len(m.SupportPlanId) > 0 {
 		i -= len(m.SupportPlanId)
 		copy(dAtA[i:], m.SupportPlanId)
 		i = encodeVarintPrepaid(dAtA, i, uint64(len(m.SupportPlanId)))
 		i--
+		dAtA[i] = 0x5a
+	}
+	if m.EndsAt != nil {
+		{
+			size, err := m.EndsAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintPrepaid(dAtA, i, uint64(size))
+		}
+		i--
 		dAtA[i] = 0x52
+	}
+	if m.StartsAt != nil {
+		{
+			size, err := m.StartsAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintPrepaid(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x4a
 	}
 	if m.IsDeleted {
 		i--
@@ -1429,7 +1291,7 @@ func (m *PrepaidDeployment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0
 		}
 		i--
-		dAtA[i] = 0x48
+		dAtA[i] = 0x40
 	}
 	if m.DeletedAt != nil {
 		{
@@ -1441,7 +1303,7 @@ func (m *PrepaidDeployment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			i = encodeVarintPrepaid(dAtA, i, uint64(size))
 		}
 		i--
-		dAtA[i] = 0x42
+		dAtA[i] = 0x3a
 	}
 	if m.CreatedAt != nil {
 		{
@@ -1453,14 +1315,28 @@ func (m *PrepaidDeployment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			i = encodeVarintPrepaid(dAtA, i, uint64(size))
 		}
 		i--
-		dAtA[i] = 0x3a
+		dAtA[i] = 0x32
 	}
 	if len(m.RegionId) > 0 {
 		i -= len(m.RegionId)
 		copy(dAtA[i:], m.RegionId)
 		i = encodeVarintPrepaid(dAtA, i, uint64(len(m.RegionId)))
 		i--
-		dAtA[i] = 0x32
+		dAtA[i] = 0x2a
+	}
+	if len(m.Description) > 0 {
+		i -= len(m.Description)
+		copy(dAtA[i:], m.Description)
+		i = encodeVarintPrepaid(dAtA, i, uint64(len(m.Description)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintPrepaid(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0x1a
 	}
 	if len(m.Url) > 0 {
 		i -= len(m.Url)
@@ -1629,135 +1505,12 @@ func (m *PrepaidDeployment_Status) MarshalToSizedBuffer(dAtA []byte) (int, error
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if m.Deployment != nil {
-		{
-			size, err := m.Deployment.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintPrepaid(dAtA, i, uint64(size))
-		}
+	if len(m.DeploymentId) > 0 {
+		i -= len(m.DeploymentId)
+		copy(dAtA[i:], m.DeploymentId)
+		i = encodeVarintPrepaid(dAtA, i, uint64(len(m.DeploymentId)))
 		i--
 		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *PrepaidDeployment_Expiration) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *PrepaidDeployment_Expiration) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *PrepaidDeployment_Expiration) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if len(m.LastWarningEmailSendTo) > 0 {
-		for iNdEx := len(m.LastWarningEmailSendTo) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.LastWarningEmailSendTo[iNdEx])
-			copy(dAtA[i:], m.LastWarningEmailSendTo[iNdEx])
-			i = encodeVarintPrepaid(dAtA, i, uint64(len(m.LastWarningEmailSendTo[iNdEx])))
-			i--
-			dAtA[i] = 0x22
-		}
-	}
-	if m.LastWarningEmailSendAt != nil {
-		{
-			size, err := m.LastWarningEmailSendAt.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintPrepaid(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x1a
-	}
-	if len(m.Reason) > 0 {
-		i -= len(m.Reason)
-		copy(dAtA[i:], m.Reason)
-		i = encodeVarintPrepaid(dAtA, i, uint64(len(m.Reason)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if m.ExpiresAt != nil {
-		{
-			size, err := m.ExpiresAt.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintPrepaid(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *PrepaidDeployment_BackupRestoreSpec) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *PrepaidDeployment_BackupRestoreSpec) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *PrepaidDeployment_BackupRestoreSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if len(m.BackupId) > 0 {
-		i -= len(m.BackupId)
-		copy(dAtA[i:], m.BackupId)
-		i = encodeVarintPrepaid(dAtA, i, uint64(len(m.BackupId)))
-		i--
-		dAtA[i] = 0x52
-	}
-	if m.LastUpdatedAt != nil {
-		{
-			size, err := m.LastUpdatedAt.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintPrepaid(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x12
-	}
-	if m.Revision != 0 {
-		i = encodeVarintPrepaid(dAtA, i, uint64(m.Revision))
-		i--
-		dAtA[i] = 0x8
 	}
 	return len(dAtA) - i, nil
 }
@@ -1799,6 +1552,115 @@ func (m *PrepaidDeploymentList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			i--
 			dAtA[i] = 0xa
 		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ListPrepaidDeploymentsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ListPrepaidDeploymentsRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ListPrepaidDeploymentsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.OrganizationId) > 0 {
+		i -= len(m.OrganizationId)
+		copy(dAtA[i:], m.OrganizationId)
+		i = encodeVarintPrepaid(dAtA, i, uint64(len(m.OrganizationId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *UpdateDeploymentRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *UpdateDeploymentRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UpdateDeploymentRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.PrepaidDeploymentId) > 0 {
+		i -= len(m.PrepaidDeploymentId)
+		copy(dAtA[i:], m.PrepaidDeploymentId)
+		i = encodeVarintPrepaid(dAtA, i, uint64(len(m.PrepaidDeploymentId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *CloneFromBackupRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CloneFromBackupRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CloneFromBackupRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.BackupId) > 0 {
+		i -= len(m.BackupId)
+		copy(dAtA[i:], m.BackupId)
+		i = encodeVarintPrepaid(dAtA, i, uint64(len(m.BackupId)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.PrepaidDeploymentId) > 0 {
+		i -= len(m.PrepaidDeploymentId)
+		copy(dAtA[i:], m.PrepaidDeploymentId)
+		i = encodeVarintPrepaid(dAtA, i, uint64(len(m.PrepaidDeploymentId)))
+		i--
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -1860,10 +1722,10 @@ func (m *CreateDeploymentRequest) MarshalToSizedBuffer(dAtA []byte) (int, error)
 		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.Id) > 0 {
-		i -= len(m.Id)
-		copy(dAtA[i:], m.Id)
-		i = encodeVarintPrepaid(dAtA, i, uint64(len(m.Id)))
+	if len(m.PrepaidDeploymentId) > 0 {
+		i -= len(m.PrepaidDeploymentId)
+		copy(dAtA[i:], m.PrepaidDeploymentId)
+		i = encodeVarintPrepaid(dAtA, i, uint64(len(m.PrepaidDeploymentId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1938,6 +1800,14 @@ func (m *PrepaidDeployment) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovPrepaid(uint64(l))
 	}
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovPrepaid(uint64(l))
+	}
+	l = len(m.Description)
+	if l > 0 {
+		n += 1 + l + sovPrepaid(uint64(l))
+	}
 	l = len(m.RegionId)
 	if l > 0 {
 		n += 1 + l + sovPrepaid(uint64(l))
@@ -1953,55 +1823,28 @@ func (m *PrepaidDeployment) Size() (n int) {
 	if m.IsDeleted {
 		n += 2
 	}
+	if m.StartsAt != nil {
+		l = m.StartsAt.Size()
+		n += 1 + l + sovPrepaid(uint64(l))
+	}
+	if m.EndsAt != nil {
+		l = m.EndsAt.Size()
+		n += 1 + l + sovPrepaid(uint64(l))
+	}
 	l = len(m.SupportPlanId)
 	if l > 0 {
 		n += 1 + l + sovPrepaid(uint64(l))
 	}
-	l = len(m.CreatedById)
-	if l > 0 {
-		n += 1 + l + sovPrepaid(uint64(l))
-	}
-	if m.Locked {
-		n += 2
-	}
 	if m.Servers != nil {
 		l = m.Servers.Size()
-		n += 2 + l + sovPrepaid(uint64(l))
-	}
-	if m.ReplaceVersionBy != nil {
-		l = m.ReplaceVersionBy.Size()
-		n += 2 + l + sovPrepaid(uint64(l))
-	}
-	if m.UpgradeRecommendation != nil {
-		l = m.UpgradeRecommendation.Size()
 		n += 2 + l + sovPrepaid(uint64(l))
 	}
 	if m.Model != nil {
 		l = m.Model.Size()
 		n += 2 + l + sovPrepaid(uint64(l))
 	}
-	l = len(m.CustomImage)
-	if l > 0 {
-		n += 2 + l + sovPrepaid(uint64(l))
-	}
-	l = len(m.IamproviderId)
-	if l > 0 {
-		n += 2 + l + sovPrepaid(uint64(l))
-	}
-	l = len(m.IpallowlistId)
-	if l > 0 {
-		n += 2 + l + sovPrepaid(uint64(l))
-	}
 	if m.Status != nil {
 		l = m.Status.Size()
-		n += 2 + l + sovPrepaid(uint64(l))
-	}
-	if m.Expiration != nil {
-		l = m.Expiration.Size()
-		n += 2 + l + sovPrepaid(uint64(l))
-	}
-	if m.BackupRestore != nil {
-		l = m.BackupRestore.Size()
 		n += 2 + l + sovPrepaid(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
@@ -2084,60 +1927,7 @@ func (m *PrepaidDeployment_Status) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.Deployment != nil {
-		l = m.Deployment.Size()
-		n += 1 + l + sovPrepaid(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *PrepaidDeployment_Expiration) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.ExpiresAt != nil {
-		l = m.ExpiresAt.Size()
-		n += 1 + l + sovPrepaid(uint64(l))
-	}
-	l = len(m.Reason)
-	if l > 0 {
-		n += 1 + l + sovPrepaid(uint64(l))
-	}
-	if m.LastWarningEmailSendAt != nil {
-		l = m.LastWarningEmailSendAt.Size()
-		n += 1 + l + sovPrepaid(uint64(l))
-	}
-	if len(m.LastWarningEmailSendTo) > 0 {
-		for _, s := range m.LastWarningEmailSendTo {
-			l = len(s)
-			n += 1 + l + sovPrepaid(uint64(l))
-		}
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *PrepaidDeployment_BackupRestoreSpec) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.Revision != 0 {
-		n += 1 + sovPrepaid(uint64(m.Revision))
-	}
-	if m.LastUpdatedAt != nil {
-		l = m.LastUpdatedAt.Size()
-		n += 1 + l + sovPrepaid(uint64(l))
-	}
-	l = len(m.BackupId)
+	l = len(m.DeploymentId)
 	if l > 0 {
 		n += 1 + l + sovPrepaid(uint64(l))
 	}
@@ -2165,13 +1955,65 @@ func (m *PrepaidDeploymentList) Size() (n int) {
 	return n
 }
 
+func (m *ListPrepaidDeploymentsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.OrganizationId)
+	if l > 0 {
+		n += 1 + l + sovPrepaid(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *UpdateDeploymentRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.PrepaidDeploymentId)
+	if l > 0 {
+		n += 1 + l + sovPrepaid(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *CloneFromBackupRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.PrepaidDeploymentId)
+	if l > 0 {
+		n += 1 + l + sovPrepaid(uint64(l))
+	}
+	l = len(m.BackupId)
+	if l > 0 {
+		n += 1 + l + sovPrepaid(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *CreateDeploymentRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.Id)
+	l = len(m.PrepaidDeploymentId)
 	if l > 0 {
 		n += 1 + l + sovPrepaid(uint64(l))
 	}
@@ -2318,7 +2160,71 @@ func (m *PrepaidDeployment) Unmarshal(dAtA []byte) error {
 			}
 			m.Url = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 6:
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPrepaid
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPrepaid
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPrepaid
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPrepaid
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPrepaid
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPrepaid
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Description = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RegionId", wireType)
 			}
@@ -2350,7 +2256,7 @@ func (m *PrepaidDeployment) Unmarshal(dAtA []byte) error {
 			}
 			m.RegionId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 7:
+		case 6:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
 			}
@@ -2386,7 +2292,7 @@ func (m *PrepaidDeployment) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 8:
+		case 7:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DeletedAt", wireType)
 			}
@@ -2422,7 +2328,7 @@ func (m *PrepaidDeployment) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 9:
+		case 8:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field IsDeleted", wireType)
 			}
@@ -2442,7 +2348,79 @@ func (m *PrepaidDeployment) Unmarshal(dAtA []byte) error {
 				}
 			}
 			m.IsDeleted = bool(v != 0)
+		case 9:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StartsAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPrepaid
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthPrepaid
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthPrepaid
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.StartsAt == nil {
+				m.StartsAt = &types.Timestamp{}
+			}
+			if err := m.StartsAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		case 10:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field EndsAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPrepaid
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthPrepaid
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthPrepaid
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.EndsAt == nil {
+				m.EndsAt = &types.Timestamp{}
+			}
+			if err := m.EndsAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 11:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field SupportPlanId", wireType)
 			}
@@ -2474,59 +2452,7 @@ func (m *PrepaidDeployment) Unmarshal(dAtA []byte) error {
 			}
 			m.SupportPlanId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 11:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field CreatedById", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPrepaid
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.CreatedById = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 13:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Locked", wireType)
-			}
-			var v int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPrepaid
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			m.Locked = bool(v != 0)
-		case 103:
+		case 101:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Servers", wireType)
 			}
@@ -2562,79 +2488,7 @@ func (m *PrepaidDeployment) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 104:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ReplaceVersionBy", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPrepaid
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.ReplaceVersionBy == nil {
-				m.ReplaceVersionBy = &v1.ReplaceVersionBy{}
-			}
-			if err := m.ReplaceVersionBy.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 105:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field UpgradeRecommendation", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPrepaid
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.UpgradeRecommendation == nil {
-				m.UpgradeRecommendation = &v1.UpgradeVersionRecommendation{}
-			}
-			if err := m.UpgradeRecommendation.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 106:
+		case 102:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Model", wireType)
 			}
@@ -2670,102 +2524,6 @@ func (m *PrepaidDeployment) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 107:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field CustomImage", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPrepaid
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.CustomImage = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 108:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field IamproviderId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPrepaid
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.IamproviderId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 109:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field IpallowlistId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPrepaid
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.IpallowlistId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
 		case 201:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
@@ -2799,78 +2557,6 @@ func (m *PrepaidDeployment) Unmarshal(dAtA []byte) error {
 				m.Status = &PrepaidDeployment_Status{}
 			}
 			if err := m.Status.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 301:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Expiration", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPrepaid
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Expiration == nil {
-				m.Expiration = &PrepaidDeployment_Expiration{}
-			}
-			if err := m.Expiration.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 401:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field BackupRestore", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPrepaid
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.BackupRestore == nil {
-				m.BackupRestore = &PrepaidDeployment_BackupRestoreSpec{}
-			}
-			if err := m.BackupRestore.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -3318,133 +3004,7 @@ func (m *PrepaidDeployment_Status) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Deployment", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPrepaid
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Deployment == nil {
-				m.Deployment = &v1.Deployment{}
-			}
-			if err := m.Deployment.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipPrepaid(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *PrepaidDeployment_Expiration) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowPrepaid
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: Expiration: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Expiration: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ExpiresAt", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPrepaid
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.ExpiresAt == nil {
-				m.ExpiresAt = &types.Timestamp{}
-			}
-			if err := m.ExpiresAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Reason", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field DeploymentId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -3472,216 +3032,7 @@ func (m *PrepaidDeployment_Expiration) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Reason = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field LastWarningEmailSendAt", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPrepaid
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.LastWarningEmailSendAt == nil {
-				m.LastWarningEmailSendAt = &types.Timestamp{}
-			}
-			if err := m.LastWarningEmailSendAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 4:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field LastWarningEmailSendTo", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPrepaid
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.LastWarningEmailSendTo = append(m.LastWarningEmailSendTo, string(dAtA[iNdEx:postIndex]))
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipPrepaid(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *PrepaidDeployment_BackupRestoreSpec) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowPrepaid
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: BackupRestoreSpec: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: BackupRestoreSpec: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Revision", wireType)
-			}
-			m.Revision = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPrepaid
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Revision |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field LastUpdatedAt", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPrepaid
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.LastUpdatedAt == nil {
-				m.LastUpdatedAt = &types.Timestamp{}
-			}
-			if err := m.LastUpdatedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 10:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field BackupId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPrepaid
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthPrepaid
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.BackupId = string(dAtA[iNdEx:postIndex])
+			m.DeploymentId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -3796,6 +3147,296 @@ func (m *PrepaidDeploymentList) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *ListPrepaidDeploymentsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowPrepaid
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ListPrepaidDeploymentsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ListPrepaidDeploymentsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OrganizationId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPrepaid
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPrepaid
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPrepaid
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OrganizationId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipPrepaid(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthPrepaid
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthPrepaid
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *UpdateDeploymentRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowPrepaid
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UpdateDeploymentRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UpdateDeploymentRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PrepaidDeploymentId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPrepaid
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPrepaid
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPrepaid
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PrepaidDeploymentId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipPrepaid(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthPrepaid
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthPrepaid
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *CloneFromBackupRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowPrepaid
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CloneFromBackupRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CloneFromBackupRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PrepaidDeploymentId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPrepaid
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPrepaid
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPrepaid
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PrepaidDeploymentId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BackupId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPrepaid
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPrepaid
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPrepaid
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.BackupId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipPrepaid(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthPrepaid
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthPrepaid
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *CreateDeploymentRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -3827,7 +3468,7 @@ func (m *CreateDeploymentRequest) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field PrepaidDeploymentId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -3855,7 +3496,7 @@ func (m *CreateDeploymentRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Id = string(dAtA[iNdEx:postIndex])
+			m.PrepaidDeploymentId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
