@@ -85,7 +85,7 @@ service PrepaidService {
     // Creates a cloned deployment from a backup and attaches it to the prepaid deployment. This takes the deployment specification from the prepaid deployment, which must match the specification mentioned in the backup.
     // Required permissions:
     // - prepaid.prepaiddeployment.create on the project in which the deployment is going to be created
-	// - prepaid.prepaiddeployment.get on the prepaid deployment identified by the given prepaid_deployment_id
+    // - prepaid.prepaiddeployment.get on the prepaid deployment identified by the given prepaid_deployment_id
     rpc CloneDeploymentFromBackup(CloneFromBackupRequest) returns (data.v1.Deployment) {
         option (google.api.http) = {
             post: "/api/prepaid/v1/prepaiddeployments/{prepaid_deployment_id}/clone"
@@ -103,12 +103,12 @@ message PrepaidDeployment {
     // URL of this resource
     // This is a read-only value.
     string url = 2;
-	// The name of prepaid deployment, not related to created deployment
-	string name = 3;
-	// An optional description for prepaid deployment, not related to created deployment
-	string description = 4;
-	// Identifier of an organization that owns this prepaid deployment
-	string organization_id = 5;
+    // The name of prepaid deployment, not related to created deployment
+    string name = 3;
+    // An optional description for prepaid deployment, not related to created deployment
+    string description = 4;
+    // Identifier of an organization that owns this prepaid deployment
+    string organization_id = 5;
     // Identifier of the region in which the deployment is going to be created.
     string region_id = 6;
     // The creation timestamp of the prepaid deployment
@@ -117,57 +117,57 @@ message PrepaidDeployment {
     google.protobuf.Timestamp deleted_at = 8;
     // Set when this deployment is deleted.
     bool is_deleted = 9;
-	// When the prepaid deployment was bought
+    // When the prepaid deployment was bought
     google.protobuf.Timestamp starts_at = 10;
-	// When the prepaid deployment is paid to.
+    // When the prepaid deployment is paid to.
     google.protobuf.Timestamp ends_at = 11;
     // Identifier of the support plan selected for this prepaid deployment.
     string support_plan_id = 12;
     // Servers specification for created deployment
     data.v1.Deployment.ServersSpec servers = 101;
-	// Model specification for created deployment
+    // Model specification for created deployment
     data.v1.Deployment.ModelSpec model = 102;
-	//Identifies the addons that will be used on the deployment
-	repeated string addons = 103;
+    //Identifies the addons that will be used on the deployment
+    repeated string addons = 103;
 
     // Status of the prepaid deployment
     // All members of this field are read-only.
     message Status {
-		// id of created deployment
-		// if there is no deployment associated with this prepaid deployment it's empty
-		string deployment_id = 1;
+        // id of created deployment
+        // if there is no deployment associated with this prepaid deployment it's empty
+        string deployment_id = 1;
     }
     Status status = 201;
 }
 
 message PrepaidDeploymentList {
-	// prepaid deployment items
-	repeated PrepaidDeployment items = 1;
+    // prepaid deployment items
+    repeated PrepaidDeployment items = 1;
 }
 
 message ListPrepaidDeploymentsRequest {
-	// identifier of the organization to get a list of prepaid deployments for
-	string organization_id = 1;
+    // identifier of the organization to get a list of prepaid deployments for
+    string organization_id = 1;
 }
 
 message UpdateDeploymentRequest {
-	// Identifier of prepaid deployment
-	string prepaid_deployment_id = 1;
+    // Identifier of prepaid deployment
+    string prepaid_deployment_id = 1;
 }
 
 message CloneFromBackupRequest {
-	// Identifier of prepaid deployment
-	string prepaid_deployment_id = 1;
-	// Identifier of the backup to restore from
-	// Backup specification has to match prepaid_deployment specification in ordere to succedd
-	string backup_id = 2;
+    // Identifier of prepaid deployment
+    string prepaid_deployment_id = 1;
+    // Identifier of the backup to restore from
+    // Backup specification has to match prepaid_deployment specification in ordere to succedd
+    string backup_id = 2;
 }
 
 message CreateDeploymentRequest {
-	// Identifier of prepaid deployment to use as a specification and attach the newly created Deployment to
-	string prepaid_deployment_id = 1;
+    // Identifier of prepaid deployment to use as a specification and attach the newly created Deployment to
+    string prepaid_deployment_id = 1;
     // Identifier of the project that owns the newly created deployment.
-	string project_id = 2;
+    string project_id = 2;
     // Optional identifier of IP allowlist to use for this deployment.
     string ipallowlist_id = 3;
     // ArangoDB version to use for this deployment.
