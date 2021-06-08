@@ -13671,7 +13671,7 @@ Required permissions:
                 <td><a href="#arangodb.cloud.data.v1.Deployment">.arangodb.cloud.data.v1.Deployment</a></td>
                 <td><p>Creates a new deployment from a prepaid deployment and attached the newly created deployment to the prepaid deployment.
 Required permissions:
-- prepaid.prepaiddeployment.create on the project in which the deployment is going to be created
+- data.deployment.create on the project in which the deployment is going to be created
 - prepaid.prepaiddeployment.get on the deployment identified by the given prepaid_deployment_id</p></td>
               </tr>
             
@@ -13681,7 +13681,8 @@ Required permissions:
                 <td><a href="#arangodb.cloud.data.v1.Deployment">.arangodb.cloud.data.v1.Deployment</a></td>
                 <td><p>Update the deployment by prepaid deployment&#39;s id
 Required permissions:
-- data.deployment.update on the deployment attached to the prepaid deployment</p></td>
+- data.deployment.update on the deployment attached to the prepaid deployment
+- prepaid.prepaiddeployment.get on the deployment identified by the given prepaid_deployment_id</p></td>
               </tr>
             
               <tr>
@@ -13690,8 +13691,9 @@ Required permissions:
                 <td><a href="#arangodb.cloud.data.v1.Deployment">.arangodb.cloud.data.v1.Deployment</a></td>
                 <td><p>Creates a cloned deployment from a backup and attaches it to the prepaid deployment. This takes the deployment specification from the prepaid deployment, which must match the specification mentioned in the backup.
 Required permissions:
-- prepaid.prepaiddeployment.create on the project in which the deployment is going to be created
-- prepaid.prepaiddeployment.get on the prepaid deployment identified by the given prepaid_deployment_id</p></td>
+- data.deployment.create on the project in which the deployment is going to be created
+- prepaid.prepaiddeployment.get on the prepaid deployment identified by the given prepaid_deployment_id
+- replication.deployment.clone-from-backup</p></td>
               </tr>
             
           </tbody>

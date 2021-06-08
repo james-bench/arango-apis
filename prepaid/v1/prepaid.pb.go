@@ -749,17 +749,19 @@ type PrepaidServiceClient interface {
 	GetPrepaidDeployment(ctx context.Context, in *v11.IDOptions, opts ...grpc.CallOption) (*PrepaidDeployment, error)
 	// Creates a new deployment from a prepaid deployment and attached the newly created deployment to the prepaid deployment.
 	// Required permissions:
-	// - prepaid.prepaiddeployment.create on the project in which the deployment is going to be created
+	// - data.deployment.create on the project in which the deployment is going to be created
 	// - prepaid.prepaiddeployment.get on the deployment identified by the given prepaid_deployment_id
 	CreateDeployment(ctx context.Context, in *CreateDeploymentRequest, opts ...grpc.CallOption) (*v1.Deployment, error)
 	// Update the deployment by prepaid deployment's id
 	// Required permissions:
 	// - data.deployment.update on the deployment attached to the prepaid deployment
+	// - prepaid.prepaiddeployment.get on the deployment identified by the given prepaid_deployment_id
 	UpdateDeployment(ctx context.Context, in *UpdateDeploymentRequest, opts ...grpc.CallOption) (*v1.Deployment, error)
 	// Creates a cloned deployment from a backup and attaches it to the prepaid deployment. This takes the deployment specification from the prepaid deployment, which must match the specification mentioned in the backup.
 	// Required permissions:
-	// - prepaid.prepaiddeployment.create on the project in which the deployment is going to be created
+	// - data.deployment.create on the project in which the deployment is going to be created
 	// - prepaid.prepaiddeployment.get on the prepaid deployment identified by the given prepaid_deployment_id
+	// - replication.deployment.clone-from-backup
 	CloneDeploymentFromBackup(ctx context.Context, in *CloneFromBackupRequest, opts ...grpc.CallOption) (*v1.Deployment, error)
 }
 
@@ -841,17 +843,19 @@ type PrepaidServiceServer interface {
 	GetPrepaidDeployment(context.Context, *v11.IDOptions) (*PrepaidDeployment, error)
 	// Creates a new deployment from a prepaid deployment and attached the newly created deployment to the prepaid deployment.
 	// Required permissions:
-	// - prepaid.prepaiddeployment.create on the project in which the deployment is going to be created
+	// - data.deployment.create on the project in which the deployment is going to be created
 	// - prepaid.prepaiddeployment.get on the deployment identified by the given prepaid_deployment_id
 	CreateDeployment(context.Context, *CreateDeploymentRequest) (*v1.Deployment, error)
 	// Update the deployment by prepaid deployment's id
 	// Required permissions:
 	// - data.deployment.update on the deployment attached to the prepaid deployment
+	// - prepaid.prepaiddeployment.get on the deployment identified by the given prepaid_deployment_id
 	UpdateDeployment(context.Context, *UpdateDeploymentRequest) (*v1.Deployment, error)
 	// Creates a cloned deployment from a backup and attaches it to the prepaid deployment. This takes the deployment specification from the prepaid deployment, which must match the specification mentioned in the backup.
 	// Required permissions:
-	// - prepaid.prepaiddeployment.create on the project in which the deployment is going to be created
+	// - data.deployment.create on the project in which the deployment is going to be created
 	// - prepaid.prepaiddeployment.get on the prepaid deployment identified by the given prepaid_deployment_id
+	// - replication.deployment.clone-from-backup
 	CloneDeploymentFromBackup(context.Context, *CloneFromBackupRequest) (*v1.Deployment, error)
 }
 
