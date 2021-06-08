@@ -178,7 +178,7 @@ export interface IPrepaidService {
   
   // Fetch all prepaid deployments for organization.
   // Required permissions:
-  // - prepaid.prepaiddeployment.list on the organization
+  // - prepaid.prepaiddeployment.list on the organization identified by given organization ID
   ListPrepaidDeployments: (req: ListPrepaidDeploymentsRequest) => Promise<PrepaidDeploymentList>;
   
   // Fetch a deployment by its id.
@@ -200,7 +200,6 @@ export interface IPrepaidService {
   
   // Creates a cloned deployment from a backup and attaches it to the prepaid deployment. This takes the deployment specification from the prepaid deployment, which must match the specification mentioned in the backup.
   // Required permissions:
-  // - data.deployment.create on the project in which the deployment is going to be created
   // - prepaid.prepaiddeployment.get on the prepaid deployment identified by the given prepaid_deployment_id
   // - replication.deployment.clone-from-backup
   CloneDeploymentFromBackup: (req: CloneFromBackupRequest) => Promise<arangodb_cloud_data_v1_Deployment>;
@@ -219,7 +218,7 @@ export class PrepaidService implements IPrepaidService {
   
   // Fetch all prepaid deployments for organization.
   // Required permissions:
-  // - prepaid.prepaiddeployment.list on the organization
+  // - prepaid.prepaiddeployment.list on the organization identified by given organization ID
   async ListPrepaidDeployments(req: ListPrepaidDeploymentsRequest): Promise<PrepaidDeploymentList> {
     const path = `/api/prepaid/v1/organizations/${encodeURIComponent(req.organization_id || '')}/prepaiddeployments`;
     const url = path + api.queryString(req, [`organization_id`]);
@@ -255,7 +254,6 @@ export class PrepaidService implements IPrepaidService {
   
   // Creates a cloned deployment from a backup and attaches it to the prepaid deployment. This takes the deployment specification from the prepaid deployment, which must match the specification mentioned in the backup.
   // Required permissions:
-  // - data.deployment.create on the project in which the deployment is going to be created
   // - prepaid.prepaiddeployment.get on the prepaid deployment identified by the given prepaid_deployment_id
   // - replication.deployment.clone-from-backup
   async CloneDeploymentFromBackup(req: CloneFromBackupRequest): Promise<arangodb_cloud_data_v1_Deployment> {

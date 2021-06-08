@@ -13653,7 +13653,7 @@ Required permissions:
                 <td><a href="#arangodb.cloud.prepaid.v1.PrepaidDeploymentList">PrepaidDeploymentList</a></td>
                 <td><p>Fetch all prepaid deployments for organization.
 Required permissions:
-- prepaid.prepaiddeployment.list on the organization</p></td>
+- prepaid.prepaiddeployment.list on the organization identified by given organization ID</p></td>
               </tr>
             
               <tr>
@@ -13691,7 +13691,6 @@ Required permissions:
                 <td><a href="#arangodb.cloud.data.v1.Deployment">.arangodb.cloud.data.v1.Deployment</a></td>
                 <td><p>Creates a cloned deployment from a backup and attaches it to the prepaid deployment. This takes the deployment specification from the prepaid deployment, which must match the specification mentioned in the backup.
 Required permissions:
-- data.deployment.create on the project in which the deployment is going to be created
 - prepaid.prepaiddeployment.get on the prepaid deployment identified by the given prepaid_deployment_id
 - replication.deployment.clone-from-backup</p></td>
               </tr>

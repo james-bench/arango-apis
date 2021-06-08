@@ -45,7 +45,7 @@ service PrepaidService {
 
     // Fetch all prepaid deployments for organization.
     // Required permissions:
-    // - prepaid.prepaiddeployment.list on the organization
+    // - prepaid.prepaiddeployment.list on the organization identified by given organization ID
     rpc ListPrepaidDeployments(ListPrepaidDeploymentsRequest) returns (PrepaidDeploymentList) {
         option (google.api.http) = {
             post: "/api/prepaid/v1/organizations/{organization_id}/prepaiddeployments"
@@ -85,7 +85,6 @@ service PrepaidService {
 
     // Creates a cloned deployment from a backup and attaches it to the prepaid deployment. This takes the deployment specification from the prepaid deployment, which must match the specification mentioned in the backup.
     // Required permissions:
-    // - data.deployment.create on the project in which the deployment is going to be created
     // - prepaid.prepaiddeployment.get on the prepaid deployment identified by the given prepaid_deployment_id
     // - replication.deployment.clone-from-backup
     rpc CloneDeploymentFromBackup(CloneFromBackupRequest) returns (data.v1.Deployment) {
