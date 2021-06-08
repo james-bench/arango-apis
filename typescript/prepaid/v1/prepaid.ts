@@ -121,6 +121,11 @@ export interface PrepaidDeployment {
   // googleTypes.Timestamp
   ends_at?: googleTypes.Timestamp;
   
+  // Set when current time is betweeen starts_at and ends_at
+  // This is a read-only value
+  // boolean
+  is_active?: boolean;
+  
   // Identifier of the support plan selected for this prepaid deployment.
   // string
   support_plan_id?: string;
@@ -239,7 +244,7 @@ export class PrepaidService implements IPrepaidService {
   // - data.deployment.create on the project in which the deployment is going to be created
   // - prepaid.prepaiddeployment.get on the deployment identified by the given prepaid_deployment_id
   async CreateDeployment(req: CreateDeploymentRequest): Promise<arangodb_cloud_data_v1_Deployment> {
-    const url = `/api/prepaid/v1/prepaiddeployments/${encodeURIComponent(req.prepaid_deployment_id || '')}/create`;
+    const url = `/api/prepaid/v1/prepaiddeployments/${encodeURIComponent(req.prepaid_deployment_id || '')}/deployment/create`;
     return api.post(url, req);
   }
   
@@ -248,7 +253,7 @@ export class PrepaidService implements IPrepaidService {
   // - data.deployment.update on the deployment attached to the prepaid deployment
   // - prepaid.prepaiddeployment.get on the deployment identified by the given prepaid_deployment_id
   async UpdateDeployment(req: UpdateDeploymentRequest): Promise<arangodb_cloud_data_v1_Deployment> {
-    const url = `/api/prepaid/v1/prepaiddeployments/${encodeURIComponent(req.prepaid_deployment_id || '')}/update`;
+    const url = `/api/prepaid/v1/prepaiddeployments/${encodeURIComponent(req.prepaid_deployment_id || '')}/deployment/update`;
     return api.post(url, req);
   }
   
@@ -257,7 +262,7 @@ export class PrepaidService implements IPrepaidService {
   // - prepaid.prepaiddeployment.get on the prepaid deployment identified by the given prepaid_deployment_id
   // - replication.deployment.clone-from-backup
   async CloneDeploymentFromBackup(req: CloneFromBackupRequest): Promise<arangodb_cloud_data_v1_Deployment> {
-    const url = `/api/prepaid/v1/prepaiddeployments/${encodeURIComponent(req.prepaid_deployment_id || '')}/clone`;
+    const url = `/api/prepaid/v1/prepaiddeployments/${encodeURIComponent(req.prepaid_deployment_id || '')}/deployment/clone`;
     return api.post(url, req);
   }
 }

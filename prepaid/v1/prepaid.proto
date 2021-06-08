@@ -67,7 +67,7 @@ service PrepaidService {
     // - prepaid.prepaiddeployment.get on the deployment identified by the given prepaid_deployment_id
     rpc CreateDeployment(CreateDeploymentRequest) returns (data.v1.Deployment) {
         option (google.api.http) = {
-            post: "/api/prepaid/v1/prepaiddeployments/{prepaid_deployment_id}/create"
+            post: "/api/prepaid/v1/prepaiddeployments/{prepaid_deployment_id}/deployment/create"
             body: "*"
         };
     }
@@ -78,7 +78,7 @@ service PrepaidService {
     // - prepaid.prepaiddeployment.get on the deployment identified by the given prepaid_deployment_id
     rpc UpdateDeployment(UpdateDeploymentRequest) returns (data.v1.Deployment) {
         option (google.api.http) = {
-            post: "/api/prepaid/v1/prepaiddeployments/{prepaid_deployment_id}/update"
+            post: "/api/prepaid/v1/prepaiddeployments/{prepaid_deployment_id}/deployment/update"
             body: "*"
         };
     }
@@ -89,7 +89,7 @@ service PrepaidService {
     // - replication.deployment.clone-from-backup
     rpc CloneDeploymentFromBackup(CloneFromBackupRequest) returns (data.v1.Deployment) {
         option (google.api.http) = {
-            post: "/api/prepaid/v1/prepaiddeployments/{prepaid_deployment_id}/clone"
+            post: "/api/prepaid/v1/prepaiddeployments/{prepaid_deployment_id}/deployment/clone"
             body: "*"
         };
     }
@@ -122,8 +122,11 @@ message PrepaidDeployment {
     google.protobuf.Timestamp starts_at = 10;
     // End of the period for which the PrepaidDeployment was purchased
     google.protobuf.Timestamp ends_at = 11;
+		// Set when current time is betweeen starts_at and ends_at
+		// This is a read-only value
+		bool is_active = 12;
     // Identifier of the support plan selected for this prepaid deployment.
-    string support_plan_id = 12;
+    string support_plan_id = 13;
     // Model specification for created deployment
     data.v1.Deployment.ModelSpec model = 102;
     // Identifies the addons that will be used on the deployment

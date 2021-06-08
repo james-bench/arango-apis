@@ -682,11 +682,11 @@ var (
 
 	pattern_PrepaidService_GetPrepaidDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "prepaid", "v1", "prepaiddeployments", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_PrepaidService_CreateDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "prepaid", "v1", "prepaiddeployments", "prepaid_deployment_id", "create"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_PrepaidService_CreateDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 6}, []string{"api", "prepaid", "v1", "prepaiddeployments", "prepaid_deployment_id", "deployment", "create"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_PrepaidService_UpdateDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "prepaid", "v1", "prepaiddeployments", "prepaid_deployment_id", "update"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_PrepaidService_UpdateDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 6}, []string{"api", "prepaid", "v1", "prepaiddeployments", "prepaid_deployment_id", "deployment", "update"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_PrepaidService_CloneDeploymentFromBackup_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "prepaid", "v1", "prepaiddeployments", "prepaid_deployment_id", "clone"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_PrepaidService_CloneDeploymentFromBackup_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 6}, []string{"api", "prepaid", "v1", "prepaiddeployments", "prepaid_deployment_id", "deployment", "clone"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (

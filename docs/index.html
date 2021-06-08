@@ -13503,6 +13503,14 @@ This is a read-only value. </p></td>
                 </tr>
               
                 <tr>
+                  <td>is_active</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Set when current time is betweeen starts_at and ends_at
+This is a read-only value </p></td>
+                </tr>
+              
+                <tr>
                   <td>support_plan_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
@@ -13748,7 +13756,7 @@ Required permissions:
               <tr>
                 <td>CreateDeployment</td>
                 <td>POST</td>
-                <td>/api/prepaid/v1/prepaiddeployments/{prepaid_deployment_id}/create</td>
+                <td>/api/prepaid/v1/prepaiddeployments/{prepaid_deployment_id}/deployment/create</td>
                 <td>*</td>
               </tr>
               
@@ -13758,7 +13766,7 @@ Required permissions:
               <tr>
                 <td>UpdateDeployment</td>
                 <td>POST</td>
-                <td>/api/prepaid/v1/prepaiddeployments/{prepaid_deployment_id}/update</td>
+                <td>/api/prepaid/v1/prepaiddeployments/{prepaid_deployment_id}/deployment/update</td>
                 <td>*</td>
               </tr>
               
@@ -13768,7 +13776,7 @@ Required permissions:
               <tr>
                 <td>CloneDeploymentFromBackup</td>
                 <td>POST</td>
-                <td>/api/prepaid/v1/prepaiddeployments/{prepaid_deployment_id}/clone</td>
+                <td>/api/prepaid/v1/prepaiddeployments/{prepaid_deployment_id}/deployment/clone</td>
                 <td>*</td>
               </tr>
               
