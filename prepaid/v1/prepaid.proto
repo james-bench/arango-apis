@@ -122,9 +122,9 @@ message PrepaidDeployment {
     google.protobuf.Timestamp starts_at = 10;
     // End of the period for which the PrepaidDeployment was purchased
     google.protobuf.Timestamp ends_at = 11;
-		// Set when current time is betweeen starts_at and ends_at
-		// This is a read-only value
-		bool is_active = 12;
+    // Set when current time is betweeen starts_at and ends_at
+    // This is a read-only value
+    bool is_active = 12;
     // Identifier of the support plan selected for this prepaid deployment.
     string support_plan_id = 13;
     // Model specification for created deployment
