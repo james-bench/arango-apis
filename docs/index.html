@@ -1055,6 +1055,53 @@ title: "ArangoDB Oasis API"
         
           
           <li>
+            <a href="#prepaid%2fv1%2fprepaid.proto">prepaid/v1/prepaid.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#arangodb.cloud.prepaid.v1.CloneFromBackupRequest"><span class="badge">M</span>CloneFromBackupRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.prepaid.v1.CreateDeploymentRequest"><span class="badge">M</span>CreateDeploymentRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.prepaid.v1.CreateDeploymentRequest.CertificateSpec"><span class="badge">M</span>CreateDeploymentRequest.CertificateSpec</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.prepaid.v1.ListPrepaidDeploymentsRequest"><span class="badge">M</span>ListPrepaidDeploymentsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.prepaid.v1.PrepaidDeployment"><span class="badge">M</span>PrepaidDeployment</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.prepaid.v1.PrepaidDeployment.Status"><span class="badge">M</span>PrepaidDeployment.Status</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.prepaid.v1.PrepaidDeploymentList"><span class="badge">M</span>PrepaidDeploymentList</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.prepaid.v1.UpdateDeploymentRequest"><span class="badge">M</span>UpdateDeploymentRequest</a>
+                </li>
+              
+              
+              
+              
+                <li>
+                  <a href="#arangodb.cloud.prepaid.v1.PrepaidService"><span class="badge">S</span>PrepaidService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#replication%2fv1%2freplication.proto">replication/v1/replication.proto</a>
             <ul>
               
@@ -13203,6 +13250,534 @@ Required permissions:
                 <td>GET</td>
                 <td>/api/platform/v1/regions/{id}</td>
                 <td></td>
+              </tr>
+              
+            
+            </tbody>
+          </table>
+          
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="prepaid/v1/prepaid.proto">prepaid/v1/prepaid.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="arangodb.cloud.prepaid.v1.CloneFromBackupRequest">CloneFromBackupRequest</h3>
+        <p>CloneFromBackupRequest is used to create a new deployment based on PrepaidDeployment</p><p>with prepaid_deployment_id and restore data from Backup with given backup_id</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>prepaid_deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of prepaid deployment </p></td>
+                </tr>
+              
+                <tr>
+                  <td>backup_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the backup to restore from
+Backup specification has to match prepaid_deployment specification in order to succeed </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.prepaid.v1.CreateDeploymentRequest">CreateDeploymentRequest</h3>
+        <p>CreateDeploymentRequest is used to create a new deployment based on PrepaidDeployment</p><p>with given prepaid_deployment_id and attach it to this PrepaidDeployment</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>prepaid_deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of prepaid deployment to use as a specification and attach the newly created Deployment to </p></td>
+                </tr>
+              
+                <tr>
+                  <td>project_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the project that owns the newly created deployment. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ipallowlist_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional identifier of IP allowlist to use for this deployment. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>version</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ArangoDB version to use for this deployment. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>certificates</td>
+                  <td><a href="#arangodb.cloud.prepaid.v1.CreateDeploymentRequest.CertificateSpec">CreateDeploymentRequest.CertificateSpec</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.prepaid.v1.CreateDeploymentRequest.CertificateSpec">CreateDeploymentRequest.CertificateSpec</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>ca_certificate_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the CACertificate used to sign TLS certificates for the deployment.
+If you change this value after the creation of the deployment a complete
+rotation of the deployment is required, which will result in some downtime. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>alternate_dns_names</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Zero or more DNS names to include in the TLS certificate of the deployment. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.prepaid.v1.ListPrepaidDeploymentsRequest">ListPrepaidDeploymentsRequest</h3>
+        <p>ListPrepaidDeploymentsRequest is used to request a list of PrepaidDeployments for</p><p>organization with given organization_id</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>identifier of the organization to get a list of prepaid deployments for </p></td>
+                </tr>
+              
+                <tr>
+                  <td>options</td>
+                  <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
+                  <td></td>
+                  <td><p>common listing options </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.prepaid.v1.PrepaidDeployment">PrepaidDeployment</h3>
+        <p>A PrepaidDeployment contains all attributes of a future deployment that is already paid for.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>System identifier of the prepaid deployment.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>URL of this resource
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The name of prepaid deployment, not related to created deployment </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>An optional description for prepaid deployment, not related to created deployment </p></td>
+                </tr>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of an organization that owns this prepaid deployment </p></td>
+                </tr>
+              
+                <tr>
+                  <td>region_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the region in which a deployment is going to be created. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The creation timestamp of the prepaid deployment </p></td>
+                </tr>
+              
+                <tr>
+                  <td>deleted_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The deletion timestamp of the prepaid deployment </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_deleted</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Set when this deployment is deleted. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>starts_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Start of the period for which the PrepaidDeployment was purchased </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ends_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>End of the period for which the PrepaidDeployment was purchased </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_active</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Set when current time is betweeen starts_at and ends_at
+This is a read-only value </p></td>
+                </tr>
+              
+                <tr>
+                  <td>support_plan_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the support plan selected for this prepaid deployment. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>model</td>
+                  <td><a href="#arangodb.cloud.data.v1.Deployment.ModelSpec">arangodb.cloud.data.v1.Deployment.ModelSpec</a></td>
+                  <td></td>
+                  <td><p>Model specification for created deployment </p></td>
+                </tr>
+              
+                <tr>
+                  <td>addons</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Identifies the addons that will be used on the deployment </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#arangodb.cloud.prepaid.v1.PrepaidDeployment.Status">PrepaidDeployment.Status</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.prepaid.v1.PrepaidDeployment.Status">PrepaidDeployment.Status</h3>
+        <p>Status of the prepaid deployment</p><p>All members of this field are read-only.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>id of created deployment
+if there is no deployment associated with this prepaid deployment it&#39;s empty </p></td>
+                </tr>
+              
+                <tr>
+                  <td>attached_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>timestamp when the deployment was created for or attached to PrepaidDeployment </p></td>
+                </tr>
+              
+                <tr>
+                  <td>detached_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>timestamp when the deployment was detached from PrepaidDeployment </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.prepaid.v1.PrepaidDeploymentList">PrepaidDeploymentList</h3>
+        <p>PrepaidDeploymentList contains a list of PrepaidDeployment items</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#arangodb.cloud.prepaid.v1.PrepaidDeployment">PrepaidDeployment</a></td>
+                  <td>repeated</td>
+                  <td><p>prepaid deployment items </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.prepaid.v1.UpdateDeploymentRequest">UpdateDeploymentRequest</h3>
+        <p>UpdateDeploymentRequest is used to update deployment attached to PrepaidDeployment</p><p>with give prepaid_deployment_id</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>prepaid_deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of prepaid deployment </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+
+      
+
+      
+        <h3 id="arangodb.cloud.prepaid.v1.PrepaidService">PrepaidService</h3>
+        <p>PrepaidService is the API used to configure prepaid objects.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GetAPIVersion</td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Version">.arangodb.cloud.common.v1.Version</a></td>
+                <td><p>Get the current API version of this service.
+Required permissions:
+- None</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListPrepaidDeployments</td>
+                <td><a href="#arangodb.cloud.prepaid.v1.ListPrepaidDeploymentsRequest">ListPrepaidDeploymentsRequest</a></td>
+                <td><a href="#arangodb.cloud.prepaid.v1.PrepaidDeploymentList">PrepaidDeploymentList</a></td>
+                <td><p>Fetch all prepaid deployments for organization.
+Required permissions:
+- prepaid.prepaiddeployment.list on the organization identified by given organization ID</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetPrepaidDeployment</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.prepaid.v1.PrepaidDeployment">PrepaidDeployment</a></td>
+                <td><p>Fetch a deployment by its id.
+Required permissions:
+- prepaid.prepaiddeployment.get on the deployment identified by the given ID</p></td>
+              </tr>
+            
+              <tr>
+                <td>CreateDeployment</td>
+                <td><a href="#arangodb.cloud.prepaid.v1.CreateDeploymentRequest">CreateDeploymentRequest</a></td>
+                <td><a href="#arangodb.cloud.data.v1.Deployment">.arangodb.cloud.data.v1.Deployment</a></td>
+                <td><p>Creates a new deployment from a prepaid deployment and attached the newly created deployment to the prepaid deployment.
+Required permissions:
+- data.deployment.create on the project in which the deployment is going to be created
+- prepaid.prepaiddeployment.get on the deployment identified by the given prepaid_deployment_id</p></td>
+              </tr>
+            
+              <tr>
+                <td>UpdateDeployment</td>
+                <td><a href="#arangodb.cloud.prepaid.v1.UpdateDeploymentRequest">UpdateDeploymentRequest</a></td>
+                <td><a href="#arangodb.cloud.data.v1.Deployment">.arangodb.cloud.data.v1.Deployment</a></td>
+                <td><p>Update the deployment by prepaid deployment&#39;s id
+Required permissions:
+- data.deployment.update on the deployment attached to the prepaid deployment
+- prepaid.prepaiddeployment.get on the deployment identified by the given prepaid_deployment_id</p></td>
+              </tr>
+            
+              <tr>
+                <td>CloneDeploymentFromBackup</td>
+                <td><a href="#arangodb.cloud.prepaid.v1.CloneFromBackupRequest">CloneFromBackupRequest</a></td>
+                <td><a href="#arangodb.cloud.data.v1.Deployment">.arangodb.cloud.data.v1.Deployment</a></td>
+                <td><p>Creates a cloned deployment from a backup and attaches it to the prepaid deployment. This takes the deployment specification from the prepaid deployment, which must match the specification mentioned in the backup.
+Required permissions:
+- prepaid.prepaiddeployment.get on the prepaid deployment identified by the given prepaid_deployment_id
+- replication.deployment.clone-from-backup</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+          
+          
+          <h4>Methods with HTTP bindings</h4>
+          <table>
+            <thead>
+              <tr>
+                <td>Method Name</td>
+                <td>Method</td>
+                <td>Pattern</td>
+                <td>Body</td>
+              </tr>
+            </thead>
+            <tbody>
+            
+              
+              
+              <tr>
+                <td>GetAPIVersion</td>
+                <td>GET</td>
+                <td>/api/prepaid/v1/api-version</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>ListPrepaidDeployments</td>
+                <td>POST</td>
+                <td>/api/prepaid/v1/organizations/{organization_id}/prepaiddeployments</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetPrepaidDeployment</td>
+                <td>GET</td>
+                <td>/api/prepaid/v1/prepaiddeployments/{id}</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>CreateDeployment</td>
+                <td>POST</td>
+                <td>/api/prepaid/v1/prepaiddeployments/{prepaid_deployment_id}/deployment/create</td>
+                <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>UpdateDeployment</td>
+                <td>POST</td>
+                <td>/api/prepaid/v1/prepaiddeployments/{prepaid_deployment_id}/deployment/update</td>
+                <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>CloneDeploymentFromBackup</td>
+                <td>POST</td>
+                <td>/api/prepaid/v1/prepaiddeployments/{prepaid_deployment_id}/deployment/clone</td>
+                <td>*</td>
               </tr>
               
             
