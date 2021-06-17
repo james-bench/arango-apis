@@ -14,5 +14,5 @@ const (
 
 // PrepaidDeploymentURL returns an url for given organization and prepaid deployment
 func PrepaidDeploymentURL(organizationID, prepaidDeploymentID string) string {
-	return path.Join("/", rm.OrganizationURL(organizationID), KindPrepaidDeployment, url.PathEscape(organizationID))
+	return path.Join("/", rm.OrganizationURL(organizationID), KindPrepaidDeployment, url.PathEscape(prepaidDeploymentID))
 }
