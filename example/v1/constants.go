@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
 // Author Gergely Brautigam
+// Author Ewout Prangsma
 //
 
 package v1
@@ -26,4 +27,7 @@ const (
 	// ExampleDatasetIDPayloadLabel is the label used in the event payload for
 	// an example dataset.
 	ExampleDatasetIDPayloadLabel = "exampledataset_id"
+	// DeploymentIDPayloadLabel is the label used in the event payload for
+	// the ID of the deployment in which the example is installed.
+	DeploymentIDPayloadLabel = "deployment_id"
 )
