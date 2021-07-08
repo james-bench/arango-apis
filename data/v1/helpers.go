@@ -156,10 +156,10 @@ func DeploymentServerStatusEqual(a, b *Deployment_ServerStatus, ignoreTimestamps
 		a.GetVersion() == b.GetVersion() &&
 		a.GetLastStartedAt().Equal(b.GetLastStartedAt()) &&
 		a.GetRotationPending() == b.GetRotationPending() &&
-		DataVolumeInfoEqual(a.GetDataVolumeInfo(), b.GetDataVolumeInfo(), ignoreTimestamps) &&
+		(ignoreVolatile || DataVolumeInfoEqual(a.GetDataVolumeInfo(), b.GetDataVolumeInfo(), ignoreTimestamps)) &&
 		a.GetRecentRestarts() == b.GetRecentRestarts() &&
-		a.GetLastMemoryUsage() == b.GetLastMemoryUsage() &&
-		a.GetLastCpuUsage() == b.GetLastCpuUsage() &&
+		(ignoreVolatile || a.GetLastMemoryUsage() == b.GetLastMemoryUsage()) &&
+		(ignoreVolatile || a.GetLastCpuUsage() == b.GetLastCpuUsage()) &&
 		a.GetIsLeader() == b.GetIsLeader()
 }
 
