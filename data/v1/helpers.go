@@ -110,7 +110,7 @@ func (source *Deployment_ServersSpec) Equals(other *Deployment_ServersSpec) bool
 }
 
 // DeploymentStatusEqual returns true when the fields of a & b are equal.
-func DeploymentStatusEqual(a, b *Deployment_Status, ignoreTimestamps bool) bool {
+func DeploymentStatusEqual(a, b *Deployment_Status, ignoreTimestamps, ignoreVolatile bool) bool {
 	return a.GetEndpoint() == b.GetEndpoint() &&
 		a.GetEndpointSelfSigned() == b.GetEndpointSelfSigned() &&
 		a.GetDescription() == b.GetDescription() &&
@@ -118,7 +118,7 @@ func DeploymentStatusEqual(a, b *Deployment_Status, ignoreTimestamps bool) bool 
 		a.GetReady() == b.GetReady() &&
 		a.GetUpgrading() == b.GetUpgrading() &&
 		strings.Join(a.GetServerVersions(), ",") == strings.Join(b.GetServerVersions(), ",") &&
-		DeploymentServerStatusListEqual(a.GetServers(), b.GetServers(), ignoreTimestamps) &&
+		DeploymentServerStatusListEqual(a.GetServers(), b.GetServers(), ignoreTimestamps, ignoreVolatile) &&
 		a.GetBackupRestoreStatus().Equals(b.GetBackupRestoreStatus()) &&
 		a.GetTotalBackupSizeBytes() == b.GetTotalBackupSizeBytes() &&
 		a.GetBackupUploadInProgress() == b.GetBackupUploadInProgress()
@@ -133,12 +133,12 @@ func (source *Deployment_BackupRestoreStatus) Equals(other *Deployment_BackupRes
 }
 
 // DeploymentServerStatusListEqual returns true when the elements of a & b are equal.
-func DeploymentServerStatusListEqual(a, b []*Deployment_ServerStatus, ignoreTimestamps bool) bool {
+func DeploymentServerStatusListEqual(a, b []*Deployment_ServerStatus, ignoreTimestamps, ignoreVolatile bool) bool {
 	if len(a) != len(b) {
 		return false
 	}
 	for i, x := range a {
-		if !DeploymentServerStatusEqual(x, b[i], ignoreTimestamps) {
+		if !DeploymentServerStatusEqual(x, b[i], ignoreTimestamps, ignoreVolatile) {
 			return false
 		}
 	}
@@ -146,7 +146,7 @@ func DeploymentServerStatusListEqual(a, b []*Deployment_ServerStatus, ignoreTime
 }
 
 // DeploymentServerStatusEqual returns true when the fields of a & b are equal.
-func DeploymentServerStatusEqual(a, b *Deployment_ServerStatus, ignoreTimestamps bool) bool {
+func DeploymentServerStatusEqual(a, b *Deployment_ServerStatus, ignoreTimestamps, ignoreVolatile bool) bool {
 	return a.GetId() == b.GetId() &&
 		a.GetType() == b.GetType() &&
 		a.GetDescription() == b.GetDescription() &&
