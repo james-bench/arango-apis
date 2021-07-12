@@ -364,6 +364,9 @@ message Deployment {
     // This is the timestamp that is_paused is transitioned from set to unset.
     // This is a read-only value.
     google.protobuf.Timestamp last_resumed_at = 22;
+    // Identifier of the prepaid deployment that this deployment is attached to.
+    // This is a read-only value.
+    string prepaid_deployment_id = 23;
 
 
     // ArangoDB version to use for this deployment.
@@ -379,10 +382,10 @@ message Deployment {
     string version = 101;
 
     // If set, this deployment will be upgraded to the ArangoDB release with the
-	// version as listed in this field.
+  // version as listed in this field.
     ReplaceVersionBy replace_version_by = 104;
     // If set, it is recommended to upgrade to the ArangoDB release with the
-	// version as listed in this field.
+  // version as listed in this field.
     UpgradeVersionRecommendation upgrade_recommendation = 105;
 
     message CertificateSpec {
