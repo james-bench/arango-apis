@@ -117,6 +117,7 @@ func DeploymentStatusEqual(a, b *Deployment_Status, ignoreTimestamps, ignoreVola
 		a.GetCreated() == b.GetCreated() &&
 		a.GetReady() == b.GetReady() &&
 		a.GetUpgrading() == b.GetUpgrading() &&
+		a.GetBootstrapped() == b.GetBootstrapped() &&
 		strings.Join(a.GetServerVersions(), ",") == strings.Join(b.GetServerVersions(), ",") &&
 		DeploymentServerStatusListEqual(a.GetServers(), b.GetServers(), ignoreTimestamps, ignoreVolatile) &&
 		a.GetBackupRestoreStatus().Equals(b.GetBackupRestoreStatus()) &&
