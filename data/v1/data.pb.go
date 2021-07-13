@@ -326,7 +326,7 @@ type Deployment struct {
 	// This is the timestamp that is_paused is transitioned from set to unset.
 	// This is a read-only value.
 	LastResumedAt *types.Timestamp `protobuf:"bytes,22,opt,name=last_resumed_at,json=lastResumedAt,proto3" json:"last_resumed_at,omitempty"`
-	// Identifier of the prepaid deployment that this deployment is attached to.
+	// Identifier of the prepaid deployment that this deployment is attached to (if any).
 	// This is a read-only value.
 	PrepaidDeploymentId string `protobuf:"bytes,23,opt,name=prepaid_deployment_id,json=prepaidDeploymentId,proto3" json:"prepaid_deployment_id,omitempty"`
 	// ArangoDB version to use for this deployment.

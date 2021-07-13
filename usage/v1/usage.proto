@@ -104,8 +104,10 @@ message UsageItem {
         // Model of the deployment
         // This field is not filled-out when the kind is AuditLogSize
         string deployment_model = 15;
+        // Identifier of the PrepaidDeployment that this deployment is attached to (if any)
+        string prepaid_deployment_id = 16;
     }
-    // Identification of the resource covered by this usage item 
+    // Identification of the resource covered by this usage item
     Resource resource = 4;
 
     // This usage item covers a time period that starts at this timestamp
