@@ -253,7 +253,7 @@ export interface Deployment {
   // googleTypes.Timestamp
   last_resumed_at?: googleTypes.Timestamp;
   
-  // Identifier of the prepaid deployment that this deployment is attached to.
+  // Identifier of the prepaid deployment that this deployment is attached to (if any).
   // This is a read-only value.
   // string
   prepaid_deployment_id?: string;
