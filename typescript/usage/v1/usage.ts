@@ -318,6 +318,11 @@ export interface UsageItem_Resource {
   // This field is not filled-out when the kind is AuditLogSize
   // string
   deployment_model?: string;
+  
+  // Identifier of the PrepaidDeployment that this deployment is attached to (if any)
+  // This field is only filled-out when the kind is DeploymentSize
+  // string
+  prepaid_deployment_id?: string;
 }
 
 // List of UsageItems.
