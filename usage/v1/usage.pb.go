@@ -244,7 +244,6 @@ type UsageItem_Resource struct {
 	// This field is not filled-out when the kind is AuditLogSize
 	DeploymentModel string `protobuf:"bytes,15,opt,name=deployment_model,json=deploymentModel,proto3" json:"deployment_model,omitempty"`
 	// Identifier of the PrepaidDeployment that this deployment is attached to (if any)
-	// This field is only filled-out when the kind is DeploymentSize
 	PrepaidDeploymentId  string   `protobuf:"bytes,16,opt,name=prepaid_deployment_id,json=prepaidDeploymentId,proto3" json:"prepaid_deployment_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
