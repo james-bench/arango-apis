@@ -66,8 +66,7 @@ type Organization struct {
 	// If set, this organization cannot be deleted.
 	// To delete, first update the with locked set to false.
 	Locked bool `protobuf:"varint,13,opt,name=locked,proto3" json:"locked,omitempty"`
-	// If set, this organization cannot create deployments
-	// without prepaid deployments
+	// If set, this organization cannot create deployments without prepaid deployments.
 	RequiresPrepaidDeployments bool     `protobuf:"varint,14,opt,name=requires_prepaid_deployments,json=requiresPrepaidDeployments,proto3" json:"requires_prepaid_deployments,omitempty"`
 	XXX_NoUnkeyedLiteral       struct{} `json:"-"`
 	XXX_unrecognized           []byte   `json:"-"`

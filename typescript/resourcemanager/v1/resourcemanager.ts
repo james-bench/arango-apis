@@ -249,8 +249,7 @@ export interface Organization {
   // boolean
   locked?: boolean;
   
-  // If set, this organization cannot create deployments
-  // without prepaid deployments
+  // If set, this organization cannot create deployments without prepaid deployments.
   // boolean
   requires_prepaid_deployments?: boolean;
 }
