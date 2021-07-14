@@ -248,6 +248,11 @@ export interface Organization {
   // To delete, first update the with locked set to false.
   // boolean
   locked?: boolean;
+  
+  // If set, this organization cannot create deployments
+  // without prepaid deployments
+  // boolean
+  is_denied_to_create_deployments?: boolean;
 }
 export interface Organization_TotalDeploymentsEntry {
   // string
