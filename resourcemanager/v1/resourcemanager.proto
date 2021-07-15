@@ -398,6 +398,8 @@ message Organization {
     // If set, this organization cannot be deleted.
     // To delete, first update the with locked set to false.
     bool locked = 13;
+    // If set, this organization cannot create deployments without prepaid deployments.
+    bool requires_prepaid_deployments = 14;
 }
 
 // List of organizations.
