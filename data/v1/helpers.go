@@ -109,9 +109,12 @@ func (source *Deployment_ServersSpec) Equals(other *Deployment_ServersSpec) bool
 		strings.Join(source.GetDbserverArgs(), ",") == strings.Join(other.GetDbserverArgs(), ",")
 }
 
-func (s *Deployment_ModelSpec) Equals(o *Deployment_ModelSpec) bool {
-	return s.GetModel() == o.GetModel() && s.GetNodeCount() == o.GetNodeCount() &&
-		s.GetNodeDiskSize() == o.GetNodeDiskSize() && s.GetNodeSizeId() == o.GetNodeSizeId()
+// Equals returns true when source and other have the same values
+func (source *Deployment_ModelSpec) Equals(other *Deployment_ModelSpec) bool {
+	return source.GetModel() == other.GetModel() &&
+		source.GetNodeCount() == other.GetNodeCount() &&
+		source.GetNodeDiskSize() == other.GetNodeDiskSize() &&
+		source.GetNodeSizeId() == other.GetNodeSizeId()
 }
 
 // DeploymentStatusEqual returns true when the fields of a & b are equal.
