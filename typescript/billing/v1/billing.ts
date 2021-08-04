@@ -195,8 +195,8 @@ export interface Invoice_Item {
   description?: string;
   
   // Amount of money (ex VAT) that was already prepaid for this item
-  // number
-  prepaid_amount?: number;
+  // boolean
+  is_prepaid?: boolean;
 }
 
 // Payment (attempt) of the invoice
