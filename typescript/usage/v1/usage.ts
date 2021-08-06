@@ -324,12 +324,12 @@ export interface UsageItem_Resource {
   prepaid_deployment_id?: string;
   
   // Timestamp when the prepaid_deployment starts
-  // string
-  prepaid_deployment_starts_at?: string;
+  // googleTypes.Timestamp
+  prepaid_deployment_starts_at?: googleTypes.Timestamp;
   
   // Timestamp when the prepaid_deployment ends
-  // string
-  prepaid_deployment_ends_at?: string;
+  // googleTypes.Timestamp
+  prepaid_deployment_ends_at?: googleTypes.Timestamp;
 }
 
 // List of UsageItems.
