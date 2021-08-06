@@ -367,6 +367,12 @@ message Deployment {
     // Identifier of the prepaid deployment that this deployment is attached to (if any).
     // This is a read-only value.
     string prepaid_deployment_id = 23;
+		// When the prepaid deployments starts
+		// This is a read-only value
+    google.protobuf.Timestamp prepaid_deployment_starts_at = 24;
+		// When the prepaid deployments ends
+		// This is a read-only value
+    google.protobuf.Timestamp prepaid_deployment_ends_at = 25;
 
 
     // ArangoDB version to use for this deployment.
