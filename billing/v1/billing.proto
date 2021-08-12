@@ -254,7 +254,7 @@ message Invoice {
         float amount = 2;
         // Human readable description of this item
         string description = 3;
-        // Amount of money (ex VAT) that was already prepaid for this item
+        // If set, this invoice item is already prepaid
         bool is_prepaid = 5;
     }
     // All items of the invoice

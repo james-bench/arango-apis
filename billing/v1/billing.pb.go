@@ -296,7 +296,7 @@ type Invoice_Item struct {
 	Amount float32 `protobuf:"fixed32,2,opt,name=amount,proto3" json:"amount,omitempty"`
 	// Human readable description of this item
 	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	// Amount of money (ex VAT) that was already prepaid for this item
+	// If set, this invoice item is already prepaid
 	IsPrepaid            bool     `protobuf:"varint,5,opt,name=is_prepaid,json=isPrepaid,proto3" json:"is_prepaid,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
