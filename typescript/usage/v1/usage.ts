@@ -323,11 +323,11 @@ export interface UsageItem_Resource {
   // string
   prepaid_deployment_id?: string;
   
-  // Timestamp when the prepaid_deployment starts
+  // Timestamp when the prepaid_deployment starts (relevant when prepaid_deployment_id is set only)
   // googleTypes.Timestamp
   prepaid_deployment_starts_at?: googleTypes.Timestamp;
   
-  // Timestamp when the prepaid_deployment ends
+  // Timestamp when the prepaid_deployment ends (relevant when prepaid_deployment_id is set only)
   // googleTypes.Timestamp
   prepaid_deployment_ends_at?: googleTypes.Timestamp;
 }

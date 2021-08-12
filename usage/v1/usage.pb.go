@@ -245,9 +245,9 @@ type UsageItem_Resource struct {
 	DeploymentModel string `protobuf:"bytes,15,opt,name=deployment_model,json=deploymentModel,proto3" json:"deployment_model,omitempty"`
 	// Identifier of the PrepaidDeployment that this deployment is attached to (if any)
 	PrepaidDeploymentId string `protobuf:"bytes,16,opt,name=prepaid_deployment_id,json=prepaidDeploymentId,proto3" json:"prepaid_deployment_id,omitempty"`
-	// Timestamp when the prepaid_deployment starts
+	// Timestamp when the prepaid_deployment starts (relevant when prepaid_deployment_id is set only)
 	PrepaidDeploymentStartsAt *types.Timestamp `protobuf:"bytes,17,opt,name=prepaid_deployment_starts_at,json=prepaidDeploymentStartsAt,proto3" json:"prepaid_deployment_starts_at,omitempty"`
-	// Timestamp when the prepaid_deployment ends
+	// Timestamp when the prepaid_deployment ends (relevant when prepaid_deployment_id is set only)
 	PrepaidDeploymentEndsAt *types.Timestamp `protobuf:"bytes,18,opt,name=prepaid_deployment_ends_at,json=prepaidDeploymentEndsAt,proto3" json:"prepaid_deployment_ends_at,omitempty"`
 	XXX_NoUnkeyedLiteral    struct{}         `json:"-"`
 	XXX_unrecognized        []byte           `json:"-"`
