@@ -258,6 +258,11 @@ export interface Deployment {
   // string
   prepaid_deployment_id?: string;
   
+  // If set, authentication for Foxx requests is disabled.
+  // Be default this field is not set for new deployments.
+  // boolean
+  disable_foxx_authentication?: boolean;
+  
   // ArangoDB version to use for this deployment.
   // See Version.version.
   // If you change this value to a higher version,
