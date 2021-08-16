@@ -330,7 +330,7 @@ type Deployment struct {
 	// This is a read-only value.
 	PrepaidDeploymentId string `protobuf:"bytes,23,opt,name=prepaid_deployment_id,json=prepaidDeploymentId,proto3" json:"prepaid_deployment_id,omitempty"`
 	// If set, authentication for Foxx requests is disabled.
-	// Be default this field is set for new deployments.
+	// Be default this field is not set for new deployments.
 	DisableFoxxAuthentication bool `protobuf:"varint,24,opt,name=disable_foxx_authentication,json=disableFoxxAuthentication,proto3" json:"disable_foxx_authentication,omitempty"`
 	// ArangoDB version to use for this deployment.
 	// See Version.version.
