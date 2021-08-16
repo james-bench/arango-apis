@@ -367,6 +367,9 @@ message Deployment {
     // Identifier of the prepaid deployment that this deployment is attached to (if any).
     // This is a read-only value.
     string prepaid_deployment_id = 23;
+    // If set, authentication for Foxx requests is disabled.
+    // Be default this field is set for new deployments.
+    bool disable_foxx_authentication = 24;
 
 
     // ArangoDB version to use for this deployment.
