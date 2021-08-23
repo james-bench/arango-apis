@@ -18,6 +18,7 @@
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
 // Author Marcin Swiderski
+// Author Ewout Prangsma
 //
 
 package v1
@@ -30,5 +31,5 @@ const (
 	// APIMinorVersion contains minor version of this API
 	APIMinorVersion = 0
 	// APIPatchVersion contains patch version of this API
-	APIPatchVersion = 1
+	APIPatchVersion = 2
 )

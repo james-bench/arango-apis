@@ -18,6 +18,7 @@
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
 // Author Marcin Swiderski
+// Author Ewout Prangsma
 //
 
 syntax = "proto3";
@@ -198,4 +199,9 @@ message CreateDeploymentRequest {
         repeated string alternate_dns_names = 2;
     }
     CertificateSpec certificates = 5;
+    // This field must be set to the identifier of the current Terms&Conditions 
+    // when creating a deployment from a prepaid deployment.
+    // If the tier of the organization does not require a non-empty Terms&Condition
+    // identifier, this field may be left empty.
+    string accepted_terms_and_conditions_id = 6;
 }

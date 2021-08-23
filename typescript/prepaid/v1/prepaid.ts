@@ -48,6 +48,13 @@ export interface CreateDeploymentRequest {
   
   // CreateDeploymentRequest_CertificateSpec
   certificates?: CreateDeploymentRequest_CertificateSpec;
+  
+  // This field must be set to the identifier of the current Terms&Conditions
+  // when creating a deployment from a prepaid deployment.
+  // If the tier of the organization does not require a non-empty Terms&Condition
+  // identifier, this field may be left empty.
+  // string
+  accepted_terms_and_conditions_id?: string;
 }
 export interface CreateDeploymentRequest_CertificateSpec {
   // Identifier of the CACertificate used to sign TLS certificates for the deployment.
