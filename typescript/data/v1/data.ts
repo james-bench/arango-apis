@@ -258,12 +258,17 @@ export interface Deployment {
   // string
   prepaid_deployment_id?: string;
   
-  // When the prepaid deployments starts
+  // If set, authentication for Foxx requests is disabled.
+  // Be default this field is not set for new deployments.
+  // boolean
+  disable_foxx_authentication?: boolean;
+  
+  // When the prepaid deployments starts (relevant when prepaid_deployment_id is set only)
   // This is a read-only value
   // googleTypes.Timestamp
   prepaid_deployment_starts_at?: googleTypes.Timestamp;
   
-  // When the prepaid deployments ends
+  // When the prepaid deployments ends (relevant when prepaid_deployment_id is set only)
   // This is a read-only value
   // googleTypes.Timestamp
   prepaid_deployment_ends_at?: googleTypes.Timestamp;
