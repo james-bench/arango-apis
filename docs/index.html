@@ -4742,6 +4742,13 @@ This is the amount that the customer will be charged for. </p></td>
                   <td><p>Human readable description of this item </p></td>
                 </tr>
               
+                <tr>
+                  <td>is_prepaid</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Amount of money (ex VAT) that was already prepaid for this item </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -17870,6 +17877,20 @@ This field is not filled-out when the kind is AuditLogSize </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Identifier of the PrepaidDeployment that this deployment is attached to (if any) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>prepaid_deployment_starts_at</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Timestamp when the prepaid_deployment starts </p></td>
+                </tr>
+              
+                <tr>
+                  <td>prepaid_deployment_ends_at</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Timestamp when the prepaid_deployment ends </p></td>
                 </tr>
               
             </tbody>

@@ -193,6 +193,10 @@ export interface Invoice_Item {
   // Human readable description of this item
   // string
   description?: string;
+  
+  // If set, this invoice item is already prepaid
+  // boolean
+  is_prepaid?: boolean;
 }
 
 // Payment (attempt) of the invoice

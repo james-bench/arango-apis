@@ -106,6 +106,10 @@ message UsageItem {
         string deployment_model = 15;
         // Identifier of the PrepaidDeployment that this deployment is attached to (if any)
         string prepaid_deployment_id = 16;
+        // Timestamp when the prepaid_deployment starts (relevant when prepaid_deployment_id is set only)
+        google.protobuf.Timestamp prepaid_deployment_starts_at = 17;
+        // Timestamp when the prepaid_deployment ends (relevant when prepaid_deployment_id is set only)
+        google.protobuf.Timestamp prepaid_deployment_ends_at = 18;
     }
     // Identification of the resource covered by this usage item
     Resource resource = 4;

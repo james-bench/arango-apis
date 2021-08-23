@@ -263,6 +263,16 @@ export interface Deployment {
   // boolean
   disable_foxx_authentication?: boolean;
   
+  // When the prepaid deployments starts (relevant when prepaid_deployment_id is set only)
+  // This is a read-only value
+  // googleTypes.Timestamp
+  prepaid_deployment_starts_at?: googleTypes.Timestamp;
+  
+  // When the prepaid deployments ends (relevant when prepaid_deployment_id is set only)
+  // This is a read-only value
+  // googleTypes.Timestamp
+  prepaid_deployment_ends_at?: googleTypes.Timestamp;
+  
   // ArangoDB version to use for this deployment.
   // See Version.version.
   // If you change this value to a higher version,

@@ -254,6 +254,8 @@ message Invoice {
         float amount = 2;
         // Human readable description of this item
         string description = 3;
+        // If set, this invoice item is already prepaid
+        bool is_prepaid = 5;
     }
     // All items of the invoice
     repeated Item items = 100;

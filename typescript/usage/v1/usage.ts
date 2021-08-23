@@ -322,6 +322,14 @@ export interface UsageItem_Resource {
   // Identifier of the PrepaidDeployment that this deployment is attached to (if any)
   // string
   prepaid_deployment_id?: string;
+  
+  // Timestamp when the prepaid_deployment starts (relevant when prepaid_deployment_id is set only)
+  // googleTypes.Timestamp
+  prepaid_deployment_starts_at?: googleTypes.Timestamp;
+  
+  // Timestamp when the prepaid_deployment ends (relevant when prepaid_deployment_id is set only)
+  // googleTypes.Timestamp
+  prepaid_deployment_ends_at?: googleTypes.Timestamp;
 }
 
 // List of UsageItems.
