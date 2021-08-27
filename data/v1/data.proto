@@ -376,6 +376,9 @@ message Deployment {
     // When the prepaid deployments ends (relevant when prepaid_deployment_id is set only)
     // This is a read-only value
     google.protobuf.Timestamp prepaid_deployment_ends_at = 26;
+    // Whenever deployment can be updated to new values from prepaid deployment
+    // This is a read-only value
+    bool is_prepaid_deployment_update_available = 27;
 
 
     // ArangoDB version to use for this deployment.
