@@ -273,6 +273,11 @@ export interface Deployment {
   // googleTypes.Timestamp
   prepaid_deployment_ends_at?: googleTypes.Timestamp;
   
+  // Whenever deployment can be updated to new values from prepaid deployment
+  // This is a read-only value
+  // boolean
+  is_prepaid_deployment_update_available?: boolean;
+  
   // ArangoDB version to use for this deployment.
   // See Version.version.
   // If you change this value to a higher version,
