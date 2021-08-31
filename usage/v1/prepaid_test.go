@@ -86,7 +86,7 @@ func TestIsActivePrepaidDeployment(t *testing.T) {
 		{
 			//-------ppppppppppppp--------------------
 			//----------------------uuuuuuuuuuuuuuuuu-
-			name: "usage starts adter prepaid deployment ends",
+			name: "usage starts after prepaid deployment ends",
 			item: UsageItem{
 				Resource: &UsageItem_Resource{
 					PrepaidDeploymentId:       "id",
@@ -95,6 +95,36 @@ func TestIsActivePrepaidDeployment(t *testing.T) {
 				},
 				StartsAt: TimestampMust(now.Add(time.Hour)),
 				EndsAt:   TimestampMust(now.Add(time.Hour * 24)),
+			},
+			expected: false,
+		},
+		{
+			//-------ppppppppppppp--------------------
+			//--------------------uuuuuuuuuuuuuuuuuuu-
+			name: "usage starts exactly at prepaid deployment ends",
+			item: UsageItem{
+				Resource: &UsageItem_Resource{
+					PrepaidDeploymentId:       "id",
+					PrepaidDeploymentStartsAt: TimestampMust(now.Add(-time.Hour * 24)),
+					PrepaidDeploymentEndsAt:   TimestampMust(now),
+				},
+				StartsAt: TimestampMust(now),
+				EndsAt:   TimestampMust(now.Add(time.Hour * 24)),
+			},
+			expected: false,
+		},
+		{
+			//----------------------ppppppppppppppp---
+			//-------uuuuuuuuuuuuuuu------------------
+			name: "usage ends exactly at prepaid deployment start",
+			item: UsageItem{
+				Resource: &UsageItem_Resource{
+					PrepaidDeploymentId:       "id",
+					PrepaidDeploymentStartsAt: TimestampMust(now),
+					PrepaidDeploymentEndsAt:   TimestampMust(now.Add(time.Hour * 24)),
+				},
+				StartsAt: TimestampMust(now.Add(-time.Hour * 48)),
+				EndsAt:   TimestampMust(now),
 			},
 			expected: false,
 		},
