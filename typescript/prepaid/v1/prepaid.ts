@@ -164,6 +164,10 @@ export interface PrepaidDeployment_Status {
   // timestamp when the deployment was detached from PrepaidDeployment
   // googleTypes.Timestamp
   detached_at?: googleTypes.Timestamp;
+  
+  // url of the given deployment
+  // string
+  deployment_url?: string;
 }
 
 // PrepaidDeploymentList contains a list of PrepaidDeployment items
