@@ -143,6 +143,8 @@ message PrepaidDeployment {
         google.protobuf.Timestamp attached_at = 2;
         // timestamp when the deployment was detached from PrepaidDeployment
         google.protobuf.Timestamp detached_at = 3;
+        // url of the given deployment
+        string deployment_url = 4;
     }
     Status status = 201;
 }
