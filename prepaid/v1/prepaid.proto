@@ -145,6 +145,8 @@ message PrepaidDeployment {
         google.protobuf.Timestamp detached_at = 3;
         // url of the given deployment
         string deployment_url = 4;
+        // timestamp of the last warning email
+        google.protobuf.Timestamp last_warning_email_send_at = 5;
     }
     Status status = 201;
 }

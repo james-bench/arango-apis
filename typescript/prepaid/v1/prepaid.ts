@@ -168,6 +168,10 @@ export interface PrepaidDeployment_Status {
   // url of the given deployment
   // string
   deployment_url?: string;
+  
+  // timestamp of the last warning email
+  // googleTypes.Timestamp
+  last_warning_email_send_at?: googleTypes.Timestamp;
 }
 
 // PrepaidDeploymentList contains a list of PrepaidDeployment items
