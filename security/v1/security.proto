@@ -188,6 +188,9 @@ message IPAllowlist {
     // The list of warnings which are related to the IP allow list.
     // This is a read-only value.
     repeated string warnings = 12;
+    // If set, a few additional IP addresses are added to allow for remote 
+    // connectivity inspection of the deployment by the Oasis platform.
+    bool remote_inspection_allowed = 13;
 }
 
 // List of IP allowlists.

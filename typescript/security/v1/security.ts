@@ -263,6 +263,11 @@ export interface IPAllowlist {
   // This is a read-only value.
   // string
   warnings?: string[];
+  
+  // If set, a few additional IP addresses are added to allow for remote
+  // connectivity inspection of the deployment by the Oasis platform.
+  // boolean
+  remote_inspection_allowed?: boolean;
 }
 
 // List of IP allowlists.
