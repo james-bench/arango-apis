@@ -530,6 +530,11 @@ export interface Tier {
   // This is a read-only value and cannot be initialized.
   // boolean
   has_auditlog_destination_https_post?: boolean;
+  
+  // If set, this tier supports private endpoints.
+  // This is a read-only value and cannot be initialized.
+  // boolean
+  has_private_endpoints?: boolean;
 }
 
 // ResourceManagerService is the API used to configure basic resource objects.
