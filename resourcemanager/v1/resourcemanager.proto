@@ -443,6 +443,9 @@ message Tier {
     // This fields is only relevant if has_auditlog_feature is set.
     // This is a read-only value and cannot be initialized.
     bool has_auditlog_destination_https_post = 10;
+    // If set, this tier supports private endpoints.
+    // This is a read-only value and cannot be initialized.
+    bool has_private_endpoints = 11;
 }
 
 // Member of an organization.
