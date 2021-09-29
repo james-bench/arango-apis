@@ -37,16 +37,13 @@ type CauseFunc = func(error) error
 
 // Cause is the cause function used by the error helpers in this module.
 var Cause = func(err error) error {
-	for {
-		s, ok := status.FromError(err)
-		if ok {
+	for err != nil {
+		if s, ok := status.FromError(err); ok {
 			return s.Err()
 		}
 		err = errors.Unwrap(err)
-		if err == nil {
-			return err
-		}
 	}
+	return nil
 }
 
 // IsCanceled returns true if the given error signals a request that was canceled. Typically by the caller.
