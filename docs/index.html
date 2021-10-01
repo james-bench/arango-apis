@@ -1016,6 +1016,41 @@ title: "ArangoDB Oasis API"
         
           
           <li>
+            <a href="#network%2fv1%2fnetwork.proto">network/v1/network.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#arangodb.cloud.network.v1.PrivateEndpointService"><span class="badge">M</span>PrivateEndpointService</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.network.v1.PrivateEndpointService.Aks"><span class="badge">M</span>PrivateEndpointService.Aks</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.network.v1.PrivateEndpointService.AksPrivateEndpointConnectionStatus"><span class="badge">M</span>PrivateEndpointService.AksPrivateEndpointConnectionStatus</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.network.v1.PrivateEndpointService.AksStatus"><span class="badge">M</span>PrivateEndpointService.AksStatus</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.network.v1.PrivateEndpointService.Status"><span class="badge">M</span>PrivateEndpointService.Status</a>
+                </li>
+              
+              
+              
+              
+                <li>
+                  <a href="#arangodb.cloud.network.v1.NetworkService"><span class="badge">S</span>NetworkService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#platform%2fv1%2fplatform.proto">platform/v1/platform.proto</a>
             <ul>
               
@@ -12927,6 +12962,394 @@ Required permissions:
                 <td>GetDeploymentLogs</td>
                 <td>POST</td>
                 <td>/api/monitoring/v1/streaming/deployment-logs</td>
+                <td>*</td>
+              </tr>
+              
+            
+            </tbody>
+          </table>
+          
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="network/v1/network.proto">network/v1/network.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="arangodb.cloud.network.v1.PrivateEndpointService">PrivateEndpointService</h3>
+        <p>PrivateEndpointService represents the service part of the private endpoint</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>System identifier of the private endpoint service.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>URL of this resource.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Name of the private endpoint service. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Description of the private endpoint service. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The creation timestamp of the private endpoint service 
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>deleted_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The deletion timestamp of the private endpoint service 
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_deleted</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Set when this private endpoint service is deleted.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the deployment
+After creation, this value cannot be changed. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>aks</td>
+                  <td><a href="#arangodb.cloud.network.v1.PrivateEndpointService.Aks">PrivateEndpointService.Aks</a></td>
+                  <td></td>
+                  <td><p>Specific AKS setting. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#arangodb.cloud.network.v1.PrivateEndpointService.Status">PrivateEndpointService.Status</a></td>
+                  <td></td>
+                  <td><p>Status of the private endpoint service.
+All fields are read-only. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.network.v1.PrivateEndpointService.Aks">PrivateEndpointService.Aks</h3>
+        <p>Specific AKS setting.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>client_subscription_ids</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>The subscription IDs of the client side, needed to auto-approve private endpoint connections.
+After a private endpoint connection has been made this field cannot be modified anymore. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.network.v1.PrivateEndpointService.AksPrivateEndpointConnectionStatus">PrivateEndpointService.AksPrivateEndpointConnectionStatus</h3>
+        <p>Specific AKS private endpoint connection status fields.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The name of the private endpoint connection </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The description of the private endpoint connection </p></td>
+                </tr>
+              
+                <tr>
+                  <td>state</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The state of the private endpoint connection </p></td>
+                </tr>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The private endpoint identifier </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.network.v1.PrivateEndpointService.AksStatus">PrivateEndpointService.AksStatus</h3>
+        <p>Specific AKS status fields. </p><p>All fields are read-only.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>alias</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The alias generated by the Azure private link service needed by the client to setup the private endpoint. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>private_endpoint_connections</td>
+                  <td><a href="#arangodb.cloud.network.v1.PrivateEndpointService.AksPrivateEndpointConnectionStatus">PrivateEndpointService.AksPrivateEndpointConnectionStatus</a></td>
+                  <td>repeated</td>
+                  <td><p>The status of the private endpoint connections. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.network.v1.PrivateEndpointService.Status">PrivateEndpointService.Status</h3>
+        <p>Status of the private endpoint service.</p><p>All fields are read-only.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>ready</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Set when the private endpoint service is ready. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ready_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The timestamp the ready flag has been set. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>needs_attention</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Set if this private endpoint service needs attention. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>message</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Free text message describing the status. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>aks</td>
+                  <td><a href="#arangodb.cloud.network.v1.PrivateEndpointService.AksStatus">PrivateEndpointService.AksStatus</a></td>
+                  <td></td>
+                  <td><p>Specific AKS status fields.
+All fields are read-only. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+
+      
+
+      
+        <h3 id="arangodb.cloud.network.v1.NetworkService">NetworkService</h3>
+        <p>NetworkService is the API used to manage the network for a deployment.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GetAPIVersion</td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Version">.arangodb.cloud.common.v1.Version</a></td>
+                <td><p>Get the current API version of this service.
+Required permissions:
+- None</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetPrivateEndpointService</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.network.v1.PrivateEndpointService">PrivateEndpointService</a></td>
+                <td><p>Fetch a private endpoint service by its ID.
+Required permissions:
+- network.privateendpointservice.get on the private endpoint service.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetPrivateEndpointServiceByDeploymentID</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.network.v1.PrivateEndpointService">PrivateEndpointService</a></td>
+                <td><p>Fetch a private endpoint service by the deployment ID.
+Required permissions:
+- network.privateendpointservice.get-by-deployment-id on the deployment that owns the private endpoint service.</p></td>
+              </tr>
+            
+              <tr>
+                <td>CreatePrivateEndpointService</td>
+                <td><a href="#arangodb.cloud.network.v1.PrivateEndpointService">PrivateEndpointService</a></td>
+                <td><a href="#arangodb.cloud.network.v1.PrivateEndpointService">PrivateEndpointService</a></td>
+                <td><p>Create a new private endpoint service.
+Required permissions:
+- network.privateendpointservice.create on the deployment that owns the private endpoint service.</p></td>
+              </tr>
+            
+              <tr>
+                <td>UpdatePrivateEndpointService</td>
+                <td><a href="#arangodb.cloud.network.v1.PrivateEndpointService">PrivateEndpointService</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><p>Update the private endpoint service.
+This will not update the status field, for updating the status, please use UpdatePrivateEndpointServiceStatus.
+Required permissions:
+- network.privateendpointservice.update on the private endpoint service.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+          
+          
+          <h4>Methods with HTTP bindings</h4>
+          <table>
+            <thead>
+              <tr>
+                <td>Method Name</td>
+                <td>Method</td>
+                <td>Pattern</td>
+                <td>Body</td>
+              </tr>
+            </thead>
+            <tbody>
+            
+              
+              
+              <tr>
+                <td>GetAPIVersion</td>
+                <td>GET</td>
+                <td>/api/network/v1/api-version</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetPrivateEndpointService</td>
+                <td>GET</td>
+                <td>/api/network/v1/privateendpointservice/{id}</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetPrivateEndpointServiceByDeploymentID</td>
+                <td>GET</td>
+                <td>/api/network/v1/deployment/{id}/privateendpointservice</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>CreatePrivateEndpointService</td>
+                <td>POST</td>
+                <td>/api/network/v1/deployment/{deployment_id}/privateendpointservice</td>
+                <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>UpdatePrivateEndpointService</td>
+                <td>PATCH</td>
+                <td>/api/network/v1/privateendpointservice/{id}</td>
                 <td>*</td>
               </tr>
               
