@@ -28,7 +28,7 @@ const (
 	// PermissionPrivateEndpointServiceGet is needed for getting an individual private endpoint service
 	PermissionPrivateEndpointServiceGet = "network.privateendpointservice.get"
 	// PermissionPrivateEndpointServiceGetByDeploymentID is getting an individual private endpoint service by deployment ID
-	PermissionPrivateEndpointServiceList = "network.privateendpointservice.get-by-deployment-id"
+	PermissionPrivateEndpointServiceGetByDeploymentID = "network.privateendpointservice.get-by-deployment-id"
 	// PermissionPrivateEndpointServiceCreate is needed for creating a private endpoint service
 	PermissionPrivateEndpointServiceCreate = "network.privateendpointservice.create"
 	// PermissionPrivateEndpointServiceUpdate is needed to update the private endpoint service
