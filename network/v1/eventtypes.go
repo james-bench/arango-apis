@@ -34,5 +34,5 @@ const (
 	EventTypePrivateEndpointServiceUpdated = "network.privateendpointservice.updated"
 	// EventTypePrivateEndpointServiceDeleted is the type of event fired after a private endpoint service has been (marked for) deleted
 	// SubjectID contains the ID of the private endpoint service.
-	EventTypPrivateEndpointServiceDeleted = "network.privateendpointservice.deleted"
+	EventTypePrivateEndpointServiceDeleted = "network.privateendpointservice.deleted"
 )
