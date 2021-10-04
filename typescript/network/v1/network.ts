@@ -148,7 +148,6 @@ export interface INetworkService {
   CreatePrivateEndpointService: (req: PrivateEndpointService) => Promise<PrivateEndpointService>;
   
   // Update the private endpoint service.
-  // This will not update the status field, for updating the status, please use UpdatePrivateEndpointServiceStatus.
   // Required permissions:
   // - network.privateendpointservice.update on the private endpoint service.
   UpdatePrivateEndpointService: (req: PrivateEndpointService) => Promise<void>;
@@ -192,7 +191,6 @@ export class NetworkService implements INetworkService {
   }
   
   // Update the private endpoint service.
-  // This will not update the status field, for updating the status, please use UpdatePrivateEndpointServiceStatus.
   // Required permissions:
   // - network.privateendpointservice.update on the private endpoint service.
   async UpdatePrivateEndpointService(req: PrivateEndpointService): Promise<void> {

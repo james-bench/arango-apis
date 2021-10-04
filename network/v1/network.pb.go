@@ -537,7 +537,6 @@ type NetworkServiceClient interface {
 	// - network.privateendpointservice.create on the deployment that owns the private endpoint service.
 	CreatePrivateEndpointService(ctx context.Context, in *PrivateEndpointService, opts ...grpc.CallOption) (*PrivateEndpointService, error)
 	// Update the private endpoint service.
-	// This will not update the status field, for updating the status, please use UpdatePrivateEndpointServiceStatus.
 	// Required permissions:
 	// - network.privateendpointservice.update on the private endpoint service.
 	UpdatePrivateEndpointService(ctx context.Context, in *PrivateEndpointService, opts ...grpc.CallOption) (*v1.Empty, error)
@@ -615,7 +614,6 @@ type NetworkServiceServer interface {
 	// - network.privateendpointservice.create on the deployment that owns the private endpoint service.
 	CreatePrivateEndpointService(context.Context, *PrivateEndpointService) (*PrivateEndpointService, error)
 	// Update the private endpoint service.
-	// This will not update the status field, for updating the status, please use UpdatePrivateEndpointServiceStatus.
 	// Required permissions:
 	// - network.privateendpointservice.update on the private endpoint service.
 	UpdatePrivateEndpointService(context.Context, *PrivateEndpointService) (*v1.Empty, error)

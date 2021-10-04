@@ -71,7 +71,6 @@ service NetworkService {
     }
 
     // Update the private endpoint service.
-    // This will not update the status field, for updating the status, please use UpdatePrivateEndpointServiceStatus.
     // Required permissions:
     // - network.privateendpointservice.update on the private endpoint service. 
     rpc UpdatePrivateEndpointService(PrivateEndpointService) returns (arangodb.cloud.common.v1.Empty) {
