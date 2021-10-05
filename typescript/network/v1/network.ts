@@ -51,6 +51,12 @@ export interface PrivateEndpointService {
   // string
   deployment_id?: string;
   
+  // Zero or more DNS names to include in the TLS certificate of the deployment.
+  // This name should be resolvable in the private network (vNET/VPC) and can be used to connect
+  // to the private endpoint to establish a SSL connection (where the name will be used during the handshake).
+  // string
+  alternate_dns_names?: string[];
+  
   // Specific AKS setting.
   // PrivateEndpointService_Aks
   aks?: PrivateEndpointService_Aks;

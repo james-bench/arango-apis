@@ -13051,6 +13051,15 @@ After creation, this value cannot be changed. </p></td>
                 </tr>
               
                 <tr>
+                  <td>alternate_dns_names</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Zero or more DNS names to include in the TLS certificate of the deployment.
+This name should be resolvable in the private network (vNET/VPC) and can be used to connect 
+to the private endpoint to establish a SSL connection (where the name will be used during the handshake). </p></td>
+                </tr>
+              
+                <tr>
                   <td>aks</td>
                   <td><a href="#arangodb.cloud.network.v1.PrivateEndpointService.Aks">PrivateEndpointService.Aks</a></td>
                   <td></td>
