@@ -23,6 +23,8 @@
 package v1
 
 import (
+	"errors"
+
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -34,7 +36,15 @@ import (
 type CauseFunc = func(error) error
 
 // Cause is the cause function used by the error helpers in this module.
-var Cause = func(err error) error { return err }
+var Cause = func(err error) error {
+	for err != nil {
+		if s, ok := status.FromError(err); ok {
+			return s.Err()
+		}
+		err = errors.Unwrap(err)
+	}
+	return nil
+}
 
 // IsCanceled returns true if the given error signals a request that was canceled. Typically by the caller.
 func IsCanceled(err error) bool {
@@ -195,4 +205,17 @@ func Aborted(msg string, args ...interface{}) error {
 		return status.Errorf(codes.Aborted, msg, args...)
 	}
 	return status.Error(codes.Aborted, msg)
+}
+
+// CommonError extracts common error from given error and returns it
+// If the given err is nil it returns nil also
+// If the given err Cause is not any of known common errors it return Unknown error
+func CommonError(err error) error {
+	if err == nil {
+		return nil
+	}
+	if common := Cause(err); common != nil {
+		return common
+	}
+	return Unknown("Unknown error")
 }
