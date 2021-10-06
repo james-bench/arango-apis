@@ -206,3 +206,16 @@ func Aborted(msg string, args ...interface{}) error {
 	}
 	return status.Error(codes.Aborted, msg)
 }
+
+// CommonError extracts common error from given error and returns it
+// If the given err is nil it returns nil also
+// If the given err Cause is not any of known common errors it return Unknonw error
+func CommonError(err error) error {
+	if err == nil {
+		return nil
+	}
+	if common := Cause(err); common != nil {
+		return common
+	}
+	return Unknown("Unknown error")
+}
