@@ -209,7 +209,7 @@ func Aborted(msg string, args ...interface{}) error {
 
 // CommonError extracts common error from given error and returns it
 // If the given err is nil it returns nil also
-// If the given err Cause is not any of known common errors it return Unknonw error
+// If the given err Cause is not any of known common errors it return Unknown error
 func CommonError(err error) error {
 	if err == nil {
 		return nil
