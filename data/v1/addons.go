@@ -18,4 +18,8 @@ const (
 	// AddonIDAuditLog is ID of the Audit Log addon.
 	// That addon is used when a deployment has an attached audit log.
 	AddonIDAuditLog = "auditlog"
+
+	// AddonIDPriviteEndpointService is ID of the Private endpoint service addon.
+	// That addon is used when a deployment is using a private endpoint service.
+	AddonIDPrivateEndpointService = "privateendpointservice"
 )
