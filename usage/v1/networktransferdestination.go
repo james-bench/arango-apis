@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
 //
 // Author Robert Stam
 //
@@ -15,4 +15,6 @@ const (
 	NetworkTransferDestinationInternet = "Internet"
 	// NetworkTransferDestinationInCluster specifies the destination (or source) from the ingress/egress as in-cluster data transfer.
 	NetworkTransferDestinationInCluster = "InCluster"
+	// NetworkTransferDestinationPrivateEndpoint specifies the destination (or source) from the ingress/egress as private-endpoint data transfer.
+	NetworkTransferDestinationPrivateEndpoint = "PrivateEndpoint"
 )
