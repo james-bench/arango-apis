@@ -24,54 +24,50 @@ syntax = "proto3";
 
 package arangodb.cloud.prepaid.v1;
 
-option go_package = "github.com/arangodb-managed/apis/notifications/v1";
+option go_package = "github.com/arangodb-managed/apis/notification/v1";
 
 import "common/v1/common.proto";
 
 import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
 import "google/api/annotations.proto";
 
-// NotificationsServise is the API used to interact with deployment notifications
+// NotificationsService is the API used to interact with deployment notifications
 service NotificationsService {
     // Get the current API version of this service.
     // Required permissions:
     // - None
     rpc GetAPIVersion(common.v1.Empty) returns (common.v1.Version) {
         option (google.api.http) = {
-            get: "/api/notifications/v1/api-version"
+            get: "/api/notification/v1/api-version"
         };
     }
 
     // Fetch all notifications related to given deployment
     // Required permissions:
-    // - notifications.deployment-notifications.list on the deployment identified by given deployment_id
+    // - notification.deployment-notifications.list on the deployment identified by given deployment_id
     rpc ListDeploymentNotifications(ListDeploymentNotificationsRequest) returns (NotificationList) {
         option (google.api.http) = {
-            post: "/api/notifications/v1/{deployment_id}"
+            post: "/api/notification/v1/deployment/{deployment_id}/notifications"
         };
     }
 }
 
 
 // Notification contains all attributes of a notification
+// All fields in this message are read-only.
 message Notification {
     // System identifier of the notification
-    // This is a read-only value.
     string id = 1;
     // Type of notification.
-    // This is a read-only value.
+    // Will be one of following value: "email", "slack", "sms"
     string type = 2;
     // The creation timestamp of the prepaid deployment
-    // This is a read-only value.
     google.protobuf.Timestamp created_at = 3;
     // Title of notification.
-    // This is a read-only value.
     string title = 4;
     // Receipments of notification.
-    // This is a read-only value.
     repeated string receipment = 5;
     // Content of notification
-    // This is a read-only value.
     repeated NotificationContent content = 6;
 }
 
@@ -86,14 +82,14 @@ message NotificationContent {
 }
 // ListDeploymentNotificationsRequest is used to request a list of Notifications for given deployment
 message ListDeploymentNotificationsRequest {
-    // identifier of the deployment_id to get a list of notifications for
+    // Identifier of the deployment to get a list of notifications for
     string deployment_id = 1;
-    // common listing options
+    // Common listing options
     common.v1.ListOptions options = 2;
 }
 
 // NotificationList contains a list of Notification items
 message NotificationList {
-  // notification items
-  repeated Notification items=1;
+    // Notification items
+    repeated Notification items=1;
 }
