@@ -58,28 +58,28 @@ message Notification {
     // System identifier of the notification
     // This is a read-only value.
     string id = 1;
-		// Type of notification.
-		// This is a read-only value.
-		string type = 2;
+    // Type of notification.
+    // This is a read-only value.
+    string type = 2;
     // The creation timestamp of the prepaid deployment
     google.protobuf.Timestamp created_at = 3;
     // Title of notification.
     // This is a read-only value.
     string title = 4;
-		// Receipments of notification.
-		// This is a read-only value.
+    // Receipments of notification.
+    // This is a read-only value.
     repeated string receipment = 5;
-		// Content of notification
-		repeated NotificationContent content = 6;
+    // Content of notification
+    repeated NotificationContent content = 6;
 }
 
 // NotificationContent holds content and it's mime type
 message NotificationContent {
-		// MIME Type of notification.
-	  // This is a read-only value.
-	  string content_type = 1;
-		// Content of notification
-		// This is a read-only value.
+    // MIME Type of notification.
+    // This is a read-only value.
+    string content_type = 1;
+    // Content of notification
+    // This is a read-only value.
     string content = 2;
 }
 // ListDeploymentNotificationsRequest is used to request a list of Notifications for given deployment
@@ -92,6 +92,6 @@ message ListDeploymentNotificationsRequest {
 
 // NotificationList contains a list of Notification items
 message NotificationList {
-	// notification items
-	repeated Notification items=1;
+  // notification items
+  repeated Notification items=1;
 }
