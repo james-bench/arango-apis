@@ -62,6 +62,7 @@ message Notification {
     // This is a read-only value.
     string type = 2;
     // The creation timestamp of the prepaid deployment
+    // This is a read-only value.
     google.protobuf.Timestamp created_at = 3;
     // Title of notification.
     // This is a read-only value.
@@ -70,6 +71,7 @@ message Notification {
     // This is a read-only value.
     repeated string receipment = 5;
     // Content of notification
+    // This is a read-only value.
     repeated NotificationContent content = 6;
 }
 

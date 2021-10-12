@@ -35,6 +35,7 @@ export interface Notification {
   type?: string;
   
   // The creation timestamp of the prepaid deployment
+  // This is a read-only value.
   // googleTypes.Timestamp
   created_at?: googleTypes.Timestamp;
   
@@ -49,6 +50,7 @@ export interface Notification {
   receipment?: string[];
   
   // Content of notification
+  // This is a read-only value.
   // NotificationContent
   content?: NotificationContent[];
 }

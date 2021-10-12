@@ -38,6 +38,7 @@ type Notification struct {
 	// This is a read-only value.
 	Type string `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
 	// The creation timestamp of the prepaid deployment
+	// This is a read-only value.
 	CreatedAt *types.Timestamp `protobuf:"bytes,3,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	// Title of notification.
 	// This is a read-only value.
@@ -46,6 +47,7 @@ type Notification struct {
 	// This is a read-only value.
 	Receipment []string `protobuf:"bytes,5,rep,name=receipment,proto3" json:"receipment,omitempty"`
 	// Content of notification
+	// This is a read-only value.
 	Content              []*NotificationContent `protobuf:"bytes,6,rep,name=content,proto3" json:"content,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}               `json:"-"`
 	XXX_unrecognized     []byte                 `json:"-"`
