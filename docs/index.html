@@ -1059,6 +1059,37 @@ title: "ArangoDB Oasis API"
         
           
           <li>
+            <a href="#notifications%2fv1%2fnotifications.proto">notifications/v1/notifications.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#arangodb.cloud.prepaid.v1.ListDeploymentNotificationsRequest"><span class="badge">M</span>ListDeploymentNotificationsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.prepaid.v1.Notification"><span class="badge">M</span>Notification</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.prepaid.v1.NotificationContent"><span class="badge">M</span>NotificationContent</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.prepaid.v1.NotificationList"><span class="badge">M</span>NotificationList</a>
+                </li>
+              
+              
+              
+              
+                <li>
+                  <a href="#arangodb.cloud.prepaid.v1.NotificationsService"><span class="badge">S</span>NotificationsService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#platform%2fv1%2fplatform.proto">platform/v1/platform.proto</a>
             <ul>
               
@@ -13469,6 +13500,239 @@ Required permissions:
                 <td>PATCH</td>
                 <td>/api/network/v1/privateendpointservice/{id}</td>
                 <td>*</td>
+              </tr>
+              
+            
+            </tbody>
+          </table>
+          
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="notifications/v1/notifications.proto">notifications/v1/notifications.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="arangodb.cloud.prepaid.v1.ListDeploymentNotificationsRequest">ListDeploymentNotificationsRequest</h3>
+        <p>ListDeploymentNotificationsRequest is used to request a list of Notifications for given deployment</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>identifier of the deployment_id to get a list of notifications for </p></td>
+                </tr>
+              
+                <tr>
+                  <td>options</td>
+                  <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
+                  <td></td>
+                  <td><p>common listing options </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.prepaid.v1.Notification">Notification</h3>
+        <p>Notification contains all attributes of a notification</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>System identifier of the notification
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>type</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Type of notification.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The creation timestamp of the prepaid deployment </p></td>
+                </tr>
+              
+                <tr>
+                  <td>title</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Title of notification.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>receipment</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Receipments of notification.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>content</td>
+                  <td><a href="#arangodb.cloud.prepaid.v1.NotificationContent">NotificationContent</a></td>
+                  <td>repeated</td>
+                  <td><p>Content of notification </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.prepaid.v1.NotificationContent">NotificationContent</h3>
+        <p>NotificationContent holds content and it's mime type</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>content_type</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>MIME Type of notification.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>content</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Content of notification
+This is a read-only value. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.prepaid.v1.NotificationList">NotificationList</h3>
+        <p>NotificationList contains a list of Notification items</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#arangodb.cloud.prepaid.v1.Notification">Notification</a></td>
+                  <td>repeated</td>
+                  <td><p>notification items </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+
+      
+
+      
+        <h3 id="arangodb.cloud.prepaid.v1.NotificationsService">NotificationsService</h3>
+        <p>NotificationsServise is the API used to interact with deployment notifications</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GetAPIVersion</td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Version">.arangodb.cloud.common.v1.Version</a></td>
+                <td><p>Get the current API version of this service.
+Required permissions:
+- None</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListDeploymentNotifications</td>
+                <td><a href="#arangodb.cloud.prepaid.v1.ListDeploymentNotificationsRequest">ListDeploymentNotificationsRequest</a></td>
+                <td><a href="#arangodb.cloud.prepaid.v1.NotificationList">NotificationList</a></td>
+                <td><p>Fetch all notifications related to given deployment
+Required permissions:
+- notifications.deployment-notifications.list on the deployment identified by given deployment_id</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+          
+          
+          <h4>Methods with HTTP bindings</h4>
+          <table>
+            <thead>
+              <tr>
+                <td>Method Name</td>
+                <td>Method</td>
+                <td>Pattern</td>
+                <td>Body</td>
+              </tr>
+            </thead>
+            <tbody>
+            
+              
+              
+              <tr>
+                <td>GetAPIVersion</td>
+                <td>GET</td>
+                <td>/api/notifications/v1/api-version</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>ListDeploymentNotifications</td>
+                <td>POST</td>
+                <td>/api/notifications/v1/{deployment_id}</td>
+                <td></td>
               </tr>
               
             
