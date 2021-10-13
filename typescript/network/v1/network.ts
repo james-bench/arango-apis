@@ -11,6 +11,13 @@ import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/com
 // File: network/v1/network.proto
 // Package: arangodb.cloud.network.v1
 
+// IsPrivateEndpointServiceFeatureAvailableRequest specifies the request parameters for the IsPrivateEndpointServiceFeatureAvailable method.
+export interface IsPrivateEndpointServiceFeatureAvailableRequest {
+  // Identifier of the deployment
+  // string
+  deployment_id?: string;
+}
+
 // IsPrivateEndpointServiceFeatureAvailableResult specifies if the private endpoint service is enabled and available for the specific deployment.
 // If it is not available it contains a message why not.
 export interface IsPrivateEndpointServiceFeatureAvailableResult {
@@ -153,7 +160,7 @@ export interface INetworkService {
   // Checks if the private endpoint service feature is enabled and available for a specific deployment.
   // Required permissions:
   // - network.privateendpointservice.get-feature on the deployment that is identified by the given ID.
-  IsPrivateEndpointServiceFeatureAvailable: (req: arangodb_cloud_common_v1_IDOptions) => Promise<IsPrivateEndpointServiceFeatureAvailableResult>;
+  IsPrivateEndpointServiceFeatureAvailable: (req: IsPrivateEndpointServiceFeatureAvailableRequest) => Promise<IsPrivateEndpointServiceFeatureAvailableResult>;
   
   // Fetch a private endpoint service by its ID.
   // Required permissions:
@@ -190,9 +197,9 @@ export class NetworkService implements INetworkService {
   // Checks if the private endpoint service feature is enabled and available for a specific deployment.
   // Required permissions:
   // - network.privateendpointservice.get-feature on the deployment that is identified by the given ID.
-  async IsPrivateEndpointServiceFeatureAvailable(req: arangodb_cloud_common_v1_IDOptions): Promise<IsPrivateEndpointServiceFeatureAvailableResult> {
-    const path = `/api/network/v1/deployment/${encodeURIComponent(req.id || '')}/feature`;
-    const url = path + api.queryString(req, [`id`]);
+  async IsPrivateEndpointServiceFeatureAvailable(req: IsPrivateEndpointServiceFeatureAvailableRequest): Promise<IsPrivateEndpointServiceFeatureAvailableResult> {
+    const path = `/api/network/v1/deployment/${encodeURIComponent(req.deployment_id || '')}/feature`;
+    const url = path + api.queryString(req, [`deployment_id`]);
     return api.get(url, undefined);
   }
   

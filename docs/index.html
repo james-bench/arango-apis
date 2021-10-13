@@ -1020,6 +1020,10 @@ title: "ArangoDB Oasis API"
             <ul>
               
                 <li>
+                  <a href="#arangodb.cloud.network.v1.IsPrivateEndpointServiceFeatureAvailableRequest"><span class="badge">M</span>IsPrivateEndpointServiceFeatureAvailableRequest</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.network.v1.IsPrivateEndpointServiceFeatureAvailableResult"><span class="badge">M</span>IsPrivateEndpointServiceFeatureAvailableResult</a>
                 </li>
               
@@ -12992,6 +12996,30 @@ Required permissions:
       <p></p>
 
       
+        <h3 id="arangodb.cloud.network.v1.IsPrivateEndpointServiceFeatureAvailableRequest">IsPrivateEndpointServiceFeatureAvailableRequest</h3>
+        <p>IsPrivateEndpointServiceFeatureAvailableRequest specifies the request parameters for the IsPrivateEndpointServiceFeatureAvailable method.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the deployment </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.network.v1.IsPrivateEndpointServiceFeatureAvailableResult">IsPrivateEndpointServiceFeatureAvailableResult</h3>
         <p>IsPrivateEndpointServiceFeatureAvailableResult specifies if the private endpoint service is enabled and available for the specific deployment.</p><p>If it is not available it contains a message why not.</p>
 
@@ -13305,7 +13333,7 @@ Required permissions:
             
               <tr>
                 <td>IsPrivateEndpointServiceFeatureAvailable</td>
-                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.network.v1.IsPrivateEndpointServiceFeatureAvailableRequest">IsPrivateEndpointServiceFeatureAvailableRequest</a></td>
                 <td><a href="#arangodb.cloud.network.v1.IsPrivateEndpointServiceFeatureAvailableResult">IsPrivateEndpointServiceFeatureAvailableResult</a></td>
                 <td><p>Checks if the private endpoint service feature is enabled and available for a specific deployment.
 Required permissions:
@@ -13381,7 +13409,7 @@ Required permissions:
               <tr>
                 <td>IsPrivateEndpointServiceFeatureAvailable</td>
                 <td>GET</td>
-                <td>/api/network/v1/deployment/{id}/feature</td>
+                <td>/api/network/v1/deployment/{deployment_id}/feature</td>
                 <td></td>
               </tr>
               
