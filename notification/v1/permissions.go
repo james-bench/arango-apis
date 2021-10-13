@@ -23,8 +23,8 @@
 package v1
 
 const (
-	// Notifications permissions
+	// Notification permissions
 
 	// PermissionDeploymentNotificationsList is required to list deployment's Notifications
-	PermissionDeploymentNotificationsList = "notifications.deployment-notifications.list"
+	PermissionDeploymentNotificationList = "notifications.deployment-notification.list"
 )

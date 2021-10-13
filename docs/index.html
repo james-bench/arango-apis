@@ -1059,7 +1059,7 @@ title: "ArangoDB Oasis API"
         
           
           <li>
-            <a href="#notifications%2fv1%2fnotifications.proto">notifications/v1/notifications.proto</a>
+            <a href="#notification%2fv1%2fnotification.proto">notification/v1/notification.proto</a>
             <ul>
               
                 <li>
@@ -1082,7 +1082,7 @@ title: "ArangoDB Oasis API"
               
               
                 <li>
-                  <a href="#arangodb.cloud.prepaid.v1.NotificationsService"><span class="badge">S</span>NotificationsService</a>
+                  <a href="#arangodb.cloud.prepaid.v1.NotificationService"><span class="badge">S</span>NotificationService</a>
                 </li>
               
             </ul>
@@ -13510,7 +13510,7 @@ Required permissions:
     
       
       <div class="file-heading">
-        <h2 id="notifications/v1/notifications.proto">notifications/v1/notifications.proto</h2><a href="#title">Top</a>
+        <h2 id="notification/v1/notification.proto">notification/v1/notification.proto</h2><a href="#title">Top</a>
       </div>
       <p></p>
 
@@ -13529,14 +13529,14 @@ Required permissions:
                   <td>deployment_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>identifier of the deployment_id to get a list of notifications for </p></td>
+                  <td><p>Identifier of the deployment to get a list of notifications for </p></td>
                 </tr>
               
                 <tr>
                   <td>options</td>
                   <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
                   <td></td>
-                  <td><p>common listing options </p></td>
+                  <td><p>Common listing options </p></td>
                 </tr>
               
             </tbody>
@@ -13547,7 +13547,7 @@ Required permissions:
         
       
         <h3 id="arangodb.cloud.prepaid.v1.Notification">Notification</h3>
-        <p>Notification contains all attributes of a notification</p>
+        <p>Notification contains all attributes of a notification</p><p>All fields in this message are read-only.</p>
 
         
           <table class="field-table">
@@ -13560,8 +13560,7 @@ Required permissions:
                   <td>id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>System identifier of the notification
-This is a read-only value. </p></td>
+                  <td><p>System identifier of the notification </p></td>
                 </tr>
               
                 <tr>
@@ -13569,39 +13568,35 @@ This is a read-only value. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Type of notification.
-This is a read-only value. </p></td>
+Will be one of following value: &#34;email&#34;, &#34;sms&#34; </p></td>
                 </tr>
               
                 <tr>
                   <td>created_at</td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
-                  <td><p>The creation timestamp of the prepaid deployment
-This is a read-only value. </p></td>
+                  <td><p>The creation timestamp of the prepaid deployment </p></td>
                 </tr>
               
                 <tr>
                   <td>title</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Title of notification.
-This is a read-only value. </p></td>
+                  <td><p>Title of notification. </p></td>
                 </tr>
               
                 <tr>
                   <td>receipment</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>Receipments of notification.
-This is a read-only value. </p></td>
+                  <td><p>Receipments of notification. </p></td>
                 </tr>
               
                 <tr>
                   <td>content</td>
                   <td><a href="#arangodb.cloud.prepaid.v1.NotificationContent">NotificationContent</a></td>
                   <td>repeated</td>
-                  <td><p>Content of notification
-This is a read-only value. </p></td>
+                  <td><p>Content of notification </p></td>
                 </tr>
               
             </tbody>
@@ -13612,7 +13607,7 @@ This is a read-only value. </p></td>
         
       
         <h3 id="arangodb.cloud.prepaid.v1.NotificationContent">NotificationContent</h3>
-        <p>NotificationContent holds content and it's mime type</p>
+        <p>NotificationContent holds content and it's mime type</p><p>All fields in this message are read-only.</p>
 
         
           <table class="field-table">
@@ -13625,16 +13620,14 @@ This is a read-only value. </p></td>
                   <td>content_type</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>MIME Type of notification.
-This is a read-only value. </p></td>
+                  <td><p>MIME Type of notification. </p></td>
                 </tr>
               
                 <tr>
                   <td>content</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Content of notification
-This is a read-only value. </p></td>
+                  <td><p>Content of notification </p></td>
                 </tr>
               
             </tbody>
@@ -13658,7 +13651,7 @@ This is a read-only value. </p></td>
                   <td>items</td>
                   <td><a href="#arangodb.cloud.prepaid.v1.Notification">Notification</a></td>
                   <td>repeated</td>
-                  <td><p>notification items </p></td>
+                  <td><p>Notification items </p></td>
                 </tr>
               
             </tbody>
@@ -13674,8 +13667,8 @@ This is a read-only value. </p></td>
       
 
       
-        <h3 id="arangodb.cloud.prepaid.v1.NotificationsService">NotificationsService</h3>
-        <p>NotificationsServise is the API used to interact with deployment notifications</p>
+        <h3 id="arangodb.cloud.prepaid.v1.NotificationService">NotificationService</h3>
+        <p>NotificationService is the API used to interact with deployment notifications</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
@@ -13697,7 +13690,7 @@ Required permissions:
                 <td><a href="#arangodb.cloud.prepaid.v1.NotificationList">NotificationList</a></td>
                 <td><p>Fetch all notifications related to given deployment
 Required permissions:
-- notifications.deployment-notifications.list on the deployment identified by given deployment_id</p></td>
+- notification.deployment-notification.list on the deployment identified by given deployment_id</p></td>
               </tr>
             
           </tbody>
@@ -13723,7 +13716,7 @@ Required permissions:
               <tr>
                 <td>GetAPIVersion</td>
                 <td>GET</td>
-                <td>/api/notifications/v1/api-version</td>
+                <td>/api/notification/v1/api-version</td>
                 <td></td>
               </tr>
               
@@ -13733,7 +13726,7 @@ Required permissions:
               <tr>
                 <td>ListDeploymentNotifications</td>
                 <td>POST</td>
-                <td>/api/notifications/v1/{deployment_id}</td>
+                <td>/api/notification/v1/deployment/{deployment_id}/notifications</td>
                 <td></td>
               </tr>
               

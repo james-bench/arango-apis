@@ -31,8 +31,8 @@ import "common/v1/common.proto";
 import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
 import "google/api/annotations.proto";
 
-// NotificationsService is the API used to interact with deployment notifications
-service NotificationsService {
+// NotificationService is the API used to interact with deployment notifications
+service NotificationService {
     // Get the current API version of this service.
     // Required permissions:
     // - None
@@ -44,7 +44,7 @@ service NotificationsService {
 
     // Fetch all notifications related to given deployment
     // Required permissions:
-    // - notification.deployment-notifications.list on the deployment identified by given deployment_id
+    // - notification.deployment-notification.list on the deployment identified by given deployment_id
     rpc ListDeploymentNotifications(ListDeploymentNotificationsRequest) returns (NotificationList) {
         option (google.api.http) = {
             post: "/api/notification/v1/deployment/{deployment_id}/notifications"
@@ -59,7 +59,7 @@ message Notification {
     // System identifier of the notification
     string id = 1;
     // Type of notification.
-    // Will be one of following value: "email", "slack", "sms"
+    // Will be one of following value: "email", "sms"
     string type = 2;
     // The creation timestamp of the prepaid deployment
     google.protobuf.Timestamp created_at = 3;
@@ -72,12 +72,11 @@ message Notification {
 }
 
 // NotificationContent holds content and it's mime type
+// All fields in this message are read-only.
 message NotificationContent {
     // MIME Type of notification.
-    // This is a read-only value.
     string content_type = 1;
     // Content of notification
-    // This is a read-only value.
     string content = 2;
 }
 // ListDeploymentNotificationsRequest is used to request a list of Notifications for given deployment
@@ -91,5 +90,5 @@ message ListDeploymentNotificationsRequest {
 // NotificationList contains a list of Notification items
 message NotificationList {
     // Notification items
-    repeated Notification items=1;
+    repeated Notification items = 1;
 }

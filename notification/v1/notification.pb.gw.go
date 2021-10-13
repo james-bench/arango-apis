@@ -32,7 +32,7 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = descriptor.ForMessage
 
-func request_NotificationsService_GetAPIVersion_0(ctx context.Context, marshaler runtime.Marshaler, client NotificationsServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_NotificationService_GetAPIVersion_0(ctx context.Context, marshaler runtime.Marshaler, client NotificationServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq v1.Empty
 	var metadata runtime.ServerMetadata
 
@@ -41,7 +41,7 @@ func request_NotificationsService_GetAPIVersion_0(ctx context.Context, marshaler
 
 }
 
-func local_request_NotificationsService_GetAPIVersion_0(ctx context.Context, marshaler runtime.Marshaler, server NotificationsServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_NotificationService_GetAPIVersion_0(ctx context.Context, marshaler runtime.Marshaler, server NotificationServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq v1.Empty
 	var metadata runtime.ServerMetadata
 
@@ -51,10 +51,10 @@ func local_request_NotificationsService_GetAPIVersion_0(ctx context.Context, mar
 }
 
 var (
-	filter_NotificationsService_ListDeploymentNotifications_0 = &utilities.DoubleArray{Encoding: map[string]int{"deployment_id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+	filter_NotificationService_ListDeploymentNotifications_0 = &utilities.DoubleArray{Encoding: map[string]int{"deployment_id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 )
 
-func request_NotificationsService_ListDeploymentNotifications_0(ctx context.Context, marshaler runtime.Marshaler, client NotificationsServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_NotificationService_ListDeploymentNotifications_0(ctx context.Context, marshaler runtime.Marshaler, client NotificationServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListDeploymentNotificationsRequest
 	var metadata runtime.ServerMetadata
 
@@ -79,7 +79,7 @@ func request_NotificationsService_ListDeploymentNotifications_0(ctx context.Cont
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_NotificationsService_ListDeploymentNotifications_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_NotificationService_ListDeploymentNotifications_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -88,7 +88,7 @@ func request_NotificationsService_ListDeploymentNotifications_0(ctx context.Cont
 
 }
 
-func local_request_NotificationsService_ListDeploymentNotifications_0(ctx context.Context, marshaler runtime.Marshaler, server NotificationsServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_NotificationService_ListDeploymentNotifications_0(ctx context.Context, marshaler runtime.Marshaler, server NotificationServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListDeploymentNotificationsRequest
 	var metadata runtime.ServerMetadata
 
@@ -113,7 +113,7 @@ func local_request_NotificationsService_ListDeploymentNotifications_0(ctx contex
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_NotificationsService_ListDeploymentNotifications_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_NotificationService_ListDeploymentNotifications_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -122,12 +122,12 @@ func local_request_NotificationsService_ListDeploymentNotifications_0(ctx contex
 
 }
 
-// RegisterNotificationsServiceHandlerServer registers the http handlers for service NotificationsService to "mux".
-// UnaryRPC     :call NotificationsServiceServer directly.
+// RegisterNotificationServiceHandlerServer registers the http handlers for service NotificationService to "mux".
+// UnaryRPC     :call NotificationServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-func RegisterNotificationsServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server NotificationsServiceServer) error {
+func RegisterNotificationServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server NotificationServiceServer) error {
 
-	mux.Handle("GET", pattern_NotificationsService_GetAPIVersion_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_NotificationService_GetAPIVersion_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -136,18 +136,18 @@ func RegisterNotificationsServiceHandlerServer(ctx context.Context, mux *runtime
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_NotificationsService_GetAPIVersion_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_NotificationService_GetAPIVersion_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_NotificationsService_GetAPIVersion_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_NotificationService_GetAPIVersion_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_NotificationsService_ListDeploymentNotifications_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_NotificationService_ListDeploymentNotifications_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -156,23 +156,23 @@ func RegisterNotificationsServiceHandlerServer(ctx context.Context, mux *runtime
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_NotificationsService_ListDeploymentNotifications_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_NotificationService_ListDeploymentNotifications_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_NotificationsService_ListDeploymentNotifications_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_NotificationService_ListDeploymentNotifications_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterNotificationsServiceHandlerFromEndpoint is same as RegisterNotificationsServiceHandler but
+// RegisterNotificationServiceHandlerFromEndpoint is same as RegisterNotificationServiceHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterNotificationsServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterNotificationServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -192,23 +192,23 @@ func RegisterNotificationsServiceHandlerFromEndpoint(ctx context.Context, mux *r
 		}()
 	}()
 
-	return RegisterNotificationsServiceHandler(ctx, mux, conn)
+	return RegisterNotificationServiceHandler(ctx, mux, conn)
 }
 
-// RegisterNotificationsServiceHandler registers the http handlers for service NotificationsService to "mux".
+// RegisterNotificationServiceHandler registers the http handlers for service NotificationService to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterNotificationsServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterNotificationsServiceHandlerClient(ctx, mux, NewNotificationsServiceClient(conn))
+func RegisterNotificationServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterNotificationServiceHandlerClient(ctx, mux, NewNotificationServiceClient(conn))
 }
 
-// RegisterNotificationsServiceHandlerClient registers the http handlers for service NotificationsService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "NotificationsServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "NotificationsServiceClient"
+// RegisterNotificationServiceHandlerClient registers the http handlers for service NotificationService
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "NotificationServiceClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "NotificationServiceClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "NotificationsServiceClient" to call the correct interceptors.
-func RegisterNotificationsServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client NotificationsServiceClient) error {
+// "NotificationServiceClient" to call the correct interceptors.
+func RegisterNotificationServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client NotificationServiceClient) error {
 
-	mux.Handle("GET", pattern_NotificationsService_GetAPIVersion_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_NotificationService_GetAPIVersion_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -217,18 +217,18 @@ func RegisterNotificationsServiceHandlerClient(ctx context.Context, mux *runtime
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_NotificationsService_GetAPIVersion_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_NotificationService_GetAPIVersion_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_NotificationsService_GetAPIVersion_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_NotificationService_GetAPIVersion_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_NotificationsService_ListDeploymentNotifications_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_NotificationService_ListDeploymentNotifications_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -237,14 +237,14 @@ func RegisterNotificationsServiceHandlerClient(ctx context.Context, mux *runtime
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_NotificationsService_ListDeploymentNotifications_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_NotificationService_ListDeploymentNotifications_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_NotificationsService_ListDeploymentNotifications_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_NotificationService_ListDeploymentNotifications_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -252,13 +252,13 @@ func RegisterNotificationsServiceHandlerClient(ctx context.Context, mux *runtime
 }
 
 var (
-	pattern_NotificationsService_GetAPIVersion_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "notification", "v1", "api-version"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_NotificationService_GetAPIVersion_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "notification", "v1", "api-version"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_NotificationsService_ListDeploymentNotifications_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "notification", "v1", "deployment", "deployment_id", "notifications"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_NotificationService_ListDeploymentNotifications_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "notification", "v1", "deployment", "deployment_id", "notifications"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
-	forward_NotificationsService_GetAPIVersion_0 = runtime.ForwardResponseMessage
+	forward_NotificationService_GetAPIVersion_0 = runtime.ForwardResponseMessage
 
-	forward_NotificationsService_ListDeploymentNotifications_0 = runtime.ForwardResponseMessage
+	forward_NotificationService_ListDeploymentNotifications_0 = runtime.ForwardResponseMessage
 )
