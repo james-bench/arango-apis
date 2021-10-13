@@ -11,6 +11,18 @@ import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/com
 // File: network/v1/network.proto
 // Package: arangodb.cloud.network.v1
 
+// IsPrivateEndpointServiceFeatureAvailableResult specifies if the private endpoint service is enabled and available for the specific deployment.
+// If it is not available it contains a message why not.
+export interface IsPrivateEndpointServiceFeatureAvailableResult {
+  // Set if the feature is enabled and available.
+  // boolean
+  available?: boolean;
+  
+  // Message why the feature is not available.
+  // string
+  message?: string;
+}
+
 // PrivateEndpointService represents the service part of the private endpoint
 export interface PrivateEndpointService {
   // System identifier of the private endpoint service.
@@ -138,6 +150,11 @@ export interface INetworkService {
   // - None
   GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
   
+  // Checks if the private endpoint service feature is enabled and available for a specific deployment.
+  // Required permissions:
+  // - network.feature.get on the deployment that is identified by the given ID.
+  IsPrivateEndpointServiceFeatureAvailable: (req: arangodb_cloud_common_v1_IDOptions) => Promise<IsPrivateEndpointServiceFeatureAvailableResult>;
+  
   // Fetch a private endpoint service by its ID.
   // Required permissions:
   // - network.privateendpointservice.get on the private endpoint service.
@@ -167,6 +184,15 @@ export class NetworkService implements INetworkService {
   async GetAPIVersion(req?: arangodb_cloud_common_v1_Empty): Promise<arangodb_cloud_common_v1_Version> {
     const path = `/api/network/v1/api-version`;
     const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
+  // Checks if the private endpoint service feature is enabled and available for a specific deployment.
+  // Required permissions:
+  // - network.feature.get on the deployment that is identified by the given ID.
+  async IsPrivateEndpointServiceFeatureAvailable(req: arangodb_cloud_common_v1_IDOptions): Promise<IsPrivateEndpointServiceFeatureAvailableResult> {
+    const path = `/api/network/v1/deployment/${encodeURIComponent(req.id || '')}/feature`;
+    const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
   

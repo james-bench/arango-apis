@@ -1020,6 +1020,10 @@ title: "ArangoDB Oasis API"
             <ul>
               
                 <li>
+                  <a href="#arangodb.cloud.network.v1.IsPrivateEndpointServiceFeatureAvailableResult"><span class="badge">M</span>IsPrivateEndpointServiceFeatureAvailableResult</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.network.v1.PrivateEndpointService"><span class="badge">M</span>PrivateEndpointService</a>
                 </li>
               
@@ -7496,6 +7500,15 @@ This is a read-only value </p></td>
                 </tr>
               
                 <tr>
+                  <td>private_endpoint</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Set if the deployment use a private endpoint.
+This is a read-only value after creation.
+If set during creation a private endpoint service will be created. </p></td>
+                </tr>
+              
+                <tr>
                   <td>version</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
@@ -9667,6 +9680,7 @@ Required permissions:
                 <td><p>Create a new deployment
 Required permissions:
 - data.deployment.create on the project that owns the deployment
+- network.privateendpointservice.create on the project that owns the deployment (if private_endpoint field is set)
 Note that deployment.status &amp; deployment.expiration are ignored
 in this request.</p></td>
               </tr>
@@ -12978,6 +12992,37 @@ Required permissions:
       <p></p>
 
       
+        <h3 id="arangodb.cloud.network.v1.IsPrivateEndpointServiceFeatureAvailableResult">IsPrivateEndpointServiceFeatureAvailableResult</h3>
+        <p>IsPrivateEndpointServiceFeatureAvailableResult specifies if the private endpoint service is enabled and available for the specific deployment.</p><p>If it is not available it contains a message why not.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>available</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Set if the feature is enabled and available. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>message</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Message why the feature is not available. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.network.v1.PrivateEndpointService">PrivateEndpointService</h3>
         <p>PrivateEndpointService represents the service part of the private endpoint</p>
 
@@ -13259,6 +13304,15 @@ Required permissions:
               </tr>
             
               <tr>
+                <td>IsPrivateEndpointServiceFeatureAvailable</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.network.v1.IsPrivateEndpointServiceFeatureAvailableResult">IsPrivateEndpointServiceFeatureAvailableResult</a></td>
+                <td><p>Checks if the private endpoint service feature is enabled and available for a specific deployment.
+Required permissions:
+- network.feature.get on the deployment that is identified by the given ID.</p></td>
+              </tr>
+            
+              <tr>
                 <td>GetPrivateEndpointService</td>
                 <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
                 <td><a href="#arangodb.cloud.network.v1.PrivateEndpointService">PrivateEndpointService</a></td>
@@ -13318,6 +13372,16 @@ Required permissions:
                 <td>GetAPIVersion</td>
                 <td>GET</td>
                 <td>/api/network/v1/api-version</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>IsPrivateEndpointServiceFeatureAvailable</td>
+                <td>GET</td>
+                <td>/api/network/v1/deployment/{id}/feature</td>
                 <td></td>
               </tr>
               
