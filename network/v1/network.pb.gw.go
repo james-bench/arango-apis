@@ -50,26 +50,19 @@ func local_request_NetworkService_GetAPIVersion_0(ctx context.Context, marshaler
 
 }
 
+var (
+	filter_NetworkService_IsPrivateEndpointServiceFeatureAvailable_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+)
+
 func request_NetworkService_IsPrivateEndpointServiceFeatureAvailable_0(ctx context.Context, marshaler runtime.Marshaler, client NetworkServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq IsPrivateEndpointServiceFeatureAvailableRequest
 	var metadata runtime.ServerMetadata
 
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["deployment_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "deployment_id")
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-
-	protoReq.DeploymentId, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "deployment_id", err)
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_NetworkService_IsPrivateEndpointServiceFeatureAvailable_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.IsPrivateEndpointServiceFeatureAvailable(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -81,22 +74,11 @@ func local_request_NetworkService_IsPrivateEndpointServiceFeatureAvailable_0(ctx
 	var protoReq IsPrivateEndpointServiceFeatureAvailableRequest
 	var metadata runtime.ServerMetadata
 
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["deployment_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "deployment_id")
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-
-	protoReq.DeploymentId, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "deployment_id", err)
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_NetworkService_IsPrivateEndpointServiceFeatureAvailable_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := server.IsPrivateEndpointServiceFeatureAvailable(ctx, &protoReq)
@@ -377,7 +359,7 @@ func RegisterNetworkServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 
 	})
 
-	mux.Handle("GET", pattern_NetworkService_IsPrivateEndpointServiceFeatureAvailable_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_NetworkService_IsPrivateEndpointServiceFeatureAvailable_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -538,7 +520,7 @@ func RegisterNetworkServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 
 	})
 
-	mux.Handle("GET", pattern_NetworkService_IsPrivateEndpointServiceFeatureAvailable_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_NetworkService_IsPrivateEndpointServiceFeatureAvailable_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -644,7 +626,7 @@ func RegisterNetworkServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 var (
 	pattern_NetworkService_GetAPIVersion_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "network", "v1", "api-version"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_NetworkService_IsPrivateEndpointServiceFeatureAvailable_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "network", "v1", "deployment", "deployment_id", "feature"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_NetworkService_IsPrivateEndpointServiceFeatureAvailable_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"api", "network", "v1", "privateendpointservice", "feature"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_NetworkService_GetPrivateEndpointService_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "network", "v1", "privateendpointservice", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 

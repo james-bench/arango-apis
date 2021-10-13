@@ -12997,7 +12997,7 @@ Required permissions:
 
       
         <h3 id="arangodb.cloud.network.v1.IsPrivateEndpointServiceFeatureAvailableRequest">IsPrivateEndpointServiceFeatureAvailableRequest</h3>
-        <p>IsPrivateEndpointServiceFeatureAvailableRequest specifies the request parameters for the IsPrivateEndpointServiceFeatureAvailable method.</p>
+        <p>IsPrivateEndpointServiceFeatureAvailableRequest specifies the request parameters for the IsPrivateEndpointServiceFeatureAvailable method.</p><p>At least 1 of the fields should contain a value.</p>
 
         
           <table class="field-table">
@@ -13010,7 +13010,23 @@ Required permissions:
                   <td>deployment_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Identifier of the deployment </p></td>
+                  <td><p>Identifier of the deployment (optional) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the organization (optional)
+This field is ignored if a deployment_id is specified </p></td>
+                </tr>
+              
+                <tr>
+                  <td>region_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the region (optional)
+This field is ignored if a deployment_id is specified </p></td>
                 </tr>
               
             </tbody>
@@ -13021,7 +13037,7 @@ Required permissions:
         
       
         <h3 id="arangodb.cloud.network.v1.IsPrivateEndpointServiceFeatureAvailableResult">IsPrivateEndpointServiceFeatureAvailableResult</h3>
-        <p>IsPrivateEndpointServiceFeatureAvailableResult specifies if the private endpoint service is enabled and available for the specific deployment.</p><p>If it is not available it contains a message why not.</p>
+        <p>IsPrivateEndpointServiceFeatureAvailableResult specifies if the private endpoint service is enabled and available.</p><p>If it is not available it contains a message why not.</p>
 
         
           <table class="field-table">
@@ -13335,9 +13351,11 @@ Required permissions:
                 <td>IsPrivateEndpointServiceFeatureAvailable</td>
                 <td><a href="#arangodb.cloud.network.v1.IsPrivateEndpointServiceFeatureAvailableRequest">IsPrivateEndpointServiceFeatureAvailableRequest</a></td>
                 <td><a href="#arangodb.cloud.network.v1.IsPrivateEndpointServiceFeatureAvailableResult">IsPrivateEndpointServiceFeatureAvailableResult</a></td>
-                <td><p>Checks if the private endpoint service feature is enabled and available for a specific deployment.
+                <td><p>Checks if the private endpoint service feature is enabled and available.
 Required permissions:
-- network.privateendpointservice.get-feature on the deployment that is identified by the given ID.</p></td>
+- network.privateendpointservice.get-feature on the deployment that is identified by the given deployment ID (if specified).
+- network.privateendpointservice.get-feature on the organization that is identified by the given organization ID (if specified).
+- None, authenticated only (if only the region ID is specified).</p></td>
               </tr>
             
               <tr>
@@ -13408,8 +13426,8 @@ Required permissions:
               
               <tr>
                 <td>IsPrivateEndpointServiceFeatureAvailable</td>
-                <td>GET</td>
-                <td>/api/network/v1/deployment/{deployment_id}/feature</td>
+                <td>POST</td>
+                <td>/api/network/v1/privateendpointservice/feature</td>
                 <td></td>
               </tr>
               
