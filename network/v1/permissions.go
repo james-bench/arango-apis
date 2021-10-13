@@ -25,6 +25,8 @@ package v1
 const (
 	// PrivateEndpointService permissions
 
+	// PermissionPrivateEndpointServiceGetFeature is needed for getting whether or not the private endpoint service feature is enabled and available for a specific deployment.
+	PermissionPrivateEndpointServiceGetFeature = "network.privateendpointservice.get-feature"
 	// PermissionPrivateEndpointServiceGet is needed for getting an individual private endpoint service
 	PermissionPrivateEndpointServiceGet = "network.privateendpointservice.get"
 	// PermissionPrivateEndpointServiceGetByDeploymentID is getting an individual private endpoint service by deployment ID

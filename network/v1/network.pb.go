@@ -607,7 +607,7 @@ type NetworkServiceClient interface {
 	GetAPIVersion(ctx context.Context, in *v1.Empty, opts ...grpc.CallOption) (*v1.Version, error)
 	// Checks if the private endpoint service feature is enabled and available for a specific deployment.
 	// Required permissions:
-	// - network.feature.get on the deployment that is identified by the given ID.
+	// - network.privateendpointservice.get-feature on the deployment that is identified by the given ID.
 	IsPrivateEndpointServiceFeatureAvailable(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*IsPrivateEndpointServiceFeatureAvailableResult, error)
 	// Fetch a private endpoint service by its ID.
 	// Required permissions:
@@ -697,7 +697,7 @@ type NetworkServiceServer interface {
 	GetAPIVersion(context.Context, *v1.Empty) (*v1.Version, error)
 	// Checks if the private endpoint service feature is enabled and available for a specific deployment.
 	// Required permissions:
-	// - network.feature.get on the deployment that is identified by the given ID.
+	// - network.privateendpointservice.get-feature on the deployment that is identified by the given ID.
 	IsPrivateEndpointServiceFeatureAvailable(context.Context, *v1.IDOptions) (*IsPrivateEndpointServiceFeatureAvailableResult, error)
 	// Fetch a private endpoint service by its ID.
 	// Required permissions:

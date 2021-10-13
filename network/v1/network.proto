@@ -42,9 +42,9 @@ service NetworkService {
         };
     }
 
-     // Checks if the private endpoint service feature is enabled and available for a specific deployment.
+    // Checks if the private endpoint service feature is enabled and available for a specific deployment.
     // Required permissions:
-    // - network.feature.get on the deployment that is identified by the given ID.
+    // - network.privateendpointservice.get-feature on the deployment that is identified by the given ID.
     rpc IsPrivateEndpointServiceFeatureAvailable(common.v1.IDOptions) returns (IsPrivateEndpointServiceFeatureAvailableResult) {
         option (google.api.http) = {
             get: "/api/network/v1/deployment/{id}/feature"

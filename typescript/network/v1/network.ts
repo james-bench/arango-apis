@@ -152,7 +152,7 @@ export interface INetworkService {
   
   // Checks if the private endpoint service feature is enabled and available for a specific deployment.
   // Required permissions:
-  // - network.feature.get on the deployment that is identified by the given ID.
+  // - network.privateendpointservice.get-feature on the deployment that is identified by the given ID.
   IsPrivateEndpointServiceFeatureAvailable: (req: arangodb_cloud_common_v1_IDOptions) => Promise<IsPrivateEndpointServiceFeatureAvailableResult>;
   
   // Fetch a private endpoint service by its ID.
@@ -189,7 +189,7 @@ export class NetworkService implements INetworkService {
   
   // Checks if the private endpoint service feature is enabled and available for a specific deployment.
   // Required permissions:
-  // - network.feature.get on the deployment that is identified by the given ID.
+  // - network.privateendpointservice.get-feature on the deployment that is identified by the given ID.
   async IsPrivateEndpointServiceFeatureAvailable(req: arangodb_cloud_common_v1_IDOptions): Promise<IsPrivateEndpointServiceFeatureAvailableResult> {
     const path = `/api/network/v1/deployment/${encodeURIComponent(req.id || '')}/feature`;
     const url = path + api.queryString(req, [`id`]);
