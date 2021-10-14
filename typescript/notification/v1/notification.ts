@@ -100,8 +100,7 @@ export class NotificationService implements INotificationService {
   // Required permissions:
   // - notification.deployment-notification.list on the deployment identified by given deployment_id
   async ListDeploymentNotifications(req: ListDeploymentNotificationsRequest): Promise<NotificationList> {
-    const path = `/api/notification/v1/deployment/${encodeURIComponent(req.deployment_id || '')}/notifications`;
-    const url = path + api.queryString(req, [`deployment_id`]);
-    return api.post(url, undefined);
+    const url = `/api/notification/v1/deployment/${encodeURIComponent(req.deployment_id || '')}/notifications`;
+    return api.post(url, req);
   }
 }

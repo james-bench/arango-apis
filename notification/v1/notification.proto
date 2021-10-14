@@ -48,6 +48,7 @@ service NotificationService {
     rpc ListDeploymentNotifications(ListDeploymentNotificationsRequest) returns (NotificationList) {
         option (google.api.http) = {
             post: "/api/notification/v1/deployment/{deployment_id}/notifications"
+            body: "*"
         };
     }
 }
