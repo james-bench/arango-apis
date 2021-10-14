@@ -11,18 +11,19 @@ import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/com
 // File: notification/v1/notification.proto
 // Package: arangodb.cloud.prepaid.v1
 
-// ListDeploymentNotificationsRequest is used to request a list of Notifications for given deployment
+// ListDeploymentNotificationsRequest is used to request a list of Notifications for given deployment.
 export interface ListDeploymentNotificationsRequest {
-  // Identifier of the deployment to get a list of notifications for
+  // Identifier of the deployment to get a list of notifications for.
   // string
   deployment_id?: string;
   
-  // Common listing options
+  // Common listing options.
+  // context_id is a don't care.
   // arangodb.cloud.common.v1.ListOptions
   options?: arangodb_cloud_common_v1_ListOptions;
 }
 
-// Notification contains all attributes of a notification
+// Notification contains all attributes of a notification.
 // All fields in this message are read-only.
 export interface Notification {
   // System identifier of the notification
@@ -30,11 +31,11 @@ export interface Notification {
   id?: string;
   
   // Type of notification.
-  // Will be one of following value: "email", "sms"
+  // Will be one of following value: "email", "sms".
   // string
   type?: string;
   
-  // The creation timestamp of the prepaid deployment
+  // The creation timestamp of the prepaid deployment.
   // googleTypes.Timestamp
   created_at?: googleTypes.Timestamp;
   
@@ -46,44 +47,44 @@ export interface Notification {
   // string
   receipment?: string[];
   
-  // Content of notification
+  // Content of notification.
   // NotificationContent
   content?: NotificationContent[];
 }
 
-// NotificationContent holds content and it's mime type
+// NotificationContent holds content and it's mime type.
 // All fields in this message are read-only.
 export interface NotificationContent {
   // MIME Type of notification.
   // string
   content_type?: string;
   
-  // Content of notification
+  // Content of notification.
   // string
   content?: string;
 }
 
-// NotificationList contains a list of Notification items
+// NotificationList contains a list of Notification items.
 export interface NotificationList {
-  // Notification items
+  // Notification items.
   // Notification
   items?: Notification[];
 }
 
-// NotificationService is the API used to interact with deployment notifications
+// NotificationService is the API used to interact with deployment notifications.
 export interface INotificationService {
   // Get the current API version of this service.
   // Required permissions:
   // - None
   GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
   
-  // Fetch all notifications related to given deployment
+  // Fetch all notifications related to given deployment.
   // Required permissions:
   // - notification.deployment-notification.list on the deployment identified by given deployment_id
   ListDeploymentNotifications: (req: ListDeploymentNotificationsRequest) => Promise<NotificationList>;
 }
 
-// NotificationService is the API used to interact with deployment notifications
+// NotificationService is the API used to interact with deployment notifications.
 export class NotificationService implements INotificationService {
   // Get the current API version of this service.
   // Required permissions:
@@ -94,7 +95,7 @@ export class NotificationService implements INotificationService {
     return api.get(url, undefined);
   }
   
-  // Fetch all notifications related to given deployment
+  // Fetch all notifications related to given deployment.
   // Required permissions:
   // - notification.deployment-notification.list on the deployment identified by given deployment_id
   async ListDeploymentNotifications(req: ListDeploymentNotificationsRequest): Promise<NotificationList> {

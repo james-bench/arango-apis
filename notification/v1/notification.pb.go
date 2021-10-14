@@ -29,21 +29,21 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-// Notification contains all attributes of a notification
+// Notification contains all attributes of a notification.
 // All fields in this message are read-only.
 type Notification struct {
 	// System identifier of the notification
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Type of notification.
-	// Will be one of following value: "email", "sms"
+	// Will be one of following value: "email", "sms".
 	Type string `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
-	// The creation timestamp of the prepaid deployment
+	// The creation timestamp of the prepaid deployment.
 	CreatedAt *types.Timestamp `protobuf:"bytes,3,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	// Title of notification.
 	Title string `protobuf:"bytes,4,opt,name=title,proto3" json:"title,omitempty"`
 	// Receipments of notification.
 	Receipment []string `protobuf:"bytes,5,rep,name=receipment,proto3" json:"receipment,omitempty"`
-	// Content of notification
+	// Content of notification.
 	Content              []*NotificationContent `protobuf:"bytes,6,rep,name=content,proto3" json:"content,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}               `json:"-"`
 	XXX_unrecognized     []byte                 `json:"-"`
@@ -125,12 +125,12 @@ func (m *Notification) GetContent() []*NotificationContent {
 	return nil
 }
 
-// NotificationContent holds content and it's mime type
+// NotificationContent holds content and it's mime type.
 // All fields in this message are read-only.
 type NotificationContent struct {
 	// MIME Type of notification.
 	ContentType string `protobuf:"bytes,1,opt,name=content_type,json=contentType,proto3" json:"content_type,omitempty"`
-	// Content of notification
+	// Content of notification.
 	Content              string   `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -184,11 +184,12 @@ func (m *NotificationContent) GetContent() string {
 	return ""
 }
 
-// ListDeploymentNotificationsRequest is used to request a list of Notifications for given deployment
+// ListDeploymentNotificationsRequest is used to request a list of Notifications for given deployment.
 type ListDeploymentNotificationsRequest struct {
-	// Identifier of the deployment to get a list of notifications for
+	// Identifier of the deployment to get a list of notifications for.
 	DeploymentId string `protobuf:"bytes,1,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
-	// Common listing options
+	// Common listing options.
+	// context_id is a don't care.
 	Options              *v1.ListOptions `protobuf:"bytes,2,opt,name=options,proto3" json:"options,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
 	XXX_unrecognized     []byte          `json:"-"`
@@ -242,9 +243,9 @@ func (m *ListDeploymentNotificationsRequest) GetOptions() *v1.ListOptions {
 	return nil
 }
 
-// NotificationList contains a list of Notification items
+// NotificationList contains a list of Notification items.
 type NotificationList struct {
-	// Notification items
+	// Notification items.
 	Items                []*Notification `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
 	XXX_unrecognized     []byte          `json:"-"`
@@ -355,7 +356,7 @@ type NotificationServiceClient interface {
 	// Required permissions:
 	// - None
 	GetAPIVersion(ctx context.Context, in *v1.Empty, opts ...grpc.CallOption) (*v1.Version, error)
-	// Fetch all notifications related to given deployment
+	// Fetch all notifications related to given deployment.
 	// Required permissions:
 	// - notification.deployment-notification.list on the deployment identified by given deployment_id
 	ListDeploymentNotifications(ctx context.Context, in *ListDeploymentNotificationsRequest, opts ...grpc.CallOption) (*NotificationList, error)
@@ -393,7 +394,7 @@ type NotificationServiceServer interface {
 	// Required permissions:
 	// - None
 	GetAPIVersion(context.Context, *v1.Empty) (*v1.Version, error)
-	// Fetch all notifications related to given deployment
+	// Fetch all notifications related to given deployment.
 	// Required permissions:
 	// - notification.deployment-notification.list on the deployment identified by given deployment_id
 	ListDeploymentNotifications(context.Context, *ListDeploymentNotificationsRequest) (*NotificationList, error)

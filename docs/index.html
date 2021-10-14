@@ -13516,7 +13516,7 @@ Required permissions:
 
       
         <h3 id="arangodb.cloud.prepaid.v1.ListDeploymentNotificationsRequest">ListDeploymentNotificationsRequest</h3>
-        <p>ListDeploymentNotificationsRequest is used to request a list of Notifications for given deployment</p>
+        <p>ListDeploymentNotificationsRequest is used to request a list of Notifications for given deployment.</p>
 
         
           <table class="field-table">
@@ -13529,14 +13529,15 @@ Required permissions:
                   <td>deployment_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Identifier of the deployment to get a list of notifications for </p></td>
+                  <td><p>Identifier of the deployment to get a list of notifications for. </p></td>
                 </tr>
               
                 <tr>
                   <td>options</td>
                   <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
                   <td></td>
-                  <td><p>Common listing options </p></td>
+                  <td><p>Common listing options.
+context_id is a don&#39;t care. </p></td>
                 </tr>
               
             </tbody>
@@ -13547,7 +13548,7 @@ Required permissions:
         
       
         <h3 id="arangodb.cloud.prepaid.v1.Notification">Notification</h3>
-        <p>Notification contains all attributes of a notification</p><p>All fields in this message are read-only.</p>
+        <p>Notification contains all attributes of a notification.</p><p>All fields in this message are read-only.</p>
 
         
           <table class="field-table">
@@ -13568,14 +13569,14 @@ Required permissions:
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Type of notification.
-Will be one of following value: &#34;email&#34;, &#34;sms&#34; </p></td>
+Will be one of following value: &#34;email&#34;, &#34;sms&#34;. </p></td>
                 </tr>
               
                 <tr>
                   <td>created_at</td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
-                  <td><p>The creation timestamp of the prepaid deployment </p></td>
+                  <td><p>The creation timestamp of the prepaid deployment. </p></td>
                 </tr>
               
                 <tr>
@@ -13596,7 +13597,7 @@ Will be one of following value: &#34;email&#34;, &#34;sms&#34; </p></td>
                   <td>content</td>
                   <td><a href="#arangodb.cloud.prepaid.v1.NotificationContent">NotificationContent</a></td>
                   <td>repeated</td>
-                  <td><p>Content of notification </p></td>
+                  <td><p>Content of notification. </p></td>
                 </tr>
               
             </tbody>
@@ -13607,7 +13608,7 @@ Will be one of following value: &#34;email&#34;, &#34;sms&#34; </p></td>
         
       
         <h3 id="arangodb.cloud.prepaid.v1.NotificationContent">NotificationContent</h3>
-        <p>NotificationContent holds content and it's mime type</p><p>All fields in this message are read-only.</p>
+        <p>NotificationContent holds content and it's mime type.</p><p>All fields in this message are read-only.</p>
 
         
           <table class="field-table">
@@ -13627,7 +13628,7 @@ Will be one of following value: &#34;email&#34;, &#34;sms&#34; </p></td>
                   <td>content</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Content of notification </p></td>
+                  <td><p>Content of notification. </p></td>
                 </tr>
               
             </tbody>
@@ -13638,7 +13639,7 @@ Will be one of following value: &#34;email&#34;, &#34;sms&#34; </p></td>
         
       
         <h3 id="arangodb.cloud.prepaid.v1.NotificationList">NotificationList</h3>
-        <p>NotificationList contains a list of Notification items</p>
+        <p>NotificationList contains a list of Notification items.</p>
 
         
           <table class="field-table">
@@ -13651,7 +13652,7 @@ Will be one of following value: &#34;email&#34;, &#34;sms&#34; </p></td>
                   <td>items</td>
                   <td><a href="#arangodb.cloud.prepaid.v1.Notification">Notification</a></td>
                   <td>repeated</td>
-                  <td><p>Notification items </p></td>
+                  <td><p>Notification items. </p></td>
                 </tr>
               
             </tbody>
@@ -13668,7 +13669,7 @@ Will be one of following value: &#34;email&#34;, &#34;sms&#34; </p></td>
 
       
         <h3 id="arangodb.cloud.prepaid.v1.NotificationService">NotificationService</h3>
-        <p>NotificationService is the API used to interact with deployment notifications</p>
+        <p>NotificationService is the API used to interact with deployment notifications.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
@@ -13688,7 +13689,7 @@ Required permissions:
                 <td>ListDeploymentNotifications</td>
                 <td><a href="#arangodb.cloud.prepaid.v1.ListDeploymentNotificationsRequest">ListDeploymentNotificationsRequest</a></td>
                 <td><a href="#arangodb.cloud.prepaid.v1.NotificationList">NotificationList</a></td>
-                <td><p>Fetch all notifications related to given deployment
+                <td><p>Fetch all notifications related to given deployment.
 Required permissions:
 - notification.deployment-notification.list on the deployment identified by given deployment_id</p></td>
               </tr>

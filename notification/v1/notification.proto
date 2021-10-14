@@ -31,7 +31,7 @@ import "common/v1/common.proto";
 import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
 import "google/api/annotations.proto";
 
-// NotificationService is the API used to interact with deployment notifications
+// NotificationService is the API used to interact with deployment notifications.
 service NotificationService {
     // Get the current API version of this service.
     // Required permissions:
@@ -42,7 +42,7 @@ service NotificationService {
         };
     }
 
-    // Fetch all notifications related to given deployment
+    // Fetch all notifications related to given deployment.
     // Required permissions:
     // - notification.deployment-notification.list on the deployment identified by given deployment_id
     rpc ListDeploymentNotifications(ListDeploymentNotificationsRequest) returns (NotificationList) {
@@ -53,42 +53,43 @@ service NotificationService {
 }
 
 
-// Notification contains all attributes of a notification
+// Notification contains all attributes of a notification.
 // All fields in this message are read-only.
 message Notification {
     // System identifier of the notification
     string id = 1;
     // Type of notification.
-    // Will be one of following value: "email", "sms"
+    // Will be one of following value: "email", "sms".
     string type = 2;
-    // The creation timestamp of the prepaid deployment
+    // The creation timestamp of the prepaid deployment.
     google.protobuf.Timestamp created_at = 3;
     // Title of notification.
     string title = 4;
     // Receipments of notification.
     repeated string receipment = 5;
-    // Content of notification
+    // Content of notification.
     repeated NotificationContent content = 6;
 }
 
-// NotificationContent holds content and it's mime type
+// NotificationContent holds content and it's mime type.
 // All fields in this message are read-only.
 message NotificationContent {
     // MIME Type of notification.
     string content_type = 1;
-    // Content of notification
+    // Content of notification.
     string content = 2;
 }
-// ListDeploymentNotificationsRequest is used to request a list of Notifications for given deployment
+// ListDeploymentNotificationsRequest is used to request a list of Notifications for given deployment.
 message ListDeploymentNotificationsRequest {
-    // Identifier of the deployment to get a list of notifications for
+    // Identifier of the deployment to get a list of notifications for.
     string deployment_id = 1;
-    // Common listing options
+    // Common listing options.
+		// context_id is a don't care.
     common.v1.ListOptions options = 2;
 }
 
-// NotificationList contains a list of Notification items
+// NotificationList contains a list of Notification items.
 message NotificationList {
-    // Notification items
+    // Notification items.
     repeated Notification items = 1;
 }
