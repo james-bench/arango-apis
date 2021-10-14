@@ -65,8 +65,9 @@ message Notification {
     google.protobuf.Timestamp created_at = 3;
     // Title of notification.
     string title = 4;
-    // Receipments of notification.
-    repeated string receipments = 5;
+    // Recipients of notification.
+    // email addresses, phone numbers etc
+    repeated string recipients = 5;
     // Content of notification.
     repeated NotificationContent content = 6;
 }
@@ -84,7 +85,7 @@ message ListDeploymentNotificationsRequest {
     // Identifier of the deployment to get a list of notifications for.
     string deployment_id = 1;
     // Common listing options.
-		// context_id is a don't care.
+    // context_id is a don't care.
     common.v1.ListOptions options = 2;
 }
 

@@ -43,9 +43,10 @@ export interface Notification {
   // string
   title?: string;
   
-  // Receipments of notification.
+  // Recipients of notification.
+  // email addresses, phone numbers etc
   // string
-  receipments?: string[];
+  recipients?: string[];
   
   // Content of notification.
   // NotificationContent
