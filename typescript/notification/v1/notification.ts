@@ -45,7 +45,7 @@ export interface Notification {
   
   // Receipments of notification.
   // string
-  receipment?: string[];
+  receipments?: string[];
   
   // Content of notification.
   // NotificationContent
