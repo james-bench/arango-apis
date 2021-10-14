@@ -42,6 +42,17 @@ service NetworkService {
         };
     }
 
+    // Checks if the private endpoint service feature is enabled and available.
+    // Required permissions:
+    // - network.privateendpointservice.get-feature on the deployment that is identified by the given deployment ID (if specified).
+    // - network.privateendpointservice.get-feature on the organization that is identified by the given organization ID (if specified).
+    // - None, authenticated only (if only the region ID is specified).
+    rpc IsPrivateEndpointServiceFeatureAvailable(IsPrivateEndpointServiceFeatureAvailableRequest) returns (IsPrivateEndpointServiceFeatureAvailableResult) {
+        option (google.api.http) = {
+            post: "/api/network/v1/privateendpointservice/feature"
+        };
+    }
+
     // Fetch a private endpoint service by its ID.
     // Required permissions:
     // - network.privateendpointservice.get on the private endpoint service.
@@ -81,6 +92,27 @@ service NetworkService {
     }
 }
 
+// IsPrivateEndpointServiceFeatureAvailableRequest specifies the request parameters for the IsPrivateEndpointServiceFeatureAvailable method.
+// At least 1 of the fields should contain a value.
+message IsPrivateEndpointServiceFeatureAvailableRequest {
+    // Identifier of the deployment (optional)
+    string deployment_id = 1;
+    // Identifier of the organization (optional)
+    // This field is ignored if a deployment_id is specified
+    string organization_id = 2;
+    // Identifier of the region (optional)
+    // This field is ignored if a deployment_id is specified
+    string region_id = 3;
+}
+
+// IsPrivateEndpointServiceFeatureAvailableResult specifies if the private endpoint service is enabled and available.
+// If it is not available it contains a message why not.
+message IsPrivateEndpointServiceFeatureAvailableResult {
+    // Set if the feature is enabled and available.
+    bool available = 1;
+    // Message why the feature is not available.
+    string message = 2;
+}
 
 // PrivateEndpointService represents the service part of the private endpoint 
 message PrivateEndpointService {

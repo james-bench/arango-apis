@@ -278,6 +278,12 @@ export interface Deployment {
   // boolean
   is_prepaid_deployment_update_available?: boolean;
   
+  // Set if the deployment use a private endpoint.
+  // This is a read-only value after creation.
+  // If set during creation a private endpoint service will be created.
+  // boolean
+  private_endpoint?: boolean;
+  
   // ArangoDB version to use for this deployment.
   // See Version.version.
   // If you change this value to a higher version,
@@ -1271,6 +1277,7 @@ export interface IDataService {
   // Create a new deployment
   // Required permissions:
   // - data.deployment.create on the project that owns the deployment
+  // - network.privateendpointservice.create on the project that owns the deployment (if private_endpoint field is set)
   // Note that deployment.status & deployment.expiration are ignored
   // in this request.
   CreateDeployment: (req: Deployment) => Promise<Deployment>;
@@ -1428,6 +1435,7 @@ export class DataService implements IDataService {
   // Create a new deployment
   // Required permissions:
   // - data.deployment.create on the project that owns the deployment
+  // - network.privateendpointservice.create on the project that owns the deployment (if private_endpoint field is set)
   // Note that deployment.status & deployment.expiration are ignored
   // in this request.
   async CreateDeployment(req: Deployment): Promise<Deployment> {

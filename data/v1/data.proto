@@ -74,6 +74,7 @@ service DataService {
     // Create a new deployment
     // Required permissions:
     // - data.deployment.create on the project that owns the deployment
+    // - network.privateendpointservice.create on the project that owns the deployment (if private_endpoint field is set)
     // Note that deployment.status & deployment.expiration are ignored
     // in this request.
     rpc CreateDeployment(Deployment) returns (Deployment) {
@@ -380,6 +381,10 @@ message Deployment {
     // This is a read-only value
     bool is_prepaid_deployment_update_available = 27;
 
+    // Set if the deployment use a private endpoint.
+    // This is a read-only value after creation.
+    // If set during creation a private endpoint service will be created.
+    bool private_endpoint = 30;
 
     // ArangoDB version to use for this deployment.
     // See Version.version.

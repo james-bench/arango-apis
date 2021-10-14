@@ -11,6 +11,36 @@ import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/com
 // File: network/v1/network.proto
 // Package: arangodb.cloud.network.v1
 
+// IsPrivateEndpointServiceFeatureAvailableRequest specifies the request parameters for the IsPrivateEndpointServiceFeatureAvailable method.
+// At least 1 of the fields should contain a value.
+export interface IsPrivateEndpointServiceFeatureAvailableRequest {
+  // Identifier of the deployment (optional)
+  // string
+  deployment_id?: string;
+  
+  // Identifier of the organization (optional)
+  // This field is ignored if a deployment_id is specified
+  // string
+  organization_id?: string;
+  
+  // Identifier of the region (optional)
+  // This field is ignored if a deployment_id is specified
+  // string
+  region_id?: string;
+}
+
+// IsPrivateEndpointServiceFeatureAvailableResult specifies if the private endpoint service is enabled and available.
+// If it is not available it contains a message why not.
+export interface IsPrivateEndpointServiceFeatureAvailableResult {
+  // Set if the feature is enabled and available.
+  // boolean
+  available?: boolean;
+  
+  // Message why the feature is not available.
+  // string
+  message?: string;
+}
+
 // PrivateEndpointService represents the service part of the private endpoint
 export interface PrivateEndpointService {
   // System identifier of the private endpoint service.
@@ -138,6 +168,13 @@ export interface INetworkService {
   // - None
   GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
   
+  // Checks if the private endpoint service feature is enabled and available.
+  // Required permissions:
+  // - network.privateendpointservice.get-feature on the deployment that is identified by the given deployment ID (if specified).
+  // - network.privateendpointservice.get-feature on the organization that is identified by the given organization ID (if specified).
+  // - None, authenticated only (if only the region ID is specified).
+  IsPrivateEndpointServiceFeatureAvailable: (req: IsPrivateEndpointServiceFeatureAvailableRequest) => Promise<IsPrivateEndpointServiceFeatureAvailableResult>;
+  
   // Fetch a private endpoint service by its ID.
   // Required permissions:
   // - network.privateendpointservice.get on the private endpoint service.
@@ -168,6 +205,17 @@ export class NetworkService implements INetworkService {
     const path = `/api/network/v1/api-version`;
     const url = path + api.queryString(req, []);
     return api.get(url, undefined);
+  }
+  
+  // Checks if the private endpoint service feature is enabled and available.
+  // Required permissions:
+  // - network.privateendpointservice.get-feature on the deployment that is identified by the given deployment ID (if specified).
+  // - network.privateendpointservice.get-feature on the organization that is identified by the given organization ID (if specified).
+  // - None, authenticated only (if only the region ID is specified).
+  async IsPrivateEndpointServiceFeatureAvailable(req: IsPrivateEndpointServiceFeatureAvailableRequest): Promise<IsPrivateEndpointServiceFeatureAvailableResult> {
+    const path = `/api/network/v1/privateendpointservice/feature`;
+    const url = path + api.queryString(req, []);
+    return api.post(url, undefined);
   }
   
   // Fetch a private endpoint service by its ID.
