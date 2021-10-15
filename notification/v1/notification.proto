@@ -1,0 +1,97 @@
+//
+// DISCLAIMER
+//
+// Copyright 2021 ArangoDB GmbH, Cologne, Germany
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+// Copyright holder is ArangoDB GmbH, Cologne, Germany
+//
+// Author Marcin Swiderski
+//
+
+syntax = "proto3";
+
+package arangodb.cloud.prepaid.v1;
+
+option go_package = "github.com/arangodb-managed/apis/notification/v1";
+
+import "common/v1/common.proto";
+
+import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
+import "google/api/annotations.proto";
+
+// NotificationService is the API used to interact with deployment notifications.
+service NotificationService {
+    // Get the current API version of this service.
+    // Required permissions:
+    // - None
+    rpc GetAPIVersion(common.v1.Empty) returns (common.v1.Version) {
+        option (google.api.http) = {
+            get: "/api/notification/v1/api-version"
+        };
+    }
+
+    // Fetch all notifications related to given deployment.
+    // Required permissions:
+    // - notification.deployment-notification.list on the deployment identified by given deployment_id
+    rpc ListDeploymentNotifications(ListDeploymentNotificationsRequest) returns (NotificationList) {
+        option (google.api.http) = {
+            post: "/api/notification/v1/deployment/{deployment_id}/notifications"
+            body: "*"
+        };
+    }
+}
+
+
+// Notification contains all attributes of a notification.
+// All fields in this message are read-only.
+message Notification {
+    // System identifier of the notification
+    string id = 1;
+    // Type of notification.
+    // Will be one of following value: "email", "sms".
+    string type = 2;
+    // The creation timestamp of the prepaid deployment.
+    google.protobuf.Timestamp created_at = 3;
+    // Title of notification.
+    string title = 4;
+    // Recipients of notification.
+    // email addresses, phone numbers etc
+    repeated string recipients = 5;
+    // Content of notification.
+    repeated NotificationContent content = 6;
+}
+
+// NotificationContent holds content and it's mime type.
+// All fields in this message are read-only.
+message NotificationContent {
+    // MIME Type of notification.
+    string content_type = 1;
+    // Content of notification.
+    string content = 2;
+}
+// ListDeploymentNotificationsRequest is used to request a list of Notifications for given deployment.
+message ListDeploymentNotificationsRequest {
+    // Identifier of the deployment to get a list of notifications for.
+    string deployment_id = 1;
+    // Common listing options.
+    // context_id is a don't care.
+    common.v1.ListOptions options = 2;
+}
+
+// NotificationList contains a list of Notification items.
+message NotificationList {
+    // Notification items.
+    repeated Notification items = 1;
+}
