@@ -361,6 +361,10 @@ export interface Deployment {
   // This is a read-only property
   // string
   clone_backup_id?: string;
+  
+  // Email addresses that notifications related to the deployment should be sent to.
+  // string
+  notification_email_addresses?: string[];
 }
 
 // Information about a backup restore.
