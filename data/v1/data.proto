@@ -630,8 +630,14 @@ message Deployment {
     // The ID of the backup to restore this clone deployment from.
     // This is a read-only property
     string clone_backup_id = 601;
-    // Email addresses that notifications related to the deployment should be sent to.
-    repeated string notification_email_addresses = 610;
+
+    // Deployment's notification settings
+    message NotificationSettings {
+      // Email addresses that notifications related to this deployment should be sent to.
+      repeated string email_addresses = 1;
+    }
+    // Deployment's notification settings
+    NotificationSettings notification_settings = 610;
 }
 
 // NodeSize specifies the size constraints of different data nodes.
