@@ -361,6 +361,10 @@ export interface Deployment {
   // This is a read-only property
   // string
   clone_backup_id?: string;
+  
+  // Deployment's notification settings
+  // Deployment_NotificationSettings
+  notification_settings?: Deployment_NotificationSettings;
 }
 
 // Information about a backup restore.
@@ -453,6 +457,13 @@ export interface Deployment_ModelSpec {
   // This field is ignored set in case the flexible model is used.
   // number
   node_disk_size?: number;
+}
+
+// Deployment's notification settings
+export interface Deployment_NotificationSettings {
+  // Email addresses that notifications related to this deployment should be sent to.
+  // string
+  email_addresses?: string[];
 }
 
 // Status of a single server (of the ArangoDB cluster)

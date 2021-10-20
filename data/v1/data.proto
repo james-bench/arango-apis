@@ -310,7 +310,7 @@ message RebalanceDeploymentShardsRequest {
 }
 
 // A Deployment is represents one deployment of an ArangoDB cluster.
-message Deployment {   
+message Deployment {
     // System identifier of the deployment.
     // This is a read-only value.
     string id = 1;
@@ -630,6 +630,14 @@ message Deployment {
     // The ID of the backup to restore this clone deployment from.
     // This is a read-only property
     string clone_backup_id = 601;
+
+    // Deployment's notification settings
+    message NotificationSettings {
+      // Email addresses that notifications related to this deployment should be sent to.
+      repeated string email_addresses = 1;
+    }
+    // Deployment's notification settings
+    NotificationSettings notification_settings = 610;
 }
 
 // NodeSize specifies the size constraints of different data nodes.
@@ -1100,4 +1108,3 @@ message DeploymentFeaturesRequest {
     // Node size use for the intended deployments
     string node_size_id = 4;
 }
-
