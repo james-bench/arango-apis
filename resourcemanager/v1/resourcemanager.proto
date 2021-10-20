@@ -401,7 +401,7 @@ message Organization {
     // If set, this organization cannot create deployments without prepaid deployments.
     bool requires_prepaid_deployments = 14;
     // If set, configures which authentication providers can/cannot be used for this organization.
-    AuthenticationProviders authentication_provider = 15;
+    AuthenticationProviders authentication_providers = 15;
 }
 
 // List of organizations.

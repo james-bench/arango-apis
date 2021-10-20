@@ -274,7 +274,7 @@ export interface Organization {
   
   // If set, configures which authentication providers can/cannot be used for this organization.
   // AuthenticationProviders
-  authentication_provider?: AuthenticationProviders;
+  authentication_providers?: AuthenticationProviders;
 }
 export interface Organization_TotalDeploymentsEntry {
   // string
