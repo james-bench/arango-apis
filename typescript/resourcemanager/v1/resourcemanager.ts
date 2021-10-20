@@ -16,21 +16,21 @@ import { User as arangodb_cloud_iam_v1_User } from '../../iam/v1/iam'
 
 // Specify which authentication providers are allowed for use
 // in a specific Organization.
+// For each field applies:
+// - If set, users can access the organization when using that authentication provider.
+// - If not set, users will be denied access to the organizatin when using that authentication provider.
 export interface AuthenticationProviders {
-  // If set, users cannot access the organization when using
-  // username/password authentication provider.
+  // Control access to the organization for users using then username/password authentication provider.
   // boolean
-  disable_username_password?: boolean;
+  enable_username_password?: boolean;
   
-  // If set, users cannot access the organization when using
-  // Google authentication provider.
+  // Control access to the organization for users using then Google authentication provider.
   // boolean
-  disable_google?: boolean;
+  enable_google?: boolean;
   
-  // If set, users cannot access the organization when using
-  // Github authentication provider.
+  // Control access to the organization for users using then Github authentication provider.
   // boolean
-  disable_github?: boolean;
+  enable_github?: boolean;
 }
 export interface DataProcessingAddendum {
   // Identifier of this version of the DPA
@@ -273,6 +273,7 @@ export interface Organization {
   requires_prepaid_deployments?: boolean;
   
   // If set, configures which authentication providers can/cannot be used for this organization.
+  // If not set, all providers are enabled by default.
   // AuthenticationProviders
   authentication_providers?: AuthenticationProviders;
 }
