@@ -13,6 +13,25 @@ import { User as arangodb_cloud_iam_v1_User } from '../../iam/v1/iam'
 
 // File: resourcemanager/v1/resourcemanager.proto
 // Package: arangodb.cloud.resourcemanager.v1
+
+// Specify which authentication providers are allowed for use
+// in a specific Organization.
+export interface AuthenticationProviders {
+  // If set, users cannot access the organization when using
+  // username/password authentication provider.
+  // boolean
+  disable_username_password?: boolean;
+  
+  // If set, users cannot access the organization when using
+  // Google authentication provider.
+  // boolean
+  disable_google?: boolean;
+  
+  // If set, users cannot access the organization when using
+  // Github authentication provider.
+  // boolean
+  disable_github?: boolean;
+}
 export interface DataProcessingAddendum {
   // Identifier of this version of the DPA
   // string
@@ -252,6 +271,10 @@ export interface Organization {
   // If set, this organization cannot create deployments without prepaid deployments.
   // boolean
   requires_prepaid_deployments?: boolean;
+  
+  // If set, configures which authentication providers can/cannot be used for this organization.
+  // AuthenticationProviders
+  authentication_provider?: AuthenticationProviders;
 }
 export interface Organization_TotalDeploymentsEntry {
   // string

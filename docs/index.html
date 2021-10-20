@@ -1203,6 +1203,10 @@ title: "ArangoDB Oasis API"
             <ul>
               
                 <li>
+                  <a href="#arangodb.cloud.resourcemanager.v1.AuthenticationProviders"><span class="badge">M</span>AuthenticationProviders</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.resourcemanager.v1.DataProcessingAddendum"><span class="badge">M</span>DataProcessingAddendum</a>
                 </li>
               
@@ -7676,6 +7680,13 @@ This is a read-only property </p></td>
                   <td></td>
                   <td><p>The ID of the backup to restore this clone deployment from.
 This is a read-only property </p></td>
+                </tr>
+              
+                <tr>
+                  <td>notification_settings</td>
+                  <td><a href="#arangodb.cloud.data.v1.Deployment.NotificationSettings">Deployment.NotificationSettings</a></td>
+                  <td></td>
+                  <td><p>Deployment&#39;s notification settings </p></td>
                 </tr>
               
             </tbody>
@@ -14827,6 +14838,47 @@ Required permissions:
       <p></p>
 
       
+        <h3 id="arangodb.cloud.resourcemanager.v1.AuthenticationProviders">AuthenticationProviders</h3>
+        <p>Specify which authentication providers are allowed for use </p><p>in a specific Organization.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>disable_username_password</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, users cannot access the organization when using
+username/password authentication provider. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>disable_google</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, users cannot access the organization when using
+Google authentication provider. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>disable_github</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, users cannot access the organization when using
+Github authentication provider. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.resourcemanager.v1.DataProcessingAddendum">DataProcessingAddendum</h3>
         <p></p>
 
@@ -15362,6 +15414,13 @@ To delete, first update the with locked set to false. </p></td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>If set, this organization cannot create deployments without prepaid deployments. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>authentication_provider</td>
+                  <td><a href="#arangodb.cloud.resourcemanager.v1.AuthenticationProviders">AuthenticationProviders</a></td>
+                  <td></td>
+                  <td><p>If set, configures which authentication providers can/cannot be used for this organization. </p></td>
                 </tr>
               
             </tbody>

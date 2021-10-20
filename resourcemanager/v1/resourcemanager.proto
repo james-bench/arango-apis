@@ -400,6 +400,8 @@ message Organization {
     bool locked = 13;
     // If set, this organization cannot create deployments without prepaid deployments.
     bool requires_prepaid_deployments = 14;
+    // If set, configures which authentication providers can/cannot be used for this organization.
+    AuthenticationProviders authentication_provider = 15;
 }
 
 // List of organizations.
@@ -408,6 +410,20 @@ message OrganizationList {
     repeated Organization items = 1;
     // Budget for organizations (owned by the caller)
     common.v1.Budget budget = 2;
+}
+
+// Specify which authentication providers are allowed for use 
+// in a specific Organization.
+message AuthenticationProviders {
+    // If set, users cannot access the organization when using
+    // username/password authentication provider.
+    bool disable_username_password = 1;
+    // If set, users cannot access the organization when using
+    // Google authentication provider.
+    bool disable_google = 2;
+    // If set, users cannot access the organization when using
+    // Github authentication provider.
+    bool disable_github = 3;
 }
 
 // Tier of an organization.
