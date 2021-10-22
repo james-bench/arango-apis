@@ -7,7 +7,11 @@ MODVOL := arangodb-cloud-apis-pkg-mod
 HOMEVOL := arangodb-cloud-apis-home
 PROTOSOURCES := $(shell find .  -name '*.proto' -not -path './vendor/*' | sort)
 
-GITHUB_TOKEN := $(shell cat $(HOME)/.arangodb/ms/github-readonly-code-acces.token)
+ifndef CIRCLECI
+	GITHUB_TOKEN := $(shell cat $(HOME)/.arangodb/ms/github-readonly-code-acces.token)
+else
+	GITHUB_TOKEN :=
+endif
 
 DOCKERARGS := run -t --rm \
 	-u $(shell id -u):$(shell id -g) \
