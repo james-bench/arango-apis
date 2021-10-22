@@ -23,6 +23,17 @@ export interface ListDeploymentNotificationsRequest {
   options?: arangodb_cloud_common_v1_ListOptions;
 }
 
+// MarkNotificationRequest is used to mark/unmark notifications for given deployment
+export interface MarkNotificationRequest {
+  // Identifier of the deployment containing notification
+  // string
+  deployment_id?: string;
+  
+  // Identifier of notification that has to be marked
+  // string
+  notification_id?: string;
+}
+
 // Notification contains all attributes of a notification.
 // All fields in this message are read-only.
 export interface Notification {
@@ -51,6 +62,18 @@ export interface Notification {
   // Content of notification.
   // NotificationContent
   content?: NotificationContent[];
+  
+  // Notification_ReadAt
+  read_at?: Notification_ReadAt;
+}
+export interface Notification_ReadAt {
+  // When the notification was marked as read
+  // googleTypes.Timestamp
+  read_at?: googleTypes.Timestamp;
+  
+  // Identifier of user who marked message as read
+  // string
+  reader?: string;
 }
 
 // NotificationContent holds content and it's mime type.
@@ -83,6 +106,16 @@ export interface INotificationService {
   // Required permissions:
   // - notification.deployment-notification.list on the deployment identified by given deployment_id
   ListDeploymentNotifications: (req: ListDeploymentNotificationsRequest) => Promise<NotificationList>;
+  
+  // Mark notification related to given deployment as read.
+  // Required permissions:
+  // - notification.deployment-notification.mark-as-read on the deployment identified by given deployment_id
+  MarkNotificationAsRead: (req: MarkNotificationRequest) => Promise<void>;
+  
+  // Mark notification related to given deployment as unread.
+  // Required permissions:
+  // - notification.deployment-notification.mark-as-unread on the deployment identified by given deployment_id
+  MarkNotificationAsUnread: (req: MarkNotificationRequest) => Promise<void>;
 }
 
 // NotificationService is the API used to interact with deployment notifications.
@@ -101,6 +134,22 @@ export class NotificationService implements INotificationService {
   // - notification.deployment-notification.list on the deployment identified by given deployment_id
   async ListDeploymentNotifications(req: ListDeploymentNotificationsRequest): Promise<NotificationList> {
     const url = `/api/notification/v1/deployment/${encodeURIComponent(req.deployment_id || '')}/notifications`;
+    return api.post(url, req);
+  }
+  
+  // Mark notification related to given deployment as read.
+  // Required permissions:
+  // - notification.deployment-notification.mark-as-read on the deployment identified by given deployment_id
+  async MarkNotificationAsRead(req: MarkNotificationRequest): Promise<void> {
+    const url = `/api/notification/v1/deployment/${encodeURIComponent(req.deployment_id || '')}/notifications/${encodeURIComponent(req.notification_id || '')}/read`;
+    return api.post(url, req);
+  }
+  
+  // Mark notification related to given deployment as unread.
+  // Required permissions:
+  // - notification.deployment-notification.mark-as-unread on the deployment identified by given deployment_id
+  async MarkNotificationAsUnread(req: MarkNotificationRequest): Promise<void> {
+    const url = `/api/notification/v1/deployment/${encodeURIComponent(req.deployment_id || '')}/notifications/${encodeURIComponent(req.notification_id || '')}/unread`;
     return api.post(url, req);
   }
 }

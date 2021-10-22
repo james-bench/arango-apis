@@ -51,8 +51,27 @@ service NotificationService {
             body: "*"
         };
     }
-}
 
+    // Mark notification related to given deployment as read.
+    // Required permissions:
+    // - notification.deployment-notification.mark-as-read on the deployment identified by given deployment_id
+    rpc MarkNotificationAsRead(MarkNotificationRequest) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            post: "/api/notification/v1/deployment/{deployment_id}/notifications/{notification_id}/read"
+            body: "*"
+        };
+    }
+
+    // Mark notification related to given deployment as unread.
+    // Required permissions:
+    // - notification.deployment-notification.mark-as-unread on the deployment identified by given deployment_id
+    rpc MarkNotificationAsUnread(MarkNotificationRequest) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            post: "/api/notification/v1/deployment/{deployment_id}/notifications/{notification_id}/unread"
+            body: "*"
+        };
+    }
+}
 
 // Notification contains all attributes of a notification.
 // All fields in this message are read-only.
@@ -71,6 +90,14 @@ message Notification {
     repeated string recipients = 5;
     // Content of notification.
     repeated NotificationContent content = 6;
+
+    message ReadAt {
+      // When the notification was marked as read
+      google.protobuf.Timestamp read_at = 1;
+      // Identifier of user who marked message as read
+      string reader = 2;
+    }
+    ReadAt read_at = 7;
 }
 
 // NotificationContent holds content and it's mime type.
@@ -94,4 +121,12 @@ message ListDeploymentNotificationsRequest {
 message NotificationList {
     // Notification items.
     repeated Notification items = 1;
+}
+
+// MarkNotificationRequest is used to mark/unmark notifications for given deployment
+message MarkNotificationRequest {
+    // Identifier of the deployment containing notification
+    string deployment_id = 1;
+    // Identifier of notification that has to be marked
+    string notification_id = 2;
 }
