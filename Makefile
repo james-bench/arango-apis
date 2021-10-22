@@ -37,8 +37,16 @@ endif
 .PHONY: all
 all: generate build check ts docs
 
+.PHONY: pull-build-image
+pull-build-image: 
+ifndef CIRCLECI
+ifndef OFFLINE
+	@docker pull $(BUILDIMAGE)
+endif
+endif
+
 .PHONY: $(CACHEVOL)
-$(CACHEVOL): Makefile
+$(CACHEVOL): pull-build-image Makefile
 ifndef CIRCLECI
 	@docker volume create $(CACHEVOL)
 	@docker run -it --rm -v $(CACHEVOL):/usr/gocache \
@@ -47,7 +55,7 @@ ifndef CIRCLECI
 endif
 
 .PHONY: $(MODVOL)
-$(MODVOL): Makefile
+$(MODVOL): pull-build-image Makefile
 ifndef CIRCLECI
 	@docker volume create $(MODVOL)
 	@docker run -it --rm -v $(MODVOL):/go/pkg/mod \
@@ -56,7 +64,7 @@ ifndef CIRCLECI
 endif
 
 .PHONY: $(HOMEVOL)
-$(HOMEVOL): Makefile
+$(HOMEVOL): pull-build-image Makefile
 ifndef CIRCLECI
 	@docker volume create $(HOMEVOL)
 	@docker run -it 	--rm -v $(HOMEVOL):/home/gopher \
