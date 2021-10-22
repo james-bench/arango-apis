@@ -63,17 +63,26 @@ export interface Notification {
   // NotificationContent
   content?: NotificationContent[];
   
+  // If the message is not markes as read this field is empty
   // Notification_ReadAt
   read_at?: Notification_ReadAt;
+  
+  // If set this message was marked as read
+  // boolean
+  read?: boolean;
 }
+
+// Details about notification read.
+// All fields in this message are read-only.
 export interface Notification_ReadAt {
   // When the notification was marked as read
   // googleTypes.Timestamp
   read_at?: googleTypes.Timestamp;
   
   // Identifier of user who marked message as read
+  // If set the notififaction was read
   // string
-  reader?: string;
+  read_by_id?: string;
 }
 
 // NotificationContent holds content and it's mime type.

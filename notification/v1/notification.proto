@@ -91,13 +91,19 @@ message Notification {
     // Content of notification.
     repeated NotificationContent content = 6;
 
+    // Details about notification read.
+    // All fields in this message are read-only.
     message ReadAt {
       // When the notification was marked as read
       google.protobuf.Timestamp read_at = 1;
       // Identifier of user who marked message as read
-      string reader = 2;
+      string read_by_id = 2;
+      // If set the notififaction was read
     }
+    // If the message is not markes as read this field is empty
     ReadAt read_at = 7;
+    // If set this message was marked as read
+    bool read = 8;
 }
 
 // NotificationContent holds content and it's mime type.

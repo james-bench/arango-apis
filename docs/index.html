@@ -13679,7 +13679,14 @@ email addresses, phone numbers etc </p></td>
                   <td>read_at</td>
                   <td><a href="#arangodb.cloud.prepaid.v1.Notification.ReadAt">Notification.ReadAt</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>If the message is not markes as read this field is empty </p></td>
+                </tr>
+              
+                <tr>
+                  <td>read</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set this message was marked as read </p></td>
                 </tr>
               
             </tbody>
@@ -13690,7 +13697,7 @@ email addresses, phone numbers etc </p></td>
         
       
         <h3 id="arangodb.cloud.prepaid.v1.Notification.ReadAt">Notification.ReadAt</h3>
-        <p></p>
+        <p>Details about notification read.</p><p>All fields in this message are read-only.</p>
 
         
           <table class="field-table">
@@ -13707,10 +13714,12 @@ email addresses, phone numbers etc </p></td>
                 </tr>
               
                 <tr>
-                  <td>reader</td>
+                  <td>read_by_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Identifier of user who marked message as read </p></td>
+                  <td><p>Identifier of user who marked message as read
+
+If set the notififaction was read </p></td>
                 </tr>
               
             </tbody>
