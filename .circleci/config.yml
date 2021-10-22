@@ -14,7 +14,6 @@ jobs:
           keys:
             - go-mod-v1-{{ checksum "go.sum.orig" }}
       - run: |
-          make bootstrap
           make check-version # fail early if there is a version inconsistency
           make all
       - save_cache:
