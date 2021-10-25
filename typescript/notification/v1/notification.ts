@@ -21,6 +21,14 @@ export interface ListDeploymentNotificationsRequest {
   // context_id is a don't care.
   // arangodb.cloud.common.v1.ListOptions
   options?: arangodb_cloud_common_v1_ListOptions;
+  
+  // Get only read notifications
+  // boolean
+  read_only?: boolean;
+  
+  // Get only unread notifications
+  // boolean
+  unread_only?: boolean;
 }
 
 // MarkNotificationRequest is used to mark/unmark notifications for given deployment

@@ -121,6 +121,10 @@ message ListDeploymentNotificationsRequest {
     // Common listing options.
     // context_id is a don't care.
     common.v1.ListOptions options = 2;
+    // Get only read notifications
+    bool read_only = 3;
+    // Get only unread notifications
+    bool unread_only = 4;
 }
 
 // NotificationList contains a list of Notification items.
