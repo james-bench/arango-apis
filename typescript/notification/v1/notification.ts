@@ -84,7 +84,6 @@ export interface Notification_ReadAt {
   read_at?: googleTypes.Timestamp;
   
   // Identifier of user who marked message as read
-  // If set the notififaction was read
   // string
   read_by_id?: string;
 }
