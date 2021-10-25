@@ -46,7 +46,7 @@ type Notification struct {
 	Recipients []string `protobuf:"bytes,5,rep,name=recipients,proto3" json:"recipients,omitempty"`
 	// Content of notification.
 	Content []*NotificationContent `protobuf:"bytes,6,rep,name=content,proto3" json:"content,omitempty"`
-	// If the message is not markes as read this field is empty
+	// If the message is not marked as read this field is empty
 	ReadAt *Notification_ReadAt `protobuf:"bytes,7,opt,name=read_at,json=readAt,proto3" json:"read_at,omitempty"`
 	// If set this message was marked as read
 	IsRead               bool     `protobuf:"varint,8,opt,name=is_read,json=isRead,proto3" json:"is_read,omitempty"`

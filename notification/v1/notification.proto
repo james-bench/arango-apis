@@ -99,7 +99,7 @@ message Notification {
       // Identifier of user who marked message as read
       string read_by_id = 2;
     }
-    // If the message is not markes as read this field is empty
+    // If the message is not marked as read this field is empty
     ReadAt read_at = 7;
     // If set this message was marked as read
     bool is_read = 8;

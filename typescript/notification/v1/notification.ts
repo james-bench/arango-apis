@@ -67,7 +67,7 @@ export interface Notification {
   // NotificationContent
   content?: NotificationContent[];
   
-  // If the message is not markes as read this field is empty
+  // If the message is not marked as read this field is empty
   // Notification_ReadAt
   read_at?: Notification_ReadAt;
   
