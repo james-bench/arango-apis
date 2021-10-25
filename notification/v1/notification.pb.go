@@ -522,11 +522,11 @@ type NotificationServiceClient interface {
 	ListDeploymentNotifications(ctx context.Context, in *ListDeploymentNotificationsRequest, opts ...grpc.CallOption) (*NotificationList, error)
 	// Mark notification related to given deployment as read.
 	// Required permissions:
-	// - notification.deployment-notification.mark-as-read on the deployment identified by given deployment_id
+	// - notification.deployment-notification.mark-as-read on the deployment associated with the notification identified by notification_id
 	MarkNotificationAsRead(ctx context.Context, in *MarkNotificationRequest, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Mark notification related to given deployment as unread.
 	// Required permissions:
-	// - notification.deployment-notification.mark-as-unread on the deployment identified by given deployment_id
+	// - notification.deployment-notification.mark-as-unread on the deployment associated with the notification identified by notification_id
 	MarkNotificationAsUnread(ctx context.Context, in *MarkNotificationRequest, opts ...grpc.CallOption) (*v1.Empty, error)
 }
 
@@ -586,11 +586,11 @@ type NotificationServiceServer interface {
 	ListDeploymentNotifications(context.Context, *ListDeploymentNotificationsRequest) (*NotificationList, error)
 	// Mark notification related to given deployment as read.
 	// Required permissions:
-	// - notification.deployment-notification.mark-as-read on the deployment identified by given deployment_id
+	// - notification.deployment-notification.mark-as-read on the deployment associated with the notification identified by notification_id
 	MarkNotificationAsRead(context.Context, *MarkNotificationRequest) (*v1.Empty, error)
 	// Mark notification related to given deployment as unread.
 	// Required permissions:
-	// - notification.deployment-notification.mark-as-unread on the deployment identified by given deployment_id
+	// - notification.deployment-notification.mark-as-unread on the deployment associated with the notification identified by notification_id
 	MarkNotificationAsUnread(context.Context, *MarkNotificationRequest) (*v1.Empty, error)
 }
 

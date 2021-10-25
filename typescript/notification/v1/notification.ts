@@ -122,12 +122,12 @@ export interface INotificationService {
   
   // Mark notification related to given deployment as read.
   // Required permissions:
-  // - notification.deployment-notification.mark-as-read on the deployment identified by given deployment_id
+  // - notification.deployment-notification.mark-as-read on the deployment associated with the notification identified by notification_id
   MarkNotificationAsRead: (req: MarkNotificationRequest) => Promise<void>;
   
   // Mark notification related to given deployment as unread.
   // Required permissions:
-  // - notification.deployment-notification.mark-as-unread on the deployment identified by given deployment_id
+  // - notification.deployment-notification.mark-as-unread on the deployment associated with the notification identified by notification_id
   MarkNotificationAsUnread: (req: MarkNotificationRequest) => Promise<void>;
 }
 
@@ -152,7 +152,7 @@ export class NotificationService implements INotificationService {
   
   // Mark notification related to given deployment as read.
   // Required permissions:
-  // - notification.deployment-notification.mark-as-read on the deployment identified by given deployment_id
+  // - notification.deployment-notification.mark-as-read on the deployment associated with the notification identified by notification_id
   async MarkNotificationAsRead(req: MarkNotificationRequest): Promise<void> {
     const url = `/api/notification/v1/notifications/${encodeURIComponent(req.notification_id || '')}/mark/read`;
     return api.post(url, req);
@@ -160,7 +160,7 @@ export class NotificationService implements INotificationService {
   
   // Mark notification related to given deployment as unread.
   // Required permissions:
-  // - notification.deployment-notification.mark-as-unread on the deployment identified by given deployment_id
+  // - notification.deployment-notification.mark-as-unread on the deployment associated with the notification identified by notification_id
   async MarkNotificationAsUnread(req: MarkNotificationRequest): Promise<void> {
     const url = `/api/notification/v1/notifications/${encodeURIComponent(req.notification_id || '')}/mark/unread`;
     return api.post(url, req);
