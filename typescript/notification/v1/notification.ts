@@ -33,10 +33,6 @@ export interface ListDeploymentNotificationsRequest {
 
 // MarkNotificationRequest is used to mark/unmark notifications for given deployment
 export interface MarkNotificationRequest {
-  // Identifier of the deployment containing notification
-  // string
-  deployment_id?: string;
-  
   // Identifier of notification that has to be marked
   // string
   notification_id?: string;
@@ -77,7 +73,7 @@ export interface Notification {
   
   // If set this message was marked as read
   // boolean
-  read?: boolean;
+  is_read?: boolean;
 }
 
 // Details about notification read.
@@ -158,7 +154,7 @@ export class NotificationService implements INotificationService {
   // Required permissions:
   // - notification.deployment-notification.mark-as-read on the deployment identified by given deployment_id
   async MarkNotificationAsRead(req: MarkNotificationRequest): Promise<void> {
-    const url = `/api/notification/v1/deployment/${encodeURIComponent(req.deployment_id || '')}/notifications/${encodeURIComponent(req.notification_id || '')}/read`;
+    const url = `/api/notification/v1/notifications/${encodeURIComponent(req.notification_id || '')}/mark/read`;
     return api.post(url, req);
   }
   
@@ -166,7 +162,7 @@ export class NotificationService implements INotificationService {
   // Required permissions:
   // - notification.deployment-notification.mark-as-unread on the deployment identified by given deployment_id
   async MarkNotificationAsUnread(req: MarkNotificationRequest): Promise<void> {
-    const url = `/api/notification/v1/deployment/${encodeURIComponent(req.deployment_id || '')}/notifications/${encodeURIComponent(req.notification_id || '')}/unread`;
+    const url = `/api/notification/v1/notifications/${encodeURIComponent(req.notification_id || '')}/mark/unread`;
     return api.post(url, req);
   }
 }

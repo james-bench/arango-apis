@@ -57,7 +57,7 @@ service NotificationService {
     // - notification.deployment-notification.mark-as-read on the deployment identified by given deployment_id
     rpc MarkNotificationAsRead(MarkNotificationRequest) returns (common.v1.Empty) {
         option (google.api.http) = {
-            post: "/api/notification/v1/deployment/{deployment_id}/notifications/{notification_id}/read"
+            post: "/api/notification/v1/notifications/{notification_id}/mark/read"
             body: "*"
         };
     }
@@ -67,7 +67,7 @@ service NotificationService {
     // - notification.deployment-notification.mark-as-unread on the deployment identified by given deployment_id
     rpc MarkNotificationAsUnread(MarkNotificationRequest) returns (common.v1.Empty) {
         option (google.api.http) = {
-            post: "/api/notification/v1/deployment/{deployment_id}/notifications/{notification_id}/unread"
+            post: "/api/notification/v1/notifications/{notification_id}/mark/unread"
             body: "*"
         };
     }
@@ -103,7 +103,7 @@ message Notification {
     // If the message is not markes as read this field is empty
     ReadAt read_at = 7;
     // If set this message was marked as read
-    bool read = 8;
+    bool is_read = 8;
 }
 
 // NotificationContent holds content and it's mime type.
@@ -135,8 +135,6 @@ message NotificationList {
 
 // MarkNotificationRequest is used to mark/unmark notifications for given deployment
 message MarkNotificationRequest {
-    // Identifier of the deployment containing notification
-    string deployment_id = 1;
     // Identifier of notification that has to be marked
     string notification_id = 2;
 }

@@ -13615,13 +13615,6 @@ context_id is a don&#39;t care. </p></td>
             <tbody>
               
                 <tr>
-                  <td>deployment_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Identifier of the deployment containing notification </p></td>
-                </tr>
-              
-                <tr>
                   <td>notification_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
@@ -13697,7 +13690,7 @@ email addresses, phone numbers etc </p></td>
                 </tr>
               
                 <tr>
-                  <td>read</td>
+                  <td>is_read</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>If set this message was marked as read </p></td>
@@ -13891,7 +13884,7 @@ Required permissions:
               <tr>
                 <td>MarkNotificationAsRead</td>
                 <td>POST</td>
-                <td>/api/notification/v1/deployment/{deployment_id}/notifications/{notification_id}/read</td>
+                <td>/api/notification/v1/notifications/{notification_id}/mark/read</td>
                 <td>*</td>
               </tr>
               
@@ -13901,7 +13894,7 @@ Required permissions:
               <tr>
                 <td>MarkNotificationAsUnread</td>
                 <td>POST</td>
-                <td>/api/notification/v1/deployment/{deployment_id}/notifications/{notification_id}/unread</td>
+                <td>/api/notification/v1/notifications/{notification_id}/mark/unread</td>
                 <td>*</td>
               </tr>
               
