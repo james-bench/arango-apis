@@ -135,5 +135,5 @@ message NotificationList {
 // MarkNotificationRequest is used to mark/unmark notifications for given deployment
 message MarkNotificationRequest {
     // Identifier of notification that has to be marked
-    string notification_id = 2;
+    string notification_id = 1;
 }
