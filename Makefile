@@ -1,10 +1,17 @@
 SHELL = bash
 SCRIPTDIR := $(shell pwd)
 ROOTDIR := $(shell cd $(SCRIPTDIR) && pwd)
-BUILDIMAGE := arangodb-cloud-apis-build
+BUILDIMAGE := arangodboasis/golang-ci:latest
 CACHEVOL := arangodb-cloud-apis-gocache
 MODVOL := arangodb-cloud-apis-pkg-mod
+HOMEVOL := arangodb-cloud-apis-home
 PROTOSOURCES := $(shell find .  -name '*.proto' -not -path './vendor/*' | sort)
+
+ifndef CIRCLECI
+	GITHUB_TOKEN := $(shell cat $(HOME)/.arangodb/ms/github-readonly-code-acces.token)
+else
+	GITHUB_TOKEN :=
+endif
 
 DOCKERARGS := run -t --rm \
 	-u $(shell id -u):$(shell id -g) \
@@ -12,10 +19,12 @@ DOCKERARGS := run -t --rm \
 	-v $(ROOTDIR):/usr/src \
 	-v $(CACHEVOL):/usr/gocache \
 	-v $(MODVOL):/go/pkg/mod \
+	-v $(HOMEVOL):/home/gopher \
 	-e GOCACHE=/usr/gocache \
 	-e GOSUMDB=off \
 	-e GOPROXY=direct \
 	-e CGO_ENABLED=0 \
+	-e HOME=/home/gopher \
 	-w /usr/src \
 	$(BUILDIMAGE)
 
@@ -28,51 +37,52 @@ endif
 .PHONY: all
 all: generate build check ts docs
 
-# Build docker builder image
-.PHONY: build-image
+.PHONY: pull-build-image
+pull-build-image: 
 ifndef CIRCLECI
-build-image:
-	docker build \
-		--build-arg=TOKEN=$(shell cat $(HOME)/.arangodb/ms/github-readonly-code-acces.token) \
-		-t $(BUILDIMAGE) \
-		-f Dockerfile.build .
-else
-build-image: get-plugins
+ifndef OFFLINE
+	@docker pull $(BUILDIMAGE)
+endif
 endif
 
-.PHONY: get-plugins
-get-plugins:
-	go get github.com/gogo/protobuf/protoc-gen-gogo@v1.3.0
-	go get github.com/gogo/protobuf/protoc-gen-gofast@v1.3.0
-	go get github.com/gogo/protobuf/protoc-gen-gogofaster@v1.3.0
-	go get golang.org/x/tools/cmd/goimports@v0.0.0-20190918214516-5a1a30219888
-	go get github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger@v1.11.0
-	go get github.com/golang/protobuf/protoc-gen-go@v1.3.2
-	go get github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@v1.3.2
-	go get github.com/arangodb-managed/protoc-gen-ts/cmd/protoc-gen-ts@v0.2.0
-	go get github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway@v1.14.6
-
 .PHONY: $(CACHEVOL)
-$(CACHEVOL):
+$(CACHEVOL): pull-build-image Makefile
 ifndef CIRCLECI
 	@docker volume create $(CACHEVOL)
-	docker run -it 	--rm -v $(CACHEVOL):/usr/gocache \
+	@docker run -it --rm -v $(CACHEVOL):/usr/gocache \
 		$(BUILDIMAGE) \
-		chown -R $(shell id -u):$(shell id -g) /usr/gocache
+		sudo chown -R $(shell id -u):$(shell id -g) /usr/gocache
 endif
 
 .PHONY: $(MODVOL)
-$(MODVOL):
+$(MODVOL): pull-build-image Makefile
 ifndef CIRCLECI
 	@docker volume create $(MODVOL)
-	docker run -it 	--rm -v $(MODVOL):/go/pkg/mod \
+	@docker run -it --rm -v $(MODVOL):/go/pkg/mod \
 		$(BUILDIMAGE) \
-		chown -R $(shell id -u):$(shell id -g) /go/pkg/mod
+		sudo chown -R $(shell id -u):$(shell id -g) /go/pkg/mod
+endif
+
+.PHONY: $(HOMEVOL)
+$(HOMEVOL): pull-build-image Makefile
+ifndef CIRCLECI
+	@docker volume create $(HOMEVOL)
+	@docker run -it 	--rm -v $(HOMEVOL):/home/gopher \
+		-e GITHUB_TOKEN=$(GITHUB_TOKEN) \
+		-e HOME=/home/gopher \
+		$(BUILDIMAGE) \
+		sudo chown -R $(shell id -u):$(shell id -g) /home/gopher
+	@docker run -it --rm -v $(HOMEVOL):/home/gopher \
+		-u $(shell id -u):$(shell id -g) \
+		-e GITHUB_TOKEN=$(GITHUB_TOKEN) \
+		-e HOME=/home/gopher \
+		$(BUILDIMAGE) \
+		configure-git
 endif
 
 # Generate go code for proto files
 .PHONY: generate
-generate: $(CACHEVOL) $(MODVOL)
+generate: $(CACHEVOL) $(MODVOL) $(HOMEVOL)
 	$(DOCKERENV) \
 		go generate ./...
 
@@ -89,7 +99,7 @@ check:
 
 # Generate API docs
 .PHONY: docs
-docs: $(CACHEVOL) $(MODVOL)
+docs: $(CACHEVOL) $(MODVOL) $(HOMEVOL)
 	$(DOCKERENV) \
 		protoc -I.:vendor:vendor/googleapis/:vendor/github.com/gogo/protobuf/protobuf/ \
 			--doc_out=docs $(PROTOSOURCES) \
@@ -99,7 +109,7 @@ docs: $(CACHEVOL) $(MODVOL)
 
 # Generate API as typescript
 .PHONY: ts
-ts: $(CACHEVOL) $(MODVOL)
+ts: $(CACHEVOL) $(MODVOL) $(HOMEVOL)
 	@rm -Rf typescript
 	@mkdir -p typescript
 	$(DOCKERENV) \
