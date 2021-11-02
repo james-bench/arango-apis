@@ -388,7 +388,7 @@ func (m *NotificationList) GetItems() []*Notification {
 	return nil
 }
 
-// MarkNotificationRequest is used to mark/unmark notifications for given deployment
+// MarkNotificationRequest is used to mark notifications for given deployment as Read/Unread
 type MarkNotificationRequest struct {
 	// Identifier of notification that has to be marked
 	NotificationId       string   `protobuf:"bytes,1,opt,name=notification_id,json=notificationId,proto3" json:"notification_id,omitempty"`
