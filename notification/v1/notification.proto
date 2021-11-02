@@ -132,7 +132,7 @@ message NotificationList {
     repeated Notification items = 1;
 }
 
-// MarkNotificationRequest is used to mark/unmark notifications for given deployment
+// MarkNotificationRequest is used to mark notifications for given deployment as Read/Unread
 message MarkNotificationRequest {
     // Identifier of notification that has to be marked
     string notification_id = 1;

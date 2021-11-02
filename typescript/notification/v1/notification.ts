@@ -31,7 +31,7 @@ export interface ListDeploymentNotificationsRequest {
   unread_only?: boolean;
 }
 
-// MarkNotificationRequest is used to mark/unmark notifications for given deployment
+// MarkNotificationRequest is used to mark notifications for given deployment as Read/Unread
 export interface MarkNotificationRequest {
   // Identifier of notification that has to be marked
   // string
