@@ -27,4 +27,8 @@ const (
 
 	// PermissionDeploymentNotificationList is required to list deployment's Notifications
 	PermissionDeploymentNotificationList = "notification.deployment-notification.list"
+	// PermissionNotificationMarkAsRead is required to mark notification as read
+	PermissionNotificationMarkAsRead = "notification.deployment-notification.mark-as-read"
+	// PermissionNotificationMarkAsUnread is required to mark notification as unread
+	PermissionNotificationMarkAsUnread = "notification.deployment-notification.mark-as-unread"
 )
