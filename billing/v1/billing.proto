@@ -546,6 +546,8 @@ message BillingConfig {
     repeated string email_addresses = 3;
     // US sales tax number of the organization (if any)
     string us_tax_number = 4;
+    // Legal name of the organization
+    string company_legal_name = 5;
 }
 
 // Request arguments for SetBillingConfig.
