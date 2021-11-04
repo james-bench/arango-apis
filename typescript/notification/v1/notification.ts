@@ -9,7 +9,7 @@ import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../commo
 import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 
 // File: notification/v1/notification.proto
-// Package: arangodb.cloud.prepaid.v1
+// Package: arangodb.cloud.notification.v1
 
 // ListDeploymentNotificationsRequest is used to request a list of Notifications for given deployment.
 export interface ListDeploymentNotificationsRequest {
