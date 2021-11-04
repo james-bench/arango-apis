@@ -22,7 +22,7 @@
 
 syntax = "proto3";
 
-package arangodb.cloud.prepaid.v1;
+package arangodb.cloud.notification.v1;
 
 option go_package = "github.com/arangodb-managed/apis/notification/v1";
 
