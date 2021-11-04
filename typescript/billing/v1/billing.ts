@@ -54,6 +54,10 @@ export interface BillingConfig {
   // US sales tax number of the organization (if any)
   // string
   us_tax_number?: string;
+  
+  // Legal name of the organization
+  // string
+  company_legal_name?: string;
 }
 
 // Request arguments for CreatePaymentMethod
