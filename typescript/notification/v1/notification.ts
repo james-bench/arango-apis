@@ -9,7 +9,7 @@ import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../commo
 import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 
 // File: notification/v1/notification.proto
-// Package: arangodb.cloud.prepaid.v1
+// Package: arangodb.cloud.notification.v1
 
 // ListDeploymentNotificationsRequest is used to request a list of Notifications for given deployment.
 export interface ListDeploymentNotificationsRequest {
@@ -21,6 +21,21 @@ export interface ListDeploymentNotificationsRequest {
   // context_id is a don't care.
   // arangodb.cloud.common.v1.ListOptions
   options?: arangodb_cloud_common_v1_ListOptions;
+  
+  // Get only read notifications
+  // boolean
+  read_only?: boolean;
+  
+  // Get only unread notifications
+  // boolean
+  unread_only?: boolean;
+}
+
+// MarkNotificationRequest is used to mark notifications for given deployment as Read/Unread
+export interface MarkNotificationRequest {
+  // Identifier of notification that has to be marked
+  // string
+  notification_id?: string;
 }
 
 // Notification contains all attributes of a notification.
@@ -51,6 +66,26 @@ export interface Notification {
   // Content of notification.
   // NotificationContent
   content?: NotificationContent[];
+  
+  // If the message is not marked as read this field is empty
+  // Notification_ReadAt
+  read_at?: Notification_ReadAt;
+  
+  // If set this message was marked as read
+  // boolean
+  is_read?: boolean;
+}
+
+// Details about notification read.
+// All fields in this message are read-only.
+export interface Notification_ReadAt {
+  // When the notification was marked as read
+  // googleTypes.Timestamp
+  read_at?: googleTypes.Timestamp;
+  
+  // Identifier of user who marked message as read
+  // string
+  read_by_id?: string;
 }
 
 // NotificationContent holds content and it's mime type.
@@ -83,6 +118,16 @@ export interface INotificationService {
   // Required permissions:
   // - notification.deployment-notification.list on the deployment identified by given deployment_id
   ListDeploymentNotifications: (req: ListDeploymentNotificationsRequest) => Promise<NotificationList>;
+  
+  // Mark notification related to given deployment as read.
+  // Required permissions:
+  // - notification.deployment-notification.mark-as-read on the deployment associated with the notification identified by notification_id
+  MarkNotificationAsRead: (req: MarkNotificationRequest) => Promise<void>;
+  
+  // Mark notification related to given deployment as unread.
+  // Required permissions:
+  // - notification.deployment-notification.mark-as-unread on the deployment associated with the notification identified by notification_id
+  MarkNotificationAsUnread: (req: MarkNotificationRequest) => Promise<void>;
 }
 
 // NotificationService is the API used to interact with deployment notifications.
@@ -101,6 +146,22 @@ export class NotificationService implements INotificationService {
   // - notification.deployment-notification.list on the deployment identified by given deployment_id
   async ListDeploymentNotifications(req: ListDeploymentNotificationsRequest): Promise<NotificationList> {
     const url = `/api/notification/v1/deployment/${encodeURIComponent(req.deployment_id || '')}/notifications`;
+    return api.post(url, req);
+  }
+  
+  // Mark notification related to given deployment as read.
+  // Required permissions:
+  // - notification.deployment-notification.mark-as-read on the deployment associated with the notification identified by notification_id
+  async MarkNotificationAsRead(req: MarkNotificationRequest): Promise<void> {
+    const url = `/api/notification/v1/notifications/${encodeURIComponent(req.notification_id || '')}/mark/read`;
+    return api.post(url, req);
+  }
+  
+  // Mark notification related to given deployment as unread.
+  // Required permissions:
+  // - notification.deployment-notification.mark-as-unread on the deployment associated with the notification identified by notification_id
+  async MarkNotificationAsUnread(req: MarkNotificationRequest): Promise<void> {
+    const url = `/api/notification/v1/notifications/${encodeURIComponent(req.notification_id || '')}/mark/unread`;
     return api.post(url, req);
   }
 }

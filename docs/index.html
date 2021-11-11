@@ -1067,26 +1067,34 @@ title: "ArangoDB Oasis API"
             <ul>
               
                 <li>
-                  <a href="#arangodb.cloud.prepaid.v1.ListDeploymentNotificationsRequest"><span class="badge">M</span>ListDeploymentNotificationsRequest</a>
+                  <a href="#arangodb.cloud.notification.v1.ListDeploymentNotificationsRequest"><span class="badge">M</span>ListDeploymentNotificationsRequest</a>
                 </li>
               
                 <li>
-                  <a href="#arangodb.cloud.prepaid.v1.Notification"><span class="badge">M</span>Notification</a>
+                  <a href="#arangodb.cloud.notification.v1.MarkNotificationRequest"><span class="badge">M</span>MarkNotificationRequest</a>
                 </li>
               
                 <li>
-                  <a href="#arangodb.cloud.prepaid.v1.NotificationContent"><span class="badge">M</span>NotificationContent</a>
+                  <a href="#arangodb.cloud.notification.v1.Notification"><span class="badge">M</span>Notification</a>
                 </li>
               
                 <li>
-                  <a href="#arangodb.cloud.prepaid.v1.NotificationList"><span class="badge">M</span>NotificationList</a>
+                  <a href="#arangodb.cloud.notification.v1.Notification.ReadAt"><span class="badge">M</span>Notification.ReadAt</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.notification.v1.NotificationContent"><span class="badge">M</span>NotificationContent</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.notification.v1.NotificationList"><span class="badge">M</span>NotificationList</a>
                 </li>
               
               
               
               
                 <li>
-                  <a href="#arangodb.cloud.prepaid.v1.NotificationService"><span class="badge">S</span>NotificationService</a>
+                  <a href="#arangodb.cloud.notification.v1.NotificationService"><span class="badge">S</span>NotificationService</a>
                 </li>
               
             </ul>
@@ -4533,6 +4541,13 @@ See https://en.wikipedia.org/wiki/List_of_U.S._state_abbreviations </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>US sales tax number of the organization (if any) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>company_legal_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Legal name of the organization </p></td>
                 </tr>
               
             </tbody>
@@ -13554,7 +13569,7 @@ Required permissions:
       <p></p>
 
       
-        <h3 id="arangodb.cloud.prepaid.v1.ListDeploymentNotificationsRequest">ListDeploymentNotificationsRequest</h3>
+        <h3 id="arangodb.cloud.notification.v1.ListDeploymentNotificationsRequest">ListDeploymentNotificationsRequest</h3>
         <p>ListDeploymentNotificationsRequest is used to request a list of Notifications for given deployment.</p>
 
         
@@ -13579,6 +13594,20 @@ Required permissions:
 context_id is a don&#39;t care. </p></td>
                 </tr>
               
+                <tr>
+                  <td>read_only</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Get only read notifications </p></td>
+                </tr>
+              
+                <tr>
+                  <td>unread_only</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Get only unread notifications </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -13586,7 +13615,31 @@ context_id is a don&#39;t care. </p></td>
 
         
       
-        <h3 id="arangodb.cloud.prepaid.v1.Notification">Notification</h3>
+        <h3 id="arangodb.cloud.notification.v1.MarkNotificationRequest">MarkNotificationRequest</h3>
+        <p>MarkNotificationRequest is used to mark notifications for given deployment as Read/Unread</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>notification_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of notification that has to be marked </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.notification.v1.Notification">Notification</h3>
         <p>Notification contains all attributes of a notification.</p><p>All fields in this message are read-only.</p>
 
         
@@ -13635,9 +13688,23 @@ email addresses, phone numbers etc </p></td>
               
                 <tr>
                   <td>content</td>
-                  <td><a href="#arangodb.cloud.prepaid.v1.NotificationContent">NotificationContent</a></td>
+                  <td><a href="#arangodb.cloud.notification.v1.NotificationContent">NotificationContent</a></td>
                   <td>repeated</td>
                   <td><p>Content of notification. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>read_at</td>
+                  <td><a href="#arangodb.cloud.notification.v1.Notification.ReadAt">Notification.ReadAt</a></td>
+                  <td></td>
+                  <td><p>If the message is not marked as read this field is empty </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_read</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set this message was marked as read </p></td>
                 </tr>
               
             </tbody>
@@ -13647,7 +13714,38 @@ email addresses, phone numbers etc </p></td>
 
         
       
-        <h3 id="arangodb.cloud.prepaid.v1.NotificationContent">NotificationContent</h3>
+        <h3 id="arangodb.cloud.notification.v1.Notification.ReadAt">Notification.ReadAt</h3>
+        <p>Details about notification read.</p><p>All fields in this message are read-only.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>read_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>When the notification was marked as read </p></td>
+                </tr>
+              
+                <tr>
+                  <td>read_by_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of user who marked message as read </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.notification.v1.NotificationContent">NotificationContent</h3>
         <p>NotificationContent holds content and it's mime type.</p><p>All fields in this message are read-only.</p>
 
         
@@ -13678,7 +13776,7 @@ email addresses, phone numbers etc </p></td>
 
         
       
-        <h3 id="arangodb.cloud.prepaid.v1.NotificationList">NotificationList</h3>
+        <h3 id="arangodb.cloud.notification.v1.NotificationList">NotificationList</h3>
         <p>NotificationList contains a list of Notification items.</p>
 
         
@@ -13690,7 +13788,7 @@ email addresses, phone numbers etc </p></td>
               
                 <tr>
                   <td>items</td>
-                  <td><a href="#arangodb.cloud.prepaid.v1.Notification">Notification</a></td>
+                  <td><a href="#arangodb.cloud.notification.v1.Notification">Notification</a></td>
                   <td>repeated</td>
                   <td><p>Notification items. </p></td>
                 </tr>
@@ -13708,7 +13806,7 @@ email addresses, phone numbers etc </p></td>
       
 
       
-        <h3 id="arangodb.cloud.prepaid.v1.NotificationService">NotificationService</h3>
+        <h3 id="arangodb.cloud.notification.v1.NotificationService">NotificationService</h3>
         <p>NotificationService is the API used to interact with deployment notifications.</p>
         <table class="enum-table">
           <thead>
@@ -13727,11 +13825,29 @@ Required permissions:
             
               <tr>
                 <td>ListDeploymentNotifications</td>
-                <td><a href="#arangodb.cloud.prepaid.v1.ListDeploymentNotificationsRequest">ListDeploymentNotificationsRequest</a></td>
-                <td><a href="#arangodb.cloud.prepaid.v1.NotificationList">NotificationList</a></td>
+                <td><a href="#arangodb.cloud.notification.v1.ListDeploymentNotificationsRequest">ListDeploymentNotificationsRequest</a></td>
+                <td><a href="#arangodb.cloud.notification.v1.NotificationList">NotificationList</a></td>
                 <td><p>Fetch all notifications related to given deployment.
 Required permissions:
 - notification.deployment-notification.list on the deployment identified by given deployment_id</p></td>
+              </tr>
+            
+              <tr>
+                <td>MarkNotificationAsRead</td>
+                <td><a href="#arangodb.cloud.notification.v1.MarkNotificationRequest">MarkNotificationRequest</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><p>Mark notification related to given deployment as read.
+Required permissions:
+- notification.deployment-notification.mark-as-read on the deployment associated with the notification identified by notification_id</p></td>
+              </tr>
+            
+              <tr>
+                <td>MarkNotificationAsUnread</td>
+                <td><a href="#arangodb.cloud.notification.v1.MarkNotificationRequest">MarkNotificationRequest</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><p>Mark notification related to given deployment as unread.
+Required permissions:
+- notification.deployment-notification.mark-as-unread on the deployment associated with the notification identified by notification_id</p></td>
               </tr>
             
           </tbody>
@@ -13768,6 +13884,26 @@ Required permissions:
                 <td>ListDeploymentNotifications</td>
                 <td>POST</td>
                 <td>/api/notification/v1/deployment/{deployment_id}/notifications</td>
+                <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>MarkNotificationAsRead</td>
+                <td>POST</td>
+                <td>/api/notification/v1/notifications/{notification_id}/mark/read</td>
+                <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>MarkNotificationAsUnread</td>
+                <td>POST</td>
+                <td>/api/notification/v1/notifications/{notification_id}/mark/unread</td>
                 <td>*</td>
               </tr>
               
