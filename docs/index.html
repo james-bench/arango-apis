@@ -1215,6 +1215,10 @@ title: "ArangoDB Oasis API"
             <ul>
               
                 <li>
+                  <a href="#arangodb.cloud.resourcemanager.v1.AuthenticationProviders"><span class="badge">M</span>AuthenticationProviders</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.resourcemanager.v1.DataProcessingAddendum"><span class="badge">M</span>DataProcessingAddendum</a>
                 </li>
               
@@ -15005,6 +15009,44 @@ Required permissions:
       <p></p>
 
       
+        <h3 id="arangodb.cloud.resourcemanager.v1.AuthenticationProviders">AuthenticationProviders</h3>
+        <p>Specify which authentication providers are allowed for use </p><p>in a specific Organization.</p><p>For each field applies:</p><p>- If set, users can access the organization when using that authentication provider.</p><p>- If not set, users will be denied access to the organizatin when using that authentication provider.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>enable_username_password</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Control access to the organization for users using then username/password authentication provider. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>enable_google</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Control access to the organization for users using then Google authentication provider. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>enable_github</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Control access to the organization for users using then Github authentication provider. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.resourcemanager.v1.DataProcessingAddendum">DataProcessingAddendum</h3>
         <p></p>
 
@@ -15540,6 +15582,14 @@ To delete, first update the with locked set to false. </p></td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>If set, this organization cannot create deployments without prepaid deployments. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>authentication_providers</td>
+                  <td><a href="#arangodb.cloud.resourcemanager.v1.AuthenticationProviders">AuthenticationProviders</a></td>
+                  <td></td>
+                  <td><p>If set, configures which authentication providers can/cannot be used for this organization.
+If not set, all providers are enabled by default. </p></td>
                 </tr>
               
             </tbody>
