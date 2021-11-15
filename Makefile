@@ -22,7 +22,6 @@ DOCKERARGS := run -t --rm \
 	-v $(HOMEVOL):/home/gopher \
 	-e GOCACHE=/usr/gocache \
 	-e GOSUMDB=off \
-	-e GOPROXY=direct \
 	-e CGO_ENABLED=0 \
 	-e HOME=/home/gopher \
 	-w /usr/src \
