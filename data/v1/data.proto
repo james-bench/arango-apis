@@ -645,7 +645,7 @@ message Deployment {
         int32 maximum_node_disk_size = 1;
     }
     // Deployment's disk autoscaling settings
-    DiskAutoSizeSettings disk_size_auto_settings = 611;
+    DiskAutoSizeSettings disk_auto_size_settings = 611;
 }
 
 // NodeSize specifies the size constraints of different data nodes.

@@ -368,7 +368,7 @@ export interface Deployment {
   
   // Deployment's disk autoscaling settings
   // Deployment_DiskAutoSizeSettings
-  disk_size_auto_settings?: Deployment_DiskAutoSizeSettings;
+  disk_auto_size_settings?: Deployment_DiskAutoSizeSettings;
 }
 
 // Information about a backup restore.
