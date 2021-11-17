@@ -642,6 +642,7 @@ message Deployment {
     // Deployment's disk autoscaling settings
     message DiskAutoSizeSettings {
         // Maximum allowed disk size for node to be able to grow (in GB)
+        // This field is ignored set in case the flexible model is used.
         int32 maximum_node_disk_size = 1;
     }
     // Deployment's disk autoscaling settings

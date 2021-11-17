@@ -1662,6 +1662,7 @@ func (m *Deployment_NotificationSettings) GetEmailAddresses() []string {
 // Deployment's disk autoscaling settings
 type Deployment_DiskAutoSizeSettings struct {
 	// Maximum allowed disk size for node to be able to grow (in GB)
+	// This field is ignored set in case the flexible model is used.
 	MaximumNodeDiskSize  int32    `protobuf:"varint,1,opt,name=maximum_node_disk_size,json=maximumNodeDiskSize,proto3" json:"maximum_node_disk_size,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
