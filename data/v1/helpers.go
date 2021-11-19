@@ -215,3 +215,13 @@ func (d *Deployment) GetOrCreateStatus() *Deployment_Status {
 	}
 	return d.GetStatus()
 }
+
+// Clone creates a deep copy of Deployment_DiskAutoSizeSettings
+func (src *Deployment_DiskAutoSizeSettings) Clone() *Deployment_DiskAutoSizeSettings {
+	if src == nil {
+		return nil
+	}
+	return &Deployment_DiskAutoSizeSettings{
+		MaximumNodeDiskSize: src.MaximumNodeDiskSize,
+	}
+}
