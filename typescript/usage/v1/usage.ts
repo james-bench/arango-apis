@@ -61,6 +61,16 @@ export interface ListUsageItemsRequest {
   // string
   deployment_id?: string;
   
+  // Limit to usage items for deployments with this node size.
+  // This is an optional field.
+  // string
+  node_size_id?: string;
+  
+  // Limit to usage items for deployments in this region.
+  // This is an optional field.
+  // string
+  region_id?: string;
+  
   // If set, limit to usage items that have no invoice_id set.
   // boolean
   has_no_invoice_id?: boolean;
