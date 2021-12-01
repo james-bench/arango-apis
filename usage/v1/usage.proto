@@ -259,6 +259,12 @@ message ListUsageItemsRequest {
     // Limit to usage items for the deployment with this id.
     // This is an optional field.
     string deployment_id = 14;
+    // Limit to usage items for deployments with this node size.
+    // This is an optional field.
+    string node_size_id = 15;
+    // Limit to usage items for deployments in this region.
+    // This is an optional field.
+    string region_id = 16;
 
     // If set, limit to usage items that have no invoice_id set.
     bool has_no_invoice_id = 20;
