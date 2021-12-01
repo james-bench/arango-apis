@@ -421,8 +421,8 @@ export interface Deployment_CertificateSpec {
 
 // Deployment's disk autoscaling settings
 export interface Deployment_DiskAutoSizeSettings {
-  // Maximum allowed disk size for node to be able to grow (in GB)
-  // This field is ignored set in case the flexible model is used.
+  // Maximum allowed disk size that a node can reach (in GB).
+  // This field is ignored, if the flexible model is used.
   // number
   maximum_node_disk_size?: number;
 }
