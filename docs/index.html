@@ -653,6 +653,10 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.data.v1.Deployment.DiskAutoSizeSettings"><span class="badge">M</span>Deployment.DiskAutoSizeSettings</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.data.v1.Deployment.Expiration"><span class="badge">M</span>Deployment.Expiration</a>
                 </li>
               
@@ -7704,6 +7708,13 @@ This is a read-only property </p></td>
                   <td><p>Deployment&#39;s notification settings </p></td>
                 </tr>
               
+                <tr>
+                  <td>disk_auto_size_settings</td>
+                  <td><a href="#arangodb.cloud.data.v1.Deployment.DiskAutoSizeSettings">Deployment.DiskAutoSizeSettings</a></td>
+                  <td></td>
+                  <td><p>Deployment&#39;s disk autoscaling settings </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -7819,6 +7830,31 @@ rotation of the deployment is required, which will result in some downtime. </p>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
                   <td><p>Zero or more DNS names to include in the TLS certificate of the deployment. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.data.v1.Deployment.DiskAutoSizeSettings">Deployment.DiskAutoSizeSettings</h3>
+        <p>Deployment's disk autoscaling settings</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>maximum_node_disk_size</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Maximum allowed disk size that a node can reach (in GB).
+This field is ignored, if the flexible model is used. </p></td>
                 </tr>
               
             </tbody>

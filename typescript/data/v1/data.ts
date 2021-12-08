@@ -365,6 +365,10 @@ export interface Deployment {
   // Deployment's notification settings
   // Deployment_NotificationSettings
   notification_settings?: Deployment_NotificationSettings;
+  
+  // Deployment's disk autoscaling settings
+  // Deployment_DiskAutoSizeSettings
+  disk_auto_size_settings?: Deployment_DiskAutoSizeSettings;
 }
 
 // Information about a backup restore.
@@ -413,6 +417,14 @@ export interface Deployment_CertificateSpec {
   // Zero or more DNS names to include in the TLS certificate of the deployment.
   // string
   alternate_dns_names?: string[];
+}
+
+// Deployment's disk autoscaling settings
+export interface Deployment_DiskAutoSizeSettings {
+  // Maximum allowed disk size that a node can reach (in GB).
+  // This field is ignored, if the flexible model is used.
+  // number
+  maximum_node_disk_size?: number;
 }
 
 // Expiration of the deployment.
