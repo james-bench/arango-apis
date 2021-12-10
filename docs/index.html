@@ -1223,6 +1223,10 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.resourcemanager.v1.DomainLimits"><span class="badge">M</span>DomainLimits</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.resourcemanager.v1.Event"><span class="badge">M</span>Event</a>
                 </li>
               
@@ -15086,6 +15090,31 @@ Required permissions:
 
         
       
+        <h3 id="arangodb.cloud.resourcemanager.v1.DomainLimits">DomainLimits</h3>
+        <p>Specify limits related to domain names of user accounts that are allowed to</p><p>access resources of a specific Organization.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>allowed_email_domains</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>If this list is non-empty, only users that have an email address in one
+of the given domains will be granted access to the resources in the Organization. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.resourcemanager.v1.Event">Event</h3>
         <p>An Event represents something that happened to an organization</p><p>in the ArangoDB Managed service.</p>
 
@@ -15591,6 +15620,14 @@ To delete, first update the with locked set to false. </p></td>
                   <td></td>
                   <td><p>If set, configures which authentication providers can/cannot be used for this organization.
 If not set, all providers are enabled by default. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>domain_limits</td>
+                  <td><a href="#arangodb.cloud.resourcemanager.v1.DomainLimits">DomainLimits</a></td>
+                  <td></td>
+                  <td><p>If set, configure limitations on the domains used by user accounts to access this organization.
+If not set, there is no restriction of domains for user accounts. </p></td>
                 </tr>
               
             </tbody>
