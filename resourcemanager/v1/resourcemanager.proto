@@ -401,9 +401,9 @@ message Organization {
     // If set, configures which authentication providers can/cannot be used for this organization.
     // If not set, all providers are enabled by default.
     AuthenticationProviders authentication_providers = 15;
-    // If set, configure limitations on the domains used by user accounts to access this organization.
+    // If set, configure restrictions on the email domains used by user accounts to access this organization.
     // If not set, there is no restriction of domains for user accounts.
-    DomainLimits domain_limits = 16;
+    DomainRestrictions email_domain_restrictions = 16;
 }
 
 // List of organizations.
@@ -428,12 +428,12 @@ message AuthenticationProviders {
     bool enable_github = 3;
 }
 
-// Specify limits related to domain names of user accounts that are allowed to
+// Specify restrictions related to email domain names of user accounts that are allowed to
 // access resources of a specific Organization.
-message DomainLimits {
+message DomainRestrictions {
     // If this list is non-empty, only users that have an email address in one
     // of the given domains will be granted access to the resources in the Organization.
-    repeated string allowed_email_domains = 1;
+    repeated string allowed_domains = 1;
 }
 
 // Tier of an organization.

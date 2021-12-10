@@ -46,13 +46,13 @@ export interface DataProcessingAddendum {
   created_at?: googleTypes.Timestamp;
 }
 
-// Specify limits related to domain names of user accounts that are allowed to
+// Specify restrictions related to email domain names of user accounts that are allowed to
 // access resources of a specific Organization.
-export interface DomainLimits {
+export interface DomainRestrictions {
   // If this list is non-empty, only users that have an email address in one
   // of the given domains will be granted access to the resources in the Organization.
   // string
-  allowed_email_domains?: string[];
+  allowed_domains?: string[];
 }
 
 // An Event represents something that happened to an organization
@@ -286,10 +286,10 @@ export interface Organization {
   // AuthenticationProviders
   authentication_providers?: AuthenticationProviders;
   
-  // If set, configure limitations on the domains used by user accounts to access this organization.
+  // If set, configure restrictions on the email domains used by user accounts to access this organization.
   // If not set, there is no restriction of domains for user accounts.
-  // DomainLimits
-  domain_limits?: DomainLimits;
+  // DomainRestrictions
+  email_domain_restrictions?: DomainRestrictions;
 }
 export interface Organization_TotalDeploymentsEntry {
   // string

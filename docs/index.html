@@ -1223,7 +1223,7 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
-                  <a href="#arangodb.cloud.resourcemanager.v1.DomainLimits"><span class="badge">M</span>DomainLimits</a>
+                  <a href="#arangodb.cloud.resourcemanager.v1.DomainRestrictions"><span class="badge">M</span>DomainRestrictions</a>
                 </li>
               
                 <li>
@@ -15090,8 +15090,8 @@ Required permissions:
 
         
       
-        <h3 id="arangodb.cloud.resourcemanager.v1.DomainLimits">DomainLimits</h3>
-        <p>Specify limits related to domain names of user accounts that are allowed to</p><p>access resources of a specific Organization.</p>
+        <h3 id="arangodb.cloud.resourcemanager.v1.DomainRestrictions">DomainRestrictions</h3>
+        <p>Specify restrictions related to email domain names of user accounts that are allowed to</p><p>access resources of a specific Organization.</p>
 
         
           <table class="field-table">
@@ -15101,7 +15101,7 @@ Required permissions:
             <tbody>
               
                 <tr>
-                  <td>allowed_email_domains</td>
+                  <td>allowed_domains</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
                   <td><p>If this list is non-empty, only users that have an email address in one
@@ -15623,10 +15623,10 @@ If not set, all providers are enabled by default. </p></td>
                 </tr>
               
                 <tr>
-                  <td>domain_limits</td>
-                  <td><a href="#arangodb.cloud.resourcemanager.v1.DomainLimits">DomainLimits</a></td>
+                  <td>email_domain_restrictions</td>
+                  <td><a href="#arangodb.cloud.resourcemanager.v1.DomainRestrictions">DomainRestrictions</a></td>
                   <td></td>
-                  <td><p>If set, configure limitations on the domains used by user accounts to access this organization.
+                  <td><p>If set, configure restrictions on the email domains used by user accounts to access this organization.
 If not set, there is no restriction of domains for user accounts. </p></td>
                 </tr>
               
