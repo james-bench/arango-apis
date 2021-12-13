@@ -17,8 +17,6 @@
 // 
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 // 
-// Author Ewout Prangsma
-// 
 
 syntax = "proto3";
 
@@ -403,6 +401,9 @@ message Organization {
     // If set, configures which authentication providers can/cannot be used for this organization.
     // If not set, all providers are enabled by default.
     AuthenticationProviders authentication_providers = 15;
+    // If set, configure restrictions on the email domains used by user accounts to access this organization.
+    // If not set, there is no restriction of domains for user accounts.
+    DomainRestrictions email_domain_restrictions = 16;
 }
 
 // List of organizations.
@@ -425,6 +426,14 @@ message AuthenticationProviders {
     bool enable_google = 2;
     // Control access to the organization for users using then Github authentication provider.
     bool enable_github = 3;
+}
+
+// Specify restrictions related to email domain names of user accounts that are allowed to
+// access resources of a specific Organization.
+message DomainRestrictions {
+    // If this list is non-empty, only users that have an email address in one
+    // of the given domains will be granted access to the resources in the Organization.
+    repeated string allowed_domains = 1;
 }
 
 // Tier of an organization.
