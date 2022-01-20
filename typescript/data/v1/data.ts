@@ -330,6 +330,32 @@ export interface Deployment {
   // string
   iamprovider_id?: string;
   
+  // Optional identifier of disk performance to use for this deployment.
+  // string
+  disk_performance_id?: string;
+  
+  // If set, the disk performance cannot be updated, due to other reasons than the disk rate limit.
+  // This is a read-only value
+  // boolean
+  disk_performance_locked?: boolean;
+  
+  // Disk rate limit is the period required to wait before a next disk action can be executed.
+  // A value of 0 means that there is no rate limit.
+  // If now - (last_disk_performance_updated_at or last_disk_size_updated_at) > disk_rate_limit_period it is not allowed to update
+  // dbserver_disk_size or disk_performance_id.
+  // googleTypes.Duration
+  disk_rate_limit_period?: googleTypes.Duration;
+  
+  // Timestamp when the last time the disk performance has been updated.
+  // This is a read-only value
+  // googleTypes.Timestamp
+  last_disk_performance_updated_at?: googleTypes.Timestamp;
+  
+  // Timestamp when the last time the disk size has been updated.
+  // This is a read-only value
+  // googleTypes.Timestamp
+  last_disk_size_updated_at?: googleTypes.Timestamp;
+  
   // Deployment_Status
   status?: Deployment_Status;
   
@@ -1031,6 +1057,35 @@ export interface DeploymentSizeRequest {
   region_id?: string;
 }
 
+// DiskPerformance represents a disk performance object.
+// All fields in this message are read-only values.
+export interface DiskPerformance {
+  // System identifier of the disk-performance.
+  // string
+  id?: string;
+  
+  // Name of the disk-performance.
+  // string
+  name?: string;
+  
+  // Description of the disk-performance.
+  // string
+  description?: string;
+}
+
+// List of DiskPerformances.
+export interface DiskPerformanceList {
+  // DiskPerformance
+  items?: DiskPerformance[];
+}
+
+// GetDiskPerformanceRequest is used as request in GetDiskPerformance
+export interface GetDiskPerformanceRequest {
+  // disk performance identifier (e.g. 'DP30')
+  // string
+  disk_performance_id?: string;
+}
+
 // Instructions for importing data into a deployment
 export interface ImportDataInstructions {
   // Lines of code to run arangorestore
@@ -1062,6 +1117,28 @@ export interface ListDeploymentModelsRequest {
   // Identifier of project that will own a deployment.
   // string
   project_id?: string;
+}
+
+// ListDiskPerformancesRequest is used as request in ListAllDiskPerformances
+export interface ListDiskPerformancesRequest {
+  // Identifier of the region (e.g. 'aks-westeurope').
+  // This field is ignored when a deployment_id is provided, otherwise required.
+  // string
+  region_id?: string;
+  
+  // Identifier of the node size (e.g. 'A16').
+  // This field is ignored when a deployment_id is provided, otherwise required.
+  // string
+  node_size_id?: string;
+  
+  // Amount of disk space (in GB) to allocate for each dbserver.
+  // This field is ignored when a deployment_id is provided, otherwise required.
+  // number
+  dbserver_disk_size?: number;
+  
+  // Identifier of the deloyment, used to fill-out the region, node-size and disk-size.
+  // string
+  deployment_id?: string;
 }
 
 // Request arguments for ListVersions.
@@ -1416,6 +1493,16 @@ export interface IDataService {
   // Required permissions:
   // - data.deployment.rebalance-shards on the deployment
   RebalanceDeploymentShards: (req: RebalanceDeploymentShardsRequest) => Promise<void>;
+  
+  // Lists disk performances that match all of the given filters.
+  // Required permissions:
+  // - None
+  ListDiskPerformances: (req: ListDiskPerformancesRequest) => Promise<DiskPerformanceList>;
+  
+  // Get the disk performance for the requested disk performance ID.
+  // Required permissions:
+  // - None
+  GetDiskPerformance: (req: GetDiskPerformanceRequest) => Promise<DiskPerformance>;
 }
 
 // DataService is the API used to configure data objects.
@@ -1650,5 +1737,23 @@ export class DataService implements IDataService {
     const path = `/api/data/v1/deployments/${encodeURIComponent(req.deployment_id || '')}/rebalance-shards`;
     const url = path + api.queryString(req, [`deployment_id`]);
     return api.post(url, undefined);
+  }
+  
+  // Lists disk performances that match all of the given filters.
+  // Required permissions:
+  // - None
+  async ListDiskPerformances(req: ListDiskPerformancesRequest): Promise<DiskPerformanceList> {
+    const path = `/api/data/v1/disk-performances`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
+  // Get the disk performance for the requested disk performance ID.
+  // Required permissions:
+  // - None
+  async GetDiskPerformance(req: GetDiskPerformanceRequest): Promise<DiskPerformance> {
+    const path = `/api/data/v1/disk-performance/${encodeURIComponent(req.disk_performance_id || '')}`;
+    const url = path + api.queryString(req, [`disk_performance_id`]);
+    return api.get(url, undefined);
   }
 }

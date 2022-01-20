@@ -1,7 +1,7 @@
 // 
 // DISCLAIMER
 // 
-// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2022 ArangoDB GmbH, Cologne, Germany
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ option go_package = "github.com/arangodb-managed/apis/data/v1";
 import "common/v1/common.proto";
 
 import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
+import "github.com/golang/protobuf/ptypes/duration/duration.proto";
 import "google/api/annotations.proto";
 
 // DataService is the API used to configure data objects.
@@ -273,6 +274,24 @@ service DataService {
             post: "/api/data/v1/deployments/{deployment_id}/rebalance-shards"
         };
     }
+
+    // Lists disk performances that match all of the given filters.
+    // Required permissions:
+    // - None
+    rpc ListDiskPerformances(ListDiskPerformancesRequest) returns (DiskPerformanceList) {
+        option (google.api.http) = {
+            get: "/api/data/v1/disk-performances"
+        };
+    }
+
+    // Get the disk performance for the requested disk performance ID.
+    // Required permissions:
+    // - None
+    rpc GetDiskPerformance(GetDiskPerformanceRequest) returns (DiskPerformance)  {
+        option (google.api.http) = {
+            get: "/api/data/v1/disk-performance/{disk_performance_id}"
+        };
+    }
 }
 
 // RotateDeploymentServerRequest request for rotating out servers for a deployment
@@ -470,6 +489,23 @@ message Deployment {
 
     // Optional identifier of IAM provider to use for this deployment.
     string iamprovider_id = 108;
+
+    // Optional identifier of disk performance to use for this deployment.
+    string disk_performance_id = 120;
+    // If set, the disk performance cannot be updated, due to other reasons than the disk rate limit.
+    // This is a read-only value
+    bool disk_performance_locked = 121;
+    // Disk rate limit is the period required to wait before a next disk action can be executed.  
+    // A value of 0 means that there is no rate limit.
+    // If now - (last_disk_performance_updated_at or last_disk_size_updated_at) > disk_rate_limit_period it is not allowed to update
+    // dbserver_disk_size or disk_performance_id.
+    google.protobuf.Duration disk_rate_limit_period = 122;
+    // Timestamp when the last time the disk performance has been updated.
+    // This is a read-only value
+    google.protobuf.Timestamp last_disk_performance_updated_at = 123;
+    // Timestamp when the last time the disk size has been updated.
+    // This is a read-only value
+    google.protobuf.Timestamp last_disk_size_updated_at = 124;
 
     // Status of a single server (of the ArangoDB cluster)
     message ServerStatus {
@@ -1117,3 +1153,42 @@ message DeploymentFeaturesRequest {
     // Node size use for the intended deployments
     string node_size_id = 4;
 }
+
+
+// ListDiskPerformancesRequest is used as request in ListAllDiskPerformances
+message ListDiskPerformancesRequest {
+    // Identifier of the region (e.g. 'aks-westeurope').
+    // This field is ignored when a deployment_id is provided, otherwise required. 
+    string region_id = 1;
+    // Identifier of the node size (e.g. 'A16').
+    // This field is ignored when a deployment_id is provided, otherwise required. 
+    string node_size_id = 2;
+    // Amount of disk space (in GB) to allocate for each dbserver.
+    // This field is ignored when a deployment_id is provided, otherwise required. 
+    int32 dbserver_disk_size = 3;
+    // Identifier of the deloyment, used to fill-out the region, node-size and disk-size.
+    string deployment_id = 10;
+}
+
+// GetDiskPerformanceRequest is used as request in GetDiskPerformance
+message GetDiskPerformanceRequest {
+    // disk performance identifier (e.g. 'DP30')
+    string disk_performance_id = 1;
+}
+
+// List of DiskPerformances.
+message DiskPerformanceList {
+    repeated DiskPerformance items = 1;
+}
+
+// DiskPerformance represents a disk performance object.
+// All fields in this message are read-only values.
+message DiskPerformance {
+    // System identifier of the disk-performance.
+    string id = 1;
+    // Name of the disk-performance.
+    string name = 2; 
+    // Description of the disk-performance.
+    string description = 3;  
+}
+
