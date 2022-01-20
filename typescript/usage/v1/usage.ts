@@ -230,6 +230,10 @@ export interface UsageItem_DeploymentSize {
   // string
   node_size_id?: string;
   
+  // Identifier of disk performance used for this deployment (if any).
+  // string
+  disk_performance_id?: string;
+  
   // List of identifiers of addons used by the deployment.
   // string
   addon_ids?: string[];

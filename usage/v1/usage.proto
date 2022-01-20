@@ -1,7 +1,7 @@
 // 
 // DISCLAIMER
 // 
-// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2022 ArangoDB GmbH, Cologne, Germany
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -150,6 +150,9 @@ message UsageItem {
 
         // Identifier of the node-size used for this deployment (empty for flexible)
         string node_size_id = 31;
+
+        // Identifier of disk performance used for this deployment (if any).
+        string disk_performance_id = 32;
 
         // List of identifiers of addons used by the deployment.
         repeated string addon_ids = 41;
