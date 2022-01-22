@@ -277,7 +277,8 @@ service DataService {
 
     // Lists disk performances that match all of the given filters.
     // Required permissions:
-    // - None
+    // - data.diskperformance.list (if deployment ID is provided)
+    // - None, authenticated only (if no deployment ID is provided)
     rpc ListDiskPerformances(ListDiskPerformancesRequest) returns (DiskPerformanceList) {
         option (google.api.http) = {
             get: "/api/data/v1/disk-performances"
@@ -286,7 +287,7 @@ service DataService {
 
     // Get the disk performance for the requested disk performance ID.
     // Required permissions:
-    // - None
+    // - None, authenticated only
     rpc GetDiskPerformance(GetDiskPerformanceRequest) returns (DiskPerformance)  {
         option (google.api.http) = {
             get: "/api/data/v1/disk-performance/{disk_performance_id}"
@@ -1190,5 +1191,7 @@ message DiskPerformance {
     string name = 2; 
     // Description of the disk-performance.
     string description = 3;  
+    // If set, this is the default disk performance.
+	bool is_default = 4;
 }
 

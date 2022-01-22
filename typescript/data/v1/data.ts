@@ -1071,6 +1071,10 @@ export interface DiskPerformance {
   // Description of the disk-performance.
   // string
   description?: string;
+  
+  // If set, this is the default disk performance.
+  // boolean
+  is_default?: boolean;
 }
 
 // List of DiskPerformances.
@@ -1496,12 +1500,13 @@ export interface IDataService {
   
   // Lists disk performances that match all of the given filters.
   // Required permissions:
-  // - None
+  // - data.diskperformance.list (if deployment ID is provided)
+  // - None, authenticated only (if no deployment ID is provided)
   ListDiskPerformances: (req: ListDiskPerformancesRequest) => Promise<DiskPerformanceList>;
   
   // Get the disk performance for the requested disk performance ID.
   // Required permissions:
-  // - None
+  // - None, authenticated only
   GetDiskPerformance: (req: GetDiskPerformanceRequest) => Promise<DiskPerformance>;
 }
 
@@ -1741,7 +1746,8 @@ export class DataService implements IDataService {
   
   // Lists disk performances that match all of the given filters.
   // Required permissions:
-  // - None
+  // - data.diskperformance.list (if deployment ID is provided)
+  // - None, authenticated only (if no deployment ID is provided)
   async ListDiskPerformances(req: ListDiskPerformancesRequest): Promise<DiskPerformanceList> {
     const path = `/api/data/v1/disk-performances`;
     const url = path + api.queryString(req, []);
@@ -1750,7 +1756,7 @@ export class DataService implements IDataService {
   
   // Get the disk performance for the requested disk performance ID.
   // Required permissions:
-  // - None
+  // - None, authenticated only
   async GetDiskPerformance(req: GetDiskPerformanceRequest): Promise<DiskPerformance> {
     const path = `/api/data/v1/disk-performance/${encodeURIComponent(req.disk_performance_id || '')}`;
     const url = path + api.queryString(req, [`disk_performance_id`]);

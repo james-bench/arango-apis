@@ -102,3 +102,10 @@ const (
 	// PermissionCPUSizeList is needed for listing CPU sizes in a project.
 	PermissionCPUSizeList = "data.cpusize.list"
 )
+
+const (
+	// DiskPerformance permissions
+
+	// PermissionDiskPerformanceList is needed for listing disk performances for a specific deployment
+	PermissionDiskPerformanceList = "data.diskperformance.list"
+)

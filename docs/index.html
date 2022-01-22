@@ -9233,6 +9233,13 @@ Must be &gt;= 3 and &lt;= 5 </p></td>
                   <td><p>Description of the disk-performance. </p></td>
                 </tr>
               
+                <tr>
+                  <td>is_default</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, this is the default disk performance. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -10199,7 +10206,8 @@ Required permissions:
                 <td><a href="#arangodb.cloud.data.v1.DiskPerformanceList">DiskPerformanceList</a></td>
                 <td><p>Lists disk performances that match all of the given filters.
 Required permissions:
-- None</p></td>
+- data.diskperformance.list (if deployment ID is provided)
+- None, authenticated only (if no deployment ID is provided)</p></td>
               </tr>
             
               <tr>
@@ -10208,7 +10216,7 @@ Required permissions:
                 <td><a href="#arangodb.cloud.data.v1.DiskPerformance">DiskPerformance</a></td>
                 <td><p>Get the disk performance for the requested disk performance ID.
 Required permissions:
-- None</p></td>
+- None, authenticated only</p></td>
               </tr>
             
           </tbody>
