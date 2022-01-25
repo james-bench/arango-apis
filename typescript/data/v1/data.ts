@@ -1072,7 +1072,7 @@ export interface DiskPerformance {
   // string
   description?: string;
   
-  // If set, this is the default disk performance.
+  // If set, this is the default disk performance (inside the requested region).
   // boolean
   is_default?: boolean;
 }
@@ -1088,6 +1088,10 @@ export interface GetDiskPerformanceRequest {
   // disk performance identifier (e.g. 'DP30')
   // string
   disk_performance_id?: string;
+  
+  // Identifier of the region (e.g. 'aks-westeurope').
+  // string
+  region_id?: string;
 }
 
 // Instructions for importing data into a deployment

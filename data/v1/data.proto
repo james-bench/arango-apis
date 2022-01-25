@@ -1175,6 +1175,8 @@ message ListDiskPerformancesRequest {
 message GetDiskPerformanceRequest {
     // disk performance identifier (e.g. 'DP30')
     string disk_performance_id = 1;
+    // Identifier of the region (e.g. 'aks-westeurope').
+    string region_id = 2;
 }
 
 // List of DiskPerformances.
@@ -1191,7 +1193,7 @@ message DiskPerformance {
     string name = 2; 
     // Description of the disk-performance.
     string description = 3;  
-    // If set, this is the default disk performance.
+    // If set, this is the default disk performance (inside the requested region).
 	bool is_default = 4;
 }
 
