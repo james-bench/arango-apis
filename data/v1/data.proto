@@ -764,6 +764,8 @@ message Version {
     // If set, deployments using this version are recommend to be upgraded to the ArangoDB release with the
     // version as listed in this message.
     UpgradeVersionRecommendation upgrade_recommendation = 3;
+    // If set, this version is not longer actively supported.
+	bool is_end_of_life = 4;
 }
 
 // ReplaceVersionBy holds replacement instructions.
