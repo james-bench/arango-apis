@@ -307,6 +307,11 @@ export interface Deployment {
   // UpgradeVersionRecommendation
   upgrade_recommendation?: UpgradeVersionRecommendation;
   
+  // If set, the version used by this deployment is no longer actively supported.
+  // This is a readonly field.
+  // boolean
+  version_is_end_of_life?: boolean;
+  
   // Deployment_CertificateSpec
   certificates?: Deployment_CertificateSpec;
   

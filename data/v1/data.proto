@@ -404,6 +404,9 @@ message Deployment {
     // If set, it is recommended to upgrade to the ArangoDB release with the
     // version as listed in this field.
     UpgradeVersionRecommendation upgrade_recommendation = 105;
+    // If set, the version used by this deployment is no longer actively supported.
+    // This is a readonly field.
+    bool version_is_end_of_life = 701;
 
     message CertificateSpec {
         // Identifier of the CACertificate used to sign TLS certificates for the deployment.
