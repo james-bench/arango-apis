@@ -1352,6 +1352,10 @@ export interface Version {
   // version as listed in this message.
   // UpgradeVersionRecommendation
   upgrade_recommendation?: UpgradeVersionRecommendation;
+  
+  // If set, this version is not longer actively supported.
+  // boolean
+  is_end_of_life?: boolean;
 }
 
 // List of Versions.
