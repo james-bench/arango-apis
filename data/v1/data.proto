@@ -1199,6 +1199,6 @@ message DiskPerformance {
     // Description of the disk-performance.
     string description = 3;  
     // If set, this is the default disk performance (inside the requested region).
-	bool is_default = 4;
+    bool is_default = 4;
 }
 
