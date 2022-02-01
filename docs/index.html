@@ -9211,7 +9211,7 @@ Must be &gt;= 3 and &lt;= 5 </p></td>
         
       
         <h3 id="arangodb.cloud.data.v1.DiskPerformance">DiskPerformance</h3>
-        <p>DiskPerformance represents a disk performance object.</p><p>All fields in this message are read-only values.</p>
+        <p>DiskPerformance provides information on a specific disk performance option.</p><p>All fields in this message are read-only values.</p>
 
         
           <table class="field-table">
@@ -10503,9 +10503,9 @@ Required permissions:
               
               <tr>
                 <td>ListDiskPerformances</td>
-                <td>GET</td>
+                <td>POST</td>
                 <td>/api/data/v1/disk-performances</td>
-                <td></td>
+                <td>*</td>
               </tr>
               
             
@@ -10513,9 +10513,9 @@ Required permissions:
               
               <tr>
                 <td>GetDiskPerformance</td>
-                <td>GET</td>
+                <td>POST</td>
                 <td>/api/data/v1/disk-performance/{disk_performance_id}</td>
-                <td></td>
+                <td>*</td>
               </tr>
               
             

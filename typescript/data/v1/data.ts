@@ -1062,7 +1062,7 @@ export interface DeploymentSizeRequest {
   region_id?: string;
 }
 
-// DiskPerformance represents a disk performance object.
+// DiskPerformance provides information on a specific disk performance option.
 // All fields in this message are read-only values.
 export interface DiskPerformance {
   // System identifier of the disk-performance.
@@ -1762,17 +1762,15 @@ export class DataService implements IDataService {
   // - data.diskperformance.list (if deployment ID is provided)
   // - None, authenticated only (if no deployment ID is provided)
   async ListDiskPerformances(req: ListDiskPerformancesRequest): Promise<DiskPerformanceList> {
-    const path = `/api/data/v1/disk-performances`;
-    const url = path + api.queryString(req, []);
-    return api.get(url, undefined);
+    const url = `/api/data/v1/disk-performances`;
+    return api.post(url, req);
   }
   
   // Get the disk performance for the requested disk performance ID.
   // Required permissions:
   // - None, authenticated only
   async GetDiskPerformance(req: GetDiskPerformanceRequest): Promise<DiskPerformance> {
-    const path = `/api/data/v1/disk-performance/${encodeURIComponent(req.disk_performance_id || '')}`;
-    const url = path + api.queryString(req, [`disk_performance_id`]);
-    return api.get(url, undefined);
+    const url = `/api/data/v1/disk-performance/${encodeURIComponent(req.disk_performance_id || '')}`;
+    return api.post(url, req);
   }
 }

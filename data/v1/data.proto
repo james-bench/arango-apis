@@ -281,7 +281,8 @@ service DataService {
     // - None, authenticated only (if no deployment ID is provided)
     rpc ListDiskPerformances(ListDiskPerformancesRequest) returns (DiskPerformanceList) {
         option (google.api.http) = {
-            get: "/api/data/v1/disk-performances"
+            post: "/api/data/v1/disk-performances"
+            body: "*"
         };
     }
 
@@ -290,7 +291,8 @@ service DataService {
     // - None, authenticated only
     rpc GetDiskPerformance(GetDiskPerformanceRequest) returns (DiskPerformance)  {
         option (google.api.http) = {
-            get: "/api/data/v1/disk-performance/{disk_performance_id}"
+            post: "/api/data/v1/disk-performance/{disk_performance_id}"
+            body: "*"
         };
     }
 }
@@ -1189,7 +1191,7 @@ message DiskPerformanceList {
     repeated DiskPerformance items = 1;
 }
 
-// DiskPerformance represents a disk performance object.
+// DiskPerformance provides information on a specific disk performance option.
 // All fields in this message are read-only values.
 message DiskPerformance {
     // System identifier of the disk-performance.
