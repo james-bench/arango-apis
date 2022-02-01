@@ -741,6 +741,18 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.data.v1.DiskPerformance"><span class="badge">M</span>DiskPerformance</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.data.v1.DiskPerformanceList"><span class="badge">M</span>DiskPerformanceList</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.data.v1.GetDiskPerformanceRequest"><span class="badge">M</span>GetDiskPerformanceRequest</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.data.v1.ImportDataInstructions"><span class="badge">M</span>ImportDataInstructions</a>
                 </li>
               
@@ -750,6 +762,10 @@ title: "ArangoDB Oasis API"
               
                 <li>
                   <a href="#arangodb.cloud.data.v1.ListDeploymentModelsRequest"><span class="badge">M</span>ListDeploymentModelsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.data.v1.ListDiskPerformancesRequest"><span class="badge">M</span>ListDiskPerformancesRequest</a>
                 </li>
               
                 <li>
@@ -7659,6 +7675,47 @@ This field can only be set by selected organizations. </p></td>
                 </tr>
               
                 <tr>
+                  <td>disk_performance_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional identifier of disk performance to use for this deployment. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>disk_performance_locked</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, the disk performance cannot be updated, due to other reasons than the disk rate limit.
+This is a read-only value </p></td>
+                </tr>
+              
+                <tr>
+                  <td>disk_rate_limit_period</td>
+                  <td><a href="#google.protobuf.Duration">google.protobuf.Duration</a></td>
+                  <td></td>
+                  <td><p>Disk rate limit is the period required to wait before a next disk action can be executed.  
+A value of 0 means that there is no rate limit.
+If now - (last_disk_performance_updated_at or last_disk_size_updated_at) &gt; disk_rate_limit_period it is not allowed to update
+dbserver_disk_size or disk_performance_id. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_disk_performance_updated_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Timestamp when the last time the disk performance has been updated.
+This is a read-only value </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_disk_size_updated_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Timestamp when the last time the disk size has been updated.
+This is a read-only value </p></td>
+                </tr>
+              
+                <tr>
                   <td>status</td>
                   <td><a href="#arangodb.cloud.data.v1.Deployment.Status">Deployment.Status</a></td>
                   <td></td>
@@ -9153,6 +9210,106 @@ Must be &gt;= 3 and &lt;= 5 </p></td>
 
         
       
+        <h3 id="arangodb.cloud.data.v1.DiskPerformance">DiskPerformance</h3>
+        <p>DiskPerformance provides information on a specific disk performance option.</p><p>All fields in this message are read-only values.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>System identifier of the disk-performance. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Name of the disk-performance. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Description of the disk-performance. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_default</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, this is the default disk performance (inside the requested region). </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.data.v1.DiskPerformanceList">DiskPerformanceList</h3>
+        <p>List of DiskPerformances.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#arangodb.cloud.data.v1.DiskPerformance">DiskPerformance</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.data.v1.GetDiskPerformanceRequest">GetDiskPerformanceRequest</h3>
+        <p>GetDiskPerformanceRequest is used as request in GetDiskPerformance</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>disk_performance_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>disk performance identifier (e.g. &#39;DP30&#39;) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>region_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the region (e.g. &#39;aks-westeurope&#39;). </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.data.v1.ImportDataInstructions">ImportDataInstructions</h3>
         <p>Instructions for importing data into a deployment</p>
 
@@ -9237,6 +9394,54 @@ Must be &gt;= 3 and &lt;= 5 </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Identifier of project that will own a deployment. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.data.v1.ListDiskPerformancesRequest">ListDiskPerformancesRequest</h3>
+        <p>ListDiskPerformancesRequest is used as request in ListAllDiskPerformances</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>region_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the region (e.g. &#39;aks-westeurope&#39;).
+This field is ignored when a deployment_id is provided, otherwise required. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>node_size_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the node size (e.g. &#39;A16&#39;).
+This field is ignored when a deployment_id is provided, otherwise required. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>dbserver_disk_size</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Amount of disk space (in GB) to allocate for each dbserver.
+This field is ignored when a deployment_id is provided, otherwise required. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the deloyment, used to fill-out the region, node-size and disk-size. </p></td>
                 </tr>
               
             </tbody>
@@ -10017,6 +10222,25 @@ Required permissions:
 - data.deployment.rebalance-shards on the deployment</p></td>
               </tr>
             
+              <tr>
+                <td>ListDiskPerformances</td>
+                <td><a href="#arangodb.cloud.data.v1.ListDiskPerformancesRequest">ListDiskPerformancesRequest</a></td>
+                <td><a href="#arangodb.cloud.data.v1.DiskPerformanceList">DiskPerformanceList</a></td>
+                <td><p>Lists disk performances that match all of the given filters.
+Required permissions:
+- data.diskperformance.list (if deployment ID is provided)
+- None, authenticated only (if no deployment ID is provided)</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetDiskPerformance</td>
+                <td><a href="#arangodb.cloud.data.v1.GetDiskPerformanceRequest">GetDiskPerformanceRequest</a></td>
+                <td><a href="#arangodb.cloud.data.v1.DiskPerformance">DiskPerformance</a></td>
+                <td><p>Get the disk performance for the requested disk performance ID.
+Required permissions:
+- None, authenticated only</p></td>
+              </tr>
+            
           </tbody>
         </table>
 
@@ -10272,6 +10496,26 @@ Required permissions:
                 <td>POST</td>
                 <td>/api/data/v1/deployments/{deployment_id}/rebalance-shards</td>
                 <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>ListDiskPerformances</td>
+                <td>POST</td>
+                <td>/api/data/v1/disk-performances</td>
+                <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetDiskPerformance</td>
+                <td>POST</td>
+                <td>/api/data/v1/disk-performance/{disk_performance_id}</td>
+                <td>*</td>
               </tr>
               
             
