@@ -36,7 +36,7 @@ import (
 type CauseFunc = func(error) error
 
 // Cause is the cause function used by the error helpers in this module.
-var Cause = func(err error) error {
+func Cause(err error) error {
 	for err != nil {
 		if s, ok := status.FromError(err); ok {
 			return s.Err()
