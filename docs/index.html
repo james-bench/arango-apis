@@ -7693,7 +7693,7 @@ This is a read-only value </p></td>
                   <td>disk_rate_limit_period</td>
                   <td><a href="#google.protobuf.Duration">google.protobuf.Duration</a></td>
                   <td></td>
-                  <td><p>Disk rate limit is the period required to wait before a next disk action can be executed.  
+                  <td><p>Disk rate limit is the (fixed) period required to wait before a next disk action can be executed.  
 A value of 0 means that there is no rate limit.
 If now - (last_disk_performance_updated_at or last_disk_size_updated_at) &gt; disk_rate_limit_period it is not allowed to update
 dbserver_disk_size or disk_performance_id. </p></td>
@@ -7712,6 +7712,17 @@ This is a read-only value </p></td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
                   <td><p>Timestamp when the last time the disk size has been updated.
+This is a read-only value </p></td>
+                </tr>
+              
+                <tr>
+                  <td>disk_rate_limit_active</td>
+                  <td><a href="#google.protobuf.Duration">google.protobuf.Duration</a></td>
+                  <td></td>
+                  <td><p>Disk rate limit active is the active period required to wait before a next disk action can be executed.
+The difference between disk_rate_limit_period and this field is that disk_rate_limit_period is a constant value 
+(independent) if the rate limit is active, this field will count down, if the field is 0 you can modify.
+If this field is set it is not allowed to update dbserver_disk_size or disk_performance_id.
 This is a read-only value </p></td>
                 </tr>
               

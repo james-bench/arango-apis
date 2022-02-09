@@ -501,7 +501,7 @@ message Deployment {
     // If set, the disk performance cannot be updated, due to other reasons than the disk rate limit.
     // This is a read-only value
     bool disk_performance_locked = 121;
-    // Disk rate limit is the period required to wait before a next disk action can be executed.  
+    // Disk rate limit is the (fixed) period required to wait before a next disk action can be executed.  
     // A value of 0 means that there is no rate limit.
     // If now - (last_disk_performance_updated_at or last_disk_size_updated_at) > disk_rate_limit_period it is not allowed to update
     // dbserver_disk_size or disk_performance_id.
@@ -511,7 +511,13 @@ message Deployment {
     google.protobuf.Timestamp last_disk_performance_updated_at = 123;
     // Timestamp when the last time the disk size has been updated.
     // This is a read-only value
-    google.protobuf.Timestamp last_disk_size_updated_at = 124;
+    google.protobuf.Timestamp last_disk_size_updated_at = 124; 
+    // Disk rate limit active is the active period required to wait before a next disk action can be executed.
+    // The difference between disk_rate_limit_period and this field is that disk_rate_limit_period is a constant value 
+    // (independent) if the rate limit is active, this field will count down, if the field is 0 you can modify.
+    // If this field is set it is not allowed to update dbserver_disk_size or disk_performance_id.
+    // This is a read-only value
+    google.protobuf.Duration disk_rate_limit_active = 125;
 
     // Status of a single server (of the ArangoDB cluster)
     message ServerStatus {
