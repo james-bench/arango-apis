@@ -319,6 +319,8 @@ message TimeOfDay {
 // List of backup policies.
 message BackupPolicyList {
     repeated BackupPolicy items = 1;
+    // Budget for backup policies
+    common.v1.Budget budget = 3;
 }
 
 // Request arguments for ListBackupPolicies
