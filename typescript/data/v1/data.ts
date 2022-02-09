@@ -344,7 +344,7 @@ export interface Deployment {
   // boolean
   disk_performance_locked?: boolean;
   
-  // Disk rate limit is the period required to wait before a next disk action can be executed.
+  // Disk rate limit is the (fixed) period required to wait before a next disk action can be executed.
   // A value of 0 means that there is no rate limit.
   // If now - (last_disk_performance_updated_at or last_disk_size_updated_at) > disk_rate_limit_period it is not allowed to update
   // dbserver_disk_size or disk_performance_id.
@@ -360,6 +360,14 @@ export interface Deployment {
   // This is a read-only value
   // googleTypes.Timestamp
   last_disk_size_updated_at?: googleTypes.Timestamp;
+  
+  // Disk rate limit active is the active period required to wait before a next disk action can be executed.
+  // The difference between disk_rate_limit_period and this field is that disk_rate_limit_period is a constant value
+  // (independent) if the rate limit is active, this field will count down, if the field is 0 you can modify.
+  // If this field is set it is not allowed to update dbserver_disk_size or disk_performance_id.
+  // This is a read-only value
+  // googleTypes.Duration
+  disk_rate_limit_active?: googleTypes.Duration;
   
   // Deployment_Status
   status?: Deployment_Status;
