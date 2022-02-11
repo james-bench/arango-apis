@@ -54,4 +54,8 @@ const (
 	// by all deployments in a project in GB.
 	// This kinds of quota must be requested on project level.
 	QuotaKindTotalDeploymentsDiskPerProject = "data.total-deployments-disk-per-project"
+	// QuotaKindTotalBackupPoliciesPerDeployment limits the total number of back up policies
+	// for a given deployment
+	// This kind of quota must be requested on project level.
+	QuotaKindTotalBackupPoliciesPerDeployment = "backup.total-backup-policy-per-deployment"
 )
