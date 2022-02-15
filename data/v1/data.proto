@@ -1112,6 +1112,9 @@ message DeploymentPriceRequest {
     // Amount of disk space (in GB) to allocate for each dbserver.
     // This field is ignored unless model is "flexible".
     int32 dbserver_disk_size = 14;
+    
+    // Identifier of disk performance used for this deployment (if any).
+    string disk_performance_id = 15;
 }
 
 message DeploymentPrice {

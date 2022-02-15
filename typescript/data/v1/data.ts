@@ -917,6 +917,10 @@ export interface DeploymentPriceRequest {
   // This field is ignored unless model is "flexible".
   // number
   dbserver_disk_size?: number;
+  
+  // Identifier of disk performance used for this deployment (if any).
+  // string
+  disk_performance_id?: string;
 }
 
 // Result of CalculateDeploymentSize

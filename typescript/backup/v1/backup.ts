@@ -385,6 +385,10 @@ export interface BackupPolicy_Status {
 export interface BackupPolicyList {
   // BackupPolicy
   items?: BackupPolicy[];
+  
+  // Budget for backup policies
+  // arangodb.cloud.common.v1.Budget
+  budget?: arangodb_cloud_common_v1_Budget;
 }
 
 // Request arguments for ListBackupPolicies
