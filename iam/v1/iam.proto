@@ -277,7 +277,8 @@ service IAMService {
     // - None
     rpc GetMultipleEffectivePermissions(GetMultipleEffectivePermissionsRequest) returns (MultiplePermissionLists) {
         option (google.api.http) = {
-            get: "/api/iam/v1/policies/effective-permissions-multiple"
+            post: "/api/iam/v1/policies/effective-permissions-multiple"
+            body: "*"
         };
     }
 

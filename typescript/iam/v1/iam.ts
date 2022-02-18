@@ -896,9 +896,8 @@ export class IAMService implements IIAMService {
   // Required permissions:
   // - None
   async GetMultipleEffectivePermissions(req: GetMultipleEffectivePermissionsRequest): Promise<MultiplePermissionLists> {
-    const path = `/api/iam/v1/policies/effective-permissions-multiple`;
-    const url = path + api.queryString(req, []);
-    return api.get(url, undefined);
+    const url = `/api/iam/v1/policies/effective-permissions-multiple`;
+    return api.post(url, req);
   }
   
   // Does the authenticated user have all of the requested permissions for the resource
