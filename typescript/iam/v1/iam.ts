@@ -122,6 +122,13 @@ export interface CreateAPIKeyRequest {
   time_to_live?: googleTypes.Duration;
 }
 
+// Request arguments for GetMultipleEffectivePermissions
+export interface GetMultipleEffectivePermissionsRequest {
+  // URLs of the resources to fetch.
+  // string
+  url?: string[];
+}
+
 // Group of user accounts.
 export interface Group {
   // System identifier of the group.
@@ -215,10 +222,20 @@ export interface IsMemberOfGroupRequest {
   group_id?: string;
 }
 
+// Multiple Lists of permissions.
+export interface MultiplePermissionLists {
+  // PermissionList
+  items?: PermissionList[];
+}
+
 // List of permissions.
 export interface PermissionList {
   // string
   items?: string[];
+  
+  // URL of the resource (filled out when GetMultipleEffectivePermissions was called).
+  // string
+  url?: string;
 }
 
 // Policy bindings members to roles for access to a resource.
@@ -583,6 +600,13 @@ export interface IIAMService {
   // - None
   GetEffectivePermissions: (req: arangodb_cloud_common_v1_URLOptions) => Promise<PermissionList>;
   
+  // Return the lists of permissions that are available to the currently authenticated
+  // used for actions on the resources identified by the given URLs.
+  // This method can replace multiple GetEffectivePermissions calls into a single roundtrip.
+  // Required permissions:
+  // - None
+  GetMultipleEffectivePermissions: (req: GetMultipleEffectivePermissionsRequest) => Promise<MultiplePermissionLists>;
+  
   // Does the authenticated user have all of the requested permissions for the resource
   // identified by the given URL?
   // Required permissions:
@@ -861,6 +885,17 @@ export class IAMService implements IIAMService {
   // - None
   async GetEffectivePermissions(req: arangodb_cloud_common_v1_URLOptions): Promise<PermissionList> {
     const path = `/api/iam/v1/policies/effective-permissions`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
+  // Return the lists of permissions that are available to the currently authenticated
+  // used for actions on the resources identified by the given URLs.
+  // This method can replace multiple GetEffectivePermissions calls into a single roundtrip.
+  // Required permissions:
+  // - None
+  async GetMultipleEffectivePermissions(req: GetMultipleEffectivePermissionsRequest): Promise<MultiplePermissionLists> {
+    const path = `/api/iam/v1/policies/effective-permissions-multiple`;
     const url = path + api.queryString(req, []);
     return api.get(url, undefined);
   }

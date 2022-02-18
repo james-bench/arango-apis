@@ -903,6 +903,10 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.iam.v1.GetMultipleEffectivePermissionsRequest"><span class="badge">M</span>GetMultipleEffectivePermissionsRequest</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.iam.v1.Group"><span class="badge">M</span>Group</a>
                 </li>
               
@@ -924,6 +928,10 @@ title: "ArangoDB Oasis API"
               
                 <li>
                   <a href="#arangodb.cloud.iam.v1.IsMemberOfGroupRequest"><span class="badge">M</span>IsMemberOfGroupRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.iam.v1.MultiplePermissionLists"><span class="badge">M</span>MultiplePermissionLists</a>
                 </li>
               
                 <li>
@@ -11308,6 +11316,30 @@ You can still use RevokeAPIKey to revoke such API keys. </p></td>
 
         
       
+        <h3 id="arangodb.cloud.iam.v1.GetMultipleEffectivePermissionsRequest">GetMultipleEffectivePermissionsRequest</h3>
+        <p>Request arguments for GetMultipleEffectivePermissions</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>url</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>URLs of the resources to fetch. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.iam.v1.Group">Group</h3>
         <p>Group of user accounts.</p>
 
@@ -11540,6 +11572,30 @@ This is a read-only value. </p></td>
 
         
       
+        <h3 id="arangodb.cloud.iam.v1.MultiplePermissionLists">MultiplePermissionLists</h3>
+        <p>Multiple Lists of permissions.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#arangodb.cloud.iam.v1.PermissionList">PermissionList</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.iam.v1.PermissionList">PermissionList</h3>
         <p>List of permissions.</p>
 
@@ -11555,6 +11611,13 @@ This is a read-only value. </p></td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
                   <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>URL of the resource (filled out when GetMultipleEffectivePermissions was called). </p></td>
                 </tr>
               
             </tbody>
@@ -12300,6 +12363,17 @@ Required permissions:
               </tr>
             
               <tr>
+                <td>GetMultipleEffectivePermissions</td>
+                <td><a href="#arangodb.cloud.iam.v1.GetMultipleEffectivePermissionsRequest">GetMultipleEffectivePermissionsRequest</a></td>
+                <td><a href="#arangodb.cloud.iam.v1.MultiplePermissionLists">MultiplePermissionLists</a></td>
+                <td><p>Return the lists of permissions that are available to the currently authenticated
+used for actions on the resources identified by the given URLs.
+This method can replace multiple GetEffectivePermissions calls into a single roundtrip.
+Required permissions:
+- None</p></td>
+              </tr>
+            
+              <tr>
                 <td>HasPermissions</td>
                 <td><a href="#arangodb.cloud.iam.v1.HasPermissionsRequest">HasPermissionsRequest</a></td>
                 <td><a href="#arangodb.cloud.common.v1.YesOrNo">.arangodb.cloud.common.v1.YesOrNo</a></td>
@@ -12658,6 +12732,16 @@ Required permissions:
                 <td>GetEffectivePermissions</td>
                 <td>GET</td>
                 <td>/api/iam/v1/policies/effective-permissions</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetMultipleEffectivePermissions</td>
+                <td>GET</td>
+                <td>/api/iam/v1/policies/effective-permissions-multiple</td>
                 <td></td>
               </tr>
               

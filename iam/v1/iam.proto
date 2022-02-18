@@ -270,6 +270,17 @@ service IAMService {
         };
     }
 
+    // Return the lists of permissions that are available to the currently authenticated
+    // used for actions on the resources identified by the given URLs.
+    // This method can replace multiple GetEffectivePermissions calls into a single roundtrip.
+    // Required permissions:
+    // - None
+    rpc GetMultipleEffectivePermissions(GetMultipleEffectivePermissionsRequest) returns (MultiplePermissionLists) {
+        option (google.api.http) = {
+            get: "/api/iam/v1/policies/effective-permissions-multiple"
+        };
+    }
+
     // Does the authenticated user have all of the requested permissions for the resource
     // identified by the given URL?
     // Required permissions:
@@ -500,9 +511,22 @@ message GroupMembersRequest {
     repeated string user_ids = 2;    
 }
 
+// Request arguments for GetMultipleEffectivePermissions
+message GetMultipleEffectivePermissionsRequest {
+    // URLs of the resources to fetch.
+    repeated string url = 1;
+}
+
+// Multiple Lists of permissions.
+message MultiplePermissionLists {
+    repeated PermissionList items = 1;
+}
+
 // List of permissions.
 message PermissionList {
     repeated string items = 1;
+    // URL of the resource (filled out when GetMultipleEffectivePermissions was called).
+    string url = 2;
 }
 
 // Request arguments for HasPermissionsRequest.
