@@ -126,7 +126,7 @@ export interface CreateAPIKeyRequest {
 export interface GetMultipleEffectivePermissionsRequest {
   // URLs of the resources to fetch.
   // string
-  url?: string[];
+  urls?: string[];
 }
 
 // Group of user accounts.
@@ -230,6 +230,7 @@ export interface MultiplePermissionLists {
 
 // List of permissions.
 export interface PermissionList {
+  // The permissions
   // string
   items?: string[];
   

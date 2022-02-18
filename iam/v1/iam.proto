@@ -514,7 +514,7 @@ message GroupMembersRequest {
 // Request arguments for GetMultipleEffectivePermissions
 message GetMultipleEffectivePermissionsRequest {
     // URLs of the resources to fetch.
-    repeated string url = 1;
+    repeated string urls = 1;
 }
 
 // Multiple Lists of permissions.
@@ -524,6 +524,7 @@ message MultiplePermissionLists {
 
 // List of permissions.
 message PermissionList {
+    // The permissions
     repeated string items = 1;
     // URL of the resource (filled out when GetMultipleEffectivePermissions was called).
     string url = 2;
