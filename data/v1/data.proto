@@ -614,6 +614,8 @@ message Deployment {
         int64 total_backup_size_bytes = 101;
         // Set if there is any backup currently uploading data to the external source
         bool backup_upload_in_progress = 102;
+        // Set if the deployment is up-to-date and has no pending updates.
+        bool is_up_to_date = 103;
     }
     Status status = 201;
 

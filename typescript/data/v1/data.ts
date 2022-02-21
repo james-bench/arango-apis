@@ -721,6 +721,10 @@ export interface Deployment_Status {
   // Set if there is any backup currently uploading data to the external source
   // boolean
   backup_upload_in_progress?: boolean;
+  
+  // Set if the deployment is up-to-date and has no pending updates.
+  // boolean
+  is_up_to_date?: boolean;
 }
 
 // Result for GetDeploymentCredentials
