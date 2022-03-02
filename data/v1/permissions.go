@@ -45,6 +45,8 @@ const (
 	PermissionDeploymentCreateTestDatabase = "data.deployment.create-test-database"
 	// PermissionDeploymentRebalanceShards is needed for rebalancing shards for a deployment
 	PermissionDeploymentRebalanceShards = "data.deployment.rebalance-shards"
+	// PermissionDeploymentUpdateScheduledRootPasswordRotation is needed to update scheduled root password rotation setting for a deployment
+	PermissionDeploymentUpdateScheduledRootPasswordRotation = "data.deployment.update-scheduled-root-password-rotation"
 )
 
 const (

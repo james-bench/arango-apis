@@ -408,6 +408,18 @@ export interface Deployment {
   // Deployment's disk autoscaling settings
   // Deployment_DiskAutoSizeSettings
   disk_auto_size_settings?: Deployment_DiskAutoSizeSettings;
+  
+  // Determines if root's password scheduled rotation is enabled for the deployment.
+  // This is a readonly field.
+  // boolean
+  is_scheduled_root_password_rotation_enabled?: boolean;
+  
+  // Time when the last time root password rotated for the deployment.
+  // For the existing deployments, this field is not set until they enable scheduled root password rotation.
+  // For the new deployments, this field will have the same value with deployment's `created_at`.
+  // This is a readonly field.
+  // googleTypes.Timestamp
+  last_root_password_rotated_at?: googleTypes.Timestamp;
 }
 
 // Information about a backup restore.
@@ -1344,6 +1356,17 @@ export interface ServersSpecLimitsRequest {
   deployment_id?: string;
 }
 
+// Request arguments for UpdateDeploymentScheduledRootPasswordRotation
+export interface UpdateDeploymentScheduledRootPasswordRotationRequest {
+  // Identifier of the deloyment.
+  // string
+  deployment_id?: string;
+  
+  // Whether scheduled root password rotation should be enabled or not.
+  // boolean
+  enabled?: boolean;
+}
+
 // UpgradeVersionRecommendation holds a recommendation for updating this version.
 export interface UpgradeVersionRecommendation {
   // The version of the ArangoDB release that it it is recommend to upgraded to.
@@ -1421,6 +1444,11 @@ export interface IDataService {
   // Note that deployment.status & deployment.expiration are ignored
   // in this request.
   UpdateDeployment: (req: Deployment) => Promise<Deployment>;
+  
+  // Update the setting for scheduled root password rotation
+  // Required permissions:
+  // - data.deployment.update-scheduled-root-password-rotation
+  UpdateDeploymentScheduledRootPasswordRotation: (req: UpdateDeploymentScheduledRootPasswordRotationRequest) => Promise<void>;
   
   // Delete a deployment
   // Note that deployments are initially only marked for deletion.
@@ -1595,6 +1623,14 @@ export class DataService implements IDataService {
   async UpdateDeployment(req: Deployment): Promise<Deployment> {
     const url = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}`;
     return api.patch(url, req);
+  }
+  
+  // Update the setting for scheduled root password rotation
+  // Required permissions:
+  // - data.deployment.update-scheduled-root-password-rotation
+  async UpdateDeploymentScheduledRootPasswordRotation(req: UpdateDeploymentScheduledRootPasswordRotationRequest): Promise<void> {
+    const url = `/api/data/v1/deployments/${encodeURIComponent(req.deployment_id || '')}/scheduled-rootpassword-rotation`;
+    return api.put(url, req);
   }
   
   // Delete a deployment
