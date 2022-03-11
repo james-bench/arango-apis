@@ -333,6 +333,10 @@ export interface BackupPolicy_HourlySchedule {
   // Schedule should run with an interval of the specified hours (1-23)
   // number
   schedule_every_interval_hours?: number;
+  
+  // Minutes offset is a minute offset to full hour (0-59) when the backup process should start
+  // number
+  minutes_offset?: number;
 }
 
 // Note: Nested types inside nested types is not supported by the typescript generator

@@ -44,7 +44,8 @@ func (source *BackupPolicy_Schedule) Equals(other *BackupPolicy_Schedule) bool {
 
 // Equals returns true when source & other have the same values
 func (source *BackupPolicy_HourlySchedule) Equals(other *BackupPolicy_HourlySchedule) bool {
-	return source.GetScheduleEveryIntervalHours() == other.GetScheduleEveryIntervalHours()
+	return source.GetScheduleEveryIntervalHours() == other.GetScheduleEveryIntervalHours() &&
+		source.GetMinutesOffset() == other.GetMinutesOffset()
 }
 
 // Equals returns true when source & other have the same values
