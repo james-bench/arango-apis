@@ -1122,6 +1122,10 @@ title: "ArangoDB Oasis API"
                   <a href="#arangodb.cloud.notification.v1.NotificationList"><span class="badge">M</span>NotificationList</a>
                 </li>
               
+                <li>
+                  <a href="#arangodb.cloud.notification.v1.SubscribeToManagedServiceNewsRequest"><span class="badge">M</span>SubscribeToManagedServiceNewsRequest</a>
+                </li>
+              
               
               
               
@@ -14294,6 +14298,30 @@ email addresses, phone numbers etc </p></td>
 
         
       
+        <h3 id="arangodb.cloud.notification.v1.SubscribeToManagedServiceNewsRequest">SubscribeToManagedServiceNewsRequest</h3>
+        <p>SubscribeToManagedServiceNewsRequest is used to subscribe to Oasis newsletter</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>email</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The email to subscribe to the newsletter </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
 
@@ -14342,6 +14370,15 @@ Required permissions:
                 <td><p>Mark notification related to given deployment as unread.
 Required permissions:
 - notification.deployment-notification.mark-as-unread on the deployment associated with the notification identified by notification_id</p></td>
+              </tr>
+            
+              <tr>
+                <td>SubscribeToManagedServiceNews</td>
+                <td><a href="#arangodb.cloud.notification.v1.SubscribeToManagedServiceNewsRequest">SubscribeToManagedServiceNewsRequest</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><p>Subscribe to Oasis monthly newsletter.
+Required permissions:
+- None</p></td>
               </tr>
             
           </tbody>
@@ -14398,6 +14435,16 @@ Required permissions:
                 <td>MarkNotificationAsUnread</td>
                 <td>POST</td>
                 <td>/api/notification/v1/notifications/{notification_id}/mark/unread</td>
+                <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>SubscribeToManagedServiceNews</td>
+                <td>POST</td>
+                <td>/api/notification/v1/newsletter/subscribe</td>
                 <td>*</td>
               </tr>
               

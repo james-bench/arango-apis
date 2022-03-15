@@ -71,6 +71,16 @@ service NotificationService {
             body: "*"
         };
     }
+
+    // Subscribe to Oasis monthly newsletter.
+    // Required permissions:
+    // - None
+    rpc SubscribeToManagedServiceNews(SubscribeToManagedServiceNewsRequest) returns (arangodb.cloud.common.v1.Empty) {
+        option(google.api.http) = {
+            post: "/api/notification/v1/newsletter/subscribe"
+            body: "*"
+        };
+    }
 }
 
 // Notification contains all attributes of a notification.
@@ -136,4 +146,10 @@ message NotificationList {
 message MarkNotificationRequest {
     // Identifier of notification that has to be marked
     string notification_id = 1;
+}
+
+// SubscribeToManagedServiceNewsRequest is used to subscribe to Oasis newsletter
+message SubscribeToManagedServiceNewsRequest {
+    // The email to subscribe to the newsletter
+    string email = 1;
 }
