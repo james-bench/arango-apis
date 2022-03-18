@@ -1,7 +1,7 @@
 // 
 // DISCLAIMER
 // 
-// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2022 ArangoDB GmbH, Cologne, Germany
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,9 +16,6 @@
 // limitations under the License.
 // 
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
-// 
-// Author Ewout Prangsma
-// Author Robert Stam
 // 
 
 syntax = "proto3";
@@ -580,6 +577,8 @@ message AuditLogTopic {
     bool for_deployment = 2;
     // If set, this topic is used in audit log events of the Oasis platform.
     bool for_platform = 3;
+    // If set, this topic will be excluded by default when adding new destinations.
+    bool exclude_by_default = 4;
 }
 
 // List of AuditLogTopic's

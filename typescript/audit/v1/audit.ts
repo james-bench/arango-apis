@@ -409,6 +409,10 @@ export interface AuditLogTopic {
   // If set, this topic is used in audit log events of the Oasis platform.
   // boolean
   for_platform?: boolean;
+  
+  // If set, this topic will be excluded by default when adding new destinations.
+  // boolean
+  exclude_by_default?: boolean;
 }
 
 // List of AuditLogTopic's
