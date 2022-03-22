@@ -54,7 +54,7 @@ service ReplicationService {
     // Required permissions:
     // if project_id is specified
     // - backup.backup.get on the backup specified by backup_id in request
-    // - replication.deployment.clone-from-backup on the project specified in request (or source project if project_id not provided)
+    // - replication.deployment.clone-from-backup on the project specified in request
     // if project_id is not specified
     // - replication.deployment.clone-from-backup on the backup specified by backup_id
     rpc CloneDeploymentFromBackup(CloneDeploymentFromBackupRequest) returns (data.v1.Deployment) {
