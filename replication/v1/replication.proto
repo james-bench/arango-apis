@@ -74,4 +74,7 @@ message CloneDeploymentFromBackupRequest {
     // identifier, this field may be left empty.
     // If this field is not set the terms and conditions of the source deployment will be used.
     string accepted_terms_and_conditions_id = 3;
+    // Target project identifier.
+    // This is an optional field
+    string project_id = 4;
 }

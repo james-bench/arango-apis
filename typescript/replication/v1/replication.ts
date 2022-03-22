@@ -29,6 +29,11 @@ export interface CloneDeploymentFromBackupRequest {
   // If this field is not set the terms and conditions of the source deployment will be used.
   // string
   accepted_terms_and_conditions_id?: string;
+  
+  // Target project identifier.
+  // This is an optional field
+  // string
+  project_id?: string;
 }
 
 // ReplicationService is the API used to replicate a deployment.
