@@ -15477,7 +15477,7 @@ data into the new deployment. The new deployment will have a different endpoint,
 be reset for it. All other user settings will remain the same.
 The old deployment will not be touched.
 Required permissions:
-- backup.backup.get on the backup specified by backup_id in request
+- backup.backup.get on the backup specified by backup_id in request (if project_id is specified, otherwise it&#39;s not required)
 - replication.deployment.clone-from-backup on the project specified in request (or source project if project_id not provided)</p></td>
               </tr>
             

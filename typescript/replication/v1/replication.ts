@@ -53,7 +53,7 @@ export interface IReplicationService {
   // be reset for it. All other user settings will remain the same.
   // The old deployment will not be touched.
   // Required permissions:
-  // - backup.backup.get on the backup specified by backup_id in request
+  // - backup.backup.get on the backup specified by backup_id in request (if project_id is specified, otherwise it's not required)
   // - replication.deployment.clone-from-backup on the project specified in request (or source project if project_id not provided)
   CloneDeploymentFromBackup: (req: CloneDeploymentFromBackupRequest) => Promise<arangodb_cloud_data_v1_Deployment>;
 }
@@ -79,7 +79,7 @@ export class ReplicationService implements IReplicationService {
   // be reset for it. All other user settings will remain the same.
   // The old deployment will not be touched.
   // Required permissions:
-  // - backup.backup.get on the backup specified by backup_id in request
+  // - backup.backup.get on the backup specified by backup_id in request (if project_id is specified, otherwise it's not required)
   // - replication.deployment.clone-from-backup on the project specified in request (or source project if project_id not provided)
   async CloneDeploymentFromBackup(req: CloneDeploymentFromBackupRequest): Promise<arangodb_cloud_data_v1_Deployment> {
     const url = `/api/replication/v1/backup/${encodeURIComponent(req.backup_id || '')}/clone`;

@@ -174,7 +174,7 @@ type ReplicationServiceClient interface {
 	// be reset for it. All other user settings will remain the same.
 	// The old deployment will not be touched.
 	// Required permissions:
-	// - backup.backup.get on the backup specified by backup_id in request
+	// - backup.backup.get on the backup specified by backup_id in request (if project_id is specified, otherwise it's not required)
 	// - replication.deployment.clone-from-backup on the project specified in request (or source project if project_id not provided)
 	CloneDeploymentFromBackup(ctx context.Context, in *CloneDeploymentFromBackupRequest, opts ...grpc.CallOption) (*v11.Deployment, error)
 }
@@ -221,7 +221,7 @@ type ReplicationServiceServer interface {
 	// be reset for it. All other user settings will remain the same.
 	// The old deployment will not be touched.
 	// Required permissions:
-	// - backup.backup.get on the backup specified by backup_id in request
+	// - backup.backup.get on the backup specified by backup_id in request (if project_id is specified, otherwise it's not required)
 	// - replication.deployment.clone-from-backup on the project specified in request (or source project if project_id not provided)
 	CloneDeploymentFromBackup(context.Context, *CloneDeploymentFromBackupRequest) (*v11.Deployment, error)
 }
