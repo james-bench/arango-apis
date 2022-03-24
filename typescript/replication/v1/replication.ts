@@ -29,6 +29,11 @@ export interface CloneDeploymentFromBackupRequest {
   // If this field is not set the terms and conditions of the source deployment will be used.
   // string
   accepted_terms_and_conditions_id?: string;
+  
+  // Target project identifier.
+  // This is an optional field
+  // string
+  project_id?: string;
 }
 
 // ReplicationService is the API used to replicate a deployment.
@@ -48,7 +53,11 @@ export interface IReplicationService {
   // be reset for it. All other user settings will remain the same.
   // The old deployment will not be touched.
   // Required permissions:
-  // - replication.deployment.clone-from-backup
+  // if project_id is specified
+  // - backup.backup.get on the backup specified by backup_id in request
+  // - replication.deployment.clone-from-backup on the project specified in request
+  // if project_id is not specified
+  // - replication.deployment.clone-from-backup on the backup specified by backup_id
   CloneDeploymentFromBackup: (req: CloneDeploymentFromBackupRequest) => Promise<arangodb_cloud_data_v1_Deployment>;
 }
 
@@ -73,7 +82,11 @@ export class ReplicationService implements IReplicationService {
   // be reset for it. All other user settings will remain the same.
   // The old deployment will not be touched.
   // Required permissions:
-  // - replication.deployment.clone-from-backup
+  // if project_id is specified
+  // - backup.backup.get on the backup specified by backup_id in request
+  // - replication.deployment.clone-from-backup on the project specified in request
+  // if project_id is not specified
+  // - replication.deployment.clone-from-backup on the backup specified by backup_id
   async CloneDeploymentFromBackup(req: CloneDeploymentFromBackupRequest): Promise<arangodb_cloud_data_v1_Deployment> {
     const url = `/api/replication/v1/backup/${encodeURIComponent(req.backup_id || '')}/clone`;
     return api.post(url, req);

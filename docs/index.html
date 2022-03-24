@@ -15425,6 +15425,14 @@ identifier, this field may be left empty.
 If this field is not set the terms and conditions of the source deployment will be used. </p></td>
                 </tr>
               
+                <tr>
+                  <td>project_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Target project identifier.
+This is an optional field </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -15469,7 +15477,11 @@ data into the new deployment. The new deployment will have a different endpoint,
 be reset for it. All other user settings will remain the same.
 The old deployment will not be touched.
 Required permissions:
-- replication.deployment.clone-from-backup</p></td>
+if project_id is specified
+- backup.backup.get on the backup specified by backup_id in request
+- replication.deployment.clone-from-backup on the project specified in request
+if project_id is not specified
+- replication.deployment.clone-from-backup on the backup specified by backup_id</p></td>
               </tr>
             
           </tbody>
