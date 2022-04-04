@@ -340,6 +340,11 @@ export interface ListInvoicesRequest {
   // This is an optional field.
   // arangodb.cloud.common.v1.ListOptions
   options?: arangodb_cloud_common_v1_ListOptions;
+  
+  // Whether or not to include the usage item IDs on every Invoice_Item in the returned Invoices.
+  // This is an optional field; usage item IDs are not included by default.
+  // boolean
+  include_usageitem_ids?: boolean;
 }
 
 // Request arguments for ListPaymentMethods
