@@ -1,7 +1,7 @@
 // 
 // DISCLAIMER
 // 
-// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2022 ArangoDB GmbH, Cologne, Germany
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,9 +16,6 @@
 // limitations under the License.
 // 
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
-// 
-// Author Ewout Prangsma
-// Author Robert Stam
 // 
 
 syntax = "proto3";
@@ -372,6 +369,10 @@ message ListInvoicesRequest {
     // Standard list options
     // This is an optional field.
     common.v1.ListOptions options = 10;
+
+    // Whether or not to include the usage item IDs on every Invoice_Item in the returned Invoices.
+    // This is an optional field; usage item IDs are not included by default.
+    bool include_usageitem_ids = 20;
 }
 
 // Request argument for GetPreliminaryInvoice
