@@ -4742,10 +4742,7 @@ func (m *BackupPolicy) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthBackup
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthBackup
 			}
 			if (iNdEx + skippy) > l {
@@ -4936,10 +4933,7 @@ func (m *BackupPolicy_Schedule) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthBackup
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthBackup
 			}
 			if (iNdEx + skippy) > l {
@@ -5028,10 +5022,7 @@ func (m *BackupPolicy_HourlySchedule) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthBackup
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthBackup
 			}
 			if (iNdEx + skippy) > l {
@@ -5258,10 +5249,7 @@ func (m *BackupPolicy_DailySchedule) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthBackup
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthBackup
 			}
 			if (iNdEx + skippy) > l {
@@ -5367,10 +5355,7 @@ func (m *BackupPolicy_MonthlySchedule) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthBackup
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthBackup
 			}
 			if (iNdEx + skippy) > l {
@@ -5489,10 +5474,7 @@ func (m *BackupPolicy_Status) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthBackup
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthBackup
 			}
 			if (iNdEx + skippy) > l {
@@ -5613,10 +5595,7 @@ func (m *TimeOfDay) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthBackup
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthBackup
 			}
 			if (iNdEx + skippy) > l {
@@ -5737,10 +5716,7 @@ func (m *BackupPolicyList) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthBackup
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthBackup
 			}
 			if (iNdEx + skippy) > l {
@@ -5879,10 +5855,7 @@ func (m *ListBackupPoliciesRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthBackup
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthBackup
 			}
 			if (iNdEx + skippy) > l {
@@ -6417,10 +6390,7 @@ func (m *Backup) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthBackup
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthBackup
 			}
 			if (iNdEx + skippy) > l {
@@ -6575,10 +6545,7 @@ func (m *Backup_DeploymentInfo) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthBackup
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthBackup
 			}
 			if (iNdEx + skippy) > l {
@@ -6684,10 +6651,7 @@ func (m *Backup_DownloadSpec) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthBackup
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthBackup
 			}
 			if (iNdEx + skippy) > l {
@@ -7072,10 +7036,7 @@ func (m *Backup_Status) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthBackup
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthBackup
 			}
 			if (iNdEx + skippy) > l {
@@ -7201,10 +7162,7 @@ func (m *Backup_UploadStatus) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthBackup
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthBackup
 			}
 			if (iNdEx + skippy) > l {
@@ -7330,10 +7288,7 @@ func (m *Backup_DownloadStatus) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthBackup
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthBackup
 			}
 			if (iNdEx + skippy) > l {
@@ -7454,10 +7409,7 @@ func (m *BackupList) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthBackup
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthBackup
 			}
 			if (iNdEx + skippy) > l {
@@ -7708,10 +7660,7 @@ func (m *ListBackupsRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthBackup
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthBackup
 			}
 			if (iNdEx + skippy) > l {
@@ -7730,6 +7679,7 @@ func (m *ListBackupsRequest) Unmarshal(dAtA []byte) error {
 func skipBackup(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -7761,10 +7711,8 @@ func skipBackup(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -7785,55 +7733,30 @@ func skipBackup(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthBackup
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthBackup
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowBackup
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipBackup(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthBackup
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupBackup
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthBackup
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthBackup = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowBackup   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthBackup        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowBackup          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupBackup = fmt.Errorf("proto: unexpected end of group")
 )
