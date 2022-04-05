@@ -6389,7 +6389,7 @@ func (m *Organization) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthResourcemanager
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -6578,10 +6578,7 @@ func (m *Organization) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -6702,10 +6699,7 @@ func (m *OrganizationList) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -6816,10 +6810,7 @@ func (m *AuthenticationProviders) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -6902,10 +6893,7 @@ func (m *DomainRestrictions) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -7200,10 +7188,7 @@ func (m *Tier) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -7342,10 +7327,7 @@ func (m *Member) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -7430,10 +7412,7 @@ func (m *MemberList) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -7548,10 +7527,7 @@ func (m *IsMemberOfOrganizationRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -7642,10 +7618,7 @@ func (m *IsMemberOfOrganizationResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -7764,10 +7737,7 @@ func (m *OrganizationMembersRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -8110,10 +8080,7 @@ func (m *Project) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -8234,10 +8201,7 @@ func (m *ProjectList) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -8558,7 +8522,7 @@ func (m *Event) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthResourcemanager
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -8747,10 +8711,7 @@ func (m *Event) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -8835,10 +8796,7 @@ func (m *EventList) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -9081,10 +9039,7 @@ func (m *ListEventOptions) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -9539,10 +9494,7 @@ func (m *OrganizationInvite) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -9627,10 +9579,7 @@ func (m *OrganizationInviteList) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -9785,10 +9734,7 @@ func (m *QuotaDescription) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -9873,10 +9819,7 @@ func (m *QuotaDescriptionList) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -10010,10 +9953,7 @@ func (m *Quota) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -10098,10 +10038,7 @@ func (m *QuotaList) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -10220,10 +10157,7 @@ func (m *ListQuotasRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -10374,10 +10308,7 @@ func (m *TermsAndConditions) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -10528,10 +10459,7 @@ func (m *DataProcessingAddendum) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourcemanager
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthResourcemanager
 			}
 			if (iNdEx + skippy) > l {
@@ -10550,6 +10478,7 @@ func (m *DataProcessingAddendum) Unmarshal(dAtA []byte) error {
 func skipResourcemanager(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -10581,10 +10510,8 @@ func skipResourcemanager(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -10605,55 +10532,30 @@ func skipResourcemanager(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthResourcemanager
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthResourcemanager
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowResourcemanager
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipResourcemanager(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthResourcemanager
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupResourcemanager
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthResourcemanager
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthResourcemanager = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowResourcemanager   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthResourcemanager        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowResourcemanager          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupResourcemanager = fmt.Errorf("proto: unexpected end of group")
 )
