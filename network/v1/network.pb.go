@@ -196,6 +196,8 @@ type PrivateEndpointService struct {
 	AlternateDnsNames []string `protobuf:"bytes,11,rep,name=alternate_dns_names,json=alternateDnsNames,proto3" json:"alternate_dns_names,omitempty"`
 	// Specific AKS setting.
 	Aks *PrivateEndpointService_Aks `protobuf:"bytes,20,opt,name=aks,proto3" json:"aks,omitempty"`
+	// Specific AWS setting.
+	Aws *PrivateEndpointService_Aks `protobuf:"bytes,30,opt,name=aws,proto3" json:"aws,omitempty"`
 	// Status of the private endpoint service.
 	// All fields are read-only.
 	Status               *PrivateEndpointService_Status `protobuf:"bytes,100,opt,name=status,proto3" json:"status,omitempty"`
@@ -307,6 +309,13 @@ func (m *PrivateEndpointService) GetAks() *PrivateEndpointService_Aks {
 	return nil
 }
 
+func (m *PrivateEndpointService) GetAws() *PrivateEndpointService_Aks {
+	if m != nil {
+		return m.Aws
+	}
+	return nil
+}
+
 func (m *PrivateEndpointService) GetStatus() *PrivateEndpointService_Status {
 	if m != nil {
 		return m.Status
@@ -364,6 +373,126 @@ func (m *PrivateEndpointService_Aks) GetClientSubscriptionIds() []string {
 	return nil
 }
 
+// Specific AWS principal setting.
+type PrivateEndpointService_AwsPrincipals struct {
+	// 12 digit AWS Account Identifier.
+	// When both user_names and role_names are not provided all principals can be used to setup the private endpoint (account principal).
+	AccountId string `protobuf:"bytes,1,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
+	// Optional user names (when at least one user name is provided the specified IAM user(s)) are able to setup the private endpoint.
+	// It is allowed to specify both users and roles
+	UserNames []string `protobuf:"bytes,2,rep,name=user_names,json=userNames,proto3" json:"user_names,omitempty"`
+	// Optional role names (when at least one role name is provided the specified IAM role(s)) are able to setup the private endpoint.
+	// It is allowed to specify both users and roles
+	RoleNames            []string `protobuf:"bytes,3,rep,name=role_names,json=roleNames,proto3" json:"role_names,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *PrivateEndpointService_AwsPrincipals) Reset()         { *m = PrivateEndpointService_AwsPrincipals{} }
+func (m *PrivateEndpointService_AwsPrincipals) String() string { return proto.CompactTextString(m) }
+func (*PrivateEndpointService_AwsPrincipals) ProtoMessage()    {}
+func (*PrivateEndpointService_AwsPrincipals) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8571034d60397816, []int{2, 1}
+}
+func (m *PrivateEndpointService_AwsPrincipals) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PrivateEndpointService_AwsPrincipals) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PrivateEndpointService_AwsPrincipals.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PrivateEndpointService_AwsPrincipals) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PrivateEndpointService_AwsPrincipals.Merge(m, src)
+}
+func (m *PrivateEndpointService_AwsPrincipals) XXX_Size() int {
+	return m.Size()
+}
+func (m *PrivateEndpointService_AwsPrincipals) XXX_DiscardUnknown() {
+	xxx_messageInfo_PrivateEndpointService_AwsPrincipals.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PrivateEndpointService_AwsPrincipals proto.InternalMessageInfo
+
+func (m *PrivateEndpointService_AwsPrincipals) GetAccountId() string {
+	if m != nil {
+		return m.AccountId
+	}
+	return ""
+}
+
+func (m *PrivateEndpointService_AwsPrincipals) GetUserNames() []string {
+	if m != nil {
+		return m.UserNames
+	}
+	return nil
+}
+
+func (m *PrivateEndpointService_AwsPrincipals) GetRoleNames() []string {
+	if m != nil {
+		return m.RoleNames
+	}
+	return nil
+}
+
+// Specific AWS setting.
+type PrivateEndpointService_Aws struct {
+	// The AWS principals of the client side, needed to auto-approve private endpoint connections.
+	// After a private endpoint connection has been made this field cannot be modified anymore.
+	AwsPrincipals        []*PrivateEndpointService_AwsPrincipals `protobuf:"bytes,1,rep,name=aws_principals,json=awsPrincipals,proto3" json:"aws_principals,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                `json:"-"`
+	XXX_unrecognized     []byte                                  `json:"-"`
+	XXX_sizecache        int32                                   `json:"-"`
+}
+
+func (m *PrivateEndpointService_Aws) Reset()         { *m = PrivateEndpointService_Aws{} }
+func (m *PrivateEndpointService_Aws) String() string { return proto.CompactTextString(m) }
+func (*PrivateEndpointService_Aws) ProtoMessage()    {}
+func (*PrivateEndpointService_Aws) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8571034d60397816, []int{2, 2}
+}
+func (m *PrivateEndpointService_Aws) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PrivateEndpointService_Aws) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PrivateEndpointService_Aws.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PrivateEndpointService_Aws) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PrivateEndpointService_Aws.Merge(m, src)
+}
+func (m *PrivateEndpointService_Aws) XXX_Size() int {
+	return m.Size()
+}
+func (m *PrivateEndpointService_Aws) XXX_DiscardUnknown() {
+	xxx_messageInfo_PrivateEndpointService_Aws.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PrivateEndpointService_Aws proto.InternalMessageInfo
+
+func (m *PrivateEndpointService_Aws) GetAwsPrincipals() []*PrivateEndpointService_AwsPrincipals {
+	if m != nil {
+		return m.AwsPrincipals
+	}
+	return nil
+}
+
 // Specific AKS private endpoint connection status fields.
 type PrivateEndpointService_AksPrivateEndpointConnectionStatus struct {
 	// The name of the private endpoint connection
@@ -387,7 +516,7 @@ func (m *PrivateEndpointService_AksPrivateEndpointConnectionStatus) String() str
 }
 func (*PrivateEndpointService_AksPrivateEndpointConnectionStatus) ProtoMessage() {}
 func (*PrivateEndpointService_AksPrivateEndpointConnectionStatus) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8571034d60397816, []int{2, 1}
+	return fileDescriptor_8571034d60397816, []int{2, 3}
 }
 func (m *PrivateEndpointService_AksPrivateEndpointConnectionStatus) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -460,7 +589,7 @@ func (m *PrivateEndpointService_AksStatus) Reset()         { *m = PrivateEndpoin
 func (m *PrivateEndpointService_AksStatus) String() string { return proto.CompactTextString(m) }
 func (*PrivateEndpointService_AksStatus) ProtoMessage()    {}
 func (*PrivateEndpointService_AksStatus) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8571034d60397816, []int{2, 2}
+	return fileDescriptor_8571034d60397816, []int{2, 4}
 }
 func (m *PrivateEndpointService_AksStatus) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -503,6 +632,154 @@ func (m *PrivateEndpointService_AksStatus) GetPrivateEndpointConnections() []*Pr
 	return nil
 }
 
+// Specific AWS private endpoint connection status fields.
+type PrivateEndpointService_AwsPrivateEndpointConnectionStatus struct {
+	// The owner of the private endpoint connection
+	Owner string `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
+	// The creation date the private endpoint connection
+	CreatedAt *types.Timestamp `protobuf:"bytes,2,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	// The state of the private endpoint connection
+	State string `protobuf:"bytes,3,opt,name=state,proto3" json:"state,omitempty"`
+	// The private endpoint identifier
+	Id                   string   `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *PrivateEndpointService_AwsPrivateEndpointConnectionStatus) Reset() {
+	*m = PrivateEndpointService_AwsPrivateEndpointConnectionStatus{}
+}
+func (m *PrivateEndpointService_AwsPrivateEndpointConnectionStatus) String() string {
+	return proto.CompactTextString(m)
+}
+func (*PrivateEndpointService_AwsPrivateEndpointConnectionStatus) ProtoMessage() {}
+func (*PrivateEndpointService_AwsPrivateEndpointConnectionStatus) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8571034d60397816, []int{2, 5}
+}
+func (m *PrivateEndpointService_AwsPrivateEndpointConnectionStatus) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PrivateEndpointService_AwsPrivateEndpointConnectionStatus) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PrivateEndpointService_AwsPrivateEndpointConnectionStatus.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PrivateEndpointService_AwsPrivateEndpointConnectionStatus) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PrivateEndpointService_AwsPrivateEndpointConnectionStatus.Merge(m, src)
+}
+func (m *PrivateEndpointService_AwsPrivateEndpointConnectionStatus) XXX_Size() int {
+	return m.Size()
+}
+func (m *PrivateEndpointService_AwsPrivateEndpointConnectionStatus) XXX_DiscardUnknown() {
+	xxx_messageInfo_PrivateEndpointService_AwsPrivateEndpointConnectionStatus.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PrivateEndpointService_AwsPrivateEndpointConnectionStatus proto.InternalMessageInfo
+
+func (m *PrivateEndpointService_AwsPrivateEndpointConnectionStatus) GetOwner() string {
+	if m != nil {
+		return m.Owner
+	}
+	return ""
+}
+
+func (m *PrivateEndpointService_AwsPrivateEndpointConnectionStatus) GetCreatedAt() *types.Timestamp {
+	if m != nil {
+		return m.CreatedAt
+	}
+	return nil
+}
+
+func (m *PrivateEndpointService_AwsPrivateEndpointConnectionStatus) GetState() string {
+	if m != nil {
+		return m.State
+	}
+	return ""
+}
+
+func (m *PrivateEndpointService_AwsPrivateEndpointConnectionStatus) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+// Specific AWS status fields.
+// All fields are read-only.
+type PrivateEndpointService_AwsStatus struct {
+	// The service name generated by the AWS VPC endpoint service needed by the client to setup the VPC endpoint.
+	ServiceName string `protobuf:"bytes,1,opt,name=service_name,json=serviceName,proto3" json:"service_name,omitempty"`
+	// The availability zones information needed to setup the VPC endpoint.
+	AvailabilityZones []string `protobuf:"bytes,2,rep,name=availability_zones,json=availabilityZones,proto3" json:"availability_zones,omitempty"`
+	// The status of the private endpoint connections.
+	PrivateEndpointConnections []*PrivateEndpointService_AwsPrivateEndpointConnectionStatus `protobuf:"bytes,3,rep,name=private_endpoint_connections,json=privateEndpointConnections,proto3" json:"private_endpoint_connections,omitempty"`
+	XXX_NoUnkeyedLiteral       struct{}                                                     `json:"-"`
+	XXX_unrecognized           []byte                                                       `json:"-"`
+	XXX_sizecache              int32                                                        `json:"-"`
+}
+
+func (m *PrivateEndpointService_AwsStatus) Reset()         { *m = PrivateEndpointService_AwsStatus{} }
+func (m *PrivateEndpointService_AwsStatus) String() string { return proto.CompactTextString(m) }
+func (*PrivateEndpointService_AwsStatus) ProtoMessage()    {}
+func (*PrivateEndpointService_AwsStatus) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8571034d60397816, []int{2, 6}
+}
+func (m *PrivateEndpointService_AwsStatus) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PrivateEndpointService_AwsStatus) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PrivateEndpointService_AwsStatus.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PrivateEndpointService_AwsStatus) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PrivateEndpointService_AwsStatus.Merge(m, src)
+}
+func (m *PrivateEndpointService_AwsStatus) XXX_Size() int {
+	return m.Size()
+}
+func (m *PrivateEndpointService_AwsStatus) XXX_DiscardUnknown() {
+	xxx_messageInfo_PrivateEndpointService_AwsStatus.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PrivateEndpointService_AwsStatus proto.InternalMessageInfo
+
+func (m *PrivateEndpointService_AwsStatus) GetServiceName() string {
+	if m != nil {
+		return m.ServiceName
+	}
+	return ""
+}
+
+func (m *PrivateEndpointService_AwsStatus) GetAvailabilityZones() []string {
+	if m != nil {
+		return m.AvailabilityZones
+	}
+	return nil
+}
+
+func (m *PrivateEndpointService_AwsStatus) GetPrivateEndpointConnections() []*PrivateEndpointService_AwsPrivateEndpointConnectionStatus {
+	if m != nil {
+		return m.PrivateEndpointConnections
+	}
+	return nil
+}
+
 // Status of the private endpoint service.
 // All fields are read-only.
 type PrivateEndpointService_Status struct {
@@ -516,7 +793,10 @@ type PrivateEndpointService_Status struct {
 	Message string `protobuf:"bytes,11,opt,name=message,proto3" json:"message,omitempty"`
 	// Specific AKS status fields.
 	// All fields are read-only.
-	Aks                  *PrivateEndpointService_AksStatus `protobuf:"bytes,20,opt,name=aks,proto3" json:"aks,omitempty"`
+	Aks *PrivateEndpointService_AksStatus `protobuf:"bytes,20,opt,name=aks,proto3" json:"aks,omitempty"`
+	// Specific AWS status fields.
+	// All fields are read-only.
+	Aws                  *PrivateEndpointService_AwsStatus `protobuf:"bytes,30,opt,name=aws,proto3" json:"aws,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                          `json:"-"`
 	XXX_unrecognized     []byte                            `json:"-"`
 	XXX_sizecache        int32                             `json:"-"`
@@ -526,7 +806,7 @@ func (m *PrivateEndpointService_Status) Reset()         { *m = PrivateEndpointSe
 func (m *PrivateEndpointService_Status) String() string { return proto.CompactTextString(m) }
 func (*PrivateEndpointService_Status) ProtoMessage()    {}
 func (*PrivateEndpointService_Status) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8571034d60397816, []int{2, 3}
+	return fileDescriptor_8571034d60397816, []int{2, 7}
 }
 func (m *PrivateEndpointService_Status) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -590,81 +870,103 @@ func (m *PrivateEndpointService_Status) GetAks() *PrivateEndpointService_AksStat
 	return nil
 }
 
+func (m *PrivateEndpointService_Status) GetAws() *PrivateEndpointService_AwsStatus {
+	if m != nil {
+		return m.Aws
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*IsPrivateEndpointServiceFeatureAvailableRequest)(nil), "arangodb.cloud.network.v1.IsPrivateEndpointServiceFeatureAvailableRequest")
 	proto.RegisterType((*IsPrivateEndpointServiceFeatureAvailableResult)(nil), "arangodb.cloud.network.v1.IsPrivateEndpointServiceFeatureAvailableResult")
 	proto.RegisterType((*PrivateEndpointService)(nil), "arangodb.cloud.network.v1.PrivateEndpointService")
 	proto.RegisterType((*PrivateEndpointService_Aks)(nil), "arangodb.cloud.network.v1.PrivateEndpointService.Aks")
+	proto.RegisterType((*PrivateEndpointService_AwsPrincipals)(nil), "arangodb.cloud.network.v1.PrivateEndpointService.AwsPrincipals")
+	proto.RegisterType((*PrivateEndpointService_Aws)(nil), "arangodb.cloud.network.v1.PrivateEndpointService.Aws")
 	proto.RegisterType((*PrivateEndpointService_AksPrivateEndpointConnectionStatus)(nil), "arangodb.cloud.network.v1.PrivateEndpointService.AksPrivateEndpointConnectionStatus")
 	proto.RegisterType((*PrivateEndpointService_AksStatus)(nil), "arangodb.cloud.network.v1.PrivateEndpointService.AksStatus")
+	proto.RegisterType((*PrivateEndpointService_AwsPrivateEndpointConnectionStatus)(nil), "arangodb.cloud.network.v1.PrivateEndpointService.AwsPrivateEndpointConnectionStatus")
+	proto.RegisterType((*PrivateEndpointService_AwsStatus)(nil), "arangodb.cloud.network.v1.PrivateEndpointService.AwsStatus")
 	proto.RegisterType((*PrivateEndpointService_Status)(nil), "arangodb.cloud.network.v1.PrivateEndpointService.Status")
 }
 
 func init() { proto.RegisterFile("network.proto", fileDescriptor_8571034d60397816) }
 
 var fileDescriptor_8571034d60397816 = []byte{
-	// 962 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x56, 0x4f, 0x6f, 0x1b, 0x45,
-	0x14, 0x67, 0xec, 0xfc, 0xf3, 0x33, 0x09, 0x30, 0x84, 0xb2, 0xdd, 0xba, 0xc1, 0x38, 0x87, 0x5a,
-	0xad, 0xb2, 0x4b, 0x52, 0x35, 0x2a, 0xad, 0x8a, 0xb4, 0xad, 0xdb, 0xc8, 0x08, 0x4a, 0xe4, 0x14,
-	0x0e, 0x5c, 0xac, 0xb1, 0x67, 0xba, 0x1d, 0x79, 0x77, 0x76, 0xd9, 0x19, 0x1b, 0x0c, 0x42, 0x42,
-	0x7c, 0x05, 0x24, 0xc4, 0x81, 0x0f, 0x80, 0xf8, 0x08, 0xdc, 0xb8, 0x71, 0x44, 0x70, 0x47, 0x28,
-	0x20, 0xf1, 0x11, 0x10, 0x37, 0xb4, 0xb3, 0xb3, 0xb6, 0x9b, 0x66, 0x9b, 0x38, 0x6a, 0x6f, 0x33,
-	0xef, 0xbd, 0x79, 0xef, 0xf7, 0x9b, 0xf7, 0xdb, 0x37, 0x0b, 0xab, 0x82, 0xa9, 0x4f, 0xa3, 0x64,
-	0xe0, 0xc4, 0x49, 0xa4, 0x22, 0x7c, 0x9e, 0x24, 0x44, 0xf8, 0x11, 0xed, 0x39, 0xfd, 0x20, 0x1a,
-	0x52, 0x27, 0xf7, 0x8e, 0xb6, 0xed, 0x73, 0xfd, 0x28, 0x0c, 0x23, 0xe1, 0x8e, 0xb6, 0xdd, 0x6c,
-	0x95, 0x1d, 0xb1, 0x6f, 0xfa, 0x5c, 0x3d, 0x1a, 0xf6, 0x9c, 0x7e, 0x14, 0xba, 0x7e, 0x14, 0x10,
-	0xe1, 0xbb, 0xda, 0xd1, 0x1b, 0x3e, 0x74, 0x63, 0x35, 0x8e, 0x99, 0x74, 0x15, 0x0f, 0x99, 0x54,
-	0x24, 0x8c, 0xa7, 0x2b, 0x73, 0xb8, 0xe6, 0x47, 0x91, 0x1f, 0x30, 0x97, 0xc4, 0xdc, 0x25, 0x42,
-	0x44, 0x8a, 0x28, 0x1e, 0x09, 0x99, 0x79, 0x1b, 0xdf, 0x23, 0x70, 0xdb, 0x72, 0x3f, 0xe1, 0x23,
-	0xa2, 0xd8, 0x5d, 0x41, 0xe3, 0x88, 0x0b, 0x75, 0xc0, 0x92, 0x11, 0xef, 0xb3, 0x7b, 0x8c, 0xa8,
-	0x61, 0xc2, 0xbc, 0x11, 0xe1, 0x01, 0xe9, 0x05, 0xac, 0xc3, 0x3e, 0x19, 0x32, 0xa9, 0xf0, 0x26,
-	0xac, 0x52, 0x16, 0x07, 0xd1, 0x38, 0x64, 0x42, 0x75, 0x39, 0xb5, 0x50, 0x1d, 0x35, 0x2b, 0x9d,
-	0x17, 0xa7, 0xc6, 0x36, 0xc5, 0x97, 0xe0, 0xa5, 0x28, 0xf1, 0x89, 0xe0, 0x9f, 0xeb, 0x7a, 0x69,
-	0x58, 0x49, 0x87, 0xad, 0xcd, 0x9a, 0xdb, 0x14, 0x5f, 0x80, 0x4a, 0xc2, 0x7c, 0x13, 0x52, 0xd6,
-	0x21, 0x2b, 0x99, 0xa1, 0x4d, 0x1b, 0x8f, 0xc0, 0x39, 0x3d, 0x3a, 0x39, 0x0c, 0x14, 0xae, 0x41,
-	0x85, 0xe4, 0x26, 0x0d, 0x6c, 0xa5, 0x33, 0x35, 0x60, 0x0b, 0x96, 0x43, 0x26, 0x25, 0xf1, 0x99,
-	0x41, 0x93, 0x6f, 0x1b, 0x7f, 0xac, 0xc0, 0xb9, 0xe3, 0x0b, 0xe1, 0x35, 0x28, 0x4d, 0x48, 0x96,
-	0x38, 0xc5, 0x2f, 0x43, 0x79, 0x98, 0x04, 0x26, 0x41, 0xba, 0xc4, 0x18, 0x16, 0x04, 0x09, 0x99,
-	0x81, 0xaf, 0xd7, 0xb8, 0x0e, 0x55, 0xca, 0x64, 0x3f, 0xe1, 0x71, 0x4a, 0xd4, 0x5a, 0xd0, 0xae,
-	0x59, 0x13, 0x7e, 0x1b, 0xa0, 0x9f, 0x30, 0xa2, 0x18, 0xed, 0x12, 0x65, 0x2d, 0xd6, 0x51, 0xb3,
-	0xba, 0x63, 0x3b, 0x59, 0xbb, 0x9c, 0xbc, 0xc1, 0xce, 0x83, 0xbc, 0x9f, 0x9d, 0x8a, 0x89, 0xf6,
-	0x54, 0x7a, 0x94, 0xb2, 0x80, 0x99, 0xa3, 0x4b, 0x27, 0x1f, 0x35, 0xd1, 0x9e, 0xc2, 0x17, 0x01,
-	0xb8, 0xec, 0x9a, 0xbd, 0xb5, 0x9c, 0xdd, 0x10, 0x97, 0xad, 0xcc, 0xf0, 0x64, 0x73, 0xe1, 0x98,
-	0xe6, 0x3a, 0xf0, 0x2a, 0x09, 0x14, 0x4b, 0x04, 0x51, 0xac, 0x4b, 0x85, 0xec, 0xa6, 0x8c, 0xa5,
-	0x55, 0xad, 0x97, 0x9b, 0x95, 0xce, 0x2b, 0x13, 0x57, 0x4b, 0xc8, 0xfb, 0xa9, 0x03, 0xef, 0x41,
-	0x99, 0x0c, 0xa4, 0xb5, 0xae, 0x71, 0x5e, 0x73, 0x0a, 0xbf, 0x00, 0xe7, 0xf8, 0x0e, 0x38, 0xde,
-	0x40, 0x76, 0xd2, 0x0c, 0x78, 0x1f, 0x96, 0xa4, 0x22, 0x6a, 0x28, 0x2d, 0xaa, 0x73, 0x5d, 0x9f,
-	0x3f, 0xd7, 0x81, 0x3e, 0xdf, 0x31, 0x79, 0xec, 0x5b, 0x50, 0xf6, 0x06, 0x12, 0xef, 0xc2, 0xeb,
-	0xfd, 0x80, 0xa7, 0x94, 0xe5, 0xb0, 0x37, 0x69, 0x51, 0x97, 0x53, 0x69, 0x21, 0xcd, 0xea, 0xb5,
-	0xcc, 0x7d, 0x30, 0xe3, 0x6d, 0x53, 0x69, 0x7f, 0x85, 0xa0, 0xe1, 0x0d, 0x8e, 0x4a, 0xf4, 0x4e,
-	0x24, 0x04, 0xeb, 0xa7, 0x31, 0x59, 0xb5, 0x89, 0x40, 0x50, 0xb1, 0x40, 0x4a, 0x4f, 0x0a, 0x64,
-	0x1d, 0x16, 0x53, 0x94, 0xb9, 0xae, 0xb2, 0x8d, 0x91, 0xe3, 0x42, 0x2e, 0x47, 0xfb, 0x27, 0x04,
-	0x15, 0x6f, 0x20, 0x4d, 0xa5, 0x75, 0x58, 0x24, 0x01, 0x27, 0xd2, 0x94, 0xca, 0x36, 0xf8, 0x5b,
-	0x04, 0xb5, 0x38, 0xc3, 0xd8, 0x65, 0x06, 0x64, 0xb7, 0x3f, 0x41, 0x29, 0xad, 0x52, 0xbd, 0xdc,
-	0xac, 0xee, 0x3c, 0x38, 0x53, 0x6b, 0x4e, 0x20, 0xdf, 0xb1, 0xe3, 0xa2, 0x00, 0x69, 0xff, 0x83,
-	0x60, 0x69, 0x8a, 0x3c, 0x61, 0x84, 0x8e, 0xcd, 0x57, 0x9b, 0x6d, 0xf0, 0x35, 0x58, 0xd1, 0x8b,
-	0x54, 0xe7, 0xa5, 0x13, 0x75, 0xbe, 0xac, 0x63, 0x3d, 0x95, 0x8e, 0x1f, 0xc1, 0x18, 0x95, 0x5d,
-	0xa2, 0x14, 0x13, 0xfa, 0x82, 0x41, 0xa7, 0x5d, 0xd3, 0x66, 0x2f, 0xb7, 0xce, 0x4e, 0x84, 0xea,
-	0x63, 0x13, 0x01, 0xbf, 0x3f, 0x2b, 0xda, 0x9b, 0x67, 0xba, 0x19, 0x73, 0x01, 0x69, 0x9e, 0x9d,
-	0x7f, 0x57, 0x60, 0xed, 0x7e, 0x76, 0x28, 0x1f, 0x2c, 0x9f, 0xc1, 0xea, 0x1e, 0x53, 0xde, 0x7e,
-	0xfb, 0x23, 0x96, 0xc8, 0x14, 0xcc, 0x1b, 0x47, 0xab, 0x98, 0x67, 0x60, 0xb4, 0xed, 0xdc, 0x0d,
-	0x63, 0x35, 0xb6, 0xdf, 0x2c, 0x0e, 0x30, 0x39, 0x1a, 0x9b, 0x5f, 0xff, 0xfe, 0xf7, 0x37, 0xa5,
-	0x8b, 0xf8, 0x82, 0x9e, 0xf8, 0x06, 0x66, 0xfa, 0xa4, 0x90, 0x98, 0x6f, 0x8d, 0x4c, 0xa1, 0xff,
-	0x10, 0x34, 0x4f, 0x3b, 0x58, 0xf1, 0xbb, 0x4f, 0xe1, 0x3e, 0xe7, 0xdb, 0x61, 0xb7, 0x9f, 0x49,
-	0xae, 0x74, 0xd2, 0x37, 0x76, 0x35, 0xd1, 0xb7, 0x1a, 0xce, 0x51, 0xa2, 0x46, 0x6e, 0xb9, 0xce,
-	0x65, 0x96, 0xc5, 0x7d, 0x98, 0xa5, 0xc1, 0x3f, 0x20, 0x38, 0xbf, 0xc7, 0x54, 0xc1, 0xb0, 0xdf,
-	0x2c, 0xbe, 0xe1, 0x76, 0xeb, 0x83, 0x38, 0x53, 0xed, 0xf6, 0xdc, 0x6a, 0x68, 0x5c, 0xd5, 0x68,
-	0xb7, 0xf0, 0x95, 0x53, 0xa2, 0xfd, 0x82, 0xd3, 0x2f, 0xf1, 0xcf, 0x08, 0x2e, 0x15, 0x42, 0xbd,
-	0x3d, 0x6e, 0x4d, 0x67, 0x72, 0xeb, 0xb9, 0x01, 0x7f, 0x47, 0x03, 0xbf, 0x8e, 0x77, 0x8f, 0x02,
-	0x9f, 0xbe, 0x08, 0x1a, 0x6c, 0x01, 0x11, 0xfc, 0x1b, 0x82, 0xda, 0x1d, 0xfd, 0x70, 0x15, 0xdc,
-	0xf8, 0xfc, 0x98, 0xce, 0x42, 0xe3, 0x3d, 0x4d, 0xe3, 0x5e, 0xc3, 0x7b, 0x1a, 0x8d, 0xc7, 0x5e,
-	0xbe, 0x22, 0x46, 0x37, 0xd0, 0x65, 0xfc, 0x23, 0x82, 0xda, 0x87, 0x31, 0x7d, 0xa6, 0xa4, 0x4e,
-	0xfa, 0xf8, 0x73, 0xc1, 0xef, 0xcc, 0x23, 0xa1, 0x1b, 0xe8, 0xf2, 0xed, 0x5b, 0xbf, 0x1c, 0x6e,
-	0xa0, 0x5f, 0x0f, 0x37, 0xd0, 0x9f, 0x87, 0x1b, 0xe8, 0xbb, 0xbf, 0x36, 0x5e, 0xf8, 0xf8, 0xca,
-	0xcc, 0x0f, 0x65, 0x5e, 0x74, 0x2b, 0x24, 0x82, 0xf8, 0x8c, 0xa6, 0xc9, 0xe5, 0x4c, 0xf6, 0xde,
-	0x92, 0x9e, 0xb3, 0x57, 0xff, 0x0f, 0x00, 0x00, 0xff, 0xff, 0x56, 0x63, 0xcc, 0xe6, 0xc8, 0x0a,
-	0x00, 0x00,
+	// 1139 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x57, 0x4f, 0x6f, 0x1b, 0x45,
+	0x14, 0x67, 0xed, 0xfc, 0xf3, 0x73, 0x63, 0xe8, 0x10, 0x8a, 0xbb, 0x4d, 0x42, 0xea, 0x1c, 0x1a,
+	0xb5, 0xca, 0x9a, 0xa4, 0x6a, 0x54, 0x1a, 0x15, 0xb4, 0x6d, 0xda, 0xc8, 0x88, 0x96, 0xc8, 0x29,
+	0x1c, 0x7a, 0x59, 0x8d, 0x77, 0x26, 0xee, 0xc8, 0xeb, 0xd9, 0x65, 0x67, 0x6c, 0xe3, 0x22, 0x24,
+	0xc4, 0x57, 0x40, 0x42, 0x48, 0xf0, 0x01, 0x10, 0x1f, 0x80, 0x03, 0x37, 0x6e, 0x1c, 0x11, 0x7c,
+	0x01, 0x14, 0x38, 0xf1, 0x01, 0x40, 0xdc, 0xd0, 0xcc, 0xce, 0xda, 0xdb, 0x34, 0x6e, 0x62, 0xb7,
+	0xbd, 0xed, 0xbc, 0xf7, 0xe6, 0xcd, 0xef, 0xfd, 0xde, 0x7b, 0x33, 0x6f, 0x61, 0x9e, 0x53, 0xd9,
+	0x0b, 0xe3, 0x96, 0x13, 0xc5, 0xa1, 0x0c, 0xd1, 0x79, 0x1c, 0x63, 0xde, 0x0c, 0x49, 0xc3, 0xf1,
+	0x83, 0xb0, 0x43, 0x9c, 0x54, 0xdb, 0xdd, 0xb0, 0xcf, 0xf9, 0x61, 0xbb, 0x1d, 0xf2, 0x6a, 0x77,
+	0xa3, 0x9a, 0x7c, 0x25, 0x5b, 0xec, 0xed, 0x26, 0x93, 0x8f, 0x3a, 0x0d, 0xc7, 0x0f, 0xdb, 0xd5,
+	0x66, 0x18, 0x60, 0xde, 0xac, 0x6a, 0x45, 0xa3, 0x73, 0x50, 0x8d, 0x64, 0x3f, 0xa2, 0xa2, 0x2a,
+	0x59, 0x9b, 0x0a, 0x89, 0xdb, 0xd1, 0xf0, 0xcb, 0x6c, 0x5e, 0x6c, 0x86, 0x61, 0x33, 0xa0, 0x55,
+	0x1c, 0xb1, 0x2a, 0xe6, 0x3c, 0x94, 0x58, 0xb2, 0x90, 0x8b, 0x44, 0x5b, 0xf9, 0xce, 0x82, 0x6a,
+	0x4d, 0xec, 0xc5, 0xac, 0x8b, 0x25, 0xbd, 0xc3, 0x49, 0x14, 0x32, 0x2e, 0xf7, 0x69, 0xdc, 0x65,
+	0x3e, 0xbd, 0x4b, 0xb1, 0xec, 0xc4, 0xd4, 0xed, 0x62, 0x16, 0xe0, 0x46, 0x40, 0xeb, 0xf4, 0x93,
+	0x0e, 0x15, 0x12, 0xad, 0xc2, 0x3c, 0xa1, 0x51, 0x10, 0xf6, 0xdb, 0x94, 0x4b, 0x8f, 0x91, 0xb2,
+	0xb5, 0x62, 0xad, 0x15, 0xea, 0x67, 0x86, 0xc2, 0x1a, 0x41, 0x97, 0xe0, 0xd5, 0x30, 0x6e, 0x62,
+	0xce, 0x1e, 0xeb, 0xf3, 0x94, 0x59, 0x4e, 0x9b, 0x95, 0xb2, 0xe2, 0x1a, 0x41, 0x17, 0xa0, 0x10,
+	0xd3, 0xa6, 0x31, 0xc9, 0x6b, 0x93, 0xb9, 0x44, 0x50, 0x23, 0x95, 0x47, 0xe0, 0x9c, 0x1e, 0x9d,
+	0xe8, 0x04, 0x12, 0x2d, 0x42, 0x01, 0xa7, 0x22, 0x0d, 0x6c, 0xae, 0x3e, 0x14, 0xa0, 0x32, 0xcc,
+	0xb6, 0xa9, 0x10, 0xb8, 0x49, 0x0d, 0x9a, 0x74, 0x59, 0xf9, 0xbb, 0x04, 0xe7, 0x8e, 0x3f, 0x08,
+	0x95, 0x20, 0x37, 0x08, 0x32, 0xc7, 0x08, 0x7a, 0x0d, 0xf2, 0x9d, 0x38, 0x30, 0x0e, 0xd4, 0x27,
+	0x42, 0x30, 0xc5, 0x71, 0x9b, 0x1a, 0xf8, 0xfa, 0x1b, 0xad, 0x40, 0x91, 0x50, 0xe1, 0xc7, 0x2c,
+	0x52, 0x81, 0x96, 0xa7, 0xb4, 0x2a, 0x2b, 0x42, 0xef, 0x00, 0xf8, 0x31, 0xc5, 0x92, 0x12, 0x0f,
+	0xcb, 0xf2, 0xf4, 0x8a, 0xb5, 0x56, 0xdc, 0xb4, 0x9d, 0x24, 0x5d, 0x4e, 0x9a, 0x60, 0xe7, 0x41,
+	0x9a, 0xcf, 0x7a, 0xc1, 0x58, 0xbb, 0x52, 0x6d, 0x25, 0x34, 0xa0, 0x66, 0xeb, 0xcc, 0xc9, 0x5b,
+	0x8d, 0xb5, 0x2b, 0xd1, 0x12, 0x00, 0x13, 0x9e, 0x59, 0x97, 0x67, 0x13, 0x86, 0x98, 0xd8, 0x49,
+	0x04, 0x4f, 0x27, 0x17, 0x8e, 0x49, 0xae, 0x03, 0xaf, 0xe3, 0x40, 0xd2, 0x98, 0x63, 0x49, 0x3d,
+	0xc2, 0x85, 0xa7, 0x22, 0x16, 0xe5, 0xe2, 0x4a, 0x7e, 0xad, 0x50, 0x3f, 0x3b, 0x50, 0xed, 0x70,
+	0x71, 0x5f, 0x29, 0xd0, 0x2e, 0xe4, 0x71, 0x4b, 0x94, 0x17, 0x34, 0xce, 0x6b, 0xce, 0xc8, 0x0e,
+	0x70, 0x8e, 0xcf, 0x80, 0xe3, 0xb6, 0x44, 0x5d, 0x79, 0xd0, 0x8e, 0x7a, 0xa2, 0xbc, 0xfc, 0x7c,
+	0x8e, 0x7a, 0x02, 0xed, 0xc1, 0x8c, 0x90, 0x58, 0x76, 0x44, 0x99, 0x68, 0x5f, 0xd7, 0xc7, 0xf7,
+	0xb5, 0xaf, 0xf7, 0xd7, 0x8d, 0x1f, 0xfb, 0x26, 0xe4, 0xdd, 0x96, 0x40, 0x5b, 0xf0, 0xa6, 0x1f,
+	0x30, 0xc5, 0x9d, 0xe8, 0x34, 0x06, 0xb9, 0xf6, 0x18, 0x11, 0x65, 0x4b, 0xd3, 0xf3, 0x46, 0xa2,
+	0xde, 0xcf, 0x68, 0x6b, 0x44, 0xd8, 0x01, 0xcc, 0xbb, 0x3d, 0x55, 0xea, 0xdc, 0x67, 0x11, 0x0e,
+	0x84, 0xca, 0x13, 0xf6, 0xfd, 0xb0, 0x93, 0x6d, 0xb1, 0x82, 0x91, 0xd4, 0x88, 0x52, 0x77, 0x04,
+	0x8d, 0x0d, 0xf3, 0x39, 0xed, 0xba, 0xa0, 0x24, 0x09, 0xe3, 0x4b, 0x00, 0x71, 0x18, 0x50, 0xa3,
+	0xce, 0x27, 0x6a, 0x25, 0xd1, 0x6a, 0xbb, 0x0d, 0x79, 0xb7, 0x27, 0xd0, 0x01, 0x94, 0x70, 0x4f,
+	0x78, 0xd1, 0xe0, 0x54, 0x8d, 0xb1, 0xb8, 0xf9, 0xde, 0x04, 0xcc, 0x66, 0xc1, 0xd7, 0xe7, 0x71,
+	0x76, 0x69, 0x7f, 0x61, 0x41, 0xc5, 0x6d, 0x1d, 0x6d, 0xe4, 0xdb, 0x21, 0xe7, 0xd4, 0x57, 0x04,
+	0x24, 0x54, 0x0e, 0xda, 0xc8, 0x1a, 0xdd, 0x46, 0xb9, 0xa7, 0xdb, 0x68, 0x01, 0xa6, 0x55, 0x0a,
+	0xd2, 0xee, 0x4b, 0x16, 0xa6, 0x69, 0xa7, 0xd2, 0xa6, 0xb5, 0x7f, 0xb2, 0xa0, 0xe0, 0xb6, 0x84,
+	0x39, 0x69, 0x01, 0xa6, 0x71, 0xc0, 0xb0, 0x30, 0x47, 0x25, 0x0b, 0xf4, 0xb5, 0x05, 0x8b, 0x51,
+	0x82, 0xd1, 0xa3, 0x06, 0xa4, 0xe7, 0x0f, 0x50, 0x26, 0x34, 0x17, 0x37, 0x1f, 0x4c, 0x54, 0x77,
+	0x27, 0x04, 0x5f, 0xb7, 0xa3, 0x51, 0x06, 0xc2, 0xfe, 0x56, 0xf1, 0xd7, 0x3b, 0x91, 0xbf, 0x05,
+	0x98, 0x0e, 0x7b, 0x9c, 0xc6, 0x69, 0x54, 0x7a, 0x71, 0xe4, 0x9a, 0xc9, 0x8d, 0x73, 0xcd, 0x9c,
+	0x8e, 0xda, 0x7f, 0x14, 0xb5, 0xbd, 0x94, 0xda, 0x8b, 0x70, 0x46, 0x24, 0x51, 0x7b, 0x99, 0x64,
+	0x16, 0x8d, 0x4c, 0x95, 0x1f, 0x5a, 0x07, 0x64, 0xae, 0x64, 0x16, 0x30, 0xd9, 0xf7, 0x1e, 0x87,
+	0x7c, 0x50, 0xc3, 0x67, 0xb3, 0x9a, 0x87, 0x4a, 0x71, 0x72, 0x5a, 0xf2, 0x13, 0xa7, 0xa5, 0xf7,
+	0x5c, 0x69, 0xf9, 0x31, 0x07, 0x33, 0x43, 0xea, 0x63, 0x8a, 0x49, 0xdf, 0x3c, 0x39, 0xc9, 0x02,
+	0x5d, 0x83, 0x39, 0xfd, 0x71, 0x3a, 0xe2, 0x67, 0xb5, 0xad, 0x2b, 0xd5, 0xdb, 0xc9, 0x29, 0x25,
+	0xc2, 0xc3, 0x52, 0x52, 0xae, 0xeb, 0x1e, 0xb4, 0xdb, 0x92, 0x16, 0xbb, 0xa9, 0x34, 0xfb, 0x9c,
+	0x15, 0x9f, 0x78, 0xce, 0xd0, 0xbd, 0xec, 0x8d, 0xbb, 0x3d, 0x51, 0xc1, 0x1a, 0x02, 0xf4, 0xbd,
+	0x7b, 0x2f, 0x7b, 0xef, 0x6e, 0x4f, 0x44, 0xf4, 0xc0, 0x5d, 0x4f, 0x6c, 0xfe, 0x3b, 0x07, 0xa5,
+	0xfb, 0xc9, 0xa6, 0xf4, 0x91, 0xfd, 0x14, 0xe6, 0x77, 0xa9, 0x74, 0xf7, 0x6a, 0x1f, 0xd3, 0x58,
+	0xa8, 0xd8, 0xde, 0x3a, 0x7a, 0x8a, 0x19, 0x89, 0xba, 0x1b, 0xce, 0x9d, 0x76, 0x24, 0xfb, 0xf6,
+	0xc5, 0xd1, 0x06, 0xc6, 0x47, 0x65, 0xf5, 0xcb, 0xdf, 0xff, 0xfa, 0x2a, 0xb7, 0x84, 0x2e, 0xe8,
+	0xe9, 0xc7, 0xc0, 0x54, 0xe3, 0x15, 0x8e, 0xd8, 0x7a, 0xd7, 0x1c, 0xf4, 0x9f, 0x05, 0x6b, 0xa7,
+	0x1d, 0x32, 0xd0, 0xfb, 0xcf, 0x88, 0x7d, 0xcc, 0x39, 0xca, 0xae, 0xbd, 0x10, 0x5f, 0x6a, 0xea,
+	0xa9, 0x6c, 0xe9, 0x40, 0xdf, 0xae, 0x38, 0x47, 0x03, 0x35, 0xd5, 0x9b, 0xb6, 0x8d, 0xe9, 0xc2,
+	0xea, 0x41, 0xe2, 0x06, 0x7d, 0x6f, 0xc1, 0xf9, 0x5d, 0x2a, 0x47, 0x0c, 0x3e, 0xab, 0xa3, 0x19,
+	0xae, 0xed, 0x7c, 0x18, 0x25, 0x4d, 0xb0, 0x31, 0x76, 0x35, 0x54, 0xae, 0x6a, 0xb4, 0xeb, 0xe8,
+	0xca, 0x29, 0xd1, 0x7e, 0xc6, 0xc8, 0xe7, 0xe8, 0x67, 0x0b, 0x2e, 0x8d, 0x84, 0x7a, 0xab, 0xbf,
+	0x33, 0x9c, 0x4f, 0x76, 0x5e, 0x1a, 0xf0, 0x77, 0x35, 0xf0, 0xeb, 0x68, 0xeb, 0x28, 0xf0, 0xe1,
+	0x74, 0xa4, 0xc1, 0x8e, 0x08, 0x04, 0xfd, 0x66, 0xc1, 0xe2, 0x6d, 0x7d, 0xbb, 0x8e, 0x60, 0x7c,
+	0x7c, 0x4c, 0x93, 0x84, 0xf1, 0x81, 0x0e, 0xe3, 0x6e, 0xc5, 0x7d, 0x56, 0x18, 0x4f, 0x4c, 0x81,
+	0xa3, 0x22, 0xba, 0x61, 0x5d, 0x46, 0x3f, 0x58, 0xb0, 0xf8, 0x51, 0x44, 0x5e, 0x68, 0x50, 0x27,
+	0x35, 0x7f, 0x5a, 0xf0, 0x9b, 0xe3, 0x94, 0xd0, 0x0d, 0xeb, 0xf2, 0xad, 0x9b, 0xbf, 0x1c, 0x2e,
+	0x5b, 0xbf, 0x1e, 0x2e, 0x5b, 0x7f, 0x1c, 0x2e, 0x5b, 0xdf, 0xfc, 0xb9, 0xfc, 0xca, 0xc3, 0x2b,
+	0x99, 0x9f, 0xab, 0xf4, 0xd0, 0xf5, 0x36, 0xe6, 0xb8, 0x49, 0x89, 0x72, 0x2e, 0x32, 0xde, 0x1b,
+	0x33, 0xfa, 0xda, 0xbe, 0xfa, 0x7f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x9f, 0x26, 0xd7, 0x80, 0xd4,
+	0x0d, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1097,6 +1399,20 @@ func (m *PrivateEndpointService) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 		i--
 		dAtA[i] = 0xa2
 	}
+	if m.Aws != nil {
+		{
+			size, err := m.Aws.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintNetwork(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xf2
+	}
 	if m.Aks != nil {
 		{
 			size, err := m.Aks.MarshalToSizedBuffer(dAtA[:i])
@@ -1228,6 +1544,99 @@ func (m *PrivateEndpointService_Aks) MarshalToSizedBuffer(dAtA []byte) (int, err
 	return len(dAtA) - i, nil
 }
 
+func (m *PrivateEndpointService_AwsPrincipals) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PrivateEndpointService_AwsPrincipals) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PrivateEndpointService_AwsPrincipals) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.RoleNames) > 0 {
+		for iNdEx := len(m.RoleNames) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.RoleNames[iNdEx])
+			copy(dAtA[i:], m.RoleNames[iNdEx])
+			i = encodeVarintNetwork(dAtA, i, uint64(len(m.RoleNames[iNdEx])))
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
+	if len(m.UserNames) > 0 {
+		for iNdEx := len(m.UserNames) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.UserNames[iNdEx])
+			copy(dAtA[i:], m.UserNames[iNdEx])
+			i = encodeVarintNetwork(dAtA, i, uint64(len(m.UserNames[iNdEx])))
+			i--
+			dAtA[i] = 0x12
+		}
+	}
+	if len(m.AccountId) > 0 {
+		i -= len(m.AccountId)
+		copy(dAtA[i:], m.AccountId)
+		i = encodeVarintNetwork(dAtA, i, uint64(len(m.AccountId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *PrivateEndpointService_Aws) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PrivateEndpointService_Aws) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PrivateEndpointService_Aws) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.AwsPrincipals) > 0 {
+		for iNdEx := len(m.AwsPrincipals) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.AwsPrincipals[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintNetwork(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
 func (m *PrivateEndpointService_AksPrivateEndpointConnectionStatus) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1331,6 +1740,123 @@ func (m *PrivateEndpointService_AksStatus) MarshalToSizedBuffer(dAtA []byte) (in
 	return len(dAtA) - i, nil
 }
 
+func (m *PrivateEndpointService_AwsPrivateEndpointConnectionStatus) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PrivateEndpointService_AwsPrivateEndpointConnectionStatus) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PrivateEndpointService_AwsPrivateEndpointConnectionStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintNetwork(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.State) > 0 {
+		i -= len(m.State)
+		copy(dAtA[i:], m.State)
+		i = encodeVarintNetwork(dAtA, i, uint64(len(m.State)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.CreatedAt != nil {
+		{
+			size, err := m.CreatedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintNetwork(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Owner) > 0 {
+		i -= len(m.Owner)
+		copy(dAtA[i:], m.Owner)
+		i = encodeVarintNetwork(dAtA, i, uint64(len(m.Owner)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *PrivateEndpointService_AwsStatus) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PrivateEndpointService_AwsStatus) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PrivateEndpointService_AwsStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.PrivateEndpointConnections) > 0 {
+		for iNdEx := len(m.PrivateEndpointConnections) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.PrivateEndpointConnections[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintNetwork(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
+	if len(m.AvailabilityZones) > 0 {
+		for iNdEx := len(m.AvailabilityZones) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.AvailabilityZones[iNdEx])
+			copy(dAtA[i:], m.AvailabilityZones[iNdEx])
+			i = encodeVarintNetwork(dAtA, i, uint64(len(m.AvailabilityZones[iNdEx])))
+			i--
+			dAtA[i] = 0x12
+		}
+	}
+	if len(m.ServiceName) > 0 {
+		i -= len(m.ServiceName)
+		copy(dAtA[i:], m.ServiceName)
+		i = encodeVarintNetwork(dAtA, i, uint64(len(m.ServiceName)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func (m *PrivateEndpointService_Status) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1354,6 +1880,20 @@ func (m *PrivateEndpointService_Status) MarshalToSizedBuffer(dAtA []byte) (int, 
 	if m.XXX_unrecognized != nil {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Aws != nil {
+		{
+			size, err := m.Aws.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintNetwork(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xf2
 	}
 	if m.Aks != nil {
 		{
@@ -1512,6 +2052,10 @@ func (m *PrivateEndpointService) Size() (n int) {
 		l = m.Aks.Size()
 		n += 2 + l + sovNetwork(uint64(l))
 	}
+	if m.Aws != nil {
+		l = m.Aws.Size()
+		n += 2 + l + sovNetwork(uint64(l))
+	}
 	if m.Status != nil {
 		l = m.Status.Size()
 		n += 2 + l + sovNetwork(uint64(l))
@@ -1531,6 +2075,52 @@ func (m *PrivateEndpointService_Aks) Size() (n int) {
 	if len(m.ClientSubscriptionIds) > 0 {
 		for _, s := range m.ClientSubscriptionIds {
 			l = len(s)
+			n += 1 + l + sovNetwork(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *PrivateEndpointService_AwsPrincipals) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.AccountId)
+	if l > 0 {
+		n += 1 + l + sovNetwork(uint64(l))
+	}
+	if len(m.UserNames) > 0 {
+		for _, s := range m.UserNames {
+			l = len(s)
+			n += 1 + l + sovNetwork(uint64(l))
+		}
+	}
+	if len(m.RoleNames) > 0 {
+		for _, s := range m.RoleNames {
+			l = len(s)
+			n += 1 + l + sovNetwork(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *PrivateEndpointService_Aws) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.AwsPrincipals) > 0 {
+		for _, e := range m.AwsPrincipals {
+			l = e.Size()
 			n += 1 + l + sovNetwork(uint64(l))
 		}
 	}
@@ -1590,6 +2180,62 @@ func (m *PrivateEndpointService_AksStatus) Size() (n int) {
 	return n
 }
 
+func (m *PrivateEndpointService_AwsPrivateEndpointConnectionStatus) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Owner)
+	if l > 0 {
+		n += 1 + l + sovNetwork(uint64(l))
+	}
+	if m.CreatedAt != nil {
+		l = m.CreatedAt.Size()
+		n += 1 + l + sovNetwork(uint64(l))
+	}
+	l = len(m.State)
+	if l > 0 {
+		n += 1 + l + sovNetwork(uint64(l))
+	}
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovNetwork(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *PrivateEndpointService_AwsStatus) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ServiceName)
+	if l > 0 {
+		n += 1 + l + sovNetwork(uint64(l))
+	}
+	if len(m.AvailabilityZones) > 0 {
+		for _, s := range m.AvailabilityZones {
+			l = len(s)
+			n += 1 + l + sovNetwork(uint64(l))
+		}
+	}
+	if len(m.PrivateEndpointConnections) > 0 {
+		for _, e := range m.PrivateEndpointConnections {
+			l = e.Size()
+			n += 1 + l + sovNetwork(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *PrivateEndpointService_Status) Size() (n int) {
 	if m == nil {
 		return 0
@@ -1612,6 +2258,10 @@ func (m *PrivateEndpointService_Status) Size() (n int) {
 	}
 	if m.Aks != nil {
 		l = m.Aks.Size()
+		n += 2 + l + sovNetwork(uint64(l))
+	}
+	if m.Aws != nil {
+		l = m.Aws.Size()
 		n += 2 + l + sovNetwork(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
@@ -2225,6 +2875,42 @@ func (m *PrivateEndpointService) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		case 30:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Aws", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetwork
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Aws == nil {
+				m.Aws = &PrivateEndpointService_Aks{}
+			}
+			if err := m.Aws.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		case 100:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
@@ -2343,6 +3029,238 @@ func (m *PrivateEndpointService_Aks) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.ClientSubscriptionIds = append(m.ClientSubscriptionIds, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipNetwork(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *PrivateEndpointService_AwsPrincipals) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowNetwork
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: AwsPrincipals: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: AwsPrincipals: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AccountId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetwork
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.AccountId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UserNames", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetwork
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.UserNames = append(m.UserNames, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RoleNames", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetwork
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RoleNames = append(m.RoleNames, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipNetwork(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *PrivateEndpointService_Aws) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowNetwork
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Aws: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Aws: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AwsPrincipals", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetwork
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.AwsPrincipals = append(m.AwsPrincipals, &PrivateEndpointService_AwsPrincipals{})
+			if err := m.AwsPrincipals[len(m.AwsPrincipals)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -2662,6 +3580,338 @@ func (m *PrivateEndpointService_AksStatus) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *PrivateEndpointService_AwsPrivateEndpointConnectionStatus) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowNetwork
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: AwsPrivateEndpointConnectionStatus: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: AwsPrivateEndpointConnectionStatus: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Owner", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetwork
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Owner = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetwork
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.CreatedAt == nil {
+				m.CreatedAt = &types.Timestamp{}
+			}
+			if err := m.CreatedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetwork
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.State = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetwork
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipNetwork(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *PrivateEndpointService_AwsStatus) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowNetwork
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: AwsStatus: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: AwsStatus: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ServiceName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetwork
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ServiceName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AvailabilityZones", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetwork
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.AvailabilityZones = append(m.AvailabilityZones, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PrivateEndpointConnections", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetwork
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PrivateEndpointConnections = append(m.PrivateEndpointConnections, &PrivateEndpointService_AwsPrivateEndpointConnectionStatus{})
+			if err := m.PrivateEndpointConnections[len(m.PrivateEndpointConnections)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipNetwork(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *PrivateEndpointService_Status) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2832,6 +4082,42 @@ func (m *PrivateEndpointService_Status) Unmarshal(dAtA []byte) error {
 				m.Aks = &PrivateEndpointService_AksStatus{}
 			}
 			if err := m.Aks.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 30:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Aws", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetwork
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetwork
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Aws == nil {
+				m.Aws = &PrivateEndpointService_AwsStatus{}
+			}
+			if err := m.Aws.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
