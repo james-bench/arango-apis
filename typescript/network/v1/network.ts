@@ -92,8 +92,8 @@ export interface PrivateEndpointService {
   aks?: PrivateEndpointService_Aks;
   
   // Specific AWS setting.
-  // PrivateEndpointService_Aks
-  aws?: PrivateEndpointService_Aks;
+  // PrivateEndpointService_Aws
+  aws?: PrivateEndpointService_Aws;
   
   // Status of the private endpoint service.
   // All fields are read-only.

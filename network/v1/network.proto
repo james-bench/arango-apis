@@ -173,7 +173,7 @@ message PrivateEndpointService {
         repeated AwsPrincipals aws_principals = 1;
     }
     // Specific AWS setting.
-    Aks aws = 30;
+    Aws aws = 30;
 
     // Specific AKS private endpoint connection status fields.
     message AksPrivateEndpointConnectionStatus {
