@@ -163,6 +163,11 @@ message ExampleDatasetInstallation {
         bool is_failed = 4;
         // Set when once the installation finished successfully and the dataset is available to be used.
         bool is_available = 5;
+        // Name of ArangoDB user that was created for this installation. 
+        // Empty when no user is created.
+        string user_name = 6;
+        // URL towards demo resulting from this example installation.
+        string demo_url = 7;
     }
     // Status of the actual installation.
     Status status = 100;
