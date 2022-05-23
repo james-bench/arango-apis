@@ -103,6 +103,15 @@ export interface ExampleDatasetInstallation_Status {
   // Set when once the installation finished successfully and the dataset is available to be used.
   // boolean
   is_available?: boolean;
+  
+  // Name of ArangoDB user that was created for this installation.
+  // Empty when no user is created.
+  // string
+  user_name?: string;
+  
+  // URL towards demo resulting from this example installation.
+  // string
+  demo_url?: string;
 }
 
 // List of example datasets.
