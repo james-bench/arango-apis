@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2021 ArangoDB GmbH, Cologne, Germany
+// Copyright 2021-2022 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,8 +17,6 @@
 //
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
-// Author Robert Stam
-//
 
 package v1
 
@@ -28,7 +26,7 @@ const (
 	// APIMajorVersion contains major version of this API
 	APIMajorVersion = 1
 	// APIMinorVersion contains minor version of this API
-	APIMinorVersion = 0
+	APIMinorVersion = 1
 	// APIPatchVersion contains patch version of this API
 	APIPatchVersion = 0
 )

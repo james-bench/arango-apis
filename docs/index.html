@@ -1080,6 +1080,22 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.network.v1.PrivateEndpointService.Aws"><span class="badge">M</span>PrivateEndpointService.Aws</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.network.v1.PrivateEndpointService.AwsPrincipals"><span class="badge">M</span>PrivateEndpointService.AwsPrincipals</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.network.v1.PrivateEndpointService.AwsPrivateEndpointConnectionStatus"><span class="badge">M</span>PrivateEndpointService.AwsPrivateEndpointConnectionStatus</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.network.v1.PrivateEndpointService.AwsStatus"><span class="badge">M</span>PrivateEndpointService.AwsStatus</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.network.v1.PrivateEndpointService.Status"><span class="badge">M</span>PrivateEndpointService.Status</a>
                 </li>
               
@@ -13769,6 +13785,13 @@ to the private endpoint to establish a SSL connection (where the name will be us
                 </tr>
               
                 <tr>
+                  <td>aws</td>
+                  <td><a href="#arangodb.cloud.network.v1.PrivateEndpointService.Aws">PrivateEndpointService.Aws</a></td>
+                  <td></td>
+                  <td><p>Specific AWS setting. </p></td>
+                </tr>
+              
+                <tr>
                   <td>status</td>
                   <td><a href="#arangodb.cloud.network.v1.PrivateEndpointService.Status">PrivateEndpointService.Status</a></td>
                   <td></td>
@@ -13884,6 +13907,155 @@ After a private endpoint connection has been made this field cannot be modified 
 
         
       
+        <h3 id="arangodb.cloud.network.v1.PrivateEndpointService.Aws">PrivateEndpointService.Aws</h3>
+        <p>Specific AWS setting.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>aws_principals</td>
+                  <td><a href="#arangodb.cloud.network.v1.PrivateEndpointService.AwsPrincipals">PrivateEndpointService.AwsPrincipals</a></td>
+                  <td>repeated</td>
+                  <td><p>The AWS principals of the client side, needed to auto-approve private endpoint connections.
+After a private endpoint connection has been made this field cannot be modified anymore. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.network.v1.PrivateEndpointService.AwsPrincipals">PrivateEndpointService.AwsPrincipals</h3>
+        <p>Specific AWS principal setting.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>account_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>12 digit AWS Account Identifier.
+When both user_names and role_names are not provided all principals can be used to setup the private endpoint (account principal). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>user_names</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Optional user names (when at least one user name is provided the specified IAM user(s)) are able to setup the private endpoint.
+It is allowed to specify both users and roles </p></td>
+                </tr>
+              
+                <tr>
+                  <td>role_names</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Optional role names (when at least one role name is provided the specified IAM role(s)) are able to setup the private endpoint.
+It is allowed to specify both users and roles </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.network.v1.PrivateEndpointService.AwsPrivateEndpointConnectionStatus">PrivateEndpointService.AwsPrivateEndpointConnectionStatus</h3>
+        <p>Specific AWS private endpoint connection status fields.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>owner</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The owner of the private endpoint connection </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The creation date the private endpoint connection </p></td>
+                </tr>
+              
+                <tr>
+                  <td>state</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The state of the private endpoint connection </p></td>
+                </tr>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The private endpoint identifier </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.network.v1.PrivateEndpointService.AwsStatus">PrivateEndpointService.AwsStatus</h3>
+        <p>Specific AWS status fields. </p><p>All fields are read-only.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>service_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The service name generated by the AWS VPC endpoint service needed by the client to setup the VPC endpoint. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>availability_zones</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>The availability zones information needed to setup the VPC endpoint. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>private_endpoint_connections</td>
+                  <td><a href="#arangodb.cloud.network.v1.PrivateEndpointService.AwsPrivateEndpointConnectionStatus">PrivateEndpointService.AwsPrivateEndpointConnectionStatus</a></td>
+                  <td>repeated</td>
+                  <td><p>The status of the private endpoint connections. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.network.v1.PrivateEndpointService.Status">PrivateEndpointService.Status</h3>
         <p>Status of the private endpoint service.</p><p>All fields are read-only.</p>
 
@@ -13927,6 +14099,14 @@ After a private endpoint connection has been made this field cannot be modified 
                   <td><a href="#arangodb.cloud.network.v1.PrivateEndpointService.AksStatus">PrivateEndpointService.AksStatus</a></td>
                   <td></td>
                   <td><p>Specific AKS status fields.
+All fields are read-only. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>aws</td>
+                  <td><a href="#arangodb.cloud.network.v1.PrivateEndpointService.AwsStatus">PrivateEndpointService.AwsStatus</a></td>
+                  <td></td>
+                  <td><p>Specific AWS status fields.
 All fields are read-only. </p></td>
                 </tr>
               
