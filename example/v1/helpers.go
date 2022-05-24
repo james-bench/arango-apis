@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2022 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -43,7 +43,9 @@ func (source *ExampleDatasetInstallation_Status) Equals(other *ExampleDatasetIns
 	return source.GetState() == other.GetState() &&
 		source.GetDatabaseName() == other.GetDatabaseName() &&
 		source.GetIsAvailable() == other.GetIsAvailable() &&
-		source.GetIsFailed() == other.GetIsFailed()
+		source.GetIsFailed() == other.GetIsFailed() &&
+		source.GetUserName() == other.GetUserName() &&
+		source.GetDemoUrl() == other.GetDemoUrl()
 }
 
 // CloneExampleDataset creates a deep copy of the given source
