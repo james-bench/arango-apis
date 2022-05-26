@@ -691,6 +691,9 @@ export interface IBillingService {
   // - billing.config.set on the organization identified by the given organization ID
   SetBillingConfig: (req: SetBillingConfigRequest) => Promise<void>;
   
+  // Get available credits for an organization identified by organization_id
+  // Required permissions:
+  // - billing.credits.get_available on the organization identified by the given organization ID
   GetAvailableCredits: (req: GetAvailableCreditsRequest) => Promise<AvailableCredits>;
 }
 
@@ -864,6 +867,9 @@ export class BillingService implements IBillingService {
     return api.put(url, req);
   }
   
+  // Get available credits for an organization identified by organization_id
+  // Required permissions:
+  // - billing.credits.get_available on the organization identified by the given organization ID
   async GetAvailableCredits(req: GetAvailableCreditsRequest): Promise<AvailableCredits> {
     const path = `/api/billing/v1/organization/${encodeURIComponent(req.organization_id || '')}/config`;
     const url = path + api.queryString(req, [`organization_id`]);

@@ -2461,6 +2461,9 @@ type BillingServiceClient interface {
 	// Required permissions:
 	// - billing.config.set on the organization identified by the given organization ID
 	SetBillingConfig(ctx context.Context, in *SetBillingConfigRequest, opts ...grpc.CallOption) (*v1.Empty, error)
+	// Get available credits for an organization identified by organization_id
+	// Required permissions:
+	// - billing.credits.get_available on the organization identified by the given organization ID
 	GetAvailableCredits(ctx context.Context, in *GetAvailableCreditsRequest, opts ...grpc.CallOption) (*AvailableCredits, error)
 }
 
@@ -2728,6 +2731,9 @@ type BillingServiceServer interface {
 	// Required permissions:
 	// - billing.config.set on the organization identified by the given organization ID
 	SetBillingConfig(context.Context, *SetBillingConfigRequest) (*v1.Empty, error)
+	// Get available credits for an organization identified by organization_id
+	// Required permissions:
+	// - billing.credits.get_available on the organization identified by the given organization ID
 	GetAvailableCredits(context.Context, *GetAvailableCreditsRequest) (*AvailableCredits, error)
 }
 
