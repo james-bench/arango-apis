@@ -29,6 +29,9 @@ const (
 	// PaymentMethodTypeCreditCard indicates that the payment method
 	// is of type creditcard.
 	PaymentMethodTypeCreditCard = "creditcard"
+	// PaymentMethodTypeInternalCredit indicates that the payment method
+	// is of type credit.
+	PaymentMethodTypeInternalCredit = "credit"
 )
 
 const (
