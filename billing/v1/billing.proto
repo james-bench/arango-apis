@@ -209,6 +209,9 @@ service BillingService {
         };
     }
 
+    // Get available credits for an organization identified by organization_id
+    // Required permissions:
+    // - billing.credits.get_available on the organization identified by the given organization ID
     rpc GetAvailableCredits(GetAvailableCreditsRequest) returns (AvailableCredits) {
         option (google.api.http) = {
             get: "/api/billing/v1/organization/{organization_id}/config"
