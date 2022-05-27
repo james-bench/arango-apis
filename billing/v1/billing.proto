@@ -208,7 +208,18 @@ service BillingService {
             body: "*"
         };
     }
+
+    // Get available credits for an organization identified by organization_id
+    // Required permissions:
+    // - billing.credits.get_available on the organization identified by the given organization ID
+    rpc GetAvailableCredits(GetAvailableCreditsRequest) returns (AvailableCredits) {
+        option (google.api.http) = {
+            get: "/api/billing/v1/organization/{organization_id}/config"
+        };
+    }
 }
+
+
 
 // An Invoice message describes a transaction for usage of ArangoDB Oasis.
 message Invoice {   
@@ -344,6 +355,9 @@ message Invoice {
         // This is the total_amount_incl_taxes converted into the payment 
         // method currency.
         float converted_amount = 31;
+        // Amount in the invoice currency that was paid with this payment
+        // If it's 0, it is assumed that this is a full amount of the invoice
+        float amount = 32;
     }
     // All payment attempts for this invoice, ordered by created_at.
     repeated Payment payments = 201;
@@ -564,4 +578,20 @@ message PDFDocument {
     bytes content = 1;
     // Filename of the document
     string filename = 2;
+}
+
+message GetAvailableCreditsRequest {
+    string organization_id = 1;
+}
+
+message AvailableCredits {
+    // information abou Credit in a given currency
+    message CreditCurrencyAmount {
+        // amount of credit
+        float amount = 1;
+        // identifier of the currency for this credit
+        string currency_id = 2;
+    }
+    // contains information about credits in different currencies
+    repeated CreditCurrencyAmount credits = 1;
 }

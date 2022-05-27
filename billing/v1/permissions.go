@@ -75,3 +75,8 @@ const (
 	// PermissionPaymentMethodSetDefault is needed for changing the default payment method for an organization
 	PermissionPaymentMethodSetDefault = "billing.paymentmethod.set-default"
 )
+
+const (
+	// PermissionGetAvailableCredits is needed to get credits available to organization
+	PermissionGetAvailableCredits = "billing.credits.get_available"
+)

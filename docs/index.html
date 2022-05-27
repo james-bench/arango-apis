@@ -401,11 +401,23 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.billing.v1.AvailableCredits"><span class="badge">M</span>AvailableCredits</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.billing.v1.AvailableCredits.CreditCurrencyAmount"><span class="badge">M</span>AvailableCredits.CreditCurrencyAmount</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.billing.v1.BillingConfig"><span class="badge">M</span>BillingConfig</a>
                 </li>
               
                 <li>
                   <a href="#arangodb.cloud.billing.v1.CreatePaymentMethodRequest"><span class="badge">M</span>CreatePaymentMethodRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.billing.v1.GetAvailableCreditsRequest"><span class="badge">M</span>GetAvailableCreditsRequest</a>
                 </li>
               
                 <li>
@@ -4582,6 +4594,61 @@ See https://en.wikipedia.org/wiki/List_of_U.S._state_abbreviations </p></td>
 
         
       
+        <h3 id="arangodb.cloud.billing.v1.AvailableCredits">AvailableCredits</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>credits</td>
+                  <td><a href="#arangodb.cloud.billing.v1.AvailableCredits.CreditCurrencyAmount">AvailableCredits.CreditCurrencyAmount</a></td>
+                  <td>repeated</td>
+                  <td><p>contains information about credits in different currencies </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.billing.v1.AvailableCredits.CreditCurrencyAmount">AvailableCredits.CreditCurrencyAmount</h3>
+        <p>information abou Credit in a given currency</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>amount</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>amount of credit </p></td>
+                </tr>
+              
+                <tr>
+                  <td>currency_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>identifier of the currency for this credit </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.billing.v1.BillingConfig">BillingConfig</h3>
         <p>Billing configuration for an organization</p>
 
@@ -4663,6 +4730,30 @@ See https://en.wikipedia.org/wiki/List_of_U.S._state_abbreviations </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Last name of owner of payment method </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.billing.v1.GetAvailableCreditsRequest">GetAvailableCreditsRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
                 </tr>
               
             </tbody>
@@ -5029,6 +5120,14 @@ of the payment method. </p></td>
 the amount (in converted currency) that the customer is charged for.
 This is the total_amount_incl_taxes converted into the payment 
 method currency. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>amount</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Amount in the invoice currency that was paid with this payment
+If it&#39;s 0, it is assumed that this is a full amount of the invoice </p></td>
                 </tr>
               
             </tbody>
@@ -5935,6 +6034,15 @@ Required permissions:
 - billing.config.set on the organization identified by the given organization ID</p></td>
               </tr>
             
+              <tr>
+                <td>GetAvailableCredits</td>
+                <td><a href="#arangodb.cloud.billing.v1.GetAvailableCreditsRequest">GetAvailableCreditsRequest</a></td>
+                <td><a href="#arangodb.cloud.billing.v1.AvailableCredits">AvailableCredits</a></td>
+                <td><p>Get available credits for an organization identified by organization_id
+Required permissions:
+- billing.credits.get_available on the organization identified by the given organization ID</p></td>
+              </tr>
+            
           </tbody>
         </table>
 
@@ -6130,6 +6238,16 @@ Required permissions:
                 <td>PUT</td>
                 <td>/api/billing/v1/organization/{organization_id}/config</td>
                 <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetAvailableCredits</td>
+                <td>GET</td>
+                <td>/api/billing/v1/organization/{organization_id}/config</td>
+                <td></td>
               </tr>
               
             

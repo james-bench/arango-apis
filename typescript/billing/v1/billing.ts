@@ -36,6 +36,22 @@ export interface Address {
   // string
   country_code?: string;
 }
+export interface AvailableCredits {
+  // contains information about credits in different currencies
+  // AvailableCredits_CreditCurrencyAmount
+  credits?: AvailableCredits_CreditCurrencyAmount[];
+}
+
+// information abou Credit in a given currency
+export interface AvailableCredits_CreditCurrencyAmount {
+  // amount of credit
+  // number
+  amount?: number;
+  
+  // identifier of the currency for this credit
+  // string
+  currency_id?: string;
+}
 
 // Billing configuration for an organization
 export interface BillingConfig {
@@ -73,6 +89,10 @@ export interface CreatePaymentMethodRequest {
   // Last name of owner of payment method
   // string
   last_name?: string;
+}
+export interface GetAvailableCreditsRequest {
+  // string
+  organization_id?: string;
 }
 
 // Request argument for GetPreliminaryInvoice
@@ -259,6 +279,11 @@ export interface Invoice_Payment {
   // method currency.
   // number
   converted_amount?: number;
+  
+  // Amount in the invoice currency that was paid with this payment
+  // If it's 0, it is assumed that this is a full amount of the invoice
+  // number
+  amount?: number;
 }
 
 // Status of the invoice
@@ -665,6 +690,11 @@ export interface IBillingService {
   // Required permissions:
   // - billing.config.set on the organization identified by the given organization ID
   SetBillingConfig: (req: SetBillingConfigRequest) => Promise<void>;
+  
+  // Get available credits for an organization identified by organization_id
+  // Required permissions:
+  // - billing.credits.get_available on the organization identified by the given organization ID
+  GetAvailableCredits: (req: GetAvailableCreditsRequest) => Promise<AvailableCredits>;
 }
 
 // BillingService is the API used to fetch billing information.
@@ -835,5 +865,14 @@ export class BillingService implements IBillingService {
   async SetBillingConfig(req: SetBillingConfigRequest): Promise<void> {
     const url = `/api/billing/v1/organization/${encodeURIComponent(req.organization_id || '')}/config`;
     return api.put(url, req);
+  }
+  
+  // Get available credits for an organization identified by organization_id
+  // Required permissions:
+  // - billing.credits.get_available on the organization identified by the given organization ID
+  async GetAvailableCredits(req: GetAvailableCreditsRequest): Promise<AvailableCredits> {
+    const path = `/api/billing/v1/organization/${encodeURIComponent(req.organization_id || '')}/config`;
+    const url = path + api.queryString(req, [`organization_id`]);
+    return api.get(url, undefined);
   }
 }
