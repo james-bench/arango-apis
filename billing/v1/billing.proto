@@ -455,6 +455,8 @@ message ListPaymentProvidersRequest {
     string organization_id = 1;
     // Optional common list options. (Context ID is ignored)
     common.v1.ListOptions options = 2;
+    // If set to true, also return include internal payment providers, for whom users can't create payment methods.
+    bool include_internal = 3;
 }
 
 // Payment methods are specific methods for paying at a specific payment provider

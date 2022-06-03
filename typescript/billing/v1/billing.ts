@@ -392,6 +392,10 @@ export interface ListPaymentProvidersRequest {
   // Optional common list options. (Context ID is ignored)
   // arangodb.cloud.common.v1.ListOptions
   options?: arangodb_cloud_common_v1_ListOptions;
+  
+  // If set to true, also return include internal payment providers, for whom users can't create payment methods.
+  // boolean
+  include_internal?: boolean;
 }
 
 // Billing specific organization flags
