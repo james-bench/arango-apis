@@ -875,7 +875,7 @@ export class BillingService implements IBillingService {
   // Required permissions:
   // - billing.credits.get_available on the organization identified by the given organization ID
   async GetAvailableCredits(req: GetAvailableCreditsRequest): Promise<AvailableCredits> {
-    const path = `/api/billing/v1/organization/${encodeURIComponent(req.organization_id || '')}/config`;
+    const path = `/api/billing/v1/organization/${encodeURIComponent(req.organization_id || '')}/credits`;
     const url = path + api.queryString(req, [`organization_id`]);
     return api.get(url, undefined);
   }
