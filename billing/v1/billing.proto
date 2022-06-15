@@ -214,7 +214,7 @@ service BillingService {
     // - billing.credits.get_available on the organization identified by the given organization ID
     rpc GetAvailableCredits(GetAvailableCreditsRequest) returns (AvailableCredits) {
         option (google.api.http) = {
-            get: "/api/billing/v1/organization/{organization_id}/config"
+            get: "/api/billing/v1/organization/{organization_id}/credits"
         };
     }
 }
