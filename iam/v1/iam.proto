@@ -604,7 +604,7 @@ message RoleBinding {
 message ListRoleBindingsRequest {
     // URL of the resource to which this policy applies.
     // This field is required.
-     string resource_url = 1;
+    string resource_url = 1;
     // common listing options (context field is ignored)
     // used for pagination
     common.v1.ListOptions options = 2;
