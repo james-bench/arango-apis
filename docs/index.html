@@ -947,6 +947,10 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.iam.v1.ListRoleBindingsRequest"><span class="badge">M</span>ListRoleBindingsRequest</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.iam.v1.MultiplePermissionLists"><span class="badge">M</span>MultiplePermissionLists</a>
                 </li>
               
@@ -976,6 +980,10 @@ title: "ArangoDB Oasis API"
               
                 <li>
                   <a href="#arangodb.cloud.iam.v1.RoleBinding"><span class="badge">M</span>RoleBinding</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.iam.v1.RoleBindingsList"><span class="badge">M</span>RoleBindingsList</a>
                 </li>
               
                 <li>
@@ -11833,6 +11841,66 @@ This is a read-only value. </p></td>
 
         
       
+        <h3 id="arangodb.cloud.iam.v1.ListRoleBindingsRequest">ListRoleBindingsRequest</h3>
+        <p>Request arguments for ListRoleBindings</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>resource_url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>URL of the resource to which this policy applies.
+This field is required. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>options</td>
+                  <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
+                  <td></td>
+                  <td><p>common listing options (context field is ignored)
+used for pagination </p></td>
+                </tr>
+              
+                <tr>
+                  <td>member_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Filter role bindings based on member identifier
+Member ID is formatted as:
+- user:&lt;user_id&gt;
+- group:&lt;group_id&gt; 
+This field is optional. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>role_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Filter based on role identifier
+This field is optional. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>delete_not_allowed</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Filter based on delete_not_allowed value
+This field is optional </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.iam.v1.MultiplePermissionLists">MultiplePermissionLists</h3>
         <p>Multiple Lists of permissions.</p>
 
@@ -12136,6 +12204,30 @@ Member ID is formatted as:
                   <td></td>
                   <td><p>If set, this this role-binding cannot be deleted  
 This is a read-only value. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.iam.v1.RoleBindingsList">RoleBindingsList</h3>
+        <p>List of RoleBindings items</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#arangodb.cloud.iam.v1.RoleBinding">RoleBinding</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
                 </tr>
               
             </tbody>
@@ -12596,6 +12688,15 @@ Required permissions:
               </tr>
             
               <tr>
+                <td>ListRoleBindings</td>
+                <td><a href="#arangodb.cloud.iam.v1.ListRoleBindingsRequest">ListRoleBindingsRequest</a></td>
+                <td><a href="#arangodb.cloud.iam.v1.RoleBindingsList">RoleBindingsList</a></td>
+                <td><p>List the policies based on given filters.
+Required permissions:
+- iam.policy.list on resource identified by the url</p></td>
+              </tr>
+            
+              <tr>
                 <td>AddRoleBindings</td>
                 <td><a href="#arangodb.cloud.iam.v1.RoleBindingsRequest">RoleBindingsRequest</a></td>
                 <td><a href="#arangodb.cloud.iam.v1.Policy">Policy</a></td>
@@ -12961,6 +13062,16 @@ Required permissions:
               
               <tr>
                 <td>GetPolicy</td>
+                <td>GET</td>
+                <td>/api/iam/v1/policies</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>ListRoleBindings</td>
                 <td>GET</td>
                 <td>/api/iam/v1/policies</td>
                 <td></td>

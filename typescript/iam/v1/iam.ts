@@ -222,6 +222,37 @@ export interface IsMemberOfGroupRequest {
   group_id?: string;
 }
 
+// Request arguments for ListRoleBindings
+export interface ListRoleBindingsRequest {
+  // URL of the resource to which this policy applies.
+  // This field is required.
+  // string
+  resource_url?: string;
+  
+  // common listing options (context field is ignored)
+  // used for pagination
+  // arangodb.cloud.common.v1.ListOptions
+  options?: arangodb_cloud_common_v1_ListOptions;
+  
+  // Filter role bindings based on member identifier
+  // Member ID is formatted as:
+  // - user:<user_id>
+  // - group:<group_id>
+  // This field is optional.
+  // string
+  member_id?: string;
+  
+  // Filter based on role identifier
+  // This field is optional.
+  // string
+  role_id?: string;
+  
+  // Filter based on delete_not_allowed value
+  // This field is optional
+  // boolean
+  delete_not_allowed?: boolean;
+}
+
 // Multiple Lists of permissions.
 export interface MultiplePermissionLists {
   // PermissionList
@@ -351,6 +382,12 @@ export interface RoleBinding {
   // This is a read-only value.
   // boolean
   delete_not_allowed?: boolean;
+}
+
+// List of RoleBindings items
+export interface RoleBindingsList {
+  // RoleBinding
+  items?: RoleBinding[];
 }
 
 // Request arguments for Add/DeleteRoleBindings.
@@ -584,6 +621,11 @@ export interface IIAMService {
   // Required permissions:
   // - iam.policy.get on resource identified by the url
   GetPolicy: (req: arangodb_cloud_common_v1_URLOptions) => Promise<Policy>;
+  
+  // List the policies based on given filters.
+  // Required permissions:
+  // - iam.policy.list on resource identified by the url
+  ListRoleBindings: (req: ListRoleBindingsRequest) => Promise<RoleBindingsList>;
   
   // Add one or more RoleBindings to the policy of a resource identified by given URL.
   // Required permissions:
@@ -859,6 +901,15 @@ export class IAMService implements IIAMService {
   // Required permissions:
   // - iam.policy.get on resource identified by the url
   async GetPolicy(req: arangodb_cloud_common_v1_URLOptions): Promise<Policy> {
+    const path = `/api/iam/v1/policies`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
+  // List the policies based on given filters.
+  // Required permissions:
+  // - iam.policy.list on resource identified by the url
+  async ListRoleBindings(req: ListRoleBindingsRequest): Promise<RoleBindingsList> {
     const path = `/api/iam/v1/policies`;
     const url = path + api.queryString(req, []);
     return api.get(url, undefined);

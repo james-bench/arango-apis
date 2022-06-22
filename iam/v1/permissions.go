@@ -59,6 +59,8 @@ const (
 	PermissionPolicyGet = "iam.policy.get"
 	// PermissionPolicyUpdate is needed for updating a policy on a resource
 	PermissionPolicyUpdate = "iam.policy.update"
+	// PermissionPolicyList is needed for listing role bindings
+	PermissionPolicyList = "iam.policy.list"
 )
 
 const (
