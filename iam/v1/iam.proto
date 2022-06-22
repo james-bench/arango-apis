@@ -616,10 +616,7 @@ message ListRoleBindingsRequest {
     string member_id = 3;
     // Filter based on role identifier
     // This field is optional.
-    string role_id = 4;
-    // Filter based on delete_not_allowed value
-    // This field is optional
-    bool delete_not_allowed = 5;
+    string role_id = 4; 
 }
 
 // List of RoleBindings items

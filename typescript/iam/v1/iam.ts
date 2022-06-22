@@ -246,11 +246,6 @@ export interface ListRoleBindingsRequest {
   // This field is optional.
   // string
   role_id?: string;
-  
-  // Filter based on delete_not_allowed value
-  // This field is optional
-  // boolean
-  delete_not_allowed?: boolean;
 }
 
 // Multiple Lists of permissions.
