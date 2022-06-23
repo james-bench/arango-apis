@@ -129,6 +129,32 @@ export interface GetMultipleEffectivePermissionsRequest {
   urls?: string[];
 }
 
+// Request arguments for GetPolicyByFilter
+export interface GetPolicyByFilterRequest {
+  // URL of the resource to which this policy applies.
+  // This field is required.
+  // string
+  resource_url?: string;
+  
+  // common listing options (context field is ignored)
+  // used for pagination
+  // arangodb.cloud.common.v1.ListOptions
+  options?: arangodb_cloud_common_v1_ListOptions;
+  
+  // Filter role bindings based on member identifier
+  // Member ID is formatted as:
+  // - user:<user_id>
+  // - group:<group_id>
+  // This field is optional.
+  // string
+  member_id?: string;
+  
+  // Filter based on role identifier
+  // This field is optional.
+  // string
+  role_id?: string;
+}
+
 // Group of user accounts.
 export interface Group {
   // System identifier of the group.
@@ -585,6 +611,11 @@ export interface IIAMService {
   // - iam.policy.get on resource identified by the url
   GetPolicy: (req: arangodb_cloud_common_v1_URLOptions) => Promise<Policy>;
   
+  // Get the policies based on given filters.
+  // Required permissions:
+  // - iam.policy.get on resource identified by the url
+  GetPolicyByFilter: (req: GetPolicyByFilterRequest) => Promise<Policy>;
+  
   // Add one or more RoleBindings to the policy of a resource identified by given URL.
   // Required permissions:
   // - iam.policy.update on resource identified by the url
@@ -860,6 +891,15 @@ export class IAMService implements IIAMService {
   // - iam.policy.get on resource identified by the url
   async GetPolicy(req: arangodb_cloud_common_v1_URLOptions): Promise<Policy> {
     const path = `/api/iam/v1/policies`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
+  // Get the policies based on given filters.
+  // Required permissions:
+  // - iam.policy.get on resource identified by the url
+  async GetPolicyByFilter(req: GetPolicyByFilterRequest): Promise<Policy> {
+    const path = `/api/iam/v1/policies-by-filter`;
     const url = path + api.queryString(req, []);
     return api.get(url, undefined);
   }
