@@ -240,12 +240,12 @@ service IAMService {
         };
     }
 
-    // List the policies based on given filters.
+    // Get the policies based on given filters.
     // Required permissions:
-    // - iam.policy.list on resource identified by the url
-    rpc ListRoleBindings(ListRoleBindingsRequest) returns (RoleBindingsList) {
+    // - iam.policy.get on resource identified by the url
+    rpc GetPolicyByFilter(GetPolicyByFilterRequest) returns (Policy) {
         option (google.api.http) = {
-            get: "/api/iam/v1/policies"
+            get: "/api/iam/v1/policies-by-filter"
         };
     }
 
@@ -600,8 +600,8 @@ message RoleBinding {
     bool delete_not_allowed = 4;
 }
 
-// Request arguments for ListRoleBindings 
-message ListRoleBindingsRequest {
+// Request arguments for GetPolicyByFilter
+message GetPolicyByFilterRequest {
     // URL of the resource to which this policy applies.
     // This field is required.
     string resource_url = 1;
@@ -617,11 +617,6 @@ message ListRoleBindingsRequest {
     // Filter based on role identifier
     // This field is optional.
     string role_id = 4; 
-}
-
-// List of RoleBindings items
-message RoleBindingsList {
-    repeated RoleBinding items = 1;
 }
 
 // Policy bindings members to roles for access to a resource.

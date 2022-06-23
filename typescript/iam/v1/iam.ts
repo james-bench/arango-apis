@@ -129,6 +129,32 @@ export interface GetMultipleEffectivePermissionsRequest {
   urls?: string[];
 }
 
+// Request arguments for GetPolicyByFilter
+export interface GetPolicyByFilterRequest {
+  // URL of the resource to which this policy applies.
+  // This field is required.
+  // string
+  resource_url?: string;
+  
+  // common listing options (context field is ignored)
+  // used for pagination
+  // arangodb.cloud.common.v1.ListOptions
+  options?: arangodb_cloud_common_v1_ListOptions;
+  
+  // Filter role bindings based on member identifier
+  // Member ID is formatted as:
+  // - user:<user_id>
+  // - group:<group_id>
+  // This field is optional.
+  // string
+  member_id?: string;
+  
+  // Filter based on role identifier
+  // This field is optional.
+  // string
+  role_id?: string;
+}
+
 // Group of user accounts.
 export interface Group {
   // System identifier of the group.
@@ -220,32 +246,6 @@ export interface IsMemberOfGroupRequest {
   // Identifier of the group
   // string
   group_id?: string;
-}
-
-// Request arguments for ListRoleBindings
-export interface ListRoleBindingsRequest {
-  // URL of the resource to which this policy applies.
-  // This field is required.
-  // string
-  resource_url?: string;
-  
-  // common listing options (context field is ignored)
-  // used for pagination
-  // arangodb.cloud.common.v1.ListOptions
-  options?: arangodb_cloud_common_v1_ListOptions;
-  
-  // Filter role bindings based on member identifier
-  // Member ID is formatted as:
-  // - user:<user_id>
-  // - group:<group_id>
-  // This field is optional.
-  // string
-  member_id?: string;
-  
-  // Filter based on role identifier
-  // This field is optional.
-  // string
-  role_id?: string;
 }
 
 // Multiple Lists of permissions.
@@ -377,12 +377,6 @@ export interface RoleBinding {
   // This is a read-only value.
   // boolean
   delete_not_allowed?: boolean;
-}
-
-// List of RoleBindings items
-export interface RoleBindingsList {
-  // RoleBinding
-  items?: RoleBinding[];
 }
 
 // Request arguments for Add/DeleteRoleBindings.
@@ -617,10 +611,10 @@ export interface IIAMService {
   // - iam.policy.get on resource identified by the url
   GetPolicy: (req: arangodb_cloud_common_v1_URLOptions) => Promise<Policy>;
   
-  // List the policies based on given filters.
+  // Get the policies based on given filters.
   // Required permissions:
-  // - iam.policy.list on resource identified by the url
-  ListRoleBindings: (req: ListRoleBindingsRequest) => Promise<RoleBindingsList>;
+  // - iam.policy.get on resource identified by the url
+  GetPolicyByFilter: (req: GetPolicyByFilterRequest) => Promise<Policy>;
   
   // Add one or more RoleBindings to the policy of a resource identified by given URL.
   // Required permissions:
@@ -901,11 +895,11 @@ export class IAMService implements IIAMService {
     return api.get(url, undefined);
   }
   
-  // List the policies based on given filters.
+  // Get the policies based on given filters.
   // Required permissions:
-  // - iam.policy.list on resource identified by the url
-  async ListRoleBindings(req: ListRoleBindingsRequest): Promise<RoleBindingsList> {
-    const path = `/api/iam/v1/policies`;
+  // - iam.policy.get on resource identified by the url
+  async GetPolicyByFilter(req: GetPolicyByFilterRequest): Promise<Policy> {
+    const path = `/api/iam/v1/policies-by-filter`;
     const url = path + api.queryString(req, []);
     return api.get(url, undefined);
   }
