@@ -21,10 +21,10 @@
 package v1
 
 const (
-	// EducationRoleStudent constant for student role at educational institute
-	EducationRoleStudent = "student"
-	// EducationRoleTeacher constant for teacher role at educational institute
-	EducationRoleTeacher = "teacher"
-	// EducationRoleOther constant for role other than student / teacher at educational institute
-	EducationRoleOther = "other"
+	// EducationalRoleStudent constant for student role at educational institute
+	EducationalRoleStudent = "student"
+	// EducationalRoleTeacher constant for teacher role at educational institute
+	EducationalRoleTeacher = "teacher"
+	// EducationalRoleOther constant for role other than student / teacher at educational institute
+	EducationalRoleOther = "other"
 )
