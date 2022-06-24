@@ -490,7 +490,7 @@ export interface User {
   
   // If set, this user belongs to an educational institute.
   // boolean
-  has_educcational_status?: boolean;
+  has_educational_status?: boolean;
   
   // Defines the role of user at educational institute.
   // Possible values are student | teacher | other
