@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
+// Copyright 2022 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,18 +17,14 @@
 //
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
-// Author Ewout Prangsma
-//
 
 package v1
 
 const (
-	// APIID contains identifier of this API
-	APIID = "iam/v1"
-	// APIMajorVersion contains major version of this API
-	APIMajorVersion = 1
-	// APIMinorVersion contains minor version of this API
-	APIMinorVersion = 2
-	// APIPatchVersion contains patch version of this API
-	APIPatchVersion = 2
+	// EducationalRoleStudent constant for student role at educational institute
+	EducationalRoleStudent = "student"
+	// EducationalRoleTeacher constant for teacher role at educational institute
+	EducationalRoleTeacher = "teacher"
+	// EducationalRoleOther constant for role other than student / teacher at educational institute
+	EducationalRoleOther = "other"
 )

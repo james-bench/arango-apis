@@ -458,6 +458,11 @@ message User {
     string last_ip = 16;
     // Defines if a user's mobile phone number needs verification based on email root domain address.
     bool mobile_phone_needs_verification = 17;
+    // If set, this user belongs to an educational institute.
+    bool has_educational_status = 18;
+    // Defines the role of user at educational institute.
+    // Possible values are student | teacher | other
+    string educational_role = 19;
 }
 
 // Request arguments for VerifyUserMobilePhone

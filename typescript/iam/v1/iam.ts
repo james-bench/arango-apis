@@ -487,6 +487,15 @@ export interface User {
   // Defines if a user's mobile phone number needs verification based on email root domain address.
   // boolean
   mobile_phone_needs_verification?: boolean;
+  
+  // If set, this user belongs to an educational institute.
+  // boolean
+  has_educational_status?: boolean;
+  
+  // Defines the role of user at educational institute.
+  // Possible values are student | teacher | other
+  // string
+  educational_role?: string;
 }
 
 // Request arguments for VerifyUserMobilePhone
