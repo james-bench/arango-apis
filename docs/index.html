@@ -370,6 +370,10 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.backup.v1.CopyBackupRequest"><span class="badge">M</span>CopyBackupRequest</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.backup.v1.ListBackupPoliciesRequest"><span class="badge">M</span>ListBackupPoliciesRequest</a>
                 </li>
               
@@ -3381,6 +3385,14 @@ This is a read-only field. To set this field please use the DownloadBackup metho
                   <td><p>Status of the actual backup </p></td>
                 </tr>
               
+                <tr>
+                  <td>region_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the region in which backup is stored
+if not set, backup is stored in the same region as of deployment </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -3794,6 +3806,14 @@ To delete, first update the with locked set to false. </p></td>
                   <td><p>Status of the backup policy </p></td>
                 </tr>
               
+                <tr>
+                  <td>additional_region_ids</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>List of region identifiers where the backup should be taken.
+If not set, it should be taken in the same region as of deployment </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -4040,6 +4060,37 @@ This is applicable for Monthly type only, ignored for Hourly and Daily </p></td>
                   <td><a href="#arangodb.cloud.common.v1.Budget">arangodb.cloud.common.v1.Budget</a></td>
                   <td></td>
                   <td><p>Budget for backup policies </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.backup.v1.CopyBackupRequest">CopyBackupRequest</h3>
+        <p>parameters for copying the backup</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>source_backup_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the backup that is to be copied </p></td>
+                </tr>
+              
+                <tr>
+                  <td>region_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the region where the backup should be copied </p></td>
                 </tr>
               
             </tbody>
@@ -4364,6 +4415,16 @@ Required permissions:
 -  backup.backup.delete on the backup identified by the given ID.</p></td>
               </tr>
             
+              <tr>
+                <td>CopyBackup</td>
+                <td><a href="#arangodb.cloud.backup.v1.CopyBackupRequest">CopyBackupRequest</a></td>
+                <td><a href="#arangodb.cloud.backup.v1.Backup">Backup</a></td>
+                <td><p>Copy a backup from source backup to a given region identifier.
+It is not allowed to copy backup that does not have upload_to_cloud flag set to true
+Required permissions:
+- backup.backup.copy on the backup identified by the given ID.</p></td>
+              </tr>
+            
           </tbody>
         </table>
 
@@ -4528,6 +4589,16 @@ Required permissions:
                 <td>DeleteBackup</td>
                 <td>DELETE</td>
                 <td>/api/backup/v1/backup/{id}</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>CopyBackup</td>
+                <td>POST</td>
+                <td>/api/backup/v1/copy</td>
                 <td></td>
               </tr>
               

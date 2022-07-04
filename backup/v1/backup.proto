@@ -189,6 +189,16 @@ service BackupService {
             delete: "/api/backup/v1/backup/{id}"
         };
     }
+
+    // Copy a backup from source backup to a given region identifier.
+    // It is not allowed to copy backup that does not have upload_to_cloud flag set to true
+    // Required permissions:
+    // - backup.backup.copy on the backup identified by the given ID.
+    rpc CopyBackup(CopyBackupRequest) returns (Backup) {
+        option (google.api.http) = {
+            post: "/api/backup/v1/copy"
+        };
+    }
 }
 
 // BackupPolicy represents a single backup policy for a deployment.
@@ -304,6 +314,10 @@ message BackupPolicy {
     }
     // Status of the backup policy
     Status status = 100;
+
+    // List of region identifiers where the backup should be taken.
+    // If not set, it should be taken in the same region as of deployment
+    repeated string additional_region_ids = 101;
 
 }
 
@@ -460,7 +474,11 @@ message Backup {
         bool downloaded = 2;
         // The timestamp of when the backup has been fully downloaded.
         google.protobuf.Timestamp downloaded_at = 3;
-    } 
+    }
+
+    // Identifier of the region in which backup is stored
+    // if not set, backup is stored in the same region as of deployment
+    string region_id = 101;
 }
 
 // List of backups.
@@ -491,4 +509,13 @@ message ListBackupsRequest {
     bool sort_by_created = 20;
     // Sort descending (default is ascending).
     bool sort_descending = 21;
+}
+
+// parameters for copying the backup
+message CopyBackupRequest {
+    // Identifier of the backup that is to be copied
+    string source_backup_id = 1;
+
+    // Identifier of the region where the backup should be copied
+    string region_id = 2;
 }

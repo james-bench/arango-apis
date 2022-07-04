@@ -92,6 +92,11 @@ export interface Backup {
   // Status of the actual backup
   // Backup_Status
   status?: Backup_Status;
+  
+  // Identifier of the region in which backup is stored
+  // if not set, backup is stored in the same region as of deployment
+  // string
+  region_id?: string;
 }
 
 // Information about the deployment during backup
@@ -291,6 +296,11 @@ export interface BackupPolicy {
   // Status of the backup policy
   // BackupPolicy_Status
   status?: BackupPolicy_Status;
+  
+  // List of region identifiers where the backup should be taken.
+  // If not set, it should be taken in the same region as of deployment
+  // string
+  additional_region_ids?: string[];
 }
 
 // Note: Nested types inside nested types is not supported by the typescript generator
@@ -393,6 +403,17 @@ export interface BackupPolicyList {
   // Budget for backup policies
   // arangodb.cloud.common.v1.Budget
   budget?: arangodb_cloud_common_v1_Budget;
+}
+
+// parameters for copying the backup
+export interface CopyBackupRequest {
+  // Identifier of the backup that is to be copied
+  // string
+  source_backup_id?: string;
+  
+  // Identifier of the region where the backup should be copied
+  // string
+  region_id?: string;
 }
 
 // Request arguments for ListBackupPolicies
@@ -556,6 +577,12 @@ export interface IBackupService {
   // Required permissions:
   // -  backup.backup.delete on the backup identified by the given ID.
   DeleteBackup: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Copy a backup from source backup to a given region identifier.
+  // It is not allowed to copy backup that does not have upload_to_cloud flag set to true
+  // Required permissions:
+  // - backup.backup.copy on the backup identified by the given ID.
+  CopyBackup: (req: CopyBackupRequest) => Promise<Backup>;
 }
 
 // BackupService is the API used to configure backup objects.
@@ -705,5 +732,15 @@ export class BackupService implements IBackupService {
     const path = `/api/backup/v1/backup/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.delete(url, undefined);
+  }
+  
+  // Copy a backup from source backup to a given region identifier.
+  // It is not allowed to copy backup that does not have upload_to_cloud flag set to true
+  // Required permissions:
+  // - backup.backup.copy on the backup identified by the given ID.
+  async CopyBackup(req: CopyBackupRequest): Promise<Backup> {
+    const path = `/api/backup/v1/copy`;
+    const url = path + api.queryString(req, []);
+    return api.post(url, undefined);
   }
 }
