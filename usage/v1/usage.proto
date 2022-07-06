@@ -276,4 +276,9 @@ message ListUsageItemsRequest {
     // If set, limit to usage items that have the invoice_id set to this specific value.
     // This is an optional field.
     string invoice_id = 22;
+
+    // Request usage items that start at or after given timestamp.
+    // This is an optional field.
+    google.protobuf.Timestamp not_start_before = 23;
+
 }
