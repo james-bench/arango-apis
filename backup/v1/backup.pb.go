@@ -73,8 +73,10 @@ type BackupPolicy struct {
 	Locked bool `protobuf:"varint,14,opt,name=locked,proto3" json:"locked,omitempty"`
 	// Status of the backup policy
 	Status *BackupPolicy_Status `protobuf:"bytes,100,opt,name=status,proto3" json:"status,omitempty"`
-	// List of region identifiers where the backup should be taken.
-	// If not set, it should be taken in the same region as of deployment
+	// List of region identifiers where the backup should be uploaded
+	// in addition to the region where the deployment is running.
+	// If not set, it should be uploaded to the same region as where the deployment is running.
+	// This field can be filled-out only for policies where 'upload' is set.
 	AdditionalRegionIds  []string `protobuf:"bytes,101,rep,name=additional_region_ids,json=additionalRegionIds,proto3" json:"additional_region_ids,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -836,7 +838,7 @@ type Backup struct {
 	// Status of the actual backup
 	Status *Backup_Status `protobuf:"bytes,100,opt,name=status,proto3" json:"status,omitempty"`
 	// Identifier of the region in which backup is stored
-	// if not set, backup is stored in the same region as of deployment
+	// If not set, backup is stored in the same region as of deployment
 	RegionId             string   `protobuf:"bytes,101,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -1568,9 +1570,10 @@ func (m *ListBackupsRequest) GetSortDescending() bool {
 	return false
 }
 
-// parameters for copying the backup
+// Parameters for copying the backup
 type CopyBackupRequest struct {
 	// Identifier of the backup that is to be copied
+	// The source backup should have the 'upload' boolean set.
 	SourceBackupId string `protobuf:"bytes,1,opt,name=source_backup_id,json=sourceBackupId,proto3" json:"source_backup_id,omitempty"`
 	// Identifier of the region where the backup should be copied
 	RegionId             string   `protobuf:"bytes,2,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
@@ -1871,8 +1874,8 @@ type BackupServiceClient interface {
 	// Required permissions:
 	// -  backup.backup.delete on the backup identified by the given ID.
 	DeleteBackup(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
-	// Copy a backup from source backup to a given region identifier.
-	// It is not allowed to copy backup that does not have upload_to_cloud flag set to true
+	// Copy a backup manually from source backup to a given region identifier.
+	// It is not allowed to copy backup that does not have upload flag set to true
 	// Required permissions:
 	// - backup.backup.copy on the backup identified by the given ID.
 	CopyBackup(ctx context.Context, in *CopyBackupRequest, opts ...grpc.CallOption) (*Backup, error)
@@ -2108,8 +2111,8 @@ type BackupServiceServer interface {
 	// Required permissions:
 	// -  backup.backup.delete on the backup identified by the given ID.
 	DeleteBackup(context.Context, *v1.IDOptions) (*v1.Empty, error)
-	// Copy a backup from source backup to a given region identifier.
-	// It is not allowed to copy backup that does not have upload_to_cloud flag set to true
+	// Copy a backup manually from source backup to a given region identifier.
+	// It is not allowed to copy backup that does not have upload flag set to true
 	// Required permissions:
 	// - backup.backup.copy on the backup identified by the given ID.
 	CopyBackup(context.Context, *CopyBackupRequest) (*Backup, error)

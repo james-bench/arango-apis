@@ -94,7 +94,7 @@ export interface Backup {
   status?: Backup_Status;
   
   // Identifier of the region in which backup is stored
-  // if not set, backup is stored in the same region as of deployment
+  // If not set, backup is stored in the same region as of deployment
   // string
   region_id?: string;
 }
@@ -297,8 +297,10 @@ export interface BackupPolicy {
   // BackupPolicy_Status
   status?: BackupPolicy_Status;
   
-  // List of region identifiers where the backup should be taken.
-  // If not set, it should be taken in the same region as of deployment
+  // List of region identifiers where the backup should be uploaded
+  // in addition to the region where the deployment is running.
+  // If not set, it should be uploaded to the same region as where the deployment is running.
+  // This field can be filled-out only for policies where 'upload' is set.
   // string
   additional_region_ids?: string[];
 }
@@ -405,9 +407,10 @@ export interface BackupPolicyList {
   budget?: arangodb_cloud_common_v1_Budget;
 }
 
-// parameters for copying the backup
+// Parameters for copying the backup
 export interface CopyBackupRequest {
   // Identifier of the backup that is to be copied
+  // The source backup should have the 'upload' boolean set.
   // string
   source_backup_id?: string;
   
@@ -578,8 +581,8 @@ export interface IBackupService {
   // -  backup.backup.delete on the backup identified by the given ID.
   DeleteBackup: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
   
-  // Copy a backup from source backup to a given region identifier.
-  // It is not allowed to copy backup that does not have upload_to_cloud flag set to true
+  // Copy a backup manually from source backup to a given region identifier.
+  // It is not allowed to copy backup that does not have upload flag set to true
   // Required permissions:
   // - backup.backup.copy on the backup identified by the given ID.
   CopyBackup: (req: CopyBackupRequest) => Promise<Backup>;
@@ -734,8 +737,8 @@ export class BackupService implements IBackupService {
     return api.delete(url, undefined);
   }
   
-  // Copy a backup from source backup to a given region identifier.
-  // It is not allowed to copy backup that does not have upload_to_cloud flag set to true
+  // Copy a backup manually from source backup to a given region identifier.
+  // It is not allowed to copy backup that does not have upload flag set to true
   // Required permissions:
   // - backup.backup.copy on the backup identified by the given ID.
   async CopyBackup(req: CopyBackupRequest): Promise<Backup> {

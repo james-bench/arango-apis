@@ -3390,7 +3390,7 @@ This is a read-only field. To set this field please use the DownloadBackup metho
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Identifier of the region in which backup is stored
-if not set, backup is stored in the same region as of deployment </p></td>
+If not set, backup is stored in the same region as of deployment </p></td>
                 </tr>
               
             </tbody>
@@ -3810,8 +3810,10 @@ To delete, first update the with locked set to false. </p></td>
                   <td>additional_region_ids</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>List of region identifiers where the backup should be taken.
-If not set, it should be taken in the same region as of deployment </p></td>
+                  <td><p>List of region identifiers where the backup should be uploaded
+in addition to the region where the deployment is running.
+If not set, it should be uploaded to the same region as where the deployment is running.
+This field can be filled-out only for policies where &#39;upload&#39; is set. </p></td>
                 </tr>
               
             </tbody>
@@ -4070,7 +4072,7 @@ This is applicable for Monthly type only, ignored for Hourly and Daily </p></td>
         
       
         <h3 id="arangodb.cloud.backup.v1.CopyBackupRequest">CopyBackupRequest</h3>
-        <p>parameters for copying the backup</p>
+        <p>Parameters for copying the backup</p>
 
         
           <table class="field-table">
@@ -4083,7 +4085,8 @@ This is applicable for Monthly type only, ignored for Hourly and Daily </p></td>
                   <td>source_backup_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Identifier of the backup that is to be copied </p></td>
+                  <td><p>Identifier of the backup that is to be copied
+The source backup should have the &#39;upload&#39; boolean set. </p></td>
                 </tr>
               
                 <tr>
@@ -4419,8 +4422,8 @@ Required permissions:
                 <td>CopyBackup</td>
                 <td><a href="#arangodb.cloud.backup.v1.CopyBackupRequest">CopyBackupRequest</a></td>
                 <td><a href="#arangodb.cloud.backup.v1.Backup">Backup</a></td>
-                <td><p>Copy a backup from source backup to a given region identifier.
-It is not allowed to copy backup that does not have upload_to_cloud flag set to true
+                <td><p>Copy a backup manually from source backup to a given region identifier.
+It is not allowed to copy backup that does not have upload flag set to true
 Required permissions:
 - backup.backup.copy on the backup identified by the given ID.</p></td>
               </tr>

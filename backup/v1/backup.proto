@@ -190,8 +190,8 @@ service BackupService {
         };
     }
 
-    // Copy a backup from source backup to a given region identifier.
-    // It is not allowed to copy backup that does not have upload_to_cloud flag set to true
+    // Copy a backup manually from source backup to a given region identifier.
+    // It is not allowed to copy backup that does not have upload flag set to true
     // Required permissions:
     // - backup.backup.copy on the backup identified by the given ID.
     rpc CopyBackup(CopyBackupRequest) returns (Backup) {
@@ -315,8 +315,10 @@ message BackupPolicy {
     // Status of the backup policy
     Status status = 100;
 
-    // List of region identifiers where the backup should be taken.
-    // If not set, it should be taken in the same region as of deployment
+    // List of region identifiers where the backup should be uploaded
+    // in addition to the region where the deployment is running.
+    // If not set, it should be uploaded to the same region as where the deployment is running.
+    // This field can be filled-out only for policies where 'upload' is set.
     repeated string additional_region_ids = 101;
 
 }
@@ -477,7 +479,7 @@ message Backup {
     }
 
     // Identifier of the region in which backup is stored
-    // if not set, backup is stored in the same region as of deployment
+    // If not set, backup is stored in the same region as of deployment
     string region_id = 101;
 }
 
@@ -511,9 +513,10 @@ message ListBackupsRequest {
     bool sort_descending = 21;
 }
 
-// parameters for copying the backup
+// Parameters for copying the backup
 message CopyBackupRequest {
     // Identifier of the backup that is to be copied
+    // The source backup should have the 'upload' boolean set.
     string source_backup_id = 1;
 
     // Identifier of the region where the backup should be copied
