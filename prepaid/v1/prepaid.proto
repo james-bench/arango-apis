@@ -132,6 +132,8 @@ message PrepaidDeployment {
     data.v1.Deployment.ModelSpec model = 102;
     // Identifies the addons that will be used on the deployment
     repeated string addons = 103;
+    // Optional identifier of disk performance to use for this deployment.
+    string disk_performance_id = 104;
 
     // Status of the prepaid deployment
     // All members of this field are read-only.

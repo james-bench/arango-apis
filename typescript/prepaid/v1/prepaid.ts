@@ -145,6 +145,10 @@ export interface PrepaidDeployment {
   // string
   addons?: string[];
   
+  // Optional identifier of disk performance to use for this deployment.
+  // string
+  disk_performance_id?: string;
+  
   // PrepaidDeployment_Status
   status?: PrepaidDeployment_Status;
 }
