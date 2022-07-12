@@ -156,6 +156,9 @@ message UsageItem {
 
         // List of identifiers of addons used by the deployment.
         repeated string addon_ids = 41;
+
+        // IF true the deployment was in paused state
+        bool is_paused = 42;
     }
     // Amount of (computer) resources used by the resource covered by this usage item.
     // This field is only set when the usage item is of kind DeploymentSize.
