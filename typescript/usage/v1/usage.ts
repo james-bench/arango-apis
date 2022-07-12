@@ -242,6 +242,10 @@ export interface UsageItem_DeploymentSize {
   // List of identifiers of addons used by the deployment.
   // string
   addon_ids?: string[];
+  
+  // IF true the deployment was in paused state
+  // boolean
+  is_paused?: boolean;
 }
 
 // Amount of network traffic used by the resource covered by this usage item.
