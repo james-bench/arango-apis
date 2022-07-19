@@ -3,3 +3,4 @@
 #IDE's
 .idea
 
+.vscode/*.log
