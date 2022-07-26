@@ -55,19 +55,22 @@ export interface DeploymentReplication {
   // boolean
   enabled?: boolean;
   
-  // CA Certificate string
+  // A PEM encoded representation of the public key of the CA certificate used to verify sync master in source datacenter.
+  // The value stored here is base64 encoded.
   // string
-  ca_cert?: string;
+  certificate_pem?: string;
   
-  // TLS Keyfile string
+  // A PEM encoded representation of the keyfile used for client authentication of the sync master (with the sync master in the source datacenter).
+  // A keyfile contains 1 or more certificates and a private key.
+  // The value stored here is base64 encoded.
   // string
   tls_keyfile?: string;
   
-  // List of master endpoints at source
+  // List of master endpoints at source data center.
   // string
   master_endpoint?: string[];
   
-  // Status of a given DeploymentReplication
+  // Status of the DeploymentReplication
   // DeploymentReplication_DeploymentReplicationStatus
   status?: DeploymentReplication_DeploymentReplicationStatus;
 }
@@ -92,6 +95,9 @@ export interface DeploymentReplication_DeploymentReplicationStatus {
   // Service (LoadBalancer) endpoint of the SyncMasters
   // This field has the format of a URL.
   // This is a readonly field.
+  // Replication will move to "Ready" phase only once the sync endpoint is available.
+  // If the sync endpoint is not available, the reconciler responsible for populating this field
+  // will keep retrying (with exponential backoff).
   // string
   sync_endpoint?: string;
 }
@@ -122,12 +128,12 @@ export interface IReplicationService {
   
   // Get an existing DeploymentReplication using its deployment ID
   // Required permissions:
-  // - replication.deployment.get-deployment-replication
+  // - replication.deploymentreplication.get
   GetDeploymentReplication: (req: arangodb_cloud_common_v1_IDOptions) => Promise<DeploymentReplication>;
   
   // Update an existing DeploymentReplication spec. If does not exist, this will create a new one.
   // Required permissions:
-  // - replication.deployment.update-deployment-replication
+  // - replication.deploymentreplication.update
   UpdateDeploymentReplication: (req: DeploymentReplication) => Promise<DeploymentReplication>;
 }
 
@@ -164,7 +170,7 @@ export class ReplicationService implements IReplicationService {
   
   // Get an existing DeploymentReplication using its deployment ID
   // Required permissions:
-  // - replication.deployment.get-deployment-replication
+  // - replication.deploymentreplication.get
   async GetDeploymentReplication(req: arangodb_cloud_common_v1_IDOptions): Promise<DeploymentReplication> {
     const path = `/api/replication/v1/deployment/${encodeURIComponent(req.id || '')}/replication`;
     const url = path + api.queryString(req, [`id`]);
@@ -173,7 +179,7 @@ export class ReplicationService implements IReplicationService {
   
   // Update an existing DeploymentReplication spec. If does not exist, this will create a new one.
   // Required permissions:
-  // - replication.deployment.update-deployment-replication
+  // - replication.deploymentreplication.update
   async UpdateDeploymentReplication(req: DeploymentReplication): Promise<DeploymentReplication> {
     const url = `/api/replication/v1/deployment/${encodeURIComponent(req.deployment_id || '')}/replication`;
     return api.patch(url, req);

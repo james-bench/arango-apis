@@ -16120,31 +16120,34 @@ Note: a deployment needs to have `supported` set to true first, and should be in
                 </tr>
               
                 <tr>
-                  <td>ca_cert</td>
+                  <td>certificate_pem</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>CA Certificate string </p></td>
+                  <td><p>A PEM encoded representation of the public key of the CA certificate used to verify sync master in source datacenter.
+The value stored here is base64 encoded. </p></td>
                 </tr>
               
                 <tr>
                   <td>tls_keyfile</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>TLS Keyfile string </p></td>
+                  <td><p>A PEM encoded representation of the keyfile used for client authentication of the sync master (with the sync master in the source datacenter).
+A keyfile contains 1 or more certificates and a private key.
+The value stored here is base64 encoded. </p></td>
                 </tr>
               
                 <tr>
                   <td>master_endpoint</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>List of master endpoints at source </p></td>
+                  <td><p>List of master endpoints at source data center. </p></td>
                 </tr>
               
                 <tr>
                   <td>status</td>
                   <td><a href="#arangodb.cloud.replication.v1.DeploymentReplication.DeploymentReplicationStatus">DeploymentReplication.DeploymentReplicationStatus</a></td>
                   <td></td>
-                  <td><p>Status of a given DeploymentReplication </p></td>
+                  <td><p>Status of the DeploymentReplication </p></td>
                 </tr>
               
             </tbody>
@@ -16190,7 +16193,10 @@ Should only contain only one of the following values:
                   <td></td>
                   <td><p>Service (LoadBalancer) endpoint of the SyncMasters
 This field has the format of a URL.
-This is a readonly field. </p></td>
+This is a readonly field.
+Replication will move to &#34;Ready&#34; phase only once the sync endpoint is available.
+If the sync endpoint is not available, the reconciler responsible for populating this field
+will keep retrying (with exponential backoff). </p></td>
                 </tr>
               
             </tbody>
@@ -16250,7 +16256,7 @@ if project_id is not specified
                 <td><a href="#arangodb.cloud.replication.v1.DeploymentReplication">DeploymentReplication</a></td>
                 <td><p>Get an existing DeploymentReplication using its deployment ID
 Required permissions:
-- replication.deployment.get-deployment-replication</p></td>
+- replication.deploymentreplication.get</p></td>
               </tr>
             
               <tr>
@@ -16259,7 +16265,7 @@ Required permissions:
                 <td><a href="#arangodb.cloud.replication.v1.DeploymentReplication">DeploymentReplication</a></td>
                 <td><p>Update an existing DeploymentReplication spec. If does not exist, this will create a new one.
 Required permissions:
-- replication.deployment.update-deployment-replication</p></td>
+- replication.deploymentreplication.update</p></td>
               </tr>
             
           </tbody>

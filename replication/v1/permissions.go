@@ -28,9 +28,9 @@ const (
 	// PermissionDeploymentCloneFromBackup is needed to clone a deployment from an existing backup.
 	PermissionDeploymentCloneFromBackup = "replication.deployment.clone-from-backup"
 
-	// PermissionGetDeploymentReplicatoin is needed to get a DeploymentReplication for a given Deployment
-	PermissionGetDeploymentReplication = "replication.deployment.get-deployment-replication"
+	// PermissionGetDeploymentReplication is needed to get a DeploymentReplication for a given Deployment
+	PermissionGetDeploymentReplication = "replication.deploymentreplication.get"
 
 	// PermissionUpdateDeploymentReplication is needed to update / create a DeploymentReplication
-	PermissionUpdateDeploymentReplication = "replication.deployment.update-deployment-replication"
+	PermissionUpdateDeploymentReplication = "replication.deploymentreplication.update"
 )

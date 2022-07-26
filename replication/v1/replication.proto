@@ -66,7 +66,7 @@ service ReplicationService {
 
     // Get an existing DeploymentReplication using its deployment ID
     // Required permissions:
-    // - replication.deployment.get-deployment-replication
+    // - replication.deploymentreplication.get
     rpc GetDeploymentReplication(common.v1.IDOptions) returns (DeploymentReplication) {
         option (google.api.http) = {
             get: "/api/replication/v1/deployment/{id}/replication"
@@ -75,7 +75,7 @@ service ReplicationService {
 
     // Update an existing DeploymentReplication spec. If does not exist, this will create a new one.
     // Required permissions:
-    // - replication.deployment.update-deployment-replication
+    // - replication.deploymentreplication.update
     rpc UpdateDeploymentReplication(DeploymentReplication) returns (DeploymentReplication) {
         option (google.api.http) = {
             patch: "/api/replication/v1/deployment/{deployment_id}/replication"
@@ -118,13 +118,16 @@ message DeploymentReplication {
     // Note: a deployment needs to have `supported` set to true first, and should be in "Ready" phase.
     bool enabled = 3;
 
-    // CA Certificate string
-    string ca_cert = 4;
+    // A PEM encoded representation of the public key of the CA certificate used to verify sync master in source datacenter.
+    // The value stored here is base64 encoded.
+    string certificate_pem = 4;
 
-    // TLS Keyfile string
+    // A PEM encoded representation of the keyfile used for client authentication of the sync master (with the sync master in the source datacenter).
+    // A keyfile contains 1 or more certificates and a private key.
+    // The value stored here is base64 encoded.
     string tls_keyfile = 5;
 
-    // List of master endpoints at source
+    // List of master endpoints at source data center.
     repeated string master_endpoint = 6;
 
     // DeploymentReplicationStatus defines the status of a deployment replication.
@@ -146,9 +149,12 @@ message DeploymentReplication {
         // Service (LoadBalancer) endpoint of the SyncMasters
         // This field has the format of a URL.
         // This is a readonly field.
+        // Replication will move to "Ready" phase only once the sync endpoint is available.
+        // If the sync endpoint is not available, the reconciler responsible for populating this field
+        // will keep retrying (with exponential backoff).
         string sync_endpoint = 3;
     }
 
-    // Status of a given DeploymentReplication
+    // Status of the DeploymentReplication
     DeploymentReplicationStatus status = 100;
 }
