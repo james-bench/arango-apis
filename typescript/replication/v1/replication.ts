@@ -71,13 +71,13 @@ export interface DeploymentReplication {
   master_endpoint?: string[];
   
   // Status of the DeploymentReplication
-  // DeploymentReplication_DeploymentReplicationStatus
-  status?: DeploymentReplication_DeploymentReplicationStatus;
+  // DeploymentReplication_Status
+  status?: DeploymentReplication_Status;
 }
 
 // DeploymentReplicationStatus defines the status of a deployment replication.
 // TODO: more fields will be added later as we get clarity on what information needs to be reported.
-export interface DeploymentReplication_DeploymentReplicationStatus {
+export interface DeploymentReplication_Status {
   // Where the deployment replication process is in its lifecycle at any given time.
   // Should only contain only one of the following values:
   // "Initialising" - Replication is supported, waiting for sync masters / workers.
