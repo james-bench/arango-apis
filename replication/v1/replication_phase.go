@@ -17,20 +17,22 @@
 //
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
-// Author Gergely Brautigam
-//
 
 package v1
 
-const (
-	// Deployment permissions
+var (
+	// Replication is supported, waiting for sync masters / workers.
+	PhaseInitialising = "Initialising"
 
-	// PermissionDeploymentCloneFromBackup is needed to clone a deployment from an existing backup.
-	PermissionDeploymentCloneFromBackup = "replication.deployment.clone-from-backup"
+	// Sync masters / workers are ready, deployment is ready to start replication process.
+	PhaseReady = "Ready"
 
-	// PermissionGetDeploymentReplicatoin is needed to get a DeploymentReplication for a given Deployment
-	PermissionGetDeploymentReplication = "replication.deployment.get-deployment-replication"
+	// Replication has started and currently in progress.
+	PhaseInProgress = "In Progress"
 
-	// PermissionUpdateDeploymentReplication is needed to update / create a DeploymentReplication
-	PermissionUpdateDeploymentReplication = "replication.deployment.update-deployment-replication"
+	// Replication has been completed successfully.
+	PhaseComplete = "Complete"
+
+	// Replication could not complete successfully.
+	PhaseFailed = "Failed"
 )

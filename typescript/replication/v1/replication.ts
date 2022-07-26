@@ -5,6 +5,7 @@
 import api from '../../api'
 import * as googleTypes from '../../googleTypes'
 import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
+import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1/common'
 import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 import { Deployment as arangodb_cloud_data_v1_Deployment } from '../../data/v1/data'
 
@@ -36,6 +37,65 @@ export interface CloneDeploymentFromBackupRequest {
   project_id?: string;
 }
 
+// DeploymentReplication defines a request object for creating or updating a deployment replication
+export interface DeploymentReplication {
+  // Identifier of the deployments for a given DeploymentReplication
+  // string
+  deployment_id?: string;
+  
+  // Is replication supported on a given deployment.
+  // This will not start an actual replication, it only makes it possible to configure one
+  // by ensuring that Sync Masters / Workers have come up, and Sync Endpoint is setup correctly.
+  // boolean
+  supported?: boolean;
+  
+  // Is replication enabled for a given deployment.
+  // Setting this will start an actual replication.
+  // Note: a deployment needs to have `supported` set to true first, and should be in "Ready" phase.
+  // boolean
+  enabled?: boolean;
+  
+  // CA Certificate string
+  // string
+  ca_cert?: string;
+  
+  // TLS Keyfile string
+  // string
+  tls_keyfile?: string;
+  
+  // List of master endpoints at source
+  // string
+  master_endpoint?: string[];
+  
+  // Status of a given DeploymentReplication
+  // DeploymentReplication_DeploymentReplicationStatus
+  status?: DeploymentReplication_DeploymentReplicationStatus;
+}
+
+// DeploymentReplicationStatus defines the status of a deployment replication.
+// TODO: more fields will be added later as we get clarity on what information needs to be reported.
+export interface DeploymentReplication_DeploymentReplicationStatus {
+  // Where the deployment replication process is in its lifecycle at any given time.
+  // Should only contain only one of the following values:
+  // "Initialising" - Replication is supported, waiting for sync masters / workers.
+  // "Ready"        - Sync masters / workers are ready, deployment is ready to start replication process.
+  // "In Progress"  - Replication has started and currently in progress.
+  // "Complete"     - Replication has been completed successfully.
+  // "Failed"       - Replication could not complete successfully.
+  // string
+  phase?: string;
+  
+  // Supporting information about the deployment replication phase - such as error messages in case of failures.
+  // string
+  message?: string;
+  
+  // Service (LoadBalancer) endpoint of the SyncMasters
+  // This field has the format of a URL.
+  // This is a readonly field.
+  // string
+  sync_endpoint?: string;
+}
+
 // ReplicationService is the API used to replicate a deployment.
 export interface IReplicationService {
   // Get the current API version of this service.
@@ -59,6 +119,16 @@ export interface IReplicationService {
   // if project_id is not specified
   // - replication.deployment.clone-from-backup on the backup specified by backup_id
   CloneDeploymentFromBackup: (req: CloneDeploymentFromBackupRequest) => Promise<arangodb_cloud_data_v1_Deployment>;
+  
+  // Get an existing DeploymentReplication using its deployment ID
+  // Required permissions:
+  // - replication.deployment.get-deployment-replication
+  GetDeploymentReplication: (req: arangodb_cloud_common_v1_IDOptions) => Promise<DeploymentReplication>;
+  
+  // Update an existing DeploymentReplication spec. If does not exist, this will create a new one.
+  // Required permissions:
+  // - replication.deployment.update-deployment-replication
+  UpdateDeploymentReplication: (req: DeploymentReplication) => Promise<DeploymentReplication>;
 }
 
 // ReplicationService is the API used to replicate a deployment.
@@ -90,5 +160,22 @@ export class ReplicationService implements IReplicationService {
   async CloneDeploymentFromBackup(req: CloneDeploymentFromBackupRequest): Promise<arangodb_cloud_data_v1_Deployment> {
     const url = `/api/replication/v1/backup/${encodeURIComponent(req.backup_id || '')}/clone`;
     return api.post(url, req);
+  }
+  
+  // Get an existing DeploymentReplication using its deployment ID
+  // Required permissions:
+  // - replication.deployment.get-deployment-replication
+  async GetDeploymentReplication(req: arangodb_cloud_common_v1_IDOptions): Promise<DeploymentReplication> {
+    const path = `/api/replication/v1/deployment/${encodeURIComponent(req.id || '')}/replication`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Update an existing DeploymentReplication spec. If does not exist, this will create a new one.
+  // Required permissions:
+  // - replication.deployment.update-deployment-replication
+  async UpdateDeploymentReplication(req: DeploymentReplication): Promise<DeploymentReplication> {
+    const url = `/api/replication/v1/deployment/${encodeURIComponent(req.deployment_id || '')}/replication`;
+    return api.patch(url, req);
   }
 }

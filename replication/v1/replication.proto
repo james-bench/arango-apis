@@ -63,6 +63,25 @@ service ReplicationService {
             body: "*"
         };
     }
+
+    // Get an existing DeploymentReplication using its deployment ID
+    // Required permissions:
+    // - replication.deployment.get-deployment-replication
+    rpc GetDeploymentReplication(common.v1.IDOptions) returns (DeploymentReplication) {
+        option (google.api.http) = {
+            get: "/api/replication/v1/deployment/{id}/replication"
+        };
+    } 
+
+    // Update an existing DeploymentReplication spec. If does not exist, this will create a new one.
+    // Required permissions:
+    // - replication.deployment.update-deployment-replication
+    rpc UpdateDeploymentReplication(DeploymentReplication) returns (DeploymentReplication) {
+        option (google.api.http) = {
+            patch: "/api/replication/v1/deployment/{deployment_id}/replication"
+            body: "*"
+        };
+    }
 }
 
 // CloneDeploymentFromBackupRequest defines a request object for clone deployment call.
@@ -81,4 +100,55 @@ message CloneDeploymentFromBackupRequest {
     // Target project identifier.
     // This is an optional field
     string project_id = 4;
+}
+
+// DeploymentReplication defines a request object for creating or updating a deployment replication
+message DeploymentReplication {
+
+    // Identifier of the deployments for a given DeploymentReplication
+    string deployment_id = 1;
+
+    // Is replication supported on a given deployment.
+    // This will not start an actual replication, it only makes it possible to configure one
+    // by ensuring that Sync Masters / Workers have come up, and Sync Endpoint is setup correctly.
+    bool supported = 2;
+
+    // Is replication enabled for a given deployment.
+    // Setting this will start an actual replication.
+    // Note: a deployment needs to have `supported` set to true first, and should be in "Ready" phase.
+    bool enabled = 3;
+
+    // CA Certificate string
+    string ca_cert = 4;
+
+    // TLS Keyfile string
+    string tls_keyfile = 5;
+
+    // List of master endpoints at source
+    repeated string master_endpoint = 6;
+
+    // DeploymentReplicationStatus defines the status of a deployment replication.
+    // TODO: more fields will be added later as we get clarity on what information needs to be reported.
+    message DeploymentReplicationStatus {
+
+        // Where the deployment replication process is in its lifecycle at any given time.
+        // Should only contain only one of the following values:
+        // "Initialising" - Replication is supported, waiting for sync masters / workers.
+        // "Ready"        - Sync masters / workers are ready, deployment is ready to start replication process.
+        // "In Progress"  - Replication has started and currently in progress.
+        // "Complete"     - Replication has been completed successfully.
+        // "Failed"       - Replication could not complete successfully.
+        string phase = 1;
+
+        // Supporting information about the deployment replication phase - such as error messages in case of failures.
+        string message = 2;
+
+        // Service (LoadBalancer) endpoint of the SyncMasters
+        // This field has the format of a URL.
+        // This is a readonly field.
+        string sync_endpoint = 3;
+    }
+
+    // Status of a given DeploymentReplication
+    DeploymentReplicationStatus status = 100;
 }

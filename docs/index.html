@@ -1275,6 +1275,14 @@ title: "ArangoDB Oasis API"
                   <a href="#arangodb.cloud.replication.v1.CloneDeploymentFromBackupRequest"><span class="badge">M</span>CloneDeploymentFromBackupRequest</a>
                 </li>
               
+                <li>
+                  <a href="#arangodb.cloud.replication.v1.DeploymentReplication"><span class="badge">M</span>DeploymentReplication</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.replication.v1.DeploymentReplication.DeploymentReplicationStatus"><span class="badge">M</span>DeploymentReplication.DeploymentReplicationStatus</a>
+                </li>
+              
               
               
               
@@ -16076,6 +16084,122 @@ This is an optional field </p></td>
 
         
       
+        <h3 id="arangodb.cloud.replication.v1.DeploymentReplication">DeploymentReplication</h3>
+        <p>DeploymentReplication defines a request object for creating or updating a deployment replication</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the deployments for a given DeploymentReplication </p></td>
+                </tr>
+              
+                <tr>
+                  <td>supported</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Is replication supported on a given deployment.
+This will not start an actual replication, it only makes it possible to configure one
+by ensuring that Sync Masters / Workers have come up, and Sync Endpoint is setup correctly. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>enabled</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Is replication enabled for a given deployment.
+Setting this will start an actual replication.
+Note: a deployment needs to have `supported` set to true first, and should be in &#34;Ready&#34; phase. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ca_cert</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>CA Certificate string </p></td>
+                </tr>
+              
+                <tr>
+                  <td>tls_keyfile</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>TLS Keyfile string </p></td>
+                </tr>
+              
+                <tr>
+                  <td>master_endpoint</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>List of master endpoints at source </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#arangodb.cloud.replication.v1.DeploymentReplication.DeploymentReplicationStatus">DeploymentReplication.DeploymentReplicationStatus</a></td>
+                  <td></td>
+                  <td><p>Status of a given DeploymentReplication </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.replication.v1.DeploymentReplication.DeploymentReplicationStatus">DeploymentReplication.DeploymentReplicationStatus</h3>
+        <p>DeploymentReplicationStatus defines the status of a deployment replication.</p><p>TODO: more fields will be added later as we get clarity on what information needs to be reported.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>phase</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Where the deployment replication process is in its lifecycle at any given time.
+Should only contain only one of the following values:
+&#34;Initialising&#34; - Replication is supported, waiting for sync masters / workers.
+&#34;Ready&#34;        - Sync masters / workers are ready, deployment is ready to start replication process.
+&#34;In Progress&#34;  - Replication has started and currently in progress.
+&#34;Complete&#34;     - Replication has been completed successfully.
+&#34;Failed&#34;       - Replication could not complete successfully. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>message</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Supporting information about the deployment replication phase - such as error messages in case of failures. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>sync_endpoint</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Service (LoadBalancer) endpoint of the SyncMasters
+This field has the format of a URL.
+This is a readonly field. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
 
@@ -16120,6 +16244,24 @@ if project_id is not specified
 - replication.deployment.clone-from-backup on the backup specified by backup_id</p></td>
               </tr>
             
+              <tr>
+                <td>GetDeploymentReplication</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.replication.v1.DeploymentReplication">DeploymentReplication</a></td>
+                <td><p>Get an existing DeploymentReplication using its deployment ID
+Required permissions:
+- replication.deployment.get-deployment-replication</p></td>
+              </tr>
+            
+              <tr>
+                <td>UpdateDeploymentReplication</td>
+                <td><a href="#arangodb.cloud.replication.v1.DeploymentReplication">DeploymentReplication</a></td>
+                <td><a href="#arangodb.cloud.replication.v1.DeploymentReplication">DeploymentReplication</a></td>
+                <td><p>Update an existing DeploymentReplication spec. If does not exist, this will create a new one.
+Required permissions:
+- replication.deployment.update-deployment-replication</p></td>
+              </tr>
+            
           </tbody>
         </table>
 
@@ -16154,6 +16296,26 @@ if project_id is not specified
                 <td>CloneDeploymentFromBackup</td>
                 <td>POST</td>
                 <td>/api/replication/v1/backup/{backup_id}/clone</td>
+                <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetDeploymentReplication</td>
+                <td>GET</td>
+                <td>/api/replication/v1/deployment/{id}/replication</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>UpdateDeploymentReplication</td>
+                <td>PATCH</td>
+                <td>/api/replication/v1/deployment/{deployment_id}/replication</td>
                 <td>*</td>
               </tr>
               
