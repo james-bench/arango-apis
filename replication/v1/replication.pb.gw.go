@@ -309,7 +309,7 @@ func RegisterReplicationServiceHandlerServer(ctx context.Context, mux *runtime.S
 
 	})
 
-	mux.Handle("PATCH", pattern_ReplicationService_UpdateDeploymentReplication_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_ReplicationService_UpdateDeploymentReplication_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -430,7 +430,7 @@ func RegisterReplicationServiceHandlerClient(ctx context.Context, mux *runtime.S
 
 	})
 
-	mux.Handle("PATCH", pattern_ReplicationService_UpdateDeploymentReplication_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_ReplicationService_UpdateDeploymentReplication_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)

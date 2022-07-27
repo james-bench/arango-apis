@@ -132,6 +132,7 @@ export interface IReplicationService {
   GetDeploymentReplication: (req: arangodb_cloud_common_v1_IDOptions) => Promise<DeploymentReplication>;
   
   // Update an existing DeploymentReplication spec. If does not exist, this will create a new one.
+  // This call expects the complete entity with the updated fields.
   // Required permissions:
   // - replication.deploymentreplication.update
   UpdateDeploymentReplication: (req: DeploymentReplication) => Promise<DeploymentReplication>;
@@ -178,10 +179,11 @@ export class ReplicationService implements IReplicationService {
   }
   
   // Update an existing DeploymentReplication spec. If does not exist, this will create a new one.
+  // This call expects the complete entity with the updated fields.
   // Required permissions:
   // - replication.deploymentreplication.update
   async UpdateDeploymentReplication(req: DeploymentReplication): Promise<DeploymentReplication> {
     const url = `/api/replication/v1/deployment/${encodeURIComponent(req.deployment_id || '')}/replication`;
-    return api.patch(url, req);
+    return api.put(url, req);
   }
 }

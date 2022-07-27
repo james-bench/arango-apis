@@ -74,11 +74,12 @@ service ReplicationService {
     } 
 
     // Update an existing DeploymentReplication spec. If does not exist, this will create a new one.
+    // This call expects the complete entity with the updated fields.
     // Required permissions:
     // - replication.deploymentreplication.update
     rpc UpdateDeploymentReplication(DeploymentReplication) returns (DeploymentReplication) {
         option (google.api.http) = {
-            patch: "/api/replication/v1/deployment/{deployment_id}/replication"
+            put: "/api/replication/v1/deployment/{deployment_id}/replication"
             body: "*"
         };
     }

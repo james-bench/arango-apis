@@ -16264,6 +16264,7 @@ Required permissions:
                 <td><a href="#arangodb.cloud.replication.v1.DeploymentReplication">DeploymentReplication</a></td>
                 <td><a href="#arangodb.cloud.replication.v1.DeploymentReplication">DeploymentReplication</a></td>
                 <td><p>Update an existing DeploymentReplication spec. If does not exist, this will create a new one.
+This call expects the complete entity with the updated fields.
 Required permissions:
 - replication.deploymentreplication.update</p></td>
               </tr>
@@ -16320,7 +16321,7 @@ Required permissions:
               
               <tr>
                 <td>UpdateDeploymentReplication</td>
-                <td>PATCH</td>
+                <td>PUT</td>
                 <td>/api/replication/v1/deployment/{deployment_id}/replication</td>
                 <td>*</td>
               </tr>
