@@ -156,6 +156,9 @@ message UsageItem {
 
         // List of identifiers of addons used by the deployment.
         repeated string addon_ids = 41;
+
+        // IF true the deployment was in paused state
+        bool is_paused = 42;
     }
     // Amount of (computer) resources used by the resource covered by this usage item.
     // This field is only set when the usage item is of kind DeploymentSize.
@@ -276,4 +279,9 @@ message ListUsageItemsRequest {
     // If set, limit to usage items that have the invoice_id set to this specific value.
     // This is an optional field.
     string invoice_id = 22;
+
+    // Request usage items that start at or after given timestamp.
+    // This is an optional field.
+    google.protobuf.Timestamp not_start_before = 23;
+
 }

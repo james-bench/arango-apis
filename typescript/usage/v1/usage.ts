@@ -83,6 +83,11 @@ export interface ListUsageItemsRequest {
   // This is an optional field.
   // string
   invoice_id?: string;
+  
+  // Request usage items that start at or after given timestamp.
+  // This is an optional field.
+  // googleTypes.Timestamp
+  not_start_before?: googleTypes.Timestamp;
 }
 
 // A UsageItem message contained usage tracking information for a tracked
@@ -237,6 +242,10 @@ export interface UsageItem_DeploymentSize {
   // List of identifiers of addons used by the deployment.
   // string
   addon_ids?: string[];
+  
+  // IF true the deployment was in paused state
+  // boolean
+  is_paused?: boolean;
 }
 
 // Amount of network traffic used by the resource covered by this usage item.

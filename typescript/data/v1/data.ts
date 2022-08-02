@@ -721,6 +721,38 @@ export interface Deployment_Status {
   // string
   endpoint_self_signed?: string;
   
+  // If set, this deployment has a private endpoint, however can contain the public endpoint as well.
+  // When switching from a public endpoint to a private endpoint the public endpoint will
+  // be available for an hour to support seemlessly migration to the private endpoint.
+  // boolean
+  private_endpoint?: boolean;
+  
+  // If set, this deployment has a private endpoint only.
+  // When switching from a public endpoint to a private endpoint the public endpoint will
+  // be available for an hour to support seemlessly migration to the private endpoint.
+  // boolean
+  private_endpoint_only?: boolean;
+  
+  // Endpoint URL used to reach the deployment which is configured as a private endpoint.
+  // This field always contains the URL of the low port (8529) of the
+  // deployment.
+  // If a certificate with well known certificate is used, this
+  // port is using the well known certificate, note that the alternate DNS names are not part of this certificate.
+  // Otherwise this port is using the self-signed certificate.
+  // This endpoint is recommended for human-to-database connections.
+  // If no private endpoint is configured this field will be empty.
+  // string
+  endpoint_private_endpoint?: string;
+  
+  // Endpoint URL used to reach the deployment on the port that uses
+  // the self-signed certificate.
+  // This certificate will contain the specified alternate DNS names as well,
+  // so a secure TLS connection can be establised.
+  // This endpoint is recommended for machine-to-database connections.
+  // If no private endpoint is configured this field will be empty.
+  // string
+  endpoint_private_endpoint_self_signed?: string;
+  
   // The status of backup restore (if applicable).
   // This field will be set to empty if a new revision of the spec is available
   // Deployment_BackupRestoreStatus

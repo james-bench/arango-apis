@@ -8697,6 +8697,50 @@ This endpoint is recommended for machine-to-database connections. </p></td>
                 </tr>
               
                 <tr>
+                  <td>private_endpoint</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, this deployment has a private endpoint, however can contain the public endpoint as well.
+When switching from a public endpoint to a private endpoint the public endpoint will 
+be available for an hour to support seemlessly migration to the private endpoint. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>private_endpoint_only</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, this deployment has a private endpoint only.
+When switching from a public endpoint to a private endpoint the public endpoint will 
+be available for an hour to support seemlessly migration to the private endpoint. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>endpoint_private_endpoint</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Endpoint URL used to reach the deployment which is configured as a private endpoint.
+This field always contains the URL of the low port (8529) of the
+deployment.
+If a certificate with well known certificate is used, this
+port is using the well known certificate, note that the alternate DNS names are not part of this certificate.
+Otherwise this port is using the self-signed certificate.
+This endpoint is recommended for human-to-database connections.
+If no private endpoint is configured this field will be empty. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>endpoint_private_endpoint_self_signed</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Endpoint URL used to reach the deployment on the port that uses 
+the self-signed certificate. 
+This certificate will contain the specified alternate DNS names as well, 
+so a secure TLS connection can be establised.
+This endpoint is recommended for machine-to-database connections.
+If no private endpoint is configured this field will be empty. </p></td>
+                </tr>
+              
+                <tr>
                   <td>backup_restore_status</td>
                   <td><a href="#arangodb.cloud.data.v1.Deployment.BackupRestoreStatus">Deployment.BackupRestoreStatus</a></td>
                   <td></td>
@@ -15606,6 +15650,13 @@ This is a read-only value </p></td>
                 </tr>
               
                 <tr>
+                  <td>disk_performance_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional identifier of disk performance to use for this deployment. </p></td>
+                </tr>
+              
+                <tr>
                   <td>status</td>
                   <td><a href="#arangodb.cloud.prepaid.v1.PrepaidDeployment.Status">PrepaidDeployment.Status</a></td>
                   <td></td>
@@ -19572,6 +19623,14 @@ This is an optional field. </p></td>
 This is an optional field. </p></td>
                 </tr>
               
+                <tr>
+                  <td>not_start_before</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Request usage items that start at or after given timestamp.
+This is an optional field. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -19885,6 +19944,13 @@ Set when destination_type is &#34;https-post&#34; only </p></td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
                   <td><p>List of identifiers of addons used by the deployment. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_paused</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>IF true the deployment was in paused state </p></td>
                 </tr>
               
             </tbody>

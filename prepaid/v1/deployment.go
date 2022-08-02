@@ -18,7 +18,8 @@ func (pd *PrepaidDeployment) CanDeploymentBeUpgraded(depl *data.Deployment) bool
 		pd.GetModel().GetModel() != depl.GetModel().GetModel() ||
 		pd.GetModel().GetNodeCount() != depl.GetModel().GetNodeCount() ||
 		pd.GetModel().GetNodeDiskSize() != depl.GetModel().GetNodeDiskSize() ||
-		pd.GetModel().GetNodeSizeId() != depl.GetModel().GetNodeSizeId()
+		pd.GetModel().GetNodeSizeId() != depl.GetModel().GetNodeSizeId() ||
+		pd.GetDiskPerformanceId() != depl.GetDiskPerformanceId()
 }
 
 // IsAddonAvailable validates if the provided addon is part of the prepaid deployment
