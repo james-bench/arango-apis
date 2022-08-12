@@ -16158,7 +16158,7 @@ The value stored here is base64 encoded. </p></td>
         
       
         <h3 id="arangodb.cloud.replication.v1.DeploymentReplication.Status">DeploymentReplication.Status</h3>
-        <p>DeploymentReplicationStatus defines the status of a deployment replication.</p><p>TODO: more fields will be added later as we get clarity on what information needs to be reported.</p>
+        <p>DeploymentReplicationStatus defines the status of a deployment replication.</p>
 
         
           <table class="field-table">
@@ -16193,10 +16193,7 @@ Should only contain only one of the following values:
                   <td></td>
                   <td><p>Service (LoadBalancer) endpoint of the SyncMasters
 This field has the format of a URL.
-This is a readonly field.
-Replication will move to &#34;Ready&#34; phase only once the sync endpoint is available.
-If the sync endpoint is not available, the reconciler responsible for populating this field
-will keep retrying (with exponential backoff). </p></td>
+This is a readonly field. </p></td>
                 </tr>
               
             </tbody>

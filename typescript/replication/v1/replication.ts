@@ -76,7 +76,6 @@ export interface DeploymentReplication {
 }
 
 // DeploymentReplicationStatus defines the status of a deployment replication.
-// TODO: more fields will be added later as we get clarity on what information needs to be reported.
 export interface DeploymentReplication_Status {
   // Where the deployment replication process is in its lifecycle at any given time.
   // Should only contain only one of the following values:
@@ -95,9 +94,6 @@ export interface DeploymentReplication_Status {
   // Service (LoadBalancer) endpoint of the SyncMasters
   // This field has the format of a URL.
   // This is a readonly field.
-  // Replication will move to "Ready" phase only once the sync endpoint is available.
-  // If the sync endpoint is not available, the reconciler responsible for populating this field
-  // will keep retrying (with exponential backoff).
   // string
   sync_endpoint?: string;
 }

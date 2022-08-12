@@ -222,7 +222,6 @@ func (m *DeploymentReplication) GetStatus() *DeploymentReplication_Status {
 }
 
 // DeploymentReplicationStatus defines the status of a deployment replication.
-// TODO: more fields will be added later as we get clarity on what information needs to be reported.
 type DeploymentReplication_Status struct {
 	// Where the deployment replication process is in its lifecycle at any given time.
 	// Should only contain only one of the following values:
@@ -237,9 +236,6 @@ type DeploymentReplication_Status struct {
 	// Service (LoadBalancer) endpoint of the SyncMasters
 	// This field has the format of a URL.
 	// This is a readonly field.
-	// Replication will move to "Ready" phase only once the sync endpoint is available.
-	// If the sync endpoint is not available, the reconciler responsible for populating this field
-	// will keep retrying (with exponential backoff).
 	SyncEndpoint         string   `protobuf:"bytes,3,opt,name=sync_endpoint,json=syncEndpoint,proto3" json:"sync_endpoint,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
