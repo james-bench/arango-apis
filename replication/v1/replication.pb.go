@@ -226,11 +226,11 @@ func (m *DeploymentReplication) GetStatus() *DeploymentReplication_Status {
 type DeploymentReplication_Status struct {
 	// Where the deployment replication process is in its lifecycle at any given time.
 	// Should only contain only one of the following values:
-	// "Initialising" - Replication is supported, waiting for sync masters / workers.
-	// "Ready"        - Sync masters / workers are ready, deployment is ready to start replication process.
-	// "In Progress"  - Replication has started and currently in progress.
-	// "Complete"     - Replication has been completed successfully.
-	// "Failed"       - Replication could not complete successfully.
+	// "Initialising"   - Replication is supported, waiting for sync masters / workers.
+	// "Initialised"    - Sync masters / workers are ready, deployment is ready to start replication process.
+	// "In-Progress"    - Replication has started and currently in progress.
+	// "In-Sync"        - Replication has been completed successfully.
+	// "Failed"         - Replication could not complete successfully.
 	Phase string `protobuf:"bytes,1,opt,name=phase,proto3" json:"phase,omitempty"`
 	// Supporting information about the deployment replication phase - such as error messages in case of failures.
 	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`

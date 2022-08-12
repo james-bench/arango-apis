@@ -137,11 +137,11 @@ message DeploymentReplication {
 
         // Where the deployment replication process is in its lifecycle at any given time.
         // Should only contain only one of the following values:
-        // "Initialising" - Replication is supported, waiting for sync masters / workers.
-        // "Ready"        - Sync masters / workers are ready, deployment is ready to start replication process.
-        // "In Progress"  - Replication has started and currently in progress.
-        // "Complete"     - Replication has been completed successfully.
-        // "Failed"       - Replication could not complete successfully.
+        // "Initialising"   - Replication is supported, waiting for sync masters / workers.
+        // "Initialised"    - Sync masters / workers are ready, deployment is ready to start replication process.
+        // "In-Progress"    - Replication has started and currently in progress.
+        // "In-Sync"        - Replication has been completed successfully.
+        // "Failed"         - Replication could not complete successfully.
         string phase = 1;
 
         // Supporting information about the deployment replication phase - such as error messages in case of failures.
