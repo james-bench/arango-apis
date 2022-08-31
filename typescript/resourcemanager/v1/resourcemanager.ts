@@ -573,6 +573,11 @@ export interface Tier {
   // This is a read-only value and cannot be initialized.
   // boolean
   has_private_endpoints?: boolean;
+  
+  // If set the tier has multi region backup uploads.
+  // This is a read-only value and cannot be initialized.
+  // boolean
+  has_multi_region_backup_uploads?: boolean;
 }
 
 // ResourceManagerService is the API used to configure basic resource objects.
