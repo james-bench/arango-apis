@@ -505,6 +505,11 @@ export interface IBackupService {
   // - backup.feature.get on the deployment that is identified by the given ID.
   IsBackupUploadFeatureAvailable: (req: arangodb_cloud_common_v1_IDOptions) => Promise<arangodb_cloud_common_v1_YesOrNo>;
   
+  // Checks if the multi region backup upload feature is enabled for a specific deployment.
+  // Required permissions:
+  // - backup.feature.get on the deployment that is identified by the given ID.
+  IsMultiRegionBackupUploadFeatureAvailable: (req: arangodb_cloud_common_v1_IDOptions) => Promise<arangodb_cloud_common_v1_YesOrNo>;
+  
   // Fetch all backup policies for a specific deployment.
   // Required permissions:
   // - backup.backuppolicy.list on the deployment that owns the backup policies and is identified by the given ID.
@@ -613,6 +618,15 @@ export class BackupService implements IBackupService {
   // - backup.feature.get on the deployment that is identified by the given ID.
   async IsBackupUploadFeatureAvailable(req: arangodb_cloud_common_v1_IDOptions): Promise<arangodb_cloud_common_v1_YesOrNo> {
     const path = `/api/backup/v1/deployment/${encodeURIComponent(req.id || '')}/uploadfeature`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Checks if the multi region backup upload feature is enabled for a specific deployment.
+  // Required permissions:
+  // - backup.feature.get on the deployment that is identified by the given ID.
+  async IsMultiRegionBackupUploadFeatureAvailable(req: arangodb_cloud_common_v1_IDOptions): Promise<arangodb_cloud_common_v1_YesOrNo> {
+    const path = `/api/backup/v1/deployment/${encodeURIComponent(req.id || '')}/multiregionuploadfeature`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }

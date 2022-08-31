@@ -4307,6 +4307,15 @@ Required permissions:
               </tr>
             
               <tr>
+                <td>IsMultiRegionBackupUploadFeatureAvailable</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.common.v1.YesOrNo">.arangodb.cloud.common.v1.YesOrNo</a></td>
+                <td><p>Checks if the multi region backup upload feature is enabled for a specific deployment.
+Required permissions:
+- backup.feature.get on the deployment that is identified by the given ID.</p></td>
+              </tr>
+            
+              <tr>
                 <td>ListBackupPolicies</td>
                 <td><a href="#arangodb.cloud.backup.v1.ListBackupPoliciesRequest">ListBackupPoliciesRequest</a></td>
                 <td><a href="#arangodb.cloud.backup.v1.BackupPolicyList">BackupPolicyList</a></td>
@@ -4484,6 +4493,16 @@ Required permissions:
                 <td>IsBackupUploadFeatureAvailable</td>
                 <td>GET</td>
                 <td>/api/backup/v1/deployment/{id}/uploadfeature</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>IsMultiRegionBackupUploadFeatureAvailable</td>
+                <td>GET</td>
+                <td>/api/backup/v1/deployment/{id}/multiregionuploadfeature</td>
                 <td></td>
               </tr>
               
