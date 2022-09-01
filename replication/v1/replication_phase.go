@@ -30,7 +30,7 @@ var (
 	// Replication has started and currently in progress.
 	DeploymentReplicationPhaseInProgress = "In-Progress"
 
-	// Replication has been completed successfully as shards and collections are in-sync.
+	// All shards and collections are currently in-sync.
 	DeploymentReplicationPhaseInSync = "In-Sync"
 
 	// Replication could not complete successfully.
