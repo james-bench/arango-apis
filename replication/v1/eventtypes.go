@@ -23,10 +23,13 @@ package v1
 const (
 	// DeploymentReplication event types
 
-	// EventTypeDeploymentReplicationCreated is the type of event fired after a DeploymentReplication has been created
+	// EventTypeDeploymentReplicationCreated is the type of event fired after a DeploymentReplication has been created.
 	// SubjectID contains the Deployment ID of the DeploymentReplication.
 	EventTypeDeploymentReplicationCreated = "replication.deploymentreplication.created"
-	// EventTypeDeploymentReplicationUpdated is the type of event fired after a DeploymentReplication has been updated
+	// EventTypeDeploymentReplicationUpdated is the type of event fired after a DeploymentReplication has been updated.
 	// SubjectID contains the Deployment ID of the DeploymentReplication.
 	EventTypeDeploymentReplicationUpdated = "replication.deploymentreplication.updated"
+	// EventTypeDeploymentReplicationDeleted is the type of event fired after a DeploymentReplication has been deleted.
+	// SubjectID contains the Deployment ID of the DeploymentReplication.
+	EventTypeDeploymentReplicationDeleted = "replication.deploymentreplication.deleted"
 )
