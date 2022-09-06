@@ -229,6 +229,7 @@ type DeploymentReplication_Status struct {
 	// "Initialised"    - Sync masters / workers are ready, deployment is ready to start replication process.
 	// "In-Progress"    - Replication has started and currently in progress.
 	// "In-Sync"        - All data currently is in-sync.
+	// "Error"          - Replication is in an errored state.
 	// "Failed"         - Replication could not complete successfully.
 	Phase string `protobuf:"bytes,1,opt,name=phase,proto3" json:"phase,omitempty"`
 	// Supporting information about the deployment replication phase - such as error messages in case of failures.

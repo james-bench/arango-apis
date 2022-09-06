@@ -29,6 +29,8 @@ var (
 	DeploymentReplicationPhaseInProgress = "In-Progress"
 	// All shards and collections are currently in-sync.
 	DeploymentReplicationPhaseInSync = "In-Sync"
+	// Replication is in an errored state.
+	DeploymentReplicationPhaseError = "Error"
 	// Replication could not complete successfully.
 	DeploymentReplicationPhaseFailed = "Failed"
 )
