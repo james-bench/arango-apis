@@ -70,7 +70,7 @@ export interface DeploymentReplication {
   // string
   master_endpoint?: string[];
   
-  // Status of the DeploymentReplication
+  // Status of the DeploymentReplication.
   // DeploymentReplication_Status
   status?: DeploymentReplication_Status;
 }
@@ -82,7 +82,7 @@ export interface DeploymentReplication_Status {
   // "Initialising"   - Replication is supported, waiting for sync masters / workers.
   // "Initialised"    - Sync masters / workers are ready, deployment is ready to start replication process.
   // "In-Progress"    - Replication has started and currently in progress.
-  // "In-Sync"        - Replication has been completed successfully.
+  // "In-Sync"        - All data currently is in-sync.
   // "Failed"         - Replication could not complete successfully.
   // string
   phase?: string;
@@ -90,6 +90,14 @@ export interface DeploymentReplication_Status {
   // Supporting information about the deployment replication phase - such as error messages in case of failures.
   // string
   message?: string;
+  
+  // Total number of shards that should be in-sync.
+  // number
+  total_shards?: number;
+  
+  // Number of shards currently in-sync.
+  // number
+  shards_in_sync?: number;
   
   // Service (LoadBalancer) endpoint of the SyncMasters
   // This field has the format of a URL.
