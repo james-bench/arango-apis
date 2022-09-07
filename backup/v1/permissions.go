@@ -61,4 +61,6 @@ const (
 	PermissionBackupRestore = "backup.backup.restore"
 	// PermissionBackupDelete is needed for deleting a backup
 	PermissionBackupDelete = "backup.backup.delete"
+	// PermissionBackupCopy is needed for copying a backup
+	PermissionBackupCopy = "backup.backup.copy"
 )

@@ -92,6 +92,11 @@ export interface Backup {
   // Status of the actual backup
   // Backup_Status
   status?: Backup_Status;
+  
+  // Identifier of the region in which backup is stored
+  // If not set, backup is stored in the same region as of deployment
+  // string
+  region_id?: string;
 }
 
 // Information about the deployment during backup
@@ -291,6 +296,13 @@ export interface BackupPolicy {
   // Status of the backup policy
   // BackupPolicy_Status
   status?: BackupPolicy_Status;
+  
+  // List of region identifiers where the backup should be uploaded
+  // in addition to the region where the deployment is running.
+  // If not set, it should be uploaded to the same region as where the deployment is running.
+  // This field can be filled-out only for policies where 'upload' is set.
+  // string
+  additional_region_ids?: string[];
 }
 
 // Note: Nested types inside nested types is not supported by the typescript generator
@@ -395,6 +407,18 @@ export interface BackupPolicyList {
   budget?: arangodb_cloud_common_v1_Budget;
 }
 
+// Parameters for copying the backup
+export interface CopyBackupRequest {
+  // Identifier of the backup that is to be copied
+  // The source backup should have the 'upload' boolean set.
+  // string
+  source_backup_id?: string;
+  
+  // Identifier of the region where the backup should be copied
+  // string
+  region_id?: string;
+}
+
 // Request arguments for ListBackupPolicies
 export interface ListBackupPoliciesRequest {
   // Identifier of the deployment to request the backup policies for.
@@ -481,6 +505,11 @@ export interface IBackupService {
   // - backup.feature.get on the deployment that is identified by the given ID.
   IsBackupUploadFeatureAvailable: (req: arangodb_cloud_common_v1_IDOptions) => Promise<arangodb_cloud_common_v1_YesOrNo>;
   
+  // Checks if the multi region backup upload feature is enabled for a specific deployment.
+  // Required permissions:
+  // - backup.feature.get on the deployment that is identified by the given ID.
+  IsMultiRegionBackupUploadFeatureAvailable: (req: arangodb_cloud_common_v1_IDOptions) => Promise<arangodb_cloud_common_v1_YesOrNo>;
+  
   // Fetch all backup policies for a specific deployment.
   // Required permissions:
   // - backup.backuppolicy.list on the deployment that owns the backup policies and is identified by the given ID.
@@ -556,6 +585,12 @@ export interface IBackupService {
   // Required permissions:
   // -  backup.backup.delete on the backup identified by the given ID.
   DeleteBackup: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Copy a backup manually from source backup to a given region identifier.
+  // It is not allowed to copy backup that does not have upload flag set to true
+  // Required permissions:
+  // - backup.backup.copy on the backup identified by the given ID.
+  CopyBackup: (req: CopyBackupRequest) => Promise<Backup>;
 }
 
 // BackupService is the API used to configure backup objects.
@@ -583,6 +618,15 @@ export class BackupService implements IBackupService {
   // - backup.feature.get on the deployment that is identified by the given ID.
   async IsBackupUploadFeatureAvailable(req: arangodb_cloud_common_v1_IDOptions): Promise<arangodb_cloud_common_v1_YesOrNo> {
     const path = `/api/backup/v1/deployment/${encodeURIComponent(req.id || '')}/uploadfeature`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Checks if the multi region backup upload feature is enabled for a specific deployment.
+  // Required permissions:
+  // - backup.feature.get on the deployment that is identified by the given ID.
+  async IsMultiRegionBackupUploadFeatureAvailable(req: arangodb_cloud_common_v1_IDOptions): Promise<arangodb_cloud_common_v1_YesOrNo> {
+    const path = `/api/backup/v1/deployment/${encodeURIComponent(req.id || '')}/multiregionuploadfeature`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
@@ -705,5 +749,15 @@ export class BackupService implements IBackupService {
     const path = `/api/backup/v1/backup/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.delete(url, undefined);
+  }
+  
+  // Copy a backup manually from source backup to a given region identifier.
+  // It is not allowed to copy backup that does not have upload flag set to true
+  // Required permissions:
+  // - backup.backup.copy on the backup identified by the given ID.
+  async CopyBackup(req: CopyBackupRequest): Promise<Backup> {
+    const path = `/api/backup/v1/copy`;
+    const url = path + api.queryString(req, []);
+    return api.post(url, undefined);
   }
 }

@@ -472,6 +472,9 @@ message Tier {
     // If set, this tier supports private endpoints.
     // This is a read-only value and cannot be initialized.
     bool has_private_endpoints = 11;
+    // If set the tier has multi region backup uploads.
+    // This is a read-only value and cannot be initialized.
+    bool has_multi_region_backup_uploads = 12;
 }
 
 // Member of an organization.

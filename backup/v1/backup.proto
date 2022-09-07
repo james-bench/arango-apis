@@ -62,6 +62,17 @@ service BackupService {
         };
     }
 
+    // Checks if the multi region backup upload feature is enabled for a specific deployment.
+    // Required permissions:
+    // - backup.feature.get on the deployment that is identified by the given ID.
+    rpc IsMultiRegionBackupUploadFeatureAvailable(common.v1.IDOptions) returns (common.v1.YesOrNo) {
+        option (google.api.http) = {
+            get: "/api/backup/v1/deployment/{id}/multiregionuploadfeature"
+        };
+    }
+
+
+
     // Fetch all backup policies for a specific deployment.
     // Required permissions:
     // - backup.backuppolicy.list on the deployment that owns the backup policies and is identified by the given ID.
@@ -189,6 +200,16 @@ service BackupService {
             delete: "/api/backup/v1/backup/{id}"
         };
     }
+
+    // Copy a backup manually from source backup to a given region identifier.
+    // It is not allowed to copy backup that does not have upload flag set to true
+    // Required permissions:
+    // - backup.backup.copy on the backup identified by the given ID.
+    rpc CopyBackup(CopyBackupRequest) returns (Backup) {
+        option (google.api.http) = {
+            post: "/api/backup/v1/copy"
+        };
+    }
 }
 
 // BackupPolicy represents a single backup policy for a deployment.
@@ -304,6 +325,12 @@ message BackupPolicy {
     }
     // Status of the backup policy
     Status status = 100;
+
+    // List of region identifiers where the backup should be uploaded
+    // in addition to the region where the deployment is running.
+    // If not set, it should be uploaded to the same region as where the deployment is running.
+    // This field can be filled-out only for policies where 'upload' is set.
+    repeated string additional_region_ids = 101;
 
 }
 
@@ -460,7 +487,11 @@ message Backup {
         bool downloaded = 2;
         // The timestamp of when the backup has been fully downloaded.
         google.protobuf.Timestamp downloaded_at = 3;
-    } 
+    }
+
+    // Identifier of the region in which backup is stored
+    // If not set, backup is stored in the same region as of deployment
+    string region_id = 101;
 }
 
 // List of backups.
@@ -491,4 +522,14 @@ message ListBackupsRequest {
     bool sort_by_created = 20;
     // Sort descending (default is ascending).
     bool sort_descending = 21;
+}
+
+// Parameters for copying the backup
+message CopyBackupRequest {
+    // Identifier of the backup that is to be copied
+    // The source backup should have the 'upload' boolean set.
+    string source_backup_id = 1;
+
+    // Identifier of the region where the backup should be copied
+    string region_id = 2;
 }
