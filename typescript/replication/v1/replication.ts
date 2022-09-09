@@ -51,7 +51,7 @@ export interface DeploymentReplication {
   
   // Is replication enabled for a given deployment.
   // Setting this will start an actual replication.
-  // Note: a deployment needs to have `supported` set to true first, and should be in "Ready" phase.
+  // Note: a deployment needs to have `supported` set to true first, and should be in "Initialised" phase.
   // boolean
   enabled?: boolean;
   

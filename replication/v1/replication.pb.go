@@ -121,7 +121,7 @@ type DeploymentReplication struct {
 	Supported bool `protobuf:"varint,2,opt,name=supported,proto3" json:"supported,omitempty"`
 	// Is replication enabled for a given deployment.
 	// Setting this will start an actual replication.
-	// Note: a deployment needs to have `supported` set to true first, and should be in "Ready" phase.
+	// Note: a deployment needs to have `supported` set to true first, and should be in "Initialised" phase.
 	Enabled bool `protobuf:"varint,3,opt,name=enabled,proto3" json:"enabled,omitempty"`
 	// A PEM encoded representation of the public key of the CA certificate used to verify sync master in source datacenter.
 	// The value stored here is base64 encoded.

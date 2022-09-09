@@ -113,7 +113,7 @@ message DeploymentReplication {
     bool supported = 2;
     // Is replication enabled for a given deployment.
     // Setting this will start an actual replication.
-    // Note: a deployment needs to have `supported` set to true first, and should be in "Ready" phase.
+    // Note: a deployment needs to have `supported` set to true first, and should be in "Initialised" phase.
     bool enabled = 3;
     // A PEM encoded representation of the public key of the CA certificate used to verify sync master in source datacenter.
     // The value stored here is base64 encoded.
