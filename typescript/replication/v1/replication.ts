@@ -43,17 +43,9 @@ export interface DeploymentReplication {
   // string
   deployment_id?: string;
   
-  // Is replication supported on a given deployment.
-  // This will not start an actual replication, it only makes it possible to configure one
-  // by ensuring that Sync Masters / Workers have come up, and Sync Endpoint is setup correctly.
+  // Start the replication process for a given deployment.
   // boolean
-  supported?: boolean;
-  
-  // Is replication enabled for a given deployment.
-  // Setting this will start an actual replication.
-  // Note: a deployment needs to have `supported` set to true first, and should be in "Initialised" phase.
-  // boolean
-  enabled?: boolean;
+  started?: boolean;
   
   // A PEM encoded representation of the public key of the CA certificate used to verify sync master in source datacenter.
   // The value stored here is base64 encoded.

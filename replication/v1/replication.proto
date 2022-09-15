@@ -107,23 +107,17 @@ message CloneDeploymentFromBackupRequest {
 message DeploymentReplication {
     // Identifier of the deployments for a given DeploymentReplication
     string deployment_id = 1;
-    // Is replication supported on a given deployment.
-    // This will not start an actual replication, it only makes it possible to configure one
-    // by ensuring that Sync Masters / Workers have come up, and Sync Endpoint is setup correctly.
-    bool supported = 2;
-    // Is replication enabled for a given deployment.
-    // Setting this will start an actual replication.
-    // Note: a deployment needs to have `supported` set to true first, and should be in "Initialised" phase.
-    bool enabled = 3;
+    // Start the replication process for a given deployment.
+    bool started = 2;
     // A PEM encoded representation of the public key of the CA certificate used to verify sync master in source datacenter.
     // The value stored here is base64 encoded.
-    string certificate_pem = 4;
+    string certificate_pem = 3;
     // A PEM encoded representation of the keyfile used for client authentication of the sync master (with the sync master in the source datacenter).
     // A keyfile contains 1 or more certificates and a private key.
     // The value stored here is base64 encoded.
-    string tls_keyfile = 5;
+    string tls_keyfile = 4;
     // List of master endpoints at source data center.
-    repeated string master_endpoint = 6;
+    repeated string master_endpoint = 5;
     // DeploymentReplicationStatus defines the status of a deployment replication.
     message Status {
         // Where the deployment replication process is in its lifecycle at any given time.

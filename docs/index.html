@@ -16102,21 +16102,10 @@ This is an optional field </p></td>
                 </tr>
               
                 <tr>
-                  <td>supported</td>
+                  <td>started</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>Is replication supported on a given deployment.
-This will not start an actual replication, it only makes it possible to configure one
-by ensuring that Sync Masters / Workers have come up, and Sync Endpoint is setup correctly. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>enabled</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>Is replication enabled for a given deployment.
-Setting this will start an actual replication.
-Note: a deployment needs to have `supported` set to true first, and should be in &#34;Initialised&#34; phase. </p></td>
+                  <td><p>Start the replication process for a given deployment. </p></td>
                 </tr>
               
                 <tr>
