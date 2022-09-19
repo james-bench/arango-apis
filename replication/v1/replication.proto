@@ -110,11 +110,9 @@ message DeploymentReplication {
     // Start the replication process for a given deployment.
     bool started = 2;
     // A PEM encoded representation of the public key of the CA certificate used to verify sync master in source datacenter.
-    // The value stored here is base64 encoded.
     string certificate_pem = 3;
     // A PEM encoded representation of the keyfile used for client authentication of the sync master (with the sync master in the source datacenter).
     // A keyfile contains 1 or more certificates and a private key.
-    // The value stored here is base64 encoded.
     string tls_keyfile = 4;
     // List of master endpoints at source data center.
     repeated string master_endpoint = 5;
