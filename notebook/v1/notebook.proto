@@ -1,0 +1,177 @@
+// 
+// DISCLAIMER
+// 
+// Copyright 2022 ArangoDB GmbH, Cologne, Germany
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+// http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distribued on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// 
+// Copyright holder is ArangoDB GmbH, Cologne, Germany
+//
+
+syntax = "proto3";
+
+package arangodb.cloud.notebook.v1;
+
+option go_package = "github.com/arangodb-managed/apis/notebook/v1";
+
+import "common/v1/common.proto";
+
+import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
+import "google/api/annotations.proto";
+
+// Notebook service is used to manage notebooks.
+service NotebookService {
+    // Get the current API version of this service.
+    // Required permissions:
+    // - None
+    rpc GetAPIVersion(common.v1.Empty) returns (common.v1.Version) {
+        option (google.api.http) = {
+            get: "/api/notebook/v1/api-version"
+        };
+    }
+    
+    // Get a Notebook using its ID.
+    // Required permissions:
+    // - notebook.notebook.get  
+    rpc GetNotebook(common.v1.IDOptions) returns (Notebook) {
+        option (google.api.http) = {
+            get: "/api/notebook/v1/notebook/{id}"        
+        };
+    }
+    
+    // Create a new Notebook by specifying its configuration.
+    // Required permissions:
+    // - notebook.notebook.create
+    rpc CreateNotebook(CreateNotebookRequest) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            put: "/api/notebook/v1/notebook"
+            body: "*"
+        };
+    }
+    
+    // Delete an existing notebook using its ID.
+    // Required permissions:
+    // - notebook.notebook.delete
+    rpc DeleteNotebook(common.v1.IDOptions) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            delete:  "/api/notebook/v1/notebook/{id}"
+        };
+    }
+
+    // Stop a running notebook.
+    // Required permissions:
+    // - notebook.notebook.stop
+    rpc StopNotebook(common.v1.IDOptions) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            post:  "/api/notebook/v1/notebook/{id}/stop"
+        };
+    }
+
+    // Pause a running notebook.
+    // Required permissions:
+    // - notebook.notebook.pause
+    rpc PauseNotebook(common.v1.IDOptions) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            post:  "/api/notebook/v1/notebook/{id}/pause"
+        };
+    }
+
+    // List all notebooks for a deployment.
+    // Required permissions:
+    // - notebook.notebook.list
+    rpc ListNotebooks(ListNotebookRequest) returns (NotebookList) {
+        option (google.api.http) = {
+            post:  "/api/notebook/v1/notebooks"
+            body: "*"
+        };
+    }
+}
+
+// List of Notebooks.
+message NotebookList {
+    repeated Notebook items = 1;
+}
+
+// Request for listing notebooks.
+message ListNotebookRequest {
+    // List notebooks for this deployment ID.
+    string deployment_id = 1;
+    // Optional common list options, the context_id is ignored
+    common.v1.ListOptions options = 10;
+}
+
+// Request for creating a notebook.
+message CreateNotebookRequest {
+    // ID of the Deployment this notebook belongs to.
+    string deployment_id = 1;
+    // Configuration of the notebook instance.
+    Spec spec = 2;
+}
+
+// Contains the specification and status of a given notebook instance.
+message Notebook {
+    // ID of the Notebook.
+    string id = 1;
+    // ID of the Deployment this notebook belongs to.
+    string deployment_id = 2;
+    // Set if the notebook should be stopped.
+    bool stopped = 3;
+    // Identifier of the entity responsible for stopping the notebook.
+    string stopped_by = 4;
+    // Set if the notebook should be paused.
+    bool paused = 5;
+    // Identifier of the entity responsible for pausing the notebook.
+    string paused_by = 6;
+    // Configuration of the notebook instance.
+    Spec spec = 7;
+    // Status of the notebook.
+    // Note: all fields in this block are read-only.
+    Status status = 10;
+}
+
+// Specification options for a notebook.
+message Spec {
+    // Number of CPU units required by the notebook instance.
+    int32 CPU = 1;
+    // Memory required by the notebook instance.
+    // Should be expressed as power-of-two: Mi, Gi, Ti, Pi, etc.
+    string memory = 2;
+    // Disk space required by the notebook instance.
+    // Should be expressed as power-of-two: Mi, Gi, Ti, Pi, etc.
+    string disk = 3;
+}
+
+// Contains details for the current state of the notebook.
+message Condition {
+    // Type of condition being reported.
+    // Should be one of the following:
+    // - Running
+    // - Paused
+    // - Stopped
+    string type = 1;
+    // Status of the condition, one of true or false.
+    bool status = 2;
+    // Identifier of the entity responsible for the conditions's last transition.
+    string triggered_by = 3;
+    // Reason for the condition's last transition.
+    string reason = 4;
+    // The last time the condition transitioned from one status to another.
+    google.protobuf.Timestamp last_transition_time = 5;
+}
+
+// Status of the notebook.
+// Note: all fields in this block are read-only.
+message Status {
+    // Contains details for the current state of the notebook.
+    repeated Condition conditions = 1;
+}
