@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2022 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 //
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
-// Author Gergely Brautigam
 //
 
 package v1
@@ -27,7 +26,9 @@ const (
 
 	// PermissionDeploymentCloneFromBackup is needed to clone a deployment from an existing backup.
 	PermissionDeploymentCloneFromBackup = "replication.deployment.clone-from-backup"
+)
 
+const (
 	// PermissionGetDeploymentReplication is needed to get a DeploymentReplication for a given Deployment
 	PermissionGetDeploymentReplication = "replication.deploymentreplication.get"
 
