@@ -107,13 +107,6 @@ export interface NotificationList {
   items?: Notification[];
 }
 
-// SubscribeToManagedServiceNewsRequest is used to subscribe to Oasis newsletter
-export interface SubscribeToManagedServiceNewsRequest {
-  // The email to subscribe to the newsletter
-  // string
-  email?: string;
-}
-
 // NotificationService is the API used to interact with deployment notifications.
 export interface INotificationService {
   // Get the current API version of this service.
@@ -135,11 +128,6 @@ export interface INotificationService {
   // Required permissions:
   // - notification.deployment-notification.mark-as-unread on the deployment associated with the notification identified by notification_id
   MarkNotificationAsUnread: (req: MarkNotificationRequest) => Promise<void>;
-  
-  // Subscribe to Oasis monthly newsletter.
-  // Required permissions:
-  // - None
-  SubscribeToManagedServiceNews: (req: SubscribeToManagedServiceNewsRequest) => Promise<void>;
 }
 
 // NotificationService is the API used to interact with deployment notifications.
@@ -174,14 +162,6 @@ export class NotificationService implements INotificationService {
   // - notification.deployment-notification.mark-as-unread on the deployment associated with the notification identified by notification_id
   async MarkNotificationAsUnread(req: MarkNotificationRequest): Promise<void> {
     const url = `/api/notification/v1/notifications/${encodeURIComponent(req.notification_id || '')}/mark/unread`;
-    return api.post(url, req);
-  }
-  
-  // Subscribe to Oasis monthly newsletter.
-  // Required permissions:
-  // - None
-  async SubscribeToManagedServiceNews(req: SubscribeToManagedServiceNewsRequest): Promise<void> {
-    const url = `/api/notification/v1/newsletter/subscribe`;
     return api.post(url, req);
   }
 }
