@@ -48,13 +48,11 @@ export interface DeploymentReplication {
   started?: boolean;
   
   // A PEM encoded representation of the public key of the CA certificate used to verify sync master in source datacenter.
-  // The value stored here is base64 encoded.
   // string
   certificate_pem?: string;
   
   // A PEM encoded representation of the keyfile used for client authentication of the sync master (with the sync master in the source datacenter).
   // A keyfile contains 1 or more certificates and a private key.
-  // The value stored here is base64 encoded.
   // string
   tls_keyfile?: string;
   

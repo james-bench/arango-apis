@@ -118,11 +118,9 @@ type DeploymentReplication struct {
 	// Start the replication process for a given deployment.
 	Started bool `protobuf:"varint,2,opt,name=started,proto3" json:"started,omitempty"`
 	// A PEM encoded representation of the public key of the CA certificate used to verify sync master in source datacenter.
-	// The value stored here is base64 encoded.
 	CertificatePem string `protobuf:"bytes,3,opt,name=certificate_pem,json=certificatePem,proto3" json:"certificate_pem,omitempty"`
 	// A PEM encoded representation of the keyfile used for client authentication of the sync master (with the sync master in the source datacenter).
 	// A keyfile contains 1 or more certificates and a private key.
-	// The value stored here is base64 encoded.
 	TlsKeyfile string `protobuf:"bytes,4,opt,name=tls_keyfile,json=tlsKeyfile,proto3" json:"tls_keyfile,omitempty"`
 	// List of master endpoints at source data center.
 	MasterEndpoint []string `protobuf:"bytes,5,rep,name=master_endpoint,json=masterEndpoint,proto3" json:"master_endpoint,omitempty"`
