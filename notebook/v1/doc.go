@@ -17,8 +17,6 @@
 //
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
-// Author Ewout Prangsma
-//
 
 // Package notebook/v1 contains the API of Jupyter Notebook services.
 package v1
