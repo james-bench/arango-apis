@@ -155,7 +155,6 @@ message Spec {
 message Condition {
     // Type of condition being reported.
     // Should be one of the following:
-    // - Running
     // - Paused
     // - Stopped
     string type = 1;
@@ -172,6 +171,16 @@ message Condition {
 // Status of the notebook.
 // Note: all fields in this block are read-only.
 message Status {
+    // Where the notebook is in its lifecycle at any given time.
+    // Should only contain only one of the following values:
+    // "Initialising"   - Notebook is initialising.
+    // "Running"        - Notebook is running.
+    // "Error"          - Notebook is in an errored state. Additional information can be obtained from `message` field.
+    string phase = 1;
+    // Supporting information about the notebook phase - such as error messages in case of failures.
+    string message = 2;
+    // The last time the notebook was updated.
+    google.protobuf.Timestamp last_updated_at = 3;
     // Contains details for the current state of the notebook.
-    repeated Condition conditions = 1;
+    repeated Condition conditions = 4;
 }

@@ -16,7 +16,6 @@ import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/com
 export interface Condition {
   // Type of condition being reported.
   // Should be one of the following:
-  // - Running
   // - Paused
   // - Stopped
   // string
@@ -123,6 +122,22 @@ export interface Spec {
 // Status of the notebook.
 // Note: all fields in this block are read-only.
 export interface Status {
+  // Where the notebook is in its lifecycle at any given time.
+  // Should only contain only one of the following values:
+  // "Initialising"   - Notebook is initialising.
+  // "Running"        - Notebook is running.
+  // "Error"          - Notebook is in an errored state. Additional information can be obtained from `message` field.
+  // string
+  phase?: string;
+  
+  // Supporting information about the notebook phase - such as error messages in case of failures.
+  // string
+  message?: string;
+  
+  // The last time the notebook was updated.
+  // googleTypes.Timestamp
+  last_updated_at?: googleTypes.Timestamp;
+  
   // Contains details for the current state of the notebook.
   // Condition
   conditions?: Condition[];

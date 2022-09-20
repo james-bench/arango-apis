@@ -14813,7 +14813,6 @@ Required permissions:
                   <td></td>
                   <td><p>Type of condition being reported.
 Should be one of the following:
-- Running
 - Paused
 - Stopped </p></td>
                 </tr>
@@ -15062,6 +15061,31 @@ Should be expressed as power-of-two: Mi, Gi, Ti, Pi, etc. </p></td>
               <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
             </thead>
             <tbody>
+              
+                <tr>
+                  <td>phase</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Where the notebook is in its lifecycle at any given time.
+Should only contain only one of the following values:
+&#34;Initialising&#34;   - Notebook is initialising.
+&#34;Running&#34;        - Notebook is running.
+&#34;Error&#34;          - Notebook is in an errored state. Additional information can be obtained from `message` field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>message</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Supporting information about the notebook phase - such as error messages in case of failures. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_updated_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The last time the notebook was updated. </p></td>
+                </tr>
               
                 <tr>
                   <td>conditions</td>
