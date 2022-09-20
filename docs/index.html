@@ -14939,17 +14939,17 @@ Should be one of the following:
                 </tr>
               
                 <tr>
-                  <td>stopped</td>
+                  <td>shutdown</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>Set if the notebook should be stopped. </p></td>
+                  <td><p>Set if the notebook should be shutdown. </p></td>
                 </tr>
               
                 <tr>
-                  <td>stopped_by</td>
+                  <td>shutdown_by</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Identifier of the entity responsible for stopping the notebook. </p></td>
+                  <td><p>Identifier of the entity responsible for shutting down the notebook. </p></td>
                 </tr>
               
                 <tr>
@@ -14977,7 +14977,7 @@ Should be one of the following:
                   <td>status</td>
                   <td><a href="#arangodb.cloud.notebook.v1.Status">Status</a></td>
                   <td></td>
-                  <td><p>Status of the notebook.
+                  <td><p>Status of the notebook. Represents the state of the notebook as observed by the controller.
 Note: all fields in this block are read-only. </p></td>
                 </tr>
               
@@ -15031,10 +15031,10 @@ Note: all fields in this block are read-only. </p></td>
               
                 <tr>
                   <td>memory</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#int32">int32</a></td>
                   <td></td>
                   <td><p>Memory required by the notebook instance.
-Should be expressed as power-of-two: Mi, Gi, Ti, Pi, etc. </p></td>
+Should be expressed as memibyte (Mi). </p></td>
                 </tr>
               
                 <tr>
@@ -15053,7 +15053,7 @@ Should be expressed as power-of-two: Mi, Gi, Ti, Pi, etc. </p></td>
         
       
         <h3 id="arangodb.cloud.notebook.v1.Status">Status</h3>
-        <p>Status of the notebook.</p><p>Note: all fields in this block are read-only.</p>
+        <p>Status of the notebook. Represents the state of the notebook as observed by the controller.</p><p>Note: all fields in this block are read-only.</p>
 
         
           <table class="field-table">
@@ -15152,21 +15152,30 @@ Required permissions:
               </tr>
             
               <tr>
-                <td>StopNotebook</td>
+                <td>ShutdownNotebook</td>
                 <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
                 <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
-                <td><p>Stop a running notebook.
+                <td><p>Shutdown a running notebook.
 Required permissions:
-- notebook.notebook.stop</p></td>
+- notebook.notebook.shutdown</p></td>
               </tr>
             
               <tr>
                 <td>PauseNotebook</td>
                 <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
                 <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
-                <td><p>Pause a running notebook.
+                <td><p>Pause a running notebook. This will move the notebook to a hibernating state.
 Required permissions:
 - notebook.notebook.pause</p></td>
+              </tr>
+            
+              <tr>
+                <td>ResumeNotebook</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><p>Resume a paused notebook. This will remove the notebook from a hibernating state.
+Required permissions:
+- notebook.notebook.resume</p></td>
               </tr>
             
               <tr>
@@ -15239,9 +15248,9 @@ Required permissions:
               
               
               <tr>
-                <td>StopNotebook</td>
+                <td>ShutdownNotebook</td>
                 <td>POST</td>
-                <td>/api/notebook/v1/notebook/{id}/stop</td>
+                <td>/api/notebook/v1/notebook/{id}/shutdown</td>
                 <td></td>
               </tr>
               
@@ -15252,6 +15261,16 @@ Required permissions:
                 <td>PauseNotebook</td>
                 <td>POST</td>
                 <td>/api/notebook/v1/notebook/{id}/pause</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>ResumeNotebook</td>
+                <td>POST</td>
+                <td>/api/notebook/v1/notebook/{id}/resume</td>
                 <td></td>
               </tr>
               

@@ -192,7 +192,7 @@ func local_request_NotebookService_DeleteNotebook_0(ctx context.Context, marshal
 
 }
 
-func request_NotebookService_StopNotebook_0(ctx context.Context, marshaler runtime.Marshaler, client NotebookServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_NotebookService_ShutdownNotebook_0(ctx context.Context, marshaler runtime.Marshaler, client NotebookServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq v1.IDOptions
 	var metadata runtime.ServerMetadata
 
@@ -214,12 +214,12 @@ func request_NotebookService_StopNotebook_0(ctx context.Context, marshaler runti
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
-	msg, err := client.StopNotebook(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.ShutdownNotebook(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_NotebookService_StopNotebook_0(ctx context.Context, marshaler runtime.Marshaler, server NotebookServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_NotebookService_ShutdownNotebook_0(ctx context.Context, marshaler runtime.Marshaler, server NotebookServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq v1.IDOptions
 	var metadata runtime.ServerMetadata
 
@@ -241,7 +241,7 @@ func local_request_NotebookService_StopNotebook_0(ctx context.Context, marshaler
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
-	msg, err := server.StopNotebook(ctx, &protoReq)
+	msg, err := server.ShutdownNotebook(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -296,6 +296,60 @@ func local_request_NotebookService_PauseNotebook_0(ctx context.Context, marshale
 	}
 
 	msg, err := server.PauseNotebook(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_NotebookService_ResumeNotebook_0(ctx context.Context, marshaler runtime.Marshaler, client NotebookServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq v1.IDOptions
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+	}
+
+	protoReq.Id, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+	}
+
+	msg, err := client.ResumeNotebook(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_NotebookService_ResumeNotebook_0(ctx context.Context, marshaler runtime.Marshaler, server NotebookServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq v1.IDOptions
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+	}
+
+	protoReq.Id, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+	}
+
+	msg, err := server.ResumeNotebook(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -419,7 +473,7 @@ func RegisterNotebookServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 
 	})
 
-	mux.Handle("POST", pattern_NotebookService_StopNotebook_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_NotebookService_ShutdownNotebook_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -428,14 +482,14 @@ func RegisterNotebookServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_NotebookService_StopNotebook_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_NotebookService_ShutdownNotebook_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_NotebookService_StopNotebook_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_NotebookService_ShutdownNotebook_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -456,6 +510,26 @@ func RegisterNotebookServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		}
 
 		forward_NotebookService_PauseNotebook_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("POST", pattern_NotebookService_ResumeNotebook_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_NotebookService_ResumeNotebook_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_NotebookService_ResumeNotebook_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -600,7 +674,7 @@ func RegisterNotebookServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 
 	})
 
-	mux.Handle("POST", pattern_NotebookService_StopNotebook_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_NotebookService_ShutdownNotebook_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -609,14 +683,14 @@ func RegisterNotebookServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_NotebookService_StopNotebook_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_NotebookService_ShutdownNotebook_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_NotebookService_StopNotebook_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_NotebookService_ShutdownNotebook_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -637,6 +711,26 @@ func RegisterNotebookServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		}
 
 		forward_NotebookService_PauseNotebook_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("POST", pattern_NotebookService_ResumeNotebook_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_NotebookService_ResumeNotebook_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_NotebookService_ResumeNotebook_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -672,9 +766,11 @@ var (
 
 	pattern_NotebookService_DeleteNotebook_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 1, 1, 0, 4, 1, 5, 3}, []string{"api", "notebook", "v1", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_NotebookService_StopNotebook_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 1, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "notebook", "v1", "id", "stop"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_NotebookService_ShutdownNotebook_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 1, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "notebook", "v1", "id", "shutdown"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_NotebookService_PauseNotebook_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 1, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "notebook", "v1", "id", "pause"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_NotebookService_ResumeNotebook_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 1, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "notebook", "v1", "id", "resume"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_NotebookService_ListNotebooks_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "notebook", "v1", "notebooks"}, "", runtime.AssumeColonVerbOpt(true)))
 )
@@ -688,9 +784,11 @@ var (
 
 	forward_NotebookService_DeleteNotebook_0 = runtime.ForwardResponseMessage
 
-	forward_NotebookService_StopNotebook_0 = runtime.ForwardResponseMessage
+	forward_NotebookService_ShutdownNotebook_0 = runtime.ForwardResponseMessage
 
 	forward_NotebookService_PauseNotebook_0 = runtime.ForwardResponseMessage
+
+	forward_NotebookService_ResumeNotebook_0 = runtime.ForwardResponseMessage
 
 	forward_NotebookService_ListNotebooks_0 = runtime.ForwardResponseMessage
 )

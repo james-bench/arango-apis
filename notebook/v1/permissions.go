@@ -30,9 +30,11 @@ const (
 	// PermissionDeleteNotebook is required to delete a notebook.
 	PermissionDeleteNotebook = "notebook.notebook.delete"
 	// PermissionStopNotebook  is required to stop a notebook.
-	PermissionStopNotebook = "notebook.notebook.stop"
+	PermissionShutdownNotebook = "notebook.notebook.shutdown"
 	// PermissionPauseNotebook is required to pause a notebook.
 	PermissionPauseNotebook = "notebook.notebook.pause"
+	// PermissionResumeNotebook is required to pause a notebook.
+	PermissionResumeNotebook = "notebook.notebook.resume"
 	// PermissionListNotebooks is required to list notebooks.
 	PermissionListNotebooks = "notebook.notebook.list"
 )

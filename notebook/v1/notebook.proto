@@ -68,16 +68,16 @@ service NotebookService {
         };
     }
 
-    // Stop a running notebook.
+    // Shutdown a running notebook.
     // Required permissions:
-    // - notebook.notebook.stop
-    rpc StopNotebook(common.v1.IDOptions) returns (common.v1.Empty) {
+    // - notebook.notebook.shutdown
+    rpc ShutdownNotebook(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
-            post:  "/api/notebook/v1/notebook/{id}/stop"
+            post:  "/api/notebook/v1/notebook/{id}/shutdown"
         };
     }
 
-    // Pause a running notebook.
+    // Pause a running notebook. This will move the notebook to a hibernating state.
     // Required permissions:
     // - notebook.notebook.pause
     rpc PauseNotebook(common.v1.IDOptions) returns (common.v1.Empty) {
@@ -86,6 +86,15 @@ service NotebookService {
         };
     }
 
+    // Resume a paused notebook. This will remove the notebook from a hibernating state.
+    // Required permissions:
+    // - notebook.notebook.resume
+    rpc ResumeNotebook(common.v1.IDOptions) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            post:  "/api/notebook/v1/notebook/{id}/resume"
+        };
+    }
+    
     // List all notebooks for a deployment.
     // Required permissions:
     // - notebook.notebook.list
@@ -124,17 +133,17 @@ message Notebook {
     string id = 1;
     // ID of the Deployment this notebook belongs to.
     string deployment_id = 2;
-    // Set if the notebook should be stopped.
-    bool stopped = 3;
-    // Identifier of the entity responsible for stopping the notebook.
-    string stopped_by = 4;
+    // Set if the notebook should be shutdown.
+    bool shutdown = 3;
+    // Identifier of the entity responsible for shutting down the notebook.
+    string shutdown_by = 4;
     // Set if the notebook should be paused.
     bool paused = 5;
     // Identifier of the entity responsible for pausing the notebook.
     string paused_by = 6;
     // Configuration of the notebook instance.
     Spec spec = 7;
-    // Status of the notebook.
+    // Status of the notebook. Represents the state of the notebook as observed by the controller.
     // Note: all fields in this block are read-only.
     Status status = 10;
 }
@@ -144,8 +153,8 @@ message Spec {
     // Number of CPU units required by the notebook instance.
     int32 CPU = 1;
     // Memory required by the notebook instance.
-    // Should be expressed as power-of-two: Mi, Gi, Ti, Pi, etc.
-    string memory = 2;
+    // Should be expressed as memibyte (Mi).
+    int32 memory = 2;
     // Disk space required by the notebook instance.
     // Should be expressed as power-of-two: Mi, Gi, Ti, Pi, etc.
     string disk = 3;
@@ -168,7 +177,7 @@ message Condition {
     google.protobuf.Timestamp last_transition_time = 5;
 }
 
-// Status of the notebook.
+// Status of the notebook. Represents the state of the notebook as observed by the controller.
 // Note: all fields in this block are read-only.
 message Status {
     // Where the notebook is in its lifecycle at any given time.

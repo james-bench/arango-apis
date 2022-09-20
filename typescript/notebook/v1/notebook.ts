@@ -70,13 +70,13 @@ export interface Notebook {
   // string
   deployment_id?: string;
   
-  // Set if the notebook should be stopped.
+  // Set if the notebook should be shutdown.
   // boolean
-  stopped?: boolean;
+  shutdown?: boolean;
   
-  // Identifier of the entity responsible for stopping the notebook.
+  // Identifier of the entity responsible for shutting down the notebook.
   // string
-  stopped_by?: string;
+  shutdown_by?: string;
   
   // Set if the notebook should be paused.
   // boolean
@@ -90,7 +90,7 @@ export interface Notebook {
   // Spec
   spec?: Spec;
   
-  // Status of the notebook.
+  // Status of the notebook. Represents the state of the notebook as observed by the controller.
   // Note: all fields in this block are read-only.
   // Status
   status?: Status;
@@ -109,9 +109,9 @@ export interface Spec {
   CPU?: number;
   
   // Memory required by the notebook instance.
-  // Should be expressed as power-of-two: Mi, Gi, Ti, Pi, etc.
-  // string
-  memory?: string;
+  // Should be expressed as memibyte (Mi).
+  // number
+  memory?: number;
   
   // Disk space required by the notebook instance.
   // Should be expressed as power-of-two: Mi, Gi, Ti, Pi, etc.
@@ -119,7 +119,7 @@ export interface Spec {
   disk?: string;
 }
 
-// Status of the notebook.
+// Status of the notebook. Represents the state of the notebook as observed by the controller.
 // Note: all fields in this block are read-only.
 export interface Status {
   // Where the notebook is in its lifecycle at any given time.
@@ -165,15 +165,20 @@ export interface INotebookService {
   // - notebook.notebook.delete
   DeleteNotebook: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
   
-  // Stop a running notebook.
+  // Shutdown a running notebook.
   // Required permissions:
-  // - notebook.notebook.stop
-  StopNotebook: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  // - notebook.notebook.shutdown
+  ShutdownNotebook: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
   
-  // Pause a running notebook.
+  // Pause a running notebook. This will move the notebook to a hibernating state.
   // Required permissions:
   // - notebook.notebook.pause
   PauseNotebook: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Resume a paused notebook. This will remove the notebook from a hibernating state.
+  // Required permissions:
+  // - notebook.notebook.resume
+  ResumeNotebook: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
   
   // List all notebooks for a deployment.
   // Required permissions:
@@ -218,20 +223,29 @@ export class NotebookService implements INotebookService {
     return api.delete(url, undefined);
   }
   
-  // Stop a running notebook.
+  // Shutdown a running notebook.
   // Required permissions:
-  // - notebook.notebook.stop
-  async StopNotebook(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
-    const path = `/api/notebook/v1/notebook/${encodeURIComponent(req.id || '')}/stop`;
+  // - notebook.notebook.shutdown
+  async ShutdownNotebook(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
+    const path = `/api/notebook/v1/notebook/${encodeURIComponent(req.id || '')}/shutdown`;
     const url = path + api.queryString(req, [`id`]);
     return api.post(url, undefined);
   }
   
-  // Pause a running notebook.
+  // Pause a running notebook. This will move the notebook to a hibernating state.
   // Required permissions:
   // - notebook.notebook.pause
   async PauseNotebook(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
     const path = `/api/notebook/v1/notebook/${encodeURIComponent(req.id || '')}/pause`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.post(url, undefined);
+  }
+  
+  // Resume a paused notebook. This will remove the notebook from a hibernating state.
+  // Required permissions:
+  // - notebook.notebook.resume
+  async ResumeNotebook(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
+    const path = `/api/notebook/v1/notebook/${encodeURIComponent(req.id || '')}/resume`;
     const url = path + api.queryString(req, [`id`]);
     return api.post(url, undefined);
   }
