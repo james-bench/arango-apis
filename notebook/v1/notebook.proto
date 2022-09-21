@@ -79,7 +79,8 @@ service NotebookService {
         };
     }
         
-    // List all notebooks for a deployment.
+    // List all notebooks for deployment.
+    // Note: This lists only those notebooks created by the caller.
     // Required permissions:
     // - notebook.notebook.list
     rpc ListNotebooks(ListNotebookRequest) returns (NotebookList) {
