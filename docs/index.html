@@ -1147,7 +1147,7 @@ title: "ArangoDB Oasis API"
             <ul>
               
                 <li>
-                  <a href="#arangodb.cloud.notebook.v1.CreateNotebookRequest"><span class="badge">M</span>CreateNotebookRequest</a>
+                  <a href="#arangodb.cloud.notebook.v1.ListNotebookModelRequest"><span class="badge">M</span>ListNotebookModelRequest</a>
                 </li>
               
                 <li>
@@ -1167,15 +1167,19 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.notebook.v1.NotebookModel"><span class="badge">M</span>NotebookModel</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.notebook.v1.NotebookModelList"><span class="badge">M</span>NotebookModelList</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.notebook.v1.Status"><span class="badge">M</span>Status</a>
                 </li>
               
                 <li>
                   <a href="#arangodb.cloud.notebook.v1.Status.Usage"><span class="badge">M</span>Status.Usage</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.notebook.v1.UpdateNotebookRequest"><span class="badge">M</span>UpdateNotebookRequest</a>
                 </li>
               
               
@@ -14801,8 +14805,8 @@ Required permissions:
       <p></p>
 
       
-        <h3 id="arangodb.cloud.notebook.v1.CreateNotebookRequest">CreateNotebookRequest</h3>
-        <p>Request for creating a notebook.</p>
+        <h3 id="arangodb.cloud.notebook.v1.ListNotebookModelRequest">ListNotebookModelRequest</h3>
+        <p>Requet for listing notebook models.</p>
 
         
           <table class="field-table">
@@ -14815,29 +14819,7 @@ Required permissions:
                   <td>deployment_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>ID of the Deployment this notebook belongs to. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>name</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Name of the notebook. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>description</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Description of the notebook. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>model</td>
-                  <td><a href="#arangodb.cloud.notebook.v1.ModelSpec">ModelSpec</a></td>
-                  <td></td>
-                  <td><p>Model specification for the notebook.
-Note: This field is read-only after creating. </p></td>
+                  <td><p>ID of the deployment that the notebook belongs to. </p></td>
                 </tr>
               
             </tbody>
@@ -14889,20 +14871,18 @@ Note: This field is read-only after creating. </p></td>
             <tbody>
               
                 <tr>
-                  <td>model</td>
+                  <td>notebook_model</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Type of model being used.
-Currently supported:
-- basic [CPU: 1, Memory: 4GiB] </p></td>
+This should refer to the `id` of a `NotebookModel` object. </p></td>
                 </tr>
               
                 <tr>
                   <td>disk_size</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Disk size required by the notebook instance.
-Should be expressed as power-of-two: Mi, Gi, Ti, Pi, etc. </p></td>
+                  <td><p>Disk size allocated to the notebook instance (in GiB). </p></td>
                 </tr>
               
             </tbody>
@@ -14926,14 +14906,16 @@ Should be expressed as power-of-two: Mi, Gi, Ti, Pi, etc. </p></td>
                   <td>id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>ID of the Notebook. </p></td>
+                  <td><p>ID of the Notebook.
+This is a read-only value. </p></td>
                 </tr>
               
                 <tr>
                   <td>deployment_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>ID of the Deployment this notebook belongs to. </p></td>
+                  <td><p>ID of the Deployment this notebook belongs to.
+Read-only after creation. </p></td>
                 </tr>
               
                 <tr>
@@ -14941,7 +14923,7 @@ Should be expressed as power-of-two: Mi, Gi, Ti, Pi, etc. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>URL of the Notebook.
-Note: This is a read-only property. </p></td>
+This is a read-only value. </p></td>
                 </tr>
               
                 <tr>
@@ -14959,8 +14941,8 @@ Note: This is a read-only property. </p></td>
                 </tr>
               
                 <tr>
-                  <td>paused</td>
-                  <td><a href="#string">string</a></td>
+                  <td>is_paused</td>
+                  <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>If the notebook should be paused. </p></td>
                 </tr>
@@ -14969,14 +14951,16 @@ Note: This is a read-only property. </p></td>
                   <td>created_by_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Identifier of the user that created this notebook. </p></td>
+                  <td><p>Identifier of the user that created this notebook.
+Read-only after creation. </p></td>
                 </tr>
               
                 <tr>
                   <td>created_at</td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
-                  <td><p>Time at which this notebook was created. </p></td>
+                  <td><p>Time at which this notebook was created.
+This is a read-only value. </p></td>
                 </tr>
               
                 <tr>
@@ -14984,11 +14968,11 @@ Note: This is a read-only property. </p></td>
                   <td><a href="#arangodb.cloud.notebook.v1.ModelSpec">ModelSpec</a></td>
                   <td></td>
                   <td><p>Model specification for the notebook.
-Note: This field is read-only after creating. </p></td>
+Read-only after creation. </p></td>
                 </tr>
               
                 <tr>
-                  <td>deleted</td>
+                  <td>is_deleted</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>If the notebook should be deleted. </p></td>
@@ -14998,7 +14982,8 @@ Note: This field is read-only after creating. </p></td>
                   <td>deleted_at</td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
-                  <td><p>Time at which this notebook was deleted. </p></td>
+                  <td><p>Time at which this notebook was deleted. 
+This is a read-only value. </p></td>
                 </tr>
               
                 <tr>
@@ -15006,7 +14991,7 @@ Note: This field is read-only after creating. </p></td>
                   <td><a href="#arangodb.cloud.notebook.v1.Status">Status</a></td>
                   <td></td>
                   <td><p>Status of the notebook. Represents the state of the notebook as observed by the controller.
-Note: all fields in this block are read-only. </p></td>
+This is a read-only value. </p></td>
                 </tr>
               
             </tbody>
@@ -15040,6 +15025,76 @@ Note: all fields in this block are read-only. </p></td>
 
         
       
+        <h3 id="arangodb.cloud.notebook.v1.NotebookModel">NotebookModel</h3>
+        <p>Specifies the resource configuration for a notebook.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>System identifier of the model. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Human readable name of the model. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cpu</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>CPU units allocated to the notebook.
+1 CPU unit equals 1 physical / virtual CPU. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>memory</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Memory allocated to the notebook in &#39;GiB&#39;. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.notebook.v1.NotebookModelList">NotebookModelList</h3>
+        <p>List of notebook models.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#arangodb.cloud.notebook.v1.NotebookModel">NotebookModel</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.notebook.v1.Status">Status</h3>
         <p>Status of the notebook. Represents the state of the notebook as observed by the controller.</p><p>Note: all fields in this block are read-only.</p>
 
@@ -15055,10 +15110,11 @@ Note: all fields in this block are read-only. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Where the notebook is in its lifecycle at any given time.
-Should only contain only one of the following values:
+Should contain only one of the following values:
 &#34;Initialising&#34;   - Notebook is initialising.
 &#34;Running&#34;        - Notebook is running.
-&#34;Hibernating&#34;    - Notebook is hibernating.
+&#34;Hibernating&#34;    - Notebook is moving to a hibernated state.
+&#34;Hibernated&#34;     - Notebook has moved to a hibernated state.
 &#34;Error&#34;          - Notebook is in an errored state. Additional information can be obtained from `message` field. </p></td>
                 </tr>
               
@@ -15101,69 +15157,38 @@ Should only contain only one of the following values:
             <tbody>
               
                 <tr>
-                  <td>cpu</td>
+                  <td>data_volume_info</td>
+                  <td><a href="#arangodb.cloud.data.v1.DataVolumeInfo">arangodb.cloud.data.v1.DataVolumeInfo</a></td>
+                  <td></td>
+                  <td><p>Information about the data volume used to store the data </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_memory_usage</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>Last known memory usage in bytes </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_cpu_usage</td>
                   <td><a href="#float">float</a></td>
                   <td></td>
-                  <td><p>CPU usage in percentage. </p></td>
+                  <td><p>Last known CPU usage in vCPU units </p></td>
                 </tr>
               
                 <tr>
-                  <td>memory</td>
+                  <td>last_memory_limit</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>Last known memory limit in bytes </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_cpu_limit</td>
                   <td><a href="#float">float</a></td>
                   <td></td>
-                  <td><p>Amount of memory being consumed. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>disk</td>
-                  <td><a href="#float">float</a></td>
-                  <td></td>
-                  <td><p>Amount of disk space used. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.notebook.v1.UpdateNotebookRequest">UpdateNotebookRequest</h3>
-        <p>Request to pause a notebook.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>ID of the notebook. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>paused</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>Set if notebook should be paused. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>name</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Name of the notebook. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>description</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Description of the notebook. </p></td>
+                  <td><p>Last known CPU limit in vCPU units </p></td>
                 </tr>
               
             </tbody>
@@ -15207,7 +15232,7 @@ Required permissions:
             
               <tr>
                 <td>CreateNotebook</td>
-                <td><a href="#arangodb.cloud.notebook.v1.CreateNotebookRequest">CreateNotebookRequest</a></td>
+                <td><a href="#arangodb.cloud.notebook.v1.Notebook">Notebook</a></td>
                 <td><a href="#arangodb.cloud.notebook.v1.Notebook">Notebook</a></td>
                 <td><p>Create a new Notebook by specifying its configuration.
 Required permissions:
@@ -15226,8 +15251,8 @@ Required permissions:
             
               <tr>
                 <td>UpdateNotebook</td>
-                <td><a href="#arangodb.cloud.notebook.v1.UpdateNotebookRequest">UpdateNotebookRequest</a></td>
                 <td><a href="#arangodb.cloud.notebook.v1.Notebook">Notebook</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
                 <td><p>Update an existing notebook. Returns updated Notebook.
 Required permissions:
 - notebook.notebook.update</p></td>
@@ -15237,9 +15262,19 @@ Required permissions:
                 <td>ListNotebooks</td>
                 <td><a href="#arangodb.cloud.notebook.v1.ListNotebookRequest">ListNotebookRequest</a></td>
                 <td><a href="#arangodb.cloud.notebook.v1.NotebookList">NotebookList</a></td>
-                <td><p>List all notebooks for a deployment.
+                <td><p>List all notebooks for deployment.
+Note: This lists only those notebooks created by the caller.
 Required permissions:
 - notebook.notebook.list</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListNotebookModels</td>
+                <td><a href="#arangodb.cloud.notebook.v1.ListNotebookRequest">ListNotebookRequest</a></td>
+                <td><a href="#arangodb.cloud.notebook.v1.NotebookModelList">NotebookModelList</a></td>
+                <td><p>List all notebook models available to a deployment.
+Required permissions:
+- notebook.model.list</p></td>
               </tr>
             
           </tbody>
@@ -15316,6 +15351,16 @@ Required permissions:
                 <td>ListNotebooks</td>
                 <td>POST</td>
                 <td>/api/notebook/v1/notebooks</td>
+                <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>ListNotebookModels</td>
+                <td>POST</td>
+                <td>/api/notebook/v1/models</td>
                 <td>*</td>
               </tr>
               

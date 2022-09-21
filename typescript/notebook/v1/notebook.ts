@@ -8,28 +8,16 @@ import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
 import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1/common'
 import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
 import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
+import { DataVolumeInfo as arangodb_cloud_data_v1_DataVolumeInfo } from '../../data/v1/data'
 
 // File: notebook/v1/notebook.proto
 // Package: arangodb.cloud.notebook.v1
 
-// Request for creating a notebook.
-export interface CreateNotebookRequest {
-  // ID of the Deployment this notebook belongs to.
+// Requet for listing notebook models.
+export interface ListNotebookModelRequest {
+  // ID of the deployment that the notebook belongs to.
   // string
   deployment_id?: string;
-  
-  // Name of the notebook.
-  // string
-  name?: string;
-  
-  // Description of the notebook.
-  // string
-  description?: string;
-  
-  // Model specification for the notebook.
-  // Note: This field is read-only after creating.
-  // ModelSpec
-  model?: ModelSpec;
 }
 
 // Request for listing notebooks.
@@ -46,13 +34,11 @@ export interface ListNotebookRequest {
 // Model specification for the notebook.
 export interface ModelSpec {
   // Type of model being used.
-  // Currently supported:
-  // - basic [CPU: 1, Memory: 4GiB]
+  // This should refer to the `id` of a `NotebookModel` object.
   // string
-  model?: string;
+  notebook_model?: string;
   
-  // Disk size required by the notebook instance.
-  // Should be expressed as power-of-two: Mi, Gi, Ti, Pi, etc.
+  // Disk size allocated to the notebook instance (in GiB).
   // string
   disk_size?: string;
 }
@@ -60,15 +46,17 @@ export interface ModelSpec {
 // Contains the specification and status of a given notebook instance.
 export interface Notebook {
   // ID of the Notebook.
+  // This is a read-only value.
   // string
   id?: string;
   
   // ID of the Deployment this notebook belongs to.
+  // Read-only after creation.
   // string
   deployment_id?: string;
   
   // URL of the Notebook.
-  // Note: This is a read-only property.
+  // This is a read-only value.
   // string
   url?: string;
   
@@ -81,32 +69,35 @@ export interface Notebook {
   description?: string;
   
   // If the notebook should be paused.
-  // string
-  paused?: string;
+  // boolean
+  is_paused?: boolean;
   
   // Identifier of the user that created this notebook.
+  // Read-only after creation.
   // string
   created_by_id?: string;
   
   // Time at which this notebook was created.
+  // This is a read-only value.
   // googleTypes.Timestamp
   created_at?: googleTypes.Timestamp;
   
   // Model specification for the notebook.
-  // Note: This field is read-only after creating.
+  // Read-only after creation.
   // ModelSpec
   model?: ModelSpec;
   
   // If the notebook should be deleted.
   // boolean
-  deleted?: boolean;
+  is_deleted?: boolean;
   
   // Time at which this notebook was deleted.
+  // This is a read-only value.
   // googleTypes.Timestamp
   deleted_at?: googleTypes.Timestamp;
   
   // Status of the notebook. Represents the state of the notebook as observed by the controller.
-  // Note: all fields in this block are read-only.
+  // This is a read-only value.
   // Status
   status?: Status;
 }
@@ -117,14 +108,41 @@ export interface NotebookList {
   items?: Notebook[];
 }
 
+// Specifies the resource configuration for a notebook.
+export interface NotebookModel {
+  // System identifier of the model.
+  // string
+  id?: string;
+  
+  // Human readable name of the model.
+  // string
+  name?: string;
+  
+  // CPU units allocated to the notebook.
+  // 1 CPU unit equals 1 physical / virtual CPU.
+  // number
+  cpu?: number;
+  
+  // Memory allocated to the notebook in 'GiB'.
+  // number
+  memory?: number;
+}
+
+// List of notebook models.
+export interface NotebookModelList {
+  // NotebookModel
+  items?: NotebookModel[];
+}
+
 // Status of the notebook. Represents the state of the notebook as observed by the controller.
 // Note: all fields in this block are read-only.
 export interface Status {
   // Where the notebook is in its lifecycle at any given time.
-  // Should only contain only one of the following values:
+  // Should contain only one of the following values:
   // "Initialising"   - Notebook is initialising.
   // "Running"        - Notebook is running.
-  // "Hibernating"    - Notebook is hibernating.
+  // "Hibernating"    - Notebook is moving to a hibernated state.
+  // "Hibernated"     - Notebook has moved to a hibernated state.
   // "Error"          - Notebook is in an errored state. Additional information can be obtained from `message` field.
   // string
   phase?: string;
@@ -144,36 +162,25 @@ export interface Status {
 
 // Resource usage of the notebook.
 export interface Status_Usage {
-  // CPU usage in percentage.
+  // Information about the data volume used to store the data
+  // arangodb.cloud.data.v1.DataVolumeInfo
+  data_volume_info?: arangodb_cloud_data_v1_DataVolumeInfo;
+  
+  // Last known memory usage in bytes
   // number
-  cpu?: number;
+  last_memory_usage?: number;
   
-  // Amount of memory being consumed.
+  // Last known CPU usage in vCPU units
   // number
-  memory?: number;
+  last_cpu_usage?: number;
   
-  // Amount of disk space used.
+  // Last known memory limit in bytes
   // number
-  disk?: number;
-}
-
-// Request to pause a notebook.
-export interface UpdateNotebookRequest {
-  // ID of the notebook.
-  // string
-  id?: string;
+  last_memory_limit?: number;
   
-  // Set if notebook should be paused.
-  // boolean
-  paused?: boolean;
-  
-  // Name of the notebook.
-  // string
-  name?: string;
-  
-  // Description of the notebook.
-  // string
-  description?: string;
+  // Last known CPU limit in vCPU units
+  // number
+  last_cpu_limit?: number;
 }
 
 // Notebook service is used to manage notebooks.
@@ -191,7 +198,7 @@ export interface INotebookService {
   // Create a new Notebook by specifying its configuration.
   // Required permissions:
   // - notebook.notebook.create
-  CreateNotebook: (req: CreateNotebookRequest) => Promise<Notebook>;
+  CreateNotebook: (req: Notebook) => Promise<Notebook>;
   
   // Delete an existing notebook using its ID.
   // This initially marks the notebook for deletion. It is deleted from CP once all its child resources are deleted.
@@ -202,12 +209,18 @@ export interface INotebookService {
   // Update an existing notebook. Returns updated Notebook.
   // Required permissions:
   // - notebook.notebook.update
-  UpdateNotebook: (req: UpdateNotebookRequest) => Promise<Notebook>;
+  UpdateNotebook: (req: Notebook) => Promise<void>;
   
-  // List all notebooks for a deployment.
+  // List all notebooks for deployment.
+  // Note: This lists only those notebooks created by the caller.
   // Required permissions:
   // - notebook.notebook.list
   ListNotebooks: (req: ListNotebookRequest) => Promise<NotebookList>;
+  
+  // List all notebook models available to a deployment.
+  // Required permissions:
+  // - notebook.model.list
+  ListNotebookModels: (req: ListNotebookRequest) => Promise<NotebookModelList>;
 }
 
 // Notebook service is used to manage notebooks.
@@ -233,7 +246,7 @@ export class NotebookService implements INotebookService {
   // Create a new Notebook by specifying its configuration.
   // Required permissions:
   // - notebook.notebook.create
-  async CreateNotebook(req: CreateNotebookRequest): Promise<Notebook> {
+  async CreateNotebook(req: Notebook): Promise<Notebook> {
     const url = `/api/notebook/v1/notebook`;
     return api.put(url, req);
   }
@@ -251,16 +264,25 @@ export class NotebookService implements INotebookService {
   // Update an existing notebook. Returns updated Notebook.
   // Required permissions:
   // - notebook.notebook.update
-  async UpdateNotebook(req: UpdateNotebookRequest): Promise<Notebook> {
+  async UpdateNotebook(req: Notebook): Promise<void> {
     const url = `/api/notebook/v1/notebook/${encodeURIComponent(req.id || '')}`;
     return api.post(url, req);
   }
   
-  // List all notebooks for a deployment.
+  // List all notebooks for deployment.
+  // Note: This lists only those notebooks created by the caller.
   // Required permissions:
   // - notebook.notebook.list
   async ListNotebooks(req: ListNotebookRequest): Promise<NotebookList> {
     const url = `/api/notebook/v1/notebooks`;
+    return api.post(url, req);
+  }
+  
+  // List all notebook models available to a deployment.
+  // Required permissions:
+  // - notebook.model.list
+  async ListNotebookModels(req: ListNotebookRequest): Promise<NotebookModelList> {
+    const url = `/api/notebook/v1/models`;
     return api.post(url, req);
   }
 }

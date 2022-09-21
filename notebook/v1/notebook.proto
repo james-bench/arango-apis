@@ -25,6 +25,7 @@ package arangodb.cloud.notebook.v1;
 option go_package = "github.com/arangodb-managed/apis/notebook/v1";
 
 import "common/v1/common.proto";
+import "data/v1/data.proto";
 
 import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
 import "google/api/annotations.proto";
@@ -52,7 +53,7 @@ service NotebookService {
     // Create a new Notebook by specifying its configuration.
     // Required permissions:
     // - notebook.notebook.create
-    rpc CreateNotebook(CreateNotebookRequest) returns (Notebook) {
+    rpc CreateNotebook(Notebook) returns (Notebook) {
         option (google.api.http) = {
             put: "/api/notebook/v1/notebook"
             body: "*"
@@ -72,7 +73,7 @@ service NotebookService {
     // Update an existing notebook. Returns updated Notebook.
     // Required permissions:
     // - notebook.notebook.update
-    rpc UpdateNotebook(UpdateNotebookRequest) returns (Notebook) {
+    rpc UpdateNotebook(Notebook) returns (common.v1.Empty) {
         option (google.api.http) = {
             post:  "/api/notebook/v1/notebook/{id}"
             body: "*"
@@ -89,18 +90,16 @@ service NotebookService {
             body: "*"
         };
     }
-}
-
-// Request to pause a notebook.
-message UpdateNotebookRequest {
-    // ID of the notebook.
-    string id = 1;
-    // Set if notebook should be paused.
-    bool paused =2;
-    // Name of the notebook.
-    string name = 3;
-    // Description of the notebook.
-    string description = 4;
+    
+    // List all notebook models available to a deployment.
+    // Required permissions:
+    // - notebook.model.list
+    rpc ListNotebookModels(ListNotebookRequest) returns (NotebookModelList) {
+        option (google.api.http) = {
+            post: "/api/notebook/v1/models"
+            body: "*"
+        };
+    }
 }
 
 // List of Notebooks.
@@ -116,69 +115,84 @@ message ListNotebookRequest {
     common.v1.ListOptions options = 10;
 }
 
-// Request for creating a notebook.
-message CreateNotebookRequest {
-    // ID of the Deployment this notebook belongs to.
-    string deployment_id = 1;
-    // Name of the notebook.
-    string name = 2;
-    // Description of the notebook.
-    string description = 3;
-    // Model specification for the notebook.
-    // Note: This field is read-only after creating.
-    ModelSpec model = 4;
-}
-
 // Contains the specification and status of a given notebook instance.
 message Notebook {
     // ID of the Notebook.
+    // This is a read-only value.
     string id = 1;
     // ID of the Deployment this notebook belongs to.
+    // Read-only after creation.
     string deployment_id = 2;
     // URL of the Notebook.
-    // Note: This is a read-only property.
+    // This is a read-only value.
     string url = 3;
     // Name of the notebook.
     string name = 4;
     // Description of the notebook.
     string description = 5;
     // If the notebook should be paused.
-    string paused = 6;
+    bool is_paused = 6;
     // Identifier of the user that created this notebook.
+    // Read-only after creation.
     string created_by_id = 7;
-    // Time at which this notebook was created. 
-    google.protobuf.Timestamp created_at =8;
+    // Time at which this notebook was created.
+    // This is a read-only value.
+    google.protobuf.Timestamp created_at = 8;
     // Model specification for the notebook.
-    // Note: This field is read-only after creating.
+    // Read-only after creation.
     ModelSpec model = 9;
     // If the notebook should be deleted.
-    bool deleted = 10;
+    bool is_deleted = 10;
     // Time at which this notebook was deleted. 
+    // This is a read-only value.
     google.protobuf.Timestamp deleted_at = 11;
     // Status of the notebook. Represents the state of the notebook as observed by the controller.
-    // Note: all fields in this block are read-only.
+    // This is a read-only value.
     Status status = 100;
 }
 
 // Model specification for the notebook.
 message ModelSpec {
     // Type of model being used.
-    // Currently supported:
-    // - basic [CPU: 1, Memory: 4GiB]
-    string model = 1; 
-    // Disk size required by the notebook instance.
-    // Should be expressed as power-of-two: Mi, Gi, Ti, Pi, etc.
+    // This should refer to the `id` of a `NotebookModel` object.
+    string notebook_model = 1; 
+    // Disk size allocated to the notebook instance (in GiB).
     string disk_size = 2;
+}
+
+// Specifies the resource configuration for a notebook.
+message NotebookModel {
+    // System identifier of the model.
+    string id = 1;
+    // Human readable name of the model.
+    string name = 2;
+	// CPU units allocated to the notebook.
+	// 1 CPU unit equals 1 physical / virtual CPU.
+    int32 cpu = 3; 
+	// Memory allocated to the notebook in 'GiB'.
+    int32 memory = 4;
+}
+
+// List of notebook models.
+message NotebookModelList {
+    repeated NotebookModel items = 1;
+}
+
+// Requet for listing notebook models.
+message ListNotebookModelRequest {
+    // ID of the deployment that the notebook belongs to.
+    string deployment_id = 1;
 }
 
 // Status of the notebook. Represents the state of the notebook as observed by the controller.
 // Note: all fields in this block are read-only.
 message Status {
     // Where the notebook is in its lifecycle at any given time.
-    // Should only contain only one of the following values:
+    // Should contain only one of the following values:
     // "Initialising"   - Notebook is initialising.
     // "Running"        - Notebook is running.
-    // "Hibernating"    - Notebook is hibernating.
+    // "Hibernating"    - Notebook is moving to a hibernated state.
+    // "Hibernated"     - Notebook has moved to a hibernated state.
     // "Error"          - Notebook is in an errored state. Additional information can be obtained from `message` field.
     string phase = 1;
     // Supporting information about the notebook phase - such as error messages in case of failures.
@@ -187,12 +201,16 @@ message Status {
     google.protobuf.Timestamp last_updated_at = 3;
     // Resource usage of the notebook.
     message Usage {
-        // CPU usage in percentage.
-        float cpu = 1;
-        // Amount of memory being consumed.
-        float memory = 2;
-        // Amount of disk space used.
-        float disk = 3;
+        // Information about the data volume used to store the data
+        data.v1.DataVolumeInfo data_volume_info = 20;
+        // Last known memory usage in bytes
+        int64 last_memory_usage = 31;
+        // Last known CPU usage in vCPU units
+        float last_cpu_usage = 32;
+        // Last known memory limit in bytes
+        int64 last_memory_limit = 33;
+        // Last known CPU limit in vCPU units
+        float last_cpu_limit = 34; 
     }
     // Resource usage of the notebook.
     Usage usage = 10;
