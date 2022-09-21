@@ -20,17 +20,29 @@
 
 package v1
 
-const (
-	// Notebook permissions
+// Model defines the configuration for a notebook.
+type Model struct {
+	// CPU units required by the notebook.
+	// 1 CPU unit equals 1 physical / virtual CPU.
+	CPU int32
+	// Memory required by the notebook in 'GiB'.
+	Memory int32
+}
 
-	// PermissionGetNotebook is required to get a notebook.
-	PermissionGetNotebook = "notebook.notebook.get"
-	// PermissionCreateNotebook is required to create a notebook.
-	PermissionCreateNotebook = "notebook.notebook.create"
-	// PermissionDeleteNotebook is required to delete a notebook.
-	PermissionDeleteNotebook = "notebook.notebook.delete"
-	// PermissionUpdateNotebook is required to pause a notebook.
-	PermissionUpdateNotebook = "notebook.notebook.update"
-	// PermissionListNotebooks is required to list notebooks.
-	PermissionListNotebooks = "notebook.notebook.list"
-)
+// GetCPU returns the CPU specific of the model.
+func (m Model) GetCPU() int32 {
+	return m.CPU
+}
+
+// GetMemory returns the Memory specification of the model.
+func (m Model) GetMemory() int32 {
+	return m.Memory
+}
+
+// Models is a map of all supported models on Oasis.
+var Models = map[string]Model{
+	"basic": {
+		CPU:    2,
+		Memory: 4,
+	},
+}

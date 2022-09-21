@@ -12,41 +12,24 @@ import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/com
 // File: notebook/v1/notebook.proto
 // Package: arangodb.cloud.notebook.v1
 
-// Contains details for the current state of the notebook.
-export interface Condition {
-  // Type of condition being reported.
-  // Should be one of the following:
-  // - Paused
-  // - Stopped
-  // string
-  type?: string;
-  
-  // Status of the condition, one of true or false.
-  // boolean
-  status?: boolean;
-  
-  // Identifier of the entity responsible for the conditions's last transition.
-  // string
-  triggered_by?: string;
-  
-  // Reason for the condition's last transition.
-  // string
-  reason?: string;
-  
-  // The last time the condition transitioned from one status to another.
-  // googleTypes.Timestamp
-  last_transition_time?: googleTypes.Timestamp;
-}
-
 // Request for creating a notebook.
 export interface CreateNotebookRequest {
   // ID of the Deployment this notebook belongs to.
   // string
   deployment_id?: string;
   
-  // Configuration of the notebook instance.
-  // Spec
-  spec?: Spec;
+  // Name of the notebook.
+  // string
+  name?: string;
+  
+  // Description of the notebook.
+  // string
+  description?: string;
+  
+  // Model specification for the notebook.
+  // Note: This field is read-only after creating.
+  // ModelSpec
+  model?: ModelSpec;
 }
 
 // Request for listing notebooks.
@@ -60,6 +43,20 @@ export interface ListNotebookRequest {
   options?: arangodb_cloud_common_v1_ListOptions;
 }
 
+// Model specification for the notebook.
+export interface ModelSpec {
+  // Type of model being used.
+  // Currently supported:
+  // - basic [CPU: 1, Memory: 4GiB]
+  // string
+  model?: string;
+  
+  // Disk size required by the notebook instance.
+  // Should be expressed as power-of-two: Mi, Gi, Ti, Pi, etc.
+  // string
+  disk_size?: string;
+}
+
 // Contains the specification and status of a given notebook instance.
 export interface Notebook {
   // ID of the Notebook.
@@ -70,25 +67,38 @@ export interface Notebook {
   // string
   deployment_id?: string;
   
-  // Set if the notebook should be shutdown.
-  // boolean
-  shutdown?: boolean;
-  
-  // Identifier of the entity responsible for shutting down the notebook.
+  // Name of the notebook.
   // string
-  shutdown_by?: string;
+  name?: string;
   
-  // Set if the notebook should be paused.
-  // boolean
-  paused?: boolean;
-  
-  // Identifier of the entity responsible for pausing the notebook.
+  // Description of the notebook.
   // string
-  paused_by?: string;
+  description?: string;
   
-  // Configuration of the notebook instance.
-  // Spec
-  spec?: Spec;
+  // If the notebook should be paused.
+  // string
+  paused?: string;
+  
+  // Identifier of the user that created this notebook.
+  // string
+  created_by_id?: string;
+  
+  // Time at which this notebook was created.
+  // googleTypes.Timestamp
+  created_at?: googleTypes.Timestamp;
+  
+  // Model specification for the notebook.
+  // Note: This field is read-only after creating.
+  // ModelSpec
+  model?: ModelSpec;
+  
+  // If the notebook should be deleted.
+  // boolean
+  deleted?: boolean;
+  
+  // Time at which this notebook was deleted.
+  // googleTypes.Timestamp
+  deleted_at?: googleTypes.Timestamp;
   
   // Status of the notebook. Represents the state of the notebook as observed by the controller.
   // Note: all fields in this block are read-only.
@@ -102,23 +112,6 @@ export interface NotebookList {
   items?: Notebook[];
 }
 
-// Specification options for a notebook.
-export interface Spec {
-  // Number of CPU units required by the notebook instance.
-  // number
-  CPU?: number;
-  
-  // Memory required by the notebook instance.
-  // Should be expressed as memibyte (Mi).
-  // number
-  memory?: number;
-  
-  // Disk space required by the notebook instance.
-  // Should be expressed as power-of-two: Mi, Gi, Ti, Pi, etc.
-  // string
-  disk?: string;
-}
-
 // Status of the notebook. Represents the state of the notebook as observed by the controller.
 // Note: all fields in this block are read-only.
 export interface Status {
@@ -126,6 +119,7 @@ export interface Status {
   // Should only contain only one of the following values:
   // "Initialising"   - Notebook is initialising.
   // "Running"        - Notebook is running.
+  // "Hibernating"    - Notebook is hibernating.
   // "Error"          - Notebook is in an errored state. Additional information can be obtained from `message` field.
   // string
   phase?: string;
@@ -134,13 +128,32 @@ export interface Status {
   // string
   message?: string;
   
-  // The last time the notebook was updated.
+  // The last time this notebook was updated.
   // googleTypes.Timestamp
   last_updated_at?: googleTypes.Timestamp;
   
-  // Contains details for the current state of the notebook.
-  // Condition
-  conditions?: Condition[];
+  // URL of the Notebook.
+  // string
+  url?: string;
+}
+
+// Request to pause a notebook.
+export interface UpdateNotebookRequest {
+  // ID of the notebook.
+  // string
+  id?: string;
+  
+  // Set if notebook should be paused.
+  // boolean
+  paused?: boolean;
+  
+  // Name of the notebook.
+  // string
+  name?: string;
+  
+  // Description of the notebook.
+  // string
+  description?: string;
 }
 
 // Notebook service is used to manage notebooks.
@@ -158,27 +171,18 @@ export interface INotebookService {
   // Create a new Notebook by specifying its configuration.
   // Required permissions:
   // - notebook.notebook.create
-  CreateNotebook: (req: CreateNotebookRequest) => Promise<void>;
+  CreateNotebook: (req: CreateNotebookRequest) => Promise<Notebook>;
   
   // Delete an existing notebook using its ID.
+  // This initially marks the notebook for deletion. It is deleted from CP once all its child resources are deleted.
   // Required permissions:
   // - notebook.notebook.delete
   DeleteNotebook: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
   
-  // Shutdown a running notebook.
+  // Update an existing notebook. Returns updated Notebook.
   // Required permissions:
-  // - notebook.notebook.shutdown
-  ShutdownNotebook: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
-  
-  // Pause a running notebook. This will move the notebook to a hibernating state.
-  // Required permissions:
-  // - notebook.notebook.pause
-  PauseNotebook: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
-  
-  // Resume a paused notebook. This will remove the notebook from a hibernating state.
-  // Required permissions:
-  // - notebook.notebook.resume
-  ResumeNotebook: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  // - notebook.notebook.update
+  UpdateNotebook: (req: UpdateNotebookRequest) => Promise<Notebook>;
   
   // List all notebooks for a deployment.
   // Required permissions:
@@ -209,12 +213,13 @@ export class NotebookService implements INotebookService {
   // Create a new Notebook by specifying its configuration.
   // Required permissions:
   // - notebook.notebook.create
-  async CreateNotebook(req: CreateNotebookRequest): Promise<void> {
+  async CreateNotebook(req: CreateNotebookRequest): Promise<Notebook> {
     const url = `/api/notebook/v1/notebook`;
     return api.put(url, req);
   }
   
   // Delete an existing notebook using its ID.
+  // This initially marks the notebook for deletion. It is deleted from CP once all its child resources are deleted.
   // Required permissions:
   // - notebook.notebook.delete
   async DeleteNotebook(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
@@ -223,31 +228,12 @@ export class NotebookService implements INotebookService {
     return api.delete(url, undefined);
   }
   
-  // Shutdown a running notebook.
+  // Update an existing notebook. Returns updated Notebook.
   // Required permissions:
-  // - notebook.notebook.shutdown
-  async ShutdownNotebook(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
-    const path = `/api/notebook/v1/notebook/${encodeURIComponent(req.id || '')}/shutdown`;
-    const url = path + api.queryString(req, [`id`]);
-    return api.post(url, undefined);
-  }
-  
-  // Pause a running notebook. This will move the notebook to a hibernating state.
-  // Required permissions:
-  // - notebook.notebook.pause
-  async PauseNotebook(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
-    const path = `/api/notebook/v1/notebook/${encodeURIComponent(req.id || '')}/pause`;
-    const url = path + api.queryString(req, [`id`]);
-    return api.post(url, undefined);
-  }
-  
-  // Resume a paused notebook. This will remove the notebook from a hibernating state.
-  // Required permissions:
-  // - notebook.notebook.resume
-  async ResumeNotebook(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
-    const path = `/api/notebook/v1/notebook/${encodeURIComponent(req.id || '')}/resume`;
-    const url = path + api.queryString(req, [`id`]);
-    return api.post(url, undefined);
+  // - notebook.notebook.update
+  async UpdateNotebook(req: UpdateNotebookRequest): Promise<Notebook> {
+    const url = `/api/notebook/v1/notebook/${encodeURIComponent(req.id || '')}`;
+    return api.post(url, req);
   }
   
   // List all notebooks for a deployment.

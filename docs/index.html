@@ -1147,15 +1147,15 @@ title: "ArangoDB Oasis API"
             <ul>
               
                 <li>
-                  <a href="#arangodb.cloud.notebook.v1.Condition"><span class="badge">M</span>Condition</a>
-                </li>
-              
-                <li>
                   <a href="#arangodb.cloud.notebook.v1.CreateNotebookRequest"><span class="badge">M</span>CreateNotebookRequest</a>
                 </li>
               
                 <li>
                   <a href="#arangodb.cloud.notebook.v1.ListNotebookRequest"><span class="badge">M</span>ListNotebookRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.notebook.v1.ModelSpec"><span class="badge">M</span>ModelSpec</a>
                 </li>
               
                 <li>
@@ -1167,11 +1167,11 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
-                  <a href="#arangodb.cloud.notebook.v1.Spec"><span class="badge">M</span>Spec</a>
+                  <a href="#arangodb.cloud.notebook.v1.Status"><span class="badge">M</span>Status</a>
                 </li>
               
                 <li>
-                  <a href="#arangodb.cloud.notebook.v1.Status"><span class="badge">M</span>Status</a>
+                  <a href="#arangodb.cloud.notebook.v1.UpdateNotebookRequest"><span class="badge">M</span>UpdateNotebookRequest</a>
                 </li>
               
               
@@ -14797,61 +14797,6 @@ Required permissions:
       <p></p>
 
       
-        <h3 id="arangodb.cloud.notebook.v1.Condition">Condition</h3>
-        <p>Contains details for the current state of the notebook.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>type</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Type of condition being reported.
-Should be one of the following:
-- Paused
-- Stopped </p></td>
-                </tr>
-              
-                <tr>
-                  <td>status</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>Status of the condition, one of true or false. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>triggered_by</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Identifier of the entity responsible for the conditions&#39;s last transition. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>reason</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Reason for the condition&#39;s last transition. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>last_transition_time</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>The last time the condition transitioned from one status to another. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
         <h3 id="arangodb.cloud.notebook.v1.CreateNotebookRequest">CreateNotebookRequest</h3>
         <p>Request for creating a notebook.</p>
 
@@ -14870,10 +14815,25 @@ Should be one of the following:
                 </tr>
               
                 <tr>
-                  <td>spec</td>
-                  <td><a href="#arangodb.cloud.notebook.v1.Spec">Spec</a></td>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Configuration of the notebook instance. </p></td>
+                  <td><p>Name of the notebook. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Description of the notebook. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>model</td>
+                  <td><a href="#arangodb.cloud.notebook.v1.ModelSpec">ModelSpec</a></td>
+                  <td></td>
+                  <td><p>Model specification for the notebook.
+Note: This field is read-only after creating. </p></td>
                 </tr>
               
             </tbody>
@@ -14914,6 +14874,40 @@ Should be one of the following:
 
         
       
+        <h3 id="arangodb.cloud.notebook.v1.ModelSpec">ModelSpec</h3>
+        <p>Model specification for the notebook.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>model</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Type of model being used.
+Currently supported:
+- basic [CPU: 1, Memory: 4GiB] </p></td>
+                </tr>
+              
+                <tr>
+                  <td>disk_size</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Disk size required by the notebook instance.
+Should be expressed as power-of-two: Mi, Gi, Ti, Pi, etc. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.notebook.v1.Notebook">Notebook</h3>
         <p>Contains the specification and status of a given notebook instance.</p>
 
@@ -14939,38 +14933,60 @@ Should be one of the following:
                 </tr>
               
                 <tr>
-                  <td>shutdown</td>
-                  <td><a href="#bool">bool</a></td>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Set if the notebook should be shutdown. </p></td>
+                  <td><p>Name of the notebook. </p></td>
                 </tr>
               
                 <tr>
-                  <td>shutdown_by</td>
+                  <td>description</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Identifier of the entity responsible for shutting down the notebook. </p></td>
+                  <td><p>Description of the notebook. </p></td>
                 </tr>
               
                 <tr>
                   <td>paused</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>Set if the notebook should be paused. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>paused_by</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Identifier of the entity responsible for pausing the notebook. </p></td>
+                  <td><p>If the notebook should be paused. </p></td>
                 </tr>
               
                 <tr>
-                  <td>spec</td>
-                  <td><a href="#arangodb.cloud.notebook.v1.Spec">Spec</a></td>
+                  <td>created_by_id</td>
+                  <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Configuration of the notebook instance. </p></td>
+                  <td><p>Identifier of the user that created this notebook. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Time at which this notebook was created. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>model</td>
+                  <td><a href="#arangodb.cloud.notebook.v1.ModelSpec">ModelSpec</a></td>
+                  <td></td>
+                  <td><p>Model specification for the notebook.
+Note: This field is read-only after creating. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>deleted</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If the notebook should be deleted. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>deleted_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Time at which this notebook was deleted. </p></td>
                 </tr>
               
                 <tr>
@@ -15012,46 +15028,6 @@ Note: all fields in this block are read-only. </p></td>
 
         
       
-        <h3 id="arangodb.cloud.notebook.v1.Spec">Spec</h3>
-        <p>Specification options for a notebook.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>CPU</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>Number of CPU units required by the notebook instance. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>memory</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>Memory required by the notebook instance.
-Should be expressed as memibyte (Mi). </p></td>
-                </tr>
-              
-                <tr>
-                  <td>disk</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Disk space required by the notebook instance.
-Should be expressed as power-of-two: Mi, Gi, Ti, Pi, etc. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
         <h3 id="arangodb.cloud.notebook.v1.Status">Status</h3>
         <p>Status of the notebook. Represents the state of the notebook as observed by the controller.</p><p>Note: all fields in this block are read-only.</p>
 
@@ -15070,6 +15046,7 @@ Should be expressed as power-of-two: Mi, Gi, Ti, Pi, etc. </p></td>
 Should only contain only one of the following values:
 &#34;Initialising&#34;   - Notebook is initialising.
 &#34;Running&#34;        - Notebook is running.
+&#34;Hibernating&#34;    - Notebook is hibernating.
 &#34;Error&#34;          - Notebook is in an errored state. Additional information can be obtained from `message` field. </p></td>
                 </tr>
               
@@ -15084,14 +15061,59 @@ Should only contain only one of the following values:
                   <td>last_updated_at</td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
-                  <td><p>The last time the notebook was updated. </p></td>
+                  <td><p>The last time this notebook was updated. </p></td>
                 </tr>
               
                 <tr>
-                  <td>conditions</td>
-                  <td><a href="#arangodb.cloud.notebook.v1.Condition">Condition</a></td>
-                  <td>repeated</td>
-                  <td><p>Contains details for the current state of the notebook. </p></td>
+                  <td>url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>URL of the Notebook. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.notebook.v1.UpdateNotebookRequest">UpdateNotebookRequest</h3>
+        <p>Request to pause a notebook.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the notebook. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>paused</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Set if notebook should be paused. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Name of the notebook. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Description of the notebook. </p></td>
                 </tr>
               
             </tbody>
@@ -15136,7 +15158,7 @@ Required permissions:
               <tr>
                 <td>CreateNotebook</td>
                 <td><a href="#arangodb.cloud.notebook.v1.CreateNotebookRequest">CreateNotebookRequest</a></td>
-                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><a href="#arangodb.cloud.notebook.v1.Notebook">Notebook</a></td>
                 <td><p>Create a new Notebook by specifying its configuration.
 Required permissions:
 - notebook.notebook.create</p></td>
@@ -15147,35 +15169,18 @@ Required permissions:
                 <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
                 <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
                 <td><p>Delete an existing notebook using its ID.
+This initially marks the notebook for deletion. It is deleted from CP once all its child resources are deleted.
 Required permissions:
 - notebook.notebook.delete</p></td>
               </tr>
             
               <tr>
-                <td>ShutdownNotebook</td>
-                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
-                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
-                <td><p>Shutdown a running notebook.
+                <td>UpdateNotebook</td>
+                <td><a href="#arangodb.cloud.notebook.v1.UpdateNotebookRequest">UpdateNotebookRequest</a></td>
+                <td><a href="#arangodb.cloud.notebook.v1.Notebook">Notebook</a></td>
+                <td><p>Update an existing notebook. Returns updated Notebook.
 Required permissions:
-- notebook.notebook.shutdown</p></td>
-              </tr>
-            
-              <tr>
-                <td>PauseNotebook</td>
-                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
-                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
-                <td><p>Pause a running notebook. This will move the notebook to a hibernating state.
-Required permissions:
-- notebook.notebook.pause</p></td>
-              </tr>
-            
-              <tr>
-                <td>ResumeNotebook</td>
-                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
-                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
-                <td><p>Resume a paused notebook. This will remove the notebook from a hibernating state.
-Required permissions:
-- notebook.notebook.resume</p></td>
+- notebook.notebook.update</p></td>
               </tr>
             
               <tr>
@@ -15248,30 +15253,10 @@ Required permissions:
               
               
               <tr>
-                <td>ShutdownNotebook</td>
+                <td>UpdateNotebook</td>
                 <td>POST</td>
-                <td>/api/notebook/v1/notebook/{id}/shutdown</td>
-                <td></td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>PauseNotebook</td>
-                <td>POST</td>
-                <td>/api/notebook/v1/notebook/{id}/pause</td>
-                <td></td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>ResumeNotebook</td>
-                <td>POST</td>
-                <td>/api/notebook/v1/notebook/{id}/resume</td>
-                <td></td>
+                <td>/api/notebook/v1/notebook/{id}</td>
+                <td>*</td>
               </tr>
               
             

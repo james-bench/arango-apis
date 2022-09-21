@@ -52,7 +52,7 @@ service NotebookService {
     // Create a new Notebook by specifying its configuration.
     // Required permissions:
     // - notebook.notebook.create
-    rpc CreateNotebook(CreateNotebookRequest) returns (common.v1.Empty) {
+    rpc CreateNotebook(CreateNotebookRequest) returns (Notebook) {
         option (google.api.http) = {
             put: "/api/notebook/v1/notebook"
             body: "*"
@@ -60,6 +60,7 @@ service NotebookService {
     }
     
     // Delete an existing notebook using its ID.
+    // This initially marks the notebook for deletion. It is deleted from CP once all its child resources are deleted.
     // Required permissions:
     // - notebook.notebook.delete
     rpc DeleteNotebook(common.v1.IDOptions) returns (common.v1.Empty) {
@@ -67,34 +68,17 @@ service NotebookService {
             delete:  "/api/notebook/v1/notebook/{id}"
         };
     }
-
-    // Shutdown a running notebook.
-    // Required permissions:
-    // - notebook.notebook.shutdown
-    rpc ShutdownNotebook(common.v1.IDOptions) returns (common.v1.Empty) {
-        option (google.api.http) = {
-            post:  "/api/notebook/v1/notebook/{id}/shutdown"
-        };
-    }
-
-    // Pause a running notebook. This will move the notebook to a hibernating state.
-    // Required permissions:
-    // - notebook.notebook.pause
-    rpc PauseNotebook(common.v1.IDOptions) returns (common.v1.Empty) {
-        option (google.api.http) = {
-            post:  "/api/notebook/v1/notebook/{id}/pause"
-        };
-    }
-
-    // Resume a paused notebook. This will remove the notebook from a hibernating state.
-    // Required permissions:
-    // - notebook.notebook.resume
-    rpc ResumeNotebook(common.v1.IDOptions) returns (common.v1.Empty) {
-        option (google.api.http) = {
-            post:  "/api/notebook/v1/notebook/{id}/resume"
-        };
-    }
     
+    // Update an existing notebook. Returns updated Notebook.
+    // Required permissions:
+    // - notebook.notebook.update
+    rpc UpdateNotebook(UpdateNotebookRequest) returns (Notebook) {
+        option (google.api.http) = {
+            post:  "/api/notebook/v1/notebook/{id}"
+            body: "*"
+        };
+    }
+        
     // List all notebooks for a deployment.
     // Required permissions:
     // - notebook.notebook.list
@@ -104,6 +88,18 @@ service NotebookService {
             body: "*"
         };
     }
+}
+
+// Request to pause a notebook.
+message UpdateNotebookRequest {
+    // ID of the notebook.
+    string id = 1;
+    // Set if notebook should be paused.
+    bool paused =2;
+    // Name of the notebook.
+    string name = 3;
+    // Description of the notebook.
+    string description = 4;
 }
 
 // List of Notebooks.
@@ -123,8 +119,13 @@ message ListNotebookRequest {
 message CreateNotebookRequest {
     // ID of the Deployment this notebook belongs to.
     string deployment_id = 1;
-    // Configuration of the notebook instance.
-    Spec spec = 2;
+    // Name of the notebook.
+    string name = 2;
+    // Description of the notebook.
+    string description = 3;
+    // Model specification for the notebook.
+    // Note: This field is read-only after creating.
+    ModelSpec model = 4;
 }
 
 // Contains the specification and status of a given notebook instance.
@@ -133,48 +134,37 @@ message Notebook {
     string id = 1;
     // ID of the Deployment this notebook belongs to.
     string deployment_id = 2;
-    // Set if the notebook should be shutdown.
-    bool shutdown = 3;
-    // Identifier of the entity responsible for shutting down the notebook.
-    string shutdown_by = 4;
-    // Set if the notebook should be paused.
-    bool paused = 5;
-    // Identifier of the entity responsible for pausing the notebook.
-    string paused_by = 6;
-    // Configuration of the notebook instance.
-    Spec spec = 7;
+    // Name of the notebook.
+    string name = 3;
+    // Description of the notebook.
+    string description = 4;
+    // If the notebook should be paused.
+    string paused = 5;
+    // Identifier of the user that created this notebook.
+    string created_by_id = 6;
+    // Time at which this notebook was created. 
+    google.protobuf.Timestamp created_at = 7;
+    // Model specification for the notebook.
+    // Note: This field is read-only after creating.
+    ModelSpec model = 8;
+    // If the notebook should be deleted.
+    bool deleted = 9;
+    // Time at which this notebook was deleted. 
+    google.protobuf.Timestamp deleted_at = 10;
     // Status of the notebook. Represents the state of the notebook as observed by the controller.
     // Note: all fields in this block are read-only.
-    Status status = 10;
+    Status status = 11;
 }
 
-// Specification options for a notebook.
-message Spec {
-    // Number of CPU units required by the notebook instance.
-    int32 CPU = 1;
-    // Memory required by the notebook instance.
-    // Should be expressed as memibyte (Mi).
-    int32 memory = 2;
-    // Disk space required by the notebook instance.
+// Model specification for the notebook.
+message ModelSpec {
+    // Type of model being used.
+    // Currently supported:
+    // - basic [CPU: 1, Memory: 4GiB]
+    string model = 1; 
+    // Disk size required by the notebook instance.
     // Should be expressed as power-of-two: Mi, Gi, Ti, Pi, etc.
-    string disk = 3;
-}
-
-// Contains details for the current state of the notebook.
-message Condition {
-    // Type of condition being reported.
-    // Should be one of the following:
-    // - Paused
-    // - Stopped
-    string type = 1;
-    // Status of the condition, one of true or false.
-    bool status = 2;
-    // Identifier of the entity responsible for the conditions's last transition.
-    string triggered_by = 3;
-    // Reason for the condition's last transition.
-    string reason = 4;
-    // The last time the condition transitioned from one status to another.
-    google.protobuf.Timestamp last_transition_time = 5;
+    string disk_size = 2;
 }
 
 // Status of the notebook. Represents the state of the notebook as observed by the controller.
@@ -184,12 +174,13 @@ message Status {
     // Should only contain only one of the following values:
     // "Initialising"   - Notebook is initialising.
     // "Running"        - Notebook is running.
+    // "Hibernating"    - Notebook is hibernating.
     // "Error"          - Notebook is in an errored state. Additional information can be obtained from `message` field.
     string phase = 1;
     // Supporting information about the notebook phase - such as error messages in case of failures.
     string message = 2;
-    // The last time the notebook was updated.
+    // The last time this notebook was updated.
     google.protobuf.Timestamp last_updated_at = 3;
-    // Contains details for the current state of the notebook.
-    repeated Condition conditions = 4;
+    // URL of the Notebook.
+    string url = 4;
 }

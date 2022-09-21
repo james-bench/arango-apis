@@ -29,6 +29,82 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+// Request to pause a notebook.
+type UpdateNotebookRequest struct {
+	// ID of the notebook.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Set if notebook should be paused.
+	Paused bool `protobuf:"varint,2,opt,name=paused,proto3" json:"paused,omitempty"`
+	// Name of the notebook.
+	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	// Description of the notebook.
+	Description          string   `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *UpdateNotebookRequest) Reset()         { *m = UpdateNotebookRequest{} }
+func (m *UpdateNotebookRequest) String() string { return proto.CompactTextString(m) }
+func (*UpdateNotebookRequest) ProtoMessage()    {}
+func (*UpdateNotebookRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_e4288154b4c2ba34, []int{0}
+}
+func (m *UpdateNotebookRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *UpdateNotebookRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_UpdateNotebookRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *UpdateNotebookRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateNotebookRequest.Merge(m, src)
+}
+func (m *UpdateNotebookRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *UpdateNotebookRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdateNotebookRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UpdateNotebookRequest proto.InternalMessageInfo
+
+func (m *UpdateNotebookRequest) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *UpdateNotebookRequest) GetPaused() bool {
+	if m != nil {
+		return m.Paused
+	}
+	return false
+}
+
+func (m *UpdateNotebookRequest) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *UpdateNotebookRequest) GetDescription() string {
+	if m != nil {
+		return m.Description
+	}
+	return ""
+}
+
 // List of Notebooks.
 type NotebookList struct {
 	Items                []*Notebook `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
@@ -41,7 +117,7 @@ func (m *NotebookList) Reset()         { *m = NotebookList{} }
 func (m *NotebookList) String() string { return proto.CompactTextString(m) }
 func (*NotebookList) ProtoMessage()    {}
 func (*NotebookList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e4288154b4c2ba34, []int{0}
+	return fileDescriptor_e4288154b4c2ba34, []int{1}
 }
 func (m *NotebookList) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -92,7 +168,7 @@ func (m *ListNotebookRequest) Reset()         { *m = ListNotebookRequest{} }
 func (m *ListNotebookRequest) String() string { return proto.CompactTextString(m) }
 func (*ListNotebookRequest) ProtoMessage()    {}
 func (*ListNotebookRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e4288154b4c2ba34, []int{1}
+	return fileDescriptor_e4288154b4c2ba34, []int{2}
 }
 func (m *ListNotebookRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -139,18 +215,23 @@ func (m *ListNotebookRequest) GetOptions() *v1.ListOptions {
 type CreateNotebookRequest struct {
 	// ID of the Deployment this notebook belongs to.
 	DeploymentId string `protobuf:"bytes,1,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
-	// Configuration of the notebook instance.
-	Spec                 *Spec    `protobuf:"bytes,2,opt,name=spec,proto3" json:"spec,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	// Name of the notebook.
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// Description of the notebook.
+	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	// Model specification for the notebook.
+	// Note: This field is read-only after creating.
+	Model                *ModelSpec `protobuf:"bytes,4,opt,name=model,proto3" json:"model,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
 }
 
 func (m *CreateNotebookRequest) Reset()         { *m = CreateNotebookRequest{} }
 func (m *CreateNotebookRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateNotebookRequest) ProtoMessage()    {}
 func (*CreateNotebookRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e4288154b4c2ba34, []int{2}
+	return fileDescriptor_e4288154b4c2ba34, []int{3}
 }
 func (m *CreateNotebookRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -186,9 +267,23 @@ func (m *CreateNotebookRequest) GetDeploymentId() string {
 	return ""
 }
 
-func (m *CreateNotebookRequest) GetSpec() *Spec {
+func (m *CreateNotebookRequest) GetName() string {
 	if m != nil {
-		return m.Spec
+		return m.Name
+	}
+	return ""
+}
+
+func (m *CreateNotebookRequest) GetDescription() string {
+	if m != nil {
+		return m.Description
+	}
+	return ""
+}
+
+func (m *CreateNotebookRequest) GetModel() *ModelSpec {
+	if m != nil {
+		return m.Model
 	}
 	return nil
 }
@@ -199,19 +294,26 @@ type Notebook struct {
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// ID of the Deployment this notebook belongs to.
 	DeploymentId string `protobuf:"bytes,2,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
-	// Set if the notebook should be shutdown.
-	Shutdown bool `protobuf:"varint,3,opt,name=shutdown,proto3" json:"shutdown,omitempty"`
-	// Identifier of the entity responsible for shutting down the notebook.
-	ShutdownBy string `protobuf:"bytes,4,opt,name=shutdown_by,json=shutdownBy,proto3" json:"shutdown_by,omitempty"`
-	// Set if the notebook should be paused.
-	Paused bool `protobuf:"varint,5,opt,name=paused,proto3" json:"paused,omitempty"`
-	// Identifier of the entity responsible for pausing the notebook.
-	PausedBy string `protobuf:"bytes,6,opt,name=paused_by,json=pausedBy,proto3" json:"paused_by,omitempty"`
-	// Configuration of the notebook instance.
-	Spec *Spec `protobuf:"bytes,7,opt,name=spec,proto3" json:"spec,omitempty"`
+	// Name of the notebook.
+	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	// Description of the notebook.
+	Description string `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	// If the notebook should be paused.
+	Paused string `protobuf:"bytes,5,opt,name=paused,proto3" json:"paused,omitempty"`
+	// Identifier of the user that created this notebook.
+	CreatedById string `protobuf:"bytes,6,opt,name=created_by_id,json=createdById,proto3" json:"created_by_id,omitempty"`
+	// Time at which this notebook was created.
+	CreatedAt *types.Timestamp `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	// Model specification for the notebook.
+	// Note: This field is read-only after creating.
+	Model *ModelSpec `protobuf:"bytes,8,opt,name=model,proto3" json:"model,omitempty"`
+	// If the notebook should be deleted.
+	Deleted bool `protobuf:"varint,9,opt,name=deleted,proto3" json:"deleted,omitempty"`
+	// Time at which this notebook was deleted.
+	DeletedAt *types.Timestamp `protobuf:"bytes,10,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`
 	// Status of the notebook. Represents the state of the notebook as observed by the controller.
 	// Note: all fields in this block are read-only.
-	Status               *Status  `protobuf:"bytes,10,opt,name=status,proto3" json:"status,omitempty"`
+	Status               *Status  `protobuf:"bytes,11,opt,name=status,proto3" json:"status,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -221,7 +323,7 @@ func (m *Notebook) Reset()         { *m = Notebook{} }
 func (m *Notebook) String() string { return proto.CompactTextString(m) }
 func (*Notebook) ProtoMessage()    {}
 func (*Notebook) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e4288154b4c2ba34, []int{3}
+	return fileDescriptor_e4288154b4c2ba34, []int{4}
 }
 func (m *Notebook) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -264,37 +366,58 @@ func (m *Notebook) GetDeploymentId() string {
 	return ""
 }
 
-func (m *Notebook) GetShutdown() bool {
+func (m *Notebook) GetName() string {
 	if m != nil {
-		return m.Shutdown
-	}
-	return false
-}
-
-func (m *Notebook) GetShutdownBy() string {
-	if m != nil {
-		return m.ShutdownBy
+		return m.Name
 	}
 	return ""
 }
 
-func (m *Notebook) GetPaused() bool {
+func (m *Notebook) GetDescription() string {
+	if m != nil {
+		return m.Description
+	}
+	return ""
+}
+
+func (m *Notebook) GetPaused() string {
 	if m != nil {
 		return m.Paused
 	}
-	return false
+	return ""
 }
 
-func (m *Notebook) GetPausedBy() string {
+func (m *Notebook) GetCreatedById() string {
 	if m != nil {
-		return m.PausedBy
+		return m.CreatedById
 	}
 	return ""
 }
 
-func (m *Notebook) GetSpec() *Spec {
+func (m *Notebook) GetCreatedAt() *types.Timestamp {
 	if m != nil {
-		return m.Spec
+		return m.CreatedAt
+	}
+	return nil
+}
+
+func (m *Notebook) GetModel() *ModelSpec {
+	if m != nil {
+		return m.Model
+	}
+	return nil
+}
+
+func (m *Notebook) GetDeleted() bool {
+	if m != nil {
+		return m.Deleted
+	}
+	return false
+}
+
+func (m *Notebook) GetDeletedAt() *types.Timestamp {
+	if m != nil {
+		return m.DeletedAt
 	}
 	return nil
 }
@@ -306,107 +429,32 @@ func (m *Notebook) GetStatus() *Status {
 	return nil
 }
 
-// Specification options for a notebook.
-type Spec struct {
-	// Number of CPU units required by the notebook instance.
-	CPU int32 `protobuf:"varint,1,opt,name=CPU,proto3" json:"CPU,omitempty"`
-	// Memory required by the notebook instance.
-	// Should be expressed as memibyte (Mi).
-	Memory int32 `protobuf:"varint,2,opt,name=memory,proto3" json:"memory,omitempty"`
-	// Disk space required by the notebook instance.
+// Model specification for the notebook.
+type ModelSpec struct {
+	// Type of model being used.
+	// Currently supported:
+	// - basic [CPU: 1, Memory: 4GiB]
+	Model string `protobuf:"bytes,1,opt,name=model,proto3" json:"model,omitempty"`
+	// Disk size required by the notebook instance.
 	// Should be expressed as power-of-two: Mi, Gi, Ti, Pi, etc.
-	Disk                 string   `protobuf:"bytes,3,opt,name=disk,proto3" json:"disk,omitempty"`
+	DiskSize             string   `protobuf:"bytes,2,opt,name=disk_size,json=diskSize,proto3" json:"disk_size,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Spec) Reset()         { *m = Spec{} }
-func (m *Spec) String() string { return proto.CompactTextString(m) }
-func (*Spec) ProtoMessage()    {}
-func (*Spec) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e4288154b4c2ba34, []int{4}
-}
-func (m *Spec) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *Spec) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_Spec.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *Spec) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Spec.Merge(m, src)
-}
-func (m *Spec) XXX_Size() int {
-	return m.Size()
-}
-func (m *Spec) XXX_DiscardUnknown() {
-	xxx_messageInfo_Spec.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_Spec proto.InternalMessageInfo
-
-func (m *Spec) GetCPU() int32 {
-	if m != nil {
-		return m.CPU
-	}
-	return 0
-}
-
-func (m *Spec) GetMemory() int32 {
-	if m != nil {
-		return m.Memory
-	}
-	return 0
-}
-
-func (m *Spec) GetDisk() string {
-	if m != nil {
-		return m.Disk
-	}
-	return ""
-}
-
-// Contains details for the current state of the notebook.
-type Condition struct {
-	// Type of condition being reported.
-	// Should be one of the following:
-	// - Paused
-	// - Stopped
-	Type string `protobuf:"bytes,1,opt,name=type,proto3" json:"type,omitempty"`
-	// Status of the condition, one of true or false.
-	Status bool `protobuf:"varint,2,opt,name=status,proto3" json:"status,omitempty"`
-	// Identifier of the entity responsible for the conditions's last transition.
-	TriggeredBy string `protobuf:"bytes,3,opt,name=triggered_by,json=triggeredBy,proto3" json:"triggered_by,omitempty"`
-	// Reason for the condition's last transition.
-	Reason string `protobuf:"bytes,4,opt,name=reason,proto3" json:"reason,omitempty"`
-	// The last time the condition transitioned from one status to another.
-	LastTransitionTime   *types.Timestamp `protobuf:"bytes,5,opt,name=last_transition_time,json=lastTransitionTime,proto3" json:"last_transition_time,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
-	XXX_unrecognized     []byte           `json:"-"`
-	XXX_sizecache        int32            `json:"-"`
-}
-
-func (m *Condition) Reset()         { *m = Condition{} }
-func (m *Condition) String() string { return proto.CompactTextString(m) }
-func (*Condition) ProtoMessage()    {}
-func (*Condition) Descriptor() ([]byte, []int) {
+func (m *ModelSpec) Reset()         { *m = ModelSpec{} }
+func (m *ModelSpec) String() string { return proto.CompactTextString(m) }
+func (*ModelSpec) ProtoMessage()    {}
+func (*ModelSpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_e4288154b4c2ba34, []int{5}
 }
-func (m *Condition) XXX_Unmarshal(b []byte) error {
+func (m *ModelSpec) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *Condition) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *ModelSpec) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_Condition.Marshal(b, m, deterministic)
+		return xxx_messageInfo_ModelSpec.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -416,51 +464,30 @@ func (m *Condition) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-func (m *Condition) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Condition.Merge(m, src)
+func (m *ModelSpec) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ModelSpec.Merge(m, src)
 }
-func (m *Condition) XXX_Size() int {
+func (m *ModelSpec) XXX_Size() int {
 	return m.Size()
 }
-func (m *Condition) XXX_DiscardUnknown() {
-	xxx_messageInfo_Condition.DiscardUnknown(m)
+func (m *ModelSpec) XXX_DiscardUnknown() {
+	xxx_messageInfo_ModelSpec.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_Condition proto.InternalMessageInfo
+var xxx_messageInfo_ModelSpec proto.InternalMessageInfo
 
-func (m *Condition) GetType() string {
+func (m *ModelSpec) GetModel() string {
 	if m != nil {
-		return m.Type
+		return m.Model
 	}
 	return ""
 }
 
-func (m *Condition) GetStatus() bool {
+func (m *ModelSpec) GetDiskSize() string {
 	if m != nil {
-		return m.Status
-	}
-	return false
-}
-
-func (m *Condition) GetTriggeredBy() string {
-	if m != nil {
-		return m.TriggeredBy
+		return m.DiskSize
 	}
 	return ""
-}
-
-func (m *Condition) GetReason() string {
-	if m != nil {
-		return m.Reason
-	}
-	return ""
-}
-
-func (m *Condition) GetLastTransitionTime() *types.Timestamp {
-	if m != nil {
-		return m.LastTransitionTime
-	}
-	return nil
 }
 
 // Status of the notebook. Represents the state of the notebook as observed by the controller.
@@ -470,17 +497,18 @@ type Status struct {
 	// Should only contain only one of the following values:
 	// "Initialising"   - Notebook is initialising.
 	// "Running"        - Notebook is running.
+	// "Hibernating"    - Notebook is hibernating.
 	// "Error"          - Notebook is in an errored state. Additional information can be obtained from `message` field.
 	Phase string `protobuf:"bytes,1,opt,name=phase,proto3" json:"phase,omitempty"`
 	// Supporting information about the notebook phase - such as error messages in case of failures.
 	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	// The last time the notebook was updated.
+	// The last time this notebook was updated.
 	LastUpdatedAt *types.Timestamp `protobuf:"bytes,3,opt,name=last_updated_at,json=lastUpdatedAt,proto3" json:"last_updated_at,omitempty"`
-	// Contains details for the current state of the notebook.
-	Conditions           []*Condition `protobuf:"bytes,4,rep,name=conditions,proto3" json:"conditions,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
-	XXX_unrecognized     []byte       `json:"-"`
-	XXX_sizecache        int32        `json:"-"`
+	// URL of the Notebook.
+	Url                  string   `protobuf:"bytes,4,opt,name=url,proto3" json:"url,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *Status) Reset()         { *m = Status{} }
@@ -537,83 +565,79 @@ func (m *Status) GetLastUpdatedAt() *types.Timestamp {
 	return nil
 }
 
-func (m *Status) GetConditions() []*Condition {
+func (m *Status) GetUrl() string {
 	if m != nil {
-		return m.Conditions
+		return m.Url
 	}
-	return nil
+	return ""
 }
 
 func init() {
+	proto.RegisterType((*UpdateNotebookRequest)(nil), "arangodb.cloud.notebook.v1.UpdateNotebookRequest")
 	proto.RegisterType((*NotebookList)(nil), "arangodb.cloud.notebook.v1.NotebookList")
 	proto.RegisterType((*ListNotebookRequest)(nil), "arangodb.cloud.notebook.v1.ListNotebookRequest")
 	proto.RegisterType((*CreateNotebookRequest)(nil), "arangodb.cloud.notebook.v1.CreateNotebookRequest")
 	proto.RegisterType((*Notebook)(nil), "arangodb.cloud.notebook.v1.Notebook")
-	proto.RegisterType((*Spec)(nil), "arangodb.cloud.notebook.v1.Spec")
-	proto.RegisterType((*Condition)(nil), "arangodb.cloud.notebook.v1.Condition")
+	proto.RegisterType((*ModelSpec)(nil), "arangodb.cloud.notebook.v1.ModelSpec")
 	proto.RegisterType((*Status)(nil), "arangodb.cloud.notebook.v1.Status")
 }
 
 func init() { proto.RegisterFile("notebook.proto", fileDescriptor_e4288154b4c2ba34) }
 
 var fileDescriptor_e4288154b4c2ba34 = []byte{
-	// 888 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x56, 0x4f, 0x6f, 0x1b, 0x45,
-	0x14, 0x67, 0x1c, 0xdb, 0x71, 0x9e, 0x63, 0xb7, 0x1a, 0x4a, 0xb5, 0x2c, 0x95, 0xe3, 0x6e, 0x93,
-	0xd6, 0x44, 0xcd, 0xae, 0x12, 0x38, 0x05, 0x09, 0x54, 0x27, 0x55, 0x15, 0x54, 0x41, 0xb4, 0x69,
-	0x39, 0x70, 0xb1, 0xc6, 0xde, 0x61, 0xb3, 0xaa, 0x77, 0x67, 0xd9, 0x99, 0x35, 0xb2, 0x2a, 0x10,
-	0x02, 0x71, 0x80, 0x1b, 0xe2, 0xc2, 0x9d, 0x2f, 0x82, 0xc4, 0x05, 0x71, 0x42, 0xe2, 0x0b, 0xa0,
-	0xc0, 0x07, 0x41, 0xf3, 0x67, 0xb7, 0x86, 0xc4, 0x76, 0xa8, 0x72, 0x7b, 0x6f, 0x66, 0x7e, 0xef,
-	0xfd, 0xde, 0x6f, 0xe6, 0xbd, 0x5d, 0x68, 0x27, 0x4c, 0xd0, 0x21, 0x63, 0xcf, 0xdc, 0x34, 0x63,
-	0x82, 0x61, 0x9b, 0x64, 0x24, 0x09, 0x59, 0x30, 0x74, 0x47, 0x63, 0x96, 0x07, 0x6e, 0xb9, 0x3d,
-	0xd9, 0xb5, 0x6f, 0x8e, 0x58, 0x1c, 0xb3, 0xc4, 0x9b, 0xec, 0x7a, 0xda, 0xd2, 0x18, 0xfb, 0x9d,
-	0x30, 0x12, 0xa7, 0xf9, 0xd0, 0x1d, 0xb1, 0xd8, 0x0b, 0xd9, 0x98, 0x24, 0xa1, 0xa7, 0x36, 0x86,
-	0xf9, 0x27, 0x5e, 0x2a, 0xa6, 0x29, 0xe5, 0x9e, 0x88, 0x62, 0xca, 0x05, 0x89, 0xd3, 0x17, 0x96,
-	0x01, 0xdf, 0x0a, 0x19, 0x0b, 0xc7, 0xd4, 0x23, 0x69, 0xe4, 0x91, 0x24, 0x61, 0x82, 0x88, 0x88,
-	0x25, 0x5c, 0xef, 0x3a, 0xef, 0xc3, 0xfa, 0x07, 0x86, 0xc1, 0xe3, 0x88, 0x0b, 0xbc, 0x0f, 0xb5,
-	0x48, 0xd0, 0x98, 0x5b, 0xa8, 0xbb, 0xd2, 0x6b, 0xee, 0x6d, 0xba, 0xf3, 0xe9, 0xba, 0x05, 0xd0,
-	0xd7, 0x10, 0xe7, 0x39, 0xbc, 0x2a, 0x63, 0x94, 0xcb, 0xf4, 0xd3, 0x9c, 0x72, 0x81, 0xef, 0x40,
-	0x2b, 0xa0, 0xe9, 0x98, 0x4d, 0x63, 0x9a, 0x88, 0x41, 0x14, 0x58, 0xa8, 0x8b, 0x7a, 0x6b, 0xfe,
-	0xfa, 0x8b, 0xc5, 0xa3, 0x00, 0xbf, 0x07, 0xab, 0x2c, 0x55, 0xc4, 0x2c, 0xe8, 0xa2, 0x5e, 0x73,
-	0x6f, 0xeb, 0xbf, 0x99, 0x8d, 0x22, 0x93, 0x5d, 0x57, 0x26, 0xf9, 0x50, 0x1f, 0xf6, 0x0b, 0x94,
-	0x93, 0xc1, 0x6b, 0x07, 0x19, 0x25, 0x82, 0xbe, 0x54, 0xfa, 0xb7, 0xa1, 0xca, 0x53, 0x3a, 0xb2,
-	0x2a, 0x2a, 0x77, 0x77, 0x51, 0xd5, 0x27, 0x29, 0x1d, 0xf9, 0xea, 0xb4, 0xf3, 0x53, 0x05, 0x1a,
-	0x45, 0x3a, 0xdc, 0x86, 0x4a, 0x19, 0xbc, 0x12, 0x05, 0xe7, 0xf3, 0x56, 0x2e, 0xc8, 0x6b, 0x43,
-	0x83, 0x9f, 0xe6, 0x22, 0x60, 0x9f, 0x25, 0xd6, 0x4a, 0x17, 0xf5, 0x1a, 0x7e, 0xe9, 0xe3, 0x0d,
-	0x68, 0x16, 0xf6, 0x60, 0x38, 0xb5, 0xaa, 0x0a, 0x0e, 0xc5, 0x52, 0x7f, 0x8a, 0x6f, 0x42, 0x3d,
-	0x25, 0x39, 0xa7, 0x81, 0x55, 0x53, 0x50, 0xe3, 0xe1, 0x37, 0x60, 0x4d, 0x5b, 0x12, 0x56, 0x57,
-	0xb0, 0x86, 0x5e, 0xe8, 0x4f, 0xcb, 0x4a, 0x57, 0xff, 0x4f, 0xa5, 0x78, 0x1f, 0xea, 0x5c, 0x10,
-	0x91, 0x17, 0xb7, 0xe3, 0x2c, 0xc4, 0xa9, 0x93, 0xbe, 0x41, 0x38, 0x87, 0x50, 0x95, 0x91, 0xf0,
-	0x75, 0x58, 0x39, 0x38, 0x7e, 0xaa, 0x14, 0xaa, 0xf9, 0xd2, 0x94, 0x05, 0xc4, 0x34, 0x66, 0xd9,
-	0x54, 0x69, 0x53, 0xf3, 0x8d, 0x87, 0x31, 0x54, 0x83, 0x88, 0x3f, 0x53, 0x8a, 0xac, 0xf9, 0xca,
-	0x76, 0x7e, 0x46, 0xb0, 0x76, 0xc0, 0x92, 0x20, 0x92, 0xd7, 0x2d, 0x4f, 0xc8, 0x77, 0x6f, 0xe4,
-	0x56, 0xb6, 0x8c, 0x66, 0x38, 0x56, 0xb4, 0x1c, 0xda, 0xc3, 0xb7, 0x61, 0x5d, 0x64, 0x51, 0x18,
-	0xd2, 0x4c, 0x2b, 0xa2, 0xa3, 0x36, 0xcb, 0x35, 0xad, 0x64, 0x46, 0x09, 0x67, 0x89, 0x51, 0xd9,
-	0x78, 0xf8, 0x31, 0xdc, 0x18, 0x13, 0x2e, 0x06, 0x22, 0x23, 0x09, 0x57, 0x99, 0x07, 0xb2, 0xbd,
-	0x94, 0xde, 0xcd, 0x3d, 0xdb, 0xd5, 0xad, 0xe5, 0x16, 0xcd, 0xe8, 0x3e, 0x29, 0x7a, 0xcf, 0xc7,
-	0x12, 0xf7, 0xa4, 0x84, 0xc9, 0x0d, 0xe7, 0x17, 0x04, 0x75, 0xad, 0x0d, 0xbe, 0x01, 0xb5, 0xf4,
-	0x94, 0xf0, 0xa2, 0x00, 0xed, 0x60, 0x0b, 0x56, 0x63, 0xca, 0x39, 0x09, 0xa9, 0x79, 0x2c, 0x85,
-	0x8b, 0xfb, 0x70, 0x4d, 0x11, 0xc9, 0xd3, 0x80, 0x08, 0x1a, 0x0c, 0x88, 0x50, 0x65, 0x2c, 0xe6,
-	0xd0, 0x92, 0x90, 0xa7, 0x1a, 0xf1, 0x40, 0xe0, 0x87, 0x00, 0xa3, 0x42, 0x40, 0x6e, 0x55, 0x55,
-	0x7f, 0x6f, 0x2d, 0xba, 0xc7, 0x52, 0x6e, 0x7f, 0x06, 0xb8, 0xf7, 0x5b, 0x03, 0xae, 0x15, 0x8f,
-	0xfe, 0x84, 0x66, 0x93, 0x68, 0x44, 0xf1, 0x14, 0x5a, 0x8f, 0xa8, 0x78, 0x70, 0x7c, 0xf4, 0x11,
-	0xcd, 0xb8, 0xbc, 0x9f, 0x8d, 0xf9, 0xdd, 0xfb, 0x30, 0x4e, 0xc5, 0xd4, 0xbe, 0x3d, 0xff, 0x80,
-	0x89, 0xe1, 0x6c, 0x7e, 0xf5, 0xc7, 0xdf, 0x3f, 0x54, 0x3a, 0xf8, 0x96, 0x1a, 0x5d, 0x05, 0x31,
-	0x39, 0x1c, 0x49, 0x1a, 0xed, 0x4c, 0x4c, 0xa6, 0x2f, 0x11, 0x34, 0x1f, 0xd1, 0x72, 0xe8, 0xe0,
-	0x3b, 0xf3, 0x03, 0x1f, 0x1d, 0x9a, 0xa9, 0x61, 0x5f, 0x6a, 0xac, 0x39, 0x77, 0x15, 0x81, 0x2e,
-	0xee, 0x9c, 0x23, 0x50, 0xda, 0xcf, 0xa3, 0xe0, 0x73, 0xfc, 0x1d, 0x82, 0xf6, 0xbf, 0x67, 0x0f,
-	0xde, 0x5d, 0xa8, 0xeb, 0x45, 0x73, 0xca, 0x5e, 0x26, 0x59, 0xa1, 0x87, 0xfd, 0xfa, 0x5c, 0x3a,
-	0xfb, 0x68, 0x1b, 0x7f, 0x01, 0xed, 0x43, 0x3a, 0xa6, 0x33, 0x5c, 0x2e, 0xa5, 0xc8, 0xd2, 0xec,
-	0x46, 0x8c, 0xed, 0x65, 0x62, 0x7c, 0x8b, 0xe0, 0xfa, 0x89, 0x99, 0x51, 0x57, 0x4c, 0xc1, 0x53,
-	0x14, 0xde, 0x74, 0xee, 0x2d, 0xa6, 0xe0, 0x95, 0x13, 0xf4, 0x6b, 0x04, 0xad, 0x63, 0x39, 0xf8,
-	0xae, 0x98, 0xc8, 0x7d, 0x45, 0xe4, 0xae, 0xb3, 0xb9, 0x84, 0x88, 0x1a, 0xba, 0xf8, 0x1b, 0x04,
-	0x6d, 0x9f, 0xf2, 0x3c, 0xbe, 0x6a, 0x1a, 0x3b, 0x8a, 0xc6, 0x3d, 0x67, 0x6b, 0x09, 0x8d, 0x4c,
-	0x25, 0xc7, 0xdf, 0x23, 0x68, 0xcd, 0x7e, 0x9f, 0x39, 0xf6, 0x16, 0xbd, 0xd2, 0x0b, 0x3e, 0xe5,
-	0x76, 0xef, 0x32, 0x7d, 0x23, 0x81, 0xce, 0x96, 0xe2, 0xb6, 0xe1, 0xd8, 0x73, 0xb9, 0xf1, 0x7d,
-	0xb4, 0xdd, 0x7f, 0xf7, 0xd7, 0xb3, 0x0e, 0xfa, 0xfd, 0xac, 0x83, 0xfe, 0x3c, 0xeb, 0xa0, 0x1f,
-	0xff, 0xea, 0xbc, 0xf2, 0xf1, 0xfd, 0x99, 0x7f, 0x9d, 0x22, 0xd9, 0x4e, 0x4c, 0x12, 0x12, 0xd2,
-	0x40, 0xc6, 0xe2, 0xb3, 0xc1, 0x86, 0x75, 0x35, 0xf6, 0xde, 0xfa, 0x27, 0x00, 0x00, 0xff, 0xff,
-	0xf1, 0x90, 0xa4, 0xf4, 0x66, 0x09, 0x00, 0x00,
+	// 824 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x56, 0xdd, 0x6e, 0xe3, 0x44,
+	0x14, 0x66, 0x92, 0x6d, 0x9a, 0x9c, 0x6c, 0xb2, 0x68, 0x60, 0x57, 0xc6, 0xac, 0xb2, 0xc1, 0xdd,
+	0x45, 0xa1, 0x62, 0x6d, 0xa5, 0x5c, 0xd1, 0x4a, 0x45, 0x2d, 0x45, 0x55, 0x10, 0x7f, 0x4a, 0x80,
+	0x0b, 0x6e, 0xa2, 0x49, 0x66, 0x70, 0xad, 0xda, 0x1e, 0x93, 0x19, 0x47, 0x4a, 0x2b, 0x10, 0xe2,
+	0x01, 0x40, 0x08, 0x2e, 0x78, 0x0b, 0xee, 0x79, 0x02, 0x2e, 0xb8, 0x40, 0xe2, 0x05, 0x50, 0xe1,
+	0x41, 0x56, 0x33, 0xf6, 0xa4, 0x69, 0xf3, 0xdb, 0xbb, 0x33, 0x33, 0xe7, 0x3b, 0xe7, 0x3b, 0xdf,
+	0x1c, 0x9f, 0x31, 0xd4, 0x63, 0x2e, 0xd9, 0x80, 0xf3, 0x73, 0x37, 0x19, 0x71, 0xc9, 0xb1, 0x4d,
+	0x46, 0x24, 0xf6, 0x39, 0x1d, 0xb8, 0xc3, 0x90, 0xa7, 0xd4, 0x9d, 0x1e, 0x8f, 0xdb, 0xf6, 0xa3,
+	0x21, 0x8f, 0x22, 0x1e, 0x7b, 0xe3, 0xb6, 0x97, 0x59, 0x19, 0xc6, 0x3e, 0xf0, 0x03, 0x79, 0x96,
+	0x0e, 0xdc, 0x21, 0x8f, 0x3c, 0x9f, 0x87, 0x24, 0xf6, 0x3d, 0x7d, 0x30, 0x48, 0xbf, 0xf6, 0x12,
+	0x39, 0x49, 0x98, 0xf0, 0x64, 0x10, 0x31, 0x21, 0x49, 0x94, 0x5c, 0x5b, 0x39, 0xf8, 0xb1, 0xcf,
+	0xb9, 0x1f, 0x32, 0x8f, 0x24, 0x81, 0x47, 0xe2, 0x98, 0x4b, 0x22, 0x03, 0x1e, 0x8b, 0xec, 0xd4,
+	0x49, 0xe1, 0xe1, 0x17, 0x09, 0x25, 0x92, 0x7d, 0x92, 0xf3, 0xe8, 0xb2, 0x6f, 0x52, 0x26, 0x24,
+	0xae, 0x43, 0x21, 0xa0, 0x16, 0x6a, 0xa2, 0x56, 0xa5, 0x5b, 0x08, 0x28, 0x7e, 0x04, 0xa5, 0x84,
+	0xa4, 0x82, 0x51, 0xab, 0xd0, 0x44, 0xad, 0x72, 0x37, 0x5f, 0x61, 0x0c, 0xf7, 0x62, 0x12, 0x31,
+	0xab, 0xa8, 0x3d, 0xb5, 0x8d, 0x9b, 0x50, 0xa5, 0x4c, 0x0c, 0x47, 0x41, 0xa2, 0x52, 0x59, 0xf7,
+	0xf4, 0xd1, 0xec, 0x96, 0xf3, 0x21, 0xdc, 0x37, 0x09, 0x3f, 0x0a, 0x84, 0xc4, 0xfb, 0xb0, 0x15,
+	0x48, 0x16, 0x09, 0x0b, 0x35, 0x8b, 0xad, 0xea, 0xde, 0x53, 0x77, 0xb9, 0x4a, 0xee, 0x94, 0x69,
+	0x06, 0x71, 0x2e, 0xe1, 0x15, 0x15, 0xe3, 0x76, 0x01, 0x3b, 0x50, 0xa3, 0x2c, 0x09, 0xf9, 0x24,
+	0x62, 0xb1, 0xec, 0x4f, 0x6b, 0xb9, 0x7f, 0xbd, 0xd9, 0xa1, 0xf8, 0x3d, 0xd8, 0xe6, 0x9a, 0x91,
+	0xb0, 0xa0, 0x89, 0x5a, 0xd5, 0xbd, 0x67, 0xb7, 0x33, 0xe7, 0x17, 0x31, 0x6e, 0xbb, 0x2a, 0xc9,
+	0xa7, 0x99, 0x73, 0xd7, 0xa0, 0x9c, 0xdf, 0x11, 0x3c, 0x7c, 0x7f, 0xc4, 0x16, 0x08, 0xb8, 0x51,
+	0x7e, 0xa3, 0x5e, 0x61, 0xb9, 0x7a, 0xc5, 0x39, 0xf5, 0xf0, 0x01, 0x6c, 0x45, 0x9c, 0xb2, 0x50,
+	0x2b, 0xbb, 0x80, 0xf3, 0xac, 0x5a, 0x1f, 0x2b, 0xc7, 0x5e, 0xc2, 0x86, 0xdd, 0x0c, 0xe3, 0xfc,
+	0x51, 0x84, 0xb2, 0xe1, 0x3a, 0x77, 0xcb, 0x73, 0xa4, 0x0b, 0x2b, 0x48, 0xdf, 0xe9, 0xca, 0x67,
+	0x1a, 0x68, 0x4b, 0x1f, 0x9a, 0x06, 0x72, 0xa0, 0x36, 0xd4, 0x02, 0xd2, 0xfe, 0x60, 0xa2, 0x52,
+	0x96, 0x32, 0x6c, 0xbe, 0x79, 0x3c, 0xe9, 0x50, 0xfc, 0x2e, 0x80, 0xf1, 0x21, 0xd2, 0xda, 0xd6,
+	0x55, 0xdb, 0x6e, 0xd6, 0xd8, 0xae, 0xf9, 0x14, 0xdc, 0xcf, 0x4d, 0xe7, 0x77, 0x2b, 0xb9, 0xf7,
+	0x91, 0xbc, 0xd6, 0xaa, 0x7c, 0x77, 0xad, 0xb0, 0x05, 0xdb, 0x94, 0x85, 0x4c, 0x32, 0x6a, 0x55,
+	0x74, 0xd7, 0x9b, 0xa5, 0x62, 0x94, 0x9b, 0x8a, 0x11, 0xac, 0x67, 0x94, 0x7b, 0x1f, 0xa9, 0x5e,
+	0x2f, 0x09, 0x49, 0x64, 0x2a, 0xac, 0xaa, 0x86, 0x39, 0xab, 0x28, 0xf5, 0xb4, 0x67, 0x37, 0x47,
+	0x38, 0x87, 0x50, 0x99, 0x92, 0xc4, 0xaf, 0x9a, 0xd2, 0xb2, 0xfb, 0xcb, 0x39, 0xbf, 0x0e, 0x15,
+	0x1a, 0x88, 0xf3, 0xbe, 0x08, 0x2e, 0x4c, 0x5f, 0x95, 0xd5, 0x46, 0x2f, 0xb8, 0x60, 0xce, 0x8f,
+	0x08, 0x4a, 0x59, 0x48, 0x85, 0x4e, 0xce, 0x88, 0x60, 0x06, 0xad, 0x17, 0xaa, 0xe2, 0x88, 0x09,
+	0x41, 0x7c, 0x83, 0x35, 0x4b, 0x7c, 0x0c, 0x0f, 0x42, 0x22, 0x64, 0x3f, 0xd5, 0xe3, 0x42, 0x97,
+	0x5d, 0x5c, 0x5b, 0x76, 0x4d, 0x41, 0xb2, 0x01, 0xa3, 0x4a, 0x7f, 0x19, 0x8a, 0xe9, 0x28, 0xcc,
+	0xbb, 0x43, 0x99, 0x7b, 0x7f, 0x95, 0xe0, 0x81, 0xe9, 0xc6, 0x1e, 0x1b, 0x8d, 0x83, 0x21, 0xc3,
+	0x13, 0xa8, 0x9d, 0x32, 0x79, 0xf4, 0x59, 0xe7, 0x4b, 0x36, 0x12, 0xaa, 0x75, 0x9e, 0x2c, 0xff,
+	0x28, 0x3f, 0x88, 0x12, 0x39, 0xb1, 0xdf, 0x58, 0xee, 0x90, 0xc7, 0x70, 0x9e, 0xfe, 0xf0, 0xcf,
+	0xff, 0xbf, 0x14, 0x1a, 0xf8, 0xb1, 0x1e, 0x84, 0x46, 0x62, 0x35, 0x6a, 0x49, 0x12, 0x3c, 0x1f,
+	0xe7, 0x99, 0xbe, 0x47, 0x50, 0x3d, 0x65, 0xd3, 0x59, 0x82, 0x77, 0x96, 0x07, 0xee, 0x9c, 0xe4,
+	0xc3, 0xc0, 0xde, 0x68, 0x5a, 0x39, 0x6f, 0x6a, 0x02, 0x4d, 0xdc, 0x98, 0x23, 0x30, 0xb5, 0x2f,
+	0x03, 0xfa, 0x2d, 0xfe, 0x09, 0x41, 0xfd, 0xe6, 0x44, 0xc1, 0xed, 0x55, 0x09, 0x16, 0x4e, 0x9f,
+	0x0d, 0x39, 0xe5, 0xa2, 0xd8, 0xaf, 0x2d, 0xe5, 0xb4, 0x8f, 0x76, 0xf1, 0x77, 0x50, 0x3f, 0xd1,
+	0xdd, 0x7b, 0x37, 0x59, 0xd6, 0xdd, 0x9a, 0x51, 0x64, 0x77, 0x9d, 0x22, 0xbf, 0x22, 0xa8, 0xdf,
+	0x7c, 0xa4, 0x56, 0x2b, 0xb2, 0xf0, 0x41, 0xdb, 0x50, 0x91, 0xb7, 0x34, 0xa7, 0x1d, 0x67, 0x0d,
+	0x27, 0x25, 0xcb, 0xcf, 0x08, 0x6a, 0xb3, 0x0f, 0x8f, 0xc0, 0xde, 0xaa, 0x14, 0x0b, 0xde, 0x28,
+	0xbb, 0xb5, 0x09, 0x27, 0x05, 0x74, 0x9e, 0x69, 0x5e, 0x4f, 0x1c, 0x7b, 0x29, 0x2f, 0xb1, 0x8f,
+	0x76, 0x8f, 0x0f, 0xff, 0xbc, 0x6a, 0xa0, 0xbf, 0xaf, 0x1a, 0xe8, 0xdf, 0xab, 0x06, 0xfa, 0xed,
+	0xbf, 0xc6, 0x4b, 0x5f, 0xbd, 0x3d, 0xf3, 0xef, 0x60, 0x92, 0x3d, 0x8f, 0x48, 0x4c, 0x7c, 0x46,
+	0x55, 0x2c, 0x31, 0x1b, 0x6c, 0x50, 0xd2, 0xdf, 0xf0, 0x3b, 0x2f, 0x02, 0x00, 0x00, 0xff, 0xff,
+	0xc1, 0x67, 0x11, 0x26, 0xb6, 0x08, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -639,23 +663,16 @@ type NotebookServiceClient interface {
 	// Create a new Notebook by specifying its configuration.
 	// Required permissions:
 	// - notebook.notebook.create
-	CreateNotebook(ctx context.Context, in *CreateNotebookRequest, opts ...grpc.CallOption) (*v1.Empty, error)
+	CreateNotebook(ctx context.Context, in *CreateNotebookRequest, opts ...grpc.CallOption) (*Notebook, error)
 	// Delete an existing notebook using its ID.
+	// This initially marks the notebook for deletion. It is deleted from CP once all its child resources are deleted.
 	// Required permissions:
 	// - notebook.notebook.delete
 	DeleteNotebook(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
-	// Shutdown a running notebook.
+	// Update an existing notebook. Returns updated Notebook.
 	// Required permissions:
-	// - notebook.notebook.shutdown
-	ShutdownNotebook(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
-	// Pause a running notebook. This will move the notebook to a hibernating state.
-	// Required permissions:
-	// - notebook.notebook.pause
-	PauseNotebook(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
-	// Resume a paused notebook. This will remove the notebook from a hibernating state.
-	// Required permissions:
-	// - notebook.notebook.resume
-	ResumeNotebook(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
+	// - notebook.notebook.update
+	UpdateNotebook(ctx context.Context, in *UpdateNotebookRequest, opts ...grpc.CallOption) (*Notebook, error)
 	// List all notebooks for a deployment.
 	// Required permissions:
 	// - notebook.notebook.list
@@ -688,8 +705,8 @@ func (c *notebookServiceClient) GetNotebook(ctx context.Context, in *v1.IDOption
 	return out, nil
 }
 
-func (c *notebookServiceClient) CreateNotebook(ctx context.Context, in *CreateNotebookRequest, opts ...grpc.CallOption) (*v1.Empty, error) {
-	out := new(v1.Empty)
+func (c *notebookServiceClient) CreateNotebook(ctx context.Context, in *CreateNotebookRequest, opts ...grpc.CallOption) (*Notebook, error) {
+	out := new(Notebook)
 	err := c.cc.Invoke(ctx, "/arangodb.cloud.notebook.v1.NotebookService/CreateNotebook", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -706,27 +723,9 @@ func (c *notebookServiceClient) DeleteNotebook(ctx context.Context, in *v1.IDOpt
 	return out, nil
 }
 
-func (c *notebookServiceClient) ShutdownNotebook(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error) {
-	out := new(v1.Empty)
-	err := c.cc.Invoke(ctx, "/arangodb.cloud.notebook.v1.NotebookService/ShutdownNotebook", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *notebookServiceClient) PauseNotebook(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error) {
-	out := new(v1.Empty)
-	err := c.cc.Invoke(ctx, "/arangodb.cloud.notebook.v1.NotebookService/PauseNotebook", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *notebookServiceClient) ResumeNotebook(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error) {
-	out := new(v1.Empty)
-	err := c.cc.Invoke(ctx, "/arangodb.cloud.notebook.v1.NotebookService/ResumeNotebook", in, out, opts...)
+func (c *notebookServiceClient) UpdateNotebook(ctx context.Context, in *UpdateNotebookRequest, opts ...grpc.CallOption) (*Notebook, error) {
+	out := new(Notebook)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.notebook.v1.NotebookService/UpdateNotebook", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -755,23 +754,16 @@ type NotebookServiceServer interface {
 	// Create a new Notebook by specifying its configuration.
 	// Required permissions:
 	// - notebook.notebook.create
-	CreateNotebook(context.Context, *CreateNotebookRequest) (*v1.Empty, error)
+	CreateNotebook(context.Context, *CreateNotebookRequest) (*Notebook, error)
 	// Delete an existing notebook using its ID.
+	// This initially marks the notebook for deletion. It is deleted from CP once all its child resources are deleted.
 	// Required permissions:
 	// - notebook.notebook.delete
 	DeleteNotebook(context.Context, *v1.IDOptions) (*v1.Empty, error)
-	// Shutdown a running notebook.
+	// Update an existing notebook. Returns updated Notebook.
 	// Required permissions:
-	// - notebook.notebook.shutdown
-	ShutdownNotebook(context.Context, *v1.IDOptions) (*v1.Empty, error)
-	// Pause a running notebook. This will move the notebook to a hibernating state.
-	// Required permissions:
-	// - notebook.notebook.pause
-	PauseNotebook(context.Context, *v1.IDOptions) (*v1.Empty, error)
-	// Resume a paused notebook. This will remove the notebook from a hibernating state.
-	// Required permissions:
-	// - notebook.notebook.resume
-	ResumeNotebook(context.Context, *v1.IDOptions) (*v1.Empty, error)
+	// - notebook.notebook.update
+	UpdateNotebook(context.Context, *UpdateNotebookRequest) (*Notebook, error)
 	// List all notebooks for a deployment.
 	// Required permissions:
 	// - notebook.notebook.list
@@ -788,20 +780,14 @@ func (*UnimplementedNotebookServiceServer) GetAPIVersion(ctx context.Context, re
 func (*UnimplementedNotebookServiceServer) GetNotebook(ctx context.Context, req *v1.IDOptions) (*Notebook, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNotebook not implemented")
 }
-func (*UnimplementedNotebookServiceServer) CreateNotebook(ctx context.Context, req *CreateNotebookRequest) (*v1.Empty, error) {
+func (*UnimplementedNotebookServiceServer) CreateNotebook(ctx context.Context, req *CreateNotebookRequest) (*Notebook, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateNotebook not implemented")
 }
 func (*UnimplementedNotebookServiceServer) DeleteNotebook(ctx context.Context, req *v1.IDOptions) (*v1.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteNotebook not implemented")
 }
-func (*UnimplementedNotebookServiceServer) ShutdownNotebook(ctx context.Context, req *v1.IDOptions) (*v1.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ShutdownNotebook not implemented")
-}
-func (*UnimplementedNotebookServiceServer) PauseNotebook(ctx context.Context, req *v1.IDOptions) (*v1.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PauseNotebook not implemented")
-}
-func (*UnimplementedNotebookServiceServer) ResumeNotebook(ctx context.Context, req *v1.IDOptions) (*v1.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ResumeNotebook not implemented")
+func (*UnimplementedNotebookServiceServer) UpdateNotebook(ctx context.Context, req *UpdateNotebookRequest) (*Notebook, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateNotebook not implemented")
 }
 func (*UnimplementedNotebookServiceServer) ListNotebooks(ctx context.Context, req *ListNotebookRequest) (*NotebookList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListNotebooks not implemented")
@@ -883,56 +869,20 @@ func _NotebookService_DeleteNotebook_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
-func _NotebookService_ShutdownNotebook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.IDOptions)
+func _NotebookService_UpdateNotebook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateNotebookRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(NotebookServiceServer).ShutdownNotebook(ctx, in)
+		return srv.(NotebookServiceServer).UpdateNotebook(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/arangodb.cloud.notebook.v1.NotebookService/ShutdownNotebook",
+		FullMethod: "/arangodb.cloud.notebook.v1.NotebookService/UpdateNotebook",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NotebookServiceServer).ShutdownNotebook(ctx, req.(*v1.IDOptions))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _NotebookService_PauseNotebook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.IDOptions)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(NotebookServiceServer).PauseNotebook(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/arangodb.cloud.notebook.v1.NotebookService/PauseNotebook",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NotebookServiceServer).PauseNotebook(ctx, req.(*v1.IDOptions))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _NotebookService_ResumeNotebook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.IDOptions)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(NotebookServiceServer).ResumeNotebook(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/arangodb.cloud.notebook.v1.NotebookService/ResumeNotebook",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NotebookServiceServer).ResumeNotebook(ctx, req.(*v1.IDOptions))
+		return srv.(NotebookServiceServer).UpdateNotebook(ctx, req.(*UpdateNotebookRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -976,16 +926,8 @@ var _NotebookService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _NotebookService_DeleteNotebook_Handler,
 		},
 		{
-			MethodName: "ShutdownNotebook",
-			Handler:    _NotebookService_ShutdownNotebook_Handler,
-		},
-		{
-			MethodName: "PauseNotebook",
-			Handler:    _NotebookService_PauseNotebook_Handler,
-		},
-		{
-			MethodName: "ResumeNotebook",
-			Handler:    _NotebookService_ResumeNotebook_Handler,
+			MethodName: "UpdateNotebook",
+			Handler:    _NotebookService_UpdateNotebook_Handler,
 		},
 		{
 			MethodName: "ListNotebooks",
@@ -994,6 +936,64 @@ var _NotebookService_serviceDesc = grpc.ServiceDesc{
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "notebook.proto",
+}
+
+func (m *UpdateNotebookRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *UpdateNotebookRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UpdateNotebookRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Description) > 0 {
+		i -= len(m.Description)
+		copy(dAtA[i:], m.Description)
+		i = encodeVarintNotebook(dAtA, i, uint64(len(m.Description)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintNotebook(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.Paused {
+		i--
+		if m.Paused {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintNotebook(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *NotebookList) Marshal() (dAtA []byte, err error) {
@@ -1107,15 +1107,29 @@ func (m *CreateNotebookRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if m.Spec != nil {
+	if m.Model != nil {
 		{
-			size, err := m.Spec.MarshalToSizedBuffer(dAtA[:i])
+			size, err := m.Model.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
 			i -= size
 			i = encodeVarintNotebook(dAtA, i, uint64(size))
 		}
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Description) > 0 {
+		i -= len(m.Description)
+		copy(dAtA[i:], m.Description)
+		i = encodeVarintNotebook(dAtA, i, uint64(len(m.Description)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintNotebook(dAtA, i, uint64(len(m.Name)))
 		i--
 		dAtA[i] = 0x12
 	}
@@ -1163,11 +1177,45 @@ func (m *Notebook) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			i = encodeVarintNotebook(dAtA, i, uint64(size))
 		}
 		i--
+		dAtA[i] = 0x5a
+	}
+	if m.DeletedAt != nil {
+		{
+			size, err := m.DeletedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintNotebook(dAtA, i, uint64(size))
+		}
+		i--
 		dAtA[i] = 0x52
 	}
-	if m.Spec != nil {
+	if m.Deleted {
+		i--
+		if m.Deleted {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x48
+	}
+	if m.Model != nil {
 		{
-			size, err := m.Spec.MarshalToSizedBuffer(dAtA[:i])
+			size, err := m.Model.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintNotebook(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x42
+	}
+	if m.CreatedAt != nil {
+		{
+			size, err := m.CreatedAt.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
@@ -1177,39 +1225,33 @@ func (m *Notebook) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x3a
 	}
-	if len(m.PausedBy) > 0 {
-		i -= len(m.PausedBy)
-		copy(dAtA[i:], m.PausedBy)
-		i = encodeVarintNotebook(dAtA, i, uint64(len(m.PausedBy)))
+	if len(m.CreatedById) > 0 {
+		i -= len(m.CreatedById)
+		copy(dAtA[i:], m.CreatedById)
+		i = encodeVarintNotebook(dAtA, i, uint64(len(m.CreatedById)))
 		i--
 		dAtA[i] = 0x32
 	}
-	if m.Paused {
+	if len(m.Paused) > 0 {
+		i -= len(m.Paused)
+		copy(dAtA[i:], m.Paused)
+		i = encodeVarintNotebook(dAtA, i, uint64(len(m.Paused)))
 		i--
-		if m.Paused {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i--
-		dAtA[i] = 0x28
+		dAtA[i] = 0x2a
 	}
-	if len(m.ShutdownBy) > 0 {
-		i -= len(m.ShutdownBy)
-		copy(dAtA[i:], m.ShutdownBy)
-		i = encodeVarintNotebook(dAtA, i, uint64(len(m.ShutdownBy)))
+	if len(m.Description) > 0 {
+		i -= len(m.Description)
+		copy(dAtA[i:], m.Description)
+		i = encodeVarintNotebook(dAtA, i, uint64(len(m.Description)))
 		i--
 		dAtA[i] = 0x22
 	}
-	if m.Shutdown {
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintNotebook(dAtA, i, uint64(len(m.Name)))
 		i--
-		if m.Shutdown {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i--
-		dAtA[i] = 0x18
+		dAtA[i] = 0x1a
 	}
 	if len(m.DeploymentId) > 0 {
 		i -= len(m.DeploymentId)
@@ -1228,7 +1270,7 @@ func (m *Notebook) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *Spec) Marshal() (dAtA []byte, err error) {
+func (m *ModelSpec) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1238,12 +1280,12 @@ func (m *Spec) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *Spec) MarshalTo(dAtA []byte) (int, error) {
+func (m *ModelSpec) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *Spec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *ModelSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1252,90 +1294,17 @@ func (m *Spec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.Disk) > 0 {
-		i -= len(m.Disk)
-		copy(dAtA[i:], m.Disk)
-		i = encodeVarintNotebook(dAtA, i, uint64(len(m.Disk)))
+	if len(m.DiskSize) > 0 {
+		i -= len(m.DiskSize)
+		copy(dAtA[i:], m.DiskSize)
+		i = encodeVarintNotebook(dAtA, i, uint64(len(m.DiskSize)))
 		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x12
 	}
-	if m.Memory != 0 {
-		i = encodeVarintNotebook(dAtA, i, uint64(m.Memory))
-		i--
-		dAtA[i] = 0x10
-	}
-	if m.CPU != 0 {
-		i = encodeVarintNotebook(dAtA, i, uint64(m.CPU))
-		i--
-		dAtA[i] = 0x8
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *Condition) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *Condition) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *Condition) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.LastTransitionTime != nil {
-		{
-			size, err := m.LastTransitionTime.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintNotebook(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x2a
-	}
-	if len(m.Reason) > 0 {
-		i -= len(m.Reason)
-		copy(dAtA[i:], m.Reason)
-		i = encodeVarintNotebook(dAtA, i, uint64(len(m.Reason)))
-		i--
-		dAtA[i] = 0x22
-	}
-	if len(m.TriggeredBy) > 0 {
-		i -= len(m.TriggeredBy)
-		copy(dAtA[i:], m.TriggeredBy)
-		i = encodeVarintNotebook(dAtA, i, uint64(len(m.TriggeredBy)))
-		i--
-		dAtA[i] = 0x1a
-	}
-	if m.Status {
-		i--
-		if m.Status {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i--
-		dAtA[i] = 0x10
-	}
-	if len(m.Type) > 0 {
-		i -= len(m.Type)
-		copy(dAtA[i:], m.Type)
-		i = encodeVarintNotebook(dAtA, i, uint64(len(m.Type)))
+	if len(m.Model) > 0 {
+		i -= len(m.Model)
+		copy(dAtA[i:], m.Model)
+		i = encodeVarintNotebook(dAtA, i, uint64(len(m.Model)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1366,19 +1335,12 @@ func (m *Status) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.Conditions) > 0 {
-		for iNdEx := len(m.Conditions) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Conditions[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintNotebook(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0x22
-		}
+	if len(m.Url) > 0 {
+		i -= len(m.Url)
+		copy(dAtA[i:], m.Url)
+		i = encodeVarintNotebook(dAtA, i, uint64(len(m.Url)))
+		i--
+		dAtA[i] = 0x22
 	}
 	if m.LastUpdatedAt != nil {
 		{
@@ -1420,6 +1382,33 @@ func encodeVarintNotebook(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
+func (m *UpdateNotebookRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovNotebook(uint64(l))
+	}
+	if m.Paused {
+		n += 2
+	}
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovNotebook(uint64(l))
+	}
+	l = len(m.Description)
+	if l > 0 {
+		n += 1 + l + sovNotebook(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *NotebookList) Size() (n int) {
 	if m == nil {
 		return 0
@@ -1468,8 +1457,16 @@ func (m *CreateNotebookRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovNotebook(uint64(l))
 	}
-	if m.Spec != nil {
-		l = m.Spec.Size()
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovNotebook(uint64(l))
+	}
+	l = len(m.Description)
+	if l > 0 {
+		n += 1 + l + sovNotebook(uint64(l))
+	}
+	if m.Model != nil {
+		l = m.Model.Size()
 		n += 1 + l + sovNotebook(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
@@ -1492,22 +1489,35 @@ func (m *Notebook) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovNotebook(uint64(l))
 	}
-	if m.Shutdown {
-		n += 2
-	}
-	l = len(m.ShutdownBy)
+	l = len(m.Name)
 	if l > 0 {
 		n += 1 + l + sovNotebook(uint64(l))
 	}
-	if m.Paused {
-		n += 2
-	}
-	l = len(m.PausedBy)
+	l = len(m.Description)
 	if l > 0 {
 		n += 1 + l + sovNotebook(uint64(l))
 	}
-	if m.Spec != nil {
-		l = m.Spec.Size()
+	l = len(m.Paused)
+	if l > 0 {
+		n += 1 + l + sovNotebook(uint64(l))
+	}
+	l = len(m.CreatedById)
+	if l > 0 {
+		n += 1 + l + sovNotebook(uint64(l))
+	}
+	if m.CreatedAt != nil {
+		l = m.CreatedAt.Size()
+		n += 1 + l + sovNotebook(uint64(l))
+	}
+	if m.Model != nil {
+		l = m.Model.Size()
+		n += 1 + l + sovNotebook(uint64(l))
+	}
+	if m.Deleted {
+		n += 2
+	}
+	if m.DeletedAt != nil {
+		l = m.DeletedAt.Size()
 		n += 1 + l + sovNotebook(uint64(l))
 	}
 	if m.Status != nil {
@@ -1520,51 +1530,18 @@ func (m *Notebook) Size() (n int) {
 	return n
 }
 
-func (m *Spec) Size() (n int) {
+func (m *ModelSpec) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if m.CPU != 0 {
-		n += 1 + sovNotebook(uint64(m.CPU))
-	}
-	if m.Memory != 0 {
-		n += 1 + sovNotebook(uint64(m.Memory))
-	}
-	l = len(m.Disk)
+	l = len(m.Model)
 	if l > 0 {
 		n += 1 + l + sovNotebook(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *Condition) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.Type)
+	l = len(m.DiskSize)
 	if l > 0 {
-		n += 1 + l + sovNotebook(uint64(l))
-	}
-	if m.Status {
-		n += 2
-	}
-	l = len(m.TriggeredBy)
-	if l > 0 {
-		n += 1 + l + sovNotebook(uint64(l))
-	}
-	l = len(m.Reason)
-	if l > 0 {
-		n += 1 + l + sovNotebook(uint64(l))
-	}
-	if m.LastTransitionTime != nil {
-		l = m.LastTransitionTime.Size()
 		n += 1 + l + sovNotebook(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
@@ -1591,11 +1568,9 @@ func (m *Status) Size() (n int) {
 		l = m.LastUpdatedAt.Size()
 		n += 1 + l + sovNotebook(uint64(l))
 	}
-	if len(m.Conditions) > 0 {
-		for _, e := range m.Conditions {
-			l = e.Size()
-			n += 1 + l + sovNotebook(uint64(l))
-		}
+	l = len(m.Url)
+	if l > 0 {
+		n += 1 + l + sovNotebook(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1608,6 +1583,173 @@ func sovNotebook(x uint64) (n int) {
 }
 func sozNotebook(x uint64) (n int) {
 	return sovNotebook(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *UpdateNotebookRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowNotebook
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UpdateNotebookRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UpdateNotebookRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNotebook
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNotebook
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNotebook
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Paused", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNotebook
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Paused = bool(v != 0)
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNotebook
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNotebook
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNotebook
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNotebook
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNotebook
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNotebook
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Description = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipNotebook(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthNotebook
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
 }
 func (m *NotebookList) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -1876,7 +2018,71 @@ func (m *CreateNotebookRequest) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Spec", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNotebook
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNotebook
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNotebook
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNotebook
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNotebook
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNotebook
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Description = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Model", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -1903,10 +2109,10 @@ func (m *CreateNotebookRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.Spec == nil {
-				m.Spec = &Spec{}
+			if m.Model == nil {
+				m.Model = &ModelSpec{}
 			}
-			if err := m.Spec.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Model.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -2026,10 +2232,10 @@ func (m *Notebook) Unmarshal(dAtA []byte) error {
 			m.DeploymentId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Shutdown", wireType)
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
 			}
-			var v int
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowNotebook
@@ -2039,15 +2245,27 @@ func (m *Notebook) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= int(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			m.Shutdown = bool(v != 0)
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNotebook
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNotebook
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ShutdownBy", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2075,31 +2293,11 @@ func (m *Notebook) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ShutdownBy = string(dAtA[iNdEx:postIndex])
+			m.Description = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 5:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Paused", wireType)
-			}
-			var v int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowNotebook
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			m.Paused = bool(v != 0)
-		case 6:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field PausedBy", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Paused", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2127,11 +2325,43 @@ func (m *Notebook) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.PausedBy = string(dAtA[iNdEx:postIndex])
+			m.Paused = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CreatedById", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNotebook
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNotebook
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNotebook
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.CreatedById = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 7:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Spec", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -2158,14 +2388,106 @@ func (m *Notebook) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.Spec == nil {
-				m.Spec = &Spec{}
+			if m.CreatedAt == nil {
+				m.CreatedAt = &types.Timestamp{}
 			}
-			if err := m.Spec.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.CreatedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
+		case 8:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Model", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNotebook
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthNotebook
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthNotebook
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Model == nil {
+				m.Model = &ModelSpec{}
+			}
+			if err := m.Model.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 9:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Deleted", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNotebook
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Deleted = bool(v != 0)
 		case 10:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DeletedAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNotebook
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthNotebook
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthNotebook
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.DeletedAt == nil {
+				m.DeletedAt = &types.Timestamp{}
+			}
+			if err := m.DeletedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 11:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
 			}
@@ -2223,7 +2545,7 @@ func (m *Notebook) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *Spec) Unmarshal(dAtA []byte) error {
+func (m *ModelSpec) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -2246,136 +2568,15 @@ func (m *Spec) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Spec: wiretype end group for non-group")
+			return fmt.Errorf("proto: ModelSpec: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Spec: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field CPU", wireType)
-			}
-			m.CPU = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowNotebook
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.CPU |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Memory", wireType)
-			}
-			m.Memory = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowNotebook
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Memory |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Disk", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowNotebook
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthNotebook
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthNotebook
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Disk = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipNotebook(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthNotebook
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *Condition) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowNotebook
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: Condition: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Condition: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: ModelSpec: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Type", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Model", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2403,31 +2604,11 @@ func (m *Condition) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Type = string(dAtA[iNdEx:postIndex])
+			m.Model = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
-			}
-			var v int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowNotebook
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			m.Status = bool(v != 0)
-		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TriggeredBy", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field DiskSize", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2455,75 +2636,7 @@ func (m *Condition) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.TriggeredBy = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 4:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Reason", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowNotebook
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthNotebook
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthNotebook
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Reason = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 5:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field LastTransitionTime", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowNotebook
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthNotebook
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthNotebook
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.LastTransitionTime == nil {
-				m.LastTransitionTime = &types.Timestamp{}
-			}
-			if err := m.LastTransitionTime.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.DiskSize = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -2678,9 +2791,9 @@ func (m *Status) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Conditions", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Url", wireType)
 			}
-			var msglen int
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowNotebook
@@ -2690,25 +2803,23 @@ func (m *Status) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			if msglen < 0 {
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
 				return ErrInvalidLengthNotebook
 			}
-			postIndex := iNdEx + msglen
+			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
 				return ErrInvalidLengthNotebook
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Conditions = append(m.Conditions, &Condition{})
-			if err := m.Conditions[len(m.Conditions)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Url = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
