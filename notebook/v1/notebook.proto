@@ -121,7 +121,7 @@ message Notebook {
     // This is a read-only value.
     string id = 1;
     // ID of the Deployment this notebook belongs to.
-    // Read-only after creation.
+    // After creation, this value cannot be changed.
     string deployment_id = 2;
     // URL of the Notebook.
     // This is a read-only value.
@@ -133,13 +133,13 @@ message Notebook {
     // If the notebook should be paused.
     bool is_paused = 6;
     // Identifier of the user that created this notebook.
-    // Read-only after creation.
+    // This is a read-only value.
     string created_by_id = 7;
     // Time at which this notebook was created.
     // This is a read-only value.
     google.protobuf.Timestamp created_at = 8;
     // Model specification for the notebook.
-    // Read-only after creation.
+    // After creation, this value cannot be changed.
     ModelSpec model = 9;
     // If the notebook should be deleted.
     bool is_deleted = 10;
@@ -157,7 +157,7 @@ message ModelSpec {
     // This should refer to the `id` of a `NotebookModel` object.
     string notebook_model = 1; 
     // Disk size allocated to the notebook instance (in GiB).
-    string disk_size = 2;
+    int32 disk_size = 2;
 }
 
 // Specifies the resource configuration for a notebook.

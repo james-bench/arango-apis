@@ -34,3 +34,10 @@ const (
 	// PermissionListNotebooks is required to list notebooks.
 	PermissionListNotebooks = "notebook.notebook.list"
 )
+
+const (
+	// Notebook Model permissions
+
+	// PermissionListNotebookModels is required to list notebook models.
+	PermissionListNotebookModels = "notebook.model.list"
+)

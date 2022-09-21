@@ -39,8 +39,8 @@ export interface ModelSpec {
   notebook_model?: string;
   
   // Disk size allocated to the notebook instance (in GiB).
-  // string
-  disk_size?: string;
+  // number
+  disk_size?: number;
 }
 
 // Contains the specification and status of a given notebook instance.
@@ -51,7 +51,7 @@ export interface Notebook {
   id?: string;
   
   // ID of the Deployment this notebook belongs to.
-  // Read-only after creation.
+  // After creation, this value cannot be changed.
   // string
   deployment_id?: string;
   
@@ -73,7 +73,7 @@ export interface Notebook {
   is_paused?: boolean;
   
   // Identifier of the user that created this notebook.
-  // Read-only after creation.
+  // This is a read-only value.
   // string
   created_by_id?: string;
   
@@ -83,7 +83,7 @@ export interface Notebook {
   created_at?: googleTypes.Timestamp;
   
   // Model specification for the notebook.
-  // Read-only after creation.
+  // After creation, this value cannot be changed.
   // ModelSpec
   model?: ModelSpec;
   
