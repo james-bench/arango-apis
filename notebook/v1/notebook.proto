@@ -80,7 +80,7 @@ service NotebookService {
         };
     }
         
-    // List all notebooks for deployment.
+    // List all notebooks for the deployments identified by the given deployment identifier.
     // Note: This lists only those notebooks created by the caller.
     // Required permissions:
     // - notebook.notebook.list
@@ -91,10 +91,10 @@ service NotebookService {
         };
     }
     
-    // List all notebook models available to a deployment.
+    // List all notebook models available in the context of the given deployment.
     // Required permissions:
     // - notebook.model.list
-    rpc ListNotebookModels(ListNotebookRequest) returns (NotebookModelList) {
+    rpc ListNotebookModels(ListNotebookModelRequest) returns (NotebookModelList) {
         option (google.api.http) = {
             post: "/api/notebook/v1/models"
             body: "*"
@@ -111,6 +111,8 @@ message NotebookList {
 message ListNotebookRequest {
     // List notebooks for this deployment ID.
     string deployment_id = 1;
+    // If set, returns only paused noteboooks.
+    bool is_paused = 2;
     // Optional common list options, the context_id is ignored
     common.v1.ListOptions options = 10;
 }
@@ -166,10 +168,10 @@ message NotebookModel {
     string id = 1;
     // Human readable name of the model.
     string name = 2;
-	// CPU units allocated to the notebook.
-	// 1 CPU unit equals 1 physical / virtual CPU.
+    // CPU units allocated to the notebook.
+    // 1 CPU unit equals 1 physical / virtual CPU.
     int32 cpu = 3; 
-	// Memory allocated to the notebook in 'GiB'.
+    // Memory allocated to the notebook in 'GiB'.
     int32 memory = 4;
 }
 

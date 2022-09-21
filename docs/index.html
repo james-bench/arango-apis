@@ -14847,6 +14847,13 @@ Required permissions:
                 </tr>
               
                 <tr>
+                  <td>is_paused</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, returns only paused noteboooks. </p></td>
+                </tr>
+              
+                <tr>
                   <td>options</td>
                   <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
                   <td></td>
@@ -15262,7 +15269,7 @@ Required permissions:
                 <td>ListNotebooks</td>
                 <td><a href="#arangodb.cloud.notebook.v1.ListNotebookRequest">ListNotebookRequest</a></td>
                 <td><a href="#arangodb.cloud.notebook.v1.NotebookList">NotebookList</a></td>
-                <td><p>List all notebooks for deployment.
+                <td><p>List all notebooks for the deployments identified by the given deployment identifier.
 Note: This lists only those notebooks created by the caller.
 Required permissions:
 - notebook.notebook.list</p></td>
@@ -15270,9 +15277,9 @@ Required permissions:
             
               <tr>
                 <td>ListNotebookModels</td>
-                <td><a href="#arangodb.cloud.notebook.v1.ListNotebookRequest">ListNotebookRequest</a></td>
+                <td><a href="#arangodb.cloud.notebook.v1.ListNotebookModelRequest">ListNotebookModelRequest</a></td>
                 <td><a href="#arangodb.cloud.notebook.v1.NotebookModelList">NotebookModelList</a></td>
-                <td><p>List all notebook models available to a deployment.
+                <td><p>List all notebook models available in the context of the given deployment.
 Required permissions:
 - notebook.model.list</p></td>
               </tr>

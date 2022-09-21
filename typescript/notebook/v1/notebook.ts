@@ -26,6 +26,10 @@ export interface ListNotebookRequest {
   // string
   deployment_id?: string;
   
+  // If set, returns only paused noteboooks.
+  // boolean
+  is_paused?: boolean;
+  
   // Optional common list options, the context_id is ignored
   // arangodb.cloud.common.v1.ListOptions
   options?: arangodb_cloud_common_v1_ListOptions;
@@ -211,16 +215,16 @@ export interface INotebookService {
   // - notebook.notebook.update
   UpdateNotebook: (req: Notebook) => Promise<void>;
   
-  // List all notebooks for deployment.
+  // List all notebooks for the deployments identified by the given deployment identifier.
   // Note: This lists only those notebooks created by the caller.
   // Required permissions:
   // - notebook.notebook.list
   ListNotebooks: (req: ListNotebookRequest) => Promise<NotebookList>;
   
-  // List all notebook models available to a deployment.
+  // List all notebook models available in the context of the given deployment.
   // Required permissions:
   // - notebook.model.list
-  ListNotebookModels: (req: ListNotebookRequest) => Promise<NotebookModelList>;
+  ListNotebookModels: (req: ListNotebookModelRequest) => Promise<NotebookModelList>;
 }
 
 // Notebook service is used to manage notebooks.
@@ -269,7 +273,7 @@ export class NotebookService implements INotebookService {
     return api.post(url, req);
   }
   
-  // List all notebooks for deployment.
+  // List all notebooks for the deployments identified by the given deployment identifier.
   // Note: This lists only those notebooks created by the caller.
   // Required permissions:
   // - notebook.notebook.list
@@ -278,10 +282,10 @@ export class NotebookService implements INotebookService {
     return api.post(url, req);
   }
   
-  // List all notebook models available to a deployment.
+  // List all notebook models available in the context of the given deployment.
   // Required permissions:
   // - notebook.model.list
-  async ListNotebookModels(req: ListNotebookRequest): Promise<NotebookModelList> {
+  async ListNotebookModels(req: ListNotebookModelRequest): Promise<NotebookModelList> {
     const url = `/api/notebook/v1/models`;
     return api.post(url, req);
   }
