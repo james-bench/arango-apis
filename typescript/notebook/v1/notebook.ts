@@ -67,6 +67,11 @@ export interface Notebook {
   // string
   deployment_id?: string;
   
+  // URL of the Notebook.
+  // Note: This is a read-only property.
+  // string
+  url?: string;
+  
   // Name of the notebook.
   // string
   name?: string;
@@ -131,10 +136,6 @@ export interface Status {
   // The last time this notebook was updated.
   // googleTypes.Timestamp
   last_updated_at?: googleTypes.Timestamp;
-  
-  // URL of the Notebook.
-  // string
-  url?: string;
   
   // Resource usage of the notebook.
   // Status_Usage
