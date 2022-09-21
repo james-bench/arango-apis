@@ -135,6 +135,25 @@ export interface Status {
   // URL of the Notebook.
   // string
   url?: string;
+  
+  // Resource usage of the notebook.
+  // Status_Usage
+  usage?: Status_Usage;
+}
+
+// Resource usage of the notebook.
+export interface Status_Usage {
+  // CPU usage in percentage.
+  // number
+  cpu?: number;
+  
+  // Amount of memory being consumed.
+  // number
+  memory?: number;
+  
+  // Amount of disk space used.
+  // number
+  disk?: number;
 }
 
 // Request to pause a notebook.

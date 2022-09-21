@@ -1171,6 +1171,10 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.notebook.v1.Status.Usage"><span class="badge">M</span>Status.Usage</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.notebook.v1.UpdateNotebookRequest"><span class="badge">M</span>UpdateNotebookRequest</a>
                 </li>
               
@@ -15069,6 +15073,51 @@ Should only contain only one of the following values:
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>URL of the Notebook. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>usage</td>
+                  <td><a href="#arangodb.cloud.notebook.v1.Status.Usage">Status.Usage</a></td>
+                  <td></td>
+                  <td><p>Resource usage of the notebook. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.notebook.v1.Status.Usage">Status.Usage</h3>
+        <p>Resource usage of the notebook.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>cpu</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>CPU usage in percentage. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>memory</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Amount of memory being consumed. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>disk</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Amount of disk space used. </p></td>
                 </tr>
               
             </tbody>
