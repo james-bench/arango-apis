@@ -148,7 +148,6 @@ message Notebook {
     // This is a read-only value.
     google.protobuf.Timestamp created_at = 10;
     // Model specification for the notebook.
-    // After creation, this value cannot be changed.
     ModelSpec model = 11;
     // Set when this notebook is deleted.
     // This is a read-only value.
@@ -165,7 +164,7 @@ message Notebook {
 message ModelSpec {
     // Type of model being used.
     // This should refer to the `id` of a `NotebookModel` object.
-    string notebook_model = 1; 
+    string notebook_model_id = 1; 
     // Disk size allocated to the notebook instance (in GiB).
     int32 disk_size = 2;
 }
@@ -178,7 +177,7 @@ message NotebookModel {
     string name = 2;
     // CPU units allocated to the notebook.
     // 1 CPU unit equals 1 physical / virtual CPU.
-    int32 cpu = 3; 
+    float cpu = 3; 
     // Memory allocated to the notebook in 'GiB'.
     int32 memory = 4;
 }

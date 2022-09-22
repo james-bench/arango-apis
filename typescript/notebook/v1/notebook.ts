@@ -40,7 +40,7 @@ export interface ModelSpec {
   // Type of model being used.
   // This should refer to the `id` of a `NotebookModel` object.
   // string
-  notebook_model?: string;
+  notebook_model_id?: string;
   
   // Disk size allocated to the notebook instance (in GiB).
   // number
@@ -99,7 +99,6 @@ export interface Notebook {
   created_at?: googleTypes.Timestamp;
   
   // Model specification for the notebook.
-  // After creation, this value cannot be changed.
   // ModelSpec
   model?: ModelSpec;
   
