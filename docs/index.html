@@ -14951,7 +14951,25 @@ This is a read-only value. </p></td>
                   <td>is_paused</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>If the notebook should be paused. </p></td>
+                  <td><p>Indicates that this notebook is paused. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_paused_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The last paused timestamp of the notebook.
+This is the timestamp that is_paused is transitioned from unset to set.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_resumed_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The last resumed timestamp of the notebook.
+This is the timestamp that is_paused is transitioned from set to unset.
+This is a read-only value. </p></td>
                 </tr>
               
                 <tr>
@@ -14982,14 +15000,15 @@ After creation, this value cannot be changed. </p></td>
                   <td>is_deleted</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>If the notebook should be deleted. </p></td>
+                  <td><p>Set when this notebook is deleted.
+This is a read-only value. </p></td>
                 </tr>
               
                 <tr>
                   <td>deleted_at</td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
-                  <td><p>Time at which this notebook was deleted. 
+                  <td><p>The deletion timestamp of the deployment
 This is a read-only value. </p></td>
                 </tr>
               
@@ -14997,7 +15016,7 @@ This is a read-only value. </p></td>
                   <td>status</td>
                   <td><a href="#arangodb.cloud.notebook.v1.Status">Status</a></td>
                   <td></td>
-                  <td><p>Status of the notebook. Represents the state of the notebook as observed by the controller.
+                  <td><p>Status of the notebook.
 This is a read-only value. </p></td>
                 </tr>
               
@@ -15103,7 +15122,7 @@ This is a read-only value. </p></td>
         
       
         <h3 id="arangodb.cloud.notebook.v1.Status">Status</h3>
-        <p>Status of the notebook. Represents the state of the notebook as observed by the controller.</p><p>Note: all fields in this block are read-only.</p>
+        <p>Status of the notebook.</p><p>Note: all fields in this block are read-only.</p>
 
         
           <table class="field-table">
@@ -15270,7 +15289,6 @@ Required permissions:
                 <td><a href="#arangodb.cloud.notebook.v1.ListNotebookRequest">ListNotebookRequest</a></td>
                 <td><a href="#arangodb.cloud.notebook.v1.NotebookList">NotebookList</a></td>
                 <td><p>List all notebooks for the deployments identified by the given deployment identifier.
-Note: This lists only those notebooks created by the caller.
 Required permissions:
 - notebook.notebook.list</p></td>
               </tr>

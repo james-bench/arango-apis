@@ -72,9 +72,21 @@ export interface Notebook {
   // string
   description?: string;
   
-  // If the notebook should be paused.
+  // Indicates that this notebook is paused.
   // boolean
   is_paused?: boolean;
+  
+  // The last paused timestamp of the notebook.
+  // This is the timestamp that is_paused is transitioned from unset to set.
+  // This is a read-only value.
+  // googleTypes.Timestamp
+  last_paused_at?: googleTypes.Timestamp;
+  
+  // The last resumed timestamp of the notebook.
+  // This is the timestamp that is_paused is transitioned from set to unset.
+  // This is a read-only value.
+  // googleTypes.Timestamp
+  last_resumed_at?: googleTypes.Timestamp;
   
   // Identifier of the user that created this notebook.
   // This is a read-only value.
@@ -91,16 +103,17 @@ export interface Notebook {
   // ModelSpec
   model?: ModelSpec;
   
-  // If the notebook should be deleted.
+  // Set when this notebook is deleted.
+  // This is a read-only value.
   // boolean
   is_deleted?: boolean;
   
-  // Time at which this notebook was deleted.
+  // The deletion timestamp of the deployment
   // This is a read-only value.
   // googleTypes.Timestamp
   deleted_at?: googleTypes.Timestamp;
   
-  // Status of the notebook. Represents the state of the notebook as observed by the controller.
+  // Status of the notebook.
   // This is a read-only value.
   // Status
   status?: Status;
@@ -138,7 +151,7 @@ export interface NotebookModelList {
   items?: NotebookModel[];
 }
 
-// Status of the notebook. Represents the state of the notebook as observed by the controller.
+// Status of the notebook.
 // Note: all fields in this block are read-only.
 export interface Status {
   // Where the notebook is in its lifecycle at any given time.
@@ -216,7 +229,6 @@ export interface INotebookService {
   UpdateNotebook: (req: Notebook) => Promise<void>;
   
   // List all notebooks for the deployments identified by the given deployment identifier.
-  // Note: This lists only those notebooks created by the caller.
   // Required permissions:
   // - notebook.notebook.list
   ListNotebooks: (req: ListNotebookRequest) => Promise<NotebookList>;
@@ -274,7 +286,6 @@ export class NotebookService implements INotebookService {
   }
   
   // List all notebooks for the deployments identified by the given deployment identifier.
-  // Note: This lists only those notebooks created by the caller.
   // Required permissions:
   // - notebook.notebook.list
   async ListNotebooks(req: ListNotebookRequest): Promise<NotebookList> {

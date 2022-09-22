@@ -81,7 +81,6 @@ service NotebookService {
     }
         
     // List all notebooks for the deployments identified by the given deployment identifier.
-    // Note: This lists only those notebooks created by the caller.
     // Required permissions:
     // - notebook.notebook.list
     rpc ListNotebooks(ListNotebookRequest) returns (NotebookList) {
@@ -132,23 +131,32 @@ message Notebook {
     string name = 4;
     // Description of the notebook.
     string description = 5;
-    // If the notebook should be paused.
+    // Indicates that this notebook is paused. 
     bool is_paused = 6;
+    // The last paused timestamp of the notebook.
+    // This is the timestamp that is_paused is transitioned from unset to set.
+    // This is a read-only value.
+    google.protobuf.Timestamp last_paused_at = 7;
+    // The last resumed timestamp of the notebook.
+    // This is the timestamp that is_paused is transitioned from set to unset.
+    // This is a read-only value.
+    google.protobuf.Timestamp last_resumed_at = 8;
     // Identifier of the user that created this notebook.
     // This is a read-only value.
-    string created_by_id = 7;
+    string created_by_id = 9;
     // Time at which this notebook was created.
     // This is a read-only value.
-    google.protobuf.Timestamp created_at = 8;
+    google.protobuf.Timestamp created_at = 10;
     // Model specification for the notebook.
     // After creation, this value cannot be changed.
-    ModelSpec model = 9;
-    // If the notebook should be deleted.
-    bool is_deleted = 10;
-    // Time at which this notebook was deleted. 
+    ModelSpec model = 11;
+    // Set when this notebook is deleted.
     // This is a read-only value.
-    google.protobuf.Timestamp deleted_at = 11;
-    // Status of the notebook. Represents the state of the notebook as observed by the controller.
+    bool is_deleted = 12;
+    // The deletion timestamp of the deployment
+    // This is a read-only value.
+    google.protobuf.Timestamp deleted_at = 13;
+    // Status of the notebook.
     // This is a read-only value.
     Status status = 100;
 }
@@ -186,7 +194,7 @@ message ListNotebookModelRequest {
     string deployment_id = 1;
 }
 
-// Status of the notebook. Represents the state of the notebook as observed by the controller.
+// Status of the notebook.
 // Note: all fields in this block are read-only.
 message Status {
     // Where the notebook is in its lifecycle at any given time.
