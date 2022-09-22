@@ -168,9 +168,14 @@ export interface Status {
   // string
   message?: string;
   
-  // The last time this notebook was updated.
+  // The timestamp of when the status of the notebook was last updated.
   // googleTypes.Timestamp
   last_updated_at?: googleTypes.Timestamp;
+  
+  // Endpoint URL used to reach the notebook
+  // This value will be empty during the creation of the notebook.
+  // string
+  endpoint?: string;
   
   // Resource usage of the notebook.
   // Status_Usage
