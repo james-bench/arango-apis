@@ -26,10 +26,6 @@ export interface ListNotebookRequest {
   // string
   deployment_id?: string;
   
-  // If set, returns only paused noteboooks.
-  // boolean
-  is_paused?: boolean;
-  
   // Optional common list options, the context_id is ignored
   // arangodb.cloud.common.v1.ListOptions
   options?: arangodb_cloud_common_v1_ListOptions;

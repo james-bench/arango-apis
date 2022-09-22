@@ -110,8 +110,6 @@ message NotebookList {
 message ListNotebookRequest {
     // List notebooks for this deployment ID.
     string deployment_id = 1;
-    // If set, returns only paused noteboooks.
-    bool is_paused = 2;
     // Optional common list options, the context_id is ignored
     common.v1.ListOptions options = 10;
 }
