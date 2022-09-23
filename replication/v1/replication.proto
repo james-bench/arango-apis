@@ -125,6 +125,8 @@ message DeploymentReplication {
         // "In-Sync"        - All data currently is in-sync.
         // "Error"          - Replication is in an errored state.
         // "Failed"         - Replication could not complete successfully.
+        // "Stopping"       - Replication is being stopped.
+        // "Completed"      - Replication is stopped and all resources cleaned up properly.
         string phase = 1;
         // Supporting information about the deployment replication phase - such as error messages in case of failures.
         string message = 2;

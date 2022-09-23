@@ -33,4 +33,8 @@ var (
 	DeploymentReplicationPhaseError = "Error"
 	// Replication could not complete successfully.
 	DeploymentReplicationPhaseFailed = "Failed"
+	// Replication is being stopped.
+	DeploymentReplicationPhaseStopping = "Stopping"
+	// Replication is stopped and all resources cleaned up properly.
+	DeploymentReplicationPhaseCompleted = "Completed"
 )
