@@ -212,9 +212,7 @@ type DeploymentReplication_Status struct {
 	// Where the deployment replication process is in its lifecycle at any given time.
 	// Should only contain only one of the following values:
 	// "Initialising"   - Replication has started, waiting for sync masters / workers.
-	// "Initialised"    - Sync masters / workers are ready, deployment is ready to start replication process.
 	// "In-Progress"    - Replication has started and currently in progress.
-	// "In-Sync"        - All data currently is in-sync.
 	// "Error"          - Replication is in an errored state.
 	// "Failed"         - Replication could not complete successfully.
 	// "Stopping"       - Replication is being stopped.

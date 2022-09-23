@@ -23,12 +23,8 @@ package v1
 var (
 	// Replication has started, waiting for sync masters / workers.
 	DeploymentReplicationPhaseInitialising = "Initialising"
-	// Sync masters / workers are ready, deployment is ready to start replication process.
-	DeploymentReplicationPhaseInitialised = "Initialised"
 	// Replication has started and currently in progress.
 	DeploymentReplicationPhaseInProgress = "In-Progress"
-	// All shards and collections are currently in-sync.
-	DeploymentReplicationPhaseInSync = "In-Sync"
 	// Replication is in an errored state.
 	DeploymentReplicationPhaseError = "Error"
 	// Replication could not complete successfully.
