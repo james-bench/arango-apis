@@ -111,41 +111,250 @@ func (m *CloneDeploymentFromBackupRequest) GetProjectId() string {
 	return ""
 }
 
+// DeploymentReplication defines a request object for creating or updating a deployment replication
+type DeploymentReplication struct {
+	// Identifier of the deployments for a given DeploymentReplication
+	DeploymentId string `protobuf:"bytes,1,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
+	// Start the replication process for a given deployment.
+	Started bool `protobuf:"varint,2,opt,name=started,proto3" json:"started,omitempty"`
+	// A PEM encoded representation of the public key of the CA certificate used to verify sync master in source datacenter.
+	CertificatePem string `protobuf:"bytes,3,opt,name=certificate_pem,json=certificatePem,proto3" json:"certificate_pem,omitempty"`
+	// A PEM encoded representation of the keyfile used for client authentication of the sync master (with the sync master in the source datacenter).
+	// A keyfile contains 1 or more certificates and a private key.
+	TlsKeyfile string `protobuf:"bytes,4,opt,name=tls_keyfile,json=tlsKeyfile,proto3" json:"tls_keyfile,omitempty"`
+	// List of master endpoints at source data center.
+	MasterEndpoint []string `protobuf:"bytes,5,rep,name=master_endpoint,json=masterEndpoint,proto3" json:"master_endpoint,omitempty"`
+	// Status of the DeploymentReplication.
+	Status               *DeploymentReplication_Status `protobuf:"bytes,100,opt,name=status,proto3" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                      `json:"-"`
+	XXX_unrecognized     []byte                        `json:"-"`
+	XXX_sizecache        int32                         `json:"-"`
+}
+
+func (m *DeploymentReplication) Reset()         { *m = DeploymentReplication{} }
+func (m *DeploymentReplication) String() string { return proto.CompactTextString(m) }
+func (*DeploymentReplication) ProtoMessage()    {}
+func (*DeploymentReplication) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ed0454e9e09fb71a, []int{1}
+}
+func (m *DeploymentReplication) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DeploymentReplication) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DeploymentReplication.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *DeploymentReplication) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeploymentReplication.Merge(m, src)
+}
+func (m *DeploymentReplication) XXX_Size() int {
+	return m.Size()
+}
+func (m *DeploymentReplication) XXX_DiscardUnknown() {
+	xxx_messageInfo_DeploymentReplication.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DeploymentReplication proto.InternalMessageInfo
+
+func (m *DeploymentReplication) GetDeploymentId() string {
+	if m != nil {
+		return m.DeploymentId
+	}
+	return ""
+}
+
+func (m *DeploymentReplication) GetStarted() bool {
+	if m != nil {
+		return m.Started
+	}
+	return false
+}
+
+func (m *DeploymentReplication) GetCertificatePem() string {
+	if m != nil {
+		return m.CertificatePem
+	}
+	return ""
+}
+
+func (m *DeploymentReplication) GetTlsKeyfile() string {
+	if m != nil {
+		return m.TlsKeyfile
+	}
+	return ""
+}
+
+func (m *DeploymentReplication) GetMasterEndpoint() []string {
+	if m != nil {
+		return m.MasterEndpoint
+	}
+	return nil
+}
+
+func (m *DeploymentReplication) GetStatus() *DeploymentReplication_Status {
+	if m != nil {
+		return m.Status
+	}
+	return nil
+}
+
+// DeploymentReplicationStatus defines the status of a deployment replication.
+// Note: All fields in this message block are read-only.
+type DeploymentReplication_Status struct {
+	// Where the deployment replication process is in its lifecycle at any given time.
+	// Should only contain only one of the following values:
+	// "Initialising"   - Replication has started, waiting for sync masters / workers.
+	// "In-Progress"    - Replication has started and currently in progress.
+	// "Error"          - Replication is in an errored state.
+	// "Failed"         - Replication could not complete successfully.
+	// "Stopping"       - Replication is being stopped.
+	// "Completed"      - Replication is stopped and all resources cleaned up properly.
+	Phase string `protobuf:"bytes,1,opt,name=phase,proto3" json:"phase,omitempty"`
+	// Supporting information about the deployment replication phase - such as error messages in case of failures.
+	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	// Total number of shards that should be in-sync.
+	TotalShards int32 `protobuf:"varint,3,opt,name=total_shards,json=totalShards,proto3" json:"total_shards,omitempty"`
+	// Number of shards currently in-sync.
+	ShardsInSync int32 `protobuf:"varint,4,opt,name=shards_in_sync,json=shardsInSync,proto3" json:"shards_in_sync,omitempty"`
+	// Service (LoadBalancer) endpoint of the SyncMasters
+	// This field has the format of a URL.
+	// This is a readonly field.
+	SyncEndpoint         string   `protobuf:"bytes,5,opt,name=sync_endpoint,json=syncEndpoint,proto3" json:"sync_endpoint,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *DeploymentReplication_Status) Reset()         { *m = DeploymentReplication_Status{} }
+func (m *DeploymentReplication_Status) String() string { return proto.CompactTextString(m) }
+func (*DeploymentReplication_Status) ProtoMessage()    {}
+func (*DeploymentReplication_Status) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ed0454e9e09fb71a, []int{1, 0}
+}
+func (m *DeploymentReplication_Status) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DeploymentReplication_Status) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DeploymentReplication_Status.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *DeploymentReplication_Status) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeploymentReplication_Status.Merge(m, src)
+}
+func (m *DeploymentReplication_Status) XXX_Size() int {
+	return m.Size()
+}
+func (m *DeploymentReplication_Status) XXX_DiscardUnknown() {
+	xxx_messageInfo_DeploymentReplication_Status.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DeploymentReplication_Status proto.InternalMessageInfo
+
+func (m *DeploymentReplication_Status) GetPhase() string {
+	if m != nil {
+		return m.Phase
+	}
+	return ""
+}
+
+func (m *DeploymentReplication_Status) GetMessage() string {
+	if m != nil {
+		return m.Message
+	}
+	return ""
+}
+
+func (m *DeploymentReplication_Status) GetTotalShards() int32 {
+	if m != nil {
+		return m.TotalShards
+	}
+	return 0
+}
+
+func (m *DeploymentReplication_Status) GetShardsInSync() int32 {
+	if m != nil {
+		return m.ShardsInSync
+	}
+	return 0
+}
+
+func (m *DeploymentReplication_Status) GetSyncEndpoint() string {
+	if m != nil {
+		return m.SyncEndpoint
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*CloneDeploymentFromBackupRequest)(nil), "arangodb.cloud.replication.v1.CloneDeploymentFromBackupRequest")
+	proto.RegisterType((*DeploymentReplication)(nil), "arangodb.cloud.replication.v1.DeploymentReplication")
+	proto.RegisterType((*DeploymentReplication_Status)(nil), "arangodb.cloud.replication.v1.DeploymentReplication.Status")
 }
 
 func init() { proto.RegisterFile("replication.proto", fileDescriptor_ed0454e9e09fb71a) }
 
 var fileDescriptor_ed0454e9e09fb71a = []byte{
-	// 426 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x52, 0x4d, 0x8b, 0x14, 0x31,
-	0x14, 0x34, 0xa3, 0x88, 0x13, 0xf0, 0x60, 0x0e, 0xa2, 0xe3, 0xee, 0xec, 0x6c, 0x5f, 0x14, 0x71,
-	0x13, 0x5a, 0x0f, 0x82, 0x17, 0x99, 0x5d, 0x5d, 0xe9, 0x9b, 0x8c, 0xe2, 0xc1, 0xcb, 0x90, 0x49,
-	0x1e, 0x6d, 0xb4, 0x3b, 0x2f, 0xa6, 0x33, 0x0d, 0x8b, 0x7a, 0xf1, 0x2f, 0x78, 0xf1, 0xaf, 0x78,
-	0xf6, 0xe2, 0x49, 0x04, 0xff, 0x80, 0x8c, 0xfe, 0x10, 0x49, 0xba, 0xf7, 0x83, 0xc1, 0x75, 0x4f,
-	0xdd, 0xd4, 0xab, 0xaa, 0xf7, 0xa8, 0x0a, 0xbd, 0xe2, 0xc1, 0x55, 0x46, 0xc9, 0x60, 0xd0, 0x72,
-	0xe7, 0x31, 0x20, 0xdb, 0x94, 0x5e, 0xda, 0x12, 0xf5, 0x82, 0xab, 0x0a, 0x97, 0x9a, 0x9f, 0x64,
-	0xb4, 0xf9, 0xe8, 0xaa, 0xc2, 0xba, 0x46, 0x2b, 0xda, 0x5c, 0x74, 0x7f, 0x9d, 0x6c, 0xc4, 0xb4,
-	0x0c, 0x32, 0xa2, 0xf1, 0xdb, 0x63, 0x1b, 0x25, 0x62, 0x59, 0x81, 0x90, 0xce, 0x08, 0x69, 0x2d,
-	0x86, 0xe4, 0xd2, 0x74, 0xd3, 0xec, 0x2b, 0xa1, 0x93, 0xbd, 0x0a, 0x2d, 0x3c, 0x02, 0x57, 0xe1,
-	0x41, 0x0d, 0x36, 0xec, 0x7b, 0xac, 0x77, 0xa5, 0x7a, 0xb3, 0x74, 0x33, 0x78, 0xbb, 0x84, 0x26,
-	0xb0, 0x1b, 0x74, 0xb8, 0x48, 0xc0, 0xdc, 0xe8, 0x6b, 0x64, 0x42, 0x6e, 0x0d, 0x67, 0x97, 0x3a,
-	0xa0, 0xd0, 0x71, 0xe8, 0xa1, 0x34, 0x68, 0xe3, 0x70, 0xd0, 0x0d, 0x3b, 0xa0, 0xd0, 0x6c, 0x9f,
-	0x4e, 0xa4, 0x52, 0xe0, 0x02, 0xe8, 0x79, 0x00, 0x5f, 0x37, 0x73, 0x69, 0xf5, 0x5c, 0xa1, 0xd5,
-	0x26, 0x5d, 0x11, 0x35, 0xe7, 0x93, 0x66, 0xe3, 0x90, 0xf7, 0x3c, 0xd2, 0xa6, 0x56, 0xef, 0x1d,
-	0x91, 0x0a, 0xcd, 0x36, 0x29, 0x75, 0x1e, 0x5f, 0x83, 0x0a, 0x51, 0x71, 0x21, 0x29, 0x86, 0x3d,
-	0x52, 0xe8, 0xbb, 0xdf, 0x07, 0x94, 0xcd, 0x8e, 0x23, 0x7a, 0x06, 0xbe, 0x35, 0x0a, 0xd8, 0x7b,
-	0x7a, 0xf9, 0x09, 0x84, 0xe9, 0xd3, 0xe2, 0x05, 0xf8, 0xc6, 0xa0, 0x65, 0x5b, 0x7c, 0x2d, 0xd7,
-	0x3e, 0xbd, 0x36, 0xe7, 0x8f, 0x6b, 0x17, 0x0e, 0x46, 0xdb, 0xa7, 0x13, 0x7a, 0x8f, 0xec, 0xe6,
-	0xc7, 0x9f, 0x7f, 0x3e, 0x0d, 0xb6, 0xd9, 0x56, 0x4a, 0xf4, 0x44, 0x31, 0x31, 0x77, 0xe9, 0xcc,
-	0x4e, 0xdb, 0x2f, 0xfb, 0x42, 0xe8, 0xf5, 0x53, 0xa3, 0x65, 0x0f, 0xf9, 0x7f, 0x2b, 0xe6, 0x67,
-	0x95, 0x32, 0xca, 0xd6, 0x0d, 0x52, 0xe7, 0x6d, 0xce, 0x8f, 0x45, 0xd9, 0xfd, 0x74, 0x6b, 0x9e,
-	0xdd, 0xf9, 0xd7, 0xad, 0x5d, 0x83, 0xe2, 0xdd, 0x51, 0xb5, 0x1f, 0x84, 0x8a, 0x4b, 0x1f, 0x90,
-	0xdb, 0xbb, 0xd3, 0x6f, 0xab, 0x31, 0xf9, 0xb1, 0x1a, 0x93, 0x5f, 0xab, 0x31, 0xf9, 0xfc, 0x7b,
-	0x7c, 0xee, 0xa5, 0x28, 0x4d, 0x78, 0xb5, 0x5c, 0xc4, 0x40, 0xc4, 0xe1, 0xe2, 0x9d, 0x5a, 0x5a,
-	0x59, 0x82, 0x8e, 0xee, 0xcd, 0x9a, 0xfd, 0xe2, 0x62, 0x7a, 0x60, 0xf7, 0xfe, 0x06, 0x00, 0x00,
-	0xff, 0xff, 0x7b, 0xc9, 0x5f, 0xf4, 0xde, 0x02, 0x00, 0x00,
+	// 704 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x54, 0xcd, 0x6e, 0x13, 0x3b,
+	0x14, 0xbe, 0xd3, 0xde, 0xf4, 0xb6, 0xee, 0xcf, 0x15, 0x16, 0xa0, 0x90, 0xb6, 0x69, 0x1a, 0x90,
+	0x5a, 0x55, 0x34, 0xa3, 0x14, 0x24, 0xa4, 0xb2, 0xa8, 0xfa, 0xaf, 0x11, 0x0b, 0xaa, 0x09, 0xb0,
+	0x60, 0x33, 0x72, 0xc6, 0xa7, 0xd3, 0xa1, 0x33, 0xb6, 0x19, 0x3b, 0x91, 0xa2, 0xc2, 0x86, 0x57,
+	0x60, 0xc3, 0x13, 0xb0, 0x64, 0xcf, 0x9a, 0x05, 0x2c, 0x2b, 0x78, 0x01, 0x54, 0x78, 0x10, 0x64,
+	0x7b, 0xd2, 0xa4, 0x55, 0x42, 0xa5, 0xae, 0x12, 0x7f, 0xe7, 0xc7, 0xdf, 0x77, 0xce, 0x7c, 0x46,
+	0x37, 0x32, 0x10, 0x49, 0x1c, 0x12, 0x15, 0x73, 0x56, 0x13, 0x19, 0x57, 0x1c, 0xcf, 0x93, 0x8c,
+	0xb0, 0x88, 0xd3, 0x66, 0x2d, 0x4c, 0x78, 0x8b, 0xd6, 0xfa, 0x33, 0xda, 0xf5, 0xd2, 0xed, 0x90,
+	0xa7, 0x29, 0x67, 0x6e, 0xbb, 0xee, 0xda, 0x7f, 0xb6, 0xac, 0x84, 0x29, 0x51, 0x44, 0xa3, 0xfa,
+	0x37, 0xc7, 0xe6, 0x22, 0xce, 0xa3, 0x04, 0x5c, 0x22, 0x62, 0x97, 0x30, 0xc6, 0x95, 0xe9, 0x22,
+	0x6d, 0xb4, 0xfa, 0xc5, 0x41, 0x95, 0xed, 0x84, 0x33, 0xd8, 0x01, 0x91, 0xf0, 0x4e, 0x0a, 0x4c,
+	0xed, 0x65, 0x3c, 0xdd, 0x22, 0xe1, 0x71, 0x4b, 0xf8, 0xf0, 0xba, 0x05, 0x52, 0xe1, 0x59, 0x34,
+	0xd1, 0x34, 0x40, 0x10, 0xd3, 0xa2, 0x53, 0x71, 0x96, 0x27, 0xfc, 0x71, 0x0b, 0x78, 0x54, 0x07,
+	0x33, 0x88, 0x62, 0xce, 0x74, 0x70, 0xc4, 0x06, 0x2d, 0xe0, 0x51, 0xbc, 0x87, 0x2a, 0x24, 0x0c,
+	0x41, 0x28, 0xa0, 0x81, 0x82, 0x2c, 0x95, 0x01, 0x61, 0x34, 0x08, 0x39, 0xa3, 0xb1, 0x61, 0xa1,
+	0x6b, 0x46, 0x4d, 0xcd, 0x5c, 0x37, 0xef, 0x99, 0x4e, 0xdb, 0x64, 0x74, 0xfb, 0x3c, 0xc9, 0xa3,
+	0x78, 0x1e, 0x21, 0x91, 0xf1, 0x57, 0x10, 0x2a, 0x5d, 0xf1, 0xaf, 0xa9, 0x98, 0xc8, 0x11, 0x8f,
+	0x56, 0xbf, 0x8e, 0xa2, 0x5b, 0x3d, 0x01, 0x7e, 0x6f, 0x58, 0xf8, 0x2e, 0x9a, 0xa6, 0xe7, 0x81,
+	0x1e, 0xfd, 0xa9, 0x1e, 0xe8, 0x51, 0x5c, 0x44, 0xff, 0x49, 0x45, 0x32, 0x05, 0x56, 0xc0, 0xb8,
+	0xdf, 0x3d, 0xe2, 0x25, 0xf4, 0x7f, 0x08, 0x99, 0x8a, 0x0f, 0x75, 0x3f, 0x08, 0x04, 0xa4, 0x39,
+	0xdd, 0x99, 0x3e, 0xf8, 0x00, 0x52, 0xbc, 0x80, 0x26, 0x55, 0x22, 0x83, 0x63, 0xe8, 0x1c, 0xc6,
+	0x09, 0xe4, 0x0c, 0x91, 0x4a, 0xe4, 0x13, 0x8b, 0xe8, 0x4e, 0x29, 0x91, 0x0a, 0xb2, 0x00, 0x18,
+	0x15, 0x3c, 0x66, 0xaa, 0x58, 0xa8, 0x8c, 0xea, 0x4e, 0x16, 0xde, 0xcd, 0x51, 0xdc, 0x40, 0x63,
+	0x52, 0x11, 0xd5, 0x92, 0x45, 0x5a, 0x71, 0x96, 0x27, 0xd7, 0x1e, 0xd7, 0xfe, 0xfa, 0x2d, 0xd4,
+	0x06, 0xea, 0xae, 0x35, 0x4c, 0x0b, 0x3f, 0x6f, 0x55, 0xfa, 0xe8, 0xa0, 0x31, 0x0b, 0xe1, 0x9b,
+	0xa8, 0x20, 0x8e, 0x88, 0x84, 0x7c, 0x12, 0xf6, 0xa0, 0x47, 0x90, 0x82, 0x94, 0x24, 0x82, 0x7c,
+	0x87, 0xdd, 0x23, 0x5e, 0x44, 0x53, 0x8a, 0x2b, 0x92, 0x04, 0xf2, 0x88, 0x64, 0x54, 0x1a, 0xfd,
+	0x05, 0x7f, 0xd2, 0x60, 0x0d, 0x03, 0xe1, 0x7b, 0x68, 0xc6, 0x06, 0x83, 0x98, 0x05, 0xb2, 0xc3,
+	0x42, 0xa3, 0xbf, 0xe0, 0x4f, 0x59, 0xd4, 0x63, 0x8d, 0x0e, 0x0b, 0xf5, 0x2a, 0x74, 0xac, 0x5f,
+	0xbf, 0x59, 0x85, 0x06, 0xbb, 0xea, 0xd7, 0xbe, 0x17, 0x10, 0xee, 0xd3, 0xd1, 0x80, 0xac, 0x1d,
+	0x87, 0x80, 0xdf, 0xa0, 0xe9, 0x7d, 0x50, 0x9b, 0x07, 0xde, 0x0b, 0xc8, 0xa4, 0xde, 0xeb, 0xc2,
+	0xe5, 0xa9, 0xe4, 0x3e, 0x68, 0xd7, 0x6b, 0xbb, 0xa9, 0x50, 0x9d, 0xd2, 0xe2, 0xf0, 0x84, 0xbc,
+	0x47, 0x75, 0xe9, 0xdd, 0x8f, 0xdf, 0xef, 0x47, 0x16, 0xf1, 0x82, 0xf1, 0x46, 0xdf, 0x58, 0xb5,
+	0x83, 0x88, 0x88, 0x57, 0xdb, 0xf9, 0x65, 0x9f, 0x1d, 0x74, 0x67, 0xa8, 0x49, 0xf0, 0xc6, 0x15,
+	0x0b, 0xba, 0xca, 0x5e, 0xa5, 0xea, 0xe5, 0x06, 0xc6, 0xbd, 0x17, 0x56, 0x5b, 0x7d, 0x64, 0xb8,
+	0xd6, 0xab, 0xf7, 0x07, 0x71, 0xb5, 0x5e, 0x74, 0x4f, 0xce, 0x4d, 0xfa, 0xd6, 0x0d, 0xf5, 0xa5,
+	0xeb, 0xce, 0x0a, 0xfe, 0xe4, 0xa0, 0xe2, 0x3e, 0xa8, 0x21, 0xee, 0x18, 0x3e, 0x24, 0x6f, 0xe7,
+	0xa9, 0x30, 0xee, 0x2b, 0x3d, 0xbc, 0xce, 0x07, 0xd8, 0x25, 0x8c, 0xdd, 0x41, 0x84, 0x7b, 0xee,
+	0x73, 0x4f, 0x34, 0xdb, 0xbe, 0x30, 0x3e, 0x75, 0xd0, 0xec, 0x73, 0x41, 0x89, 0x82, 0xc1, 0x9c,
+	0xaf, 0x45, 0xe7, 0x9a, 0x22, 0x76, 0x8d, 0x88, 0x8d, 0xd2, 0xfa, 0x55, 0x22, 0x2e, 0xbc, 0x31,
+	0x17, 0xf4, 0xac, 0x3b, 0x2b, 0x5b, 0x9b, 0xdf, 0xce, 0xca, 0xce, 0xe9, 0x59, 0xd9, 0xf9, 0x79,
+	0x56, 0x76, 0x3e, 0xfc, 0x2a, 0xff, 0xf3, 0xd2, 0x8d, 0x62, 0x75, 0xd4, 0x6a, 0xea, 0x79, 0xbb,
+	0x5d, 0x62, 0xab, 0x29, 0x61, 0x24, 0x02, 0xaa, 0xef, 0x92, 0x97, 0x2e, 0x6b, 0x8e, 0x99, 0xe7,
+	0xfa, 0xc1, 0x9f, 0x00, 0x00, 0x00, 0xff, 0xff, 0xa8, 0x39, 0x26, 0xf5, 0x2c, 0x06, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -180,6 +389,15 @@ type ReplicationServiceClient interface {
 	// if project_id is not specified
 	// - replication.deployment.clone-from-backup on the backup specified by backup_id
 	CloneDeploymentFromBackup(ctx context.Context, in *CloneDeploymentFromBackupRequest, opts ...grpc.CallOption) (*v11.Deployment, error)
+	// Get an existing DeploymentReplication using its deployment ID
+	// Required permissions:
+	// - replication.deploymentreplication.get
+	GetDeploymentReplication(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*DeploymentReplication, error)
+	// Update an existing DeploymentReplication spec. If does not exist, this will create a new one.
+	// This call expects the complete entity with the updated fields.
+	// Required permissions:
+	// - replication.deploymentreplication.update
+	UpdateDeploymentReplication(ctx context.Context, in *DeploymentReplication, opts ...grpc.CallOption) (*DeploymentReplication, error)
 }
 
 type replicationServiceClient struct {
@@ -208,6 +426,24 @@ func (c *replicationServiceClient) CloneDeploymentFromBackup(ctx context.Context
 	return out, nil
 }
 
+func (c *replicationServiceClient) GetDeploymentReplication(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*DeploymentReplication, error) {
+	out := new(DeploymentReplication)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.replication.v1.ReplicationService/GetDeploymentReplication", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *replicationServiceClient) UpdateDeploymentReplication(ctx context.Context, in *DeploymentReplication, opts ...grpc.CallOption) (*DeploymentReplication, error) {
+	out := new(DeploymentReplication)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.replication.v1.ReplicationService/UpdateDeploymentReplication", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ReplicationServiceServer is the server API for ReplicationService service.
 type ReplicationServiceServer interface {
 	// Get the current API version of this service.
@@ -230,6 +466,15 @@ type ReplicationServiceServer interface {
 	// if project_id is not specified
 	// - replication.deployment.clone-from-backup on the backup specified by backup_id
 	CloneDeploymentFromBackup(context.Context, *CloneDeploymentFromBackupRequest) (*v11.Deployment, error)
+	// Get an existing DeploymentReplication using its deployment ID
+	// Required permissions:
+	// - replication.deploymentreplication.get
+	GetDeploymentReplication(context.Context, *v1.IDOptions) (*DeploymentReplication, error)
+	// Update an existing DeploymentReplication spec. If does not exist, this will create a new one.
+	// This call expects the complete entity with the updated fields.
+	// Required permissions:
+	// - replication.deploymentreplication.update
+	UpdateDeploymentReplication(context.Context, *DeploymentReplication) (*DeploymentReplication, error)
 }
 
 // UnimplementedReplicationServiceServer can be embedded to have forward compatible implementations.
@@ -241,6 +486,12 @@ func (*UnimplementedReplicationServiceServer) GetAPIVersion(ctx context.Context,
 }
 func (*UnimplementedReplicationServiceServer) CloneDeploymentFromBackup(ctx context.Context, req *CloneDeploymentFromBackupRequest) (*v11.Deployment, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CloneDeploymentFromBackup not implemented")
+}
+func (*UnimplementedReplicationServiceServer) GetDeploymentReplication(ctx context.Context, req *v1.IDOptions) (*DeploymentReplication, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDeploymentReplication not implemented")
+}
+func (*UnimplementedReplicationServiceServer) UpdateDeploymentReplication(ctx context.Context, req *DeploymentReplication) (*DeploymentReplication, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateDeploymentReplication not implemented")
 }
 
 func RegisterReplicationServiceServer(s *grpc.Server, srv ReplicationServiceServer) {
@@ -283,6 +534,42 @@ func _ReplicationService_CloneDeploymentFromBackup_Handler(srv interface{}, ctx 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ReplicationService_GetDeploymentReplication_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.IDOptions)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReplicationServiceServer).GetDeploymentReplication(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.replication.v1.ReplicationService/GetDeploymentReplication",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReplicationServiceServer).GetDeploymentReplication(ctx, req.(*v1.IDOptions))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReplicationService_UpdateDeploymentReplication_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeploymentReplication)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReplicationServiceServer).UpdateDeploymentReplication(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.replication.v1.ReplicationService/UpdateDeploymentReplication",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReplicationServiceServer).UpdateDeploymentReplication(ctx, req.(*DeploymentReplication))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _ReplicationService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "arangodb.cloud.replication.v1.ReplicationService",
 	HandlerType: (*ReplicationServiceServer)(nil),
@@ -294,6 +581,14 @@ var _ReplicationService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CloneDeploymentFromBackup",
 			Handler:    _ReplicationService_CloneDeploymentFromBackup_Handler,
+		},
+		{
+			MethodName: "GetDeploymentReplication",
+			Handler:    _ReplicationService_GetDeploymentReplication_Handler,
+		},
+		{
+			MethodName: "UpdateDeploymentReplication",
+			Handler:    _ReplicationService_UpdateDeploymentReplication_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -355,6 +650,145 @@ func (m *CloneDeploymentFromBackupRequest) MarshalToSizedBuffer(dAtA []byte) (in
 	return len(dAtA) - i, nil
 }
 
+func (m *DeploymentReplication) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *DeploymentReplication) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DeploymentReplication) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Status != nil {
+		{
+			size, err := m.Status.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintReplication(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x6
+		i--
+		dAtA[i] = 0xa2
+	}
+	if len(m.MasterEndpoint) > 0 {
+		for iNdEx := len(m.MasterEndpoint) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.MasterEndpoint[iNdEx])
+			copy(dAtA[i:], m.MasterEndpoint[iNdEx])
+			i = encodeVarintReplication(dAtA, i, uint64(len(m.MasterEndpoint[iNdEx])))
+			i--
+			dAtA[i] = 0x2a
+		}
+	}
+	if len(m.TlsKeyfile) > 0 {
+		i -= len(m.TlsKeyfile)
+		copy(dAtA[i:], m.TlsKeyfile)
+		i = encodeVarintReplication(dAtA, i, uint64(len(m.TlsKeyfile)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.CertificatePem) > 0 {
+		i -= len(m.CertificatePem)
+		copy(dAtA[i:], m.CertificatePem)
+		i = encodeVarintReplication(dAtA, i, uint64(len(m.CertificatePem)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.Started {
+		i--
+		if m.Started {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.DeploymentId) > 0 {
+		i -= len(m.DeploymentId)
+		copy(dAtA[i:], m.DeploymentId)
+		i = encodeVarintReplication(dAtA, i, uint64(len(m.DeploymentId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *DeploymentReplication_Status) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *DeploymentReplication_Status) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DeploymentReplication_Status) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.SyncEndpoint) > 0 {
+		i -= len(m.SyncEndpoint)
+		copy(dAtA[i:], m.SyncEndpoint)
+		i = encodeVarintReplication(dAtA, i, uint64(len(m.SyncEndpoint)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if m.ShardsInSync != 0 {
+		i = encodeVarintReplication(dAtA, i, uint64(m.ShardsInSync))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.TotalShards != 0 {
+		i = encodeVarintReplication(dAtA, i, uint64(m.TotalShards))
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.Message) > 0 {
+		i -= len(m.Message)
+		copy(dAtA[i:], m.Message)
+		i = encodeVarintReplication(dAtA, i, uint64(len(m.Message)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Phase) > 0 {
+		i -= len(m.Phase)
+		copy(dAtA[i:], m.Phase)
+		i = encodeVarintReplication(dAtA, i, uint64(len(m.Phase)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintReplication(dAtA []byte, offset int, v uint64) int {
 	offset -= sovReplication(v)
 	base := offset
@@ -385,6 +819,73 @@ func (m *CloneDeploymentFromBackupRequest) Size() (n int) {
 		n += 1 + l + sovReplication(uint64(l))
 	}
 	l = len(m.ProjectId)
+	if l > 0 {
+		n += 1 + l + sovReplication(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *DeploymentReplication) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.DeploymentId)
+	if l > 0 {
+		n += 1 + l + sovReplication(uint64(l))
+	}
+	if m.Started {
+		n += 2
+	}
+	l = len(m.CertificatePem)
+	if l > 0 {
+		n += 1 + l + sovReplication(uint64(l))
+	}
+	l = len(m.TlsKeyfile)
+	if l > 0 {
+		n += 1 + l + sovReplication(uint64(l))
+	}
+	if len(m.MasterEndpoint) > 0 {
+		for _, s := range m.MasterEndpoint {
+			l = len(s)
+			n += 1 + l + sovReplication(uint64(l))
+		}
+	}
+	if m.Status != nil {
+		l = m.Status.Size()
+		n += 2 + l + sovReplication(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *DeploymentReplication_Status) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Phase)
+	if l > 0 {
+		n += 1 + l + sovReplication(uint64(l))
+	}
+	l = len(m.Message)
+	if l > 0 {
+		n += 1 + l + sovReplication(uint64(l))
+	}
+	if m.TotalShards != 0 {
+		n += 1 + sovReplication(uint64(m.TotalShards))
+	}
+	if m.ShardsInSync != 0 {
+		n += 1 + sovReplication(uint64(m.ShardsInSync))
+	}
+	l = len(m.SyncEndpoint)
 	if l > 0 {
 		n += 1 + l + sovReplication(uint64(l))
 	}
@@ -556,6 +1057,426 @@ func (m *CloneDeploymentFromBackupRequest) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.ProjectId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipReplication(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *DeploymentReplication) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowReplication
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: DeploymentReplication: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: DeploymentReplication: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DeploymentId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReplication
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DeploymentId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Started", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Started = bool(v != 0)
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CertificatePem", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReplication
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.CertificatePem = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TlsKeyfile", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReplication
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TlsKeyfile = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MasterEndpoint", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReplication
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.MasterEndpoint = append(m.MasterEndpoint, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		case 100:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthReplication
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Status == nil {
+				m.Status = &DeploymentReplication_Status{}
+			}
+			if err := m.Status.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipReplication(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *DeploymentReplication_Status) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowReplication
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Status: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Status: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Phase", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReplication
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Phase = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Message", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReplication
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Message = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TotalShards", wireType)
+			}
+			m.TotalShards = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.TotalShards |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ShardsInSync", wireType)
+			}
+			m.ShardsInSync = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ShardsInSync |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SyncEndpoint", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReplication
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SyncEndpoint = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

@@ -1275,6 +1275,14 @@ title: "ArangoDB Oasis API"
                   <a href="#arangodb.cloud.replication.v1.CloneDeploymentFromBackupRequest"><span class="badge">M</span>CloneDeploymentFromBackupRequest</a>
                 </li>
               
+                <li>
+                  <a href="#arangodb.cloud.replication.v1.DeploymentReplication"><span class="badge">M</span>DeploymentReplication</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.replication.v1.DeploymentReplication.Status"><span class="badge">M</span>DeploymentReplication.Status</a>
+                </li>
+              
               
               
               
@@ -16076,6 +16084,127 @@ This is an optional field </p></td>
 
         
       
+        <h3 id="arangodb.cloud.replication.v1.DeploymentReplication">DeploymentReplication</h3>
+        <p>DeploymentReplication defines a request object for creating or updating a deployment replication</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the deployments for a given DeploymentReplication </p></td>
+                </tr>
+              
+                <tr>
+                  <td>started</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Start the replication process for a given deployment. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>certificate_pem</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>A PEM encoded representation of the public key of the CA certificate used to verify sync master in source datacenter. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>tls_keyfile</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>A PEM encoded representation of the keyfile used for client authentication of the sync master (with the sync master in the source datacenter).
+A keyfile contains 1 or more certificates and a private key. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>master_endpoint</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>List of master endpoints at source data center. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#arangodb.cloud.replication.v1.DeploymentReplication.Status">DeploymentReplication.Status</a></td>
+                  <td></td>
+                  <td><p>Status of the DeploymentReplication. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.replication.v1.DeploymentReplication.Status">DeploymentReplication.Status</h3>
+        <p>DeploymentReplicationStatus defines the status of a deployment replication.</p><p>Note: All fields in this message block are read-only.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>phase</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Where the deployment replication process is in its lifecycle at any given time.
+Should only contain only one of the following values:
+&#34;Initialising&#34;   - Replication has started, waiting for sync masters / workers.
+&#34;In-Progress&#34;    - Replication has started and currently in progress.
+&#34;Error&#34;          - Replication is in an errored state.
+&#34;Failed&#34;         - Replication could not complete successfully.
+&#34;Stopping&#34;       - Replication is being stopped.
+&#34;Completed&#34;      - Replication is stopped and all resources cleaned up properly. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>message</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Supporting information about the deployment replication phase - such as error messages in case of failures. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total_shards</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Total number of shards that should be in-sync. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>shards_in_sync</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Number of shards currently in-sync. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>sync_endpoint</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Service (LoadBalancer) endpoint of the SyncMasters
+This field has the format of a URL.
+This is a readonly field. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
 
@@ -16120,6 +16249,25 @@ if project_id is not specified
 - replication.deployment.clone-from-backup on the backup specified by backup_id</p></td>
               </tr>
             
+              <tr>
+                <td>GetDeploymentReplication</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.replication.v1.DeploymentReplication">DeploymentReplication</a></td>
+                <td><p>Get an existing DeploymentReplication using its deployment ID
+Required permissions:
+- replication.deploymentreplication.get</p></td>
+              </tr>
+            
+              <tr>
+                <td>UpdateDeploymentReplication</td>
+                <td><a href="#arangodb.cloud.replication.v1.DeploymentReplication">DeploymentReplication</a></td>
+                <td><a href="#arangodb.cloud.replication.v1.DeploymentReplication">DeploymentReplication</a></td>
+                <td><p>Update an existing DeploymentReplication spec. If does not exist, this will create a new one.
+This call expects the complete entity with the updated fields.
+Required permissions:
+- replication.deploymentreplication.update</p></td>
+              </tr>
+            
           </tbody>
         </table>
 
@@ -16154,6 +16302,26 @@ if project_id is not specified
                 <td>CloneDeploymentFromBackup</td>
                 <td>POST</td>
                 <td>/api/replication/v1/backup/{backup_id}/clone</td>
+                <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetDeploymentReplication</td>
+                <td>GET</td>
+                <td>/api/replication/v1/deployment/{id}/replication</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>UpdateDeploymentReplication</td>
+                <td>PUT</td>
+                <td>/api/replication/v1/deployment/{deployment_id}/replication</td>
                 <td>*</td>
               </tr>
               

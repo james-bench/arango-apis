@@ -1,7 +1,7 @@
 // 
 // DISCLAIMER
 // 
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2022 ArangoDB GmbH, Cologne, Germany
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,8 +16,6 @@
 // limitations under the License.
 // 
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
-// 
-// Author Gergely Brautigam
 // 
 
 syntax = "proto3";
@@ -63,6 +61,26 @@ service ReplicationService {
             body: "*"
         };
     }
+
+    // Get an existing DeploymentReplication using its deployment ID
+    // Required permissions:
+    // - replication.deploymentreplication.get
+    rpc GetDeploymentReplication(common.v1.IDOptions) returns (DeploymentReplication) {
+        option (google.api.http) = {
+            get: "/api/replication/v1/deployment/{id}/replication"
+        };
+    } 
+
+    // Update an existing DeploymentReplication spec. If does not exist, this will create a new one.
+    // This call expects the complete entity with the updated fields.
+    // Required permissions:
+    // - replication.deploymentreplication.update
+    rpc UpdateDeploymentReplication(DeploymentReplication) returns (DeploymentReplication) {
+        option (google.api.http) = {
+            put: "/api/replication/v1/deployment/{deployment_id}/replication"
+            body: "*"
+        };
+    }
 }
 
 // CloneDeploymentFromBackupRequest defines a request object for clone deployment call.
@@ -81,4 +99,44 @@ message CloneDeploymentFromBackupRequest {
     // Target project identifier.
     // This is an optional field
     string project_id = 4;
+}
+
+// DeploymentReplication defines a request object for creating or updating a deployment replication
+message DeploymentReplication {
+    // Identifier of the deployments for a given DeploymentReplication
+    string deployment_id = 1;
+    // Start the replication process for a given deployment.
+    bool started = 2;
+    // A PEM encoded representation of the public key of the CA certificate used to verify sync master in source datacenter.
+    string certificate_pem = 3;
+    // A PEM encoded representation of the keyfile used for client authentication of the sync master (with the sync master in the source datacenter).
+    // A keyfile contains 1 or more certificates and a private key.
+    string tls_keyfile = 4;
+    // List of master endpoints at source data center.
+    repeated string master_endpoint = 5;
+    // DeploymentReplicationStatus defines the status of a deployment replication.
+    // Note: All fields in this message block are read-only.
+    message Status {
+        // Where the deployment replication process is in its lifecycle at any given time.
+        // Should only contain only one of the following values:
+        // "Initialising"   - Replication has started, waiting for sync masters / workers.
+        // "In-Progress"    - Replication has started and currently in progress.
+        // "Error"          - Replication is in an errored state.
+        // "Failed"         - Replication could not complete successfully.
+        // "Stopping"       - Replication is being stopped.
+        // "Completed"      - Replication is stopped and all resources cleaned up properly.
+        string phase = 1;
+        // Supporting information about the deployment replication phase - such as error messages in case of failures.
+        string message = 2;
+        // Total number of shards that should be in-sync.
+        int32 total_shards = 3;
+        // Number of shards currently in-sync.
+        int32 shards_in_sync = 4;
+        // Service (LoadBalancer) endpoint of the SyncMasters
+        // This field has the format of a URL.
+        // This is a readonly field.
+        string sync_endpoint = 5;
+    }
+    // Status of the DeploymentReplication.
+    Status status = 100;
 }
