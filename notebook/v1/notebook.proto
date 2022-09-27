@@ -128,6 +128,7 @@ message NotebookList {
 // Request for listing notebooks.
 message ListNotebookRequest {
     // List notebooks for this deployment ID.
+    // This is a required field.
     string deployment_id = 1;
     // Optional common list options, the context_id is ignored
     common.v1.ListOptions options = 10;
@@ -140,13 +141,16 @@ message Notebook {
     string id = 1;
     // ID of the Deployment this notebook belongs to.
     // After creation, this value cannot be changed.
+    // This is a required field.
     string deployment_id = 2;
     // URL of the Notebook.
     // This is a read-only value.
     string url = 3;
     // Name of the notebook.
+    // This is a required field.
     string name = 4;
     // Description of the notebook.
+    // This is an optional field.
     string description = 5;
     // Indicates that this notebook is paused. 
     // Use the notebook.PauseNotebook method to pause, and notebook.ResumeNotebook to resume (unpause).
@@ -182,8 +186,10 @@ message Notebook {
 message ModelSpec {
     // Type of model being used.
     // This should refer to the `id` of a `NotebookModel` object.
+    // This is a required field.
     string notebook_model_id = 1; 
     // Disk size allocated to the notebook instance (in GiB).
+    // This is a required field.
     int32 disk_size = 2;
 }
 
@@ -198,9 +204,9 @@ message NotebookModel {
     float cpu = 3; 
     // Memory allocated to the notebook in 'GiB'.
     int32 memory = 4;
-    // Maximum amount of disk space (in GiB) to available to the notebook.
+    // Maximum amount of disk space (in GiB) available to the notebook.
     int32 max_disk_size = 5;
-    // Minimum amount of disk space (in GiB) to available to the notebook.
+    // Minimum amount of disk space (in GiB) available to the notebook.
     int32 min_disk_size = 6;
 }
 

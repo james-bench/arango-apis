@@ -23,6 +23,7 @@ export interface ListNotebookModelRequest {
 // Request for listing notebooks.
 export interface ListNotebookRequest {
   // List notebooks for this deployment ID.
+  // This is a required field.
   // string
   deployment_id?: string;
   
@@ -35,10 +36,12 @@ export interface ListNotebookRequest {
 export interface ModelSpec {
   // Type of model being used.
   // This should refer to the `id` of a `NotebookModel` object.
+  // This is a required field.
   // string
   notebook_model_id?: string;
   
   // Disk size allocated to the notebook instance (in GiB).
+  // This is a required field.
   // number
   disk_size?: number;
 }
@@ -52,6 +55,7 @@ export interface Notebook {
   
   // ID of the Deployment this notebook belongs to.
   // After creation, this value cannot be changed.
+  // This is a required field.
   // string
   deployment_id?: string;
   
@@ -61,10 +65,12 @@ export interface Notebook {
   url?: string;
   
   // Name of the notebook.
+  // This is a required field.
   // string
   name?: string;
   
   // Description of the notebook.
+  // This is an optional field.
   // string
   description?: string;
   
@@ -141,11 +147,11 @@ export interface NotebookModel {
   // number
   memory?: number;
   
-  // Maximum amount of disk space (in GiB) to available to the notebook.
+  // Maximum amount of disk space (in GiB) available to the notebook.
   // number
   max_disk_size?: number;
   
-  // Minimum amount of disk space (in GiB) to available to the notebook.
+  // Minimum amount of disk space (in GiB) available to the notebook.
   // number
   min_disk_size?: number;
 }

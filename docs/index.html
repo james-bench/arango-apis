@@ -14843,7 +14843,8 @@ Required permissions:
                   <td>deployment_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>List notebooks for this deployment ID. </p></td>
+                  <td><p>List notebooks for this deployment ID.
+This is a required field. </p></td>
                 </tr>
               
                 <tr>
@@ -14875,14 +14876,16 @@ Required permissions:
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Type of model being used.
-This should refer to the `id` of a `NotebookModel` object. </p></td>
+This should refer to the `id` of a `NotebookModel` object.
+This is a required field. </p></td>
                 </tr>
               
                 <tr>
                   <td>disk_size</td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
-                  <td><p>Disk size allocated to the notebook instance (in GiB). </p></td>
+                  <td><p>Disk size allocated to the notebook instance (in GiB).
+This is a required field. </p></td>
                 </tr>
               
             </tbody>
@@ -14915,7 +14918,8 @@ This is a read-only value. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>ID of the Deployment this notebook belongs to.
-After creation, this value cannot be changed. </p></td>
+After creation, this value cannot be changed.
+This is a required field. </p></td>
                 </tr>
               
                 <tr>
@@ -14930,14 +14934,16 @@ This is a read-only value. </p></td>
                   <td>name</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Name of the notebook. </p></td>
+                  <td><p>Name of the notebook.
+This is a required field. </p></td>
                 </tr>
               
                 <tr>
                   <td>description</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Description of the notebook. </p></td>
+                  <td><p>Description of the notebook.
+This is an optional field. </p></td>
                 </tr>
               
                 <tr>
@@ -15088,14 +15094,14 @@ This is a read-only value. </p></td>
                   <td>max_disk_size</td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
-                  <td><p>Maximum amount of disk space (in GiB) to available to the notebook. </p></td>
+                  <td><p>Maximum amount of disk space (in GiB) available to the notebook. </p></td>
                 </tr>
               
                 <tr>
                   <td>min_disk_size</td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
-                  <td><p>Minimum amount of disk space (in GiB) to available to the notebook. </p></td>
+                  <td><p>Minimum amount of disk space (in GiB) available to the notebook. </p></td>
                 </tr>
               
             </tbody>

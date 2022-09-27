@@ -82,6 +82,7 @@ func (m *NotebookList) GetItems() []*Notebook {
 // Request for listing notebooks.
 type ListNotebookRequest struct {
 	// List notebooks for this deployment ID.
+	// This is a required field.
 	DeploymentId string `protobuf:"bytes,1,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
 	// Optional common list options, the context_id is ignored
 	Options              *v1.ListOptions `protobuf:"bytes,10,opt,name=options,proto3" json:"options,omitempty"`
@@ -144,13 +145,16 @@ type Notebook struct {
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// ID of the Deployment this notebook belongs to.
 	// After creation, this value cannot be changed.
+	// This is a required field.
 	DeploymentId string `protobuf:"bytes,2,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
 	// URL of the Notebook.
 	// This is a read-only value.
 	Url string `protobuf:"bytes,3,opt,name=url,proto3" json:"url,omitempty"`
 	// Name of the notebook.
+	// This is a required field.
 	Name string `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
 	// Description of the notebook.
+	// This is an optional field.
 	Description string `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
 	// Indicates that this notebook is paused.
 	// Use the notebook.PauseNotebook method to pause, and notebook.ResumeNotebook to resume (unpause).
@@ -321,8 +325,10 @@ func (m *Notebook) GetStatus() *Status {
 type ModelSpec struct {
 	// Type of model being used.
 	// This should refer to the `id` of a `NotebookModel` object.
+	// This is a required field.
 	NotebookModelId string `protobuf:"bytes,1,opt,name=notebook_model_id,json=notebookModelId,proto3" json:"notebook_model_id,omitempty"`
 	// Disk size allocated to the notebook instance (in GiB).
+	// This is a required field.
 	DiskSize             int32    `protobuf:"varint,2,opt,name=disk_size,json=diskSize,proto3" json:"disk_size,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -387,9 +393,9 @@ type NotebookModel struct {
 	Cpu float32 `protobuf:"fixed32,3,opt,name=cpu,proto3" json:"cpu,omitempty"`
 	// Memory allocated to the notebook in 'GiB'.
 	Memory int32 `protobuf:"varint,4,opt,name=memory,proto3" json:"memory,omitempty"`
-	// Maximum amount of disk space (in GiB) to available to the notebook.
+	// Maximum amount of disk space (in GiB) available to the notebook.
 	MaxDiskSize int32 `protobuf:"varint,5,opt,name=max_disk_size,json=maxDiskSize,proto3" json:"max_disk_size,omitempty"`
-	// Minimum amount of disk space (in GiB) to available to the notebook.
+	// Minimum amount of disk space (in GiB) available to the notebook.
 	MinDiskSize          int32    `protobuf:"varint,6,opt,name=min_disk_size,json=minDiskSize,proto3" json:"min_disk_size,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
