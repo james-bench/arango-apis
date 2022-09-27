@@ -33,6 +33,10 @@ const (
 	PermissionUpdateNotebook = "notebook.notebook.update"
 	// PermissionListNotebooks is required to list notebooks.
 	PermissionListNotebooks = "notebook.notebook.list"
+	// PermissionPauseNotebook is required to pause a notebook.
+	PermissionPauseNotebook = "notebook.notebook.pause"
+	// PermissionResumeNotebook is required to resume a notebook.
+	PermissionResumeNotebook = "notebook.notebook.resume"
 )
 
 const (

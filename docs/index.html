@@ -14944,7 +14944,9 @@ This is a read-only value. </p></td>
                   <td>is_paused</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>Indicates that this notebook is paused. </p></td>
+                  <td><p>Indicates that this notebook is paused. 
+Use the notebook.PauseNotebook method to pause, and notebook.ResumeNotebook to resume (unpause).
+This is a read-only value. </p></td>
                 </tr>
               
                 <tr>
@@ -15253,7 +15255,7 @@ Required permissions:
                 <td><a href="#arangodb.cloud.notebook.v1.Notebook">Notebook</a></td>
                 <td><p>Get a Notebook using its ID.
 Required permissions:
-- notebook.notebook.get</p></td>
+- notebook.notebook.get on the notebook</p></td>
               </tr>
             
               <tr>
@@ -15272,7 +15274,7 @@ Required permissions:
                 <td><p>Delete an existing notebook using its ID.
 This initially marks the notebook for deletion. It is deleted from CP once all its child resources are deleted.
 Required permissions:
-- notebook.notebook.delete</p></td>
+- notebook.notebook.delete on the notebook</p></td>
               </tr>
             
               <tr>
@@ -15281,7 +15283,7 @@ Required permissions:
                 <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
                 <td><p>Update an existing notebook. Returns updated Notebook.
 Required permissions:
-- notebook.notebook.update</p></td>
+- notebook.notebook.update on the notebook</p></td>
               </tr>
             
               <tr>
@@ -15290,7 +15292,7 @@ Required permissions:
                 <td><a href="#arangodb.cloud.notebook.v1.NotebookList">NotebookList</a></td>
                 <td><p>List all notebooks for the deployments identified by the given deployment identifier.
 Required permissions:
-- notebook.notebook.list</p></td>
+- notebook.notebook.list on the deployment</p></td>
               </tr>
             
               <tr>
@@ -15300,6 +15302,25 @@ Required permissions:
                 <td><p>List all notebook models available in the context of the given deployment.
 Required permissions:
 - notebook.model.list</p></td>
+              </tr>
+            
+              <tr>
+                <td>PauseNotebook</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><p>Pauses a running notebook identified by the given id.
+Required permissions:
+- notebook.notebook.pause on the notebook</p></td>
+              </tr>
+            
+              <tr>
+                <td>ResumeNotebook</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><p>Resumes a paused notebook identified by the given id.
+When ResumeNotebook is invoked on a notebook that has is_paused not set, an PreconditionFailed error is returned.
+Required permissions:
+- notebook.notebook.resume on the notebook</p></td>
               </tr>
             
           </tbody>
@@ -15387,6 +15408,26 @@ Required permissions:
                 <td>POST</td>
                 <td>/api/notebook/v1/models</td>
                 <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>PauseNotebook</td>
+                <td>POST</td>
+                <td>/api/notebook/v1/{id}/pause</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>ResumeNotebook</td>
+                <td>POST</td>
+                <td>/api/notebook/v1/{id}/resume</td>
+                <td></td>
               </tr>
               
             

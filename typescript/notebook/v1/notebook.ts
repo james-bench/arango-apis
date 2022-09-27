@@ -69,6 +69,8 @@ export interface Notebook {
   description?: string;
   
   // Indicates that this notebook is paused.
+  // Use the notebook.PauseNotebook method to pause, and notebook.ResumeNotebook to resume (unpause).
+  // This is a read-only value.
   // boolean
   is_paused?: boolean;
   
@@ -209,7 +211,7 @@ export interface INotebookService {
   
   // Get a Notebook using its ID.
   // Required permissions:
-  // - notebook.notebook.get
+  // - notebook.notebook.get on the notebook
   GetNotebook: (req: arangodb_cloud_common_v1_IDOptions) => Promise<Notebook>;
   
   // Create a new Notebook by specifying its configuration.
@@ -220,23 +222,34 @@ export interface INotebookService {
   // Delete an existing notebook using its ID.
   // This initially marks the notebook for deletion. It is deleted from CP once all its child resources are deleted.
   // Required permissions:
-  // - notebook.notebook.delete
+  // - notebook.notebook.delete on the notebook
   DeleteNotebook: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
   
   // Update an existing notebook. Returns updated Notebook.
   // Required permissions:
-  // - notebook.notebook.update
+  // - notebook.notebook.update on the notebook
   UpdateNotebook: (req: Notebook) => Promise<void>;
   
   // List all notebooks for the deployments identified by the given deployment identifier.
   // Required permissions:
-  // - notebook.notebook.list
+  // - notebook.notebook.list on the deployment
   ListNotebooks: (req: ListNotebookRequest) => Promise<NotebookList>;
   
   // List all notebook models available in the context of the given deployment.
   // Required permissions:
   // - notebook.model.list
   ListNotebookModels: (req: ListNotebookModelRequest) => Promise<NotebookModelList>;
+  
+  // Pauses a running notebook identified by the given id.
+  // Required permissions:
+  // - notebook.notebook.pause on the notebook
+  PauseNotebook: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
+  // Resumes a paused notebook identified by the given id.
+  // When ResumeNotebook is invoked on a notebook that has is_paused not set, an PreconditionFailed error is returned.
+  // Required permissions:
+  // - notebook.notebook.resume on the notebook
+  ResumeNotebook: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
 }
 
 // Notebook service is used to manage notebooks.
@@ -252,7 +265,7 @@ export class NotebookService implements INotebookService {
   
   // Get a Notebook using its ID.
   // Required permissions:
-  // - notebook.notebook.get
+  // - notebook.notebook.get on the notebook
   async GetNotebook(req: arangodb_cloud_common_v1_IDOptions): Promise<Notebook> {
     const path = `/api/notebook/v1/notebook/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
@@ -270,7 +283,7 @@ export class NotebookService implements INotebookService {
   // Delete an existing notebook using its ID.
   // This initially marks the notebook for deletion. It is deleted from CP once all its child resources are deleted.
   // Required permissions:
-  // - notebook.notebook.delete
+  // - notebook.notebook.delete on the notebook
   async DeleteNotebook(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
     const path = `/api/notebook/v1/notebook/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
@@ -279,7 +292,7 @@ export class NotebookService implements INotebookService {
   
   // Update an existing notebook. Returns updated Notebook.
   // Required permissions:
-  // - notebook.notebook.update
+  // - notebook.notebook.update on the notebook
   async UpdateNotebook(req: Notebook): Promise<void> {
     const url = `/api/notebook/v1/notebook/${encodeURIComponent(req.id || '')}`;
     return api.post(url, req);
@@ -287,7 +300,7 @@ export class NotebookService implements INotebookService {
   
   // List all notebooks for the deployments identified by the given deployment identifier.
   // Required permissions:
-  // - notebook.notebook.list
+  // - notebook.notebook.list on the deployment
   async ListNotebooks(req: ListNotebookRequest): Promise<NotebookList> {
     const url = `/api/notebook/v1/notebooks`;
     return api.post(url, req);
@@ -299,5 +312,24 @@ export class NotebookService implements INotebookService {
   async ListNotebookModels(req: ListNotebookModelRequest): Promise<NotebookModelList> {
     const url = `/api/notebook/v1/models`;
     return api.post(url, req);
+  }
+  
+  // Pauses a running notebook identified by the given id.
+  // Required permissions:
+  // - notebook.notebook.pause on the notebook
+  async PauseNotebook(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
+    const path = `/api/notebook/v1/${encodeURIComponent(req.id || '')}/pause`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.post(url, undefined);
+  }
+  
+  // Resumes a paused notebook identified by the given id.
+  // When ResumeNotebook is invoked on a notebook that has is_paused not set, an PreconditionFailed error is returned.
+  // Required permissions:
+  // - notebook.notebook.resume on the notebook
+  async ResumeNotebook(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
+    const path = `/api/notebook/v1/${encodeURIComponent(req.id || '')}/resume`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.post(url, undefined);
   }
 }

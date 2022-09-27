@@ -43,7 +43,7 @@ service NotebookService {
     
     // Get a Notebook using its ID.
     // Required permissions:
-    // - notebook.notebook.get  
+    // - notebook.notebook.get on the notebook
     rpc GetNotebook(common.v1.IDOptions) returns (Notebook) {
         option (google.api.http) = {
             get: "/api/notebook/v1/notebook/{id}"        
@@ -63,7 +63,7 @@ service NotebookService {
     // Delete an existing notebook using its ID.
     // This initially marks the notebook for deletion. It is deleted from CP once all its child resources are deleted.
     // Required permissions:
-    // - notebook.notebook.delete
+    // - notebook.notebook.delete on the notebook
     rpc DeleteNotebook(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             delete:  "/api/notebook/v1/notebook/{id}"
@@ -72,7 +72,7 @@ service NotebookService {
     
     // Update an existing notebook. Returns updated Notebook.
     // Required permissions:
-    // - notebook.notebook.update
+    // - notebook.notebook.update on the notebook
     rpc UpdateNotebook(Notebook) returns (common.v1.Empty) {
         option (google.api.http) = {
             post:  "/api/notebook/v1/notebook/{id}"
@@ -82,7 +82,7 @@ service NotebookService {
         
     // List all notebooks for the deployments identified by the given deployment identifier.
     // Required permissions:
-    // - notebook.notebook.list
+    // - notebook.notebook.list on the deployment
     rpc ListNotebooks(ListNotebookRequest) returns (NotebookList) {
         option (google.api.http) = {
             post:  "/api/notebook/v1/notebooks"
@@ -97,6 +97,25 @@ service NotebookService {
         option (google.api.http) = {
             post: "/api/notebook/v1/models"
             body: "*"
+        };
+    }
+
+    // Pauses a running notebook identified by the given id.
+    // Required permissions:
+    // - notebook.notebook.pause on the notebook
+    rpc PauseNotebook(common.v1.IDOptions) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            post: "/api/notebook/v1/{id}/pause"
+        };
+    }
+    
+    // Resumes a paused notebook identified by the given id.
+    // When ResumeNotebook is invoked on a notebook that has is_paused not set, an PreconditionFailed error is returned.
+    // Required permissions:
+    // - notebook.notebook.resume on the notebook
+    rpc ResumeNotebook(common.v1.IDOptions) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            post: "/api/notebook/v1/{id}/resume"
         };
     }
 }
@@ -130,6 +149,8 @@ message Notebook {
     // Description of the notebook.
     string description = 5;
     // Indicates that this notebook is paused. 
+    // Use the notebook.PauseNotebook method to pause, and notebook.ResumeNotebook to resume (unpause).
+    // This is a read-only value.
     bool is_paused = 6;
     // The last paused timestamp of the notebook.
     // This is the timestamp that is_paused is transitioned from unset to set.
