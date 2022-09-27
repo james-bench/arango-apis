@@ -178,7 +178,6 @@ message Notebook {
     // This is a read-only value.
     Status status = 100;
 }
-
 // Model specification for the notebook.
 message ModelSpec {
     // Type of model being used.
@@ -199,6 +198,10 @@ message NotebookModel {
     float cpu = 3; 
     // Memory allocated to the notebook in 'GiB'.
     int32 memory = 4;
+    // Maximum amount of disk space (in GiB) to available to the notebook.
+    int32 max_disk_size = 5;
+    // Minimum amount of disk space (in GiB) to available to the notebook.
+    int32 min_disk_size = 6;
 }
 
 // List of notebook models.

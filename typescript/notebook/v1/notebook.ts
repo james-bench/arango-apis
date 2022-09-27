@@ -140,6 +140,14 @@ export interface NotebookModel {
   // Memory allocated to the notebook in 'GiB'.
   // number
   memory?: number;
+  
+  // Maximum amount of disk space (in GiB) to available to the notebook.
+  // number
+  max_disk_size?: number;
+  
+  // Minimum amount of disk space (in GiB) to available to the notebook.
+  // number
+  min_disk_size?: number;
 }
 
 // List of notebook models.
