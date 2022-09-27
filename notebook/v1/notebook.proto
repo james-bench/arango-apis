@@ -83,7 +83,7 @@ service NotebookService {
     // List all notebooks for the deployments identified by the given deployment identifier.
     // Required permissions:
     // - notebook.notebook.list on the deployment
-    rpc ListNotebooks(ListNotebookRequest) returns (NotebookList) {
+    rpc ListNotebooks(ListNotebooksRequest) returns (NotebookList) {
         option (google.api.http) = {
             post:  "/api/notebook/v1/notebooks"
             body: "*"
@@ -93,7 +93,7 @@ service NotebookService {
     // List all notebook models available in the context of the given deployment.
     // Required permissions:
     // - notebook.model.list
-    rpc ListNotebookModels(ListNotebookModelRequest) returns (NotebookModelList) {
+    rpc ListNotebookModels(ListNotebookModelsRequest) returns (NotebookModelList) {
         option (google.api.http) = {
             post: "/api/notebook/v1/models"
             body: "*"
@@ -126,7 +126,7 @@ message NotebookList {
 }
 
 // Request for listing notebooks.
-message ListNotebookRequest {
+message ListNotebooksRequest {
     // List notebooks for this deployment ID.
     // This is a required field.
     string deployment_id = 1;
@@ -216,7 +216,7 @@ message NotebookModelList {
 }
 
 // Requet for listing notebook models.
-message ListNotebookModelRequest {
+message ListNotebookModelsRequest {
     // ID of the deployment that the notebook belongs to.
     string deployment_id = 1;
 }

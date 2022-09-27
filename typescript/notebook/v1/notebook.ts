@@ -14,14 +14,14 @@ import { DataVolumeInfo as arangodb_cloud_data_v1_DataVolumeInfo } from '../../d
 // Package: arangodb.cloud.notebook.v1
 
 // Requet for listing notebook models.
-export interface ListNotebookModelRequest {
+export interface ListNotebookModelsRequest {
   // ID of the deployment that the notebook belongs to.
   // string
   deployment_id?: string;
 }
 
 // Request for listing notebooks.
-export interface ListNotebookRequest {
+export interface ListNotebooksRequest {
   // List notebooks for this deployment ID.
   // This is a required field.
   // string
@@ -247,12 +247,12 @@ export interface INotebookService {
   // List all notebooks for the deployments identified by the given deployment identifier.
   // Required permissions:
   // - notebook.notebook.list on the deployment
-  ListNotebooks: (req: ListNotebookRequest) => Promise<NotebookList>;
+  ListNotebooks: (req: ListNotebooksRequest) => Promise<NotebookList>;
   
   // List all notebook models available in the context of the given deployment.
   // Required permissions:
   // - notebook.model.list
-  ListNotebookModels: (req: ListNotebookModelRequest) => Promise<NotebookModelList>;
+  ListNotebookModels: (req: ListNotebookModelsRequest) => Promise<NotebookModelList>;
   
   // Pauses a running notebook identified by the given id.
   // Required permissions:
@@ -315,7 +315,7 @@ export class NotebookService implements INotebookService {
   // List all notebooks for the deployments identified by the given deployment identifier.
   // Required permissions:
   // - notebook.notebook.list on the deployment
-  async ListNotebooks(req: ListNotebookRequest): Promise<NotebookList> {
+  async ListNotebooks(req: ListNotebooksRequest): Promise<NotebookList> {
     const url = `/api/notebook/v1/notebooks`;
     return api.post(url, req);
   }
@@ -323,7 +323,7 @@ export class NotebookService implements INotebookService {
   // List all notebook models available in the context of the given deployment.
   // Required permissions:
   // - notebook.model.list
-  async ListNotebookModels(req: ListNotebookModelRequest): Promise<NotebookModelList> {
+  async ListNotebookModels(req: ListNotebookModelsRequest): Promise<NotebookModelList> {
     const url = `/api/notebook/v1/models`;
     return api.post(url, req);
   }

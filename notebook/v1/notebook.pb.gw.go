@@ -263,7 +263,7 @@ func local_request_NotebookService_UpdateNotebook_0(ctx context.Context, marshal
 }
 
 func request_NotebookService_ListNotebooks_0(ctx context.Context, marshaler runtime.Marshaler, client NotebookServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListNotebookRequest
+	var protoReq ListNotebooksRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -280,7 +280,7 @@ func request_NotebookService_ListNotebooks_0(ctx context.Context, marshaler runt
 }
 
 func local_request_NotebookService_ListNotebooks_0(ctx context.Context, marshaler runtime.Marshaler, server NotebookServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListNotebookRequest
+	var protoReq ListNotebooksRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -297,7 +297,7 @@ func local_request_NotebookService_ListNotebooks_0(ctx context.Context, marshale
 }
 
 func request_NotebookService_ListNotebookModels_0(ctx context.Context, marshaler runtime.Marshaler, client NotebookServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListNotebookModelRequest
+	var protoReq ListNotebookModelsRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -314,7 +314,7 @@ func request_NotebookService_ListNotebookModels_0(ctx context.Context, marshaler
 }
 
 func local_request_NotebookService_ListNotebookModels_0(ctx context.Context, marshaler runtime.Marshaler, server NotebookServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListNotebookModelRequest
+	var protoReq ListNotebookModelsRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)

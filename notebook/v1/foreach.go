@@ -29,8 +29,8 @@ type (
 
 // ForEachNotebook iterates over all notebooks for a specific deployment,
 // invoking the given callback for each of them.
-func ForEachNotebook(ctx context.Context, listFunc func(ctx context.Context, req *ListNotebookRequest) (*NotebookList, error),
-	req ListNotebookRequest, cb NotebookCallback) error {
+func ForEachNotebook(ctx context.Context, listFunc func(ctx context.Context, req *ListNotebooksRequest) (*NotebookList, error),
+	req ListNotebooksRequest, cb NotebookCallback) error {
 	req.Options = req.GetOptions().CloneOrDefault()
 	for {
 		list, err := listFunc(ctx, &req)
