@@ -856,7 +856,7 @@ const _ = grpc.SupportPackageIsVersion4
 type NotebookServiceClient interface {
 	// Get the current API version of this service.
 	// Required permissions:
-	// - None
+	// - None (authenticated only)
 	GetAPIVersion(ctx context.Context, in *v1.Empty, opts ...grpc.CallOption) (*v1.Version, error)
 	// Get a Notebook using its ID.
 	// Required permissions:
@@ -864,7 +864,7 @@ type NotebookServiceClient interface {
 	GetNotebook(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*Notebook, error)
 	// Create a new Notebook by specifying its configuration.
 	// Required permissions:
-	// - notebook.notebook.create
+	// - notebook.notebook.create on the deployment
 	CreateNotebook(ctx context.Context, in *Notebook, opts ...grpc.CallOption) (*Notebook, error)
 	// Delete an existing notebook using its ID.
 	// This initially marks the notebook for deletion. It is deleted from CP once all its child resources are deleted.
@@ -881,7 +881,7 @@ type NotebookServiceClient interface {
 	ListNotebooks(ctx context.Context, in *ListNotebooksRequest, opts ...grpc.CallOption) (*NotebookList, error)
 	// List all notebook models available in the context of the given deployment.
 	// Required permissions:
-	// - notebook.model.list
+	// - notebook.model.list globally
 	ListNotebookModels(ctx context.Context, in *ListNotebookModelsRequest, opts ...grpc.CallOption) (*NotebookModelList, error)
 	// Pauses a running notebook identified by the given id.
 	// Required permissions:
@@ -987,7 +987,7 @@ func (c *notebookServiceClient) ResumeNotebook(ctx context.Context, in *v1.IDOpt
 type NotebookServiceServer interface {
 	// Get the current API version of this service.
 	// Required permissions:
-	// - None
+	// - None (authenticated only)
 	GetAPIVersion(context.Context, *v1.Empty) (*v1.Version, error)
 	// Get a Notebook using its ID.
 	// Required permissions:
@@ -995,7 +995,7 @@ type NotebookServiceServer interface {
 	GetNotebook(context.Context, *v1.IDOptions) (*Notebook, error)
 	// Create a new Notebook by specifying its configuration.
 	// Required permissions:
-	// - notebook.notebook.create
+	// - notebook.notebook.create on the deployment
 	CreateNotebook(context.Context, *Notebook) (*Notebook, error)
 	// Delete an existing notebook using its ID.
 	// This initially marks the notebook for deletion. It is deleted from CP once all its child resources are deleted.
@@ -1012,7 +1012,7 @@ type NotebookServiceServer interface {
 	ListNotebooks(context.Context, *ListNotebooksRequest) (*NotebookList, error)
 	// List all notebook models available in the context of the given deployment.
 	// Required permissions:
-	// - notebook.model.list
+	// - notebook.model.list globally
 	ListNotebookModels(context.Context, *ListNotebookModelsRequest) (*NotebookModelList, error)
 	// Pauses a running notebook identified by the given id.
 	// Required permissions:

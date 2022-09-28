@@ -34,7 +34,7 @@ import "google/api/annotations.proto";
 service NotebookService {
     // Get the current API version of this service.
     // Required permissions:
-    // - None
+    // - None (authenticated only)
     rpc GetAPIVersion(common.v1.Empty) returns (common.v1.Version) {
         option (google.api.http) = {
             get: "/api/notebook/v1/api-version"
@@ -52,7 +52,7 @@ service NotebookService {
     
     // Create a new Notebook by specifying its configuration.
     // Required permissions:
-    // - notebook.notebook.create
+    // - notebook.notebook.create on the deployment
     rpc CreateNotebook(Notebook) returns (Notebook) {
         option (google.api.http) = {
             put: "/api/notebook/v1/notebook"
@@ -92,7 +92,7 @@ service NotebookService {
     
     // List all notebook models available in the context of the given deployment.
     // Required permissions:
-    // - notebook.model.list
+    // - notebook.model.list globally
     rpc ListNotebookModels(ListNotebookModelsRequest) returns (NotebookModelList) {
         option (google.api.http) = {
             post: "/api/notebook/v1/models"

@@ -220,7 +220,7 @@ export interface Status_Usage {
 export interface INotebookService {
   // Get the current API version of this service.
   // Required permissions:
-  // - None
+  // - None (authenticated only)
   GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
   
   // Get a Notebook using its ID.
@@ -230,7 +230,7 @@ export interface INotebookService {
   
   // Create a new Notebook by specifying its configuration.
   // Required permissions:
-  // - notebook.notebook.create
+  // - notebook.notebook.create on the deployment
   CreateNotebook: (req: Notebook) => Promise<Notebook>;
   
   // Delete an existing notebook using its ID.
@@ -251,7 +251,7 @@ export interface INotebookService {
   
   // List all notebook models available in the context of the given deployment.
   // Required permissions:
-  // - notebook.model.list
+  // - notebook.model.list globally
   ListNotebookModels: (req: ListNotebookModelsRequest) => Promise<NotebookModelList>;
   
   // Pauses a running notebook identified by the given id.
@@ -270,7 +270,7 @@ export interface INotebookService {
 export class NotebookService implements INotebookService {
   // Get the current API version of this service.
   // Required permissions:
-  // - None
+  // - None (authenticated only)
   async GetAPIVersion(req?: arangodb_cloud_common_v1_Empty): Promise<arangodb_cloud_common_v1_Version> {
     const path = `/api/notebook/v1/api-version`;
     const url = path + api.queryString(req, []);
@@ -288,7 +288,7 @@ export class NotebookService implements INotebookService {
   
   // Create a new Notebook by specifying its configuration.
   // Required permissions:
-  // - notebook.notebook.create
+  // - notebook.notebook.create on the deployment
   async CreateNotebook(req: Notebook): Promise<Notebook> {
     const url = `/api/notebook/v1/notebook`;
     return api.put(url, req);
@@ -322,7 +322,7 @@ export class NotebookService implements INotebookService {
   
   // List all notebook models available in the context of the given deployment.
   // Required permissions:
-  // - notebook.model.list
+  // - notebook.model.list globally
   async ListNotebookModels(req: ListNotebookModelsRequest): Promise<NotebookModelList> {
     const url = `/api/notebook/v1/models`;
     return api.post(url, req);

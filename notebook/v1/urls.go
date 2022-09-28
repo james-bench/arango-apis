@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2022 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,5 +33,5 @@ const (
 // NotebookURL creates a resource URL for the Notebook with given ID
 // in given context.
 func NotebookURL(deploymentURL, notebookID string) string {
-	return path.Join(deploymentURL, KindNotebook,url.PathEscape(notebookID))
+	return path.Join(deploymentURL, KindNotebook, url.PathEscape(notebookID))
 }
