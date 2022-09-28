@@ -15266,7 +15266,7 @@ This value will be empty during the creation of the notebook. </p></td>
                 <td><a href="#arangodb.cloud.common.v1.Version">.arangodb.cloud.common.v1.Version</a></td>
                 <td><p>Get the current API version of this service.
 Required permissions:
-- None</p></td>
+- None (authenticated only)</p></td>
               </tr>
             
               <tr>
@@ -15284,7 +15284,7 @@ Required permissions:
                 <td><a href="#arangodb.cloud.notebook.v1.Notebook">Notebook</a></td>
                 <td><p>Create a new Notebook by specifying its configuration.
 Required permissions:
-- notebook.notebook.create</p></td>
+- notebook.notebook.create on the deployment</p></td>
               </tr>
             
               <tr>
@@ -15321,7 +15321,7 @@ Required permissions:
                 <td><a href="#arangodb.cloud.notebook.v1.NotebookModelList">NotebookModelList</a></td>
                 <td><p>List all notebook models available in the context of the given deployment.
 Required permissions:
-- notebook.model.list</p></td>
+- notebook.model.list globally</p></td>
               </tr>
             
               <tr>
