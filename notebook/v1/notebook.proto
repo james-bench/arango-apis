@@ -123,6 +123,8 @@ service NotebookService {
 // List of Notebooks.
 message NotebookList {
     repeated Notebook items = 1;
+    // Budget for notebooks
+    common.v1.Budget budget = 2;
 }
 
 // Request for listing notebooks.

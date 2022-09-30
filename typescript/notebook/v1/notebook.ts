@@ -4,6 +4,7 @@
 ///
 import api from '../../api'
 import * as googleTypes from '../../googleTypes'
+import { Budget as arangodb_cloud_common_v1_Budget } from '../../common/v1/common'
 import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
 import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1/common'
 import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
@@ -126,6 +127,10 @@ export interface Notebook {
 export interface NotebookList {
   // Notebook
   items?: Notebook[];
+  
+  // Budget for notebooks
+  // arangodb.cloud.common.v1.Budget
+  budget?: arangodb_cloud_common_v1_Budget;
 }
 
 // Specifies the resource configuration for a notebook.
