@@ -32,9 +32,9 @@ const (
 	// Notebook is moving to a hibernated state.
 	NotebookPhaseHibernating = "Hibernating"
 
-    // Notebook has moved to a hibernated state.
+	// Notebook has moved to a hibernated state.
 	NotebookPhaseHibernated = "Hibernated"
 
-// Notebook is in an errored state. Additional information can be obtained from `message` field.
-	NotebookPhaseError      = "Error"
+	// Notebook is in an errored state. Additional information can be obtained from `message` field.
+	NotebookPhaseError = "Error"
 )
