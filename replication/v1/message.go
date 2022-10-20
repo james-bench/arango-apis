@@ -21,6 +21,10 @@ type Message struct {
 
 // AsJSON returns a JSON representation of the `Message` struct.
 func (m Message) AsJSON() string {
+	// The error here will always be `nil` and hence we ignore it.
+	// This is because we know `Message` will always contain string fields,
+	// and will be handled correctly by the JSON encoder.
+	// Otherwise, the caller may add redundant boilerplate code to handle an error that never occurs.
 	b, _ := json.Marshal(m)
 	return string(b)
 }
