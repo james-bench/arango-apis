@@ -11,11 +11,12 @@ import "encoding/json"
 // Message holds any additional information that the user must know regarding
 // the replication / migration process.
 type Message struct {
-	// Reason for any failures / conditions.
+	// Reason contains information related to the current state of the migration process
+	// or any supporting information related to failures.
 	Reason string `json:"reason,omitempty"`
-	// Errors related to database that may occur during replication.
+	// DbErrors contains information related to database errors that could occur during the migration process.
 	DbErrors string `json:"db_errors,omitempty"`
-	// Errors related to ArangoSync that may occur during replication.
+	// SyncErrors contains information related to errors from the ArangoSync component.
 	SyncErrors string `json:"sync_errors,omitempty"`
 }
 
