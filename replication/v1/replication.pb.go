@@ -220,6 +220,7 @@ type DeploymentReplication_Status struct {
 	Phase string `protobuf:"bytes,1,opt,name=phase,proto3" json:"phase,omitempty"`
 	// Supporting information about the deployment replication phase - such as error messages in case of failures.
 	// This field will be in JSON format and can be built using the `AsJSON()` helper.
+	// Use `FromJSON()` helper to parse this field.
 	// See - replication/v1/message.go in this repository.
 	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 	// Total number of shards that should be in-sync.

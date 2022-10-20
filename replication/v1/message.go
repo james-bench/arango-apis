@@ -30,6 +30,12 @@ func (m Message) AsJSON() string {
 	return string(b)
 }
 
+// FromJSON converts a JSON string representation of `Message`,
+// and decodes it into a `*Message` type.
+func (m *Message) FromJSON(msg string) error {
+	return json.Unmarshal([]byte(msg), m)
+}
+
 // NewMessage returns a new Message type with the given reason, dbErrors and syncErrors strings.
 func NewMessage(reason, dbErrors, syncErrors string) Message {
 	return Message{

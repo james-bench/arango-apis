@@ -81,6 +81,7 @@ export interface DeploymentReplication_Status {
   
   // Supporting information about the deployment replication phase - such as error messages in case of failures.
   // This field will be in JSON format and can be built using the `AsJSON()` helper.
+  // Use `FromJSON()` helper to parse this field.
   // See - replication/v1/message.go in this repository.
   // string
   message?: string;
