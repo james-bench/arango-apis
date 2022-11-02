@@ -1,24 +1,24 @@
-// 
+//
 // DISCLAIMER
-// 
+//
 // Copyright 2020 ArangoDB GmbH, Cologne, Germany
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+//
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
-// 
+//
 // Author Robert Stam
-// 
+//
 
 syntax = "proto3";
 
@@ -81,7 +81,7 @@ service BackupService {
             get: "/api/backup/v1/deployment/{deployment_id}/backuppolicies"
         };
     }
-    
+
     // Fetch a backup policy identified by the given ID.
     // Required permissions:
     // - backup.backuppolicy.get on the backup policy identified by the given ID.
@@ -121,7 +121,7 @@ service BackupService {
             delete: "/api/backup/v1/backuppolicies/{id}"
         };
     }
-   
+
     // Fetch all backups for a specific deployment.
     // Required permissions:
     // - backup.backup.list on the deployment that owns the backup and is identified by the given ID.
@@ -140,8 +140,8 @@ service BackupService {
         };
     }
 
-    // Create a new manual backup 
-    // Setting the backup_policy_id field in the backup is not allowed 
+    // Create a new manual backup
+    // Setting the backup_policy_id field in the backup is not allowed
     // Required permissions:
     // -  backup.backup.create on the deployment that owns the backup and is identified by the given ID.
     rpc CreateBackup(Backup) returns (Backup) {
@@ -151,7 +151,7 @@ service BackupService {
         };
     }
 
-    // Update a backup 
+    // Update a backup
     // Required permissions:
     // -  backup.backup.update on the backup identified by the given ID.
     rpc UpdateBackup(Backup) returns (Backup) {
@@ -165,7 +165,7 @@ service BackupService {
     // This operation can only be executed on backups which have the same number of DB Servers in the backup and the current running cluster.
     // If this backup was already downloaded, another download will be done.
     // If the backup is still available on the cluster there is no need to explicitly download the backup before restoring.
-    // This function will return immediately. 
+    // This function will return immediately.
     // To track status, please invoke GetBackup and check the .status field inside the returned backup object
     // Required permissions:
     // -  backup.backup.download on the backup identified by the given ID.
@@ -176,14 +176,14 @@ service BackupService {
     }
 
     // Restore (or recover) a backup identified by the given ID
-    // This operation can only be executed on backups where status.available is set and 
-    // the mayor and minor version of the backup and the current running cluster are the same. 
-    // This function will return immediately. 
-    // To track status, please invoke GetDeployment on the data API and check the 
+    // This operation can only be executed on backups where status.available is set and
+    // the mayor and minor version of the backup and the current running cluster are the same.
+    // This function will return immediately.
+    // To track status, please invoke GetDeployment on the data API and check the
     // .status.restoring_backup and .status.restore_backup_status fields inside the returned deployment object
     // Required permissions (both are needed):
-    // -  backup.backup.restore on the backup identified by the given ID. 
-    // -  data.deployment.restore-backup on the deployment that owns this backup 
+    // -  backup.backup.restore on the backup identified by the given ID.
+    // -  data.deployment.restore-backup on the deployment that owns this backup
     rpc RestoreBackup(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             post: "/api/backup/v1/backup/{id}/restore"
@@ -221,9 +221,9 @@ message BackupPolicy {
     // This is a read-only value.
     string url = 2;
     // Name of the backup policy
-    string name = 3; 
+    string name = 3;
     // Description of the backup policy
-    string description = 4; 
+    string description = 4;
     // Identifier of the deployment that owns this backup policy.
     // After creation, this value cannot be changed.
     string deployment_id = 5;
@@ -260,7 +260,7 @@ message BackupPolicy {
         MonthlySchedule monthly_schedule = 4;
     }
 
-    // Note: Nested types inside nested types is not supported by the typescript generator 
+    // Note: Nested types inside nested types is not supported by the typescript generator
     message HourlySchedule{
         // Schedule should run with an interval of the specified hours (1-23)
         int32 schedule_every_interval_hours = 1;
@@ -268,7 +268,7 @@ message BackupPolicy {
         int32 minutes_offset = 2;
     }
 
-    // Note: Nested types inside nested types is not supported by the typescript generator 
+    // Note: Nested types inside nested types is not supported by the typescript generator
     message DailySchedule{
         // If set, a backup will be created on Mondays.
         bool monday = 1;
@@ -297,13 +297,13 @@ message BackupPolicy {
         TimeOfDay schedule_at = 10;
     }
 
-    // The schedule for this backup policy 
+    // The schedule for this backup policy
     Schedule schedule = 10;
-    
+
     // Upload the backup, created by the backup policy, to an external source.
     bool upload = 11;
-   
-    // Backups created by this policy will be automatically deleted after the specified retention period 
+
+    // Backups created by this policy will be automatically deleted after the specified retention period
     // A value of 0 means that backup will never be deleted.
     google.protobuf.Duration retention_period = 12;
 
@@ -318,10 +318,10 @@ message BackupPolicy {
     // Status of the backup policy
     // All members of this field are read-only.
     message Status {
-        // The timestamp when the next backup - initiated by this backup policy - will be created 
+        // The timestamp when the next backup - initiated by this backup policy - will be created
         google.protobuf.Timestamp next_backup = 1;
-        // Message in case of failure, otherwise an empty string 
-        string message = 2;        
+        // Message in case of failure, otherwise an empty string
+        string message = 2;
     }
     // Status of the backup policy
     Status status = 100;
@@ -334,13 +334,13 @@ message BackupPolicy {
 
 }
 
-// TimeOfDay describes a specific moment on a day 
+// TimeOfDay describes a specific moment on a day
 message TimeOfDay {
     // Hours part of the time of day (0-23)
     int32 hours = 1;
     // Minutes part of the time of day (0-59)
     int32 minutes = 2;
-    // The time-zone this time of day applies to (empty means UTC) 
+    // The time-zone this time of day applies to (empty means UTC)
     // Names MUST be exactly as defined in RFC-822.
     string time_zone = 3;
 }
@@ -356,7 +356,7 @@ message BackupPolicyList {
 message ListBackupPoliciesRequest {
     // Identifier of the deployment to request the backup policies for.
     string deployment_id = 1;
-    // If set, the result includes all backup policies, including those who set to deleted, 
+    // If set, the result includes all backup policies, including those who set to deleted,
     // however are not removed from the system currently.
     // If not set, only backup policies not indicated as deleted are returned.
     bool include_deleted = 2;
@@ -372,10 +372,10 @@ message Backup {
     // URL of this resource
     // This is a read-only value.
     string url = 2;
-    // Name of the backup 
-    string name = 3; 
-    // Description of the backup 
-    string description = 4; 
+    // Name of the backup
+    string name = 3;
+    // Description of the backup
+    string description = 4;
     // Identifier of the deployment that owns this backup.
     // After creation, this value cannot be changed.
     string deployment_id = 5;
@@ -386,7 +386,7 @@ message Backup {
     // The creation timestamp of the backup (database object)
     // This is a read-only value.
     google.protobuf.Timestamp created_at = 7;
-    // The deletion timestamp of the backup 
+    // The deletion timestamp of the backup
     // This is a read-only value.
     google.protobuf.Timestamp deleted_at = 8;
     // Set when this backup is deleted.
@@ -394,11 +394,11 @@ message Backup {
     bool is_deleted = 9;
 
     // The timestamp that this backup will be automatically removed
-    // You cannot provide a value in the past, 
-    // If the field is not set, the backup will not be automatically removed.  
+    // You cannot provide a value in the past,
+    // If the field is not set, the backup will not be automatically removed.
     google.protobuf.Timestamp auto_deleted_at = 10;
 
-    // Information about the deployment during backup 
+    // Information about the deployment during backup
     // All members of this field are read-only.
     message DeploymentInfo {
         // ArangoDB version of the deployment during backup.
@@ -408,7 +408,7 @@ message Backup {
         // Model of the deployment during backup.
         data.v1.Deployment.ModelSpec model = 3;
     }
-    // Information about the deployment during backup 
+    // Information about the deployment during backup
     DeploymentInfo deployment_info = 11;
 
     // Upload the backup, created by the backup policy, to an external source.
@@ -421,9 +421,9 @@ message Backup {
     google.protobuf.Timestamp upload_updated_at = 14;
 
     // Information about a backup download.
-    // All members of this message are read-only. 
-    message DownloadSpec {  
-        // The revision of this DownloadSpec 
+    // All members of this message are read-only.
+    message DownloadSpec {
+        // The revision of this DownloadSpec
         int32 revision = 1;
         // The timestamp of when the last revision has been updated.
         google.protobuf.Timestamp last_updated_at = 2;
@@ -436,16 +436,16 @@ message Backup {
     // Status of the actual backup
     // All members of this field are read-only.
     message Status {
-        // The creation timestamp of the backup 
+        // The creation timestamp of the backup
         google.protobuf.Timestamp created_at = 1;
-        // ArangoDB version of the backup 
+        // ArangoDB version of the backup
         string version = 2;
         // The state of the backup
-        // Will be one of the following: "Pending|Unavailable|Scheduled|Download|DownloadError|Downloading|Create|Upload|Uploading|UploadError|Ready|Deleted|Failed"  
+        // Will be one of the following: "Pending|Unavailable|Scheduled|Download|DownloadError|Downloading|Create|Upload|Uploading|UploadError|Ready|Deleted|Failed"
         string state = 3;
         // Set when the backup is failed
         bool is_failed = 4;
-        // State message  
+        // State message
         string message = 5;
         // Progress of the backup (upload or download)
         string progress = 6;
@@ -476,12 +476,12 @@ message Backup {
         google.protobuf.Timestamp uploaded_at = 2;
         // Size of the backup in the external source (in bytes)
         int64 size_bytes = 3;
-    } 
+    }
 
     // The status of backup download
     // All members of this message are read-only.
     message DownloadStatus {
-        // The revision of the used DownloadStatus 
+        // The revision of the used DownloadStatus
         int32 revision = 1;
         // Set when the backup has been fully downloaded
         bool downloaded = 2;
@@ -492,6 +492,10 @@ message Backup {
     // Identifier of the region in which backup is stored
     // If not set, backup is stored in the same region as of deployment
     string region_id = 101;
+
+    // Identifier of the backup from which this backup is cloned.
+    // If not set, backup is not multi-region backup.
+    string source_backup_id = 102;
 }
 
 // List of backups.
