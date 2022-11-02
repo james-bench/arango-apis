@@ -839,9 +839,11 @@ type Backup struct {
 	Status *Backup_Status `protobuf:"bytes,100,opt,name=status,proto3" json:"status,omitempty"`
 	// Identifier of the region in which backup is stored
 	// If not set, backup is stored in the same region as of deployment
+	// This is a read-only field
 	RegionId string `protobuf:"bytes,101,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
 	// Identifier of the backup from which this backup is cloned.
 	// If not set, backup is not multi-region backup.
+	// This is a read-only field
 	SourceBackupId       string   `protobuf:"bytes,102,opt,name=source_backup_id,json=sourceBackupId,proto3" json:"source_backup_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
