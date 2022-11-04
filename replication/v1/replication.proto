@@ -27,6 +27,7 @@ option go_package = "github.com/arangodb-managed/apis/replication/v1";
 import "common/v1/common.proto";
 import "data/v1/data.proto";
 
+import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
 import "google/api/annotations.proto";
 
 // ReplicationService is the API used to replicate a deployment.
@@ -139,6 +140,9 @@ message DeploymentReplication {
         // This field has the format of a URL.
         // This is a readonly field.
         string sync_endpoint = 5;
+        // Information when a particular phase was updated.
+        // This is a readonly field.
+        google.protobuf.Timestamp phase_updated_at = 6;
     }
     // Status of the DeploymentReplication.
     Status status = 100;
