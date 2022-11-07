@@ -232,7 +232,7 @@ type DeploymentReplication_Status struct {
 	// This field has the format of a URL.
 	// This is a readonly field.
 	SyncEndpoint string `protobuf:"bytes,5,opt,name=sync_endpoint,json=syncEndpoint,proto3" json:"sync_endpoint,omitempty"`
-	// Information when a particular phase was updated.
+	// The timestamp of when the Phase of the Deployment Replication was last updated.
 	// This is a readonly field.
 	PhaseUpdatedAt       *types.Timestamp `protobuf:"bytes,6,opt,name=phase_updated_at,json=phaseUpdatedAt,proto3" json:"phase_updated_at,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}         `json:"-"`

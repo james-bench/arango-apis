@@ -140,7 +140,7 @@ message DeploymentReplication {
         // This field has the format of a URL.
         // This is a readonly field.
         string sync_endpoint = 5;
-        // Information when a particular phase was updated.
+        // The timestamp of when the Phase of the Deployment Replication was last updated.
         // This is a readonly field.
         google.protobuf.Timestamp phase_updated_at = 6;
     }

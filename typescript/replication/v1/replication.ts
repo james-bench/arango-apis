@@ -100,7 +100,7 @@ export interface DeploymentReplication_Status {
   // string
   sync_endpoint?: string;
   
-  // Information when a particular phase was updated.
+  // The timestamp of when the Phase of the Deployment Replication was last updated.
   // This is a readonly field.
   // googleTypes.Timestamp
   phase_updated_at?: googleTypes.Timestamp;
