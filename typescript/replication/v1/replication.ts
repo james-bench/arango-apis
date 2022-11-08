@@ -99,6 +99,11 @@ export interface DeploymentReplication_Status {
   // This is a readonly field.
   // string
   sync_endpoint?: string;
+  
+  // The timestamp of when the Phase of the Deployment Replication was last updated.
+  // This is a readonly field.
+  // googleTypes.Timestamp
+  phase_updated_at?: googleTypes.Timestamp;
 }
 
 // ReplicationService is the API used to replicate a deployment.
