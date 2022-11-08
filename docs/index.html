@@ -3391,7 +3391,7 @@ This is a read-only value. </p></td>
                   <td>deleted_at</td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
-                  <td><p>The deletion timestamp of the backup 
+                  <td><p>The deletion timestamp of the backup
 This is a read-only value. </p></td>
                 </tr>
               
@@ -3408,7 +3408,7 @@ This is a read-only value. </p></td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
                   <td><p>The timestamp that this backup will be automatically removed
-You cannot provide a value in the past, 
+You cannot provide a value in the past,
 If the field is not set, the backup will not be automatically removed. </p></td>
                 </tr>
               
@@ -3457,7 +3457,17 @@ This is a read-only field. To set this field please use the DownloadBackup metho
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Identifier of the region in which backup is stored
-If not set, backup is stored in the same region as of deployment </p></td>
+If not set, backup is stored in the same region as of deployment
+This is a read-only field </p></td>
+                </tr>
+              
+                <tr>
+                  <td>source_backup_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the backup from which this backup is cloned.
+If not set, backup is not multi-region backup.
+This is a read-only field </p></td>
                 </tr>
               
             </tbody>
@@ -3468,7 +3478,7 @@ If not set, backup is stored in the same region as of deployment </p></td>
         
       
         <h3 id="arangodb.cloud.backup.v1.Backup.DeploymentInfo">Backup.DeploymentInfo</h3>
-        <p>Information about the deployment during backup </p><p>All members of this field are read-only.</p>
+        <p>Information about the deployment during backup</p><p>All members of this field are read-only.</p>
 
         
           <table class="field-table">
@@ -3846,7 +3856,7 @@ The backup policy isn&#39;t deleted, unsetting this field will resume the creati
                   <td>retention_period</td>
                   <td><a href="#google.protobuf.Duration">google.protobuf.Duration</a></td>
                   <td></td>
-                  <td><p>Backups created by this policy will be automatically deleted after the specified retention period 
+                  <td><p>Backups created by this policy will be automatically deleted after the specified retention period
 A value of 0 means that backup will never be deleted. </p></td>
                 </tr>
               
@@ -4191,7 +4201,7 @@ The source backup should have the &#39;upload&#39; boolean set. </p></td>
                   <td>include_deleted</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>If set, the result includes all backup policies, including those who set to deleted, 
+                  <td><p>If set, the result includes all backup policies, including those who set to deleted,
 however are not removed from the system currently.
 If not set, only backup policies not indicated as deleted are returned. </p></td>
                 </tr>
@@ -4309,7 +4319,7 @@ A backup can be recovered from when:
                   <td>time_zone</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>The time-zone this time of day applies to (empty means UTC) 
+                  <td><p>The time-zone this time of day applies to (empty means UTC)
 Names MUST be exactly as defined in RFC-822. </p></td>
                 </tr>
               
@@ -4439,8 +4449,8 @@ Required permissions:
                 <td>CreateBackup</td>
                 <td><a href="#arangodb.cloud.backup.v1.Backup">Backup</a></td>
                 <td><a href="#arangodb.cloud.backup.v1.Backup">Backup</a></td>
-                <td><p>Create a new manual backup 
-Setting the backup_policy_id field in the backup is not allowed 
+                <td><p>Create a new manual backup
+Setting the backup_policy_id field in the backup is not allowed
 Required permissions:
 -  backup.backup.create on the deployment that owns the backup and is identified by the given ID.</p></td>
               </tr>
@@ -4449,7 +4459,7 @@ Required permissions:
                 <td>UpdateBackup</td>
                 <td><a href="#arangodb.cloud.backup.v1.Backup">Backup</a></td>
                 <td><a href="#arangodb.cloud.backup.v1.Backup">Backup</a></td>
-                <td><p>Update a backup 
+                <td><p>Update a backup
 Required permissions:
 -  backup.backup.update on the backup identified by the given ID.</p></td>
               </tr>
@@ -4462,7 +4472,7 @@ Required permissions:
 This operation can only be executed on backups which have the same number of DB Servers in the backup and the current running cluster.
 If this backup was already downloaded, another download will be done.
 If the backup is still available on the cluster there is no need to explicitly download the backup before restoring.
-This function will return immediately. 
+This function will return immediately.
 To track status, please invoke GetBackup and check the .status field inside the returned backup object
 Required permissions:
 -  backup.backup.download on the backup identified by the given ID.</p></td>
@@ -4473,13 +4483,13 @@ Required permissions:
                 <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
                 <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
                 <td><p>Restore (or recover) a backup identified by the given ID
-This operation can only be executed on backups where status.available is set and 
-the mayor and minor version of the backup and the current running cluster are the same. 
-This function will return immediately. 
-To track status, please invoke GetDeployment on the data API and check the 
+This operation can only be executed on backups where status.available is set and
+the mayor and minor version of the backup and the current running cluster are the same.
+This function will return immediately.
+To track status, please invoke GetDeployment on the data API and check the
 .status.restoring_backup and .status.restore_backup_status fields inside the returned deployment object
 Required permissions (both are needed):
--  backup.backup.restore on the backup identified by the given ID. 
+-  backup.backup.restore on the backup identified by the given ID.
 -  data.deployment.restore-backup on the deployment that owns this backup</p></td>
               </tr>
             

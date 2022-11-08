@@ -95,8 +95,15 @@ export interface Backup {
   
   // Identifier of the region in which backup is stored
   // If not set, backup is stored in the same region as of deployment
+  // This is a read-only field
   // string
   region_id?: string;
+  
+  // Identifier of the backup from which this backup is cloned.
+  // If not set, backup is not multi-region backup.
+  // This is a read-only field
+  // string
+  source_backup_id?: string;
 }
 
 // Information about the deployment during backup
