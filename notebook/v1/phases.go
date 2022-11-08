@@ -37,4 +37,7 @@ const (
 
 	// Notebook is in an errored state. Additional information can be obtained from `message` field.
 	NotebookPhaseError = "Error"
+
+	// Notebook has been marked for deletion and will clean-up all related resources.
+	NotebookPhaseDeleting = "Deleting"
 )
