@@ -1290,6 +1290,11 @@ export interface NodeSizesRequest {
   // otherwise only node sizes that have no restrictions on model will be returned.
   // string
   model?: string;
+  
+  // Optional identifier of organization that will own a deployment.
+  // Ignored if project_id or deployment_id is set.
+  // string
+  organization_id?: string;
 }
 
 // RebalanceDeploymentShardsRequest request for rebalancing shards for a deployment
@@ -1519,6 +1524,7 @@ export interface IDataService {
   // ID are returned.
   // Required permissions:
   // - data.nodesize.list on the requested project (if project ID does not equal "all")
+  // - data.nodesize.list on the requested organization (if organization ID is set)
   // - None if project ID does equals "all"
   ListNodeSizes: (req: NodeSizesRequest) => Promise<NodeSizeList>;
   
@@ -1722,6 +1728,7 @@ export class DataService implements IDataService {
   // ID are returned.
   // Required permissions:
   // - data.nodesize.list on the requested project (if project ID does not equal "all")
+  // - data.nodesize.list on the requested organization (if organization ID is set)
   // - None if project ID does equals "all"
   async ListNodeSizes(req: NodeSizesRequest): Promise<NodeSizeList> {
     const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id || '')}/regions/${encodeURIComponent(req.region_id || '')}/nodesizes`;
