@@ -164,6 +164,7 @@ service DataService {
     // ID are returned.
     // Required permissions:
     // - data.nodesize.list on the requested project (if project ID does not equal "all")
+    // - data.nodesize.list on the requested organization (if organization ID is set)
     // - None if project ID does equals "all"
     rpc ListNodeSizes(NodeSizesRequest) returns (NodeSizeList) {
         option (google.api.http) = {
@@ -781,6 +782,9 @@ message NodeSizesRequest {
     // If set, all node sizes available for this model will be returned,
     // otherwise only node sizes that have no restrictions on model will be returned.
     string model = 4;
+    // Optional identifier of organization that will own a deployment.
+    // Ignored if project_id or deployment_id is set.
+    string organization_id = 5;
 }
 
 // DeploymentModel specifies the a specific model of deploying
