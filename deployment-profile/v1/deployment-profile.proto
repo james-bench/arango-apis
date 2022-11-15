@@ -20,7 +20,7 @@
 
 syntax = "proto3";
 
-package arangodb.cloud.data.v1;
+package arangodb.cloud.deploymentprofile.v1;
 
 option go_package = "github.com/arangodb-managed/apis/deployment-profile/v1";
 
