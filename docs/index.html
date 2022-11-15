@@ -856,22 +856,22 @@ title: "ArangoDB Oasis API"
             <ul>
               
                 <li>
-                  <a href="#arangodb.cloud.deploymentprofile.v1.DeploymentProfile"><span class="badge">M</span>DeploymentProfile</a>
+                  <a href="#arangodb.cloud.data.v1.DeploymentProfile"><span class="badge">M</span>DeploymentProfile</a>
                 </li>
               
                 <li>
-                  <a href="#arangodb.cloud.deploymentprofile.v1.DeploymentProfileList"><span class="badge">M</span>DeploymentProfileList</a>
+                  <a href="#arangodb.cloud.data.v1.DeploymentProfileList"><span class="badge">M</span>DeploymentProfileList</a>
                 </li>
               
                 <li>
-                  <a href="#arangodb.cloud.deploymentprofile.v1.ListDeploymentProfilesRequest"><span class="badge">M</span>ListDeploymentProfilesRequest</a>
+                  <a href="#arangodb.cloud.data.v1.ListDeploymentProfilesRequest"><span class="badge">M</span>ListDeploymentProfilesRequest</a>
                 </li>
               
               
               
               
                 <li>
-                  <a href="#arangodb.cloud.deploymentprofile.v1.DeploymentProfileService"><span class="badge">S</span>DeploymentProfileService</a>
+                  <a href="#arangodb.cloud.data.v1.DeploymentProfileService"><span class="badge">S</span>DeploymentProfileService</a>
                 </li>
               
             </ul>
@@ -11055,7 +11055,7 @@ Required permissions:
       <p></p>
 
       
-        <h3 id="arangodb.cloud.deploymentprofile.v1.DeploymentProfile">DeploymentProfile</h3>
+        <h3 id="arangodb.cloud.data.v1.DeploymentProfile">DeploymentProfile</h3>
         <p>DeploymentProfile represents a single Deployment Profile for an organization.</p>
 
         
@@ -11118,7 +11118,7 @@ This is a read-only value. </p></td>
 
         
       
-        <h3 id="arangodb.cloud.deploymentprofile.v1.DeploymentProfileList">DeploymentProfileList</h3>
+        <h3 id="arangodb.cloud.data.v1.DeploymentProfileList">DeploymentProfileList</h3>
         <p>List of deployment profiles.</p>
 
         
@@ -11130,7 +11130,7 @@ This is a read-only value. </p></td>
               
                 <tr>
                   <td>items</td>
-                  <td><a href="#arangodb.cloud.deploymentprofile.v1.DeploymentProfile">DeploymentProfile</a></td>
+                  <td><a href="#arangodb.cloud.data.v1.DeploymentProfile">DeploymentProfile</a></td>
                   <td>repeated</td>
                   <td><p> </p></td>
                 </tr>
@@ -11142,7 +11142,7 @@ This is a read-only value. </p></td>
 
         
       
-        <h3 id="arangodb.cloud.deploymentprofile.v1.ListDeploymentProfilesRequest">ListDeploymentProfilesRequest</h3>
+        <h3 id="arangodb.cloud.data.v1.ListDeploymentProfilesRequest">ListDeploymentProfilesRequest</h3>
         <p>Request for listing deployment profiles.</p>
 
         
@@ -11189,7 +11189,7 @@ This is an optional field. </p></td>
       
 
       
-        <h3 id="arangodb.cloud.deploymentprofile.v1.DeploymentProfileService">DeploymentProfileService</h3>
+        <h3 id="arangodb.cloud.data.v1.DeploymentProfileService">DeploymentProfileService</h3>
         <p>Deployment Profile service is used to manage Deployment Profiles.</p>
         <table class="enum-table">
           <thead>
@@ -11208,8 +11208,8 @@ Required permissions:
             
               <tr>
                 <td>ListDeploymentProfiles</td>
-                <td><a href="#arangodb.cloud.deploymentprofile.v1.ListDeploymentProfilesRequest">ListDeploymentProfilesRequest</a></td>
-                <td><a href="#arangodb.cloud.deploymentprofile.v1.DeploymentProfileList">DeploymentProfileList</a></td>
+                <td><a href="#arangodb.cloud.data.v1.ListDeploymentProfilesRequest">ListDeploymentProfilesRequest</a></td>
+                <td><a href="#arangodb.cloud.data.v1.DeploymentProfileList">DeploymentProfileList</a></td>
                 <td><p>List all deployment profiles for the organization identified by the given organization identifier.
 Required permissions:
 - deploymentprofile.deploymentprofile.list on the organization</p></td>
@@ -11218,7 +11218,7 @@ Required permissions:
               <tr>
                 <td>GetDeploymentProfile</td>
                 <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
-                <td><a href="#arangodb.cloud.deploymentprofile.v1.DeploymentProfile">DeploymentProfile</a></td>
+                <td><a href="#arangodb.cloud.data.v1.DeploymentProfile">DeploymentProfile</a></td>
                 <td><p>Fetch a specific Deployment Profile identified by the given ID.
 Required permissions:
 - deploymentprofile.deploymentprofile.get on the organization that owns the deployment profile with given ID.</p></td>

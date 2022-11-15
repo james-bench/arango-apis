@@ -10,7 +10,7 @@ import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../commo
 import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 
 // File: deployment-profile/v1/deployment-profile.proto
-// Package: arangodb.cloud.deploymentprofile.v1
+// Package: arangodb.cloud.data.v1
 
 // DeploymentProfile represents a single Deployment Profile for an organization.
 export interface DeploymentProfile {
