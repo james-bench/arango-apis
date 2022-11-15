@@ -6,7 +6,9 @@
 
 package v1
 
-import "reflect"
+import (
+	"github.com/gogo/protobuf/proto"
+)
 
 // Equals returns true when source and other have the same values.
 func (source *Status) Equals(other *Status) bool {
@@ -14,5 +16,5 @@ func (source *Status) Equals(other *Status) bool {
 		source.GetPhase() == other.GetPhase() &&
 		source.GetMessage() == other.GetMessage() &&
 		source.GetLastUpdatedAt().Equal(other.GetLastUpdatedAt()) &&
-		reflect.DeepEqual(source.GetUsage(), other.GetUsage())
+		proto.Equal(source.GetUsage(), other.GetUsage())
 }
