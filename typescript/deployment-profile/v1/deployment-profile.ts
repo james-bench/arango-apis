@@ -5,7 +5,6 @@
 import api from '../../api'
 import * as googleTypes from '../../googleTypes'
 import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
-import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1/common'
 import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
 import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 
@@ -78,11 +77,6 @@ export interface IDeploymentProfileService {
   // Required permissions:
   // - deploymentprofile.deploymentprofile.list on the organization
   ListDeploymentProfiles: (req: ListDeploymentProfilesRequest) => Promise<DeploymentProfileList>;
-  
-  // Fetch a specific Deployment Profile identified by the given ID.
-  // Required permissions:
-  // - deploymentprofile.deploymentprofile.get on the organization that owns the deployment profile with given ID.
-  GetDeploymentProfile: (req: arangodb_cloud_common_v1_IDOptions) => Promise<DeploymentProfile>;
 }
 
 // Deployment Profile service is used to manage Deployment Profiles.
@@ -102,14 +96,5 @@ export class DeploymentProfileService implements IDeploymentProfileService {
   async ListDeploymentProfiles(req: ListDeploymentProfilesRequest): Promise<DeploymentProfileList> {
     const url = `/api/deploymentprofile/v1/deploymentprofiles`;
     return api.post(url, req);
-  }
-  
-  // Fetch a specific Deployment Profile identified by the given ID.
-  // Required permissions:
-  // - deploymentprofile.deploymentprofile.get on the organization that owns the deployment profile with given ID.
-  async GetDeploymentProfile(req: arangodb_cloud_common_v1_IDOptions): Promise<DeploymentProfile> {
-    const path = `/api/deploymentprofile/v1/deploymentprofiles/${encodeURIComponent(req.id || '')}`;
-    const url = path + api.queryString(req, [`id`]);
-    return api.get(url, undefined);
   }
 }

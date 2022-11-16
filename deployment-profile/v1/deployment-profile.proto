@@ -50,14 +50,6 @@ service DeploymentProfileService {
     };
   }
 
-  // Fetch a specific Deployment Profile identified by the given ID.
-  // Required permissions:
-  // - deploymentprofile.deploymentprofile.get on the organization that owns the deployment profile with given ID.
-  rpc GetDeploymentProfile(common.v1.IDOptions) returns (DeploymentProfile) {
-    option (google.api.http) = {
-      get: "/api/deploymentprofile/v1/deploymentprofiles/{id}"
-    };
-  }
 }
 
 // DeploymentProfile represents a single Deployment Profile for an organization.
