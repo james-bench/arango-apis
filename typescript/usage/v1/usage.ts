@@ -155,6 +155,11 @@ export interface UsageItem {
   // This field is only set when the usage item is of kind AuditLogCloudSize.
   // UsageItem_AuditLogStorageSize
   auditlog_storage_size?: UsageItem_AuditLogStorageSize;
+  
+  // Amount of cloud resources used by a given Notebook.
+  // This field is only set when the usage item is of kind NotebookSize.
+  // UsageItem_NotebookSize
+  notebook_size?: UsageItem_NotebookSize;
 }
 
 // Amount of audit log related resources used by the resource covered by this usage item.
@@ -271,6 +276,28 @@ export interface UsageItem_NetworkTransferSize {
   // the total_transfer_x is the sum of these 2. Inner region can be cross availability zone.
   // number
   total_transfer_egress_size?: number;
+}
+
+// Amount of cloud resources used by a given Notebook.
+// This field is only set when the usage item is of kind NotebookSize.
+export interface UsageItem_NotebookSize {
+  // Amount of CPU units allocated to the notebook.
+  // 1 CPU unit equals 1 physical / virtual CPU.
+  // number
+  cpu_size?: number;
+  
+  // Amount of memory allocated to the notebook (in GiB).
+  // number
+  memory_size?: number;
+  
+  // Size of the disk allocated to the notebook (in GiB).
+  // number
+  disk_size?: number;
+  
+  // Amount of network traffic used by the resource covered by this usage item.
+  // This field is only set when the usage item is of kind NetworkTransferSize.
+  // UsageItem_NetworkTransferSize
+  network_transfer_size?: UsageItem_NetworkTransferSize;
 }
 export interface UsageItem_Resource {
   // System identifier of the resource that this usage item covers.
