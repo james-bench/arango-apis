@@ -293,11 +293,6 @@ export interface UsageItem_NotebookSize {
   // Size of the disk allocated to the notebook (in GiB).
   // number
   disk_size?: number;
-  
-  // Amount of network traffic used by the resource covered by this usage item.
-  // This field is only set when the usage item is of kind NetworkTransferSize.
-  // UsageItem_NetworkTransferSize
-  network_transfer_size?: UsageItem_NetworkTransferSize;
 }
 export interface UsageItem_Resource {
   // System identifier of the resource that this usage item covers.

@@ -240,10 +240,6 @@ message UsageItem {
 
         // Size of the disk allocated to the notebook (in GiB).
         int64 disk_size = 3;
-
-        // Amount of network traffic used by the resource covered by this usage item.
-        // This field is only set when the usage item is of kind NetworkTransferSize.
-        NetworkTransferSize network_transfer_size = 4;
     }
 
     // Amount of cloud resources used by a given Notebook.
