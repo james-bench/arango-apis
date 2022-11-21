@@ -240,6 +240,9 @@ message UsageItem {
 
         // Size of the disk allocated to the notebook (in GiB).
         int64 disk_size = 3;
+
+        // If the Notebook is paused (Hibernated phase).
+        bool is_paused = 4;
     }
 
     // Amount of cloud resources used by a given Notebook.
