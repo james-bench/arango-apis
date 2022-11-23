@@ -10098,6 +10098,14 @@ If set, all node sizes available for this model will be returned,
 otherwise only node sizes that have no restrictions on model will be returned. </p></td>
                 </tr>
               
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional identifier of organization that will own a deployment.
+Ignored if project_id or deployment_id is set. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -10620,6 +10628,7 @@ If project ID &#34;all&#34; is used, then all node sizes for the region with giv
 ID are returned.
 Required permissions:
 - data.nodesize.list on the requested project (if project ID does not equal &#34;all&#34;)
+- data.nodesize.list on the requested organization (if organization ID is set)
 - None if project ID does equals &#34;all&#34;</p></td>
               </tr>
             
