@@ -742,10 +742,6 @@ message Deployment {
     // For the new deployments, this field will have the same value with deployment's `created_at`. 
     // This is a readonly field.
     google.protobuf.Timestamp last_root_password_rotated_at = 613;
-
-    // Optional identifier of the deployment profile for this deployment.
-    // After creation, this value cannot be changed.
-    string deployment_profile_id = 614;
 }
 
 // NodeSize specifies the size constraints of different data nodes.
