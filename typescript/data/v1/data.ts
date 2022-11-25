@@ -420,6 +420,11 @@ export interface Deployment {
   // This is a readonly field.
   // googleTypes.Timestamp
   last_root_password_rotated_at?: googleTypes.Timestamp;
+  
+  // Optional identifier of the deployment profile for this deployment.
+  // After creation, this value cannot be changed.
+  // string
+  deployment_profile_id?: string;
 }
 
 // Information about a backup restore.
