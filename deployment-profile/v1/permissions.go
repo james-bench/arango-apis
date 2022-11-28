@@ -25,7 +25,4 @@ const (
 
 	// PermissionDeploymentProfileList is needed for listing Deployment Profiles in an organization
 	PermissionDeploymentProfileList = "deploymentprofile.deploymentprofile.list"
-
-	// PermissionDeploymentProfileGet is needed for getting a Deployment Profile in an organization
-	PermissionDeploymentProfileGet = "deploymentprofile.deploymentprofile.get"
 )

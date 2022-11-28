@@ -55,11 +55,6 @@ export interface ListDeploymentProfilesRequest {
   // string
   organization_id?: string;
   
-  // List deployment profiles for this ArangoDB version
-  // This is an optional field.
-  // string
-  arangodb_version?: string;
-  
   // Optional common list options, the context_id is ignored
   // This is an optional field.
   // arangodb.cloud.common.v1.ListOptions

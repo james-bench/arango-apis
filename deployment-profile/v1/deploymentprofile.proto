@@ -77,9 +77,6 @@ message ListDeploymentProfilesRequest {
   // List deployment profiles for this organization ID.
   // This is a required field.
   string organization_id = 1;
-  // List deployment profiles for this ArangoDB version
-  // This is an optional field.
-  string arangodb_version = 2;
   // Optional common list options, the context_id is ignored
   // This is an optional field.
   common.v1.ListOptions options = 3;
