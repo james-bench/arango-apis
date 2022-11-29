@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020-2022 ArangoDB GmbH, Cologne, Germany
+// Copyright 2022 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,16 +17,18 @@
 //
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
+//
 
 package v1
 
-const (
-	// APIID contains identifier of this API
-	APIID = "data/v1"
-	// APIMajorVersion contains major version of this API
-	APIMajorVersion = 2
-	// APIMinorVersion contains minor version of this API
-	APIMinorVersion = 6
-	// APIPatchVersion contains patch version of this API
-	APIPatchVersion = 2
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
+
+func TestDeploymentProfileURL(t *testing.T) {
+	assert.Equal(t, "/Organization/123/DeploymentProfile/12345", DeploymentProfileURL("123", "12345"))
+	assert.Equal(t, "/Organization/123%2F654/DeploymentProfile/123%2F456", DeploymentProfileURL("123/654", "123/456"))
+	assert.Equal(t, "/Organization/123%2F567/DeploymentProfile/1%25432", DeploymentProfileURL("123/567", "1%432"))
+}

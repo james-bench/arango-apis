@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020-2022 ArangoDB GmbH, Cologne, Germany
+// Copyright 2022 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,13 +20,20 @@
 
 package v1
 
-const (
-	// APIID contains identifier of this API
-	APIID = "data/v1"
-	// APIMajorVersion contains major version of this API
-	APIMajorVersion = 2
-	// APIMinorVersion contains minor version of this API
-	APIMinorVersion = 6
-	// APIPatchVersion contains patch version of this API
-	APIPatchVersion = 2
+import (
+	"net/url"
+	"path"
+
+	rm "github.com/arangodb-managed/apis/resourcemanager/v1"
 )
+
+const (
+	// KindDeploymentProfile is a constant for the kind of DeploymentProfile resources.
+	KindDeploymentProfile = "DeploymentProfile"
+)
+
+// DeploymentProfileURL creates a resource URL for the DeploymentProfile with given ID
+// in given context.
+func DeploymentProfileURL(organizationID, deploymentProfileID string) string {
+	return path.Join(rm.OrganizationURL(organizationID), KindDeploymentProfile, url.PathEscape(deploymentProfileID))
+}

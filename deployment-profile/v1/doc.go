@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020-2022 ArangoDB GmbH, Cologne, Germany
+// Copyright 2022 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,15 +18,7 @@
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
 
+// Package deployment-profile/v1 contains the API of Deployment Profile service.
 package v1
 
-const (
-	// APIID contains identifier of this API
-	APIID = "data/v1"
-	// APIMajorVersion contains major version of this API
-	APIMajorVersion = 2
-	// APIMinorVersion contains minor version of this API
-	APIMinorVersion = 6
-	// APIPatchVersion contains patch version of this API
-	APIPatchVersion = 2
-)
+//go:generate protoc -I .:../../:../../vendor/:../../vendor/googleapis/:../../vendor/github.com/gogo/protobuf/protobuf/ --gofast_out=Mgithub.com/golang/protobuf/ptypes/duration/duration.proto=github.com/gogo/protobuf/types,Mgithub.com/golang/protobuf/ptypes/timestamp/timestamp.proto=github.com/gogo/protobuf/types,plugins=grpc,paths=source_relative:. --grpc-gateway_out=paths=source_relative,logtostderr=true,allow_delete_body=true:. ./deploymentprofile.proto

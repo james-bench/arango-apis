@@ -852,6 +852,33 @@ title: "ArangoDB Oasis API"
         
           
           <li>
+            <a href="#deployment-profile%2fv1%2fdeploymentprofile.proto">deployment-profile/v1/deploymentprofile.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#arangodb.cloud.deploymentprofile.v1.DeploymentProfile"><span class="badge">M</span>DeploymentProfile</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.deploymentprofile.v1.DeploymentProfileList"><span class="badge">M</span>DeploymentProfileList</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.deploymentprofile.v1.ListDeploymentProfilesRequest"><span class="badge">M</span>ListDeploymentProfilesRequest</a>
+                </li>
+              
+              
+              
+              
+                <li>
+                  <a href="#arangodb.cloud.deploymentprofile.v1.DeploymentProfileService"><span class="badge">S</span>DeploymentProfileService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#example%2fv1%2fexample.proto">example/v1/example.proto</a>
             <ul>
               
@@ -8173,6 +8200,14 @@ For the new deployments, this field will have the same value with deployment&#39
 This is a readonly field. </p></td>
                 </tr>
               
+                <tr>
+                  <td>deployment_profile_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional identifier of the deployment profile for this deployment.
+After creation, this value cannot be changed. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -11021,6 +11056,208 @@ Required permissions:
                 <td>GetDiskPerformance</td>
                 <td>POST</td>
                 <td>/api/data/v1/disk-performance/{disk_performance_id}</td>
+                <td>*</td>
+              </tr>
+              
+            
+            </tbody>
+          </table>
+          
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="deployment-profile/v1/deploymentprofile.proto">deployment-profile/v1/deploymentprofile.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="arangodb.cloud.deploymentprofile.v1.DeploymentProfile">DeploymentProfile</h3>
+        <p>DeploymentProfile represents a single Deployment Profile for an organization.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>System identifier of the deployment profile.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>URL of the deployment profile resource.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Name of the deployment profile. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Description of the deployment profile. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Organization id of the deployment profile.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The creation timestamp of the deployment profile.
+This is a read-only value. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.deploymentprofile.v1.DeploymentProfileList">DeploymentProfileList</h3>
+        <p>List of deployment profiles.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#arangodb.cloud.deploymentprofile.v1.DeploymentProfile">DeploymentProfile</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.deploymentprofile.v1.ListDeploymentProfilesRequest">ListDeploymentProfilesRequest</h3>
+        <p>Request for listing deployment profiles.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>List deployment profiles for this organization ID.
+This is a required field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>options</td>
+                  <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
+                  <td></td>
+                  <td><p>Optional common list options, the context_id is ignored
+This is an optional field. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+
+      
+
+      
+        <h3 id="arangodb.cloud.deploymentprofile.v1.DeploymentProfileService">DeploymentProfileService</h3>
+        <p>Deployment Profile service is used to manage Deployment Profiles.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GetAPIVersion</td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Version">.arangodb.cloud.common.v1.Version</a></td>
+                <td><p>Get the current API version of this service.
+Required permissions:
+- None (authenticated only)</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListDeploymentProfiles</td>
+                <td><a href="#arangodb.cloud.deploymentprofile.v1.ListDeploymentProfilesRequest">ListDeploymentProfilesRequest</a></td>
+                <td><a href="#arangodb.cloud.deploymentprofile.v1.DeploymentProfileList">DeploymentProfileList</a></td>
+                <td><p>List all deployment profiles for the organization identified by the given organization identifier.
+Required permissions:
+- deploymentprofile.deploymentprofile.list on the organization</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+          
+          
+          <h4>Methods with HTTP bindings</h4>
+          <table>
+            <thead>
+              <tr>
+                <td>Method Name</td>
+                <td>Method</td>
+                <td>Pattern</td>
+                <td>Body</td>
+              </tr>
+            </thead>
+            <tbody>
+            
+              
+              
+              <tr>
+                <td>GetAPIVersion</td>
+                <td>GET</td>
+                <td>/api/deploymentprofile/v1/api-version</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>ListDeploymentProfiles</td>
+                <td>POST</td>
+                <td>/api/deploymentprofile/v1/deploymentprofiles</td>
                 <td>*</td>
               </tr>
               
