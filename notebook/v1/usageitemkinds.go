@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020-2022 ArangoDB GmbH, Cologne, Germany
+// Copyright 2022 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,19 +17,12 @@
 //
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
-// Author Ewout Prangsma
-// Author Robert Stam
-//
 
 package v1
 
 const (
-	// APIID contains identifier of this API
-	APIID = "usage/v1"
-	// APIMajorVersion contains major version of this API
-	APIMajorVersion = 1
-	// APIMinorVersion contains minor version of this API
-	APIMinorVersion = 2
-	// APIPatchVersion contains patch version of this API
-	APIPatchVersion = 7
+	// Notebook usage item resource kinds
+
+	// UsageItemResourceKindNotebook is the kind used inside the UsageItem.Resource to refer to a notebook.
+	UsageItemResourceKindNotebook = "Notebook"
 )

@@ -1637,6 +1637,10 @@ title: "ArangoDB Oasis API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.usage.v1.UsageItem.NotebookSize"><span class="badge">M</span>UsageItem.NotebookSize</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.usage.v1.UsageItem.Resource"><span class="badge">M</span>UsageItem.Resource</a>
                 </li>
               
@@ -21005,6 +21009,14 @@ This field is only set when the usage item is of kind AuditLogSize. </p></td>
 This field is only set when the usage item is of kind AuditLogCloudSize. </p></td>
                 </tr>
               
+                <tr>
+                  <td>notebook_size</td>
+                  <td><a href="#arangodb.cloud.usage.v1.UsageItem.NotebookSize">UsageItem.NotebookSize</a></td>
+                  <td></td>
+                  <td><p>Amount of cloud resources used by a given Notebook.
+This field is only set when the usage item is of kind NotebookSize. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -21252,6 +21264,52 @@ This is always excluding backup traffic (uploads).
 
 Note: In the future we want to split between cross_region_transfer_x and inner_region_transfer_x, 
       the total_transfer_x is the sum of these 2. Inner region can be cross availability zone. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.usage.v1.UsageItem.NotebookSize">UsageItem.NotebookSize</h3>
+        <p>Amount of cloud resources used by a given Notebook.</p><p>This field is only set when the usage item is of kind NotebookSize.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>cpu_size</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Amount of CPU units allocated to the notebook.
+1 CPU unit equals 1 physical / virtual CPU. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>memory_size</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>Amount of memory allocated to the notebook (in GiB). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>disk_size</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>Size of the disk allocated to the notebook (in GiB). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_paused</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If the Notebook is paused (Hibernated phase). </p></td>
                 </tr>
               
             </tbody>
