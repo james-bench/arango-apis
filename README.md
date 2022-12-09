@@ -1,8 +1,8 @@
-# ArangoDB Cloud API's
+# ArangoGraph Insights Platform API's
 
-![ArangoDB Oasis](https://cloud.arangodb.com/assets/logos/arangodb-oasis-logo-whitebg-right.png)
+<img src="https://cloud.arangodb.com/assets/logos/arangograph-logo-auth.svg" alt="ArangoGraph Insights Platform" width="400"/>
 
-This repository contains the interface definition of the API for ArangoDB Oasis, the ArangoDB Cloud.
+This repository contains the interface definition of the API for ArangoGraph Insights Platform, formerly called Oasis.
 
 The entire interface is specified in protocol buffers and uses GRPC underlying as protocol.
 A full list of API methods and their arguments is available
@@ -14,14 +14,14 @@ This provider plugin is maintained by the team at [ArangoDB](https://www.arangod
 
 ## More information
 
-More information and a getting started guide about the Oasis API is available at [arangodb.com/docs/stable/oasis](https://www.arangodb.com/docs/stable/oasis/).
+More information and a getting started guide about the ArangoGraph Insights Platform API is available at [arangodb.com/docs/stable/arangograph](https://www.arangodb.com/docs/stable/arangograph/).
 
 ## Examples
 
-The following projects make use of the ArangoDB Oasis API and are good examples of how to use it:
+The following projects make use of the ArangoGraph Insights Platform API and are good examples of how to use it:
 
-* [oasisctl](https://github.com/arangodb-managed/oasisctl) Commandline utility for ArangoDB Oasis
-* [terraform-provider-oasis](https://github.com/arangodb-managed/terraform-provider-oasis) Terraform plugin for ArangoDB Oasis
+* [oasisctl](https://github.com/arangodb-managed/oasisctl) Commandline utility for ArangoGraph Insights Platform (formerly called ArangoDB Oasis).
+* [terraform-provider-oasis](https://github.com/arangodb-managed/terraform-provider-oasis) Terraform plugin for ArangoGraph Insights Platform (formerly called ArangoDB Oasis).
 
 ## Building
 
