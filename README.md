@@ -1,6 +1,6 @@
 # ArangoGraph Insights Platform API's
 
-<img src="https://cloud.arangodb.com/assets/logos/arangograph-logo-auth.svg" alt="drawing" width="400"/>
+<img src="https://cloud.arangodb.com/assets/logos/arangograph-logo-auth.svg" alt="ArangoGraph Insights Platform" width="400"/>
 
 This repository contains the interface definition of the API for ArangoGraph Insights Platform, formerly called Oasis.
 
