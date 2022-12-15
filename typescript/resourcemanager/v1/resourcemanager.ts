@@ -31,6 +31,10 @@ export interface AuthenticationProviders {
   // Control access to the organization for users using then Github authentication provider.
   // boolean
   enable_github?: boolean;
+  
+  // Control access to the organization for users using then Microsoft authentication provider.
+  // boolean
+  enable_microsoft?: boolean;
 }
 export interface DataProcessingAddendum {
   // Identifier of this version of the DPA
