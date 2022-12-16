@@ -1,7 +1,7 @@
 ---
 page-toc:
   disable: true
-title: "ArangoDB Oasis API"
+title: "ArangoGraph Insights Platform API"
 ---
 <!DOCTYPE html>
 
@@ -1884,8 +1884,8 @@ After creation, this value cannot be changed. </p></td>
                   <td><p>If set, this AuditLog is the default for the organization.
 This is a read-only value.
 The default AuditLog for an organization is used to capture audit events
-from the Oasis platform. If there is no default AuditLog, audit events
-from the Oasis platform are not captured.
+from the ArangoGraph Insights Platform. If there is no default AuditLog, audit events
+from the ArangoGraph Insights Platform are not captured.
 The default AuditLog is also attached to new projects in the organization. </p></td>
                 </tr>
               
@@ -2048,7 +2048,7 @@ This field is used when the destination type is &#34;https-post&#34; only. </p><
                   <td></td>
                   <td><p>ID of the deployment that the status applied to (if applicable)
 The deployment ID of the status is optional, inside the list at most 
-one destination status is allowed to be empty, meaning the Oasis status,
+one destination status is allowed to be empty, meaning the ArangoGraph Insights Platform status,
 all others will be bound to a specific deployment as indicated by this ID. </p></td>
                 </tr>
               
@@ -2557,7 +2557,7 @@ If the string has a non empty value there is (potentially) more data, if the str
                   <td>for_platform</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>If set, this topic is used in audit log events of the Oasis platform. </p></td>
+                  <td><p>If set, this topic is used in audit log events of the ArangoGraph Insights Platform. </p></td>
                 </tr>
               
                 <tr>
@@ -2801,7 +2801,7 @@ project identified by this ID. </p></td>
                   <td>for_platform_only</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>If set, only topics used in audit log events of the Oasis platform are returned. </p></td>
+                  <td><p>If set, only topics used in audit log events of the ArangoGraph Insights Platform are returned. </p></td>
                 </tr>
               
             </tbody>
@@ -3049,8 +3049,8 @@ Required permissions:
                 <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
                 <td><p>Change the default audit log of an organization.
 The default AuditLog for an organization is used to capture audit events
-from the Oasis platform. If there is no default AuditLog, audit events
-from the Oasis platform are not captured.
+from the ArangoGraph Insights Platform. If there is no default AuditLog, audit events
+from the ArangoGraph Insights Platform are not captured.
 The default AuditLog is also attached to new projects in the organization.
 Required permissions:
 - audit.auditlog.set-default on the organization.</p></td>
@@ -4994,7 +4994,7 @@ This is a required field. </p></td>
         
       
         <h3 id="arangodb.cloud.billing.v1.Invoice">Invoice</h3>
-        <p>An Invoice message describes a transaction for usage of ArangoDB Oasis.</p>
+        <p>An Invoice message describes a transaction for usage of ArangoGraph Insights Platform.</p>
 
         
           <table class="field-table">
@@ -9555,7 +9555,7 @@ the callers quota. </p></td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>If set, this recommendation does not fit in
-the Oasis platform. </p></td>
+the ArangoGraph Insights Platform. </p></td>
                 </tr>
               
             </tbody>
@@ -19737,7 +19737,7 @@ This is a read-only value. </p></td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>If set, a few additional IP addresses are added to allow for remote 
-connectivity inspection of the deployment by the Oasis platform. </p></td>
+connectivity inspection of the deployment by the ArangoGraph Insights Platform. </p></td>
                 </tr>
               
             </tbody>
@@ -21383,7 +21383,7 @@ Note: In the future we want to split between cross_region_transfer_x and inner_r
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Identifier of the project that owns the resource that this usage item covers.
-This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty) </p></td>
+This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty) </p></td>
                 </tr>
               
                 <tr>
@@ -21391,7 +21391,7 @@ This field is optional when the kind is AuditLogSize, depending if the audit log
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Name of the project that owns the resource that this usage item covers.
-This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty) </p></td>
+This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty) </p></td>
                 </tr>
               
                 <tr>
@@ -21399,7 +21399,7 @@ This field is optional when the kind is AuditLogSize, depending if the audit log
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Identifier of the deployment that owns the resource that this usage item covers.
-This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty) </p></td>
+This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty) </p></td>
                 </tr>
               
                 <tr>
@@ -21407,7 +21407,7 @@ This field is optional when the kind is AuditLogSize, depending if the audit log
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Name of the deployment that owns the resource that this usage item covers.
-This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty) </p></td>
+This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty) </p></td>
                 </tr>
               
                 <tr>
@@ -21423,7 +21423,7 @@ This field is only set when the usage item is specific for a member of the deplo
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Identifier of the cloud provider that is used to run the deployment.
-This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty) </p></td>
+This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty) </p></td>
                 </tr>
               
                 <tr>
@@ -21431,7 +21431,7 @@ This field is optional when the kind is AuditLogSize, depending if the audit log
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Identifier of the cloud region that is used to run the deployment.
-This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty) </p></td>
+This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty) </p></td>
                 </tr>
               
                 <tr>

@@ -265,7 +265,7 @@ export interface IPAllowlist {
   warnings?: string[];
   
   // If set, a few additional IP addresses are added to allow for remote
-  // connectivity inspection of the deployment by the Oasis platform.
+  // connectivity inspection of the deployment by the ArangoGraph Insights Platform.
   // boolean
   remote_inspection_allowed?: boolean;
 }

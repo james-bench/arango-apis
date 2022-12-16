@@ -17,9 +17,6 @@
 // 
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 // 
-// Author Ewout Prangsma
-// Author Robert Stam
-// 
 
 syntax = "proto3";
 
@@ -78,25 +75,25 @@ message UsageItem {
         // Name of the organization that owns the resource that this usage item covers.
         string organization_name = 6;
         // Identifier of the project that owns the resource that this usage item covers.
-        // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
+        // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
         string project_id = 7;
         // Name of the project that owns the resource that this usage item covers.
-        // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
+        // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
         string project_name = 8;
         // Identifier of the deployment that owns the resource that this usage item covers.
-        // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
+        // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
         string deployment_id = 9;
         // Name of the deployment that owns the resource that this usage item covers.
-        // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
+        // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
         string deployment_name = 10;
         // Name of the deployment member that owns the resource that this usage item covers.
         // This field is only set when the usage item is specific for a member of the deployment (e.g. network transfer)
         string deployment_member_name = 11;
         // Identifier of the cloud provider that is used to run the deployment.
-        // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
+        // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
         string cloud_provider_id = 12;
         // Identifier of the cloud region that is used to run the deployment.
-        // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
+        // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
         string cloud_region_id = 13;
         // Identifier of the support plan that is attached to the deployment.
         // This field is not filled-out when the kind is AuditLogSize

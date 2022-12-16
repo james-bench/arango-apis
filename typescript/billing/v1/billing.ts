@@ -103,7 +103,7 @@ export interface GetPreliminaryInvoiceRequest {
   organization_id?: string;
 }
 
-// An Invoice message describes a transaction for usage of ArangoDB Oasis.
+// An Invoice message describes a transaction for usage of ArangoGraph Insights Platform.
 export interface Invoice {
   // System identifier of the invoice.
   // string

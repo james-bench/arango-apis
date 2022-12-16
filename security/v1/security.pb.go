@@ -65,7 +65,7 @@ type IPAllowlist struct {
 	// This is a read-only value.
 	Warnings []string `protobuf:"bytes,12,rep,name=warnings,proto3" json:"warnings,omitempty"`
 	// If set, a few additional IP addresses are added to allow for remote
-	// connectivity inspection of the deployment by the Oasis platform.
+	// connectivity inspection of the deployment by the ArangoGraph Insights Platform.
 	RemoteInspectionAllowed bool     `protobuf:"varint,13,opt,name=remote_inspection_allowed,json=remoteInspectionAllowed,proto3" json:"remote_inspection_allowed,omitempty"`
 	XXX_NoUnkeyedLiteral    struct{} `json:"-"`
 	XXX_unrecognized        []byte   `json:"-"`

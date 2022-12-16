@@ -30,7 +30,7 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-// An Invoice message describes a transaction for usage of ArangoDB Oasis.
+// An Invoice message describes a transaction for usage of ArangoGraph Insights Platform.
 type Invoice struct {
 	// System identifier of the invoice.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
