@@ -1047,7 +1047,7 @@ export interface DeploymentSizeRecommendation {
   exceeds_quota?: boolean;
   
   // If set, this recommendation does not fit in
-  // the Oasis platform.
+  // the ArangoGraph Insights Platform.
   // boolean
   exceeds_platform?: boolean;
 }

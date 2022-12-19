@@ -228,25 +228,25 @@ type UsageItem_Resource struct {
 	// Name of the organization that owns the resource that this usage item covers.
 	OrganizationName string `protobuf:"bytes,6,opt,name=organization_name,json=organizationName,proto3" json:"organization_name,omitempty"`
 	// Identifier of the project that owns the resource that this usage item covers.
-	// This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
+	// This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
 	ProjectId string `protobuf:"bytes,7,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
 	// Name of the project that owns the resource that this usage item covers.
-	// This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
+	// This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
 	ProjectName string `protobuf:"bytes,8,opt,name=project_name,json=projectName,proto3" json:"project_name,omitempty"`
 	// Identifier of the deployment that owns the resource that this usage item covers.
-	// This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
+	// This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
 	DeploymentId string `protobuf:"bytes,9,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
 	// Name of the deployment that owns the resource that this usage item covers.
-	// This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
+	// This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
 	DeploymentName string `protobuf:"bytes,10,opt,name=deployment_name,json=deploymentName,proto3" json:"deployment_name,omitempty"`
 	// Name of the deployment member that owns the resource that this usage item covers.
 	// This field is only set when the usage item is specific for a member of the deployment (e.g. network transfer)
 	DeploymentMemberName string `protobuf:"bytes,11,opt,name=deployment_member_name,json=deploymentMemberName,proto3" json:"deployment_member_name,omitempty"`
 	// Identifier of the cloud provider that is used to run the deployment.
-	// This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
+	// This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
 	CloudProviderId string `protobuf:"bytes,12,opt,name=cloud_provider_id,json=cloudProviderId,proto3" json:"cloud_provider_id,omitempty"`
 	// Identifier of the cloud region that is used to run the deployment.
-	// This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
+	// This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
 	CloudRegionId string `protobuf:"bytes,13,opt,name=cloud_region_id,json=cloudRegionId,proto3" json:"cloud_region_id,omitempty"`
 	// Identifier of the support plan that is attached to the deployment.
 	// This field is not filled-out when the kind is AuditLogSize

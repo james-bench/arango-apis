@@ -3625,7 +3625,7 @@ type DeploymentSizeRecommendation struct {
 	// the callers quota.
 	ExceedsQuota bool `protobuf:"varint,21,opt,name=exceeds_quota,json=exceedsQuota,proto3" json:"exceeds_quota,omitempty"`
 	// If set, this recommendation does not fit in
-	// the Oasis platform.
+	// the ArangoGraph Insights Platform.
 	ExceedsPlatform      bool     `protobuf:"varint,22,opt,name=exceeds_platform,json=exceedsPlatform,proto3" json:"exceeds_platform,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`

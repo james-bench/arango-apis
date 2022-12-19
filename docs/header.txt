@@ -1,5 +1,5 @@
 ---
 page-toc:
   disable: true
-title: "ArangoDB Oasis API"
+title: "ArangoGraph Insights Platform API"
 ---

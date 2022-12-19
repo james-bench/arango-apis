@@ -324,22 +324,22 @@ export interface UsageItem_Resource {
   organization_name?: string;
   
   // Identifier of the project that owns the resource that this usage item covers.
-  // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
+  // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
   // string
   project_id?: string;
   
   // Name of the project that owns the resource that this usage item covers.
-  // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
+  // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
   // string
   project_name?: string;
   
   // Identifier of the deployment that owns the resource that this usage item covers.
-  // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
+  // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
   // string
   deployment_id?: string;
   
   // Name of the deployment that owns the resource that this usage item covers.
-  // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
+  // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
   // string
   deployment_name?: string;
   
@@ -349,12 +349,12 @@ export interface UsageItem_Resource {
   deployment_member_name?: string;
   
   // Identifier of the cloud provider that is used to run the deployment.
-  // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
+  // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
   // string
   cloud_provider_id?: string;
   
   // Identifier of the cloud region that is used to run the deployment.
-  // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or Oasis platform (empty)
+  // This field is optional when the kind is AuditLogSize, depending if the audit log is for a deployment (set) or ArangoGraph Insights Platform (empty)
   // string
   cloud_region_id?: string;
   

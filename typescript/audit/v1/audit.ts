@@ -72,8 +72,8 @@ export interface AuditLog {
   // If set, this AuditLog is the default for the organization.
   // This is a read-only value.
   // The default AuditLog for an organization is used to capture audit events
-  // from the Oasis platform. If there is no default AuditLog, audit events
-  // from the Oasis platform are not captured.
+  // from the ArangoGraph Insights Platform. If there is no default AuditLog, audit events
+  // from the ArangoGraph Insights Platform are not captured.
   // The default AuditLog is also attached to new projects in the organization.
   // boolean
   is_default?: boolean;
@@ -154,7 +154,7 @@ export interface AuditLog_DestinationCounters {
 export interface AuditLog_DestinationStatus {
   // ID of the deployment that the status applied to (if applicable)
   // The deployment ID of the status is optional, inside the list at most
-  // one destination status is allowed to be empty, meaning the Oasis status,
+  // one destination status is allowed to be empty, meaning the ArangoGraph Insights Platform status,
   // all others will be bound to a specific deployment as indicated by this ID.
   // string
   deployment_id?: string;
@@ -406,7 +406,7 @@ export interface AuditLogTopic {
   // boolean
   for_deployment?: boolean;
   
-  // If set, this topic is used in audit log events of the Oasis platform.
+  // If set, this topic is used in audit log events of the ArangoGraph Insights Platform.
   // boolean
   for_platform?: boolean;
   
@@ -516,7 +516,7 @@ export interface ListAuditLogTopicsRequest {
   // boolean
   for_deployment_only?: boolean;
   
-  // If set, only topics used in audit log events of the Oasis platform are returned.
+  // If set, only topics used in audit log events of the ArangoGraph Insights Platform are returned.
   // boolean
   for_platform_only?: boolean;
 }
@@ -626,8 +626,8 @@ export interface IAuditService {
   
   // Change the default audit log of an organization.
   // The default AuditLog for an organization is used to capture audit events
-  // from the Oasis platform. If there is no default AuditLog, audit events
-  // from the Oasis platform are not captured.
+  // from the ArangoGraph Insights Platform. If there is no default AuditLog, audit events
+  // from the ArangoGraph Insights Platform are not captured.
   // The default AuditLog is also attached to new projects in the organization.
   // Required permissions:
   // - audit.auditlog.set-default on the organization.
@@ -765,8 +765,8 @@ export class AuditService implements IAuditService {
   
   // Change the default audit log of an organization.
   // The default AuditLog for an organization is used to capture audit events
-  // from the Oasis platform. If there is no default AuditLog, audit events
-  // from the Oasis platform are not captured.
+  // from the ArangoGraph Insights Platform. If there is no default AuditLog, audit events
+  // from the ArangoGraph Insights Platform are not captured.
   // The default AuditLog is also attached to new projects in the organization.
   // Required permissions:
   // - audit.auditlog.set-default on the organization.

@@ -1,7 +1,7 @@
 // 
 // DISCLAIMER
 // 
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2022 ArangoDB GmbH, Cologne, Germany
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,8 +16,6 @@
 // limitations under the License.
 // 
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
-// 
-// Author Ewout Prangsma
 // 
 
 syntax = "proto3";
@@ -189,7 +187,7 @@ message IPAllowlist {
     // This is a read-only value.
     repeated string warnings = 12;
     // If set, a few additional IP addresses are added to allow for remote 
-    // connectivity inspection of the deployment by the Oasis platform.
+    // connectivity inspection of the deployment by the ArangoGraph Insights Platform.
     bool remote_inspection_allowed = 13;
 }
 

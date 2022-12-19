@@ -17,9 +17,6 @@
 // 
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 // 
-// Author Ewout Prangsma
-// Author Robert Stam
-// 
 
 syntax = "proto3";
 
@@ -1074,7 +1071,7 @@ message DeploymentSizeRecommendation {
     // the callers quota.
     bool exceeds_quota = 21;
     // If set, this recommendation does not fit in
-    // the Oasis platform.
+    // the ArangoGraph Insights Platform.
     bool exceeds_platform = 22;
 }
 

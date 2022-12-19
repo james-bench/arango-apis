@@ -60,8 +60,8 @@ type AuditLog struct {
 	// If set, this AuditLog is the default for the organization.
 	// This is a read-only value.
 	// The default AuditLog for an organization is used to capture audit events
-	// from the Oasis platform. If there is no default AuditLog, audit events
-	// from the Oasis platform are not captured.
+	// from the ArangoGraph Insights Platform. If there is no default AuditLog, audit events
+	// from the ArangoGraph Insights Platform are not captured.
 	// The default AuditLog is also attached to new projects in the organization.
 	IsDefault bool `protobuf:"varint,10,opt,name=is_default,json=isDefault,proto3" json:"is_default,omitempty"`
 	// Destinations that events of this AuditLog should be sent to.
@@ -353,7 +353,7 @@ func (m *AuditLog_Header) GetValue() string {
 type AuditLog_DestinationStatus struct {
 	// ID of the deployment that the status applied to (if applicable)
 	// The deployment ID of the status is optional, inside the list at most
-	// one destination status is allowed to be empty, meaning the Oasis status,
+	// one destination status is allowed to be empty, meaning the ArangoGraph Insights Platform status,
 	// all others will be bound to a specific deployment as indicated by this ID.
 	DeploymentId string `protobuf:"bytes,1,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
 	// Set if this destination (for the provided deployment) has errors.
@@ -1703,7 +1703,7 @@ type AuditLogTopic struct {
 	Topic string `protobuf:"bytes,1,opt,name=topic,proto3" json:"topic,omitempty"`
 	// If set, this topic is used in audit log events of deployments.
 	ForDeployment bool `protobuf:"varint,2,opt,name=for_deployment,json=forDeployment,proto3" json:"for_deployment,omitempty"`
-	// If set, this topic is used in audit log events of the Oasis platform.
+	// If set, this topic is used in audit log events of the ArangoGraph Insights Platform.
 	ForPlatform bool `protobuf:"varint,3,opt,name=for_platform,json=forPlatform,proto3" json:"for_platform,omitempty"`
 	// If set, this topic will be excluded by default when adding new destinations.
 	ExcludeByDefault     bool     `protobuf:"varint,4,opt,name=exclude_by_default,json=excludeByDefault,proto3" json:"exclude_by_default,omitempty"`
@@ -1827,7 +1827,7 @@ type ListAuditLogTopicsRequest struct {
 	Options *v1.ListOptions `protobuf:"bytes,1,opt,name=options,proto3" json:"options,omitempty"`
 	// If set, only topics used in audit log events of deployments are returned.
 	ForDeploymentOnly bool `protobuf:"varint,2,opt,name=for_deployment_only,json=forDeploymentOnly,proto3" json:"for_deployment_only,omitempty"`
-	// If set, only topics used in audit log events of the Oasis platform are returned.
+	// If set, only topics used in audit log events of the ArangoGraph Insights Platform are returned.
 	ForPlatformOnly      bool     `protobuf:"varint,3,opt,name=for_platform_only,json=forPlatformOnly,proto3" json:"for_platform_only,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -2173,8 +2173,8 @@ type AuditServiceClient interface {
 	DeleteAuditLog(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Change the default audit log of an organization.
 	// The default AuditLog for an organization is used to capture audit events
-	// from the Oasis platform. If there is no default AuditLog, audit events
-	// from the Oasis platform are not captured.
+	// from the ArangoGraph Insights Platform. If there is no default AuditLog, audit events
+	// from the ArangoGraph Insights Platform are not captured.
 	// The default AuditLog is also attached to new projects in the organization.
 	// Required permissions:
 	// - audit.auditlog.set-default on the organization.
@@ -2477,8 +2477,8 @@ type AuditServiceServer interface {
 	DeleteAuditLog(context.Context, *v1.IDOptions) (*v1.Empty, error)
 	// Change the default audit log of an organization.
 	// The default AuditLog for an organization is used to capture audit events
-	// from the Oasis platform. If there is no default AuditLog, audit events
-	// from the Oasis platform are not captured.
+	// from the ArangoGraph Insights Platform. If there is no default AuditLog, audit events
+	// from the ArangoGraph Insights Platform are not captured.
 	// The default AuditLog is also attached to new projects in the organization.
 	// Required permissions:
 	// - audit.auditlog.set-default on the organization.
