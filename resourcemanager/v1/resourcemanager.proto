@@ -358,7 +358,56 @@ service ResourceManagerService {
             get: "/api/resourcemanager/v1/current-dpa"
         };
     }
+
+    // List the users as per SCIM API requirements
+    // For an organization identifier inferred via JWT token
+    // Required permissions:
+    // - resourcemanager.organization.get on the organization
+    rpc ListSCIMUsers(ListSCIMUsersRequest) returns (ListSCIMUserResponse) {
+        option (google.api.http) = {
+            get: "/Users"
+        };
+    }
+
+    // Get the user of based on user identifier as per SCIM API requirements
+    // Required permissions:
+    // - resourcemanager.organization.get on the organization
+    rpc GetSCIMUser(common.v1.IDOptions) returns (SCIMUser) {
+        option (google.api.http) = {
+            get: "/Users/{id}"
+        };
+    }
+
+    // Create the user for organization identifier inferred via JWT token
+    // Required permissions:
+    // - resourcemanager.organization.update on the organization
+    rpc CreateSCIMUser(SCIMUser) returns (SCIMUser) {
+        option (google.api.http) = {
+            post: "/Users"
+        };
+    }
+
+
+    // Update the user information
+    // Required permissions:
+    // - resourcemanager.organization.update on the organization
+    rpc UpdateSCIMUser(SCIMUser) returns (SCIMUser) {
+        option (google.api.http) = {
+            patch: "/Users/{id}"
+        };
+    }
+
+    // Delete the user from an organization
+    // Required permissions:
+    // - resourcemanager.organization.update on the organization
+    rpc DeleteSCIMUser(common.v1.IDOptions) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            delete: "/Users/{id}"
+        };
+    }
 }
+
+
 
 // An Organization is represents a real world organization such as a company.
 message Organization {   
@@ -726,4 +775,80 @@ message DataProcessingAddendum {
     string content = 2;
     // Creation date of this version of the DPA.
     google.protobuf.Timestamp created_at = 3;
+}
+
+// SCIMUserName is the schema used for name of user in SCIM API response
+message SCIMUserName {
+    // Formatted name string
+    string formatted = 1;
+    // Given name / first name of user
+    string givenName = 2;
+    // Family name / last name of the user
+    string familyName = 3;
+}
+
+// SCIMUserResource is the schema used for resource like emails / photos of user in SCIM API response
+message SCIMUserResource {
+    // Value of resource example, email address or photo url
+    string value = 1;
+    // If set value is used as the primary source of information
+    bool primary = 2;
+    // Optional value. Sets the type resource example photo
+    string type = 3;
+}
+
+// SCIMUserResource is the schema used for meta data of a resource in SCIM API response
+message SCIMMetadata {
+    // Identifies type of resource example User / Group
+    string resourceType = 1;
+    // Defines the time at which the resource was created
+    google.protobuf.Timestamp created = 2;
+    // Defines the time at which the resource was updated
+    google.protobuf.Timestamp lastModified = 3;
+}
+
+// SCIMUser is the schema used for user information in SCIM API response
+message SCIMUser {
+    // Name of schemas followed in request / response
+    repeated string schemas = 1;
+    // User identifier
+    string id = 2;
+    // Display name of user
+    string displayName = 3;
+    // Nick name of user
+    string nickName = 4;
+    // Language preferred by user
+    string locale = 5;
+    // Name of user
+    SCIMUserName name = 6;
+    // Emails of user
+    repeated SCIMUserResource emails = 7;
+    // Photos of user
+    repeated SCIMUserResource photos = 8;
+    // Meta information of user creation and updation
+    SCIMMetadata meta = 9;
+}
+
+// Request params for ListSCIMUsers
+message ListSCIMUsersRequest {
+    // Pagination offset value
+    int64 startIndex = 1;
+    // Pagination limit value
+    int64 count = 2;
+    // Filters to apply for querying data
+    repeated string filter = 4;
+}
+
+// Response for ListSCIMUsers
+message ListSCIMUserResponse {
+    // Name of schemas followed in response
+    repeated string schemas = 1;
+    // Total number of results available
+    int32 totalResult = 2;
+    // Pagination offset value
+    int64 startIndex = 3;
+    // Pagination limit value
+    int64 count = 4;
+    // List of users
+    repeated SCIMUser Resources = 5;
 }
