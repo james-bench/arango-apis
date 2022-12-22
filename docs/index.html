@@ -1417,14 +1417,6 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
-                  <a href="#arangodb.cloud.resourcemanager.v1.ListSCIMUserResponse"><span class="badge">M</span>ListSCIMUserResponse</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.resourcemanager.v1.ListSCIMUsersRequest"><span class="badge">M</span>ListSCIMUsersRequest</a>
-                </li>
-              
-                <li>
                   <a href="#arangodb.cloud.resourcemanager.v1.Member"><span class="badge">M</span>Member</a>
                 </li>
               
@@ -1481,22 +1473,6 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
-                  <a href="#arangodb.cloud.resourcemanager.v1.SCIMMetadata"><span class="badge">M</span>SCIMMetadata</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.resourcemanager.v1.SCIMUser"><span class="badge">M</span>SCIMUser</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.resourcemanager.v1.SCIMUserName"><span class="badge">M</span>SCIMUserName</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.resourcemanager.v1.SCIMUserResource"><span class="badge">M</span>SCIMUserResource</a>
-                </li>
-              
-                <li>
                   <a href="#arangodb.cloud.resourcemanager.v1.TermsAndConditions"><span class="badge">M</span>TermsAndConditions</a>
                 </li>
               
@@ -1509,6 +1485,45 @@ title: "ArangoGraph Insights Platform API"
               
                 <li>
                   <a href="#arangodb.cloud.resourcemanager.v1.ResourceManagerService"><span class="badge">S</span>ResourceManagerService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
+            <a href="#scim%2fv1%2fscim.proto">scim/v1/scim.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#arangodb.cloud.resourcemanager.v1.ListUserResponse"><span class="badge">M</span>ListUserResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.resourcemanager.v1.ListUsersRequest"><span class="badge">M</span>ListUsersRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.resourcemanager.v1.Metadata"><span class="badge">M</span>Metadata</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.resourcemanager.v1.User"><span class="badge">M</span>User</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.resourcemanager.v1.UserName"><span class="badge">M</span>UserName</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.resourcemanager.v1.UserResource"><span class="badge">M</span>UserResource</a>
+                </li>
+              
+              
+              
+              
+                <li>
+                  <a href="#arangodb.cloud.resourcemanager.v1.SCIMService"><span class="badge">S</span>SCIMService</a>
                 </li>
               
             </ul>
@@ -17778,96 +17793,6 @@ This is a read-only value. </p></td>
 
         
       
-        <h3 id="arangodb.cloud.resourcemanager.v1.ListSCIMUserResponse">ListSCIMUserResponse</h3>
-        <p>Response for ListSCIMUsers</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>schemas</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>Name of schemas followed in response </p></td>
-                </tr>
-              
-                <tr>
-                  <td>totalResult</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>Total number of results available </p></td>
-                </tr>
-              
-                <tr>
-                  <td>startIndex</td>
-                  <td><a href="#int64">int64</a></td>
-                  <td></td>
-                  <td><p>Pagination offset value </p></td>
-                </tr>
-              
-                <tr>
-                  <td>count</td>
-                  <td><a href="#int64">int64</a></td>
-                  <td></td>
-                  <td><p>Pagination limit value </p></td>
-                </tr>
-              
-                <tr>
-                  <td>Resources</td>
-                  <td><a href="#arangodb.cloud.resourcemanager.v1.SCIMUser">SCIMUser</a></td>
-                  <td>repeated</td>
-                  <td><p>List of users </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.resourcemanager.v1.ListSCIMUsersRequest">ListSCIMUsersRequest</h3>
-        <p>Request params for ListSCIMUsers</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>startIndex</td>
-                  <td><a href="#int64">int64</a></td>
-                  <td></td>
-                  <td><p>Pagination offset value </p></td>
-                </tr>
-              
-                <tr>
-                  <td>count</td>
-                  <td><a href="#int64">int64</a></td>
-                  <td></td>
-                  <td><p>Pagination limit value </p></td>
-                </tr>
-              
-                <tr>
-                  <td>filter</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>Filters to apply for querying data </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
         <h3 id="arangodb.cloud.resourcemanager.v1.Member">Member</h3>
         <p>Member of an organization.</p><p>A member is always a user.</p>
 
@@ -18563,200 +18488,6 @@ A value of 0 means unlimited. </p></td>
 
         
       
-        <h3 id="arangodb.cloud.resourcemanager.v1.SCIMMetadata">SCIMMetadata</h3>
-        <p>SCIMUserResource is the schema used for meta data of a resource in SCIM API response</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>resourceType</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Identifies type of resource example User / Group </p></td>
-                </tr>
-              
-                <tr>
-                  <td>created</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>Defines the time at which the resource was created </p></td>
-                </tr>
-              
-                <tr>
-                  <td>lastModified</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>Defines the time at which the resource was updated </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.resourcemanager.v1.SCIMUser">SCIMUser</h3>
-        <p>SCIMUser is the schema used for user information in SCIM API response</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>schemas</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>Name of schemas followed in request / response </p></td>
-                </tr>
-              
-                <tr>
-                  <td>id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>User identifier </p></td>
-                </tr>
-              
-                <tr>
-                  <td>displayName</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Display name of user </p></td>
-                </tr>
-              
-                <tr>
-                  <td>nickName</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Nick name of user </p></td>
-                </tr>
-              
-                <tr>
-                  <td>locale</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Language preferred by user </p></td>
-                </tr>
-              
-                <tr>
-                  <td>name</td>
-                  <td><a href="#arangodb.cloud.resourcemanager.v1.SCIMUserName">SCIMUserName</a></td>
-                  <td></td>
-                  <td><p>Name of user </p></td>
-                </tr>
-              
-                <tr>
-                  <td>emails</td>
-                  <td><a href="#arangodb.cloud.resourcemanager.v1.SCIMUserResource">SCIMUserResource</a></td>
-                  <td>repeated</td>
-                  <td><p>Emails of user </p></td>
-                </tr>
-              
-                <tr>
-                  <td>photos</td>
-                  <td><a href="#arangodb.cloud.resourcemanager.v1.SCIMUserResource">SCIMUserResource</a></td>
-                  <td>repeated</td>
-                  <td><p>Photos of user </p></td>
-                </tr>
-              
-                <tr>
-                  <td>meta</td>
-                  <td><a href="#arangodb.cloud.resourcemanager.v1.SCIMMetadata">SCIMMetadata</a></td>
-                  <td></td>
-                  <td><p>Meta information of user creation and updation </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.resourcemanager.v1.SCIMUserName">SCIMUserName</h3>
-        <p>SCIMUserName is the schema used for name of user in SCIM API response</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>formatted</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Formatted name string </p></td>
-                </tr>
-              
-                <tr>
-                  <td>givenName</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Given name / first name of user </p></td>
-                </tr>
-              
-                <tr>
-                  <td>familyName</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Family name / last name of the user </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.resourcemanager.v1.SCIMUserResource">SCIMUserResource</h3>
-        <p>SCIMUserResource is the schema used for resource like emails / photos of user in SCIM API response</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>value</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Value of resource example, email address or photo url </p></td>
-                </tr>
-              
-                <tr>
-                  <td>primary</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>If set value is used as the primary source of information </p></td>
-                </tr>
-              
-                <tr>
-                  <td>type</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Optional value. Sets the type resource example photo </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
         <h3 id="arangodb.cloud.resourcemanager.v1.TermsAndConditions">TermsAndConditions</h3>
         <p></p>
 
@@ -19241,52 +18972,6 @@ Required permissions:
 - resourcemanager.organization.get If ID is not empty.</p></td>
               </tr>
             
-              <tr>
-                <td>ListSCIMUsers</td>
-                <td><a href="#arangodb.cloud.resourcemanager.v1.ListSCIMUsersRequest">ListSCIMUsersRequest</a></td>
-                <td><a href="#arangodb.cloud.resourcemanager.v1.ListSCIMUserResponse">ListSCIMUserResponse</a></td>
-                <td><p>List the users as per SCIM API requirements
-For an organization identifier inferred via JWT token
-Required permissions:
-- resourcemanager.organization.get on the organization</p></td>
-              </tr>
-            
-              <tr>
-                <td>GetSCIMUser</td>
-                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
-                <td><a href="#arangodb.cloud.resourcemanager.v1.SCIMUser">SCIMUser</a></td>
-                <td><p>Get the user of based on user identifier as per SCIM API requirements
-Required permissions:
-- resourcemanager.organization.get on the organization</p></td>
-              </tr>
-            
-              <tr>
-                <td>CreateSCIMUser</td>
-                <td><a href="#arangodb.cloud.resourcemanager.v1.SCIMUser">SCIMUser</a></td>
-                <td><a href="#arangodb.cloud.resourcemanager.v1.SCIMUser">SCIMUser</a></td>
-                <td><p>Create the user for organization identifier inferred via JWT token
-Required permissions:
-- resourcemanager.organization.update on the organization</p></td>
-              </tr>
-            
-              <tr>
-                <td>UpdateSCIMUser</td>
-                <td><a href="#arangodb.cloud.resourcemanager.v1.SCIMUser">SCIMUser</a></td>
-                <td><a href="#arangodb.cloud.resourcemanager.v1.SCIMUser">SCIMUser</a></td>
-                <td><p>Update the user information
-Required permissions:
-- resourcemanager.organization.update on the organization</p></td>
-              </tr>
-            
-              <tr>
-                <td>DeleteSCIMUser</td>
-                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
-                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
-                <td><p>Delete the user from an organization
-Required permissions:
-- resourcemanager.organization.update on the organization</p></td>
-              </tr>
-            
           </tbody>
         </table>
 
@@ -19615,10 +19300,392 @@ Required permissions:
               </tr>
               
             
+            </tbody>
+          </table>
+          
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="scim/v1/scim.proto">scim/v1/scim.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="arangodb.cloud.resourcemanager.v1.ListUserResponse">ListUserResponse</h3>
+        <p>Response for ListUsers</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>schemas</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Name of schemas followed in response </p></td>
+                </tr>
+              
+                <tr>
+                  <td>totalResult</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Total number of results available </p></td>
+                </tr>
+              
+                <tr>
+                  <td>startIndex</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>Pagination offset value </p></td>
+                </tr>
+              
+                <tr>
+                  <td>count</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>Pagination limit value </p></td>
+                </tr>
+              
+                <tr>
+                  <td>Resources</td>
+                  <td><a href="#arangodb.cloud.resourcemanager.v1.User">User</a></td>
+                  <td>repeated</td>
+                  <td><p>List of users </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.resourcemanager.v1.ListUsersRequest">ListUsersRequest</h3>
+        <p>Request params for ListUsers</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>startIndex</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>Pagination offset value </p></td>
+                </tr>
+              
+                <tr>
+                  <td>count</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>Pagination limit value </p></td>
+                </tr>
+              
+                <tr>
+                  <td>filter</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Filters to apply for querying data </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.resourcemanager.v1.Metadata">Metadata</h3>
+        <p>Metadata is the schema used for meta data of a resource in SCIM API response</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>resourceType</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifies type of resource example User / Group </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Defines the time at which the resource was created </p></td>
+                </tr>
+              
+                <tr>
+                  <td>lastModified</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Defines the time at which the resource was updated </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.resourcemanager.v1.User">User</h3>
+        <p>User is the schema used for user information in SCIM API response</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>schemas</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Name of schemas followed in request / response </p></td>
+                </tr>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>User identifier </p></td>
+                </tr>
+              
+                <tr>
+                  <td>displayName</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Display name of user </p></td>
+                </tr>
+              
+                <tr>
+                  <td>nickName</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Nick name of user </p></td>
+                </tr>
+              
+                <tr>
+                  <td>locale</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Language preferred by user </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#arangodb.cloud.resourcemanager.v1.UserName">UserName</a></td>
+                  <td></td>
+                  <td><p>Name of user </p></td>
+                </tr>
+              
+                <tr>
+                  <td>emails</td>
+                  <td><a href="#arangodb.cloud.resourcemanager.v1.UserResource">UserResource</a></td>
+                  <td>repeated</td>
+                  <td><p>Emails of user </p></td>
+                </tr>
+              
+                <tr>
+                  <td>photos</td>
+                  <td><a href="#arangodb.cloud.resourcemanager.v1.UserResource">UserResource</a></td>
+                  <td>repeated</td>
+                  <td><p>Photos of user </p></td>
+                </tr>
+              
+                <tr>
+                  <td>meta</td>
+                  <td><a href="#arangodb.cloud.resourcemanager.v1.Metadata">Metadata</a></td>
+                  <td></td>
+                  <td><p>Meta information of user creation and updation </p></td>
+                </tr>
+              
+                <tr>
+                  <td>externalId</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>External identifier is used to know the arango graph user id </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.resourcemanager.v1.UserName">UserName</h3>
+        <p>UserName is the schema used for name of user in SCIM API response</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>formatted</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Formatted name string </p></td>
+                </tr>
+              
+                <tr>
+                  <td>givenName</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Given name / first name of user </p></td>
+                </tr>
+              
+                <tr>
+                  <td>familyName</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Family name / last name of the user </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.resourcemanager.v1.UserResource">UserResource</h3>
+        <p>UserResource is the schema used for resource like emails / photos of user in SCIM API response</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Value of resource example, email address or photo url </p></td>
+                </tr>
+              
+                <tr>
+                  <td>primary</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set value is used as the primary source of information </p></td>
+                </tr>
+              
+                <tr>
+                  <td>type</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional value. Sets the type resource example photo </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+
+      
+
+      
+        <h3 id="arangodb.cloud.resourcemanager.v1.SCIMService">SCIMService</h3>
+        <p>SCIMService is the API used to expose the SCIM Provisioning API for SAML based SSO.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>ListUsers</td>
+                <td><a href="#arangodb.cloud.resourcemanager.v1.ListUsersRequest">ListUsersRequest</a></td>
+                <td><a href="#arangodb.cloud.resourcemanager.v1.ListUserResponse">ListUserResponse</a></td>
+                <td><p>List the users as per SCIM API requirements
+For an organization identifier inferred via API Key
+Required permissions:
+- scim.organization.get on the organization</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetUser</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.resourcemanager.v1.User">User</a></td>
+                <td><p>Get the organization member information based on user identifier as per SCIM API requirements
+Required permissions:
+- scim.organization.get on the organization</p></td>
+              </tr>
+            
+              <tr>
+                <td>AddUser</td>
+                <td><a href="#arangodb.cloud.resourcemanager.v1.User">User</a></td>
+                <td><a href="#arangodb.cloud.resourcemanager.v1.User">User</a></td>
+                <td><p>Invite the user to an organization
+that is inferred from API key
+Required permissions:
+- scim.organization.update on the organization</p></td>
+              </tr>
+            
+              <tr>
+                <td>UpdateUser</td>
+                <td><a href="#arangodb.cloud.resourcemanager.v1.User">User</a></td>
+                <td><a href="#arangodb.cloud.resourcemanager.v1.User">User</a></td>
+                <td><p>Update the user information
+Required permissions:
+- scim.organization.update on the organization</p></td>
+              </tr>
+            
+              <tr>
+                <td>DeleteUser</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><p>Delete the user from an organization
+Required permissions:
+- scim.organization.update on the organization</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+          
+          
+          <h4>Methods with HTTP bindings</h4>
+          <table>
+            <thead>
+              <tr>
+                <td>Method Name</td>
+                <td>Method</td>
+                <td>Pattern</td>
+                <td>Body</td>
+              </tr>
+            </thead>
+            <tbody>
+            
               
               
               <tr>
-                <td>ListSCIMUsers</td>
+                <td>ListUsers</td>
                 <td>GET</td>
                 <td>/Users</td>
                 <td></td>
@@ -19628,7 +19695,7 @@ Required permissions:
               
               
               <tr>
-                <td>GetSCIMUser</td>
+                <td>GetUser</td>
                 <td>GET</td>
                 <td>/Users/{id}</td>
                 <td></td>
@@ -19638,7 +19705,7 @@ Required permissions:
               
               
               <tr>
-                <td>CreateSCIMUser</td>
+                <td>AddUser</td>
                 <td>POST</td>
                 <td>/Users</td>
                 <td></td>
@@ -19648,7 +19715,7 @@ Required permissions:
               
               
               <tr>
-                <td>UpdateSCIMUser</td>
+                <td>UpdateUser</td>
                 <td>PATCH</td>
                 <td>/Users/{id}</td>
                 <td></td>
@@ -19658,7 +19725,7 @@ Required permissions:
               
               
               <tr>
-                <td>DeleteSCIMUser</td>
+                <td>DeleteUser</td>
                 <td>DELETE</td>
                 <td>/Users/{id}</td>
                 <td></td>

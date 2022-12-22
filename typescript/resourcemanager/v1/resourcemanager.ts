@@ -197,44 +197,6 @@ export interface ListQuotasRequest {
   kinds?: string[];
 }
 
-// Response for ListSCIMUsers
-export interface ListSCIMUserResponse {
-  // Name of schemas followed in response
-  // string
-  schemas?: string[];
-  
-  // Total number of results available
-  // number
-  totalResult?: number;
-  
-  // Pagination offset value
-  // number
-  startIndex?: number;
-  
-  // Pagination limit value
-  // number
-  count?: number;
-  
-  // List of users
-  // SCIMUser
-  Resources?: SCIMUser[];
-}
-
-// Request params for ListSCIMUsers
-export interface ListSCIMUsersRequest {
-  // Pagination offset value
-  // number
-  startIndex?: number;
-  
-  // Pagination limit value
-  // number
-  count?: number;
-  
-  // Filters to apply for querying data
-  // string
-  filter?: string[];
-}
-
 // Member of an organization.
 // A member is always a user.
 export interface Member {
@@ -544,90 +506,6 @@ export interface QuotaList {
   // Quota
   items?: Quota[];
 }
-
-// SCIMUserResource is the schema used for meta data of a resource in SCIM API response
-export interface SCIMMetadata {
-  // Identifies type of resource example User / Group
-  // string
-  resourceType?: string;
-  
-  // Defines the time at which the resource was created
-  // googleTypes.Timestamp
-  created?: googleTypes.Timestamp;
-  
-  // Defines the time at which the resource was updated
-  // googleTypes.Timestamp
-  lastModified?: googleTypes.Timestamp;
-}
-
-// SCIMUser is the schema used for user information in SCIM API response
-export interface SCIMUser {
-  // Name of schemas followed in request / response
-  // string
-  schemas?: string[];
-  
-  // User identifier
-  // string
-  id?: string;
-  
-  // Display name of user
-  // string
-  displayName?: string;
-  
-  // Nick name of user
-  // string
-  nickName?: string;
-  
-  // Language preferred by user
-  // string
-  locale?: string;
-  
-  // Name of user
-  // SCIMUserName
-  name?: SCIMUserName;
-  
-  // Emails of user
-  // SCIMUserResource
-  emails?: SCIMUserResource[];
-  
-  // Photos of user
-  // SCIMUserResource
-  photos?: SCIMUserResource[];
-  
-  // Meta information of user creation and updation
-  // SCIMMetadata
-  meta?: SCIMMetadata;
-}
-
-// SCIMUserName is the schema used for name of user in SCIM API response
-export interface SCIMUserName {
-  // Formatted name string
-  // string
-  formatted?: string;
-  
-  // Given name / first name of user
-  // string
-  givenName?: string;
-  
-  // Family name / last name of the user
-  // string
-  familyName?: string;
-}
-
-// SCIMUserResource is the schema used for resource like emails / photos of user in SCIM API response
-export interface SCIMUserResource {
-  // Value of resource example, email address or photo url
-  // string
-  value?: string;
-  
-  // If set value is used as the primary source of information
-  // boolean
-  primary?: boolean;
-  
-  // Optional value. Sets the type resource example photo
-  // string
-  type?: string;
-}
 export interface TermsAndConditions {
   // Identifier of this version of the terms & conditions
   // string
@@ -901,32 +779,6 @@ export interface IResourceManagerService {
   // - None If ID is empty.
   // - resourcemanager.organization.get If ID is not empty.
   GetCurrentDataProcessingAddendum: (req: arangodb_cloud_common_v1_IDOptions) => Promise<DataProcessingAddendum>;
-  
-  // List the users as per SCIM API requirements
-  // For an organization identifier inferred via JWT token
-  // Required permissions:
-  // - resourcemanager.organization.get on the organization
-  ListSCIMUsers: (req: ListSCIMUsersRequest) => Promise<ListSCIMUserResponse>;
-  
-  // Get the user of based on user identifier as per SCIM API requirements
-  // Required permissions:
-  // - resourcemanager.organization.get on the organization
-  GetSCIMUser: (req: arangodb_cloud_common_v1_IDOptions) => Promise<SCIMUser>;
-  
-  // Create the user for organization identifier inferred via JWT token
-  // Required permissions:
-  // - resourcemanager.organization.update on the organization
-  CreateSCIMUser: (req: SCIMUser) => Promise<SCIMUser>;
-  
-  // Update the user information
-  // Required permissions:
-  // - resourcemanager.organization.update on the organization
-  UpdateSCIMUser: (req: SCIMUser) => Promise<SCIMUser>;
-  
-  // Delete the user from an organization
-  // Required permissions:
-  // - resourcemanager.organization.update on the organization
-  DeleteSCIMUser: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
 }
 
 // ResourceManagerService is the API used to configure basic resource objects.
@@ -1238,51 +1090,5 @@ export class ResourceManagerService implements IResourceManagerService {
     const path = `/api/resourcemanager/v1/current-dpa`;
     const url = path + api.queryString(req, []);
     return api.get(url, undefined);
-  }
-  
-  // List the users as per SCIM API requirements
-  // For an organization identifier inferred via JWT token
-  // Required permissions:
-  // - resourcemanager.organization.get on the organization
-  async ListSCIMUsers(req: ListSCIMUsersRequest): Promise<ListSCIMUserResponse> {
-    const path = `/Users`;
-    const url = path + api.queryString(req, []);
-    return api.get(url, undefined);
-  }
-  
-  // Get the user of based on user identifier as per SCIM API requirements
-  // Required permissions:
-  // - resourcemanager.organization.get on the organization
-  async GetSCIMUser(req: arangodb_cloud_common_v1_IDOptions): Promise<SCIMUser> {
-    const path = `/Users/${encodeURIComponent(req.id || '')}`;
-    const url = path + api.queryString(req, [`id`]);
-    return api.get(url, undefined);
-  }
-  
-  // Create the user for organization identifier inferred via JWT token
-  // Required permissions:
-  // - resourcemanager.organization.update on the organization
-  async CreateSCIMUser(req: SCIMUser): Promise<SCIMUser> {
-    const path = `/Users`;
-    const url = path + api.queryString(req, []);
-    return api.post(url, undefined);
-  }
-  
-  // Update the user information
-  // Required permissions:
-  // - resourcemanager.organization.update on the organization
-  async UpdateSCIMUser(req: SCIMUser): Promise<SCIMUser> {
-    const path = `/Users/${encodeURIComponent(req.id || '')}`;
-    const url = path + api.queryString(req, [`id`]);
-    return api.patch(url, undefined);
-  }
-  
-  // Delete the user from an organization
-  // Required permissions:
-  // - resourcemanager.organization.update on the organization
-  async DeleteSCIMUser(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
-    const path = `/Users/${encodeURIComponent(req.id || '')}`;
-    const url = path + api.queryString(req, [`id`]);
-    return api.delete(url, undefined);
   }
 }
