@@ -147,7 +147,7 @@ export interface ISCIMService {
   // List the users as per SCIM API requirements
   // For an organization identifier inferred via API Key
   // Required permissions:
-  // - scim.user.get on the organization
+  // - scim.user.list on the organization
   ListUsers: (req: ListUsersRequest) => Promise<ListUserResponse>;
   
   // Get the organization member information based on user identifier as per SCIM API requirements
@@ -186,7 +186,7 @@ export class SCIMService implements ISCIMService {
   // List the users as per SCIM API requirements
   // For an organization identifier inferred via API Key
   // Required permissions:
-  // - scim.user.get on the organization
+  // - scim.user.list on the organization
   async ListUsers(req: ListUsersRequest): Promise<ListUserResponse> {
     const path = `/Users`;
     const url = path + api.queryString(req, []);

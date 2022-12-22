@@ -23,7 +23,9 @@ package v1
 const (
 	// User permissions
 
-	// PermissionUserGet is needed for listing / getting user infomration
+	// PermissionUserList is needed for getting the list of users
+	PermissionUserList = "scim.user.list"
+	// PermissionUserGet is needed for getting the user infomration
 	PermissionUserGet = "scim.user.get"
 	// PermissionUserAdd is needed for adding a user
 	PermissionUserAdd = "scim.user.add"

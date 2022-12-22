@@ -599,7 +599,7 @@ type SCIMServiceClient interface {
 	// List the users as per SCIM API requirements
 	// For an organization identifier inferred via API Key
 	// Required permissions:
-	// - scim.user.get on the organization
+	// - scim.user.list on the organization
 	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUserResponse, error)
 	// Get the organization member information based on user identifier as per SCIM API requirements
 	// Required permissions:
@@ -691,7 +691,7 @@ type SCIMServiceServer interface {
 	// List the users as per SCIM API requirements
 	// For an organization identifier inferred via API Key
 	// Required permissions:
-	// - scim.user.get on the organization
+	// - scim.user.list on the organization
 	ListUsers(context.Context, *ListUsersRequest) (*ListUserResponse, error)
 	// Get the organization member information based on user identifier as per SCIM API requirements
 	// Required permissions:
