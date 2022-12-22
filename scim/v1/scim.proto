@@ -33,6 +33,15 @@ import "google/api/annotations.proto";
 
 // SCIMService is the API used to expose the SCIM Provisioning API for SAML based SSO.
 service SCIMService {
+    // Get the current API version of this service.
+    // Required permissions:
+    // - None
+    rpc GetAPIVersion(common.v1.Empty) returns (common.v1.Version) {
+        option (google.api.http) = {
+            get: "/api/scim/v1/api-version"
+        };
+    }
+
     // List the users as per SCIM API requirements
     // For an organization identifier inferred via API Key
     // Required permissions:
