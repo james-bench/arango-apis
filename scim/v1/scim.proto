@@ -36,7 +36,7 @@ service SCIMService {
     // List the users as per SCIM API requirements
     // For an organization identifier inferred via API Key
     // Required permissions:
-    // - scim.organization.get on the organization
+    // - scim.user.get on the organization
     rpc ListUsers(ListUsersRequest) returns (ListUserResponse) {
         option (google.api.http) = {
             get: "/Users"
@@ -45,7 +45,7 @@ service SCIMService {
 
     // Get the organization member information based on user identifier as per SCIM API requirements
     // Required permissions:
-    // - scim.organization.get on the organization
+    // - scim.user.get on the organization
     rpc GetUser(common.v1.IDOptions) returns (User) {
         option (google.api.http) = {
             get: "/Users/{id}"
@@ -55,7 +55,7 @@ service SCIMService {
     // Invite the user to an organization
     // that is inferred from API key
     // Required permissions:
-    // - scim.organization.update on the organization
+    // - scim.user.add on the organization
     rpc AddUser(User) returns (User) {
         option (google.api.http) = {
             post: "/Users"
@@ -65,7 +65,7 @@ service SCIMService {
 
     // Update the user information
     // Required permissions:
-    // - scim.organization.update on the organization
+    // - scim.user.update on the organization
     rpc UpdateUser(User) returns (User) {
         option (google.api.http) = {
             patch: "/Users/{id}"
@@ -74,7 +74,7 @@ service SCIMService {
 
     // Delete the user from an organization
     // Required permissions:
-    // - scim.organization.update on the organization
+    // - scim.user.delete on the organization
     rpc DeleteUser(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
             delete: "/Users/{id}"

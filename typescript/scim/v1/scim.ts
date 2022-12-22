@@ -140,28 +140,28 @@ export interface ISCIMService {
   // List the users as per SCIM API requirements
   // For an organization identifier inferred via API Key
   // Required permissions:
-  // - scim.organization.get on the organization
+  // - scim.user.get on the organization
   ListUsers: (req: ListUsersRequest) => Promise<ListUserResponse>;
   
   // Get the organization member information based on user identifier as per SCIM API requirements
   // Required permissions:
-  // - scim.organization.get on the organization
+  // - scim.user.get on the organization
   GetUser: (req: arangodb_cloud_common_v1_IDOptions) => Promise<User>;
   
   // Invite the user to an organization
   // that is inferred from API key
   // Required permissions:
-  // - scim.organization.update on the organization
+  // - scim.user.add on the organization
   AddUser: (req: User) => Promise<User>;
   
   // Update the user information
   // Required permissions:
-  // - scim.organization.update on the organization
+  // - scim.user.update on the organization
   UpdateUser: (req: User) => Promise<User>;
   
   // Delete the user from an organization
   // Required permissions:
-  // - scim.organization.update on the organization
+  // - scim.user.delete on the organization
   DeleteUser: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
 }
 
@@ -170,7 +170,7 @@ export class SCIMService implements ISCIMService {
   // List the users as per SCIM API requirements
   // For an organization identifier inferred via API Key
   // Required permissions:
-  // - scim.organization.get on the organization
+  // - scim.user.get on the organization
   async ListUsers(req: ListUsersRequest): Promise<ListUserResponse> {
     const path = `/Users`;
     const url = path + api.queryString(req, []);
@@ -179,7 +179,7 @@ export class SCIMService implements ISCIMService {
   
   // Get the organization member information based on user identifier as per SCIM API requirements
   // Required permissions:
-  // - scim.organization.get on the organization
+  // - scim.user.get on the organization
   async GetUser(req: arangodb_cloud_common_v1_IDOptions): Promise<User> {
     const path = `/Users/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
@@ -189,7 +189,7 @@ export class SCIMService implements ISCIMService {
   // Invite the user to an organization
   // that is inferred from API key
   // Required permissions:
-  // - scim.organization.update on the organization
+  // - scim.user.add on the organization
   async AddUser(req: User): Promise<User> {
     const path = `/Users`;
     const url = path + api.queryString(req, []);
@@ -198,7 +198,7 @@ export class SCIMService implements ISCIMService {
   
   // Update the user information
   // Required permissions:
-  // - scim.organization.update on the organization
+  // - scim.user.update on the organization
   async UpdateUser(req: User): Promise<User> {
     const path = `/Users/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
@@ -207,7 +207,7 @@ export class SCIMService implements ISCIMService {
   
   // Delete the user from an organization
   // Required permissions:
-  // - scim.organization.update on the organization
+  // - scim.user.delete on the organization
   async DeleteUser(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
     const path = `/Users/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);

@@ -592,24 +592,24 @@ type SCIMServiceClient interface {
 	// List the users as per SCIM API requirements
 	// For an organization identifier inferred via API Key
 	// Required permissions:
-	// - scim.organization.get on the organization
+	// - scim.user.get on the organization
 	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUserResponse, error)
 	// Get the organization member information based on user identifier as per SCIM API requirements
 	// Required permissions:
-	// - scim.organization.get on the organization
+	// - scim.user.get on the organization
 	GetUser(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*User, error)
 	// Invite the user to an organization
 	// that is inferred from API key
 	// Required permissions:
-	// - scim.organization.update on the organization
+	// - scim.user.add on the organization
 	AddUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*User, error)
 	// Update the user information
 	// Required permissions:
-	// - scim.organization.update on the organization
+	// - scim.user.update on the organization
 	UpdateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*User, error)
 	// Delete the user from an organization
 	// Required permissions:
-	// - scim.organization.update on the organization
+	// - scim.user.delete on the organization
 	DeleteUser(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
 }
 
@@ -671,24 +671,24 @@ type SCIMServiceServer interface {
 	// List the users as per SCIM API requirements
 	// For an organization identifier inferred via API Key
 	// Required permissions:
-	// - scim.organization.get on the organization
+	// - scim.user.get on the organization
 	ListUsers(context.Context, *ListUsersRequest) (*ListUserResponse, error)
 	// Get the organization member information based on user identifier as per SCIM API requirements
 	// Required permissions:
-	// - scim.organization.get on the organization
+	// - scim.user.get on the organization
 	GetUser(context.Context, *v1.IDOptions) (*User, error)
 	// Invite the user to an organization
 	// that is inferred from API key
 	// Required permissions:
-	// - scim.organization.update on the organization
+	// - scim.user.add on the organization
 	AddUser(context.Context, *User) (*User, error)
 	// Update the user information
 	// Required permissions:
-	// - scim.organization.update on the organization
+	// - scim.user.update on the organization
 	UpdateUser(context.Context, *User) (*User, error)
 	// Delete the user from an organization
 	// Required permissions:
-	// - scim.organization.update on the organization
+	// - scim.user.delete on the organization
 	DeleteUser(context.Context, *v1.IDOptions) (*v1.Empty, error)
 }
 
