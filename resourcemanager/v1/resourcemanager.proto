@@ -360,8 +360,6 @@ service ResourceManagerService {
     }
 }
 
-
-
 // An Organization is represents a real world organization such as a company.
 message Organization {   
     // System identifier of the organization.
