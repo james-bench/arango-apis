@@ -188,7 +188,7 @@ export class SCIMService implements ISCIMService {
   // Required permissions:
   // - scim.user.list on the organization
   async ListUsers(req: ListUsersRequest): Promise<ListUserResponse> {
-    const path = `/Users`;
+    const path = `/api/scim/v1/Users`;
     const url = path + api.queryString(req, []);
     return api.get(url, undefined);
   }
@@ -197,7 +197,7 @@ export class SCIMService implements ISCIMService {
   // Required permissions:
   // - scim.user.get on the organization
   async GetUser(req: arangodb_cloud_common_v1_IDOptions): Promise<User> {
-    const path = `/Users/${encodeURIComponent(req.id || '')}`;
+    const path = `/api/scim/v1/Users/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
@@ -207,7 +207,7 @@ export class SCIMService implements ISCIMService {
   // Required permissions:
   // - scim.user.add on the organization
   async AddUser(req: User): Promise<User> {
-    const path = `/Users`;
+    const path = `/api/scim/v1/Users`;
     const url = path + api.queryString(req, []);
     return api.post(url, undefined);
   }
@@ -216,7 +216,7 @@ export class SCIMService implements ISCIMService {
   // Required permissions:
   // - scim.user.update on the organization
   async UpdateUser(req: User): Promise<User> {
-    const path = `/Users/${encodeURIComponent(req.id || '')}`;
+    const path = `/api/scim/v1/Users/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.patch(url, undefined);
   }
@@ -225,7 +225,7 @@ export class SCIMService implements ISCIMService {
   // Required permissions:
   // - scim.user.delete on the organization
   async DeleteUser(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
-    const path = `/Users/${encodeURIComponent(req.id || '')}`;
+    const path = `/api/scim/v1/Users/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.delete(url, undefined);
   }

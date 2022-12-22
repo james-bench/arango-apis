@@ -48,7 +48,7 @@ service SCIMService {
     // - scim.user.list on the organization
     rpc ListUsers(ListUsersRequest) returns (ListUserResponse) {
         option (google.api.http) = {
-            get: "/Users"
+            get: "/api/scim/v1/Users"
         };
     }
 
@@ -57,7 +57,7 @@ service SCIMService {
     // - scim.user.get on the organization
     rpc GetUser(common.v1.IDOptions) returns (User) {
         option (google.api.http) = {
-            get: "/Users/{id}"
+            get: "/api/scim/v1/Users/{id}"
         };
     }
 
@@ -67,7 +67,7 @@ service SCIMService {
     // - scim.user.add on the organization
     rpc AddUser(User) returns (User) {
         option (google.api.http) = {
-            post: "/Users"
+            post: "/api/scim/v1/Users"
         };
     }
 
@@ -77,7 +77,7 @@ service SCIMService {
     // - scim.user.update on the organization
     rpc UpdateUser(User) returns (User) {
         option (google.api.http) = {
-            patch: "/Users/{id}"
+            patch: "/api/scim/v1/Users/{id}"
         };
     }
 
@@ -86,7 +86,7 @@ service SCIMService {
     // - scim.user.delete on the organization
     rpc DeleteUser(common.v1.IDOptions) returns (common.v1.Empty) {
         option (google.api.http) = {
-            delete: "/Users/{id}"
+            delete: "/api/scim/v1/Users/{id}"
         };
     }
 }
