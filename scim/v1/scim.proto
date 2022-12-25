@@ -68,6 +68,7 @@ service SCIMService {
     rpc AddUser(User) returns (User) {
         option (google.api.http) = {
             post: "/api/scim/v1/Users"
+            body: "*"
         };
     }
 
@@ -78,6 +79,7 @@ service SCIMService {
     rpc UpdateUser(User) returns (User) {
         option (google.api.http) = {
             patch: "/api/scim/v1/Users/{id}"
+            body: "*"
         };
     }
 

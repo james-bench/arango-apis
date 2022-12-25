@@ -207,18 +207,16 @@ export class SCIMService implements ISCIMService {
   // Required permissions:
   // - scim.user.add on the organization
   async AddUser(req: User): Promise<User> {
-    const path = `/api/scim/v1/Users`;
-    const url = path + api.queryString(req, []);
-    return api.post(url, undefined);
+    const url = `/api/scim/v1/Users`;
+    return api.post(url, req);
   }
   
   // Update the user information
   // Required permissions:
   // - scim.user.update on the organization
   async UpdateUser(req: User): Promise<User> {
-    const path = `/api/scim/v1/Users/${encodeURIComponent(req.id || '')}`;
-    const url = path + api.queryString(req, [`id`]);
-    return api.patch(url, undefined);
+    const url = `/api/scim/v1/Users/${encodeURIComponent(req.id || '')}`;
+    return api.patch(url, req);
   }
   
   // Delete the user from an organization
