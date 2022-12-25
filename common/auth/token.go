@@ -24,6 +24,7 @@ package auth
 
 import (
 	"context"
+	"encoding/base64"
 	"strings"
 
 	"google.golang.org/grpc/metadata"
@@ -31,6 +32,7 @@ import (
 
 const (
 	bearerPrefix = "bearer "
+	basicPrefix  = "basic"
 )
 
 // GetAccessToken fetches the access token from the given (GRPC) context.
@@ -51,6 +53,36 @@ func GetAccessToken(ctx context.Context) (string, bool) {
 		}
 	}
 	return "", false
+}
+
+// GetApiKeySecret fetches the api key & secret from the given (GRPC) context.
+// If key & secret are not found, false is returned.
+func GetApiKeySecret(ctx context.Context) (string, string, bool) {
+	md, ok := metadata.FromIncomingContext(ctx)
+	if !ok {
+		return "", "", false
+	}
+	auth := md.Get("Authorization")
+	if len(auth) == 0 {
+		return "", "", false
+	}
+	for _, token := range auth {
+		if strings.HasPrefix(strings.ToLower(token), basicPrefix) {
+			result := strings.TrimSpace(token[len(basicPrefix):])
+			// decode base64 encoded result
+			rawDecodedText, err := base64.RawStdEncoding.DecodeString(result)
+			if err != nil {
+				return "", "", false
+			}
+
+			basicAuthSplit := strings.Split(string(rawDecodedText), ":")
+			if len(basicAuthSplit) != 2 {
+				return "", "", false
+			}
+			return basicAuthSplit[0], basicAuthSplit[1], true
+		}
+	}
+	return "", "", false
 }
 
 // WithAccessToken returns a context that containes the given access token
