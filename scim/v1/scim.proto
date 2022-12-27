@@ -151,8 +151,8 @@ message User {
     string userName = 12;
     string email = 13;
     string emailType = 14;
-    string firstName = 15;
-    string lastName = 16;
+    string givenName = 15;
+    string familyName = 16;
 }
 
 // Request params for ListUsers
