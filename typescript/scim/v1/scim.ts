@@ -224,7 +224,7 @@ export class SCIMService implements ISCIMService {
   // - scim.user.update on the organization
   async UpdateUser(req: User): Promise<User> {
     const url = `/api/scim/v1/Users/${encodeURIComponent(req.id || '')}`;
-    return api.put(url, req);
+    return api.patch(url, req);
   }
   
   // Delete the user from an organization
