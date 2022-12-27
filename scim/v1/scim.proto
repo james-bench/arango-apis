@@ -147,6 +147,8 @@ message User {
     string externalId = 10;
     // Check if user is active
     bool active = 11;
+    // userName attribute of the external system like okta
+    string userName = 12;
 }
 
 // Request params for ListUsers

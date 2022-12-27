@@ -109,6 +109,10 @@ export interface User {
   // Check if user is active
   // boolean
   active?: boolean;
+  
+  // userName attribute of the external system like okta
+  // string
+  userName?: string;
 }
 
 // UserName is the schema used for name of user in SCIM API response
