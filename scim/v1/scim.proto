@@ -149,10 +149,6 @@ message User {
     bool active = 11;
     // userName attribute of the external system like okta
     string userName = 12;
-    string email = 13;
-    string emailType = 14;
-    string givenName = 15;
-    string familyName = 16;
 }
 
 // Request params for ListUsers

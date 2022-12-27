@@ -113,18 +113,6 @@ export interface User {
   // userName attribute of the external system like okta
   // string
   userName?: string;
-  
-  // string
-  email?: string;
-  
-  // string
-  emailType?: string;
-  
-  // string
-  givenName?: string;
-  
-  // string
-  familyName?: string;
 }
 
 // UserName is the schema used for name of user in SCIM API response
