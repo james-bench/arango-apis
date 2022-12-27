@@ -46,7 +46,7 @@ export interface ListUsersRequest {
   
   // Filters to apply for querying data
   // string
-  filter?: string[];
+  filter?: string;
 }
 
 // Metadata is the schema used for meta data of a resource in SCIM API response
@@ -102,9 +102,13 @@ export interface User {
   // Metadata
   meta?: Metadata;
   
-  // External identifier is used to know the arango graph user id
+  // External identifier is used to know the okta user id
   // string
   externalId?: string;
+  
+  // Check if user is active
+  // boolean
+  active?: boolean;
 }
 
 // UserName is the schema used for name of user in SCIM API response

@@ -143,8 +143,10 @@ message User {
     repeated UserResource photos = 8;
     // Meta information of user creation and updation
     Metadata meta = 9;
-    // External identifier is used to know the arango graph user id
+    // External identifier is used to know the okta user id
     string externalId = 10;
+    // Check if user is active
+    bool active = 11;
 }
 
 // Request params for ListUsers
@@ -154,7 +156,7 @@ message ListUsersRequest {
     // Pagination limit value
     int64 count = 2;
     // Filters to apply for querying data
-    repeated string filter = 4;
+    string filter = 3;
 }
 
 // Response for ListUsers
