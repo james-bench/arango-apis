@@ -166,7 +166,7 @@ message ListUserResponse {
     // Name of schemas followed in response
     repeated string schemas = 1;
     // Total number of results available
-    int32 totalResult = 2;
+    int64 totalResult = 2;
     // Pagination offset value
     int64 startIndex = 3;
     // Pagination limit value
