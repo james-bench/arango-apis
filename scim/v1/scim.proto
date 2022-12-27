@@ -78,7 +78,7 @@ service SCIMService {
     // - scim.user.update on the organization
     rpc UpdateUser(User) returns (User) {
         option (google.api.http) = {
-            patch: "/api/scim/v1/Users/{id}"
+            put: "/api/scim/v1/Users/{id}"
             body: "*"
         };
     }
