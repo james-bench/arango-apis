@@ -121,10 +121,10 @@ export interface User {
   emailType?: string;
   
   // string
-  firstName?: string;
+  givenName?: string;
   
   // string
-  lastName?: string;
+  familyName?: string;
 }
 
 // UserName is the schema used for name of user in SCIM API response
