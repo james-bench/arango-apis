@@ -32,7 +32,7 @@ import (
 
 const (
 	bearerPrefix = "bearer "
-	basicPrefix  = "basic"
+	basicPrefix  = "basic "
 )
 
 // GetAccessToken fetches the access token from the given (GRPC) context.
