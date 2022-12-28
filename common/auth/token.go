@@ -55,9 +55,9 @@ func GetAccessToken(ctx context.Context) (string, bool) {
 	return "", false
 }
 
-// GetApiKeySecret fetches the api key & secret from the given (GRPC) context.
+// GetApiKeyAndSecret fetches the api key & secret from the given (GRPC) context.
 // If key & secret are not found, false is returned.
-func GetApiKeySecret(ctx context.Context) (string, string, bool) {
+func GetApiKeyAndSecret(ctx context.Context) (string, string, bool) {
 	md, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
 		return "", "", false

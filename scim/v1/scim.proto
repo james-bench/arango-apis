@@ -31,6 +31,10 @@ import "iam/v1/iam.proto";
 import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
 import "google/api/annotations.proto";
 
+// Note: that this API slightly differs from other APIs, because it need to follow the SCIM conversions.
+// Furthermore is on all those API calls, the authenticated user can be provided via a username/password header, 
+// which need to contain an APIKey / Secret, which need to resolve to a single organization.
+
 // SCIMService is the API used to expose the SCIM Provisioning API for SAML based SSO.
 service SCIMService {
     // Get the current API version of this service.
@@ -143,7 +147,7 @@ message User {
     repeated UserResource photos = 8;
     // Meta information of user creation and updation
     Metadata meta = 9;
-    // External identifier is used to know the okta user id
+    // External identifier is used to know the ArangoGraph Insights Platform id
     string externalId = 10;
     // Check if user is active
     bool active = 11;

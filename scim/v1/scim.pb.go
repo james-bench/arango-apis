@@ -251,7 +251,7 @@ type User struct {
 	Photos []*UserResource `protobuf:"bytes,8,rep,name=photos,proto3" json:"photos,omitempty"`
 	// Meta information of user creation and updation
 	Meta *Metadata `protobuf:"bytes,9,opt,name=meta,proto3" json:"meta,omitempty"`
-	// External identifier is used to know the okta user id
+	// External identifier is used to know the ArangoGraph Insights Platform id
 	ExternalId string `protobuf:"bytes,10,opt,name=externalId,proto3" json:"externalId,omitempty"`
 	// Check if user is active
 	Active bool `protobuf:"varint,11,opt,name=active,proto3" json:"active,omitempty"`

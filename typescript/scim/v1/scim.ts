@@ -102,7 +102,7 @@ export interface User {
   // Metadata
   meta?: Metadata;
   
-  // External identifier is used to know the okta user id
+  // External identifier is used to know the ArangoGraph Insights Platform id
   // string
   externalId?: string;
   
