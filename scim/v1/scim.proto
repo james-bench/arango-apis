@@ -76,7 +76,7 @@ service SCIMService {
     // Update the user information
     // Required permissions:
     // - scim.user.update on the organization
-    rpc UpdateUser(User) returns (User) {
+    rpc UpdateUser(PatchUserRequest) returns (User) {
         option (google.api.http) = {
             put: "/api/scim/v1/Users/{id}"
             body: "*"

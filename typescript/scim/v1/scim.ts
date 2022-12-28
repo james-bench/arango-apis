@@ -206,7 +206,7 @@ export interface ISCIMService {
   // Update the user information
   // Required permissions:
   // - scim.user.update on the organization
-  UpdateUser: (req: User) => Promise<User>;
+  UpdateUser: (req: PatchUserRequest) => Promise<User>;
   
   // Update the user status information
   // Required permissions:
@@ -261,7 +261,7 @@ export class SCIMService implements ISCIMService {
   // Update the user information
   // Required permissions:
   // - scim.user.update on the organization
-  async UpdateUser(req: User): Promise<User> {
+  async UpdateUser(req: PatchUserRequest): Promise<User> {
     const url = `/api/scim/v1/Users/${encodeURIComponent(req.id || '')}`;
     return api.put(url, req);
   }

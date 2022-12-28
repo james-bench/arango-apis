@@ -175,7 +175,7 @@ func local_request_SCIMService_AddUser_0(ctx context.Context, marshaler runtime.
 }
 
 func request_SCIMService_UpdateUser_0(ctx context.Context, marshaler runtime.Marshaler, client SCIMServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq User
+	var protoReq PatchUserRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -210,7 +210,7 @@ func request_SCIMService_UpdateUser_0(ctx context.Context, marshaler runtime.Mar
 }
 
 func local_request_SCIMService_UpdateUser_0(ctx context.Context, marshaler runtime.Marshaler, server SCIMServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq User
+	var protoReq PatchUserRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
