@@ -78,6 +78,16 @@ service SCIMService {
     // - scim.user.update on the organization
     rpc UpdateUser(User) returns (User) {
         option (google.api.http) = {
+            put: "/api/scim/v1/Users/{id}"
+            body: "*"
+        };
+    }
+
+    // Update the user status information
+    // Required permissions:
+    // - scim.user.update on the organization
+    rpc PatchUser(PatchUserRequest) returns (User) {
+        option (google.api.http) = {
             patch: "/api/scim/v1/Users/{id}"
             body: "*"
         };
@@ -173,4 +183,29 @@ message ListUserResponse {
     int64 count = 4;
     // List of users
     repeated User Resources = 5;
+}
+
+// ValuesToPatch is schema used for patching the values
+message ValuesToPatch {
+    // If set to false, user should be deleted from organization
+    bool active = 1;
+}
+
+// Operation schema is used for the operation object
+// sent in patch user request
+message Operation {
+    // Name of operation
+    string op = 1;
+    // Values to be updated in user schema
+    ValuesToPatch value = 2;
+}
+
+// Request params for PatchUser
+message PatchUserRequest {
+     // Name of schemas followed in request / response
+     repeated string schemas = 1;
+     // User identifier
+     string id = 2;
+     // Operation to be perfomed during patch request
+     repeated Operation Operations = 3;
 }

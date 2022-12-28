@@ -64,6 +64,33 @@ export interface Metadata {
   lastModified?: googleTypes.Timestamp;
 }
 
+// Operation schema is used for the operation object
+// sent in patch user request
+export interface Operation {
+  // Name of operation
+  // string
+  op?: string;
+  
+  // Values to be updated in user schema
+  // ValuesToPatch
+  value?: ValuesToPatch;
+}
+
+// Request params for PatchUser
+export interface PatchUserRequest {
+  // Name of schemas followed in request / response
+  // string
+  schemas?: string[];
+  
+  // User identifier
+  // string
+  id?: string;
+  
+  // Operation to be perfomed during patch request
+  // Operation
+  Operations?: Operation[];
+}
+
 // User is the schema used for user information in SCIM API response
 export interface User {
   // Name of schemas followed in request / response
@@ -145,6 +172,13 @@ export interface UserResource {
   type?: string;
 }
 
+// ValuesToPatch is schema used for patching the values
+export interface ValuesToPatch {
+  // If set to false, user should be deleted from organization
+  // boolean
+  active?: boolean;
+}
+
 // SCIMService is the API used to expose the SCIM Provisioning API for SAML based SSO.
 export interface ISCIMService {
   // Get the current API version of this service.
@@ -173,6 +207,11 @@ export interface ISCIMService {
   // Required permissions:
   // - scim.user.update on the organization
   UpdateUser: (req: User) => Promise<User>;
+  
+  // Update the user status information
+  // Required permissions:
+  // - scim.user.update on the organization
+  PatchUser: (req: PatchUserRequest) => Promise<User>;
   
   // Delete the user from an organization
   // Required permissions:
@@ -223,6 +262,14 @@ export class SCIMService implements ISCIMService {
   // Required permissions:
   // - scim.user.update on the organization
   async UpdateUser(req: User): Promise<User> {
+    const url = `/api/scim/v1/Users/${encodeURIComponent(req.id || '')}`;
+    return api.put(url, req);
+  }
+  
+  // Update the user status information
+  // Required permissions:
+  // - scim.user.update on the organization
+  async PatchUser(req: PatchUserRequest): Promise<User> {
     const url = `/api/scim/v1/Users/${encodeURIComponent(req.id || '')}`;
     return api.patch(url, req);
   }
