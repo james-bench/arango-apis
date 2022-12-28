@@ -1508,14 +1508,6 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
-                  <a href="#arangodb.cloud.resourcemanager.v1.Operation"><span class="badge">M</span>Operation</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.resourcemanager.v1.PatchUserRequest"><span class="badge">M</span>PatchUserRequest</a>
-                </li>
-              
-                <li>
                   <a href="#arangodb.cloud.resourcemanager.v1.User"><span class="badge">M</span>User</a>
                 </li>
               
@@ -1525,10 +1517,6 @@ title: "ArangoGraph Insights Platform API"
               
                 <li>
                   <a href="#arangodb.cloud.resourcemanager.v1.UserResource"><span class="badge">M</span>UserResource</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.resourcemanager.v1.ValuesToPatch"><span class="badge">M</span>ValuesToPatch</a>
                 </li>
               
               
@@ -19452,75 +19440,6 @@ Required permissions:
 
         
       
-        <h3 id="arangodb.cloud.resourcemanager.v1.Operation">Operation</h3>
-        <p>Operation schema is used for the operation object</p><p>sent in patch user request</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>op</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Name of operation </p></td>
-                </tr>
-              
-                <tr>
-                  <td>value</td>
-                  <td><a href="#arangodb.cloud.resourcemanager.v1.ValuesToPatch">ValuesToPatch</a></td>
-                  <td></td>
-                  <td><p>Values to be updated in user schema </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.resourcemanager.v1.PatchUserRequest">PatchUserRequest</h3>
-        <p>Request params for PatchUser</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>schemas</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>Name of schemas followed in request / response </p></td>
-                </tr>
-              
-                <tr>
-                  <td>id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>User identifier </p></td>
-                </tr>
-              
-                <tr>
-                  <td>Operations</td>
-                  <td><a href="#arangodb.cloud.resourcemanager.v1.Operation">Operation</a></td>
-                  <td>repeated</td>
-                  <td><p>Operation to be perfomed during patch request </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
         <h3 id="arangodb.cloud.resourcemanager.v1.User">User</h3>
         <p>User is the schema used for user information in SCIM API response</p>
 
@@ -19698,30 +19617,6 @@ Required permissions:
 
         
       
-        <h3 id="arangodb.cloud.resourcemanager.v1.ValuesToPatch">ValuesToPatch</h3>
-        <p>ValuesToPatch is schema used for patching the values</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>active</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>If set to false, user should be deleted from organization </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
 
       
 
@@ -19776,18 +19671,9 @@ Required permissions:
             
               <tr>
                 <td>UpdateUser</td>
-                <td><a href="#arangodb.cloud.resourcemanager.v1.PatchUserRequest">PatchUserRequest</a></td>
+                <td><a href="#arangodb.cloud.resourcemanager.v1.User">User</a></td>
                 <td><a href="#arangodb.cloud.resourcemanager.v1.User">User</a></td>
                 <td><p>Update the user information
-Required permissions:
-- scim.user.update on the organization</p></td>
-              </tr>
-            
-              <tr>
-                <td>PatchUser</td>
-                <td><a href="#arangodb.cloud.resourcemanager.v1.PatchUserRequest">PatchUserRequest</a></td>
-                <td><a href="#arangodb.cloud.resourcemanager.v1.User">User</a></td>
-                <td><p>Update the user status information
 Required permissions:
 - scim.user.update on the organization</p></td>
               </tr>
@@ -19864,16 +19750,6 @@ Required permissions:
               <tr>
                 <td>UpdateUser</td>
                 <td>PUT</td>
-                <td>/api/scim/v1/Users/{id}</td>
-                <td>*</td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>PatchUser</td>
-                <td>PATCH</td>
                 <td>/api/scim/v1/Users/{id}</td>
                 <td>*</td>
               </tr>
