@@ -17939,21 +17939,24 @@ This is a read-only value. </p></td>
                   <td>is_flexible_deployments_enabled</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>If set, all projects in this organization are allowed to use deployments using the flexible model. </p></td>
+                  <td><p>If set, all projects in this organization are allowed to use deployments using the flexible model.
+This is a read-only value. </p></td>
                 </tr>
               
                 <tr>
                   <td>is_allowed_to_use_custom_images</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>If set, this organization is allowed to use custom images for ArangoDB deployments. </p></td>
+                  <td><p>If set, this organization is allowed to use custom images for ArangoDB deployments.
+This is a read-only value. </p></td>
                 </tr>
               
                 <tr>
                   <td>is_allowed_to_use_iamproviders</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>If set, this organization is allowed to use IAMProviders on their deployments. </p></td>
+                  <td><p>If set, this organization is allowed to use IAMProviders on their deployments.
+This is a read-only value. </p></td>
                 </tr>
               
                 <tr>
@@ -17968,7 +17971,8 @@ To delete, first update the with locked set to false. </p></td>
                   <td>requires_prepaid_deployments</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>If set, this organization cannot create deployments without prepaid deployments. </p></td>
+                  <td><p>If set, this organization cannot create deployments without prepaid deployments.
+This is a read-only value. </p></td>
                 </tr>
               
                 <tr>
@@ -17985,6 +17989,14 @@ If not set, all providers are enabled by default. </p></td>
                   <td></td>
                   <td><p>If set, configure restrictions on the email domains used by user accounts to access this organization.
 If not set, there is no restriction of domains for user accounts. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_allowed_to_use_scim</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, this organization is allowed to manage IAM identities (like users) via SCIM 
+This is a read-only value. </p></td>
                 </tr>
               
             </tbody>
@@ -19637,7 +19649,7 @@ Required permissions:
                 <td><a href="#arangodb.cloud.common.v1.Version">.arangodb.cloud.common.v1.Version</a></td>
                 <td><p>Get the current API version of this service.
 Required permissions:
-- None</p></td>
+- None (authenticated only)</p></td>
               </tr>
             
               <tr>

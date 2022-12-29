@@ -149,7 +149,7 @@ export interface UserResource {
 export interface ISCIMService {
   // Get the current API version of this service.
   // Required permissions:
-  // - None
+  // - None (authenticated only)
   GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
   
   // List the users as per SCIM API requirements
@@ -184,7 +184,7 @@ export interface ISCIMService {
 export class SCIMService implements ISCIMService {
   // Get the current API version of this service.
   // Required permissions:
-  // - None
+  // - None (authenticated only)
   async GetAPIVersion(req?: arangodb_cloud_common_v1_Empty): Promise<arangodb_cloud_common_v1_Version> {
     const path = `/api/scim/v1/api-version`;
     const url = path + api.queryString(req, []);

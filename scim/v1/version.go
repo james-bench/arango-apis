@@ -24,9 +24,9 @@ const (
 	// APIID contains identifier of this API
 	APIID = "scim/v1"
 	// APIMajorVersion contains major version of this API
-	APIMajorVersion = 0
+	APIMajorVersion = 1
 	// APIMinorVersion contains minor version of this API
 	APIMinorVersion = 0
 	// APIPatchVersion contains patch version of this API
-	APIPatchVersion = 1
+	APIPatchVersion = 0
 )
