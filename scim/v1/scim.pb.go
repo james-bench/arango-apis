@@ -614,7 +614,7 @@ const _ = grpc.SupportPackageIsVersion4
 type SCIMServiceClient interface {
 	// Get the current API version of this service.
 	// Required permissions:
-	// - None
+	// - None (authenticated only)
 	GetAPIVersion(ctx context.Context, in *v1.Empty, opts ...grpc.CallOption) (*v1.Version, error)
 	// List the users as per SCIM API requirements
 	// For an organization identifier inferred via API Key
@@ -706,7 +706,7 @@ func (c *sCIMServiceClient) DeleteUser(ctx context.Context, in *v1.IDOptions, op
 type SCIMServiceServer interface {
 	// Get the current API version of this service.
 	// Required permissions:
-	// - None
+	// - None (authenticated only)
 	GetAPIVersion(context.Context, *v1.Empty) (*v1.Version, error)
 	// List the users as per SCIM API requirements
 	// For an organization identifier inferred via API Key
