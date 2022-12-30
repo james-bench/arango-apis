@@ -265,14 +265,17 @@ export interface Organization {
   total_deployments?: Organization_TotalDeploymentsEntry[];
   
   // If set, all projects in this organization are allowed to use deployments using the flexible model.
+  // This is a read-only value.
   // boolean
   is_flexible_deployments_enabled?: boolean;
   
   // If set, this organization is allowed to use custom images for ArangoDB deployments.
+  // This is a read-only value.
   // boolean
   is_allowed_to_use_custom_images?: boolean;
   
   // If set, this organization is allowed to use IAMProviders on their deployments.
+  // This is a read-only value.
   // boolean
   is_allowed_to_use_iamproviders?: boolean;
   
@@ -282,6 +285,7 @@ export interface Organization {
   locked?: boolean;
   
   // If set, this organization cannot create deployments without prepaid deployments.
+  // This is a read-only value.
   // boolean
   requires_prepaid_deployments?: boolean;
   
@@ -294,6 +298,11 @@ export interface Organization {
   // If not set, there is no restriction of domains for user accounts.
   // DomainRestrictions
   email_domain_restrictions?: DomainRestrictions;
+  
+  // If set, this organization is allowed to manage IAM identities (like users) via SCIM
+  // This is a read-only value.
+  // boolean
+  is_allowed_to_use_scim?: boolean;
 }
 export interface Organization_TotalDeploymentsEntry {
   // string

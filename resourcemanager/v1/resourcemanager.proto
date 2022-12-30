@@ -388,15 +388,19 @@ message Organization {
     // This is a read-only value.
     map<string, int32> total_deployments = 9;
     // If set, all projects in this organization are allowed to use deployments using the flexible model.
+    // This is a read-only value.
     bool is_flexible_deployments_enabled = 10;
     // If set, this organization is allowed to use custom images for ArangoDB deployments.
+    // This is a read-only value.
     bool is_allowed_to_use_custom_images = 11;
     // If set, this organization is allowed to use IAMProviders on their deployments.
+    // This is a read-only value.
     bool is_allowed_to_use_iamproviders = 12;
     // If set, this organization cannot be deleted.
     // To delete, first update the with locked set to false.
     bool locked = 13;
     // If set, this organization cannot create deployments without prepaid deployments.
+    // This is a read-only value.
     bool requires_prepaid_deployments = 14;
     // If set, configures which authentication providers can/cannot be used for this organization.
     // If not set, all providers are enabled by default.
@@ -404,6 +408,9 @@ message Organization {
     // If set, configure restrictions on the email domains used by user accounts to access this organization.
     // If not set, there is no restriction of domains for user accounts.
     DomainRestrictions email_domain_restrictions = 16;
+    // If set, this organization is allowed to manage IAM identities (like users) via SCIM 
+    // This is a read-only value.
+    bool is_allowed_to_use_scim = 17;
 }
 
 // List of organizations.

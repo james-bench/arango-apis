@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
+// Copyright 2022 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,12 +21,16 @@
 package v1
 
 const (
-	// APIID contains identifier of this API
-	APIID = "resourcemanager/v1"
-	// APIMajorVersion contains major version of this API
-	APIMajorVersion = 1
-	// APIMinorVersion contains minor version of this API
-	APIMinorVersion = 5
-	// APIPatchVersion contains patch version of this API
-	APIPatchVersion = 0
+	// User permissions
+
+	// PermissionUserList is needed for getting the list of users
+	PermissionUserList = "scim.user.list"
+	// PermissionUserGet is needed for getting the user infomration
+	PermissionUserGet = "scim.user.get"
+	// PermissionUserAdd is needed for adding a user
+	PermissionUserAdd = "scim.user.add"
+	// PermissionUserUpdate is needed for updating a user
+	PermissionUserUpdate = "scim.user.update"
+	// PermissionUserDelete is needed for removing a user
+	PermissionUserDelete = "scim.user.delete"
 )

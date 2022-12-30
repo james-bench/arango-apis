@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
+// Copyright 2022 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,12 +21,10 @@
 package v1
 
 const (
-	// APIID contains identifier of this API
-	APIID = "resourcemanager/v1"
-	// APIMajorVersion contains major version of this API
-	APIMajorVersion = 1
-	// APIMinorVersion contains minor version of this API
-	APIMinorVersion = 5
-	// APIPatchVersion contains patch version of this API
-	APIPatchVersion = 0
+	// SCIM Schemas
+
+	// SCIMSchemaUser is uniform resource name for user resource
+	SCIMSchemaUser = "urn:ietf:params:scim:schemas:core:2.0:User"
+	// SCIMSchemaListResponse is uniform resource name for list response
+	SCIMSchemaListResponse = "urn:ietf:params:scim:api:messages:2.0:ListResponse"
 )
