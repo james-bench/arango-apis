@@ -158,9 +158,9 @@ message User {
 // Request params for ListUsers
 message ListUsersRequest {
     // Pagination offset value
-    int64 startIndex = 1;
+    int32 startIndex = 1;
     // Pagination limit value
-    int64 count = 2;
+    int32 count = 2;
     // Filters to apply for querying data
     string filter = 3;
 }
@@ -170,11 +170,11 @@ message ListUserResponse {
     // Name of schemas followed in response
     repeated string schemas = 1;
     // Total number of results available
-    int64 totalResult = 2;
+    int32 totalResult = 2;
     // Pagination offset value
-    int64 startIndex = 3;
+    int32 startIndex = 3;
     // Pagination limit value
-    int64 count = 4;
+    int32 count = 4;
     // List of users
     repeated User Resources = 5;
 }
