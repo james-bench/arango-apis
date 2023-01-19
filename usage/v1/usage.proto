@@ -240,6 +240,9 @@ message UsageItem {
 
         // If the Notebook is paused (Hibernated phase).
         bool is_paused = 4;
+        
+        // ID of the type of Notebook that is being used.
+        string notebook_model_id = 5; 
     }
 
     // Amount of cloud resources used by a given Notebook.
