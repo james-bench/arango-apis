@@ -21,6 +21,7 @@ DOCKERARGS := run -t --rm \
 	-v $(MODVOL):/go/pkg/mod \
 	-v $(HOMEVOL):/home/gopher \
 	-e GOCACHE=/usr/gocache \
+	-e GOMODCACHE=/go/pkg/mod \
 	-e GOSUMDB=off \
 	-e CGO_ENABLED=0 \
 	-e HOME=/home/gopher \

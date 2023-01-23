@@ -4,7 +4,7 @@ import (
 	data "github.com/arangodb-managed/apis/data/v1"
 )
 
-//CanDeploymentBeUpgraded returns whenever the deployment spec differs from PrepaidDeployment specs
+// CanDeploymentBeUpgraded returns whenever the deployment spec differs from PrepaidDeployment specs
 func (pd *PrepaidDeployment) CanDeploymentBeUpgraded(depl *data.Deployment) bool {
 	if pd == nil {
 		return false
