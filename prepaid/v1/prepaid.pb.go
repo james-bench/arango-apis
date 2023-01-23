@@ -30,7 +30,7 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-//  A PrepaidDeployment contains all attributes of a future deployment that is already paid for.
+// A PrepaidDeployment contains all attributes of a future deployment that is already paid for.
 type PrepaidDeployment struct {
 	// System identifier of the prepaid deployment.
 	// This is a read-only value.
