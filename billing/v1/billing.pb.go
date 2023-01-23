@@ -2403,8 +2403,8 @@ type BillingServiceClient interface {
 	ListInvoices(ctx context.Context, in *ListInvoicesRequest, opts ...grpc.CallOption) (*InvoiceList, error)
 	// Fetch a specific Invoice identified by the given ID.
 	// Required permissions:
-	// - billing.invoice.get on the organization that owns the invoice
-	//   with given ID.
+	//   - billing.invoice.get on the organization that owns the invoice
+	//     with given ID.
 	GetInvoice(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*Invoice, error)
 	// Fetch a preliminary Invoice identified by the given organization ID.
 	// The preliminary invoice contains all costs from the last invoice (if any, otherwise the creation date of the organization) until last night (midnight UTC).
@@ -2413,8 +2413,8 @@ type BillingServiceClient interface {
 	GetPreliminaryInvoice(ctx context.Context, in *GetPreliminaryInvoiceRequest, opts ...grpc.CallOption) (*Invoice, error)
 	// Fetch a specific Invoice identified by the given ID as PDF document.
 	// Required permissions:
-	// - billing.invoice.get on the organization that owns the invoice
-	//   with given ID.
+	//   - billing.invoice.get on the organization that owns the invoice
+	//     with given ID.
 	GetInvoicePDF(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*PDFDocument, error)
 	// Fetch all payment providers that are usable for the organization identified
 	// by the given context ID.
@@ -2432,8 +2432,8 @@ type BillingServiceClient interface {
 	ListPaymentMethods(ctx context.Context, in *ListPaymentMethodsRequest, opts ...grpc.CallOption) (*PaymentMethodList, error)
 	// Fetch a specific payment method identified by the given ID.
 	// Required permissions:
-	// - billing.paymentmethod.get on the organization that owns the payment method
-	//   which is identified by the given ID
+	//   - billing.paymentmethod.get on the organization that owns the payment method
+	//     which is identified by the given ID
 	GetPaymentMethod(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*PaymentMethod, error)
 	// Prepare the payment provider for creating a new payment method.
 	// Required permissions:
@@ -2450,8 +2450,8 @@ type BillingServiceClient interface {
 	UpdatePaymentMethod(ctx context.Context, in *PaymentMethod, opts ...grpc.CallOption) (*PaymentMethod, error)
 	// Delete a specific payment method identified by the given ID.
 	// Required permissions:
-	// - billing.paymentmethod.delete on the organization that owns the given payment method
-	//   which is identified by the given ID.
+	//   - billing.paymentmethod.delete on the organization that owns the given payment method
+	//     which is identified by the given ID.
 	DeletePaymentMethod(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Fetch the default PaymentMethod for an organization identified by the given ID.
 	// Required permissions:
@@ -2673,8 +2673,8 @@ type BillingServiceServer interface {
 	ListInvoices(context.Context, *ListInvoicesRequest) (*InvoiceList, error)
 	// Fetch a specific Invoice identified by the given ID.
 	// Required permissions:
-	// - billing.invoice.get on the organization that owns the invoice
-	//   with given ID.
+	//   - billing.invoice.get on the organization that owns the invoice
+	//     with given ID.
 	GetInvoice(context.Context, *v1.IDOptions) (*Invoice, error)
 	// Fetch a preliminary Invoice identified by the given organization ID.
 	// The preliminary invoice contains all costs from the last invoice (if any, otherwise the creation date of the organization) until last night (midnight UTC).
@@ -2683,8 +2683,8 @@ type BillingServiceServer interface {
 	GetPreliminaryInvoice(context.Context, *GetPreliminaryInvoiceRequest) (*Invoice, error)
 	// Fetch a specific Invoice identified by the given ID as PDF document.
 	// Required permissions:
-	// - billing.invoice.get on the organization that owns the invoice
-	//   with given ID.
+	//   - billing.invoice.get on the organization that owns the invoice
+	//     with given ID.
 	GetInvoicePDF(context.Context, *v1.IDOptions) (*PDFDocument, error)
 	// Fetch all payment providers that are usable for the organization identified
 	// by the given context ID.
@@ -2702,8 +2702,8 @@ type BillingServiceServer interface {
 	ListPaymentMethods(context.Context, *ListPaymentMethodsRequest) (*PaymentMethodList, error)
 	// Fetch a specific payment method identified by the given ID.
 	// Required permissions:
-	// - billing.paymentmethod.get on the organization that owns the payment method
-	//   which is identified by the given ID
+	//   - billing.paymentmethod.get on the organization that owns the payment method
+	//     which is identified by the given ID
 	GetPaymentMethod(context.Context, *v1.IDOptions) (*PaymentMethod, error)
 	// Prepare the payment provider for creating a new payment method.
 	// Required permissions:
@@ -2720,8 +2720,8 @@ type BillingServiceServer interface {
 	UpdatePaymentMethod(context.Context, *PaymentMethod) (*PaymentMethod, error)
 	// Delete a specific payment method identified by the given ID.
 	// Required permissions:
-	// - billing.paymentmethod.delete on the organization that owns the given payment method
-	//   which is identified by the given ID.
+	//   - billing.paymentmethod.delete on the organization that owns the given payment method
+	//     which is identified by the given ID.
 	DeletePaymentMethod(context.Context, *v1.IDOptions) (*v1.Empty, error)
 	// Fetch the default PaymentMethod for an organization identified by the given ID.
 	// Required permissions:
