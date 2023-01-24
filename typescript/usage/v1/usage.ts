@@ -297,6 +297,10 @@ export interface UsageItem_NotebookSize {
   // If the Notebook is paused (Hibernated phase).
   // boolean
   is_paused?: boolean;
+  
+  // ID of the type of Notebook that is being used.
+  // string
+  notebook_model_id?: string;
 }
 export interface UsageItem_Resource {
   // System identifier of the resource that this usage item covers.
