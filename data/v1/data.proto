@@ -1,7 +1,7 @@
 // 
 // DISCLAIMER
 // 
-// Copyright 2020-2022 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2023 ArangoDB GmbH, Cologne, Germany
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -47,6 +47,17 @@ service DataService {
     rpc ListDeployments(common.v1.ListOptions) returns (DeploymentList) {
         option (google.api.http) = {
             get: "/api/data/v1/projects/{context_id}/deployments"
+        };
+    }
+
+    // Fetch all deployments in the organization identified by the given filter.
+    // Only the deployments with sufficient permissions are returned. 
+    // If the caller has no such permission on any of the deployments (in the organization) an empty list is returned, not an error. 
+    // Required permissions:
+    // - data.deployment.list on the filtered deployment(s)
+    rpc ListDeploymentsByFilter(ListDeploymentsByFilterRequest) returns (DeploymentList) {
+        option (google.api.http) = {
+            get: "/api/data/v1/organizations/{organization_id}/deployments"
         };
     }
 
@@ -1269,5 +1280,29 @@ message DiskPerformance {
     string description = 3;  
     // If set, this is the default disk performance (inside the requested region).
     bool is_default = 4;
+}
+
+// Request arguments for ListDeploymentsByFilter.
+message ListDeploymentsByFilterRequest {
+    // Identifier of the organization to request the deployments for.
+    string organization_id = 1;
+    // Return only deployments created in this project.
+    // This is an optional field.
+    string project_id = 2;
+    // Return only deployments created in this region.
+    // This is an optional field.
+    string region_id = 3;
+    // Return only deployments with an expiration date after this timestamp.
+    // This will exclude deployments that have no expiration date.
+    // This is an optional field.
+    google.protobuf.Timestamp expires_after = 10;
+     // Return only deployments with an expiration date before this timestamp.
+    // This will exclude deployments that have no expiration date.
+    // This is an optional field.
+    google.protobuf.Timestamp expires_before = 11;
+    // Return only deployments that do not expire.
+    bool does_not_expire = 12;
+    // Optional common list options, the context_id is ignored
+    common.v1.ListOptions options = 100;
 }
 
