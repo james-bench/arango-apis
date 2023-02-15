@@ -10,13 +10,17 @@ import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/com
 // File: auth/v1/auth.proto
 // Package: arangodb.cloud.auth.v1
 export interface AuthorizeRequest {
-  // URL of the resource example notebook (notebook_id.arangodb.cloud.com)
+  // Resource identifier, example (notebook id)
   // string
-  resource_url?: string;
+  resource_id?: string;
   
-  // Resource Type
+  // Resource Type is the kind of resource
   // string
   resource_type?: string;
+  
+  // Endpoint of a resource
+  // string
+  callback_url?: string;
 }
 
 // AuthService is the API used to expose the authorize end point for JWT based authorization

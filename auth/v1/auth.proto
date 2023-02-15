@@ -54,8 +54,10 @@ service AuthService {
 }
 
 message AuthorizeRequest {
-    // URL of the resource example notebook (notebook_id.arangodb.cloud.com)
-    string resource_url = 1;
-    // Resource Type
+    // Resource identifier, example (notebook id)
+    string resource_id = 1;
+    // Resource Type is the kind of resource
     string resource_type = 2;
+    // Endpoint of a resource
+    string callback_url = 3;
 }
