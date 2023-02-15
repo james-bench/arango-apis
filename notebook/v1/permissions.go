@@ -37,6 +37,8 @@ const (
 	PermissionPauseNotebook = "notebook.notebook.pause"
 	// PermissionResumeNotebook is required to resume a notebook.
 	PermissionResumeNotebook = "notebook.notebook.resume"
+	// PermissionResumeNotebook is required to execute a notebook.
+	PermissionExecuteNotebook = "notebook.notebook.execute"
 )
 
 const (
