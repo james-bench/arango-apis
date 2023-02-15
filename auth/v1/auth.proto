@@ -29,7 +29,16 @@ import "common/v1/common.proto";
 import "google/api/annotations.proto";
 
 // AuthService is the API used to expose the authorize end point for JWT based authorization
-service AuthService {    
+service AuthService {
+    // Get the current API version of this service.
+    // Required permissions:
+    // - None (authenticated only)
+    rpc GetAPIVersion(common.v1.Empty) returns (common.v1.Version) {
+        option (google.api.http) = {
+            get: "/api/auth/v1/api-version"
+        };
+    }
+
     // Verify the current user based on JWT token provided in the request header
     // Verify if the resource URI in request is allowed for a given user
     // If the permission is allowed,

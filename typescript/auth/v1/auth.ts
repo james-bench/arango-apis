@@ -4,6 +4,8 @@
 ///
 import api from '../../api'
 import * as googleTypes from '../../googleTypes'
+import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
+import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 
 // File: auth/v1/auth.proto
 // Package: arangodb.cloud.auth.v1
@@ -19,6 +21,11 @@ export interface AuthorizeRequest {
 
 // AuthService is the API used to expose the authorize end point for JWT based authorization
 export interface IAuthService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None (authenticated only)
+  GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
+  
   // Verify the current user based on JWT token provided in the request header
   // Verify if the resource URI in request is allowed for a given user
   // If the permission is allowed,
@@ -31,6 +38,15 @@ export interface IAuthService {
 
 // AuthService is the API used to expose the authorize end point for JWT based authorization
 export class AuthService implements IAuthService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None (authenticated only)
+  async GetAPIVersion(req?: arangodb_cloud_common_v1_Empty): Promise<arangodb_cloud_common_v1_Version> {
+    const path = `/api/auth/v1/api-version`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
   // Verify the current user based on JWT token provided in the request header
   // Verify if the resource URI in request is allowed for a given user
   // If the permission is allowed,
