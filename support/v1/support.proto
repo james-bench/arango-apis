@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020-2021 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2023 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,8 +17,6 @@
 //
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
 //
-// Author Ewout Prangsma
-// 
 
 syntax = "proto3";
 
@@ -114,6 +112,9 @@ message SupportRequest {
     string description = 8;
     // Severity of the request. Can be one of the following: (low|normal|high|critical)
     string severity = 9;
+    // Optional title which will contain the summary provided by the submitter (max 100 characters)
+    // If not provided a title will be extracted from the description.
+    string title = 10;
 }
 
 // Plan represents a specific support plan such as Bronze, Silver or Gold.
