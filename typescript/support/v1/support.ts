@@ -161,6 +161,11 @@ export interface SupportRequest {
   // Severity of the request. Can be one of the following: (low|normal|high|critical)
   // string
   severity?: string;
+  
+  // Optional title which will contain the summary provided by the submitter (max 100 characters)
+  // If not provided a title will be extracted from the description.
+  // string
+  title?: string;
 }
 
 // SupportService is the API used to query for support.
