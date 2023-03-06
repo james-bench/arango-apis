@@ -496,6 +496,14 @@ export interface User {
   // Possible values are student | teacher | other
   // string
   educational_role?: string;
+  
+  // Defines the user's experience with graph
+  // string
+  experience?: string;
+  
+  // Defines other DBs that the user has used
+  // string
+  other_dbs?: string[];
 }
 
 // Request arguments for VerifyUserMobilePhone
