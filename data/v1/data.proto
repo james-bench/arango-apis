@@ -875,7 +875,7 @@ message ReplaceVersionBy  {
     string version = 1;
     // Human readable reason why this version will be replaced.
     string reason = 2;
-    // Date when the old version will be replaced automatically with the new version.
+    // Date when the current version will be replaced automatically with the new version.
     google.protobuf.Timestamp automatic_update_date = 3;
 }
 
