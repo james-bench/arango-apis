@@ -39,30 +39,46 @@ export interface CloneDeploymentFromBackupRequest {
 
 // DeploymentReplication defines a request object for creating or updating a deployment replication
 export interface DeploymentReplication {
-  // Identifier of the deployments for a given DeploymentReplication
+  // Identifier of the deployment for a given DeploymentReplication
   // string
   deployment_id?: string;
   
-  // Start the replication process for a given deployment.
+  // Start the replication process for the given deployment.
   // boolean
   started?: boolean;
   
-  // A PEM encoded representation of the public key of the CA certificate used to verify sync master in source datacenter.
+  // A PEM encoded representation of the public key of the CA certificate used to verify sync master in source deployment.
   // string
   certificate_pem?: string;
   
-  // A PEM encoded representation of the keyfile used for client authentication of the sync master (with the sync master in the source datacenter).
+  // A PEM encoded representation of the keyfile used for client authentication of the sync master (with the sync master in the source deployment).
   // A keyfile contains 1 or more certificates and a private key.
   // string
   tls_keyfile?: string;
   
-  // List of master endpoints at source data center.
+  // List of master endpoints at source deployment.
+  // This setting will be removed for migration-agent v1.0.0 and is needed for the BETA version only.
   // string
   master_endpoint?: string[];
+  
+  // CancelationOptions describes what to do during cancelation process of the migration-agent.
+  // DeploymentReplication_CancelationOptions
+  cancelation_options?: DeploymentReplication_CancelationOptions;
   
   // Status of the DeploymentReplication.
   // DeploymentReplication_Status
   status?: DeploymentReplication_Status;
+}
+
+// CancelationOptions describes what to do during cancelation process of the migration-agent.
+export interface DeploymentReplication_CancelationOptions {
+  // If set, during cancelation process data consistency is not required (otherwise data consistency is required).
+  // boolean
+  data_consistency_not_required?: boolean;
+  
+  // If set, after cancelation the source deployment will be in read-only mode.
+  // boolean
+  make_source_deployment_read_only?: boolean;
 }
 
 // DeploymentReplicationStatus defines the status of a deployment replication.
