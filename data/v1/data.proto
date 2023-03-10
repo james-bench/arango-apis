@@ -876,7 +876,7 @@ message ReplaceVersionBy  {
     // Human readable reason why this version will be replaced.
     string reason = 2;
     // Date when the current version will be replaced automatically with the new version.
-    google.protobuf.Timestamp automatic_update_date = 3;
+    google.protobuf.Timestamp auto_update_date = 3;
 }
 
 // UpgradeVersionRecommendation holds a recommendation for updating this version.

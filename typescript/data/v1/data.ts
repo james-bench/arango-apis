@@ -1321,9 +1321,9 @@ export interface ReplaceVersionBy {
   // string
   reason?: string;
   
-  // Date when the old version will be replaced automatically with the new version.
+  // Date when the current version will be replaced automatically with the new version.
   // googleTypes.Timestamp
-  automatic_update_date?: googleTypes.Timestamp;
+  auto_update_date?: googleTypes.Timestamp;
 }
 
 // RotateDeploymentServerRequest request for rotating out servers for a deployment
