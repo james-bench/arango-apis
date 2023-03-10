@@ -463,6 +463,10 @@ message User {
     // Defines the role of user at educational institute.
     // Possible values are student | teacher | other
     string educational_role = 19;
+    // Defines the user's experience with graph
+    string experience = 20;
+    // Defines other DBs that the user has used
+    repeated string other_dbs = 21;
 }
 
 // Request arguments for VerifyUserMobilePhone
