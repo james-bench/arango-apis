@@ -1358,6 +1358,10 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.replication.v1.DeploymentReplication.CancelationOptions"><span class="badge">M</span>DeploymentReplication.CancelationOptions</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.replication.v1.DeploymentReplication.Status"><span class="badge">M</span>DeploymentReplication.Status</a>
                 </li>
               
@@ -17127,28 +17131,28 @@ This is an optional field </p></td>
                   <td>deployment_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Identifier of the deployments for a given DeploymentReplication </p></td>
+                  <td><p>Identifier of the deployment for a given DeploymentReplication </p></td>
                 </tr>
               
                 <tr>
                   <td>started</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>Start the replication process for a given deployment. </p></td>
+                  <td><p>Start the replication process for the given deployment. </p></td>
                 </tr>
               
                 <tr>
                   <td>certificate_pem</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>A PEM encoded representation of the public key of the CA certificate used to verify sync master in source datacenter. </p></td>
+                  <td><p>A PEM encoded representation of the public key of the CA certificate used to verify sync master in source deployment. </p></td>
                 </tr>
               
                 <tr>
                   <td>tls_keyfile</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>A PEM encoded representation of the keyfile used for client authentication of the sync master (with the sync master in the source datacenter).
+                  <td><p>A PEM encoded representation of the keyfile used for client authentication of the sync master (with the sync master in the source deployment).
 A keyfile contains 1 or more certificates and a private key. </p></td>
                 </tr>
               
@@ -17156,7 +17160,15 @@ A keyfile contains 1 or more certificates and a private key. </p></td>
                   <td>master_endpoint</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>List of master endpoints at source data center. </p></td>
+                  <td><p>List of master endpoints at source deployment.
+This setting will be removed for migration-agent v1.0.0 and is needed for the BETA version only. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cancelation_options</td>
+                  <td><a href="#arangodb.cloud.replication.v1.DeploymentReplication.CancelationOptions">DeploymentReplication.CancelationOptions</a></td>
+                  <td></td>
+                  <td><p>CancelationOptions describes what to do during cancellation process of the migration-agent. </p></td>
                 </tr>
               
                 <tr>
@@ -17164,6 +17176,37 @@ A keyfile contains 1 or more certificates and a private key. </p></td>
                   <td><a href="#arangodb.cloud.replication.v1.DeploymentReplication.Status">DeploymentReplication.Status</a></td>
                   <td></td>
                   <td><p>Status of the DeploymentReplication. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.replication.v1.DeploymentReplication.CancelationOptions">DeploymentReplication.CancelationOptions</h3>
+        <p>CancelationOptions describes what to do during cancellation process of the migration-agent.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>data_consistency_not_required</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, during cancellation process data consistency is not required (otherwise data consistency is required). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>make_source_deployment_read_only</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, after cancellation the source deployment will be in read-only mode. </p></td>
                 </tr>
               
             </tbody>
