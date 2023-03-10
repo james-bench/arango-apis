@@ -1197,6 +1197,43 @@ export interface ListDeploymentModelsRequest {
   project_id?: string;
 }
 
+// Request arguments for ListDeploymentsByFilter.
+export interface ListDeploymentsByFilterRequest {
+  // Identifier of the organization to request the deployments for.
+  // string
+  organization_id?: string;
+  
+  // Return only deployments created in this project.
+  // This is an optional field.
+  // string
+  project_id?: string;
+  
+  // Return only deployments created in this region.
+  // This is an optional field.
+  // string
+  region_id?: string;
+  
+  // Return only deployments with an expiration date after this timestamp.
+  // This will exclude deployments that have no expiration date.
+  // This is an optional field.
+  // googleTypes.Timestamp
+  expires_after?: googleTypes.Timestamp;
+  
+  // Return only deployments with an expiration date before this timestamp.
+  // This will exclude deployments that have no expiration date.
+  // This is an optional field.
+  // googleTypes.Timestamp
+  expires_before?: googleTypes.Timestamp;
+  
+  // Return only deployments that do not expire.
+  // boolean
+  does_not_expire?: boolean;
+  
+  // Optional common list options, the context_id is ignored
+  // arangodb.cloud.common.v1.ListOptions
+  options?: arangodb_cloud_common_v1_ListOptions;
+}
+
 // ListDiskPerformancesRequest is used as request in ListAllDiskPerformances
 export interface ListDiskPerformancesRequest {
   // Identifier of the region (e.g. 'aks-westeurope').
@@ -1462,6 +1499,13 @@ export interface IDataService {
   // - data.deployment.list on the project identified by the given context ID
   ListDeployments: (req: arangodb_cloud_common_v1_ListOptions) => Promise<DeploymentList>;
   
+  // Fetch all deployments in the organization identified by the given filter.
+  // Only the deployments with sufficient permissions are returned.
+  // If the caller has no such permission on any of the deployments (in the organization) an empty list is returned, not an error.
+  // Required permissions:
+  // - data.deployment.list on the filtered deployment(s)
+  ListDeploymentsByFilter: (req: ListDeploymentsByFilterRequest) => Promise<DeploymentList>;
+  
   // Fetch a deployment by its id.
   // Required permissions:
   // - data.deployment.get on the deployment identified by the given ID
@@ -1627,6 +1671,17 @@ export class DataService implements IDataService {
   async ListDeployments(req: arangodb_cloud_common_v1_ListOptions): Promise<DeploymentList> {
     const path = `/api/data/v1/projects/${encodeURIComponent(req.context_id || '')}/deployments`;
     const url = path + api.queryString(req, [`context_id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch all deployments in the organization identified by the given filter.
+  // Only the deployments with sufficient permissions are returned.
+  // If the caller has no such permission on any of the deployments (in the organization) an empty list is returned, not an error.
+  // Required permissions:
+  // - data.deployment.list on the filtered deployment(s)
+  async ListDeploymentsByFilter(req: ListDeploymentsByFilterRequest): Promise<DeploymentList> {
+    const path = `/api/data/v1/organizations/${encodeURIComponent(req.organization_id || '')}/deployments`;
+    const url = path + api.queryString(req, [`organization_id`]);
     return api.get(url, undefined);
   }
   
