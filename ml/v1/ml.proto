@@ -28,7 +28,7 @@ import "common/v1/common.proto";
 
 import "google/api/annotations.proto";
 
-// MLService is the API used to configure ArangoGraphML on ArangoGraph Insights Platform.
+// MLService is the API used to configure ArangoML on ArangoGraph Insights Platform.
 service MLService {
     // Get the current API version of this service.
     // Required permissions:
@@ -39,7 +39,8 @@ service MLService {
         };
     }
     
-    // Fetch a MLDeployment by its deployment ID.
+    // Fetch the MLDeployment for a given deployment,
+    // specified by the deployment ID.
     // Required permissions:
     // - ml.mldeployment.get
     rpc GetMLDeployment(common.v1.IDOptions) returns (MLDeployment) {
@@ -59,11 +60,11 @@ service MLService {
     }
 }
 
-// A MLDeployment represents the configuration of ArangoGraph ML for a Deployment.
+// MLDeployment represents the configuration for ArangoML for a deployment.
 message MLDeployment {
     // Identifier of the deployment for this MLDeployment.
     // This is a ready-only value.
     string deployment_id = 1;
-    // Set to true if ArangoGraphML services are enabled for this deployment.
+    // Set to true if ArangoML services are enabled for this deployment.
     bool enabled = 2;
 }

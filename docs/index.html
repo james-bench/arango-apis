@@ -14314,7 +14314,7 @@ Required permissions:
 
       
         <h3 id="arangodb.cloud.ml.v1.MLDeployment">MLDeployment</h3>
-        <p>A MLDeployment represents the configuration of ArangoGraph ML for a Deployment.</p>
+        <p>MLDeployment represents the configuration for ArangoML for a deployment.</p>
 
         
           <table class="field-table">
@@ -14335,7 +14335,7 @@ This is a ready-only value. </p></td>
                   <td>enabled</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>Set to true if ArangoGraphML services are enabled for this deployment. </p></td>
+                  <td><p>Set to true if ArangoML services are enabled for this deployment. </p></td>
                 </tr>
               
             </tbody>
@@ -14352,7 +14352,7 @@ This is a ready-only value. </p></td>
 
       
         <h3 id="arangodb.cloud.ml.v1.MLService">MLService</h3>
-        <p>MLService is the API used to configure ArangoGraphML on ArangoGraph Insights Platform.</p>
+        <p>MLService is the API used to configure ArangoML on ArangoGraph Insights Platform.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
@@ -14372,9 +14372,10 @@ Required permissions:
                 <td>GetMLDeployment</td>
                 <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
                 <td><a href="#arangodb.cloud.ml.v1.MLDeployment">MLDeployment</a></td>
-                <td><p>Fetch a MLDeployment by its deployment ID.
+                <td><p>Fetch the MLDeployment for a given deployment,
+specified by the deployment ID.
 Required permissions:
-- ml.deployment.get</p></td>
+- ml.mldeployment.get</p></td>
               </tr>
             
               <tr>
@@ -14383,7 +14384,7 @@ Required permissions:
                 <td><a href="#arangodb.cloud.ml.v1.MLDeployment">MLDeployment</a></td>
                 <td><p>Update a MLDeployment.
 Required permissions:
-- ml.deployment.update</p></td>
+- ml.mldeployment.update</p></td>
               </tr>
             
           </tbody>

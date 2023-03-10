@@ -28,12 +28,12 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-// A MLDeployment represents the configuration of ArangoGraph ML for a Deployment.
+// MLDeployment represents the configuration for ArangoML for a deployment.
 type MLDeployment struct {
 	// Identifier of the deployment for this MLDeployment.
 	// This is a ready-only value.
 	DeploymentId string `protobuf:"bytes,1,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
-	// Set to true if ArangoGraphML services are enabled for this deployment.
+	// Set to true if ArangoML services are enabled for this deployment.
 	Enabled              bool     `protobuf:"varint,2,opt,name=enabled,proto3" json:"enabled,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -136,13 +136,14 @@ type MLServiceClient interface {
 	// Required permissions:
 	// - None
 	GetAPIVersion(ctx context.Context, in *v1.Empty, opts ...grpc.CallOption) (*v1.Version, error)
-	// Fetch a MLDeployment by its deployment ID.
+	// Fetch the MLDeployment for a given deployment,
+	// specified by the deployment ID.
 	// Required permissions:
-	// - ml.deployment.get
+	// - ml.mldeployment.get
 	GetMLDeployment(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*MLDeployment, error)
 	// Update a MLDeployment.
 	// Required permissions:
-	// - ml.deployment.update
+	// - ml.mldeployment.update
 	UpdateMLDeployment(ctx context.Context, in *MLDeployment, opts ...grpc.CallOption) (*MLDeployment, error)
 }
 
@@ -187,13 +188,14 @@ type MLServiceServer interface {
 	// Required permissions:
 	// - None
 	GetAPIVersion(context.Context, *v1.Empty) (*v1.Version, error)
-	// Fetch a MLDeployment by its deployment ID.
+	// Fetch the MLDeployment for a given deployment,
+	// specified by the deployment ID.
 	// Required permissions:
-	// - ml.deployment.get
+	// - ml.mldeployment.get
 	GetMLDeployment(context.Context, *v1.IDOptions) (*MLDeployment, error)
 	// Update a MLDeployment.
 	// Required permissions:
-	// - ml.deployment.update
+	// - ml.mldeployment.update
 	UpdateMLDeployment(context.Context, *MLDeployment) (*MLDeployment, error)
 }
 

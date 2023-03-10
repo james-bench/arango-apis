@@ -11,37 +11,38 @@ import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/com
 // File: ml/v1/ml.proto
 // Package: arangodb.cloud.ml.v1
 
-// A MLDeployment represents the configuration of ArangoGraph ML for a Deployment.
+// MLDeployment represents the configuration for ArangoML for a deployment.
 export interface MLDeployment {
   // Identifier of the deployment for this MLDeployment.
   // This is a ready-only value.
   // string
   deployment_id?: string;
   
-  // Set to true if ArangoGraphML services are enabled for this deployment.
+  // Set to true if ArangoML services are enabled for this deployment.
   // boolean
   enabled?: boolean;
 }
 
-// MLService is the API used to configure ArangoGraphML on ArangoGraph Insights Platform.
+// MLService is the API used to configure ArangoML on ArangoGraph Insights Platform.
 export interface IMLService {
   // Get the current API version of this service.
   // Required permissions:
   // - None
   GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
   
-  // Fetch a MLDeployment by its deployment ID.
+  // Fetch the MLDeployment for a given deployment,
+  // specified by the deployment ID.
   // Required permissions:
-  // - ml.deployment.get
+  // - ml.mldeployment.get
   GetMLDeployment: (req: arangodb_cloud_common_v1_IDOptions) => Promise<MLDeployment>;
   
   // Update a MLDeployment.
   // Required permissions:
-  // - ml.deployment.update
+  // - ml.mldeployment.update
   UpdateMLDeployment: (req: MLDeployment) => Promise<MLDeployment>;
 }
 
-// MLService is the API used to configure ArangoGraphML on ArangoGraph Insights Platform.
+// MLService is the API used to configure ArangoML on ArangoGraph Insights Platform.
 export class MLService implements IMLService {
   // Get the current API version of this service.
   // Required permissions:
@@ -52,9 +53,10 @@ export class MLService implements IMLService {
     return api.get(url, undefined);
   }
   
-  // Fetch a MLDeployment by its deployment ID.
+  // Fetch the MLDeployment for a given deployment,
+  // specified by the deployment ID.
   // Required permissions:
-  // - ml.deployment.get
+  // - ml.mldeployment.get
   async GetMLDeployment(req: arangodb_cloud_common_v1_IDOptions): Promise<MLDeployment> {
     const path = `/api/ml/v1/deployments/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
@@ -63,7 +65,7 @@ export class MLService implements IMLService {
   
   // Update a MLDeployment.
   // Required permissions:
-  // - ml.deployment.update
+  // - ml.mldeployment.update
   async UpdateMLDeployment(req: MLDeployment): Promise<MLDeployment> {
     const url = `/api/ml/v1/deployments/${encodeURIComponent(req.deployment_id || '')}`;
     return api.patch(url, req);
