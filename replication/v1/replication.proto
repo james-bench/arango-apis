@@ -104,17 +104,29 @@ message CloneDeploymentFromBackupRequest {
 
 // DeploymentReplication defines a request object for creating or updating a deployment replication
 message DeploymentReplication {
-    // Identifier of the deployments for a given DeploymentReplication
+    // Identifier of the deployment for a given DeploymentReplication
     string deployment_id = 1;
-    // Start the replication process for a given deployment.
+    // Start the replication process for the given deployment.
     bool started = 2;
-    // A PEM encoded representation of the public key of the CA certificate used to verify sync master in source datacenter.
+    // A PEM encoded representation of the public key of the CA certificate used to verify sync master in source deployment.
     string certificate_pem = 3;
-    // A PEM encoded representation of the keyfile used for client authentication of the sync master (with the sync master in the source datacenter).
+    // A PEM encoded representation of the keyfile used for client authentication of the sync master (with the sync master in the source deployment).
     // A keyfile contains 1 or more certificates and a private key.
     string tls_keyfile = 4;
-    // List of master endpoints at source data center.
+    // List of master endpoints at source deployment.
+    // This setting will be removed for migration-agent v1.0.0 and is needed for the BETA version only.
     repeated string master_endpoint = 5;
+    
+    // CancelationOptions describes what to do during cancelation process of the migration-agent.
+    message CancelationOptions{
+        // If set, during cancelation process data consistency is not required (otherwise data consistency is required).
+        bool data_consistency_not_required = 1;
+        // If set, after cancelation the source deployment will be in read-only mode.
+        bool make_source_deployment_read_only = 2;
+    }
+    // CancelationOptions describes what to do during cancelation process of the migration-agent.
+    CancelationOptions cancelation_options = 10;
+   
     // DeploymentReplicationStatus defines the status of a deployment replication.
     // Note: All fields in this message block are read-only.
     message Status {
