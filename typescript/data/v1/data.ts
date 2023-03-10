@@ -1357,6 +1357,11 @@ export interface ReplaceVersionBy {
   // Human readable reason why this version will be replaced.
   // string
   reason?: string;
+  
+  // Date when the current version will be replaced automatically with the new version.
+  // If this field isn’t set (or present) it means no automatic update will happen.
+  // googleTypes.Timestamp
+  auto_update_date?: googleTypes.Timestamp;
 }
 
 // RotateDeploymentServerRequest request for rotating out servers for a deployment
@@ -1503,6 +1508,7 @@ export interface IDataService {
   // Only the deployments with sufficient permissions are returned.
   // If the caller has no such permission on any of the deployments (in the organization) an empty list is returned, not an error.
   // Required permissions:
+  // - None (authenticated only)
   // - data.deployment.list on the filtered deployment(s)
   ListDeploymentsByFilter: (req: ListDeploymentsByFilterRequest) => Promise<DeploymentList>;
   
@@ -1678,6 +1684,7 @@ export class DataService implements IDataService {
   // Only the deployments with sufficient permissions are returned.
   // If the caller has no such permission on any of the deployments (in the organization) an empty list is returned, not an error.
   // Required permissions:
+  // - None (authenticated only)
   // - data.deployment.list on the filtered deployment(s)
   async ListDeploymentsByFilter(req: ListDeploymentsByFilterRequest): Promise<DeploymentList> {
     const path = `/api/data/v1/organizations/${encodeURIComponent(req.organization_id || '')}/deployments`;

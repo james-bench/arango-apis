@@ -10294,6 +10294,14 @@ Format details can be found at: https://semver.org/ </p></td>
                   <td><p>Human readable reason why this version will be replaced. </p></td>
                 </tr>
               
+                <tr>
+                  <td>auto_update_date</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Date when the current version will be replaced automatically with the new version.
+If this field isn’t set (or present) it means no automatic update will happen. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -10656,6 +10664,7 @@ Required permissions:
 Only the deployments with sufficient permissions are returned. 
 If the caller has no such permission on any of the deployments (in the organization) an empty list is returned, not an error. 
 Required permissions:
+- None (authenticated only)
 - data.deployment.list on the filtered deployment(s)</p></td>
               </tr>
             
