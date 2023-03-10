@@ -1359,6 +1359,7 @@ export interface ReplaceVersionBy {
   reason?: string;
   
   // Date when the current version will be replaced automatically with the new version.
+  // If this field isn’t set (or present) it means no automatic update will happen.
   // googleTypes.Timestamp
   auto_update_date?: googleTypes.Timestamp;
 }

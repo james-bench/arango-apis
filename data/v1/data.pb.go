@@ -2692,6 +2692,7 @@ type ReplaceVersionBy struct {
 	// Human readable reason why this version will be replaced.
 	Reason string `protobuf:"bytes,2,opt,name=reason,proto3" json:"reason,omitempty"`
 	// Date when the current version will be replaced automatically with the new version.
+	// If this field isn’t set (or present) it means no automatic update will happen.
 	AutoUpdateDate       *types.Timestamp `protobuf:"bytes,3,opt,name=auto_update_date,json=autoUpdateDate,proto3" json:"auto_update_date,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
 	XXX_unrecognized     []byte           `json:"-"`

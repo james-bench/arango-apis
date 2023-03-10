@@ -888,6 +888,7 @@ message ReplaceVersionBy  {
     // Human readable reason why this version will be replaced.
     string reason = 2;
     // Date when the current version will be replaced automatically with the new version.
+    // If this field isn’t set (or present) it means no automatic update will happen.
     google.protobuf.Timestamp auto_update_date = 3;
 }
 
