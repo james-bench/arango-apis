@@ -54,6 +54,7 @@ service DataService {
     // Only the deployments with sufficient permissions are returned. 
     // If the caller has no such permission on any of the deployments (in the organization) an empty list is returned, not an error. 
     // Required permissions:
+    // - None (authenticated only)
     // - data.deployment.list on the filtered deployment(s)
     rpc ListDeploymentsByFilter(ListDeploymentsByFilterRequest) returns (DeploymentList) {
         option (google.api.http) = {
