@@ -61,7 +61,7 @@ export interface DeploymentReplication {
   // string
   master_endpoint?: string[];
   
-  // CancelationOptions describes what to do during cancellation process of the migration-agent.
+  // CancelationOptions describes what to do during cancelation process of the migration-agent.
   // DeploymentReplication_CancelationOptions
   cancelation_options?: DeploymentReplication_CancelationOptions;
   
@@ -70,13 +70,13 @@ export interface DeploymentReplication {
   status?: DeploymentReplication_Status;
 }
 
-// CancelationOptions describes what to do during cancellation process of the migration-agent.
+// CancelationOptions describes what to do during cancelation process of the migration-agent.
 export interface DeploymentReplication_CancelationOptions {
-  // If set, during cancellation process data consistency is not required (otherwise data consistency is required).
+  // If set, during cancelation process data consistency is not required (otherwise data consistency is required).
   // boolean
   data_consistency_not_required?: boolean;
   
-  // If set, after cancellation the source deployment will be in read-only mode.
+  // If set, after cancelation the source deployment will be in read-only mode.
   // boolean
   make_source_deployment_read_only?: boolean;
 }

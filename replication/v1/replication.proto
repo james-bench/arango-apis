@@ -117,14 +117,14 @@ message DeploymentReplication {
     // This setting will be removed for migration-agent v1.0.0 and is needed for the BETA version only.
     repeated string master_endpoint = 5;
     
-    // CancelationOptions describes what to do during cancellation process of the migration-agent.
+    // CancelationOptions describes what to do during cancelation process of the migration-agent.
     message CancelationOptions{
-        // If set, during cancellation process data consistency is not required (otherwise data consistency is required).
+        // If set, during cancelation process data consistency is not required (otherwise data consistency is required).
         bool data_consistency_not_required = 1;
-        // If set, after cancellation the source deployment will be in read-only mode.
+        // If set, after cancelation the source deployment will be in read-only mode.
         bool make_source_deployment_read_only = 2;
     }
-    // CancelationOptions describes what to do during cancellation process of the migration-agent.
+    // CancelationOptions describes what to do during cancelation process of the migration-agent.
     CancelationOptions cancelation_options = 10;
    
     // DeploymentReplicationStatus defines the status of a deployment replication.

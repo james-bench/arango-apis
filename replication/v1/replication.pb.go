@@ -126,7 +126,7 @@ type DeploymentReplication struct {
 	// List of master endpoints at source deployment.
 	// This setting will be removed for migration-agent v1.0.0 and is needed for the BETA version only.
 	MasterEndpoint []string `protobuf:"bytes,5,rep,name=master_endpoint,json=masterEndpoint,proto3" json:"master_endpoint,omitempty"`
-	// CancelationOptions describes what to do during cancellation process of the migration-agent.
+	// CancelationOptions describes what to do during cancelation process of the migration-agent.
 	CancelationOptions *DeploymentReplication_CancelationOptions `protobuf:"bytes,10,opt,name=cancelation_options,json=cancelationOptions,proto3" json:"cancelation_options,omitempty"`
 	// Status of the DeploymentReplication.
 	Status               *DeploymentReplication_Status `protobuf:"bytes,100,opt,name=status,proto3" json:"status,omitempty"`
@@ -217,11 +217,11 @@ func (m *DeploymentReplication) GetStatus() *DeploymentReplication_Status {
 	return nil
 }
 
-// CancelationOptions describes what to do during cancellation process of the migration-agent.
+// CancelationOptions describes what to do during cancelation process of the migration-agent.
 type DeploymentReplication_CancelationOptions struct {
-	// If set, during cancellation process data consistency is not required (otherwise data consistency is required).
+	// If set, during cancelation process data consistency is not required (otherwise data consistency is required).
 	DataConsistencyNotRequired bool `protobuf:"varint,1,opt,name=data_consistency_not_required,json=dataConsistencyNotRequired,proto3" json:"data_consistency_not_required,omitempty"`
-	// If set, after cancellation the source deployment will be in read-only mode.
+	// If set, after cancelation the source deployment will be in read-only mode.
 	MakeSourceDeploymentReadOnly bool     `protobuf:"varint,2,opt,name=make_source_deployment_read_only,json=makeSourceDeploymentReadOnly,proto3" json:"make_source_deployment_read_only,omitempty"`
 	XXX_NoUnkeyedLiteral         struct{} `json:"-"`
 	XXX_unrecognized             []byte   `json:"-"`
