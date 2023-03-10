@@ -11,8 +11,8 @@ import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/com
 // File: ml/v1/ml.proto
 // Package: arangodb.cloud.ml.v1
 
-// MLDeployment represents the configuration for ArangoML for a deployment.
-export interface MLDeployment {
+// MLServices represents the state of the ArangoML services for a given deployment.
+export interface MLServices {
   // Identifier of the deployment for this MLDeployment.
   // This is a ready-only value.
   // string
@@ -30,16 +30,16 @@ export interface IMLService {
   // - None
   GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
   
-  // Fetch the MLDeployment for a given deployment,
+  // Fetch the MLServices for a given deployment,
   // specified by the deployment ID.
   // Required permissions:
-  // - ml.mldeployment.get
-  GetMLDeployment: (req: arangodb_cloud_common_v1_IDOptions) => Promise<MLDeployment>;
+  // - ml.mlservices.get
+  GetMLServices: (req: arangodb_cloud_common_v1_IDOptions) => Promise<MLServices>;
   
-  // Update a MLDeployment.
+  // Update a MLServices.
   // Required permissions:
-  // - ml.mldeployment.update
-  UpdateMLDeployment: (req: MLDeployment) => Promise<MLDeployment>;
+  // - ml.mlservices.update
+  UpdateMLServices: (req: MLServices) => Promise<MLServices>;
 }
 
 // MLService is the API used to configure ArangoML on ArangoGraph Insights Platform.
@@ -53,21 +53,21 @@ export class MLService implements IMLService {
     return api.get(url, undefined);
   }
   
-  // Fetch the MLDeployment for a given deployment,
+  // Fetch the MLServices for a given deployment,
   // specified by the deployment ID.
   // Required permissions:
-  // - ml.mldeployment.get
-  async GetMLDeployment(req: arangodb_cloud_common_v1_IDOptions): Promise<MLDeployment> {
-    const path = `/api/ml/v1/deployments/${encodeURIComponent(req.id || '')}`;
+  // - ml.mlservices.get
+  async GetMLServices(req: arangodb_cloud_common_v1_IDOptions): Promise<MLServices> {
+    const path = `/api/ml/v1/mlservices/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
   
-  // Update a MLDeployment.
+  // Update a MLServices.
   // Required permissions:
-  // - ml.mldeployment.update
-  async UpdateMLDeployment(req: MLDeployment): Promise<MLDeployment> {
-    const url = `/api/ml/v1/deployments/${encodeURIComponent(req.deployment_id || '')}`;
+  // - ml.mlservices.update
+  async UpdateMLServices(req: MLServices): Promise<MLServices> {
+    const url = `/api/ml/v1/mlservices/${encodeURIComponent(req.deployment_id || '')}`;
     return api.patch(url, req);
   }
 }

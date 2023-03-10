@@ -1084,7 +1084,7 @@ title: "ArangoGraph Insights Platform API"
             <ul>
               
                 <li>
-                  <a href="#arangodb.cloud.ml.v1.MLDeployment"><span class="badge">M</span>MLDeployment</a>
+                  <a href="#arangodb.cloud.ml.v1.MLServices"><span class="badge">M</span>MLServices</a>
                 </li>
               
               
@@ -14313,8 +14313,8 @@ Required permissions:
       <p></p>
 
       
-        <h3 id="arangodb.cloud.ml.v1.MLDeployment">MLDeployment</h3>
-        <p>MLDeployment represents the configuration for ArangoML for a deployment.</p>
+        <h3 id="arangodb.cloud.ml.v1.MLServices">MLServices</h3>
+        <p>MLServices represents the state of the ArangoML services for a given deployment.</p>
 
         
           <table class="field-table">
@@ -14369,22 +14369,22 @@ Required permissions:
               </tr>
             
               <tr>
-                <td>GetMLDeployment</td>
+                <td>GetMLServices</td>
                 <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
-                <td><a href="#arangodb.cloud.ml.v1.MLDeployment">MLDeployment</a></td>
-                <td><p>Fetch the MLDeployment for a given deployment,
+                <td><a href="#arangodb.cloud.ml.v1.MLServices">MLServices</a></td>
+                <td><p>Fetch the MLServices for a given deployment,
 specified by the deployment ID.
 Required permissions:
-- ml.mldeployment.get</p></td>
+- ml.mlservices.get</p></td>
               </tr>
             
               <tr>
-                <td>UpdateMLDeployment</td>
-                <td><a href="#arangodb.cloud.ml.v1.MLDeployment">MLDeployment</a></td>
-                <td><a href="#arangodb.cloud.ml.v1.MLDeployment">MLDeployment</a></td>
-                <td><p>Update a MLDeployment.
+                <td>UpdateMLServices</td>
+                <td><a href="#arangodb.cloud.ml.v1.MLServices">MLServices</a></td>
+                <td><a href="#arangodb.cloud.ml.v1.MLServices">MLServices</a></td>
+                <td><p>Update a MLServices.
 Required permissions:
-- ml.mldeployment.update</p></td>
+- ml.mlservices.update</p></td>
               </tr>
             
           </tbody>
@@ -14418,9 +14418,9 @@ Required permissions:
               
               
               <tr>
-                <td>GetMLDeployment</td>
+                <td>GetMLServices</td>
                 <td>GET</td>
-                <td>/api/ml/v1/deployments/{id}</td>
+                <td>/api/ml/v1/mlservices/{id}</td>
                 <td></td>
               </tr>
               
@@ -14428,9 +14428,9 @@ Required permissions:
               
               
               <tr>
-                <td>UpdateMLDeployment</td>
+                <td>UpdateMLServices</td>
                 <td>PATCH</td>
-                <td>/api/ml/v1/deployments/{deployment_id}</td>
+                <td>/api/ml/v1/mlservices/{deployment_id}</td>
                 <td>*</td>
               </tr>
               

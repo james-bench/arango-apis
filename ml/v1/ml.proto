@@ -39,29 +39,29 @@ service MLService {
         };
     }
     
-    // Fetch the MLDeployment for a given deployment,
+    // Fetch the MLServices for a given deployment,
     // specified by the deployment ID.
     // Required permissions:
-    // - ml.mldeployment.get
-    rpc GetMLDeployment(common.v1.IDOptions) returns (MLDeployment) {
+    // - ml.mlservices.get
+    rpc GetMLServices(common.v1.IDOptions) returns (MLServices) {
         option (google.api.http) = {
-            get: "/api/ml/v1/deployments/{id}"
+            get: "/api/ml/v1/mlservices/{id}"
         };
     }
     
-    // Update a MLDeployment.
+    // Update a MLServices.
     // Required permissions:
-    // - ml.mldeployment.update
-    rpc UpdateMLDeployment(MLDeployment) returns (MLDeployment) {
+    // - ml.mlservices.update
+    rpc UpdateMLServices(MLServices) returns (MLServices) {
         option (google.api.http) = {
-            patch: "/api/ml/v1/deployments/{deployment_id}"
+            patch: "/api/ml/v1/mlservices/{deployment_id}"
             body: "*"
         };
     }
 }
 
-// MLDeployment represents the configuration for ArangoML for a deployment.
-message MLDeployment {
+// MLServices represents the state of the ArangoML services for a given deployment.
+message MLServices {
     // Identifier of the deployment for this MLDeployment.
     // This is a ready-only value.
     string deployment_id = 1;

@@ -50,7 +50,7 @@ func local_request_MLService_GetAPIVersion_0(ctx context.Context, marshaler runt
 
 }
 
-func request_MLService_GetMLDeployment_0(ctx context.Context, marshaler runtime.Marshaler, client MLServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_MLService_GetMLServices_0(ctx context.Context, marshaler runtime.Marshaler, client MLServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq v1.IDOptions
 	var metadata runtime.ServerMetadata
 
@@ -72,12 +72,12 @@ func request_MLService_GetMLDeployment_0(ctx context.Context, marshaler runtime.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
-	msg, err := client.GetMLDeployment(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.GetMLServices(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_MLService_GetMLDeployment_0(ctx context.Context, marshaler runtime.Marshaler, server MLServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_MLService_GetMLServices_0(ctx context.Context, marshaler runtime.Marshaler, server MLServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq v1.IDOptions
 	var metadata runtime.ServerMetadata
 
@@ -99,13 +99,13 @@ func local_request_MLService_GetMLDeployment_0(ctx context.Context, marshaler ru
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
-	msg, err := server.GetMLDeployment(ctx, &protoReq)
+	msg, err := server.GetMLServices(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_MLService_UpdateMLDeployment_0(ctx context.Context, marshaler runtime.Marshaler, client MLServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq MLDeployment
+func request_MLService_UpdateMLServices_0(ctx context.Context, marshaler runtime.Marshaler, client MLServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq MLServices
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -134,13 +134,13 @@ func request_MLService_UpdateMLDeployment_0(ctx context.Context, marshaler runti
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "deployment_id", err)
 	}
 
-	msg, err := client.UpdateMLDeployment(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.UpdateMLServices(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_MLService_UpdateMLDeployment_0(ctx context.Context, marshaler runtime.Marshaler, server MLServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq MLDeployment
+func local_request_MLService_UpdateMLServices_0(ctx context.Context, marshaler runtime.Marshaler, server MLServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq MLServices
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -169,7 +169,7 @@ func local_request_MLService_UpdateMLDeployment_0(ctx context.Context, marshaler
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "deployment_id", err)
 	}
 
-	msg, err := server.UpdateMLDeployment(ctx, &protoReq)
+	msg, err := server.UpdateMLServices(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -199,7 +199,7 @@ func RegisterMLServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 
 	})
 
-	mux.Handle("GET", pattern_MLService_GetMLDeployment_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MLService_GetMLServices_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -208,18 +208,18 @@ func RegisterMLServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_MLService_GetMLDeployment_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_MLService_GetMLServices_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_MLService_GetMLDeployment_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MLService_GetMLServices_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PATCH", pattern_MLService_UpdateMLDeployment_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PATCH", pattern_MLService_UpdateMLServices_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -228,14 +228,14 @@ func RegisterMLServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_MLService_UpdateMLDeployment_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_MLService_UpdateMLServices_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_MLService_UpdateMLDeployment_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MLService_UpdateMLServices_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -300,7 +300,7 @@ func RegisterMLServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, 
 
 	})
 
-	mux.Handle("GET", pattern_MLService_GetMLDeployment_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MLService_GetMLServices_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -309,18 +309,18 @@ func RegisterMLServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, 
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_MLService_GetMLDeployment_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_MLService_GetMLServices_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_MLService_GetMLDeployment_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MLService_GetMLServices_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PATCH", pattern_MLService_UpdateMLDeployment_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PATCH", pattern_MLService_UpdateMLServices_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -329,14 +329,14 @@ func RegisterMLServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, 
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_MLService_UpdateMLDeployment_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_MLService_UpdateMLServices_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_MLService_UpdateMLDeployment_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MLService_UpdateMLServices_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -346,15 +346,15 @@ func RegisterMLServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, 
 var (
 	pattern_MLService_GetAPIVersion_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "ml", "v1", "api-version"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_MLService_GetMLDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "ml", "v1", "deployments", "id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_MLService_GetMLServices_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "ml", "v1", "mlservices", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_MLService_UpdateMLDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "ml", "v1", "deployments", "deployment_id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_MLService_UpdateMLServices_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "ml", "v1", "mlservices", "deployment_id"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
 	forward_MLService_GetAPIVersion_0 = runtime.ForwardResponseMessage
 
-	forward_MLService_GetMLDeployment_0 = runtime.ForwardResponseMessage
+	forward_MLService_GetMLServices_0 = runtime.ForwardResponseMessage
 
-	forward_MLService_UpdateMLDeployment_0 = runtime.ForwardResponseMessage
+	forward_MLService_UpdateMLServices_0 = runtime.ForwardResponseMessage
 )

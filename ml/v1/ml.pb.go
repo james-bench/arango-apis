@@ -28,8 +28,8 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-// MLDeployment represents the configuration for ArangoML for a deployment.
-type MLDeployment struct {
+// MLServices represents the state of the ArangoML services for a given deployment.
+type MLServices struct {
 	// Identifier of the deployment for this MLDeployment.
 	// This is a ready-only value.
 	DeploymentId string `protobuf:"bytes,1,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
@@ -40,18 +40,18 @@ type MLDeployment struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *MLDeployment) Reset()         { *m = MLDeployment{} }
-func (m *MLDeployment) String() string { return proto.CompactTextString(m) }
-func (*MLDeployment) ProtoMessage()    {}
-func (*MLDeployment) Descriptor() ([]byte, []int) {
+func (m *MLServices) Reset()         { *m = MLServices{} }
+func (m *MLServices) String() string { return proto.CompactTextString(m) }
+func (*MLServices) ProtoMessage()    {}
+func (*MLServices) Descriptor() ([]byte, []int) {
 	return fileDescriptor_378f7d136b22f2a8, []int{0}
 }
-func (m *MLDeployment) XXX_Unmarshal(b []byte) error {
+func (m *MLServices) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MLDeployment) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *MLServices) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MLDeployment.Marshal(b, m, deterministic)
+		return xxx_messageInfo_MLServices.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -61,26 +61,26 @@ func (m *MLDeployment) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)
 		return b[:n], nil
 	}
 }
-func (m *MLDeployment) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MLDeployment.Merge(m, src)
+func (m *MLServices) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MLServices.Merge(m, src)
 }
-func (m *MLDeployment) XXX_Size() int {
+func (m *MLServices) XXX_Size() int {
 	return m.Size()
 }
-func (m *MLDeployment) XXX_DiscardUnknown() {
-	xxx_messageInfo_MLDeployment.DiscardUnknown(m)
+func (m *MLServices) XXX_DiscardUnknown() {
+	xxx_messageInfo_MLServices.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MLDeployment proto.InternalMessageInfo
+var xxx_messageInfo_MLServices proto.InternalMessageInfo
 
-func (m *MLDeployment) GetDeploymentId() string {
+func (m *MLServices) GetDeploymentId() string {
 	if m != nil {
 		return m.DeploymentId
 	}
 	return ""
 }
 
-func (m *MLDeployment) GetEnabled() bool {
+func (m *MLServices) GetEnabled() bool {
 	if m != nil {
 		return m.Enabled
 	}
@@ -88,36 +88,36 @@ func (m *MLDeployment) GetEnabled() bool {
 }
 
 func init() {
-	proto.RegisterType((*MLDeployment)(nil), "arangodb.cloud.ml.v1.MLDeployment")
+	proto.RegisterType((*MLServices)(nil), "arangodb.cloud.ml.v1.MLServices")
 }
 
 func init() { proto.RegisterFile("ml.proto", fileDescriptor_378f7d136b22f2a8) }
 
 var fileDescriptor_378f7d136b22f2a8 = []byte{
-	// 361 bytes of a gzipped FileDescriptorProto
+	// 357 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0xc8, 0xcd, 0xd1, 0x2b,
 	0x28, 0xca, 0x2f, 0xc9, 0x17, 0x12, 0x49, 0x2c, 0x4a, 0xcc, 0x4b, 0xcf, 0x4f, 0x49, 0xd2, 0x4b,
 	0xce, 0xc9, 0x2f, 0x4d, 0xd1, 0xcb, 0xcd, 0xd1, 0x2b, 0x33, 0x94, 0x12, 0x4b, 0xce, 0xcf, 0xcd,
 	0xcd, 0xcf, 0xd3, 0x2f, 0x33, 0xd4, 0x87, 0xb0, 0x20, 0xaa, 0xa5, 0x64, 0xd2, 0xf3, 0xf3, 0xd3,
 	0x73, 0x52, 0xf5, 0x13, 0x0b, 0x32, 0xf5, 0x13, 0xf3, 0xf2, 0xf2, 0x4b, 0x12, 0x4b, 0x32, 0xf3,
-	0xf3, 0x8a, 0x21, 0xb2, 0x4a, 0xbe, 0x5c, 0x3c, 0xbe, 0x3e, 0x2e, 0xa9, 0x05, 0x39, 0xf9, 0x95,
-	0xb9, 0xa9, 0x79, 0x25, 0x42, 0xca, 0x5c, 0xbc, 0x29, 0x70, 0x5e, 0x7c, 0x66, 0x8a, 0x04, 0xa3,
-	0x02, 0xa3, 0x06, 0x67, 0x10, 0x0f, 0x42, 0xd0, 0x33, 0x45, 0x48, 0x82, 0x8b, 0x3d, 0x35, 0x2f,
-	0x31, 0x29, 0x27, 0x35, 0x45, 0x82, 0x49, 0x81, 0x51, 0x83, 0x23, 0x08, 0xc6, 0x35, 0x9a, 0xcc,
-	0xcc, 0xc5, 0xe9, 0xeb, 0x13, 0x9c, 0x5a, 0x54, 0x96, 0x99, 0x9c, 0x2a, 0x54, 0xcc, 0xc5, 0xeb,
-	0x9e, 0x5a, 0xe2, 0x18, 0xe0, 0x19, 0x96, 0x5a, 0x54, 0x9c, 0x99, 0x9f, 0x27, 0x24, 0xaf, 0x87,
-	0xe6, 0x74, 0xa8, 0x4b, 0xcb, 0x0c, 0xf5, 0x5c, 0x73, 0x0b, 0x4a, 0x2a, 0xa5, 0x14, 0x71, 0x2b,
-	0x80, 0x9a, 0xa1, 0x24, 0xd7, 0x74, 0xf9, 0xc9, 0x64, 0x26, 0x09, 0x21, 0x31, 0xb0, 0x8f, 0x72,
-	0x73, 0x40, 0x1e, 0x4e, 0x2c, 0xc8, 0xd4, 0x2d, 0x83, 0xda, 0x51, 0xcf, 0xc5, 0xef, 0x9e, 0x5a,
-	0x82, 0xea, 0x29, 0xdc, 0xa6, 0x7a, 0xba, 0xf8, 0x17, 0x80, 0xc3, 0x43, 0x4a, 0x49, 0x0f, 0x5b,
-	0xb0, 0xea, 0x21, 0x1b, 0xa4, 0xa4, 0x0c, 0xb6, 0x5b, 0x56, 0x48, 0x1a, 0xc9, 0x6e, 0x44, 0xc8,
-	0x14, 0xeb, 0x57, 0x67, 0xa6, 0xd4, 0x0a, 0xf5, 0x33, 0x72, 0x09, 0x85, 0x16, 0xa4, 0x24, 0x96,
-	0xa4, 0xa2, 0x38, 0x82, 0x08, 0xf3, 0x89, 0x72, 0x83, 0x21, 0xd8, 0x0d, 0xda, 0x46, 0x6a, 0xb8,
-	0xdc, 0x80, 0x12, 0x7f, 0xb5, 0x56, 0x8c, 0x5a, 0x4e, 0x16, 0x27, 0x1e, 0xc9, 0x31, 0x5e, 0x78,
-	0x24, 0xc7, 0xf8, 0xe0, 0x91, 0x1c, 0xe3, 0x8c, 0xc7, 0x72, 0x0c, 0x51, 0x6a, 0xe9, 0x99, 0x25,
-	0x19, 0xa5, 0x49, 0xa0, 0x80, 0xd0, 0x87, 0x59, 0xa9, 0x9b, 0x9b, 0x98, 0x97, 0x98, 0x9e, 0x9a,
-	0x02, 0x32, 0xb7, 0x18, 0x62, 0x70, 0x12, 0x1b, 0x38, 0x95, 0x18, 0x03, 0x02, 0x00, 0x00, 0xff,
-	0xff, 0xc1, 0x49, 0x4f, 0x21, 0x7d, 0x02, 0x00, 0x00,
+	0xf3, 0x8a, 0x21, 0xb2, 0x4a, 0xde, 0x5c, 0x5c, 0xbe, 0x3e, 0xc1, 0xa9, 0x45, 0x65, 0x99, 0xc9,
+	0xa9, 0xc5, 0x42, 0xca, 0x5c, 0xbc, 0x29, 0xa9, 0x05, 0x39, 0xf9, 0x95, 0xb9, 0xa9, 0x79, 0x25,
+	0xf1, 0x99, 0x29, 0x12, 0x8c, 0x0a, 0x8c, 0x1a, 0x9c, 0x41, 0x3c, 0x08, 0x41, 0xcf, 0x14, 0x21,
+	0x09, 0x2e, 0xf6, 0xd4, 0xbc, 0xc4, 0xa4, 0x9c, 0xd4, 0x14, 0x09, 0x26, 0x05, 0x46, 0x0d, 0x8e,
+	0x20, 0x18, 0xd7, 0xa8, 0x9d, 0x99, 0x8b, 0x13, 0x6e, 0x9a, 0x50, 0x31, 0x17, 0xaf, 0x7b, 0x6a,
+	0x89, 0x63, 0x80, 0x67, 0x58, 0x6a, 0x51, 0x71, 0x66, 0x7e, 0x9e, 0x90, 0xbc, 0x1e, 0x9a, 0xc3,
+	0xa1, 0xee, 0x2c, 0x33, 0xd4, 0x73, 0xcd, 0x2d, 0x28, 0xa9, 0x94, 0x52, 0xc4, 0xad, 0x00, 0x6a,
+	0x86, 0x92, 0x5c, 0xd3, 0xe5, 0x27, 0x93, 0x99, 0x24, 0x84, 0xc4, 0xc0, 0xfe, 0xc9, 0xcd, 0x01,
+	0x79, 0x37, 0xb1, 0x20, 0x53, 0xb7, 0x0c, 0x6a, 0x47, 0x15, 0xd8, 0x52, 0x64, 0x2f, 0xe1, 0x36,
+	0xd3, 0xd3, 0xc5, 0xbf, 0x00, 0x1c, 0x16, 0x52, 0x0a, 0x7a, 0xd8, 0x82, 0x54, 0x0f, 0x61, 0x8c,
+	0x92, 0x12, 0xd8, 0x5e, 0x19, 0x21, 0x29, 0x24, 0x7b, 0x73, 0x73, 0x8a, 0xa1, 0xd2, 0xfa, 0xd5,
+	0x99, 0x29, 0xb5, 0x42, 0x1d, 0x8c, 0x5c, 0x02, 0xa1, 0x05, 0x29, 0x89, 0x25, 0xa9, 0x48, 0xf6,
+	0x13, 0x34, 0x9a, 0x08, 0xcb, 0x0d, 0xc0, 0x96, 0x6b, 0x19, 0xa9, 0xe2, 0xb0, 0x1c, 0x25, 0xce,
+	0x6a, 0xad, 0x18, 0xb5, 0x9c, 0x2c, 0x4e, 0x3c, 0x92, 0x63, 0xbc, 0xf0, 0x48, 0x8e, 0xf1, 0xc1,
+	0x23, 0x39, 0xc6, 0x19, 0x8f, 0xe5, 0x18, 0xa2, 0xd4, 0xd2, 0x33, 0x4b, 0x32, 0x4a, 0x93, 0x40,
+	0xde, 0xd7, 0x87, 0xd9, 0xa7, 0x9b, 0x9b, 0x98, 0x97, 0x98, 0x9e, 0x9a, 0x02, 0x32, 0xb6, 0x18,
+	0x62, 0x6e, 0x12, 0x1b, 0x38, 0x5d, 0x18, 0x03, 0x02, 0x00, 0x00, 0xff, 0xff, 0x8d, 0x78, 0xba,
+	0x2d, 0x6f, 0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -136,15 +136,15 @@ type MLServiceClient interface {
 	// Required permissions:
 	// - None
 	GetAPIVersion(ctx context.Context, in *v1.Empty, opts ...grpc.CallOption) (*v1.Version, error)
-	// Fetch the MLDeployment for a given deployment,
+	// Fetch the MLServices for a given deployment,
 	// specified by the deployment ID.
 	// Required permissions:
-	// - ml.mldeployment.get
-	GetMLDeployment(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*MLDeployment, error)
-	// Update a MLDeployment.
+	// - ml.mlservices.get
+	GetMLServices(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*MLServices, error)
+	// Update a MLServices.
 	// Required permissions:
-	// - ml.mldeployment.update
-	UpdateMLDeployment(ctx context.Context, in *MLDeployment, opts ...grpc.CallOption) (*MLDeployment, error)
+	// - ml.mlservices.update
+	UpdateMLServices(ctx context.Context, in *MLServices, opts ...grpc.CallOption) (*MLServices, error)
 }
 
 type mLServiceClient struct {
@@ -164,18 +164,18 @@ func (c *mLServiceClient) GetAPIVersion(ctx context.Context, in *v1.Empty, opts 
 	return out, nil
 }
 
-func (c *mLServiceClient) GetMLDeployment(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*MLDeployment, error) {
-	out := new(MLDeployment)
-	err := c.cc.Invoke(ctx, "/arangodb.cloud.ml.v1.MLService/GetMLDeployment", in, out, opts...)
+func (c *mLServiceClient) GetMLServices(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*MLServices, error) {
+	out := new(MLServices)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.ml.v1.MLService/GetMLServices", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *mLServiceClient) UpdateMLDeployment(ctx context.Context, in *MLDeployment, opts ...grpc.CallOption) (*MLDeployment, error) {
-	out := new(MLDeployment)
-	err := c.cc.Invoke(ctx, "/arangodb.cloud.ml.v1.MLService/UpdateMLDeployment", in, out, opts...)
+func (c *mLServiceClient) UpdateMLServices(ctx context.Context, in *MLServices, opts ...grpc.CallOption) (*MLServices, error) {
+	out := new(MLServices)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.ml.v1.MLService/UpdateMLServices", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -188,15 +188,15 @@ type MLServiceServer interface {
 	// Required permissions:
 	// - None
 	GetAPIVersion(context.Context, *v1.Empty) (*v1.Version, error)
-	// Fetch the MLDeployment for a given deployment,
+	// Fetch the MLServices for a given deployment,
 	// specified by the deployment ID.
 	// Required permissions:
-	// - ml.mldeployment.get
-	GetMLDeployment(context.Context, *v1.IDOptions) (*MLDeployment, error)
-	// Update a MLDeployment.
+	// - ml.mlservices.get
+	GetMLServices(context.Context, *v1.IDOptions) (*MLServices, error)
+	// Update a MLServices.
 	// Required permissions:
-	// - ml.mldeployment.update
-	UpdateMLDeployment(context.Context, *MLDeployment) (*MLDeployment, error)
+	// - ml.mlservices.update
+	UpdateMLServices(context.Context, *MLServices) (*MLServices, error)
 }
 
 // UnimplementedMLServiceServer can be embedded to have forward compatible implementations.
@@ -206,11 +206,11 @@ type UnimplementedMLServiceServer struct {
 func (*UnimplementedMLServiceServer) GetAPIVersion(ctx context.Context, req *v1.Empty) (*v1.Version, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAPIVersion not implemented")
 }
-func (*UnimplementedMLServiceServer) GetMLDeployment(ctx context.Context, req *v1.IDOptions) (*MLDeployment, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetMLDeployment not implemented")
+func (*UnimplementedMLServiceServer) GetMLServices(ctx context.Context, req *v1.IDOptions) (*MLServices, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMLServices not implemented")
 }
-func (*UnimplementedMLServiceServer) UpdateMLDeployment(ctx context.Context, req *MLDeployment) (*MLDeployment, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateMLDeployment not implemented")
+func (*UnimplementedMLServiceServer) UpdateMLServices(ctx context.Context, req *MLServices) (*MLServices, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateMLServices not implemented")
 }
 
 func RegisterMLServiceServer(s *grpc.Server, srv MLServiceServer) {
@@ -235,38 +235,38 @@ func _MLService_GetAPIVersion_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _MLService_GetMLDeployment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MLService_GetMLServices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(v1.IDOptions)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MLServiceServer).GetMLDeployment(ctx, in)
+		return srv.(MLServiceServer).GetMLServices(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/arangodb.cloud.ml.v1.MLService/GetMLDeployment",
+		FullMethod: "/arangodb.cloud.ml.v1.MLService/GetMLServices",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MLServiceServer).GetMLDeployment(ctx, req.(*v1.IDOptions))
+		return srv.(MLServiceServer).GetMLServices(ctx, req.(*v1.IDOptions))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _MLService_UpdateMLDeployment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MLDeployment)
+func _MLService_UpdateMLServices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MLServices)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MLServiceServer).UpdateMLDeployment(ctx, in)
+		return srv.(MLServiceServer).UpdateMLServices(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/arangodb.cloud.ml.v1.MLService/UpdateMLDeployment",
+		FullMethod: "/arangodb.cloud.ml.v1.MLService/UpdateMLServices",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MLServiceServer).UpdateMLDeployment(ctx, req.(*MLDeployment))
+		return srv.(MLServiceServer).UpdateMLServices(ctx, req.(*MLServices))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -280,19 +280,19 @@ var _MLService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _MLService_GetAPIVersion_Handler,
 		},
 		{
-			MethodName: "GetMLDeployment",
-			Handler:    _MLService_GetMLDeployment_Handler,
+			MethodName: "GetMLServices",
+			Handler:    _MLService_GetMLServices_Handler,
 		},
 		{
-			MethodName: "UpdateMLDeployment",
-			Handler:    _MLService_UpdateMLDeployment_Handler,
+			MethodName: "UpdateMLServices",
+			Handler:    _MLService_UpdateMLServices_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "ml.proto",
 }
 
-func (m *MLDeployment) Marshal() (dAtA []byte, err error) {
+func (m *MLServices) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -302,12 +302,12 @@ func (m *MLDeployment) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *MLDeployment) MarshalTo(dAtA []byte) (int, error) {
+func (m *MLServices) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MLDeployment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *MLServices) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -347,7 +347,7 @@ func encodeVarintMl(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
-func (m *MLDeployment) Size() (n int) {
+func (m *MLServices) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -372,7 +372,7 @@ func sovMl(x uint64) (n int) {
 func sozMl(x uint64) (n int) {
 	return sovMl(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
-func (m *MLDeployment) Unmarshal(dAtA []byte) error {
+func (m *MLServices) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -395,10 +395,10 @@ func (m *MLDeployment) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MLDeployment: wiretype end group for non-group")
+			return fmt.Errorf("proto: MLServices: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MLDeployment: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: MLServices: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
