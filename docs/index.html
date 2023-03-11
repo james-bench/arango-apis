@@ -800,6 +800,10 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.data.v1.ListDeploymentsByFilterRequest"><span class="badge">M</span>ListDeploymentsByFilterRequest</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.data.v1.ListDiskPerformancesRequest"><span class="badge">M</span>ListDiskPerformancesRequest</a>
                 </li>
               
@@ -1374,6 +1378,10 @@ title: "ArangoGraph Insights Platform API"
               
                 <li>
                   <a href="#arangodb.cloud.replication.v1.DeploymentReplication"><span class="badge">M</span>DeploymentReplication</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.replication.v1.DeploymentReplication.CancelationOptions"><span class="badge">M</span>DeploymentReplication.CancelationOptions</a>
                 </li>
               
                 <li>
@@ -10071,6 +10079,78 @@ Must be &gt;= 3 and &lt;= 5 </p></td>
 
         
       
+        <h3 id="arangodb.cloud.data.v1.ListDeploymentsByFilterRequest">ListDeploymentsByFilterRequest</h3>
+        <p>Request arguments for ListDeploymentsByFilter.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the organization to request the deployments for. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>project_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Return only deployments created in this project.
+This is an optional field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>region_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Return only deployments created in this region.
+This is an optional field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>expires_after</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Return only deployments with an expiration date after this timestamp.
+This will exclude deployments that have no expiration date.
+This is an optional field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>expires_before</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Return only deployments with an expiration date before this timestamp.
+This will exclude deployments that have no expiration date.
+This is an optional field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>does_not_expire</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Return only deployments that do not expire. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>options</td>
+                  <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
+                  <td></td>
+                  <td><p>Optional common list options, the context_id is ignored </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.data.v1.ListDiskPerformancesRequest">ListDiskPerformancesRequest</h3>
         <p>ListDiskPerformancesRequest is used as request in ListAllDiskPerformances</p>
 
@@ -10355,6 +10435,14 @@ Format details can be found at: https://semver.org/ </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Human readable reason why this version will be replaced. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>auto_update_date</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Date when the current version will be replaced automatically with the new version.
+If this field isn’t set (or present) it means no automatic update will happen. </p></td>
                 </tr>
               
             </tbody>
@@ -10712,6 +10800,18 @@ Required permissions:
               </tr>
             
               <tr>
+                <td>ListDeploymentsByFilter</td>
+                <td><a href="#arangodb.cloud.data.v1.ListDeploymentsByFilterRequest">ListDeploymentsByFilterRequest</a></td>
+                <td><a href="#arangodb.cloud.data.v1.DeploymentList">DeploymentList</a></td>
+                <td><p>Fetch all deployments in the organization identified by the given filter.
+Only the deployments with sufficient permissions are returned. 
+If the caller has no such permission on any of the deployments (in the organization) an empty list is returned, not an error. 
+Required permissions:
+- None (authenticated only)
+- data.deployment.list on the filtered deployment(s)</p></td>
+              </tr>
+            
+              <tr>
                 <td>GetDeployment</td>
                 <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
                 <td><a href="#arangodb.cloud.data.v1.Deployment">Deployment</a></td>
@@ -10992,6 +11092,16 @@ Required permissions:
                 <td>ListDeployments</td>
                 <td>GET</td>
                 <td>/api/data/v1/projects/{context_id}/deployments</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>ListDeploymentsByFilter</td>
+                <td>GET</td>
+                <td>/api/data/v1/organizations/{organization_id}/deployments</td>
                 <td></td>
               </tr>
               
@@ -17270,28 +17380,28 @@ This is an optional field </p></td>
                   <td>deployment_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Identifier of the deployments for a given DeploymentReplication </p></td>
+                  <td><p>Identifier of the deployment for a given DeploymentReplication </p></td>
                 </tr>
               
                 <tr>
                   <td>started</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>Start the replication process for a given deployment. </p></td>
+                  <td><p>Start the replication process for the given deployment. </p></td>
                 </tr>
               
                 <tr>
                   <td>certificate_pem</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>A PEM encoded representation of the public key of the CA certificate used to verify sync master in source datacenter. </p></td>
+                  <td><p>A PEM encoded representation of the public key of the CA certificate used to verify sync master in source deployment. </p></td>
                 </tr>
               
                 <tr>
                   <td>tls_keyfile</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>A PEM encoded representation of the keyfile used for client authentication of the sync master (with the sync master in the source datacenter).
+                  <td><p>A PEM encoded representation of the keyfile used for client authentication of the sync master (with the sync master in the source deployment).
 A keyfile contains 1 or more certificates and a private key. </p></td>
                 </tr>
               
@@ -17299,7 +17409,15 @@ A keyfile contains 1 or more certificates and a private key. </p></td>
                   <td>master_endpoint</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>List of master endpoints at source data center. </p></td>
+                  <td><p>List of master endpoints at source deployment.
+This setting will be removed for migration-agent v1.0.0 and is needed for the BETA version only. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cancelation_options</td>
+                  <td><a href="#arangodb.cloud.replication.v1.DeploymentReplication.CancelationOptions">DeploymentReplication.CancelationOptions</a></td>
+                  <td></td>
+                  <td><p>CancelationOptions describes what to do during cancelation process of the migration-agent. </p></td>
                 </tr>
               
                 <tr>
@@ -17307,6 +17425,37 @@ A keyfile contains 1 or more certificates and a private key. </p></td>
                   <td><a href="#arangodb.cloud.replication.v1.DeploymentReplication.Status">DeploymentReplication.Status</a></td>
                   <td></td>
                   <td><p>Status of the DeploymentReplication. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.replication.v1.DeploymentReplication.CancelationOptions">DeploymentReplication.CancelationOptions</h3>
+        <p>CancelationOptions describes what to do during cancelation process of the migration-agent.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>data_consistency_not_required</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, during cancelation process data consistency is not required (otherwise data consistency is required). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>make_source_deployment_read_only</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, after cancelation the source deployment will be in read-only mode. </p></td>
                 </tr>
               
             </tbody>
