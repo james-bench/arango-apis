@@ -29,7 +29,7 @@ const (
 	KindMLServices = "MLServices"
 )
 
-// MLServicesURL creates a resource URL for the MLServices resource with given ID in given context (as individual IDs).
+// MLServicesURL creates a resource URL for the MLServices resources from the given deployment URL.
 func MLServicesURL(deplURL string) string {
 	return path.Join(deplURL, KindMLServices)
 }
