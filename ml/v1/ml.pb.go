@@ -28,12 +28,13 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-// MLServices represents the state of the ArangoML services for a given deployment.
+// MLServices is a single resource which represents the state and configuration
+// of ML Services (ArangoGraphML) for a deployment specified by deployment_id.
 type MLServices struct {
-	// Identifier of the deployment for this MLDeployment.
+	// Identifier of the deployment for this MLServices resource.
 	// This is a ready-only value.
 	DeploymentId string `protobuf:"bytes,1,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
-	// Set to true if ArangoML services are enabled for this deployment.
+	// Set to true if ML services are enabled for this deployment.
 	Enabled              bool     `protobuf:"varint,2,opt,name=enabled,proto3" json:"enabled,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -112,12 +113,12 @@ var fileDescriptor_378f7d136b22f2a8 = []byte{
 	0xd3, 0xd3, 0xc5, 0xbf, 0x00, 0x1c, 0x16, 0x52, 0x0a, 0x7a, 0xd8, 0x82, 0x54, 0x0f, 0x61, 0x8c,
 	0x92, 0x12, 0xd8, 0x5e, 0x19, 0x21, 0x29, 0x24, 0x7b, 0x73, 0x73, 0x8a, 0xa1, 0xd2, 0xfa, 0xd5,
 	0x99, 0x29, 0xb5, 0x42, 0x1d, 0x8c, 0x5c, 0x02, 0xa1, 0x05, 0x29, 0x89, 0x25, 0xa9, 0x48, 0xf6,
-	0x13, 0x34, 0x9a, 0x08, 0xcb, 0x0d, 0xc0, 0x96, 0x6b, 0x19, 0xa9, 0xe2, 0xb0, 0x1c, 0x25, 0xce,
+	0x13, 0x34, 0x9a, 0x08, 0xcb, 0x0d, 0xc0, 0x96, 0x6b, 0x49, 0xa9, 0xe2, 0xb0, 0x1c, 0x25, 0xce,
 	0x6a, 0xad, 0x18, 0xb5, 0x9c, 0x2c, 0x4e, 0x3c, 0x92, 0x63, 0xbc, 0xf0, 0x48, 0x8e, 0xf1, 0xc1,
 	0x23, 0x39, 0xc6, 0x19, 0x8f, 0xe5, 0x18, 0xa2, 0xd4, 0xd2, 0x33, 0x4b, 0x32, 0x4a, 0x93, 0x40,
 	0xde, 0xd7, 0x87, 0xd9, 0xa7, 0x9b, 0x9b, 0x98, 0x97, 0x98, 0x9e, 0x9a, 0x02, 0x32, 0xb6, 0x18,
-	0x62, 0x6e, 0x12, 0x1b, 0x38, 0x5d, 0x18, 0x03, 0x02, 0x00, 0x00, 0xff, 0xff, 0x8d, 0x78, 0xba,
-	0x2d, 0x6f, 0x02, 0x00, 0x00,
+	0x62, 0x6e, 0x12, 0x1b, 0x38, 0x5d, 0x18, 0x03, 0x02, 0x00, 0x00, 0xff, 0xff, 0xdf, 0x02, 0x46,
+	0xd7, 0x6f, 0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -136,12 +137,12 @@ type MLServiceClient interface {
 	// Required permissions:
 	// - None
 	GetAPIVersion(ctx context.Context, in *v1.Empty, opts ...grpc.CallOption) (*v1.Version, error)
-	// Fetch the MLServices for a given deployment,
-	// specified by the deployment ID.
+	// Get an existing MLServices resource for a given deployment (specified by the id).
 	// Required permissions:
 	// - ml.mlservices.get
 	GetMLServices(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*MLServices, error)
-	// Update a MLServices.
+	// Update an existing MLServices resource. If it does not exist, this will create a new one.
+	// Pass the desired updated state of MLServices to this call.
 	// Required permissions:
 	// - ml.mlservices.update
 	UpdateMLServices(ctx context.Context, in *MLServices, opts ...grpc.CallOption) (*MLServices, error)
@@ -188,12 +189,12 @@ type MLServiceServer interface {
 	// Required permissions:
 	// - None
 	GetAPIVersion(context.Context, *v1.Empty) (*v1.Version, error)
-	// Fetch the MLServices for a given deployment,
-	// specified by the deployment ID.
+	// Get an existing MLServices resource for a given deployment (specified by the id).
 	// Required permissions:
 	// - ml.mlservices.get
 	GetMLServices(context.Context, *v1.IDOptions) (*MLServices, error)
-	// Update a MLServices.
+	// Update an existing MLServices resource. If it does not exist, this will create a new one.
+	// Pass the desired updated state of MLServices to this call.
 	// Required permissions:
 	// - ml.mlservices.update
 	UpdateMLServices(context.Context, *MLServices) (*MLServices, error)

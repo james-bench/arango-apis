@@ -11,14 +11,15 @@ import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/com
 // File: ml/v1/ml.proto
 // Package: arangodb.cloud.ml.v1
 
-// MLServices represents the state of the ArangoML services for a given deployment.
+// MLServices is a single resource which represents the state and configuration
+// of ML Services (ArangoGraphML) for a deployment specified by deployment_id.
 export interface MLServices {
-  // Identifier of the deployment for this MLDeployment.
+  // Identifier of the deployment for this MLServices resource.
   // This is a ready-only value.
   // string
   deployment_id?: string;
   
-  // Set to true if ArangoML services are enabled for this deployment.
+  // Set to true if ML services are enabled for this deployment.
   // boolean
   enabled?: boolean;
 }
@@ -30,13 +31,13 @@ export interface IMLService {
   // - None
   GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
   
-  // Fetch the MLServices for a given deployment,
-  // specified by the deployment ID.
+  // Get an existing MLServices resource for a given deployment (specified by the id).
   // Required permissions:
   // - ml.mlservices.get
   GetMLServices: (req: arangodb_cloud_common_v1_IDOptions) => Promise<MLServices>;
   
-  // Update a MLServices.
+  // Update an existing MLServices resource. If it does not exist, this will create a new one.
+  // Pass the desired updated state of MLServices to this call.
   // Required permissions:
   // - ml.mlservices.update
   UpdateMLServices: (req: MLServices) => Promise<MLServices>;
@@ -53,8 +54,7 @@ export class MLService implements IMLService {
     return api.get(url, undefined);
   }
   
-  // Fetch the MLServices for a given deployment,
-  // specified by the deployment ID.
+  // Get an existing MLServices resource for a given deployment (specified by the id).
   // Required permissions:
   // - ml.mlservices.get
   async GetMLServices(req: arangodb_cloud_common_v1_IDOptions): Promise<MLServices> {
@@ -63,11 +63,12 @@ export class MLService implements IMLService {
     return api.get(url, undefined);
   }
   
-  // Update a MLServices.
+  // Update an existing MLServices resource. If it does not exist, this will create a new one.
+  // Pass the desired updated state of MLServices to this call.
   // Required permissions:
   // - ml.mlservices.update
   async UpdateMLServices(req: MLServices): Promise<MLServices> {
     const url = `/api/ml/v1/mlservices/${encodeURIComponent(req.deployment_id || '')}`;
-    return api.patch(url, req);
+    return api.put(url, req);
   }
 }
