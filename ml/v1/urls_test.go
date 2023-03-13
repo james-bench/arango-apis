@@ -27,5 +27,5 @@ import (
 )
 
 func TestMLServicesURL(t *testing.T) {
-	assert.Equal(t, "/Organization/123/Project/p1/Deployment/c1/Notebook/MLServices", MLServicesURL("/Organization/123/Project/p1/Deployment/c1"))
+	assert.Equal(t, "/Organization/123/Project/p1/Deployment/c1/MLServices", MLServicesURL("/Organization/123/Project/p1/Deployment/c1"))
 }
