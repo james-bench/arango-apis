@@ -28,6 +28,7 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+// Request arguments for Authorize
 type AuthorizeRequest struct {
 	// Resource identifier, example (notebook id)
 	ResourceId string `protobuf:"bytes,1,opt,name=resource_id,json=resourceId,proto3" json:"resource_id,omitempty"`
@@ -146,7 +147,7 @@ type AuthServiceClient interface {
 	// Verify if the resource URI in request is allowed for a given user
 	// If the permission is allowed,
 	// Set cookie (arango_graph_[env]]) in response for resource URL
-	// Redirect user to resource_url in the request
+	// Redirect user to callback_url in the request
 	// Required permissions:
 	// - None (since the subject is always the authenticated user).
 	Authorize(ctx context.Context, in *AuthorizeRequest, opts ...grpc.CallOption) (*v1.Empty, error)
@@ -188,7 +189,7 @@ type AuthServiceServer interface {
 	// Verify if the resource URI in request is allowed for a given user
 	// If the permission is allowed,
 	// Set cookie (arango_graph_[env]]) in response for resource URL
-	// Redirect user to resource_url in the request
+	// Redirect user to callback_url in the request
 	// Required permissions:
 	// - None (since the subject is always the authenticated user).
 	Authorize(context.Context, *AuthorizeRequest) (*v1.Empty, error)

@@ -9,6 +9,8 @@ import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/com
 
 // File: auth/v1/auth.proto
 // Package: arangodb.cloud.auth.v1
+
+// Request arguments for Authorize
 export interface AuthorizeRequest {
   // Resource identifier, example (notebook id)
   // string
@@ -34,7 +36,7 @@ export interface IAuthService {
   // Verify if the resource URI in request is allowed for a given user
   // If the permission is allowed,
   // Set cookie (arango_graph_[env]]) in response for resource URL
-  // Redirect user to resource_url in the request
+  // Redirect user to callback_url in the request
   // Required permissions:
   // - None (since the subject is always the authenticated user).
   Authorize: (req: AuthorizeRequest) => Promise<void>;
@@ -55,7 +57,7 @@ export class AuthService implements IAuthService {
   // Verify if the resource URI in request is allowed for a given user
   // If the permission is allowed,
   // Set cookie (arango_graph_[env]]) in response for resource URL
-  // Redirect user to resource_url in the request
+  // Redirect user to callback_url in the request
   // Required permissions:
   // - None (since the subject is always the authenticated user).
   async Authorize(req: AuthorizeRequest): Promise<void> {

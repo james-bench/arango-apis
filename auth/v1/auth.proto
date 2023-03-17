@@ -16,8 +16,7 @@
 // limitations under the License.
 // 
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
-// 
-
+//
 
 syntax = "proto3";
 
@@ -43,7 +42,7 @@ service AuthService {
     // Verify if the resource URI in request is allowed for a given user
     // If the permission is allowed,
     // Set cookie (arango_graph_[env]]) in response for resource URL
-    // Redirect user to resource_url in the request
+    // Redirect user to callback_url in the request
     // Required permissions:
     // - None (since the subject is always the authenticated user).
     rpc Authorize(AuthorizeRequest) returns (common.v1.Empty) {
@@ -53,6 +52,7 @@ service AuthService {
     }
 }
 
+// Request arguments for Authorize
 message AuthorizeRequest {
     // Resource identifier, example (notebook id)
     string resource_id = 1;
