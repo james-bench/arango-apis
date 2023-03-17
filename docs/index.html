@@ -310,6 +310,25 @@ title: "ArangoGraph Insights Platform API"
         
           
           <li>
+            <a href="#auth%2fv1%2fauth.proto">auth/v1/auth.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#arangodb.cloud.auth.v1.AuthorizeRequest"><span class="badge">M</span>AuthorizeRequest</a>
+                </li>
+              
+              
+              
+              
+                <li>
+                  <a href="#arangodb.cloud.auth.v1.AuthService"><span class="badge">S</span>AuthService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#backup%2fv1%2fbackup.proto">backup/v1/backup.proto</a>
             <ul>
               
@@ -3403,6 +3422,130 @@ Required permissions:
                 <td>DetachProjectFromAuditLog</td>
                 <td>DELETE</td>
                 <td>/api/audit/v1/projects/{id}/auditlogs</td>
+                <td></td>
+              </tr>
+              
+            
+            </tbody>
+          </table>
+          
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="auth/v1/auth.proto">auth/v1/auth.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="arangodb.cloud.auth.v1.AuthorizeRequest">AuthorizeRequest</h3>
+        <p>Request arguments for Authorize</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>resource_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Resource identifier, example (notebook id) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>resource_type</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Resource Type is the kind of resource </p></td>
+                </tr>
+              
+                <tr>
+                  <td>callback_url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Endpoint of a resource </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+
+      
+
+      
+        <h3 id="arangodb.cloud.auth.v1.AuthService">AuthService</h3>
+        <p>AuthService is the API used to expose the authorize end point for JWT based authorization</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GetAPIVersion</td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Version">.arangodb.cloud.common.v1.Version</a></td>
+                <td><p>Get the current API version of this service.
+Required permissions:
+- None (authenticated only)</p></td>
+              </tr>
+            
+              <tr>
+                <td>Authorize</td>
+                <td><a href="#arangodb.cloud.auth.v1.AuthorizeRequest">AuthorizeRequest</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><p>Verify the current user based on JWT token provided in the request header
+Verify if the resource URI in request is allowed for a given user
+If the permission is allowed,
+Set cookie (arango_graph_[env]]) in response for resource URL
+Redirect user to callback_url in the request
+Required permissions:
+- None (since the subject is always the authenticated user).</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+          
+          
+          <h4>Methods with HTTP bindings</h4>
+          <table>
+            <thead>
+              <tr>
+                <td>Method Name</td>
+                <td>Method</td>
+                <td>Pattern</td>
+                <td>Body</td>
+              </tr>
+            </thead>
+            <tbody>
+            
+              
+              
+              <tr>
+                <td>GetAPIVersion</td>
+                <td>GET</td>
+                <td>/api/auth/v1/api-version</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>Authorize</td>
+                <td>POST</td>
+                <td>/api/auth/v1/authorize</td>
                 <td></td>
               </tr>
               
