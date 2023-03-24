@@ -315,6 +315,15 @@ service DataService {
             body: "*"
         };
     }
+
+    // Fetch the ArangoDB version by its id (semver).
+    // Required permissions:
+    // - None
+    rpc GetVersion(common.v1.IDOptions) returns (Version) {
+        option (google.api.http) = {
+            get: "/api/data/v1/versions/{id}"
+        };
+    }
 }
 
 // RotateDeploymentServerRequest request for rotating out servers for a deployment

@@ -1662,6 +1662,11 @@ export interface IDataService {
   // Required permissions:
   // - None, authenticated only
   GetDiskPerformance: (req: GetDiskPerformanceRequest) => Promise<DiskPerformance>;
+  
+  // Fetch the ArangoDB version by its id (semver).
+  // Required permissions:
+  // - None
+  GetVersion: (req: arangodb_cloud_common_v1_IDOptions) => Promise<Version>;
 }
 
 // DataService is the API used to configure data objects.
@@ -1934,5 +1939,14 @@ export class DataService implements IDataService {
   async GetDiskPerformance(req: GetDiskPerformanceRequest): Promise<DiskPerformance> {
     const url = `/api/data/v1/disk-performance/${encodeURIComponent(req.disk_performance_id || '')}`;
     return api.post(url, req);
+  }
+  
+  // Fetch the ArangoDB version by its id (semver).
+  // Required permissions:
+  // - None
+  async GetVersion(req: arangodb_cloud_common_v1_IDOptions): Promise<Version> {
+    const path = `/api/data/v1/versions/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
   }
 }
