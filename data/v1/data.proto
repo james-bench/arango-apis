@@ -877,6 +877,8 @@ message Version {
     UpgradeVersionRecommendation upgrade_recommendation = 3;
     // If set, this version is not longer actively supported.
     bool is_end_of_life = 4;
+    // ArangoDB version release notes
+    string release_notes_url = 5;
 }
 
 // ReplaceVersionBy holds replacement instructions.

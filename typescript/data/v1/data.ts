@@ -1484,6 +1484,10 @@ export interface Version {
   // If set, this version is not longer actively supported.
   // boolean
   is_end_of_life?: boolean;
+  
+  // ArangoDB version release notes
+  // string
+  release_notes_url?: string;
 }
 
 // List of Versions.
