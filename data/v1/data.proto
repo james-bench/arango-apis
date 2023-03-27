@@ -155,6 +155,15 @@ service DataService {
         };
     }
 
+    // Fetch the ArangoDB version by its id (semver).
+    // Required permissions:
+    // - None
+    rpc GetVersion(common.v1.IDOptions) returns (Version) {
+        option (google.api.http) = {
+            get: "/api/data/v1/versions/{id}"
+        };
+    }
+
     // Fetch the limits for server specifications for deployments
     // owned by the given projected, created in the given region.
     // Required permissions:
@@ -316,14 +325,6 @@ service DataService {
         };
     }
 
-    // Fetch the ArangoDB version by its id (semver).
-    // Required permissions:
-    // - None
-    rpc GetVersion(common.v1.IDOptions) returns (Version) {
-        option (google.api.http) = {
-            get: "/api/data/v1/versions/{id}"
-        };
-    }
 }
 
 // RotateDeploymentServerRequest request for rotating out servers for a deployment
