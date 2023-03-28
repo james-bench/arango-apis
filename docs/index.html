@@ -10927,6 +10927,15 @@ Required permissions:
               </tr>
             
               <tr>
+                <td>GetVersion</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.data.v1.Version">Version</a></td>
+                <td><p>Fetch the ArangoDB version by its id (semver).
+Required permissions:
+- None</p></td>
+              </tr>
+            
+              <tr>
                 <td>GetServersSpecLimits</td>
                 <td><a href="#arangodb.cloud.data.v1.ServersSpecLimitsRequest">ServersSpecLimitsRequest</a></td>
                 <td><a href="#arangodb.cloud.data.v1.ServersSpecLimits">ServersSpecLimits</a></td>
@@ -11218,6 +11227,16 @@ Required permissions:
                 <td>GetDefaultVersion</td>
                 <td>GET</td>
                 <td>/api/data/v1/versions/default</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetVersion</td>
+                <td>GET</td>
+                <td>/api/data/v1/versions/{id}</td>
                 <td></td>
               </tr>
               

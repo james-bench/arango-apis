@@ -1569,6 +1569,11 @@ export interface IDataService {
   // - None
   GetDefaultVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<Version>;
   
+  // Fetch the ArangoDB version by its id (semver).
+  // Required permissions:
+  // - None
+  GetVersion: (req: arangodb_cloud_common_v1_IDOptions) => Promise<Version>;
+  
   // Fetch the limits for server specifications for deployments
   // owned by the given projected, created in the given region.
   // Required permissions:
@@ -1778,6 +1783,15 @@ export class DataService implements IDataService {
   async GetDefaultVersion(req?: arangodb_cloud_common_v1_Empty): Promise<Version> {
     const path = `/api/data/v1/versions/default`;
     const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
+  // Fetch the ArangoDB version by its id (semver).
+  // Required permissions:
+  // - None
+  async GetVersion(req: arangodb_cloud_common_v1_IDOptions): Promise<Version> {
+    const path = `/api/data/v1/versions/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
   
