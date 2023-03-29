@@ -120,6 +120,12 @@ export interface DeploymentReplication_Status {
   // This is a readonly field.
   // googleTypes.Timestamp
   phase_updated_at?: googleTypes.Timestamp;
+  
+  // Service (LoadBalancer) endpoint of the Forwarder service which allows to start streaming connection.
+  // This field has the format of a URL.
+  // This is a readonly field.
+  // string
+  forwarder_endpoint?: string;
 }
 
 // ReplicationService is the API used to replicate a deployment.
