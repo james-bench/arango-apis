@@ -32,6 +32,8 @@ import (
 const (
 	// KindDeployment is a constants for the kind of Deployment resources.
 	KindDeployment = "Deployment"
+	// KindDataloader is a constants for the kind of Dataloader resources.
+	KindDataloader = "Dataloader"
 )
 
 // DeploymentURL creates a resource URL for the Deployment with given ID
