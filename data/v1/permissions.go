@@ -111,3 +111,10 @@ const (
 	// PermissionDiskPerformanceList is needed for listing disk performances for a specific deployment
 	PermissionDiskPerformanceList = "data.diskperformance.list"
 )
+
+const (
+	// Dataloader permissions
+
+	// PermissionDataLoaderImport is needed for importing data using dataloader for a specific deployment
+	PermissionDataLoaderImport = "dataloader.deployment.import"
+)
