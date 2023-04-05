@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2022 ArangoDB GmbH, Cologne, Germany
+// Copyright 2022-2023 ArangoDB GmbH, Cologne, Germany
 //
 
 package v1
@@ -12,5 +12,6 @@ func (source *DeploymentReplication_Status) Equals(other *DeploymentReplication_
 		source.GetMessage() == other.GetMessage() &&
 		source.GetShardsInSync() == other.GetShardsInSync() &&
 		source.GetTotalShards() == other.GetShardsInSync() &&
-		source.GetSyncEndpoint() == other.GetSyncEndpoint()
+		source.GetSyncEndpoint() == other.GetSyncEndpoint() &&
+		source.GetForwarderEndpoint() == other.GetForwarderEndpoint()
 }
