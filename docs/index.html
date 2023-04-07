@@ -9200,6 +9200,13 @@ Default to username of root user. </p></td>
                   <td><p>Is the use of an IAM provider available? </p></td>
                 </tr>
               
+                <tr>
+                  <td>pause</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Is the use of the pause feature available? </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -11035,6 +11042,16 @@ Required permissions:
               </tr>
             
               <tr>
+                <td>PauseDeployment</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><p>Pauses a deployment indentified by the given ID.
+When PauseDeployment is invoked on a deployment that is not allowed to pause or has is_paused set, an PreconditionFailed error is returned.
+Required permissions:
+- data.deployment.pause on the deployment</p></td>
+              </tr>
+            
+              <tr>
                 <td>ResumeDeployment</td>
                 <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
                 <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
@@ -11338,6 +11355,16 @@ Required permissions:
                 <td>POST</td>
                 <td>/api/data/v1/deployment-features</td>
                 <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>PauseDeployment</td>
+                <td>POST</td>
+                <td>/api/data/v1/deployments/{id}/pause</td>
+                <td></td>
               </tr>
               
             
