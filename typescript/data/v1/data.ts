@@ -809,6 +809,10 @@ export interface DeploymentFeatures {
   // Is the use of an IAM provider available?
   // boolean
   iamprovider?: boolean;
+  
+  // Is the use of the pause feature available?
+  // boolean
+  pause?: boolean;
 }
 
 // Request arguments for GetDeploymentFeatures
@@ -1638,6 +1642,12 @@ export interface IDataService {
   // - data.deploymentfeatures.get on the project that is given in the request.
   GetDeploymentFeatures: (req: DeploymentFeaturesRequest) => Promise<DeploymentFeatures>;
   
+  // Pauses a deployment indentified by the given ID.
+  // When PauseDeployment is invoked on a deployment that is not allowed to pause or has is_paused set, an PreconditionFailed error is returned.
+  // Required permissions:
+  // - data.deployment.pause on the deployment
+  PauseDeployment: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
   // Resumes a paused deployment identified by the given id.
   // When ResumeDeployment is invoked on a deployment that has is_paused not set, an PreconditionFailed error is returned.
   // Required permissions:
@@ -1896,6 +1906,16 @@ export class DataService implements IDataService {
   async GetDeploymentFeatures(req: DeploymentFeaturesRequest): Promise<DeploymentFeatures> {
     const url = `/api/data/v1/deployment-features`;
     return api.post(url, req);
+  }
+  
+  // Pauses a deployment indentified by the given ID.
+  // When PauseDeployment is invoked on a deployment that is not allowed to pause or has is_paused set, an PreconditionFailed error is returned.
+  // Required permissions:
+  // - data.deployment.pause on the deployment
+  async PauseDeployment(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
+    const path = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}/pause`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.post(url, undefined);
   }
   
   // Resumes a paused deployment identified by the given id.
