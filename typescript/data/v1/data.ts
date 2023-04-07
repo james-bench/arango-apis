@@ -425,6 +425,11 @@ export interface Deployment {
   // After creation, this value cannot be changed.
   // string
   deployment_profile_id?: string;
+  
+  // Determines if deployment is using platform authentication
+  // This is readonly field
+  // boolean
+  is_platform_authentication_enabled?: boolean;
 }
 
 // Information about a backup restore.
