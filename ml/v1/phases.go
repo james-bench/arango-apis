@@ -21,12 +21,14 @@
 package v1
 
 const (
-	// APIID contains identifier of this API
-	APIID = "ml/v1"
-	// APIMajorVersion contains major version of this API
-	APIMajorVersion = 1
-	// APIMinorVersion contains minor version of this API
-	APIMinorVersion = 1
-	// APIPatchVersion contains patch version of this API
-	APIPatchVersion = 0
+	// MLServices status phases
+
+	// The services needed for ArangoGraphML are being installed.
+	MLServicesPhaseInitialising = "Initialising"
+	// ArangoDB Deployment is being bootstrapped with the required databases, schemas and data.
+	MLServicesPhaseBootstrapping = "Bootstrapping"
+	// ArangoGraphML is setup and running correctly.
+	MLServicesPhaseRunning = "Running"
+	// Indicates that there was an error with setting up ArangoGraphML. Check `message` field for additional info.
+	MLServicesPhaseError = "Error"
 )

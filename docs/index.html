@@ -1106,6 +1106,10 @@ title: "ArangoGraph Insights Platform API"
                   <a href="#arangodb.cloud.ml.v1.MLServices"><span class="badge">M</span>MLServices</a>
                 </li>
               
+                <li>
+                  <a href="#arangodb.cloud.ml.v1.Status"><span class="badge">M</span>Status</a>
+                </li>
+              
               
               
               
@@ -14532,6 +14536,57 @@ This is a ready-only value. </p></td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>Set to true if ML services are enabled for this deployment. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#arangodb.cloud.ml.v1.Status">Status</a></td>
+                  <td></td>
+                  <td><p>Status of the MLServices.
+This is a read-only value. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.ml.v1.Status">Status</h3>
+        <p>Status of the MLServices.</p><p>Note: All fields are read-only.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>phase</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Where the MLServices is in its lifecycle at any given time.
+It will contain only one of the following values:
+&#34;Bootstrapping&#34;  - ArangoDB Deployment is being bootstrapped with the required databases, schemas and data.
+&#34;Initialising&#34;   - The services needed for ArangoGraphML are being installed.
+&#34;Running&#34;        - ArangoGraphML is setup and running correctly.
+&#34;Error&#34;          - Indicates that there was an error with setting up ArangoGraphML. Check `message` field for additional info. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>message</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Supporting information about the phase of MLServices (such as error messages in case of failures). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_updated_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The timestamp of when this status was last updated. </p></td>
                 </tr>
               
             </tbody>

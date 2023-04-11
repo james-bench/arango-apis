@@ -26,6 +26,7 @@ option go_package = "github.com/arangodb-managed/apis/ml/v1";
 
 import "common/v1/common.proto";
 
+import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
 import "google/api/annotations.proto";
 
 // MLService is the API used to configure ArangoML on ArangoGraph Insights Platform.
@@ -68,4 +69,23 @@ message MLServices {
     string deployment_id = 1;
     // Set to true if ML services are enabled for this deployment.
     bool enabled = 2;
+    // Status of the MLServices.
+    // This is a read-only value.
+    Status status = 100;
+}
+
+// Status of the MLServices.
+// Note: All fields are read-only.
+message Status {
+    // Where the MLServices is in its lifecycle at any given time.
+    // It will contain only one of the following values:
+    // "Bootstrapping"  - ArangoDB Deployment is being bootstrapped with the required databases, schemas and data.
+    // "Initialising"   - The services needed for ArangoGraphML are being installed.
+    // "Running"        - ArangoGraphML is setup and running correctly.
+    // "Error"          - Indicates that there was an error with setting up ArangoGraphML. Check `message` field for additional info.
+    string phase = 1;
+    // Supporting information about the phase of MLServices (such as error messages in case of failures).
+    string message = 2;
+    // The timestamp of when this status was last updated.
+    google.protobuf.Timestamp last_updated_at = 3;
 }
