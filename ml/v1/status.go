@@ -32,3 +32,14 @@ const (
 	// Indicates that there was an error with setting up ArangoGraphML. Check `message` field for additional info.
 	MLServicesPhaseError = "Error"
 )
+
+const (
+	// Service types
+
+	// ServiceTypePrediction indicates that the service is a prediction API service.
+	ServiceTypePrediction = "prediction"
+	// ServiceTypeTraining indicates that the service is a training API service.
+	ServiceTypeTraining = "training"
+	// ServiceTypeProjects indicates that the service is a projects API service.
+	ServiceTypeProjects = "projects"
+)

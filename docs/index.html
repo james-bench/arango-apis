@@ -14598,24 +14598,10 @@ It will contain only one of the following values:
                 </tr>
               
                 <tr>
-                  <td>training_api</td>
+                  <td>services</td>
                   <td><a href="#arangodb.cloud.ml.v1.Status.ServiceStatus">Status.ServiceStatus</a></td>
-                  <td></td>
-                  <td><p>Status of the Training API service. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>prediction_api</td>
-                  <td><a href="#arangodb.cloud.ml.v1.Status.ServiceStatus">Status.ServiceStatus</a></td>
-                  <td></td>
-                  <td><p>Status of the Prediction API service. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>projects_api</td>
-                  <td><a href="#arangodb.cloud.ml.v1.Status.ServiceStatus">Status.ServiceStatus</a></td>
-                  <td></td>
-                  <td><p>Status of the Projects API service. </p></td>
+                  <td>repeated</td>
+                  <td><p>Status of each ArangoGraphML components/services. </p></td>
                 </tr>
               
             </tbody>
@@ -14634,6 +14620,14 @@ It will contain only one of the following values:
               <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
             </thead>
             <tbody>
+              
+                <tr>
+                  <td>type</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Type of service.
+Should be one of: [training|prediction|projects] </p></td>
+                </tr>
               
                 <tr>
                   <td>available</td>

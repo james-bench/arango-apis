@@ -49,21 +49,18 @@ export interface Status {
   // googleTypes.Timestamp
   last_updated_at?: googleTypes.Timestamp;
   
-  // Status of the Training API service.
+  // Status of each ArangoGraphML components/services.
   // Status_ServiceStatus
-  training_api?: Status_ServiceStatus;
-  
-  // Status of the Prediction API service.
-  // Status_ServiceStatus
-  prediction_api?: Status_ServiceStatus;
-  
-  // Status of the Projects API service.
-  // Status_ServiceStatus
-  projects_api?: Status_ServiceStatus;
+  services?: Status_ServiceStatus[];
 }
 
 // Status of a single ArangoGraphML component.
 export interface Status_ServiceStatus {
+  // Type of service.
+  // Should be one of: [training|prediction|projects]
+  // string
+  type?: string;
+  
   // Set to true if the service is available.
   // boolean
   available?: boolean;

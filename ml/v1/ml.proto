@@ -91,10 +91,13 @@ message Status {
 
     // Status of a single ArangoGraphML component.
     message ServiceStatus {
+        // Type of service.
+        // Should be one of: [training|prediction|projects]
+        string type = 1;
         // Set to true if the service is available.
-        bool available = 1;
+        bool available = 2;
         // Set to true if the service is in a failed state.
-        bool failed = 2;
+        bool failed = 3;
         // Resource usage for this service.
         message Usage {
             // Last known memory usage in bytes
@@ -107,13 +110,8 @@ message Status {
             float last_cpu_limit = 4;
         }
         // Resource usage information for this service.
-        Usage usage = 3;
+        Usage usage = 4;
     }
-
-    // Status of the Training API service.
-    ServiceStatus training_api = 4;
-    // Status of the Prediction API service.
-    ServiceStatus prediction_api = 5;
-    // Status of the Projects API service.
-    ServiceStatus projects_api = 6;
+    // Status of each ArangoGraphML components/services.
+    repeated ServiceStatus services = 4;
 }
