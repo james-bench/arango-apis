@@ -5,6 +5,7 @@ package v1
 
 import (
 	context "context"
+	encoding_binary "encoding/binary"
 	fmt "fmt"
 	v1 "github.com/arangodb-managed/apis/common/v1"
 	types "github.com/gogo/protobuf/types"
@@ -102,7 +103,7 @@ func (m *MLServices) GetStatus() *Status {
 // Status of the MLServices.
 // Note: All fields are read-only.
 type Status struct {
-	// Where the MLServices is in its lifecycle at any given time.
+	// Overall status of where the MLServices resource is in its lifecycle at a given time.
 	// It will contain only one of the following values:
 	// "Bootstrapping"  - ArangoDB Deployment is being bootstrapped with the required databases, schemas and data.
 	// "Initialising"   - The services needed for ArangoGraphML are being installed.
@@ -112,10 +113,16 @@ type Status struct {
 	// Supporting information about the phase of MLServices (such as error messages in case of failures).
 	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 	// The timestamp of when this status was last updated.
-	LastUpdatedAt        *types.Timestamp `protobuf:"bytes,3,opt,name=last_updated_at,json=lastUpdatedAt,proto3" json:"last_updated_at,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
-	XXX_unrecognized     []byte           `json:"-"`
-	XXX_sizecache        int32            `json:"-"`
+	LastUpdatedAt *types.Timestamp `protobuf:"bytes,3,opt,name=last_updated_at,json=lastUpdatedAt,proto3" json:"last_updated_at,omitempty"`
+	// Status of the Training API service.
+	TrainingApi *Status_ServiceStatus `protobuf:"bytes,4,opt,name=training_api,json=trainingApi,proto3" json:"training_api,omitempty"`
+	// Status of the Prediction API service.
+	PredictionApi *Status_ServiceStatus `protobuf:"bytes,5,opt,name=prediction_api,json=predictionApi,proto3" json:"prediction_api,omitempty"`
+	// Status of the Projects API service.
+	ProjectsApi          *Status_ServiceStatus `protobuf:"bytes,6,opt,name=projects_api,json=projectsApi,proto3" json:"projects_api,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
+	XXX_unrecognized     []byte                `json:"-"`
+	XXX_sizecache        int32                 `json:"-"`
 }
 
 func (m *Status) Reset()         { *m = Status{} }
@@ -172,45 +179,223 @@ func (m *Status) GetLastUpdatedAt() *types.Timestamp {
 	return nil
 }
 
+func (m *Status) GetTrainingApi() *Status_ServiceStatus {
+	if m != nil {
+		return m.TrainingApi
+	}
+	return nil
+}
+
+func (m *Status) GetPredictionApi() *Status_ServiceStatus {
+	if m != nil {
+		return m.PredictionApi
+	}
+	return nil
+}
+
+func (m *Status) GetProjectsApi() *Status_ServiceStatus {
+	if m != nil {
+		return m.ProjectsApi
+	}
+	return nil
+}
+
+// Status of a single ArangoGraphML component.
+type Status_ServiceStatus struct {
+	// Set to true if the service is available.
+	Available bool `protobuf:"varint,1,opt,name=available,proto3" json:"available,omitempty"`
+	// Set to true if the service is in a failed state.
+	Failed bool `protobuf:"varint,2,opt,name=failed,proto3" json:"failed,omitempty"`
+	// Resource usage information for this service.
+	Usage                *Status_ServiceStatus_Usage `protobuf:"bytes,3,opt,name=usage,proto3" json:"usage,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                    `json:"-"`
+	XXX_unrecognized     []byte                      `json:"-"`
+	XXX_sizecache        int32                       `json:"-"`
+}
+
+func (m *Status_ServiceStatus) Reset()         { *m = Status_ServiceStatus{} }
+func (m *Status_ServiceStatus) String() string { return proto.CompactTextString(m) }
+func (*Status_ServiceStatus) ProtoMessage()    {}
+func (*Status_ServiceStatus) Descriptor() ([]byte, []int) {
+	return fileDescriptor_378f7d136b22f2a8, []int{1, 0}
+}
+func (m *Status_ServiceStatus) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Status_ServiceStatus) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Status_ServiceStatus.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Status_ServiceStatus) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Status_ServiceStatus.Merge(m, src)
+}
+func (m *Status_ServiceStatus) XXX_Size() int {
+	return m.Size()
+}
+func (m *Status_ServiceStatus) XXX_DiscardUnknown() {
+	xxx_messageInfo_Status_ServiceStatus.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Status_ServiceStatus proto.InternalMessageInfo
+
+func (m *Status_ServiceStatus) GetAvailable() bool {
+	if m != nil {
+		return m.Available
+	}
+	return false
+}
+
+func (m *Status_ServiceStatus) GetFailed() bool {
+	if m != nil {
+		return m.Failed
+	}
+	return false
+}
+
+func (m *Status_ServiceStatus) GetUsage() *Status_ServiceStatus_Usage {
+	if m != nil {
+		return m.Usage
+	}
+	return nil
+}
+
+// Resource usage for this service.
+type Status_ServiceStatus_Usage struct {
+	// Last known memory usage in bytes
+	LastMemoryUsage int64 `protobuf:"varint,1,opt,name=last_memory_usage,json=lastMemoryUsage,proto3" json:"last_memory_usage,omitempty"`
+	// Last known CPU usage in vCPU units
+	LastCpuUsage float32 `protobuf:"fixed32,2,opt,name=last_cpu_usage,json=lastCpuUsage,proto3" json:"last_cpu_usage,omitempty"`
+	// Last known memory limit in bytes
+	LastMemoryLimit int64 `protobuf:"varint,3,opt,name=last_memory_limit,json=lastMemoryLimit,proto3" json:"last_memory_limit,omitempty"`
+	// Last known CPU limit in vCPU units
+	LastCpuLimit         float32  `protobuf:"fixed32,4,opt,name=last_cpu_limit,json=lastCpuLimit,proto3" json:"last_cpu_limit,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Status_ServiceStatus_Usage) Reset()         { *m = Status_ServiceStatus_Usage{} }
+func (m *Status_ServiceStatus_Usage) String() string { return proto.CompactTextString(m) }
+func (*Status_ServiceStatus_Usage) ProtoMessage()    {}
+func (*Status_ServiceStatus_Usage) Descriptor() ([]byte, []int) {
+	return fileDescriptor_378f7d136b22f2a8, []int{1, 0, 0}
+}
+func (m *Status_ServiceStatus_Usage) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Status_ServiceStatus_Usage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Status_ServiceStatus_Usage.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Status_ServiceStatus_Usage) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Status_ServiceStatus_Usage.Merge(m, src)
+}
+func (m *Status_ServiceStatus_Usage) XXX_Size() int {
+	return m.Size()
+}
+func (m *Status_ServiceStatus_Usage) XXX_DiscardUnknown() {
+	xxx_messageInfo_Status_ServiceStatus_Usage.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Status_ServiceStatus_Usage proto.InternalMessageInfo
+
+func (m *Status_ServiceStatus_Usage) GetLastMemoryUsage() int64 {
+	if m != nil {
+		return m.LastMemoryUsage
+	}
+	return 0
+}
+
+func (m *Status_ServiceStatus_Usage) GetLastCpuUsage() float32 {
+	if m != nil {
+		return m.LastCpuUsage
+	}
+	return 0
+}
+
+func (m *Status_ServiceStatus_Usage) GetLastMemoryLimit() int64 {
+	if m != nil {
+		return m.LastMemoryLimit
+	}
+	return 0
+}
+
+func (m *Status_ServiceStatus_Usage) GetLastCpuLimit() float32 {
+	if m != nil {
+		return m.LastCpuLimit
+	}
+	return 0
+}
+
 func init() {
 	proto.RegisterType((*MLServices)(nil), "arangodb.cloud.ml.v1.MLServices")
 	proto.RegisterType((*Status)(nil), "arangodb.cloud.ml.v1.Status")
+	proto.RegisterType((*Status_ServiceStatus)(nil), "arangodb.cloud.ml.v1.Status.ServiceStatus")
+	proto.RegisterType((*Status_ServiceStatus_Usage)(nil), "arangodb.cloud.ml.v1.Status.ServiceStatus.Usage")
 }
 
 func init() { proto.RegisterFile("ml.proto", fileDescriptor_378f7d136b22f2a8) }
 
 var fileDescriptor_378f7d136b22f2a8 = []byte{
-	// 472 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x92, 0x4f, 0x8b, 0x13, 0x31,
-	0x18, 0xc6, 0xcd, 0x2e, 0xd6, 0x6d, 0xb4, 0x28, 0x61, 0x59, 0x86, 0xa1, 0xd4, 0x3a, 0xa2, 0x94,
-	0x85, 0xcd, 0xd8, 0xd5, 0x83, 0xe8, 0x69, 0x17, 0x45, 0x0a, 0x8a, 0x32, 0xab, 0x1e, 0xbc, 0x94,
-	0x4c, 0x13, 0x67, 0x03, 0xf9, 0x47, 0x93, 0x19, 0xa8, 0xba, 0x07, 0xbd, 0xe8, 0xdd, 0x8b, 0x1f,
-	0xc9, 0xa3, 0xe0, 0x17, 0x90, 0xea, 0x07, 0x91, 0x26, 0x33, 0xb6, 0xca, 0x16, 0xf7, 0x96, 0xe4,
-	0x7d, 0xdf, 0xe7, 0xc7, 0xfb, 0x3c, 0x81, 0x5b, 0x52, 0x60, 0x33, 0xd5, 0x4e, 0xa3, 0x6d, 0x32,
-	0x25, 0xaa, 0xd0, 0x34, 0xc7, 0x13, 0xa1, 0x4b, 0x8a, 0xa5, 0xc0, 0xd5, 0x30, 0xde, 0x99, 0x68,
-	0x29, 0xb5, 0x4a, 0xab, 0x61, 0x1a, 0x4e, 0xa1, 0x3b, 0xbe, 0x5f, 0x70, 0x77, 0x5c, 0xe6, 0x78,
-	0xa2, 0x65, 0x5a, 0x68, 0x41, 0x54, 0x91, 0xfa, 0x42, 0x5e, 0xbe, 0x4e, 0x8d, 0x9b, 0x19, 0x66,
-	0x53, 0xc7, 0x25, 0xb3, 0x8e, 0x48, 0xb3, 0x3c, 0xd5, 0xc3, 0xdd, 0x42, 0xeb, 0x42, 0xb0, 0x94,
-	0x18, 0x9e, 0x12, 0xa5, 0xb4, 0x23, 0x8e, 0x6b, 0x65, 0x43, 0x35, 0x79, 0x0f, 0x20, 0x7c, 0xf2,
-	0xf8, 0x88, 0x4d, 0x2b, 0x3e, 0x61, 0x16, 0x5d, 0x87, 0x1d, 0xca, 0x8c, 0xd0, 0x33, 0xc9, 0x94,
-	0x1b, 0x73, 0x1a, 0x81, 0x3e, 0x18, 0xb4, 0xb3, 0x4b, 0xcb, 0xc7, 0x11, 0x45, 0x11, 0xbc, 0xc0,
-	0x14, 0xc9, 0x05, 0xa3, 0xd1, 0x46, 0x1f, 0x0c, 0xb6, 0xb2, 0xe6, 0x8a, 0xee, 0xc0, 0x96, 0x75,
-	0xc4, 0x95, 0x36, 0xa2, 0x7d, 0x30, 0xb8, 0xb8, 0xdf, 0xc5, 0xa7, 0xed, 0x89, 0x8f, 0x7c, 0x4f,
-	0x56, 0xf7, 0x26, 0xef, 0x60, 0x2b, 0xbc, 0xa0, 0x6d, 0x78, 0xde, 0x1c, 0x13, 0xcb, 0x6a, 0x6c,
-	0xb8, 0x2c, 0x78, 0x92, 0x59, 0x4b, 0x0a, 0xe6, 0x79, 0xed, 0xac, 0xb9, 0xa2, 0x43, 0x78, 0x59,
-	0x10, 0xeb, 0xc6, 0xa5, 0xa1, 0xc4, 0x31, 0x3a, 0x26, 0x2e, 0xda, 0xf4, 0xe0, 0x18, 0x87, 0xad,
-	0x71, 0xe3, 0x13, 0x7e, 0xde, 0xd8, 0x92, 0x75, 0x16, 0x23, 0x2f, 0xc2, 0xc4, 0x81, 0xdb, 0xff,
-	0xb8, 0x09, 0xdb, 0x7f, 0x1c, 0x40, 0x16, 0x76, 0x1e, 0x31, 0x77, 0xf0, 0x6c, 0xf4, 0x92, 0x4d,
-	0x2d, 0xd7, 0x0a, 0x5d, 0xfd, 0x77, 0x85, 0x3a, 0x99, 0x6a, 0x88, 0x1f, 0x4a, 0xe3, 0x66, 0xf1,
-	0xb5, 0xf5, 0x0d, 0xb5, 0x46, 0xd2, 0xfb, 0xf0, 0xfd, 0xd7, 0xe7, 0x8d, 0x08, 0xed, 0xf8, 0x10,
-	0xa4, 0x58, 0x04, 0x4c, 0x0c, 0xdf, 0xab, 0x6a, 0xc6, 0x1b, 0x0f, 0x5d, 0x8d, 0x61, 0xbd, 0xe6,
-	0xe8, 0xc1, 0x53, 0xe3, 0x03, 0x8c, 0xfb, 0xa7, 0x9b, 0xbb, 0x94, 0x49, 0x12, 0xcf, 0xed, 0xa2,
-	0x78, 0x85, 0x2b, 0x85, 0xad, 0xcb, 0xe9, 0x5b, 0x4e, 0x4f, 0xd0, 0x27, 0x00, 0xaf, 0x04, 0x33,
-	0x56, 0xf8, 0xff, 0x95, 0x3e, 0x03, 0xfc, 0x96, 0x87, 0xef, 0xc6, 0x37, 0xd6, 0xc0, 0xff, 0xfa,
-	0x67, 0x27, 0xf7, 0xc0, 0xee, 0xe1, 0xdd, 0xaf, 0xf3, 0x1e, 0xf8, 0x36, 0xef, 0x81, 0x1f, 0xf3,
-	0x1e, 0xf8, 0xf2, 0xb3, 0x77, 0xee, 0xd5, 0xcd, 0x95, 0x8f, 0xdf, 0xf0, 0xf6, 0x24, 0x51, 0xa4,
-	0x60, 0x74, 0x21, 0x6b, 0x83, 0x6e, 0xde, 0xf2, 0x31, 0xdf, 0xfe, 0x1d, 0x00, 0x00, 0xff, 0xff,
-	0xb8, 0x52, 0xc5, 0x03, 0x61, 0x03, 0x00, 0x00,
+	// 663 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x94, 0x4d, 0x6f, 0xd3, 0x30,
+	0x18, 0xc7, 0x49, 0xb7, 0x96, 0xd5, 0x6b, 0x07, 0x58, 0xd3, 0x14, 0x45, 0x55, 0x29, 0xe5, 0x45,
+	0x53, 0xa5, 0x39, 0xdb, 0xe0, 0x80, 0xe0, 0xd4, 0xf1, 0xa6, 0x49, 0xab, 0x80, 0x8c, 0x71, 0xe0,
+	0x52, 0xb9, 0x89, 0x97, 0x19, 0xc5, 0xb1, 0x15, 0x3b, 0x95, 0x0a, 0xda, 0x01, 0x2e, 0x70, 0xe7,
+	0xc2, 0x77, 0xd8, 0x47, 0xe0, 0x0b, 0x70, 0x44, 0xe2, 0x0b, 0xa0, 0xc1, 0x07, 0x41, 0xb1, 0x13,
+	0xd2, 0xa2, 0x0d, 0xb6, 0x5b, 0xfc, 0xf8, 0xff, 0xfc, 0xfe, 0xf6, 0xf3, 0xe4, 0x31, 0x58, 0x60,
+	0x11, 0x12, 0x09, 0x57, 0x1c, 0x2e, 0xe3, 0x04, 0xc7, 0x21, 0x0f, 0x46, 0xc8, 0x8f, 0x78, 0x1a,
+	0x20, 0x16, 0xa1, 0xf1, 0x86, 0xb3, 0xe2, 0x73, 0xc6, 0x78, 0xec, 0x8e, 0x37, 0x5c, 0xf3, 0x65,
+	0xd4, 0xce, 0xfd, 0x90, 0xaa, 0x83, 0x74, 0x84, 0x7c, 0xce, 0xdc, 0x90, 0x47, 0x38, 0x0e, 0x5d,
+	0xbd, 0x31, 0x4a, 0xf7, 0x5d, 0xa1, 0x26, 0x82, 0x48, 0x57, 0x51, 0x46, 0xa4, 0xc2, 0x4c, 0x94,
+	0x5f, 0x79, 0x72, 0x2b, 0xe4, 0x3c, 0x8c, 0x88, 0x8b, 0x05, 0x75, 0x71, 0x1c, 0x73, 0x85, 0x15,
+	0xe5, 0xb1, 0x34, 0xbb, 0xdd, 0x77, 0x16, 0x00, 0x83, 0x9d, 0x5d, 0x92, 0x8c, 0xa9, 0x4f, 0x24,
+	0xbc, 0x0e, 0x9a, 0x01, 0x11, 0x11, 0x9f, 0x30, 0x12, 0xab, 0x21, 0x0d, 0x6c, 0xab, 0x63, 0xad,
+	0xd6, 0xbd, 0x46, 0x19, 0xdc, 0x0e, 0xa0, 0x0d, 0x2e, 0x92, 0x18, 0x8f, 0x22, 0x12, 0xd8, 0x95,
+	0x8e, 0xb5, 0xba, 0xe0, 0x15, 0x4b, 0x78, 0x07, 0xd4, 0xa4, 0xc2, 0x2a, 0x95, 0x76, 0xd0, 0xb1,
+	0x56, 0x17, 0x37, 0x5b, 0xe8, 0xa4, 0x7b, 0xa2, 0x5d, 0xad, 0xf1, 0x72, 0x6d, 0xf7, 0xa8, 0x0a,
+	0x6a, 0x26, 0x04, 0x97, 0x41, 0x55, 0x1c, 0x60, 0x49, 0x72, 0x5f, 0xb3, 0xc8, 0x0c, 0x19, 0x91,
+	0x12, 0x87, 0x44, 0x1b, 0xd6, 0xbd, 0x62, 0x09, 0xb7, 0xc0, 0xa5, 0x08, 0x4b, 0x35, 0x4c, 0x45,
+	0x80, 0x15, 0x09, 0x86, 0x58, 0xd9, 0x73, 0xda, 0xd9, 0x41, 0xe6, 0xda, 0xa8, 0x28, 0x14, 0x7a,
+	0x51, 0xd4, 0xc5, 0x6b, 0x66, 0x29, 0x7b, 0x26, 0xa3, 0xaf, 0xe0, 0x00, 0x34, 0x54, 0x82, 0x69,
+	0x4c, 0xe3, 0x70, 0x88, 0x05, 0xb5, 0xe7, 0x35, 0xa0, 0xf7, 0xaf, 0xa3, 0xa3, 0xbc, 0x60, 0xf9,
+	0x45, 0x16, 0x8b, 0xfc, 0xbe, 0xa0, 0xf0, 0x39, 0x58, 0x12, 0x09, 0x09, 0xa8, 0x9f, 0x95, 0x59,
+	0x03, 0xab, 0xe7, 0x06, 0x36, 0x4b, 0x42, 0x86, 0x1c, 0x80, 0x86, 0x48, 0xf8, 0x6b, 0xe2, 0x2b,
+	0xa9, 0x81, 0xb5, 0xf3, 0x9f, 0xb0, 0xc8, 0xef, 0x0b, 0xea, 0x7c, 0xa9, 0x80, 0xe6, 0xcc, 0x36,
+	0x6c, 0x81, 0x3a, 0x1e, 0x63, 0x1a, 0x65, 0x5d, 0xd4, 0xa5, 0x5f, 0xf0, 0xca, 0x00, 0x5c, 0x01,
+	0xb5, 0x7d, 0x4c, 0xcb, 0x76, 0xe7, 0x2b, 0xf8, 0x18, 0x54, 0x53, 0xdd, 0x14, 0x53, 0xf2, 0xf5,
+	0xb3, 0x9f, 0x07, 0xed, 0x65, 0x79, 0x9e, 0x49, 0x77, 0x8e, 0x2c, 0x50, 0xd5, 0x01, 0xd8, 0x03,
+	0x57, 0x74, 0x3b, 0x19, 0x61, 0x3c, 0x99, 0x0c, 0x0d, 0x3d, 0x3b, 0xcf, 0x9c, 0xa7, 0xfb, 0x3c,
+	0xd0, 0x71, 0xa3, 0xbd, 0x01, 0x96, 0xb4, 0xd6, 0x17, 0x69, 0x2e, 0xcc, 0x4e, 0x57, 0xf1, 0x1a,
+	0x59, 0xf4, 0x81, 0x48, 0x4f, 0x24, 0x46, 0x94, 0x51, 0xf3, 0x8b, 0xcc, 0x10, 0x77, 0xb2, 0xf0,
+	0x0c, 0xd1, 0x08, 0xe7, 0x67, 0x88, 0x5a, 0xb5, 0xf9, 0x61, 0x0e, 0xd4, 0xff, 0x4c, 0x0c, 0x94,
+	0xa0, 0xf9, 0x84, 0xa8, 0xfe, 0xb3, 0xed, 0x97, 0x24, 0x91, 0x94, 0xc7, 0xf0, 0xea, 0xdf, 0x55,
+	0xc8, 0x27, 0x79, 0xbc, 0x81, 0x1e, 0x31, 0xa1, 0x26, 0xce, 0xb5, 0xd3, 0x05, 0x39, 0xa3, 0xdb,
+	0x7e, 0xff, 0xfd, 0xd7, 0xa7, 0x8a, 0x0d, 0x57, 0xf4, 0xd0, 0xb2, 0x28, 0x7b, 0x10, 0xb0, 0xa0,
+	0x6b, 0xe3, 0xdc, 0xe3, 0x8d, 0x36, 0x9d, 0x1e, 0xdb, 0xd3, 0x99, 0xdb, 0x0f, 0x9f, 0x0a, 0x3d,
+	0xf0, 0x4e, 0xe7, 0xe4, 0xfe, 0x94, 0x98, 0x6e, 0x57, 0xfb, 0xb6, 0xa0, 0x33, 0xe5, 0xcb, 0x22,
+	0x99, 0x6f, 0xbb, 0x6f, 0x69, 0x70, 0x08, 0x3f, 0x5a, 0xe0, 0xb2, 0x99, 0x9d, 0x29, 0xff, 0xff,
+	0xa2, 0xcf, 0x60, 0xbe, 0xae, 0xcd, 0x7b, 0xce, 0xcd, 0x53, 0xcc, 0x67, 0xde, 0xa5, 0xc3, 0x7b,
+	0x56, 0x6f, 0xeb, 0xee, 0xd7, 0xe3, 0xb6, 0xf5, 0xed, 0xb8, 0x6d, 0xfd, 0x38, 0x6e, 0x5b, 0x9f,
+	0x7f, 0xb6, 0x2f, 0xbc, 0xba, 0x35, 0xf5, 0x50, 0x16, 0x7e, 0x6b, 0x0c, 0xc7, 0x38, 0x24, 0x41,
+	0x86, 0x95, 0x86, 0x3b, 0xaa, 0xe9, 0x57, 0xe1, 0xf6, 0xef, 0x00, 0x00, 0x00, 0xff, 0xff, 0x2f,
+	0x2a, 0xe7, 0xf5, 0x91, 0x05, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -467,6 +652,42 @@ func (m *Status) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
+	if m.ProjectsApi != nil {
+		{
+			size, err := m.ProjectsApi.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintMl(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x32
+	}
+	if m.PredictionApi != nil {
+		{
+			size, err := m.PredictionApi.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintMl(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x2a
+	}
+	if m.TrainingApi != nil {
+		{
+			size, err := m.TrainingApi.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintMl(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x22
+	}
 	if m.LastUpdatedAt != nil {
 		{
 			size, err := m.LastUpdatedAt.MarshalToSizedBuffer(dAtA[:i])
@@ -492,6 +713,114 @@ func (m *Status) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i = encodeVarintMl(dAtA, i, uint64(len(m.Phase)))
 		i--
 		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Status_ServiceStatus) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Status_ServiceStatus) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Status_ServiceStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Usage != nil {
+		{
+			size, err := m.Usage.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintMl(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.Failed {
+		i--
+		if m.Failed {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Available {
+		i--
+		if m.Available {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Status_ServiceStatus_Usage) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Status_ServiceStatus_Usage) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Status_ServiceStatus_Usage) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.LastCpuLimit != 0 {
+		i -= 4
+		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.LastCpuLimit))))
+		i--
+		dAtA[i] = 0x25
+	}
+	if m.LastMemoryLimit != 0 {
+		i = encodeVarintMl(dAtA, i, uint64(m.LastMemoryLimit))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.LastCpuUsage != 0 {
+		i -= 4
+		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.LastCpuUsage))))
+		i--
+		dAtA[i] = 0x15
+	}
+	if m.LastMemoryUsage != 0 {
+		i = encodeVarintMl(dAtA, i, uint64(m.LastMemoryUsage))
+		i--
+		dAtA[i] = 0x8
 	}
 	return len(dAtA) - i, nil
 }
@@ -547,6 +876,64 @@ func (m *Status) Size() (n int) {
 	if m.LastUpdatedAt != nil {
 		l = m.LastUpdatedAt.Size()
 		n += 1 + l + sovMl(uint64(l))
+	}
+	if m.TrainingApi != nil {
+		l = m.TrainingApi.Size()
+		n += 1 + l + sovMl(uint64(l))
+	}
+	if m.PredictionApi != nil {
+		l = m.PredictionApi.Size()
+		n += 1 + l + sovMl(uint64(l))
+	}
+	if m.ProjectsApi != nil {
+		l = m.ProjectsApi.Size()
+		n += 1 + l + sovMl(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *Status_ServiceStatus) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Available {
+		n += 2
+	}
+	if m.Failed {
+		n += 2
+	}
+	if m.Usage != nil {
+		l = m.Usage.Size()
+		n += 1 + l + sovMl(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *Status_ServiceStatus_Usage) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.LastMemoryUsage != 0 {
+		n += 1 + sovMl(uint64(m.LastMemoryUsage))
+	}
+	if m.LastCpuUsage != 0 {
+		n += 5
+	}
+	if m.LastMemoryLimit != 0 {
+		n += 1 + sovMl(uint64(m.LastMemoryLimit))
+	}
+	if m.LastCpuLimit != 0 {
+		n += 5
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -828,6 +1215,352 @@ func (m *Status) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TrainingApi", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthMl
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthMl
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.TrainingApi == nil {
+				m.TrainingApi = &Status_ServiceStatus{}
+			}
+			if err := m.TrainingApi.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PredictionApi", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthMl
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthMl
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.PredictionApi == nil {
+				m.PredictionApi = &Status_ServiceStatus{}
+			}
+			if err := m.PredictionApi.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ProjectsApi", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthMl
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthMl
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.ProjectsApi == nil {
+				m.ProjectsApi = &Status_ServiceStatus{}
+			}
+			if err := m.ProjectsApi.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMl(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMl
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Status_ServiceStatus) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMl
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ServiceStatus: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ServiceStatus: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Available", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Available = bool(v != 0)
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Failed", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Failed = bool(v != 0)
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Usage", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthMl
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthMl
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Usage == nil {
+				m.Usage = &Status_ServiceStatus_Usage{}
+			}
+			if err := m.Usage.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMl(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMl
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Status_ServiceStatus_Usage) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMl
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Usage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Usage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LastMemoryUsage", wireType)
+			}
+			m.LastMemoryUsage = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.LastMemoryUsage |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 5 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LastCpuUsage", wireType)
+			}
+			var v uint32
+			if (iNdEx + 4) > l {
+				return io.ErrUnexpectedEOF
+			}
+			v = uint32(encoding_binary.LittleEndian.Uint32(dAtA[iNdEx:]))
+			iNdEx += 4
+			m.LastCpuUsage = float32(math.Float32frombits(v))
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LastMemoryLimit", wireType)
+			}
+			m.LastMemoryLimit = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.LastMemoryLimit |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 5 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LastCpuLimit", wireType)
+			}
+			var v uint32
+			if (iNdEx + 4) > l {
+				return io.ErrUnexpectedEOF
+			}
+			v = uint32(encoding_binary.LittleEndian.Uint32(dAtA[iNdEx:]))
+			iNdEx += 4
+			m.LastCpuLimit = float32(math.Float32frombits(v))
 		default:
 			iNdEx = preIndex
 			skippy, err := skipMl(dAtA[iNdEx:])
