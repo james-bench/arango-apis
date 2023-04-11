@@ -1106,6 +1106,18 @@ title: "ArangoGraph Insights Platform API"
                   <a href="#arangodb.cloud.ml.v1.MLServices"><span class="badge">M</span>MLServices</a>
                 </li>
               
+                <li>
+                  <a href="#arangodb.cloud.ml.v1.Status"><span class="badge">M</span>Status</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.ml.v1.Status.ServiceStatus"><span class="badge">M</span>Status.ServiceStatus</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.ml.v1.Status.ServiceStatus.Usage"><span class="badge">M</span>Status.ServiceStatus.Usage</a>
+                </li>
+              
               
               
               
@@ -14532,6 +14544,155 @@ This is a ready-only value. </p></td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>Set to true if ML services are enabled for this deployment. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#arangodb.cloud.ml.v1.Status">Status</a></td>
+                  <td></td>
+                  <td><p>Status of the MLServices.
+This is a read-only value. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.ml.v1.Status">Status</h3>
+        <p>Status of the MLServices.</p><p>Note: All fields are read-only.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>phase</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Overall status of where the MLServices resource is in its lifecycle at a given time.
+It will contain only one of the following values:
+&#34;Bootstrapping&#34;  - ArangoDB Deployment is being bootstrapped with the required databases, schemas and data.
+&#34;Initialising&#34;   - The services needed for ArangoGraphML are being installed.
+&#34;Running&#34;        - ArangoGraphML is setup and running correctly.
+&#34;Error&#34;          - Indicates that there was an error with setting up ArangoGraphML. Check `message` field for additional info. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>message</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Supporting information about the phase of MLServices (such as error messages in case of failures). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_updated_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The timestamp of when this status was last updated. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>services</td>
+                  <td><a href="#arangodb.cloud.ml.v1.Status.ServiceStatus">Status.ServiceStatus</a></td>
+                  <td>repeated</td>
+                  <td><p>Status of each ArangoGraphML components/services. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.ml.v1.Status.ServiceStatus">Status.ServiceStatus</h3>
+        <p>Status of a single ArangoGraphML component.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>type</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Type of service.
+Should be one of: [training|prediction|projects] </p></td>
+                </tr>
+              
+                <tr>
+                  <td>available</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Set to true if the service is available. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>failed</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Set to true if the service is in a failed state. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>usage</td>
+                  <td><a href="#arangodb.cloud.ml.v1.Status.ServiceStatus.Usage">Status.ServiceStatus.Usage</a></td>
+                  <td></td>
+                  <td><p>Resource usage information for this service. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.ml.v1.Status.ServiceStatus.Usage">Status.ServiceStatus.Usage</h3>
+        <p>Resource usage for this service.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>last_memory_usage</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>Last known memory usage in bytes </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_cpu_usage</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Last known CPU usage in vCPU units </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_memory_limit</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>Last known memory limit in bytes </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_cpu_limit</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Last known CPU limit in vCPU units </p></td>
                 </tr>
               
             </tbody>

@@ -22,6 +22,56 @@ export interface MLServices {
   // Set to true if ML services are enabled for this deployment.
   // boolean
   enabled?: boolean;
+  
+  // Status of the MLServices.
+  // This is a read-only value.
+  // Status
+  status?: Status;
+}
+
+// Status of the MLServices.
+// Note: All fields are read-only.
+export interface Status {
+  // Overall status of where the MLServices resource is in its lifecycle at a given time.
+  // It will contain only one of the following values:
+  // "Bootstrapping"  - ArangoDB Deployment is being bootstrapped with the required databases, schemas and data.
+  // "Initialising"   - The services needed for ArangoGraphML are being installed.
+  // "Running"        - ArangoGraphML is setup and running correctly.
+  // "Error"          - Indicates that there was an error with setting up ArangoGraphML. Check `message` field for additional info.
+  // string
+  phase?: string;
+  
+  // Supporting information about the phase of MLServices (such as error messages in case of failures).
+  // string
+  message?: string;
+  
+  // The timestamp of when this status was last updated.
+  // googleTypes.Timestamp
+  last_updated_at?: googleTypes.Timestamp;
+  
+  // Status of each ArangoGraphML components/services.
+  // Status_ServiceStatus
+  services?: Status_ServiceStatus[];
+}
+
+// Status of a single ArangoGraphML component.
+export interface Status_ServiceStatus {
+  // Type of service.
+  // Should be one of: [training|prediction|projects]
+  // string
+  type?: string;
+  
+  // Set to true if the service is available.
+  // boolean
+  available?: boolean;
+  
+  // Set to true if the service is in a failed state.
+  // boolean
+  failed?: boolean;
+  
+  // Resource usage information for this service.
+  // Status_ServiceStatus_Usage
+  usage?: Status_ServiceStatus_Usage;
 }
 
 // MLService is the API used to configure ArangoML on ArangoGraph Insights Platform.

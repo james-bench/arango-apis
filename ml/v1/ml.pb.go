@@ -5,8 +5,10 @@ package v1
 
 import (
 	context "context"
+	encoding_binary "encoding/binary"
 	fmt "fmt"
 	v1 "github.com/arangodb-managed/apis/common/v1"
+	types "github.com/gogo/protobuf/types"
 	proto "github.com/golang/protobuf/proto"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
@@ -35,7 +37,10 @@ type MLServices struct {
 	// This is a ready-only value.
 	DeploymentId string `protobuf:"bytes,1,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
 	// Set to true if ML services are enabled for this deployment.
-	Enabled              bool     `protobuf:"varint,2,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	Enabled bool `protobuf:"varint,2,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	// Status of the MLServices.
+	// This is a read-only value.
+	Status               *Status  `protobuf:"bytes,100,opt,name=status,proto3" json:"status,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -88,37 +93,299 @@ func (m *MLServices) GetEnabled() bool {
 	return false
 }
 
+func (m *MLServices) GetStatus() *Status {
+	if m != nil {
+		return m.Status
+	}
+	return nil
+}
+
+// Status of the MLServices.
+// Note: All fields are read-only.
+type Status struct {
+	// Overall status of where the MLServices resource is in its lifecycle at a given time.
+	// It will contain only one of the following values:
+	// "Bootstrapping"  - ArangoDB Deployment is being bootstrapped with the required databases, schemas and data.
+	// "Initialising"   - The services needed for ArangoGraphML are being installed.
+	// "Running"        - ArangoGraphML is setup and running correctly.
+	// "Error"          - Indicates that there was an error with setting up ArangoGraphML. Check `message` field for additional info.
+	Phase string `protobuf:"bytes,1,opt,name=phase,proto3" json:"phase,omitempty"`
+	// Supporting information about the phase of MLServices (such as error messages in case of failures).
+	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	// The timestamp of when this status was last updated.
+	LastUpdatedAt *types.Timestamp `protobuf:"bytes,3,opt,name=last_updated_at,json=lastUpdatedAt,proto3" json:"last_updated_at,omitempty"`
+	// Status of each ArangoGraphML components/services.
+	Services             []*Status_ServiceStatus `protobuf:"bytes,4,rep,name=services,proto3" json:"services,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
+	XXX_unrecognized     []byte                  `json:"-"`
+	XXX_sizecache        int32                   `json:"-"`
+}
+
+func (m *Status) Reset()         { *m = Status{} }
+func (m *Status) String() string { return proto.CompactTextString(m) }
+func (*Status) ProtoMessage()    {}
+func (*Status) Descriptor() ([]byte, []int) {
+	return fileDescriptor_378f7d136b22f2a8, []int{1}
+}
+func (m *Status) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Status) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Status.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Status) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Status.Merge(m, src)
+}
+func (m *Status) XXX_Size() int {
+	return m.Size()
+}
+func (m *Status) XXX_DiscardUnknown() {
+	xxx_messageInfo_Status.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Status proto.InternalMessageInfo
+
+func (m *Status) GetPhase() string {
+	if m != nil {
+		return m.Phase
+	}
+	return ""
+}
+
+func (m *Status) GetMessage() string {
+	if m != nil {
+		return m.Message
+	}
+	return ""
+}
+
+func (m *Status) GetLastUpdatedAt() *types.Timestamp {
+	if m != nil {
+		return m.LastUpdatedAt
+	}
+	return nil
+}
+
+func (m *Status) GetServices() []*Status_ServiceStatus {
+	if m != nil {
+		return m.Services
+	}
+	return nil
+}
+
+// Status of a single ArangoGraphML component.
+type Status_ServiceStatus struct {
+	// Type of service.
+	// Should be one of: [training|prediction|projects]
+	Type string `protobuf:"bytes,1,opt,name=type,proto3" json:"type,omitempty"`
+	// Set to true if the service is available.
+	Available bool `protobuf:"varint,2,opt,name=available,proto3" json:"available,omitempty"`
+	// Set to true if the service is in a failed state.
+	Failed bool `protobuf:"varint,3,opt,name=failed,proto3" json:"failed,omitempty"`
+	// Resource usage information for this service.
+	Usage                *Status_ServiceStatus_Usage `protobuf:"bytes,4,opt,name=usage,proto3" json:"usage,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                    `json:"-"`
+	XXX_unrecognized     []byte                      `json:"-"`
+	XXX_sizecache        int32                       `json:"-"`
+}
+
+func (m *Status_ServiceStatus) Reset()         { *m = Status_ServiceStatus{} }
+func (m *Status_ServiceStatus) String() string { return proto.CompactTextString(m) }
+func (*Status_ServiceStatus) ProtoMessage()    {}
+func (*Status_ServiceStatus) Descriptor() ([]byte, []int) {
+	return fileDescriptor_378f7d136b22f2a8, []int{1, 0}
+}
+func (m *Status_ServiceStatus) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Status_ServiceStatus) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Status_ServiceStatus.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Status_ServiceStatus) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Status_ServiceStatus.Merge(m, src)
+}
+func (m *Status_ServiceStatus) XXX_Size() int {
+	return m.Size()
+}
+func (m *Status_ServiceStatus) XXX_DiscardUnknown() {
+	xxx_messageInfo_Status_ServiceStatus.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Status_ServiceStatus proto.InternalMessageInfo
+
+func (m *Status_ServiceStatus) GetType() string {
+	if m != nil {
+		return m.Type
+	}
+	return ""
+}
+
+func (m *Status_ServiceStatus) GetAvailable() bool {
+	if m != nil {
+		return m.Available
+	}
+	return false
+}
+
+func (m *Status_ServiceStatus) GetFailed() bool {
+	if m != nil {
+		return m.Failed
+	}
+	return false
+}
+
+func (m *Status_ServiceStatus) GetUsage() *Status_ServiceStatus_Usage {
+	if m != nil {
+		return m.Usage
+	}
+	return nil
+}
+
+// Resource usage for this service.
+type Status_ServiceStatus_Usage struct {
+	// Last known memory usage in bytes
+	LastMemoryUsage int64 `protobuf:"varint,1,opt,name=last_memory_usage,json=lastMemoryUsage,proto3" json:"last_memory_usage,omitempty"`
+	// Last known CPU usage in vCPU units
+	LastCpuUsage float32 `protobuf:"fixed32,2,opt,name=last_cpu_usage,json=lastCpuUsage,proto3" json:"last_cpu_usage,omitempty"`
+	// Last known memory limit in bytes
+	LastMemoryLimit int64 `protobuf:"varint,3,opt,name=last_memory_limit,json=lastMemoryLimit,proto3" json:"last_memory_limit,omitempty"`
+	// Last known CPU limit in vCPU units
+	LastCpuLimit         float32  `protobuf:"fixed32,4,opt,name=last_cpu_limit,json=lastCpuLimit,proto3" json:"last_cpu_limit,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Status_ServiceStatus_Usage) Reset()         { *m = Status_ServiceStatus_Usage{} }
+func (m *Status_ServiceStatus_Usage) String() string { return proto.CompactTextString(m) }
+func (*Status_ServiceStatus_Usage) ProtoMessage()    {}
+func (*Status_ServiceStatus_Usage) Descriptor() ([]byte, []int) {
+	return fileDescriptor_378f7d136b22f2a8, []int{1, 0, 0}
+}
+func (m *Status_ServiceStatus_Usage) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Status_ServiceStatus_Usage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Status_ServiceStatus_Usage.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Status_ServiceStatus_Usage) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Status_ServiceStatus_Usage.Merge(m, src)
+}
+func (m *Status_ServiceStatus_Usage) XXX_Size() int {
+	return m.Size()
+}
+func (m *Status_ServiceStatus_Usage) XXX_DiscardUnknown() {
+	xxx_messageInfo_Status_ServiceStatus_Usage.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Status_ServiceStatus_Usage proto.InternalMessageInfo
+
+func (m *Status_ServiceStatus_Usage) GetLastMemoryUsage() int64 {
+	if m != nil {
+		return m.LastMemoryUsage
+	}
+	return 0
+}
+
+func (m *Status_ServiceStatus_Usage) GetLastCpuUsage() float32 {
+	if m != nil {
+		return m.LastCpuUsage
+	}
+	return 0
+}
+
+func (m *Status_ServiceStatus_Usage) GetLastMemoryLimit() int64 {
+	if m != nil {
+		return m.LastMemoryLimit
+	}
+	return 0
+}
+
+func (m *Status_ServiceStatus_Usage) GetLastCpuLimit() float32 {
+	if m != nil {
+		return m.LastCpuLimit
+	}
+	return 0
+}
+
 func init() {
 	proto.RegisterType((*MLServices)(nil), "arangodb.cloud.ml.v1.MLServices")
+	proto.RegisterType((*Status)(nil), "arangodb.cloud.ml.v1.Status")
+	proto.RegisterType((*Status_ServiceStatus)(nil), "arangodb.cloud.ml.v1.Status.ServiceStatus")
+	proto.RegisterType((*Status_ServiceStatus_Usage)(nil), "arangodb.cloud.ml.v1.Status.ServiceStatus.Usage")
 }
 
 func init() { proto.RegisterFile("ml.proto", fileDescriptor_378f7d136b22f2a8) }
 
 var fileDescriptor_378f7d136b22f2a8 = []byte{
-	// 357 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0xc8, 0xcd, 0xd1, 0x2b,
-	0x28, 0xca, 0x2f, 0xc9, 0x17, 0x12, 0x49, 0x2c, 0x4a, 0xcc, 0x4b, 0xcf, 0x4f, 0x49, 0xd2, 0x4b,
-	0xce, 0xc9, 0x2f, 0x4d, 0xd1, 0xcb, 0xcd, 0xd1, 0x2b, 0x33, 0x94, 0x12, 0x4b, 0xce, 0xcf, 0xcd,
-	0xcd, 0xcf, 0xd3, 0x2f, 0x33, 0xd4, 0x87, 0xb0, 0x20, 0xaa, 0xa5, 0x64, 0xd2, 0xf3, 0xf3, 0xd3,
-	0x73, 0x52, 0xf5, 0x13, 0x0b, 0x32, 0xf5, 0x13, 0xf3, 0xf2, 0xf2, 0x4b, 0x12, 0x4b, 0x32, 0xf3,
-	0xf3, 0x8a, 0x21, 0xb2, 0x4a, 0xde, 0x5c, 0x5c, 0xbe, 0x3e, 0xc1, 0xa9, 0x45, 0x65, 0x99, 0xc9,
-	0xa9, 0xc5, 0x42, 0xca, 0x5c, 0xbc, 0x29, 0xa9, 0x05, 0x39, 0xf9, 0x95, 0xb9, 0xa9, 0x79, 0x25,
-	0xf1, 0x99, 0x29, 0x12, 0x8c, 0x0a, 0x8c, 0x1a, 0x9c, 0x41, 0x3c, 0x08, 0x41, 0xcf, 0x14, 0x21,
-	0x09, 0x2e, 0xf6, 0xd4, 0xbc, 0xc4, 0xa4, 0x9c, 0xd4, 0x14, 0x09, 0x26, 0x05, 0x46, 0x0d, 0x8e,
-	0x20, 0x18, 0xd7, 0xa8, 0x9d, 0x99, 0x8b, 0x13, 0x6e, 0x9a, 0x50, 0x31, 0x17, 0xaf, 0x7b, 0x6a,
-	0x89, 0x63, 0x80, 0x67, 0x58, 0x6a, 0x51, 0x71, 0x66, 0x7e, 0x9e, 0x90, 0xbc, 0x1e, 0x9a, 0xc3,
-	0xa1, 0xee, 0x2c, 0x33, 0xd4, 0x73, 0xcd, 0x2d, 0x28, 0xa9, 0x94, 0x52, 0xc4, 0xad, 0x00, 0x6a,
-	0x86, 0x92, 0x5c, 0xd3, 0xe5, 0x27, 0x93, 0x99, 0x24, 0x84, 0xc4, 0xc0, 0xfe, 0xc9, 0xcd, 0x01,
-	0x79, 0x37, 0xb1, 0x20, 0x53, 0xb7, 0x0c, 0x6a, 0x47, 0x15, 0xd8, 0x52, 0x64, 0x2f, 0xe1, 0x36,
-	0xd3, 0xd3, 0xc5, 0xbf, 0x00, 0x1c, 0x16, 0x52, 0x0a, 0x7a, 0xd8, 0x82, 0x54, 0x0f, 0x61, 0x8c,
-	0x92, 0x12, 0xd8, 0x5e, 0x19, 0x21, 0x29, 0x24, 0x7b, 0x73, 0x73, 0x8a, 0xa1, 0xd2, 0xfa, 0xd5,
-	0x99, 0x29, 0xb5, 0x42, 0x1d, 0x8c, 0x5c, 0x02, 0xa1, 0x05, 0x29, 0x89, 0x25, 0xa9, 0x48, 0xf6,
-	0x13, 0x34, 0x9a, 0x08, 0xcb, 0x0d, 0xc0, 0x96, 0x6b, 0x49, 0xa9, 0xe2, 0xb0, 0x1c, 0x25, 0xce,
-	0x6a, 0xad, 0x18, 0xb5, 0x9c, 0x2c, 0x4e, 0x3c, 0x92, 0x63, 0xbc, 0xf0, 0x48, 0x8e, 0xf1, 0xc1,
-	0x23, 0x39, 0xc6, 0x19, 0x8f, 0xe5, 0x18, 0xa2, 0xd4, 0xd2, 0x33, 0x4b, 0x32, 0x4a, 0x93, 0x40,
-	0xde, 0xd7, 0x87, 0xd9, 0xa7, 0x9b, 0x9b, 0x98, 0x97, 0x98, 0x9e, 0x9a, 0x02, 0x32, 0xb6, 0x18,
-	0x62, 0x6e, 0x12, 0x1b, 0x38, 0x5d, 0x18, 0x03, 0x02, 0x00, 0x00, 0xff, 0xff, 0xdf, 0x02, 0x46,
-	0xd7, 0x6f, 0x02, 0x00, 0x00,
+	// 628 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x54, 0xcd, 0x6e, 0x13, 0x3d,
+	0x14, 0xfd, 0x26, 0x49, 0xf3, 0x35, 0x6e, 0xc3, 0x8f, 0x55, 0x55, 0xa3, 0x51, 0x14, 0x42, 0xf8,
+	0x51, 0x14, 0xa9, 0x9e, 0xb6, 0xb0, 0x40, 0xb0, 0x6a, 0x81, 0xa2, 0x4a, 0xad, 0x40, 0x53, 0xca,
+	0x82, 0x4d, 0xe4, 0x64, 0xdc, 0xa9, 0xa5, 0xf1, 0xd8, 0x8a, 0x3d, 0x91, 0x02, 0xea, 0x02, 0x36,
+	0xb0, 0x47, 0x42, 0xbc, 0x03, 0x2f, 0xc2, 0x0e, 0x24, 0x5e, 0x00, 0x15, 0x1e, 0x04, 0xf9, 0x67,
+	0x9a, 0x04, 0x35, 0xd0, 0x9d, 0x7d, 0x7d, 0xee, 0x39, 0xf7, 0x1e, 0xfb, 0x1a, 0x2c, 0xb2, 0x14,
+	0x89, 0x21, 0x57, 0x1c, 0xae, 0xe0, 0x21, 0xce, 0x12, 0x1e, 0xf7, 0xd1, 0x20, 0xe5, 0x79, 0x8c,
+	0x58, 0x8a, 0x46, 0x1b, 0xc1, 0xea, 0x80, 0x33, 0xc6, 0xb3, 0x70, 0xb4, 0x11, 0xda, 0x95, 0x45,
+	0x07, 0x0f, 0x12, 0xaa, 0x8e, 0xf3, 0x3e, 0x1a, 0x70, 0x16, 0x26, 0x3c, 0xc5, 0x59, 0x12, 0x9a,
+	0x83, 0x7e, 0x7e, 0x14, 0x0a, 0x35, 0x16, 0x44, 0x86, 0x8a, 0x32, 0x22, 0x15, 0x66, 0x62, 0xb2,
+	0x72, 0xc9, 0x8d, 0x84, 0xf3, 0x24, 0x25, 0x21, 0x16, 0x34, 0xc4, 0x59, 0xc6, 0x15, 0x56, 0x94,
+	0x67, 0xd2, 0x9e, 0xb6, 0xdf, 0x78, 0x00, 0xec, 0xef, 0x1d, 0x90, 0xe1, 0x88, 0x0e, 0x88, 0x84,
+	0x37, 0x40, 0x3d, 0x26, 0x22, 0xe5, 0x63, 0x46, 0x32, 0xd5, 0xa3, 0xb1, 0xef, 0xb5, 0xbc, 0x4e,
+	0x2d, 0x5a, 0x9e, 0x04, 0x77, 0x63, 0xe8, 0x83, 0xff, 0x49, 0x86, 0xfb, 0x29, 0x89, 0xfd, 0x52,
+	0xcb, 0xeb, 0x2c, 0x46, 0xc5, 0x16, 0xde, 0x05, 0x55, 0xa9, 0xb0, 0xca, 0xa5, 0x1f, 0xb7, 0xbc,
+	0xce, 0xd2, 0x66, 0x03, 0x9d, 0xd7, 0x27, 0x3a, 0x30, 0x98, 0xc8, 0x61, 0xdb, 0x1f, 0x2b, 0xa0,
+	0x6a, 0x43, 0x70, 0x05, 0x2c, 0x88, 0x63, 0x2c, 0x89, 0xd3, 0xb5, 0x1b, 0x2d, 0xc8, 0x88, 0x94,
+	0x38, 0x21, 0x46, 0xb0, 0x16, 0x15, 0x5b, 0xb8, 0x0d, 0x2e, 0xa7, 0x58, 0xaa, 0x5e, 0x2e, 0x62,
+	0xac, 0x48, 0xdc, 0xc3, 0xca, 0x2f, 0x1b, 0xe5, 0x00, 0xd9, 0xb6, 0x51, 0x61, 0x14, 0x7a, 0x5e,
+	0xf8, 0x12, 0xd5, 0x75, 0xca, 0xa1, 0xcd, 0xd8, 0x52, 0x70, 0x07, 0x2c, 0x4a, 0xd7, 0xbf, 0x5f,
+	0x69, 0x95, 0x3b, 0x4b, 0x9b, 0xdd, 0xbf, 0x95, 0x8d, 0x9c, 0x59, 0xae, 0x89, 0xb3, 0xdc, 0xe0,
+	0x6b, 0x09, 0xd4, 0x67, 0xce, 0x20, 0x04, 0x15, 0x7d, 0x3b, 0xae, 0x19, 0xb3, 0x86, 0x0d, 0x50,
+	0xc3, 0x23, 0x4c, 0x53, 0x6d, 0x98, 0xb3, 0x6f, 0x12, 0x80, 0xab, 0xa0, 0x7a, 0x84, 0xa9, 0x76,
+	0xb6, 0x6c, 0x8e, 0xdc, 0x0e, 0xee, 0x80, 0x85, 0xdc, 0xf4, 0x5f, 0x31, 0xdd, 0xad, 0x5f, 0xbc,
+	0x40, 0x74, 0xa8, 0xf3, 0x22, 0x9b, 0x1e, 0x7c, 0xf6, 0xc0, 0x82, 0x09, 0xc0, 0x2e, 0xb8, 0x6a,
+	0x9c, 0x63, 0x84, 0xf1, 0xe1, 0xb8, 0x67, 0xd9, 0x75, 0xa1, 0xe5, 0xc8, 0x58, 0xba, 0x6f, 0xe2,
+	0x16, 0x7b, 0x13, 0x5c, 0x32, 0xd8, 0x81, 0xc8, 0x1d, 0x50, 0x17, 0x5e, 0x8a, 0x96, 0x75, 0xf4,
+	0xa1, 0xc8, 0xcf, 0x65, 0x4c, 0x29, 0xa3, 0xf6, 0x36, 0x66, 0x18, 0xf7, 0x74, 0x78, 0x86, 0xd1,
+	0x02, 0x2b, 0x33, 0x8c, 0x06, 0xb5, 0xf9, 0xae, 0x0c, 0x6a, 0x67, 0x8f, 0x13, 0x4a, 0x50, 0x7f,
+	0x42, 0xd4, 0xd6, 0xb3, 0xdd, 0x17, 0x64, 0x28, 0x29, 0xcf, 0xe0, 0xb5, 0x3f, 0x5d, 0x70, 0x43,
+	0x33, 0xda, 0x40, 0x8f, 0x99, 0x50, 0xe3, 0xe0, 0xfa, 0x7c, 0x80, 0xe3, 0x68, 0x37, 0xdf, 0x7e,
+	0xff, 0xf5, 0xa1, 0xe4, 0xc3, 0x55, 0x33, 0x1f, 0x2c, 0xd5, 0xb3, 0x87, 0x05, 0x5d, 0x1b, 0x39,
+	0x8d, 0x57, 0x46, 0x74, 0x7a, 0x42, 0xe6, 0x73, 0xee, 0x3e, 0x7a, 0x2a, 0xcc, 0x6c, 0x05, 0xad,
+	0xf3, 0xef, 0x67, 0x42, 0xd3, 0x6e, 0x1b, 0xdd, 0x06, 0x0c, 0xa6, 0x74, 0x59, 0x5a, 0xbc, 0xa5,
+	0xf0, 0x35, 0x8d, 0x4f, 0xe0, 0x7b, 0x0f, 0x5c, 0xb1, 0xcf, 0x74, 0x4a, 0xff, 0x9f, 0xd4, 0x17,
+	0x10, 0x5f, 0x37, 0xe2, 0xdd, 0xe0, 0xd6, 0x1c, 0xf1, 0x99, 0x2f, 0xe0, 0xe4, 0xbe, 0xd7, 0xdd,
+	0xbe, 0xf7, 0xe5, 0xb4, 0xe9, 0x7d, 0x3b, 0x6d, 0x7a, 0x3f, 0x4e, 0x9b, 0xde, 0xa7, 0x9f, 0xcd,
+	0xff, 0x5e, 0xde, 0x9e, 0xfa, 0x93, 0x0a, 0xbd, 0x35, 0x86, 0x33, 0x9c, 0x90, 0x58, 0xd3, 0x4a,
+	0xcb, 0xdb, 0xaf, 0x9a, 0x01, 0xbc, 0xf3, 0x3b, 0x00, 0x00, 0xff, 0xff, 0xba, 0x75, 0xa5, 0xea,
+	0xfc, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -317,6 +584,20 @@ func (m *MLServices) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
+	if m.Status != nil {
+		{
+			size, err := m.Status.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintMl(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x6
+		i--
+		dAtA[i] = 0xa2
+	}
 	if m.Enabled {
 		i--
 		if m.Enabled {
@@ -333,6 +614,188 @@ func (m *MLServices) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i = encodeVarintMl(dAtA, i, uint64(len(m.DeploymentId)))
 		i--
 		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Status) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Status) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Status) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Services) > 0 {
+		for iNdEx := len(m.Services) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Services[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintMl(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x22
+		}
+	}
+	if m.LastUpdatedAt != nil {
+		{
+			size, err := m.LastUpdatedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintMl(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Message) > 0 {
+		i -= len(m.Message)
+		copy(dAtA[i:], m.Message)
+		i = encodeVarintMl(dAtA, i, uint64(len(m.Message)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Phase) > 0 {
+		i -= len(m.Phase)
+		copy(dAtA[i:], m.Phase)
+		i = encodeVarintMl(dAtA, i, uint64(len(m.Phase)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Status_ServiceStatus) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Status_ServiceStatus) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Status_ServiceStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Usage != nil {
+		{
+			size, err := m.Usage.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintMl(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x22
+	}
+	if m.Failed {
+		i--
+		if m.Failed {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.Available {
+		i--
+		if m.Available {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.Type) > 0 {
+		i -= len(m.Type)
+		copy(dAtA[i:], m.Type)
+		i = encodeVarintMl(dAtA, i, uint64(len(m.Type)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Status_ServiceStatus_Usage) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Status_ServiceStatus_Usage) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Status_ServiceStatus_Usage) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.LastCpuLimit != 0 {
+		i -= 4
+		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.LastCpuLimit))))
+		i--
+		dAtA[i] = 0x25
+	}
+	if m.LastMemoryLimit != 0 {
+		i = encodeVarintMl(dAtA, i, uint64(m.LastMemoryLimit))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.LastCpuUsage != 0 {
+		i -= 4
+		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.LastCpuUsage))))
+		i--
+		dAtA[i] = 0x15
+	}
+	if m.LastMemoryUsage != 0 {
+		i = encodeVarintMl(dAtA, i, uint64(m.LastMemoryUsage))
+		i--
+		dAtA[i] = 0x8
 	}
 	return len(dAtA) - i, nil
 }
@@ -360,6 +823,90 @@ func (m *MLServices) Size() (n int) {
 	}
 	if m.Enabled {
 		n += 2
+	}
+	if m.Status != nil {
+		l = m.Status.Size()
+		n += 2 + l + sovMl(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *Status) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Phase)
+	if l > 0 {
+		n += 1 + l + sovMl(uint64(l))
+	}
+	l = len(m.Message)
+	if l > 0 {
+		n += 1 + l + sovMl(uint64(l))
+	}
+	if m.LastUpdatedAt != nil {
+		l = m.LastUpdatedAt.Size()
+		n += 1 + l + sovMl(uint64(l))
+	}
+	if len(m.Services) > 0 {
+		for _, e := range m.Services {
+			l = e.Size()
+			n += 1 + l + sovMl(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *Status_ServiceStatus) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Type)
+	if l > 0 {
+		n += 1 + l + sovMl(uint64(l))
+	}
+	if m.Available {
+		n += 2
+	}
+	if m.Failed {
+		n += 2
+	}
+	if m.Usage != nil {
+		l = m.Usage.Size()
+		n += 1 + l + sovMl(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *Status_ServiceStatus_Usage) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.LastMemoryUsage != 0 {
+		n += 1 + sovMl(uint64(m.LastMemoryUsage))
+	}
+	if m.LastCpuUsage != 0 {
+		n += 5
+	}
+	if m.LastMemoryLimit != 0 {
+		n += 1 + sovMl(uint64(m.LastMemoryLimit))
+	}
+	if m.LastCpuLimit != 0 {
+		n += 5
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -454,6 +1001,497 @@ func (m *MLServices) Unmarshal(dAtA []byte) error {
 				}
 			}
 			m.Enabled = bool(v != 0)
+		case 100:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthMl
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthMl
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Status == nil {
+				m.Status = &Status{}
+			}
+			if err := m.Status.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMl(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMl
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Status) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMl
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Status: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Status: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Phase", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMl
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMl
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Phase = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Message", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMl
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMl
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Message = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LastUpdatedAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthMl
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthMl
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.LastUpdatedAt == nil {
+				m.LastUpdatedAt = &types.Timestamp{}
+			}
+			if err := m.LastUpdatedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Services", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthMl
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthMl
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Services = append(m.Services, &Status_ServiceStatus{})
+			if err := m.Services[len(m.Services)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMl(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMl
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Status_ServiceStatus) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMl
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ServiceStatus: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ServiceStatus: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Type", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMl
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMl
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Type = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Available", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Available = bool(v != 0)
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Failed", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Failed = bool(v != 0)
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Usage", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthMl
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthMl
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Usage == nil {
+				m.Usage = &Status_ServiceStatus_Usage{}
+			}
+			if err := m.Usage.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMl(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMl
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Status_ServiceStatus_Usage) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMl
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Usage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Usage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LastMemoryUsage", wireType)
+			}
+			m.LastMemoryUsage = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.LastMemoryUsage |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 5 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LastCpuUsage", wireType)
+			}
+			var v uint32
+			if (iNdEx + 4) > l {
+				return io.ErrUnexpectedEOF
+			}
+			v = uint32(encoding_binary.LittleEndian.Uint32(dAtA[iNdEx:]))
+			iNdEx += 4
+			m.LastCpuUsage = float32(math.Float32frombits(v))
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LastMemoryLimit", wireType)
+			}
+			m.LastMemoryLimit = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.LastMemoryLimit |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 5 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LastCpuLimit", wireType)
+			}
+			var v uint32
+			if (iNdEx + 4) > l {
+				return io.ErrUnexpectedEOF
+			}
+			v = uint32(encoding_binary.LittleEndian.Uint32(dAtA[iNdEx:]))
+			iNdEx += 4
+			m.LastCpuLimit = float32(math.Float32frombits(v))
 		default:
 			iNdEx = preIndex
 			skippy, err := skipMl(dAtA[iNdEx:])
