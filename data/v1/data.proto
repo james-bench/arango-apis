@@ -869,9 +869,6 @@ message DeploymentCredentialsRequest {
     string deployment_id = 1;
     // Reason for requesting the credentials
     string reason = 2;
-    // User for which credentails are to be fetched
-    // Defaults to root username
-    string username = 3;
 }
 
 // Result for GetDeploymentCredentials
