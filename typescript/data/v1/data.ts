@@ -802,6 +802,11 @@ export interface DeploymentCredentialsRequest {
   // Reason for requesting the credentials
   // string
   reason?: string;
+  
+  // User for which credentails are to be fetched
+  // Defaults to root username
+  // string
+  username?: string;
 }
 
 // Features that are available to new deployments in a given context.
