@@ -89,29 +89,30 @@ message Status {
     // The timestamp of when this status was last updated.
     google.protobuf.Timestamp last_updated_at = 3;
 
-    // Status of a single ArangoGraphML component.
-    message ServiceStatus {
-        // Type of service.
-        // Should be one of: [training|prediction|projects]
-        string type = 1;
-        // Set to true if the service is available.
-        bool available = 2;
-        // Set to true if the service is in a failed state.
-        bool failed = 3;
-        // Resource usage for this service.
-        message Usage {
-            // Last known memory usage in bytes
-            int64 last_memory_usage = 1;
-            // Last known CPU usage in vCPU units
-            float last_cpu_usage = 2;
-            // Last known memory limit in bytes
-            int64 last_memory_limit = 3;
-            // Last known CPU limit in vCPU units
-            float last_cpu_limit = 4;
-        }
-        // Resource usage information for this service.
-        Usage usage = 4;
-    }
     // Status of each ArangoGraphML components/services.
     repeated ServiceStatus services = 4;
+}
+
+// Status of a single ArangoGraphML component.
+message ServiceStatus {
+    // Type of service.
+    // Should be one of: [training|prediction|projects]
+    string type = 1;
+    // Set to true if the service is available.
+    bool available = 2;
+    // Set to true if the service is in a failed state.
+    bool failed = 3;
+    // Resource usage for this service.
+    message Usage {
+        // Last known memory usage in bytes
+        int64 last_memory_usage = 1;
+        // Last known CPU usage in vCPU units
+        float last_cpu_usage = 2;
+        // Last known memory limit in bytes
+        int64 last_memory_limit = 3;
+        // Last known CPU limit in vCPU units
+        float last_cpu_limit = 4;
+    }
+    // Resource usage information for this service.
+    Usage usage = 4;
 }

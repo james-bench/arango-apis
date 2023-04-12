@@ -29,6 +29,45 @@ export interface MLServices {
   status?: Status;
 }
 
+// Status of a single ArangoGraphML component.
+export interface ServiceStatus {
+  // Type of service.
+  // Should be one of: [training|prediction|projects]
+  // string
+  type?: string;
+  
+  // Set to true if the service is available.
+  // boolean
+  available?: boolean;
+  
+  // Set to true if the service is in a failed state.
+  // boolean
+  failed?: boolean;
+  
+  // Resource usage information for this service.
+  // ServiceStatus_Usage
+  usage?: ServiceStatus_Usage;
+}
+
+// Resource usage for this service.
+export interface ServiceStatus_Usage {
+  // Last known memory usage in bytes
+  // number
+  last_memory_usage?: number;
+  
+  // Last known CPU usage in vCPU units
+  // number
+  last_cpu_usage?: number;
+  
+  // Last known memory limit in bytes
+  // number
+  last_memory_limit?: number;
+  
+  // Last known CPU limit in vCPU units
+  // number
+  last_cpu_limit?: number;
+}
+
 // Status of the MLServices.
 // Note: All fields are read-only.
 export interface Status {
@@ -50,28 +89,8 @@ export interface Status {
   last_updated_at?: googleTypes.Timestamp;
   
   // Status of each ArangoGraphML components/services.
-  // Status_ServiceStatus
-  services?: Status_ServiceStatus[];
-}
-
-// Status of a single ArangoGraphML component.
-export interface Status_ServiceStatus {
-  // Type of service.
-  // Should be one of: [training|prediction|projects]
-  // string
-  type?: string;
-  
-  // Set to true if the service is available.
-  // boolean
-  available?: boolean;
-  
-  // Set to true if the service is in a failed state.
-  // boolean
-  failed?: boolean;
-  
-  // Resource usage information for this service.
-  // Status_ServiceStatus_Usage
-  usage?: Status_ServiceStatus_Usage;
+  // ServiceStatus
+  services?: ServiceStatus[];
 }
 
 // MLService is the API used to configure ArangoML on ArangoGraph Insights Platform.
