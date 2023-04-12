@@ -55,7 +55,7 @@ func (source *Status) Equals(other *Status) bool {
 }
 
 // Equals returns true when source and other have the same values.
-func (source *Status_ServiceStatus) Equals(other *Status_ServiceStatus) bool {
+func (source *ServiceStatus) Equals(other *ServiceStatus) bool {
 	return source.GetType() == other.GetType() &&
 		source.GetAvailable() == other.GetAvailable() &&
 		source.GetFailed() == other.GetFailed() &&
@@ -63,7 +63,7 @@ func (source *Status_ServiceStatus) Equals(other *Status_ServiceStatus) bool {
 }
 
 // Equals returns true when source and other have the same values.
-func Equals(source, other []*Status_ServiceStatus) bool {
+func Equals(source, other []*ServiceStatus) bool {
 	if len(source) != len(other) {
 		return false
 	}
@@ -86,15 +86,15 @@ func Equals(source, other []*Status_ServiceStatus) bool {
 }
 
 // Equals returns true when source and other have the same values.
-func (source *Status_ServiceStatus_Usage) Equals(other *Status_ServiceStatus_Usage) bool {
+func (source *ServiceStatus_Usage) Equals(other *ServiceStatus_Usage) bool {
 	return source.GetLastCpuUsage() == other.GetLastCpuUsage() &&
 		source.GetLastCpuLimit() == other.GetLastCpuLimit() &&
 		source.GetLastMemoryUsage() == other.GetLastMemoryUsage() &&
 		source.GetLastMemoryLimit() == other.GetLastMemoryLimit()
 }
 
-// SetServiceStatus sets the status of a ML service.
-func (status *Status) SetServiceStatus(svcStatus *Status_ServiceStatus) {
+// EnsureServiceStatus sets the status of a ML service.
+func (status *Status) EnsureServiceStatus(svcStatus *ServiceStatus) {
 	// Check if this service type already exists
 	for i, s := range status.GetServices() {
 		if s.GetType() == svcStatus.GetType() {
