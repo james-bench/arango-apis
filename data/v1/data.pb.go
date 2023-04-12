@@ -432,7 +432,6 @@ type Deployment struct {
 	// After creation, this value cannot be changed.
 	DeploymentProfileId string `protobuf:"bytes,614,opt,name=deployment_profile_id,json=deploymentProfileId,proto3" json:"deployment_profile_id,omitempty"`
 	// Determines if deployment is using platform authentication
-	// This is readonly field
 	IsPlatformAuthenticationEnabled bool     `protobuf:"varint,615,opt,name=is_platform_authentication_enabled,json=isPlatformAuthenticationEnabled,proto3" json:"is_platform_authentication_enabled,omitempty"`
 	XXX_NoUnkeyedLiteral            struct{} `json:"-"`
 	XXX_unrecognized                []byte   `json:"-"`

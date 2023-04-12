@@ -427,7 +427,6 @@ export interface Deployment {
   deployment_profile_id?: string;
   
   // Determines if deployment is using platform authentication
-  // This is readonly field
   // boolean
   is_platform_authentication_enabled?: boolean;
 }

@@ -777,7 +777,6 @@ message Deployment {
     string deployment_profile_id = 614;
 
     // Determines if deployment is using platform authentication
-    // This is readonly field
     bool is_platform_authentication_enabled = 615;
 }
 
