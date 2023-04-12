@@ -20,6 +20,8 @@
 
 package v1
 
+import "sort"
+
 const (
 	// MLServices status phases
 
@@ -43,3 +45,63 @@ const (
 	// ServiceTypeProjects indicates that the service is a projects API service.
 	ServiceTypeProjects = "projects"
 )
+
+// Equals returns true when source and other have the same values.
+func (source *Status) Equals(other *Status) bool {
+	return source.GetPhase() == other.GetPhase() &&
+		source.GetMessage() == other.GetMessage() &&
+		source.GetLastUpdatedAt().Equal(other.GetLastUpdatedAt()) &&
+		Equals(source.GetServices(), other.GetServices())
+}
+
+// Equals returns true when source and other have the same values.
+func (source *Status_ServiceStatus) Equals(other *Status_ServiceStatus) bool {
+	return source.GetType() == other.GetType() &&
+		source.GetAvailable() == other.GetAvailable() &&
+		source.GetFailed() == other.GetFailed() &&
+		source.GetUsage().Equals(other.GetUsage())
+}
+
+// Equals returns true when source and other have the same values.
+func Equals(source, other []*Status_ServiceStatus) bool {
+	if len(source) != len(other) {
+		return false
+	}
+
+	// Sort both slices.
+	sort.Slice(source, func(i, j int) bool {
+		return source[i].GetType() < source[j].GetType()
+	})
+	sort.Slice(other, func(i, j int) bool {
+		return other[i].GetType() < other[j].GetType()
+	})
+
+	// Check if every element is equal
+	for i := range source {
+		if !source[i].Equals(other[i]) {
+			return false
+		}
+	}
+	return true
+}
+
+// Equals returns true when source and other have the same values.
+func (source *Status_ServiceStatus_Usage) Equals(other *Status_ServiceStatus_Usage) bool {
+	return source.GetLastCpuUsage() == other.GetLastCpuUsage() &&
+		source.GetLastCpuLimit() == other.GetLastCpuLimit() &&
+		source.GetLastMemoryUsage() == other.GetLastMemoryUsage() &&
+		source.GetLastMemoryLimit() == other.GetLastMemoryLimit()
+}
+
+// SetServiceStatus sets the status of a ML service.
+func (status *Status) SetServiceStatus(svcStatus *Status_ServiceStatus) {
+	// Check if this service type already exists
+	for i, s := range status.GetServices() {
+		if s.GetType() == svcStatus.GetType() {
+			status.Services[i] = svcStatus
+			return
+		}
+	}
+	// Otherwise, append to the services.
+	status.Services = append(status.Services, svcStatus)
+}
