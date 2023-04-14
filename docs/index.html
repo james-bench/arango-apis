@@ -1107,15 +1107,15 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.ml.v1.ServiceStatus"><span class="badge">M</span>ServiceStatus</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.ml.v1.ServiceStatus.Usage"><span class="badge">M</span>ServiceStatus.Usage</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.ml.v1.Status"><span class="badge">M</span>Status</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.ml.v1.Status.ServiceStatus"><span class="badge">M</span>Status.ServiceStatus</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.ml.v1.Status.ServiceStatus.Usage"><span class="badge">M</span>Status.ServiceStatus.Usage</a>
                 </li>
               
               
@@ -14568,6 +14568,97 @@ This is a read-only value. </p></td>
 
         
       
+        <h3 id="arangodb.cloud.ml.v1.ServiceStatus">ServiceStatus</h3>
+        <p>Status of a single ArangoGraphML component.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>type</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Type of service.
+Should be one of: [training|prediction|projects] </p></td>
+                </tr>
+              
+                <tr>
+                  <td>available</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Set to true if the service is available. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>failed</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Set to true if the service is in a failed state. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>usage</td>
+                  <td><a href="#arangodb.cloud.ml.v1.ServiceStatus.Usage">ServiceStatus.Usage</a></td>
+                  <td></td>
+                  <td><p>Resource usage information for this service. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.ml.v1.ServiceStatus.Usage">ServiceStatus.Usage</h3>
+        <p>Resource usage for this service.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>last_memory_usage</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>Last known memory usage in bytes </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_cpu_usage</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Last known CPU usage in vCPU units </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_memory_limit</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>Last known memory limit in bytes </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_cpu_limit</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Last known CPU limit in vCPU units </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.ml.v1.Status">Status</h3>
         <p>Status of the MLServices.</p><p>Note: All fields are read-only.</p>
 
@@ -14606,100 +14697,9 @@ It will contain only one of the following values:
               
                 <tr>
                   <td>services</td>
-                  <td><a href="#arangodb.cloud.ml.v1.Status.ServiceStatus">Status.ServiceStatus</a></td>
+                  <td><a href="#arangodb.cloud.ml.v1.ServiceStatus">ServiceStatus</a></td>
                   <td>repeated</td>
                   <td><p>Status of each ArangoGraphML components/services. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.ml.v1.Status.ServiceStatus">Status.ServiceStatus</h3>
-        <p>Status of a single ArangoGraphML component.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>type</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Type of service.
-Should be one of: [training|prediction|projects] </p></td>
-                </tr>
-              
-                <tr>
-                  <td>available</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>Set to true if the service is available. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>failed</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>Set to true if the service is in a failed state. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>usage</td>
-                  <td><a href="#arangodb.cloud.ml.v1.Status.ServiceStatus.Usage">Status.ServiceStatus.Usage</a></td>
-                  <td></td>
-                  <td><p>Resource usage information for this service. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.ml.v1.Status.ServiceStatus.Usage">Status.ServiceStatus.Usage</h3>
-        <p>Resource usage for this service.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>last_memory_usage</td>
-                  <td><a href="#int64">int64</a></td>
-                  <td></td>
-                  <td><p>Last known memory usage in bytes </p></td>
-                </tr>
-              
-                <tr>
-                  <td>last_cpu_usage</td>
-                  <td><a href="#float">float</a></td>
-                  <td></td>
-                  <td><p>Last known CPU usage in vCPU units </p></td>
-                </tr>
-              
-                <tr>
-                  <td>last_memory_limit</td>
-                  <td><a href="#int64">int64</a></td>
-                  <td></td>
-                  <td><p>Last known memory limit in bytes </p></td>
-                </tr>
-              
-                <tr>
-                  <td>last_cpu_limit</td>
-                  <td><a href="#float">float</a></td>
-                  <td></td>
-                  <td><p>Last known CPU limit in vCPU units </p></td>
                 </tr>
               
             </tbody>
