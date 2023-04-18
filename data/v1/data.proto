@@ -775,6 +775,9 @@ message Deployment {
     // Optional identifier of the deployment profile for this deployment.
     // After creation, this value cannot be changed.
     string deployment_profile_id = 614;
+
+    // Determines if deployment is using platform authentication
+    bool is_platform_authentication_enabled = 615;
 }
 
 // NodeSize specifies the size constraints of different data nodes.

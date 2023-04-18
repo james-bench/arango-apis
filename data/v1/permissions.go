@@ -49,6 +49,10 @@ const (
 	PermissionDeploymentRebalanceShards = "data.deployment.rebalance-shards"
 	// PermissionDeploymentUpdateScheduledRootPasswordRotation is needed to update scheduled root password rotation setting for a deployment
 	PermissionDeploymentUpdateScheduledRootPasswordRotation = "data.deployment.update-scheduled-root-password-rotation"
+	// PermissionDeploymentReadOnlyAccess is needed to give user read only permission for deployment
+	PermissionDeploymentReadOnlyAccess = "data.deployment.read-only-access"
+	// PermissionDeploymentFullAccess is needed to give user full access for deployment
+	PermissionDeploymentFullAccess = "data.deployment.full-access"
 )
 
 const (
