@@ -317,10 +317,6 @@ title: "ArangoGraph Insights Platform API"
                   <a href="#arangodb.cloud.auth.v1.AuthorizeRequest"><span class="badge">M</span>AuthorizeRequest</a>
                 </li>
               
-                <li>
-                  <a href="#arangodb.cloud.auth.v1.LogoutRequest"><span class="badge">M</span>LogoutRequest</a>
-                </li>
-              
               
               
               
@@ -3492,30 +3488,6 @@ Required permissions:
 
         
       
-        <h3 id="arangodb.cloud.auth.v1.LogoutRequest">LogoutRequest</h3>
-        <p>Request arguments for Logout</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>redirect_uri</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>URL to redirect after the logout is permformed </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
 
       
 
@@ -3554,7 +3526,7 @@ Required permissions:
             
               <tr>
                 <td>Logout</td>
-                <td><a href="#arangodb.cloud.auth.v1.LogoutRequest">LogoutRequest</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
                 <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
                 <td><p>Logout the user from auth dashboard and unset the cookie
 - None (since the subject is always the authenticated user).</p></td>

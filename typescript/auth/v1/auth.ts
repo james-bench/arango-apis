@@ -25,13 +25,6 @@ export interface AuthorizeRequest {
   callback_url?: string;
 }
 
-// Request arguments for Logout
-export interface LogoutRequest {
-  // URL to redirect after the logout is permformed
-  // string
-  redirect_uri?: string;
-}
-
 // AuthService is the API used to expose the authorize end point for JWT based authorization
 export interface IAuthService {
   // Get the current API version of this service.
@@ -50,7 +43,7 @@ export interface IAuthService {
   
   // Logout the user from auth dashboard and unset the cookie
   // - None (since the subject is always the authenticated user).
-  Logout: (req: LogoutRequest) => Promise<void>;
+  Logout: (req?: arangodb_cloud_common_v1_Empty) => Promise<void>;
 }
 
 // AuthService is the API used to expose the authorize end point for JWT based authorization
@@ -79,7 +72,7 @@ export class AuthService implements IAuthService {
   
   // Logout the user from auth dashboard and unset the cookie
   // - None (since the subject is always the authenticated user).
-  async Logout(req: LogoutRequest): Promise<void> {
+  async Logout(req?: arangodb_cloud_common_v1_Empty): Promise<void> {
     const path = `/api/auth/v1/logout`;
     const url = path + api.queryString(req, []);
     return api.get(url, undefined);

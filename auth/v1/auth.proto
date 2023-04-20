@@ -53,7 +53,7 @@ service AuthService {
 
     // Logout the user from auth dashboard and unset the cookie
     // - None (since the subject is always the authenticated user).
-    rpc Logout(LogoutRequest) returns (common.v1.Empty) {
+    rpc Logout(common.v1.Empty) returns (common.v1.Empty) {
         option (google.api.http) = {
             get: "/api/auth/v1/logout"
         };
@@ -68,10 +68,4 @@ message AuthorizeRequest {
     string resource_type = 2;
     // Endpoint of a resource
     string callback_url = 3;
-}
-
-// Request arguments for Logout
-message LogoutRequest {
-    // URL to redirect after the logout is permformed
-    string redirect_uri=1;
 }
