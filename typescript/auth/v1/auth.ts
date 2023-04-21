@@ -41,7 +41,7 @@ export interface IAuthService {
   // - None (since the subject is always the authenticated user).
   Authorize: (req: AuthorizeRequest) => Promise<void>;
   
-  // Logout the user from auth dashboard and unset the cookie
+  // Logout the user from auth dashboard by deleting the cookie
   // - None (since the subject is always the authenticated user).
   Logout: (req?: arangodb_cloud_common_v1_Empty) => Promise<void>;
 }
@@ -70,7 +70,7 @@ export class AuthService implements IAuthService {
     return api.post(url, undefined);
   }
   
-  // Logout the user from auth dashboard and unset the cookie
+  // Logout the user from auth dashboard by deleting the cookie
   // - None (since the subject is always the authenticated user).
   async Logout(req?: arangodb_cloud_common_v1_Empty): Promise<void> {
     const path = `/api/auth/v1/logout`;

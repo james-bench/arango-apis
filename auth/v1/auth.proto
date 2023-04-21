@@ -51,7 +51,7 @@ service AuthService {
         };
     }
 
-    // Logout the user from auth dashboard and unset the cookie
+    // Logout the user from auth dashboard by deleting the cookie
     // - None (since the subject is always the authenticated user).
     rpc Logout(common.v1.Empty) returns (common.v1.Empty) {
         option (google.api.http) = {

@@ -152,7 +152,7 @@ type AuthServiceClient interface {
 	// Required permissions:
 	// - None (since the subject is always the authenticated user).
 	Authorize(ctx context.Context, in *AuthorizeRequest, opts ...grpc.CallOption) (*v1.Empty, error)
-	// Logout the user from auth dashboard and unset the cookie
+	// Logout the user from auth dashboard by deleting the cookie
 	// - None (since the subject is always the authenticated user).
 	Logout(ctx context.Context, in *v1.Empty, opts ...grpc.CallOption) (*v1.Empty, error)
 }
@@ -206,7 +206,7 @@ type AuthServiceServer interface {
 	// Required permissions:
 	// - None (since the subject is always the authenticated user).
 	Authorize(context.Context, *AuthorizeRequest) (*v1.Empty, error)
-	// Logout the user from auth dashboard and unset the cookie
+	// Logout the user from auth dashboard by deleting the cookie
 	// - None (since the subject is always the authenticated user).
 	Logout(context.Context, *v1.Empty) (*v1.Empty, error)
 }
