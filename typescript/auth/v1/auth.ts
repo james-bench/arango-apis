@@ -40,6 +40,10 @@ export interface IAuthService {
   // Required permissions:
   // - None (since the subject is always the authenticated user).
   Authorize: (req: AuthorizeRequest) => Promise<void>;
+  
+  // Logout the user from auth dashboard by deleting the cookie
+  // - None (since the subject is always the authenticated user).
+  Logout: (req?: arangodb_cloud_common_v1_Empty) => Promise<void>;
 }
 
 // AuthService is the API used to expose the authorize end point for JWT based authorization
@@ -64,5 +68,13 @@ export class AuthService implements IAuthService {
     const path = `/api/auth/v1/authorize`;
     const url = path + api.queryString(req, []);
     return api.post(url, undefined);
+  }
+  
+  // Logout the user from auth dashboard by deleting the cookie
+  // - None (since the subject is always the authenticated user).
+  async Logout(req?: arangodb_cloud_common_v1_Empty): Promise<void> {
+    const path = `/api/auth/v1/logout`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
   }
 }

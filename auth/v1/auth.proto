@@ -50,6 +50,14 @@ service AuthService {
             post: "/api/auth/v1/authorize"
         };
     }
+
+    // Logout the user from auth dashboard by deleting the cookie
+    // - None (since the subject is always the authenticated user).
+    rpc Logout(common.v1.Empty) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            get: "/api/auth/v1/logout"
+        };
+    }
 }
 
 // Request arguments for Authorize

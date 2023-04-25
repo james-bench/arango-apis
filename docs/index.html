@@ -3524,6 +3524,14 @@ Required permissions:
 - None (since the subject is always the authenticated user).</p></td>
               </tr>
             
+              <tr>
+                <td>Logout</td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><p>Logout the user from auth dashboard by deleting the cookie
+- None (since the subject is always the authenticated user).</p></td>
+              </tr>
+            
           </tbody>
         </table>
 
@@ -3558,6 +3566,16 @@ Required permissions:
                 <td>Authorize</td>
                 <td>POST</td>
                 <td>/api/auth/v1/authorize</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>Logout</td>
+                <td>GET</td>
+                <td>/api/auth/v1/logout</td>
                 <td></td>
               </tr>
               
