@@ -1730,6 +1730,10 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.usage.v1.UsageItem.MLServicesSize"><span class="badge">M</span>UsageItem.MLServicesSize</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.usage.v1.UsageItem.NetworkTransferSize"><span class="badge">M</span>UsageItem.NetworkTransferSize</a>
                 </li>
               
@@ -22264,6 +22268,14 @@ This field is only set when the usage item is of kind AuditLogCloudSize. </p></t
 This field is only set when the usage item is of kind NotebookSize. </p></td>
                 </tr>
               
+                <tr>
+                  <td>mlservices_size</td>
+                  <td><a href="#arangodb.cloud.usage.v1.UsageItem.MLServicesSize">UsageItem.MLServicesSize</a></td>
+                  <td></td>
+                  <td><p>Amount of compute resources used by a given MLServices resource.
+This field is only set when the usage item is of kind MLServicesSize. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -22462,6 +22474,89 @@ Set when destination_type is &#34;https-post&#34; only </p></td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>IF true the deployment was in paused state </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.usage.v1.UsageItem.MLServicesSize">UsageItem.MLServicesSize</h3>
+        <p>Amount of compute resources used by a given MLServices resource.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>training_apis</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Number of training API servers. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>training_api_memory_size</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Amount of memory (in GB) allocated for each training API server. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>training_api_cpu_size</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Amount of CPU units allocated to the training API server.
+1 CPU unit equals 1 physical / virtual CPU. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>prediction_apis</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Number of prediction API servers. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>prediction_api_memory_size</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Amount of memory (in GB) allocated for each prediction API server. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>prediction_api_cpu_size</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Amount of CPU units allocated to the prediction API server.
+1 CPU unit equals 1 physical / virtual CPU. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>projects_apis</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Number of projects API servers. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>projects_api_memory_size</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Amount of memory (in GB) allocated for each projects API server. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>projects_api_cpu_size</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Amount of CPU units allocated to the projects API server.
+1 CPU unit equals 1 physical / virtual CPU. </p></td>
                 </tr>
               
             </tbody>
