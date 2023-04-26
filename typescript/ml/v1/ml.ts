@@ -37,16 +37,22 @@ export interface ServiceStatus {
   type?: string;
   
   // Set to true if the service is available.
+  // Every service is always in ONLY ONE of the following states: (available|failed)
   // boolean
   available?: boolean;
   
   // Set to true if the service is in a failed state.
+  // Every service is always in ONLY ONE of the following states: (available|failed)
   // boolean
   failed?: boolean;
   
   // Resource usage information for this service.
   // ServiceStatus_Usage
   usage?: ServiceStatus_Usage;
+  
+  // Number of replicas running for this service.
+  // number
+  replicas?: number;
 }
 
 // Resource usage for this service.

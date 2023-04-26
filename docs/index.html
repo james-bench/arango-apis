@@ -14608,14 +14608,16 @@ Should be one of: [training|prediction|projects] </p></td>
                   <td>available</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>Set to true if the service is available. </p></td>
+                  <td><p>Set to true if the service is available.
+Every service is always in ONLY ONE of the following states: (available|failed) </p></td>
                 </tr>
               
                 <tr>
                   <td>failed</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>Set to true if the service is in a failed state. </p></td>
+                  <td><p>Set to true if the service is in a failed state.
+Every service is always in ONLY ONE of the following states: (available|failed) </p></td>
                 </tr>
               
                 <tr>
@@ -14623,6 +14625,13 @@ Should be one of: [training|prediction|projects] </p></td>
                   <td><a href="#arangodb.cloud.ml.v1.ServiceStatus.Usage">ServiceStatus.Usage</a></td>
                   <td></td>
                   <td><p>Resource usage information for this service. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>replicas</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Number of replicas running for this service. </p></td>
                 </tr>
               
             </tbody>
