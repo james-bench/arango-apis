@@ -255,7 +255,7 @@ message UsageItem {
         // Number of training API servers.
         int32 training_apis = 1;
         // Amount of memory (in GB) allocated for each training API server.
-        int32 training_api_memory_size = 2;
+        int64 training_api_memory_size = 2;
         // Amount of CPU units allocated to the training API server.
         // 1 CPU unit equals 1 physical / virtual CPU.
         float training_api_cpu_size = 3;
@@ -263,7 +263,7 @@ message UsageItem {
         // Number of prediction API servers.
         int32 prediction_apis = 4;
         // Amount of memory (in GB) allocated for each prediction API server.
-        int32 prediction_api_memory_size = 5;
+        int64 prediction_api_memory_size = 5;
         // Amount of CPU units allocated to the prediction API server.
         // 1 CPU unit equals 1 physical / virtual CPU.
         float prediction_api_cpu_size = 6;
@@ -271,7 +271,7 @@ message UsageItem {
         // Number of projects API servers.
         int32 projects_apis = 7;
         // Amount of memory (in GB) allocated for each projects API server.
-        int32 projects_api_memory_size = 8;
+        int64 projects_api_memory_size = 8;
         // Amount of CPU units allocated to the projects API server.
         // 1 CPU unit equals 1 physical / virtual CPU.
         float projects_api_cpu_size = 9;
