@@ -258,7 +258,7 @@ message UsageItem {
         int32 training_api_memory_size = 2;
         // Amount of CPU units allocated to the training API server.
         // 1 CPU unit equals 1 physical / virtual CPU.
-        int32 training_api_cpu_size = 3;
+        float training_api_cpu_size = 3;
 
         // Number of prediction API servers.
         int32 prediction_apis = 4;
@@ -266,7 +266,7 @@ message UsageItem {
         int32 prediction_api_memory_size = 5;
         // Amount of CPU units allocated to the prediction API server.
         // 1 CPU unit equals 1 physical / virtual CPU.
-        int32 prediction_api_cpu_size = 6;
+        float prediction_api_cpu_size = 6;
 
         // Number of projects API servers.
         int32 projects_apis = 7;
@@ -274,7 +274,7 @@ message UsageItem {
         int32 projects_api_memory_size = 8;
         // Amount of CPU units allocated to the projects API server.
         // 1 CPU unit equals 1 physical / virtual CPU.
-        int32 projects_api_cpu_size = 9;
+        float projects_api_cpu_size = 9;
     }
 
     // Amount of compute resources used by a given MLServices resource.
