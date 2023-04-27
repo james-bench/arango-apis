@@ -99,8 +99,10 @@ message ServiceStatus {
     // Should be one of: [training|prediction|projects]
     string type = 1;
     // Set to true if the service is available.
+    // Every service is always in ONLY ONE of the following states: (available|failed)
     bool available = 2;
     // Set to true if the service is in a failed state.
+    // Every service is always in ONLY ONE of the following states: (available|failed)
     bool failed = 3;
     // Resource usage for this service.
     message Usage {
@@ -115,4 +117,6 @@ message ServiceStatus {
     }
     // Resource usage information for this service.
     Usage usage = 4;
+    // Number of replicas running for this service.
+    int32 replicas = 5;
 }

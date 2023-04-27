@@ -59,6 +59,7 @@ func (source *ServiceStatus) Equals(other *ServiceStatus) bool {
 	return source.GetType() == other.GetType() &&
 		source.GetAvailable() == other.GetAvailable() &&
 		source.GetFailed() == other.GetFailed() &&
+		source.GetReplicas() == other.GetReplicas() &&
 		source.GetUsage().Equals(other.GetUsage())
 }
 
