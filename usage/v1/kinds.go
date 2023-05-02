@@ -48,8 +48,12 @@ const (
 	// the amount of cloud storage used by audit log (of a deployment).
 	// UsageItems from this kind will not be closed automatically, so open items can exists.
 	UsageItemKindAuditLogStorageSize = "AuditLogStorageSize"
-	// UpdateItemKindNotebookSize indicates a UsageItem that contains
+	// UsageItemKindNotebookSize indicates a UsageItem that contains
 	// the amount of resources used by the notebooks (of a deployment).
 	// UsageItems from this kind will not be closed automatically, so open items can exists.
 	UsageItemKindNotebookSize = "NotebookSize"
+	// UsageItemKindMLServicesSize indicates a UsageItem that contains
+	// the amount of resources used by a MLServices resoruse (of a deployment).
+	// UsageItems from this kind will not be closed automatically, so open items can exist.
+	UsageItemKindMLServicesSize = "MLServicesSize"
 )

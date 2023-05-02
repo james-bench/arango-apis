@@ -124,6 +124,7 @@ message UsageItem {
     // The usage item must be ended when this field it set.
     string invoice_id = 9;
 
+
     // Amount of (computer) resources used by the resource covered by this usage item.
     message DeploymentSize {
         // Number of coordinators of the deployment
@@ -248,6 +249,37 @@ message UsageItem {
     // Amount of cloud resources used by a given Notebook.
     // This field is only set when the usage item is of kind NotebookSize.
     NotebookSize notebook_size = 106;
+
+    // Amount of compute resources used by a given MLServices resource.
+    message MLServicesSize {
+        // Number of training API servers.
+        int32 training_apis = 1;
+        // Amount of memory (in GB) allocated for each training API server.
+        int64 training_api_memory_size = 2;
+        // Amount of CPU units allocated to the training API server.
+        // 1 CPU unit equals 1 physical / virtual CPU.
+        float training_api_cpu_size = 3;
+
+        // Number of prediction API servers.
+        int32 prediction_apis = 4;
+        // Amount of memory (in GB) allocated for each prediction API server.
+        int64 prediction_api_memory_size = 5;
+        // Amount of CPU units allocated to the prediction API server.
+        // 1 CPU unit equals 1 physical / virtual CPU.
+        float prediction_api_cpu_size = 6;
+
+        // Number of projects API servers.
+        int32 projects_apis = 7;
+        // Amount of memory (in GB) allocated for each projects API server.
+        int64 projects_api_memory_size = 8;
+        // Amount of CPU units allocated to the projects API server.
+        // 1 CPU unit equals 1 physical / virtual CPU.
+        float projects_api_cpu_size = 9;
+    }
+
+    // Amount of compute resources used by a given MLServices resource.
+    // This field is only set when the usage item is of kind MLServicesSize.
+    MLServicesSize mlservices_size = 107;
 }
 
 // List of UsageItems.

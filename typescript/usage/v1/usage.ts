@@ -160,6 +160,11 @@ export interface UsageItem {
   // This field is only set when the usage item is of kind NotebookSize.
   // UsageItem_NotebookSize
   notebook_size?: UsageItem_NotebookSize;
+  
+  // Amount of compute resources used by a given MLServices resource.
+  // This field is only set when the usage item is of kind MLServicesSize.
+  // UsageItem_MLServicesSize
+  mlservices_size?: UsageItem_MLServicesSize;
 }
 
 // Amount of audit log related resources used by the resource covered by this usage item.
@@ -251,6 +256,48 @@ export interface UsageItem_DeploymentSize {
   // IF true the deployment was in paused state
   // boolean
   is_paused?: boolean;
+}
+
+// Amount of compute resources used by a given MLServices resource.
+export interface UsageItem_MLServicesSize {
+  // Number of training API servers.
+  // number
+  training_apis?: number;
+  
+  // Amount of memory (in GB) allocated for each training API server.
+  // number
+  training_api_memory_size?: number;
+  
+  // Amount of CPU units allocated to the training API server.
+  // 1 CPU unit equals 1 physical / virtual CPU.
+  // number
+  training_api_cpu_size?: number;
+  
+  // Number of prediction API servers.
+  // number
+  prediction_apis?: number;
+  
+  // Amount of memory (in GB) allocated for each prediction API server.
+  // number
+  prediction_api_memory_size?: number;
+  
+  // Amount of CPU units allocated to the prediction API server.
+  // 1 CPU unit equals 1 physical / virtual CPU.
+  // number
+  prediction_api_cpu_size?: number;
+  
+  // Number of projects API servers.
+  // number
+  projects_apis?: number;
+  
+  // Amount of memory (in GB) allocated for each projects API server.
+  // number
+  projects_api_memory_size?: number;
+  
+  // Amount of CPU units allocated to the projects API server.
+  // 1 CPU unit equals 1 physical / virtual CPU.
+  // number
+  projects_api_cpu_size?: number;
 }
 
 // Amount of network traffic used by the resource covered by this usage item.
