@@ -1250,6 +1250,8 @@ message DeploymentFeatures {
     bool iamprovider = 1;
     // Is the use of the pause feature available?
     bool pause = 2;
+    // Is the use of the ML features available?
+    bool ml = 3;
 }
 
 // Request arguments for GetDeploymentFeatures

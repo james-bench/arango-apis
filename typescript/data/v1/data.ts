@@ -812,6 +812,10 @@ export interface DeploymentFeatures {
   // Is the use of the pause feature available?
   // boolean
   pause?: boolean;
+  
+  // Is the use of the ML features available?
+  // boolean
+  ml?: boolean;
 }
 
 // Request arguments for GetDeploymentFeatures
