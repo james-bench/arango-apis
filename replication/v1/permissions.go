@@ -35,4 +35,7 @@ const (
 
 	// PermissionUpdateDeploymentReplication is needed to update / create a DeploymentReplication
 	PermissionUpdateDeploymentReplication = "replication.deploymentreplication.update"
+
+	// PermissionUpgradeConnectionToForwarder is needed to start streaming connection via migration-forwarder
+	PermissionUpgradeConnectionToForwarder = "replication.migration-forwarder.upgrade-connection"
 )

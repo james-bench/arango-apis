@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020-2023 ArangoDB GmbH, Cologne, Germany
+// Copyright 2023 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,12 +21,6 @@
 package v1
 
 const (
-	// APIID contains identifier of this API
-	APIID = "replication/v1"
-	// APIMajorVersion contains major version of this API
-	APIMajorVersion = 1
-	// APIMinorVersion contains minor version of this API
-	APIMinorVersion = 1
-	// APIPatchVersion contains patch version of this API
-	APIPatchVersion = 5
+	// KindMigrationForwarder is a constant for the kind of MigrationForwarder resources.
+	KindMigrationForwarder = "MigrationForwarder"
 )
