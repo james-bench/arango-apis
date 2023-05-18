@@ -159,6 +159,9 @@ message DeploymentReplication {
         // This field has the format of a URL.
         // This is a readonly field.
         string forwarder_endpoint = 7;
+        // Progress of replication in percents (value from 0.0 to 1.0).
+        // This is a readonly field.
+        float progress = 8;
     }
     // Status of the DeploymentReplication.
     Status status = 100;

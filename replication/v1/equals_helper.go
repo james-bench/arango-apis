@@ -12,6 +12,7 @@ func (source *DeploymentReplication_Status) Equals(other *DeploymentReplication_
 		source.GetMessage() == other.GetMessage() &&
 		source.GetShardsInSync() == other.GetShardsInSync() &&
 		source.GetTotalShards() == other.GetShardsInSync() &&
+		source.GetProgress() == other.GetProgress() &&
 		source.GetSyncEndpoint() == other.GetSyncEndpoint() &&
 		source.GetForwarderEndpoint() == other.GetForwarderEndpoint()
 }
