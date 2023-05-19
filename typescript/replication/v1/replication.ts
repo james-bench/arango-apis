@@ -126,6 +126,11 @@ export interface DeploymentReplication_Status {
   // This is a readonly field.
   // string
   forwarder_endpoint?: string;
+  
+  // Progress of replication in percents (value from 0.0 to 1.0).
+  // This is a readonly field.
+  // number
+  progress?: number;
 }
 
 // ReplicationService is the API used to replicate a deployment.
