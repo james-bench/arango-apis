@@ -56,12 +56,7 @@ export interface DeploymentReplication {
   // string
   tls_keyfile?: string;
   
-  // List of master endpoints at source deployment.
-  // This setting will be removed for migration-agent v1.0.0 and is needed for the BETA version only.
-  // string
-  master_endpoint?: string[];
-  
-  // CancelationOptions describes what to do during cancelation process of the migration-agent.
+  // CancelationOptions describes what to do during cancellation process of the migration-agent.
   // DeploymentReplication_CancelationOptions
   cancelation_options?: DeploymentReplication_CancelationOptions;
   
@@ -70,13 +65,13 @@ export interface DeploymentReplication {
   status?: DeploymentReplication_Status;
 }
 
-// CancelationOptions describes what to do during cancelation process of the migration-agent.
+// CancelationOptions describes what to do during cancellation process of the migration-agent.
 export interface DeploymentReplication_CancelationOptions {
-  // If set, during cancelation process data consistency is not required (otherwise data consistency is required).
+  // If set, during cancellation process data consistency is not required (otherwise data consistency is required).
   // boolean
   data_consistency_not_required?: boolean;
   
-  // If set, after cancelation the source deployment will be in read-only mode.
+  // If set, after cancellation the source deployment will be in read-only mode.
   // boolean
   make_source_deployment_read_only?: boolean;
 }
@@ -101,14 +96,6 @@ export interface DeploymentReplication_Status {
   // See - replication/v1/message.go in this repository.
   // string
   message?: string;
-  
-  // Total number of shards that should be in-sync.
-  // number
-  total_shards?: number;
-  
-  // Number of shards currently in-sync.
-  // number
-  shards_in_sync?: number;
   
   // Service (LoadBalancer) endpoint of the SyncMasters
   // This field has the format of a URL.

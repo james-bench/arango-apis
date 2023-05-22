@@ -17818,18 +17818,10 @@ A keyfile contains 1 or more certificates and a private key. </p></td>
                 </tr>
               
                 <tr>
-                  <td>master_endpoint</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>List of master endpoints at source deployment.
-This setting will be removed for migration-agent v1.0.0 and is needed for the BETA version only. </p></td>
-                </tr>
-              
-                <tr>
                   <td>cancelation_options</td>
                   <td><a href="#arangodb.cloud.replication.v1.DeploymentReplication.CancelationOptions">DeploymentReplication.CancelationOptions</a></td>
                   <td></td>
-                  <td><p>CancelationOptions describes what to do during cancelation process of the migration-agent. </p></td>
+                  <td><p>CancelationOptions describes what to do during cancellation process of the migration-agent. </p></td>
                 </tr>
               
                 <tr>
@@ -17847,7 +17839,7 @@ This setting will be removed for migration-agent v1.0.0 and is needed for the BE
         
       
         <h3 id="arangodb.cloud.replication.v1.DeploymentReplication.CancelationOptions">DeploymentReplication.CancelationOptions</h3>
-        <p>CancelationOptions describes what to do during cancelation process of the migration-agent.</p>
+        <p>CancelationOptions describes what to do during cancellation process of the migration-agent.</p>
 
         
           <table class="field-table">
@@ -17860,14 +17852,14 @@ This setting will be removed for migration-agent v1.0.0 and is needed for the BE
                   <td>data_consistency_not_required</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>If set, during cancelation process data consistency is not required (otherwise data consistency is required). </p></td>
+                  <td><p>If set, during cancellation process data consistency is not required (otherwise data consistency is required). </p></td>
                 </tr>
               
                 <tr>
                   <td>make_source_deployment_read_only</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>If set, after cancelation the source deployment will be in read-only mode. </p></td>
+                  <td><p>If set, after cancellation the source deployment will be in read-only mode. </p></td>
                 </tr>
               
             </tbody>
@@ -17909,20 +17901,6 @@ Should only contain only one of the following values:
 This field will be in JSON format and can be built using the `AsJSON()` helper.
 Use `FromJSON()` helper to parse this field.
 See - replication/v1/message.go in this repository. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>total_shards</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>Total number of shards that should be in-sync. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>shards_in_sync</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>Number of shards currently in-sync. </p></td>
                 </tr>
               
                 <tr>

@@ -113,18 +113,15 @@ message DeploymentReplication {
     // A PEM encoded representation of the keyfile used for client authentication of the sync master (with the sync master in the source deployment).
     // A keyfile contains 1 or more certificates and a private key.
     string tls_keyfile = 4;
-    // List of master endpoints at source deployment.
-    // This setting will be removed for migration-agent v1.0.0 and is needed for the BETA version only.
-    repeated string master_endpoint = 5;
-    
-    // CancelationOptions describes what to do during cancelation process of the migration-agent.
+
+    // CancelationOptions describes what to do during cancellation process of the migration-agent.
     message CancelationOptions{
-        // If set, during cancelation process data consistency is not required (otherwise data consistency is required).
+        // If set, during cancellation process data consistency is not required (otherwise data consistency is required).
         bool data_consistency_not_required = 1;
-        // If set, after cancelation the source deployment will be in read-only mode.
+        // If set, after cancellation the source deployment will be in read-only mode.
         bool make_source_deployment_read_only = 2;
     }
-    // CancelationOptions describes what to do during cancelation process of the migration-agent.
+    // CancelationOptions describes what to do during cancellation process of the migration-agent.
     CancelationOptions cancelation_options = 10;
    
     // DeploymentReplicationStatus defines the status of a deployment replication.
@@ -144,10 +141,6 @@ message DeploymentReplication {
         // Use `FromJSON()` helper to parse this field.
         // See - replication/v1/message.go in this repository.
         string message = 2;
-        // Total number of shards that should be in-sync.
-        int32 total_shards = 3;
-        // Number of shards currently in-sync.
-        int32 shards_in_sync = 4;
         // Service (LoadBalancer) endpoint of the SyncMasters
         // This field has the format of a URL.
         // This is a readonly field.
