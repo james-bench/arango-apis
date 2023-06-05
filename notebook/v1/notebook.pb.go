@@ -192,7 +192,7 @@ type Notebook struct {
 	// This is a read-only value.
 	DeletedAt *types.Timestamp `protobuf:"bytes,13,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`
 	// If set, the Notebook is created for use along with ArangoML.
-	// This field will be set to `true` if ML servies are enabled at the time of creating the notebook.
+	// This field will be set to `true` if ML services are enabled at the time of creating the notebook.
 	// This is a read-only value.
 	MlEnabled bool `protobuf:"varint,14,opt,name=ml_enabled,json=mlEnabled,proto3" json:"ml_enabled,omitempty"`
 	// Status of the notebook.

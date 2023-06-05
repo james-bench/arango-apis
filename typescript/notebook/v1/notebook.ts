@@ -118,7 +118,7 @@ export interface Notebook {
   deleted_at?: googleTypes.Timestamp;
   
   // If set, the Notebook is created for use along with ArangoML.
-  // This field will be set to `true` if ML servies are enabled at the time of creating the notebook.
+  // This field will be set to `true` if ML services are enabled at the time of creating the notebook.
   // This is a read-only value.
   // boolean
   ml_enabled?: boolean;
