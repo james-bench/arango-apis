@@ -199,6 +199,10 @@ export interface Status {
   // string
   endpoint?: string;
   
+  // The timestamp of when this notebook was last reported to be active.
+  // googleTypes.Timestamp
+  last_active_at?: googleTypes.Timestamp;
+  
   // Resource usage of the notebook.
   // Status_Usage
   usage?: Status_Usage;
