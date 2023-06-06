@@ -16,5 +16,6 @@ func (source *Status) Equals(other *Status) bool {
 		source.GetPhase() == other.GetPhase() &&
 		source.GetMessage() == other.GetMessage() &&
 		source.GetLastUpdatedAt().Equal(other.GetLastUpdatedAt()) &&
+		source.GetLastActiveAt().Equal(other.GetLastActiveAt()) &&
 		proto.Equal(source.GetUsage(), other.GetUsage())
 }
