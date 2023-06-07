@@ -258,6 +258,8 @@ message Status {
         // Last known CPU limit in vCPU units
         float last_cpu_limit = 5; 
     }
+    // The timestamp of when this notebook was last reported to be active.
+    google.protobuf.Timestamp last_active_at = 5;
     // Resource usage of the notebook.
     Usage usage = 10;
 }
