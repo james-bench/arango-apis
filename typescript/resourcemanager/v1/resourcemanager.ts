@@ -35,6 +35,10 @@ export interface AuthenticationProviders {
   // Control access to the organization for users using then Microsoft authentication provider.
   // boolean
   enable_microsoft?: boolean;
+  
+  // Control access to the organization for users using then SSO authentication provider.
+  // boolean
+  enable_sso?: boolean;
 }
 export interface DataProcessingAddendum {
   // Identifier of this version of the DPA
