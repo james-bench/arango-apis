@@ -435,6 +435,8 @@ message AuthenticationProviders {
     bool enable_github = 3;
     // Control access to the organization for users using then Microsoft authentication provider.
     bool enable_microsoft = 4;
+    // Control access to the organization for users using then SSO authentication provider.
+    bool enable_sso = 5;
 }
 
 // Specify restrictions related to email domain names of user accounts that are allowed to
