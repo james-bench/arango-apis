@@ -94,6 +94,10 @@ export interface Region {
   // If set, this region has not be released as generally available.
   // boolean
   prerelease?: boolean;
+  
+  // If set, this region support ML services.
+  // boolean
+  ml_supported?: boolean;
 }
 
 // List of regions.
