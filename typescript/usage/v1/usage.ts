@@ -348,6 +348,11 @@ export interface UsageItem_NotebookSize {
   // ID of the type of Notebook that is being used.
   // string
   notebook_model_id?: string;
+  
+  // Amount of GPU units allocated to the notebook.
+  // 1 GPU unit equals 1 physical / virtual GPU.
+  // number
+  gpu_size?: number;
 }
 export interface UsageItem_Resource {
   // System identifier of the resource that this usage item covers.

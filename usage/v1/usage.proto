@@ -1,7 +1,7 @@
 // 
 // DISCLAIMER
 // 
-// Copyright 2020-2022 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2023 ArangoDB GmbH, Cologne, Germany
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -244,6 +244,10 @@ message UsageItem {
         
         // ID of the type of Notebook that is being used.
         string notebook_model_id = 5; 
+
+        // Amount of GPU units allocated to the notebook.
+        // 1 GPU unit equals 1 physical / virtual GPU.
+        float gpu_size = 6;   
     }
 
     // Amount of cloud resources used by a given Notebook.
