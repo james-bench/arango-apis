@@ -165,6 +165,11 @@ export interface NotebookModel {
   // Minimum amount of disk space (in GiB) available to the notebook.
   // number
   min_disk_size?: number;
+  
+  // GPU units allocated to the notebook.
+  // 1 GPU unit equals 1 physical / virtual GPU.
+  // number
+  gpu?: number;
 }
 
 // List of notebook models.
@@ -229,6 +234,14 @@ export interface Status_Usage {
   // Last known CPU limit in vCPU units
   // number
   last_cpu_limit?: number;
+  
+  // Last known GPU usage in GPU units
+  // number
+  last_gpu_usage?: number;
+  
+  // Last known GPU limit in GPU units
+  // number
+  last_gpu_limit?: number;
 }
 
 // Notebook service is used to manage notebooks.

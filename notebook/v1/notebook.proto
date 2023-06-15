@@ -214,6 +214,9 @@ message NotebookModel {
     int32 max_disk_size = 5;
     // Minimum amount of disk space (in GiB) available to the notebook.
     int32 min_disk_size = 6;
+    // GPU units allocated to the notebook.
+    // 1 GPU unit equals 1 physical / virtual GPU.
+    float gpu = 7; 
 }
 
 // List of notebook models.
@@ -257,6 +260,10 @@ message Status {
         int64 last_memory_limit = 4;
         // Last known CPU limit in vCPU units
         float last_cpu_limit = 5; 
+        // Last known GPU usage in GPU units
+        float last_gpu_usage = 6;
+        // Last known GPU limit in GPU units
+        float last_gpu_limit = 7; 
     }
     // The timestamp of when this notebook was last reported to be active.
     google.protobuf.Timestamp last_active_at = 5;
