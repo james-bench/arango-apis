@@ -835,7 +835,7 @@ type Backup struct {
 	// If this field is set the backup will be downloaded the deployment.
 	// This is a read-only field. To set this field please use the DownloadBackup method.
 	Download *Backup_DownloadSpec `protobuf:"bytes,13,opt,name=download,proto3" json:"download,omitempty"`
-	// Identifier of the user who created this deployment.
+	// Identifier of the user who created this backup.
 	// This field is set only for manual backups.
 	// This is a read-only value.
 	CreatedById string `protobuf:"bytes,15,opt,name=created_by_id,json=createdById,proto3" json:"created_by_id,omitempty"`
