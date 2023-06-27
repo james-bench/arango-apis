@@ -433,6 +433,11 @@ message Backup {
     // This is a read-only field. To set this field please use the DownloadBackup method.
     DownloadSpec download = 13;
 
+    // Identifier of the user who created this backup.
+    // This field is set only for manual backups.
+    // This is a read-only value.
+    string created_by_id = 15;
+
     // Status of the actual backup
     // All members of this field are read-only.
     message Status {
