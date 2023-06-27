@@ -89,6 +89,12 @@ export interface Backup {
   // Backup_DownloadSpec
   download?: Backup_DownloadSpec;
   
+  // Identifier of the user who created this deployment.
+  // This field is set only for manual backups.
+  // This is a read-only value.
+  // string
+  created_by_id?: string;
+  
   // Status of the actual backup
   // Backup_Status
   status?: Backup_Status;

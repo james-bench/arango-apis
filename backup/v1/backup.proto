@@ -323,6 +323,7 @@ message BackupPolicy {
         // Message in case of failure, otherwise an empty string
         string message = 2;
     }
+
     // Status of the backup policy
     Status status = 100;
 
@@ -432,6 +433,11 @@ message Backup {
     // If this field is set the backup will be downloaded the deployment.
     // This is a read-only field. To set this field please use the DownloadBackup method.
     DownloadSpec download = 13;
+
+    // Identifier of the user who created this deployment.
+    // This field is set only for manual backups.
+    // This is a read-only value.
+    string created_by_id = 15;
 
     // Status of the actual backup
     // All members of this field are read-only.
