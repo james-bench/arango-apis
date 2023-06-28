@@ -429,6 +429,10 @@ export interface Deployment {
   // Determines if deployment is using platform authentication
   // boolean
   is_platform_authentication_enabled?: boolean;
+  
+  // The (optional) intended use-case for this deployment
+  // string
+  intended_use_case?: string;
 }
 
 // Information about a backup restore.
