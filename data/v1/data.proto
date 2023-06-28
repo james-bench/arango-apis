@@ -778,6 +778,9 @@ message Deployment {
 
     // Determines if deployment is using platform authentication
     bool is_platform_authentication_enabled = 615;
+
+    // The (optional) intended use-case for this deployment
+    string intended_use_case = 616;
 }
 
 // NodeSize specifies the size constraints of different data nodes.
