@@ -56,3 +56,14 @@ const (
 	// database - the name of the created database
 	EventTypeDeploymentCreatedTestDatabase = "data.deployment.created-test-database"
 )
+
+const (
+	// Deployment event reasons
+
+	// DeploymentEventReasonPauseDeployment contains the reason that should be set
+	// inside the event that is emitted when a deployment is paused.
+	DeploymentEventReasonPauseDeployment = "pause_deployment"
+	// DeploymentEventReasonResumeDeployment contains the reason that should be set
+	// inside the event that is emitted when a deployment is resumed.
+	DeploymentEventReasonResumeDeployment = "resume_deployment"
+)
