@@ -56,7 +56,7 @@ export interface DeploymentReplication {
   // string
   tls_keyfile?: string;
   
-  // ID of the user that initiated this deployment replication.
+  // Identifier of the user that initiated this deployment replication.
   // This is a read-only value.
   // string
   started_by_id?: string;

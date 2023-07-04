@@ -124,7 +124,7 @@ type DeploymentReplication struct {
 	// A PEM encoded representation of the keyfile used for client authentication of the sync master (with the sync master in the source deployment).
 	// A keyfile contains 1 or more certificates and a private key.
 	TlsKeyfile string `protobuf:"bytes,4,opt,name=tls_keyfile,json=tlsKeyfile,proto3" json:"tls_keyfile,omitempty"`
-	// ID of the user that initiated this deployment replication.
+	// Identifier of the user that initiated this deployment replication.
 	// This is a read-only value.
 	StartedById string `protobuf:"bytes,5,opt,name=started_by_id,json=startedById,proto3" json:"started_by_id,omitempty"`
 	// CancelationOptions describes what to do during cancellation process of the migration-agent.

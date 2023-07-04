@@ -113,7 +113,7 @@ message DeploymentReplication {
     // A PEM encoded representation of the keyfile used for client authentication of the sync master (with the sync master in the source deployment).
     // A keyfile contains 1 or more certificates and a private key.
     string tls_keyfile = 4;
-    // ID of the user that initiated this deployment replication.
+    // Identifier of the user that initiated this deployment replication.
     // This is a read-only value.
     string started_by_id = 5;
 
