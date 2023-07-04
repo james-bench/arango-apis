@@ -56,6 +56,11 @@ export interface DeploymentReplication {
   // string
   tls_keyfile?: string;
   
+  // ID of the user that initiated this deployment replication.
+  // This is a read-only value.
+  // string
+  started_by_id?: string;
+  
   // CancelationOptions describes what to do during cancellation process of the migration-agent.
   // DeploymentReplication_CancelationOptions
   cancelation_options?: DeploymentReplication_CancelationOptions;
