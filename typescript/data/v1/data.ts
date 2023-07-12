@@ -446,6 +446,11 @@ export interface Deployment_BackupRestoreSpec {
   // googleTypes.Timestamp
   last_updated_at?: googleTypes.Timestamp;
   
+  // Identifier of the user that restored this backup.
+  // This is a read-only value.
+  // string
+  restored_by_id?: string;
+  
   // Identifier of a backup to restore to.
   // string
   backup_id?: string;
