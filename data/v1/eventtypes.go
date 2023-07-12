@@ -66,4 +66,7 @@ const (
 	// DeploymentEventReasonResumeDeployment contains the reason that should be set
 	// inside the event that is emitted when a deployment is resumed.
 	DeploymentEventReasonResumeDeployment = "resume_deployment"
+	// DeploymentEventReasonRestoreBackup contains the reason taht should be set
+	// in the event that is emitted when a deployment backup is restored.
+	DeploymentEventReasonRestoreBackup = "restore_backup"
 )
