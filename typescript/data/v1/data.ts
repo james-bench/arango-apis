@@ -463,6 +463,10 @@ export interface Deployment_BackupRestoreStatus {
   // number
   revision?: number;
   
+  // The timestamp of when the backup restore status was updated.
+  // googleTypes.Timestamp
+  last_updated_at?: googleTypes.Timestamp;
+  
   // Set if the deployment is preparing or restoring a backup
   // boolean
   restoring?: boolean;
