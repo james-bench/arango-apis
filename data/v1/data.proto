@@ -688,6 +688,8 @@ message Deployment {
     message BackupRestoreStatus {
         // The revision of the used BackupRestoreSpec 
         int32 revision = 1;
+        // The timestamp of when the backup restore status was updated.
+        google.protobuf.Timestamp last_updated_at = 2;
         // Set if the deployment is preparing or restoring a backup
         bool restoring = 10;
         // Status of the restore backup operation.
