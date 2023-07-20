@@ -55,6 +55,10 @@ export interface CreateDeploymentRequest {
   // identifier, this field may be left empty.
   // string
   accepted_terms_and_conditions_id?: string;
+  
+  // Determines if deployment is using platform authentication
+  // boolean
+  is_platform_authentication_enabled?: boolean;
 }
 export interface CreateDeploymentRequest_CertificateSpec {
   // Identifier of the CACertificate used to sign TLS certificates for the deployment.

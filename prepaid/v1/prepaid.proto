@@ -210,4 +210,6 @@ message CreateDeploymentRequest {
     // If the tier of the organization does not require a non-empty Terms&Condition
     // identifier, this field may be left empty.
     string accepted_terms_and_conditions_id = 6;
+    // Determines if deployment is using platform authentication
+    bool is_platform_authentication_enabled = 7;
 }
