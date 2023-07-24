@@ -1298,6 +1298,8 @@ message ListDiskPerformancesRequest {
     // This field is ignored when a deployment_id is provided, otherwise required. 
     int32 dbserver_disk_size = 3;
     // Optional identifier of the organization for which the disk performances need to be listed.
+    // If specified, only those disk performances are listed that the organization is allowed to use
+    // for a deployment of a given node_size_id.
     string organization_id = 4;
     // Identifier of the deloyment, used to fill-out the region, node-size and disk-size.
     string deployment_id = 10;

@@ -1283,6 +1283,8 @@ export interface ListDiskPerformancesRequest {
   dbserver_disk_size?: number;
   
   // Optional identifier of the organization for which the disk performances need to be listed.
+  // If specified, only those disk performances are listed that the organization is allowed to use
+  // for a deployment of a given node_size_id.
   // string
   organization_id?: string;
   
