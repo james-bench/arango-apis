@@ -1297,6 +1297,8 @@ message ListDiskPerformancesRequest {
     // Amount of disk space (in GB) to allocate for each dbserver.
     // This field is ignored when a deployment_id is provided, otherwise required. 
     int32 dbserver_disk_size = 3;
+    // Optional identifier of the organization for which the disk performances need to be listed.
+    string organization_id = 4;
     // Identifier of the deloyment, used to fill-out the region, node-size and disk-size.
     string deployment_id = 10;
 }
