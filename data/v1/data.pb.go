@@ -2423,6 +2423,7 @@ type ListCPUSizesRequest struct {
 	ProjectId string `protobuf:"bytes,1,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
 	// Optional identifier of a deployment for which CPU sizes are requested.
 	// If specified, only those CPU sizes are listed, that an existing deployment is allowed to have.
+	// If specified, project_id field is ignored, and instead read from the deployment.
 	DeploymentId         string   `protobuf:"bytes,2,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
