@@ -5694,7 +5694,8 @@ type DataServiceClient interface {
 	RebalanceDeploymentShards(ctx context.Context, in *RebalanceDeploymentShardsRequest, opts ...grpc.CallOption) (*v1.Empty, error)
 	// Lists disk performances that match all of the given filters.
 	// Required permissions:
-	// - data.diskperformance.list (if deployment ID is provided)
+	// - data.diskperformance.list on the deployment (if deployment ID is provided)
+	// - data.diskperformance.list on the organization (if organization ID is provided, but deployment ID is not)
 	// - None, authenticated only (if no deployment ID is provided)
 	ListDiskPerformances(ctx context.Context, in *ListDiskPerformancesRequest, opts ...grpc.CallOption) (*DiskPerformanceList, error)
 	// Get the disk performance for the requested disk performance ID.
@@ -6145,7 +6146,8 @@ type DataServiceServer interface {
 	RebalanceDeploymentShards(context.Context, *RebalanceDeploymentShardsRequest) (*v1.Empty, error)
 	// Lists disk performances that match all of the given filters.
 	// Required permissions:
-	// - data.diskperformance.list (if deployment ID is provided)
+	// - data.diskperformance.list on the deployment (if deployment ID is provided)
+	// - data.diskperformance.list on the organization (if organization ID is provided, but deployment ID is not)
 	// - None, authenticated only (if no deployment ID is provided)
 	ListDiskPerformances(context.Context, *ListDiskPerformancesRequest) (*DiskPerformanceList, error)
 	// Get the disk performance for the requested disk performance ID.

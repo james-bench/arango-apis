@@ -1702,7 +1702,8 @@ export interface IDataService {
   
   // Lists disk performances that match all of the given filters.
   // Required permissions:
-  // - data.diskperformance.list (if deployment ID is provided)
+  // - data.diskperformance.list on the deployment (if deployment ID is provided)
+  // - data.diskperformance.list on the organization (if organization ID is provided, but deployment ID is not)
   // - None, authenticated only (if no deployment ID is provided)
   ListDiskPerformances: (req: ListDiskPerformancesRequest) => Promise<DiskPerformanceList>;
   
@@ -1988,7 +1989,8 @@ export class DataService implements IDataService {
   
   // Lists disk performances that match all of the given filters.
   // Required permissions:
-  // - data.diskperformance.list (if deployment ID is provided)
+  // - data.diskperformance.list on the deployment (if deployment ID is provided)
+  // - data.diskperformance.list on the organization (if organization ID is provided, but deployment ID is not)
   // - None, authenticated only (if no deployment ID is provided)
   async ListDiskPerformances(req: ListDiskPerformancesRequest): Promise<DiskPerformanceList> {
     const url = `/api/data/v1/disk-performances`;

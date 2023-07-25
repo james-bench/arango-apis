@@ -11194,7 +11194,8 @@ Required permissions:
                 <td><a href="#arangodb.cloud.data.v1.DiskPerformanceList">DiskPerformanceList</a></td>
                 <td><p>Lists disk performances that match all of the given filters.
 Required permissions:
-- data.diskperformance.list (if deployment ID is provided)
+- data.diskperformance.list on the deployment (if deployment ID is provided)
+- data.diskperformance.list on the organization (if organization ID is provided, but deployment ID is not)
 - None, authenticated only (if no deployment ID is provided)</p></td>
               </tr>
             
