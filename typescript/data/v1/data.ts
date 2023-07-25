@@ -1282,6 +1282,13 @@ export interface ListDiskPerformancesRequest {
   // number
   dbserver_disk_size?: number;
   
+  // Optional identifier of the organization for which the disk performances need to be listed.
+  // If specified, only those disk performances are listed that the organization is allowed to use
+  // for a deployment of a given node_size_id.
+  // This field is ignored when a deployment_id is provided.
+  // string
+  organization_id?: string;
+  
   // Identifier of the deloyment, used to fill-out the region, node-size and disk-size.
   // string
   deployment_id?: string;
@@ -1696,7 +1703,8 @@ export interface IDataService {
   
   // Lists disk performances that match all of the given filters.
   // Required permissions:
-  // - data.diskperformance.list (if deployment ID is provided)
+  // - data.diskperformance.list on the deployment (if deployment ID is provided)
+  // - data.diskperformance.list on the organization (if organization ID is provided, but deployment ID is not)
   // - None, authenticated only (if no deployment ID is provided)
   ListDiskPerformances: (req: ListDiskPerformancesRequest) => Promise<DiskPerformanceList>;
   
@@ -1982,7 +1990,8 @@ export class DataService implements IDataService {
   
   // Lists disk performances that match all of the given filters.
   // Required permissions:
-  // - data.diskperformance.list (if deployment ID is provided)
+  // - data.diskperformance.list on the deployment (if deployment ID is provided)
+  // - data.diskperformance.list on the organization (if organization ID is provided, but deployment ID is not)
   // - None, authenticated only (if no deployment ID is provided)
   async ListDiskPerformances(req: ListDiskPerformancesRequest): Promise<DiskPerformanceList> {
     const url = `/api/data/v1/disk-performances`;

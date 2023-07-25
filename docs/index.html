@@ -10300,6 +10300,16 @@ This field is ignored when a deployment_id is provided, otherwise required. </p>
                 </tr>
               
                 <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional identifier of the organization for which the disk performances need to be listed.
+If specified, only those disk performances are listed that the organization is allowed to use
+for a deployment of a given node_size_id.
+This field is ignored when a deployment_id is provided. </p></td>
+                </tr>
+              
+                <tr>
                   <td>deployment_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
@@ -11185,7 +11195,8 @@ Required permissions:
                 <td><a href="#arangodb.cloud.data.v1.DiskPerformanceList">DiskPerformanceList</a></td>
                 <td><p>Lists disk performances that match all of the given filters.
 Required permissions:
-- data.diskperformance.list (if deployment ID is provided)
+- data.diskperformance.list on the deployment (if deployment ID is provided)
+- data.diskperformance.list on the organization (if organization ID is provided, but deployment ID is not)
 - None, authenticated only (if no deployment ID is provided)</p></td>
               </tr>
             
