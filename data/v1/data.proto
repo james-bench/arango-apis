@@ -868,6 +868,9 @@ message CPUSizeList {
 message ListCPUSizesRequest {
     // Identifier of project that will own a deployment.
     string project_id = 1;
+    // Optional identifier of a deployment for which CPU sizes are requested.
+    // If specified, only those CPU sizes are listed, that an existing deployment is allowed to have.
+    string deployment_id = 2;
 }
 
 // Request arguments for GetDeploymentCredentials
