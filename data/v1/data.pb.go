@@ -4756,6 +4756,7 @@ type ListDiskPerformancesRequest struct {
 	// Optional identifier of the organization for which the disk performances need to be listed.
 	// If specified, only those disk performances are listed that the organization is allowed to use
 	// for a deployment of a given node_size_id.
+	// This field is ignored when a deployment_id is provided.
 	OrganizationId string `protobuf:"bytes,4,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
 	// Identifier of the deloyment, used to fill-out the region, node-size and disk-size.
 	DeploymentId         string   `protobuf:"bytes,10,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
