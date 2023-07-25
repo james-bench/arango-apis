@@ -1213,6 +1213,12 @@ export interface ListCPUSizesRequest {
   // Identifier of project that will own a deployment.
   // string
   project_id?: string;
+  
+  // Optional identifier of a deployment for which CPU sizes are requested.
+  // If specified, only those CPU sizes are listed, that an existing deployment is allowed to have.
+  // If specified, project_id field is ignored, and instead read from the deployment.
+  // string
+  deployment_id?: string;
 }
 
 // Request arguments for ListDeploymentModels
