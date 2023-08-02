@@ -1375,6 +1375,13 @@ export interface NodeSizesRequest {
   // Ignored if project_id or deployment_id is set.
   // string
   organization_id?: string;
+  
+  // Optional field to include node sizes that are otherwise restricted
+  // for the specified projectID / organizationID.
+  // By default, the result is restricted based on the organization and project tiers/quotas.
+  // Ignored when project_id is "all" and organization_id is not provided.
+  // boolean
+  include_restricted?: boolean;
 }
 
 // RebalanceDeploymentShardsRequest request for rebalancing shards for a deployment

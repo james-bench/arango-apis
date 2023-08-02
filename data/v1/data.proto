@@ -830,6 +830,11 @@ message NodeSizesRequest {
     // Optional identifier of organization that will own a deployment.
     // Ignored if project_id or deployment_id is set.
     string organization_id = 5;
+    // Optional field to include node sizes that are otherwise restricted
+    // for the specified projectID / organizationID.
+    // By default, the result is restricted based on the organization and project tiers/quotas.
+    // Ignored when project_id is "all" and organization_id is not provided.
+    bool include_restricted = 7;
 }
 
 // DeploymentModel specifies the a specific model of deploying

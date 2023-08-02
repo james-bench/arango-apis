@@ -10504,6 +10504,16 @@ otherwise only node sizes that have no restrictions on model will be returned. <
 Ignored if project_id or deployment_id is set. </p></td>
                 </tr>
               
+                <tr>
+                  <td>include_restricted</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Optional field to include node sizes that are otherwise restricted
+for the specified projectID / organizationID.
+By default, the result is restricted based on the organization and project tiers/quotas.
+Ignored when project_id is &#34;all&#34; and organization_id is not provided. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
