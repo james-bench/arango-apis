@@ -30,3 +30,7 @@ const (
 	// CreateTestDatabaseDatabaseNameField name of the field containing the name of the database.
 	CreateTestDatabaseDatabaseNameField = "database"
 )
+
+const (
+	ExpirationReasonNoExpire = "doesn't expire"
+)
