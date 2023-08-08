@@ -1,0 +1,51 @@
+// 
+// DISCLAIMER
+// 
+// Copyright 2023 ArangoDB GmbH, Cologne, Germany
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+// http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// 
+// Copyright holder is ArangoDB GmbH, Cologne, Germany
+// 
+
+syntax = "proto3";
+
+package arangodb.cloud.credits.v1;
+
+option go_package = "github.com/arangodb-managed/apis/credits/v1";
+
+import "common/v1/common.proto";
+
+import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
+import "google/api/annotations.proto";
+
+// CreditsService is the API used for managing credits.
+service CreditsService {
+    // List credit bundles for an organization.
+    // Required permissions:
+    // - bundle.credits.list
+    rpc ListCreditBundles(ListCreditBundlesRequest) returns (common.v1.Empty) {
+        option (google.api.http) = {
+            get: "/api/credits/v1/{organization_id}/creditbundles"
+        };
+    }
+}
+
+// Request for listing credit bundles
+message ListCreditBundlesRequest {
+    // ID of the organization for which credit bundles are listed.
+    // This is a required field.
+    string organization_id = 1;
+    // If set, include expired bundles.
+    bool include_expired = 2;
+}
