@@ -34,7 +34,7 @@ service CreditsService {
     // List credit bundles for an organization.
     // Required permissions:
     // - bundle.credits.list
-    rpc ListCreditBundles(ListCreditBundlesRequest) returns (common.v1.Empty) {
+    rpc ListCreditBundles(ListCreditBundlesRequest) returns (CreditBundlesList) {
         option (google.api.http) = {
             get: "/api/credits/v1/{organization_id}/creditbundles"
         };
@@ -48,4 +48,30 @@ message ListCreditBundlesRequest {
     string organization_id = 1;
     // If set, include expired bundles.
     bool include_expired = 2;
+}
+
+// List of credit bundles
+message CreditBundlesList {
+    repeated CreditBundle items = 1;
+}
+
+message CreditBundle {
+    // Unique identifier of this credit bundle.
+    string id = 1;
+    // The organization this credit bundle belongs to.
+    string organization_id = 2;
+    // The number of credits purchased in this bundle.
+    float credits_purchased = 3;
+    // The total price of these credits.
+    float total_price = 4;
+    // Currency used for total_price.
+    string currency = 5;
+    // The number of credits remaining in this bundle.
+    float credits_remaining = 6;
+    // The date at which this bundle was purchased.
+    google.protobuf.Timestamp purchased_at = 7;
+    // The date from which this bundle is valid.
+    google.protobuf.Timestamp valid_from = 8;
+    // The date until which this bundle is valid.
+    google.protobuf.Timestamp valid_until = 9;
 }

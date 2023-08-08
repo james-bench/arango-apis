@@ -23,6 +23,6 @@ package v1
 const (
 	// Credit bundles permissions
 
-	// CreditBundlesList is needed for listing credit bundles.
-	CreditBundlesList = "bundle.credits.list"
+	// PermissionCreditBundlesList is needed for listing credit bundles.
+	PermissionCreditBundlesList = "bundle.credits.list"
 )

@@ -578,6 +578,14 @@ title: "ArangoGraph Insights Platform API"
             <ul>
               
                 <li>
+                  <a href="#arangodb.cloud.credits.v1.CreditBundle"><span class="badge">M</span>CreditBundle</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.credits.v1.CreditBundlesList"><span class="badge">M</span>CreditBundlesList</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.credits.v1.ListCreditBundlesRequest"><span class="badge">M</span>ListCreditBundlesRequest</a>
                 </li>
               
@@ -6957,6 +6965,110 @@ Unless specified otherwise, the default number is DefaultPageSize. </p></td>
       <p></p>
 
       
+        <h3 id="arangodb.cloud.credits.v1.CreditBundle">CreditBundle</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Unique identifier of this credit bundle. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The organization this credit bundle belongs to. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>credits_purchased</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>The number of credits purchased in this bundle. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total_price</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>The total price of these credits. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>currency</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Currency used for total_price. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>credits_remaining</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>The number of credits remaining in this bundle. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>purchased_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The date at which this bundle was purchased. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>valid_from</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The date from which this bundle is valid. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>valid_until</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The date until which this bundle is valid. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.credits.v1.CreditBundlesList">CreditBundlesList</h3>
+        <p>List of credit bundles</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#arangodb.cloud.credits.v1.CreditBundle">CreditBundle</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.credits.v1.ListCreditBundlesRequest">ListCreditBundlesRequest</h3>
         <p>Request for listing credit bundles</p>
 
@@ -7006,7 +7118,7 @@ This is a required field. </p></td>
               <tr>
                 <td>ListCreditBundles</td>
                 <td><a href="#arangodb.cloud.credits.v1.ListCreditBundlesRequest">ListCreditBundlesRequest</a></td>
-                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><a href="#arangodb.cloud.credits.v1.CreditBundlesList">CreditBundlesList</a></td>
                 <td><p>List credit bundles for an organization.
 Required permissions:
 - bundle.credits.list</p></td>
