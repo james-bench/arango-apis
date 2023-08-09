@@ -58,9 +58,9 @@ export interface ListCreditBundlesRequest {
   // string
   organization_id?: string;
   
-  // If set, include expired bundles.
+  // If set, exclude expired bundles.
   // boolean
-  include_expired?: boolean;
+  exclude_expired?: boolean;
 }
 
 // CreditsService is the API used for managing credits.

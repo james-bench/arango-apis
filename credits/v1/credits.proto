@@ -46,8 +46,8 @@ message ListCreditBundlesRequest {
     // ID of the organization for which credit bundles are listed.
     // This is a required field.
     string organization_id = 1;
-    // If set, include expired bundles.
-    bool include_expired = 2;
+    // If set, exclude expired bundles.
+    bool exclude_expired = 2;
 }
 
 // List of credit bundles
