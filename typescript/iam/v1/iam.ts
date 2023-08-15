@@ -196,6 +196,10 @@ export interface Group {
   // This is a read-only value.
   // boolean
   is_virtual?: boolean;
+  
+  // Set if this group is the default.
+  // boolean
+  is_default?: boolean;
 }
 
 // List of groups.

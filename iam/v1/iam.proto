@@ -499,6 +499,8 @@ message Group {
     // Set if this group is virtual and managed by the system.
     // This is a read-only value.
     bool is_virtual = 9;
+    // Set if this group is the default.
+    bool is_default = 10;
 }
 
 // List of groups.
