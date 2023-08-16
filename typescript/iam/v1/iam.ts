@@ -197,7 +197,8 @@ export interface Group {
   // boolean
   is_virtual?: boolean;
   
-  // Set if this group is the default.
+  // If set, new users are automatically added to this group.
+  // If there are multiple default groups, new users are added to all of them.
   // boolean
   is_default?: boolean;
 }

@@ -356,7 +356,8 @@ type Group struct {
 	// Set if this group is virtual and managed by the system.
 	// This is a read-only value.
 	IsVirtual bool `protobuf:"varint,9,opt,name=is_virtual,json=isVirtual,proto3" json:"is_virtual,omitempty"`
-	// Set if this group is the default.
+	// If set, new users are automatically added to this group.
+	// If there are multiple default groups, new users are added to all of them.
 	IsDefault            bool     `protobuf:"varint,10,opt,name=is_default,json=isDefault,proto3" json:"is_default,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
