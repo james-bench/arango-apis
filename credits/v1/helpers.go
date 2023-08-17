@@ -35,3 +35,8 @@ func (bundle *CreditBundle) IsExpired() (bool, error) {
 	}
 	return time.Now().UTC().After(validUntil), nil
 }
+
+// IsUsed returns true if a credit bundle has been used.
+func (bundle *CreditBundle) IsUsed() bool {
+	return bundle.GetCreditsPurchased() != bundle.GetCreditsRemaining()
+}
