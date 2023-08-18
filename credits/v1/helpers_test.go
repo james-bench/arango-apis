@@ -21,16 +21,28 @@
 package v1
 
 import (
+	"testing"
+	"time"
+
 	"github.com/gogo/protobuf/types"
+	"github.com/stretchr/testify/assert"
 )
 
-// IsExpired returns true if a credit bundle is expired.
-func (bundle *CreditBundle) IsExpired() bool {
-	now := types.TimestampNow()
-	return now.Compare(bundle.GetValidUntil()) > 0
-}
-
-// IsUsed returns true if a credit bundle has been used.
-func (bundle *CreditBundle) IsUsed() bool {
-	return bundle.GetCreditsPurchased() != bundle.GetCreditsRemaining()
+func TestIsExpired(t *testing.T) {
+	t.Run("expired", func(t *testing.T) {
+		year := time.Now().Year() - 2
+		validUntil, _ := types.TimestampProto(time.Date(year, 7, 16, 0, 0, 0, 0, time.UTC))
+		b := &CreditBundle{
+			ValidUntil: validUntil,
+		}
+		assert.True(t, b.IsExpired())
+	})
+	t.Run("not expired", func(t *testing.T) {
+		year := time.Now().Year() + 2
+		validUntil, _ := types.TimestampProto(time.Date(year, 7, 16, 0, 0, 0, 0, time.UTC))
+		expiredBundle := &CreditBundle{
+			ValidUntil: validUntil,
+		}
+		assert.False(t, expiredBundle.IsExpired())
+	})
 }
