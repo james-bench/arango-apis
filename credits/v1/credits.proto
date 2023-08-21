@@ -33,7 +33,7 @@ import "google/api/annotations.proto";
 service CreditsService {
     // List credit bundles for an organization.
     // Required permissions:
-    // - credits.bundle.list on the organization identified by the given organization ID
+    // - credits.creditbundle.list on the organization identified by the given organization ID
     rpc ListCreditBundles(ListCreditBundlesRequest) returns (CreditBundlesList) {
         option (google.api.http) = {
             get: "/api/credits/v1/{organization_id}/creditbundles"

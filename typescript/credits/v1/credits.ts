@@ -67,7 +67,7 @@ export interface ListCreditBundlesRequest {
 export interface ICreditsService {
   // List credit bundles for an organization.
   // Required permissions:
-  // - credits.bundle.list on the organization identified by the given organization ID
+  // - credits.creditbundle.list on the organization identified by the given organization ID
   ListCreditBundles: (req: ListCreditBundlesRequest) => Promise<CreditBundlesList>;
 }
 
@@ -75,7 +75,7 @@ export interface ICreditsService {
 export class CreditsService implements ICreditsService {
   // List credit bundles for an organization.
   // Required permissions:
-  // - credits.bundle.list on the organization identified by the given organization ID
+  // - credits.creditbundle.list on the organization identified by the given organization ID
   async ListCreditBundles(req: ListCreditBundlesRequest): Promise<CreditBundlesList> {
     const path = `/api/credits/v1/${encodeURIComponent(req.organization_id || '')}/creditbundles`;
     const url = path + api.queryString(req, [`organization_id`]);

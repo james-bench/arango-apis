@@ -24,5 +24,5 @@ const (
 	// Credit bundles permissions
 
 	// PermissionCreditBundlesList is needed for listing credit bundles.
-	PermissionCreditBundlesList = "credits.bundle.list"
+	PermissionCreditBundlesList = "credits.creditbundle.list"
 )
