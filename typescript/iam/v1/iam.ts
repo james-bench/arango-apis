@@ -196,6 +196,11 @@ export interface Group {
   // This is a read-only value.
   // boolean
   is_virtual?: boolean;
+  
+  // If set, new users are automatically added to this group.
+  // If there are multiple default groups, new users are added to all of them.
+  // boolean
+  is_default?: boolean;
 }
 
 // List of groups.

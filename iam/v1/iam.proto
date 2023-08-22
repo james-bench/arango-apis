@@ -499,6 +499,9 @@ message Group {
     // Set if this group is virtual and managed by the system.
     // This is a read-only value.
     bool is_virtual = 9;
+    // If set, new users are automatically added to this group.
+    // If there are multiple default groups, new users are added to all of them.
+    bool is_default = 10;
 }
 
 // List of groups.
