@@ -8,39 +8,53 @@ import * as googleTypes from '../../googleTypes'
 // File: credits/v1/credits.proto
 // Package: arangodb.cloud.credits.v1
 export interface CreditBundle {
-  // Unique identifier of this credit bundle.
+  // ID of the credit bundle.
+  // This is a read-only value.
   // string
   id?: string;
   
+  // URL of this credit bundle.
+  // This is a read-only value.
+  // string
+  url?: string;
+  
   // The organization this credit bundle belongs to.
+  // This is a read-only value.
   // string
   organization_id?: string;
   
   // The number of credits purchased in this bundle.
+  // This is a read-only value.
   // number
   credits_purchased?: number;
   
   // The total price of these credits.
+  // This is a read-only value.
   // number
   total_price?: number;
   
   // Currency used for total_price.
+  // This is a read-only value.
   // string
   currency?: string;
   
   // The number of credits remaining in this bundle.
+  // This is a read-only value.
   // number
   credits_remaining?: number;
   
   // The date at which this bundle was purchased.
+  // This is a read-only value.
   // googleTypes.Timestamp
   purchased_at?: googleTypes.Timestamp;
   
   // The date from which this bundle is valid.
+  // This is a read-only value.
   // googleTypes.Timestamp
   valid_from?: googleTypes.Timestamp;
   
   // The date until which this bundle is valid.
+  // This is a read-only value.
   // googleTypes.Timestamp
   valid_until?: googleTypes.Timestamp;
 }
