@@ -336,7 +336,7 @@ const _ = grpc.SupportPackageIsVersion4
 type CreditsServiceClient interface {
 	// List credit bundles for an organization.
 	// Required permissions:
-	// - credits.creditbundle.list on the organization identified by the given organization ID
+	// - credit.creditbundle.list on the organization identified by the given organization ID
 	ListCreditBundles(ctx context.Context, in *ListCreditBundlesRequest, opts ...grpc.CallOption) (*CreditBundlesList, error)
 }
 
@@ -361,7 +361,7 @@ func (c *creditsServiceClient) ListCreditBundles(ctx context.Context, in *ListCr
 type CreditsServiceServer interface {
 	// List credit bundles for an organization.
 	// Required permissions:
-	// - credits.creditbundle.list on the organization identified by the given organization ID
+	// - credit.creditbundle.list on the organization identified by the given organization ID
 	ListCreditBundles(context.Context, *ListCreditBundlesRequest) (*CreditBundlesList, error)
 }
 
