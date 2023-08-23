@@ -574,6 +574,33 @@ title: "ArangoGraph Insights Platform API"
         
           
           <li>
+            <a href="#credits%2fv1%2fcredits.proto">credits/v1/credits.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#arangodb.cloud.credits.v1.CreditBundle"><span class="badge">M</span>CreditBundle</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.credits.v1.CreditBundlesList"><span class="badge">M</span>CreditBundlesList</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.credits.v1.ListCreditBundlesRequest"><span class="badge">M</span>ListCreditBundlesRequest</a>
+                </li>
+              
+              
+              
+              
+                <li>
+                  <a href="#arangodb.cloud.credits.v1.CreditsService"><span class="badge">S</span>CreditsService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#crypto%2fv1%2fcrypto.proto">crypto/v1/crypto.proto</a>
             <ul>
               
@@ -6930,6 +6957,222 @@ Unless specified otherwise, the default number is DefaultPageSize. </p></td>
       
 
       
+    
+      
+      <div class="file-heading">
+        <h2 id="credits/v1/credits.proto">credits/v1/credits.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="arangodb.cloud.credits.v1.CreditBundle">CreditBundle</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the credit bundle.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>url</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>URL of this credit bundle.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The organization this credit bundle belongs to.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>credits_purchased</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>The number of credits purchased in this bundle.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total_price</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>The total price of these credits.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>currency</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Currency used for total_price.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>credits_remaining</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>The number of credits remaining in this bundle.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>purchased_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The date at which this bundle was purchased.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>valid_from</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The date from which this bundle is valid.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>valid_until</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The date until which this bundle is valid.
+This is a read-only value. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.credits.v1.CreditBundlesList">CreditBundlesList</h3>
+        <p>List of credit bundles</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#arangodb.cloud.credits.v1.CreditBundle">CreditBundle</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.credits.v1.ListCreditBundlesRequest">ListCreditBundlesRequest</h3>
+        <p>Request for listing credit bundles</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the organization for which credit bundles are listed.
+This is a required field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>exclude_expired</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, exclude expired bundles. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+
+      
+
+      
+        <h3 id="arangodb.cloud.credits.v1.CreditsService">CreditsService</h3>
+        <p>CreditsService is the API used for managing credits.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>ListCreditBundles</td>
+                <td><a href="#arangodb.cloud.credits.v1.ListCreditBundlesRequest">ListCreditBundlesRequest</a></td>
+                <td><a href="#arangodb.cloud.credits.v1.CreditBundlesList">CreditBundlesList</a></td>
+                <td><p>List credit bundles for an organization.
+Required permissions:
+- credit.creditbundle.list on the organization identified by the given organization ID</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+          
+          
+          <h4>Methods with HTTP bindings</h4>
+          <table>
+            <thead>
+              <tr>
+                <td>Method Name</td>
+                <td>Method</td>
+                <td>Pattern</td>
+                <td>Body</td>
+              </tr>
+            </thead>
+            <tbody>
+            
+              
+              
+              <tr>
+                <td>ListCreditBundles</td>
+                <td>GET</td>
+                <td>/api/credits/v1/{organization_id}/creditbundles</td>
+                <td></td>
+              </tr>
+              
+            
+            </tbody>
+          </table>
+          
+        
     
       
       <div class="file-heading">
