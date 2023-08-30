@@ -36,9 +36,40 @@ service CreditsService {
     // - credit.creditbundle.list on the organization identified by the given organization ID
     rpc ListCreditBundles(ListCreditBundlesRequest) returns (CreditBundlesList) {
         option (google.api.http) = {
-            get: "/api/credits/v1/{organization_id}/creditbundles"
+            get: "/api/credit/v1/{organization_id}/creditbundles"
         };
     }
+
+    // List credit usage for the specified organization ID.
+    // Required permisisons:
+    // - credit.creditbundleusage.list on the organiation identified by the given organization ID.
+    rpc ListCreditBundlesUsage(ListCreditBundleUsageRequest) returns (CreditBundleUsageList) {
+        option (google.api.http) = {
+            get: "/api/credit/v1/{organization_id}/creditbundleusage"
+        };
+    };
+}
+
+// Request for listing credit usage.
+message ListCreditBundleUsageRequest {
+    // The organization this credit bundle belongs to.
+    // This is a required field.
+    string organization_id = 1;
+    // If set, list the usage for the specified credit bundle only.
+    // By default, returns the usage for all credit bundles in this organization.
+    // This is an optional field.
+    string credit_bundle_id = 2;
+    // The date from which credit usage should be listed.
+    // If unspecified, defaults to the date 7 days before `ends_at`.
+    // This is an optional field.
+    google.protobuf.Timestamp starts_at = 3;
+    // The date until which credit usage should be listed.
+    // If unspecified, defaults to the current date (at the time of calling the API).
+    // This is an optional field.
+    google.protobuf.Timestamp end_at = 4;
+    // Common list options
+    // context_id is ignored.
+    common.v1.ListOptions options = 20;
 }
 
 // Request for listing credit bundles
@@ -86,4 +117,24 @@ message CreditBundle {
     // The date until which this bundle is valid.
     // This is a read-only value.
     google.protobuf.Timestamp valid_until = 11;
+}
+
+// Usage of credit bundle.
+message CreditBundleUsage {
+    // Unique identifier of this credit bundle usage.
+    string id = 1;
+    // ID of the usage item this credit bundle usage corresponds to.
+    string usage_item_id = 2;
+    // ID of the credit bundle from which credit was used.
+    string credit_bundle_id = 3;
+    // Amount of credits used from the specified credit_bundle_id.
+    float usage = 4;
+    // Amount of credits remaining after this usage.
+    float remaining = 5;
+    // Timestamp at which the credits were used.
+    google.protobuf.Timestamp used_at = 6;
+}
+
+message CreditBundleUsageList {
+    repeated CreditBundleUsage items = 1;
 }
