@@ -74,6 +74,10 @@ export interface CreditBundleUsage {
   // string
   credit_bundle_id?: string;
   
+  // ID of the organization this credit bundle (and usage) belongs to.
+  // string
+  organization_id?: string;
+  
   // Amount of credits used from the specified credit_bundle_id.
   // number
   usage?: number;
