@@ -153,7 +153,7 @@ export interface ICreditsService {
   
   // List credit usage for the specified organization ID.
   // Required permisisons:
-  // - credit.creditbundleusage.list on the organiation identified by the given organization ID.
+  // - credit.creditbundleusage.list on the organization identified by the given organization ID.
   ListCreditBundlesUsage: (req: ListCreditBundleUsageRequest) => Promise<CreditBundleUsageList>;
 }
 
@@ -170,9 +170,9 @@ export class CreditsService implements ICreditsService {
   
   // List credit usage for the specified organization ID.
   // Required permisisons:
-  // - credit.creditbundleusage.list on the organiation identified by the given organization ID.
+  // - credit.creditbundleusage.list on the organization identified by the given organization ID.
   async ListCreditBundlesUsage(req: ListCreditBundleUsageRequest): Promise<CreditBundleUsageList> {
-    const path = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/creditbundleusage`;
+    const path = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/creditbundleusages`;
     const url = path + api.queryString(req, [`organization_id`]);
     return api.get(url, undefined);
   }

@@ -307,7 +307,7 @@ func RegisterCreditsServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 var (
 	pattern_CreditsService_ListCreditBundles_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "credit", "v1", "organization_id", "creditbundles"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_CreditsService_ListCreditBundlesUsage_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "credit", "v1", "organization_id", "creditbundleusage"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_CreditsService_ListCreditBundlesUsage_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "credit", "v1", "organization_id", "creditbundleusages"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (

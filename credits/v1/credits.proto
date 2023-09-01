@@ -42,10 +42,10 @@ service CreditsService {
 
     // List credit usage for the specified organization ID.
     // Required permisisons:
-    // - credit.creditbundleusage.list on the organiation identified by the given organization ID.
+    // - credit.creditbundleusage.list on the organization identified by the given organization ID.
     rpc ListCreditBundlesUsage(ListCreditBundleUsageRequest) returns (CreditBundleUsageList) {
         option (google.api.http) = {
-            get: "/api/credit/v1/{organization_id}/creditbundleusage"
+            get: "/api/credit/v1/{organization_id}/creditbundleusages"
         };
     };
 }
