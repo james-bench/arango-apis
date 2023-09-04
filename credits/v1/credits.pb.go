@@ -605,11 +605,11 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type CreditsServiceClient interface {
-	// List credit bundles for an organization.
+	// List credit bundles for an organiation based on the provided request.
 	// Required permissions:
 	// - credit.creditbundle.list on the organization identified by the given organization ID
 	ListCreditBundles(ctx context.Context, in *ListCreditBundlesRequest, opts ...grpc.CallOption) (*CreditBundlesList, error)
-	// List credit usage for the specified organization ID.
+	// List credit bundle usages for an organiation based on the provided request.
 	// Required permisisons:
 	// - credit.creditbundleusage.list on the organization identified by the given organization ID.
 	ListCreditBundlesUsage(ctx context.Context, in *ListCreditBundleUsageRequest, opts ...grpc.CallOption) (*CreditBundleUsageList, error)
@@ -643,11 +643,11 @@ func (c *creditsServiceClient) ListCreditBundlesUsage(ctx context.Context, in *L
 
 // CreditsServiceServer is the server API for CreditsService service.
 type CreditsServiceServer interface {
-	// List credit bundles for an organization.
+	// List credit bundles for an organiation based on the provided request.
 	// Required permissions:
 	// - credit.creditbundle.list on the organization identified by the given organization ID
 	ListCreditBundles(context.Context, *ListCreditBundlesRequest) (*CreditBundlesList, error)
-	// List credit usage for the specified organization ID.
+	// List credit bundle usages for an organiation based on the provided request.
 	// Required permisisons:
 	// - credit.creditbundleusage.list on the organization identified by the given organization ID.
 	ListCreditBundlesUsage(context.Context, *ListCreditBundleUsageRequest) (*CreditBundleUsageList, error)

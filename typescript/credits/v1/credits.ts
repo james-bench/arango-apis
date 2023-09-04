@@ -151,12 +151,12 @@ export interface ListCreditBundlesRequest {
 
 // CreditsService is the API used for managing credits.
 export interface ICreditsService {
-  // List credit bundles for an organization.
+  // List credit bundles for an organiation based on the provided request.
   // Required permissions:
   // - credit.creditbundle.list on the organization identified by the given organization ID
   ListCreditBundles: (req: ListCreditBundlesRequest) => Promise<CreditBundlesList>;
   
-  // List credit usage for the specified organization ID.
+  // List credit bundle usages for an organiation based on the provided request.
   // Required permisisons:
   // - credit.creditbundleusage.list on the organization identified by the given organization ID.
   ListCreditBundlesUsage: (req: ListCreditBundleUsageRequest) => Promise<CreditBundleUsageList>;
@@ -164,7 +164,7 @@ export interface ICreditsService {
 
 // CreditsService is the API used for managing credits.
 export class CreditsService implements ICreditsService {
-  // List credit bundles for an organization.
+  // List credit bundles for an organiation based on the provided request.
   // Required permissions:
   // - credit.creditbundle.list on the organization identified by the given organization ID
   async ListCreditBundles(req: ListCreditBundlesRequest): Promise<CreditBundlesList> {
@@ -173,7 +173,7 @@ export class CreditsService implements ICreditsService {
     return api.get(url, undefined);
   }
   
-  // List credit usage for the specified organization ID.
+  // List credit bundle usages for an organiation based on the provided request.
   // Required permisisons:
   // - credit.creditbundleusage.list on the organization identified by the given organization ID.
   async ListCreditBundlesUsage(req: ListCreditBundleUsageRequest): Promise<CreditBundleUsageList> {

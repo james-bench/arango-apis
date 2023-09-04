@@ -31,7 +31,7 @@ import "google/api/annotations.proto";
 
 // CreditsService is the API used for managing credits.
 service CreditsService {
-    // List credit bundles for an organization.
+    // List credit bundles for an organiation based on the provided request.
     // Required permissions:
     // - credit.creditbundle.list on the organization identified by the given organization ID
     rpc ListCreditBundles(ListCreditBundlesRequest) returns (CreditBundlesList) {
@@ -40,7 +40,7 @@ service CreditsService {
         };
     }
 
-    // List credit usage for the specified organization ID.
+    // List credit bundle usages for an organiation based on the provided request.
     // Required permisisons:
     // - credit.creditbundleusage.list on the organization identified by the given organization ID.
     rpc ListCreditBundlesUsage(ListCreditBundleUsageRequest) returns (CreditBundleUsageList) {
