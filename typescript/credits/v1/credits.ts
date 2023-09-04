@@ -58,6 +58,10 @@ export interface CreditBundle {
   // This is a read-only value.
   // googleTypes.Timestamp
   valid_until?: googleTypes.Timestamp;
+  
+  // Timestamp of when this credit bundle was last used.
+  // googleTypes.Timestamp
+  last_used_at?: googleTypes.Timestamp;
 }
 
 // Usage of credit bundle.

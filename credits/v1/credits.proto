@@ -117,6 +117,8 @@ message CreditBundle {
     // The date until which this bundle is valid.
     // This is a read-only value.
     google.protobuf.Timestamp valid_until = 11;
+    // Timestamp of when this credit bundle was last used.
+    google.protobuf.Timestamp last_used_at = 12;
 }
 
 // Usage of credit bundle.
