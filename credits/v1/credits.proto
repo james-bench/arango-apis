@@ -31,7 +31,7 @@ import "google/api/annotations.proto";
 
 // CreditsService is the API used for managing credits.
 service CreditsService {
-    // List credit bundles for an organiation based on the provided request.
+    // List credit bundles for an organization based on the provided request.
     // Required permissions:
     // - credit.creditbundle.list on the organization identified by the given organization ID
     rpc ListCreditBundles(ListCreditBundlesRequest) returns (CreditBundlesList) {
@@ -40,7 +40,7 @@ service CreditsService {
         };
     }
 
-    // List credit bundle usages for an organiation based on the provided request.
+    // List credit bundle usages for an organization based on the provided request.
     // Required permisisons:
     // - credit.creditbundleusage.list on the organization identified by the given organization ID.
     rpc ListCreditBundlesUsage(ListCreditBundleUsageRequest) returns (CreditBundleUsageList) {
@@ -66,7 +66,7 @@ message ListCreditBundleUsageRequest {
     // The date until which credit usage should be listed.
     // If unspecified, defaults to the current date (at the time of calling the API).
     // This is an optional field.
-    google.protobuf.Timestamp end_at = 4;
+    google.protobuf.Timestamp ends_at = 4;
     // Common list options
     // context_id is ignored.
     common.v1.ListOptions options = 20;
