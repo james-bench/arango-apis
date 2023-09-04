@@ -140,6 +140,7 @@ message CreditBundleUsage {
     google.protobuf.Timestamp created_at = 7;
 }
 
+// List of CreditBundleUsages.
 message CreditBundleUsageList {
     repeated CreditBundleUsage items = 1;
 }

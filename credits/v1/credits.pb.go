@@ -482,6 +482,7 @@ func (m *CreditBundleUsage) GetCreatedAt() *types.Timestamp {
 	return nil
 }
 
+// List of CreditBundleUsages.
 type CreditBundleUsageList struct {
 	Items                []*CreditBundleUsage `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}             `json:"-"`

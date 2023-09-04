@@ -95,6 +95,8 @@ export interface CreditBundleUsage {
   // googleTypes.Timestamp
   created_at?: googleTypes.Timestamp;
 }
+
+// List of CreditBundleUsages.
 export interface CreditBundleUsageList {
   // CreditBundleUsage
   items?: CreditBundleUsage[];
