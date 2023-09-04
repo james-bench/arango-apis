@@ -50,7 +50,7 @@ service CreditsService {
     };
 }
 
-// Request for listing credit usage.
+// Request for listing credit bundle usages.
 message ListCreditBundleUsageRequest {
     // The organization this credit bundle belongs to.
     // This is a required field.

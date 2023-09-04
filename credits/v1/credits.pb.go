@@ -30,7 +30,7 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-// Request for listing credit usage.
+// Request for listing credit bundle usages.
 type ListCreditBundleUsageRequest struct {
 	// The organization this credit bundle belongs to.
 	// This is a required field.

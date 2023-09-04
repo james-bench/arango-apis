@@ -106,7 +106,7 @@ export interface CreditBundlesList {
   items?: CreditBundle[];
 }
 
-// Request for listing credit usage.
+// Request for listing credit bundle usages.
 export interface ListCreditBundleUsageRequest {
   // The organization this credit bundle belongs to.
   // This is a required field.
