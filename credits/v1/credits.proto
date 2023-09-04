@@ -122,6 +122,7 @@ message CreditBundle {
 }
 
 // Usage of credit bundle.
+// All fields are read-only.
 message CreditBundleUsage {
     // Unique identifier of this credit bundle usage.
     string id = 1;
@@ -135,8 +136,8 @@ message CreditBundleUsage {
     float usage = 5;
     // Amount of credits remaining after this usage.
     float remaining = 6;
-    // Timestamp at which the credits were used.
-    google.protobuf.Timestamp used_at = 20;
+    // Timestamp at which this credit usage was created.
+    google.protobuf.Timestamp created_at = 7;
 }
 
 message CreditBundleUsageList {

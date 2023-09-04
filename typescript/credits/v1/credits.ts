@@ -65,6 +65,7 @@ export interface CreditBundle {
 }
 
 // Usage of credit bundle.
+// All fields are read-only.
 export interface CreditBundleUsage {
   // Unique identifier of this credit bundle usage.
   // string
@@ -90,9 +91,9 @@ export interface CreditBundleUsage {
   // number
   remaining?: number;
   
-  // Timestamp at which the credits were used.
+  // Timestamp at which this credit usage was created.
   // googleTypes.Timestamp
-  used_at?: googleTypes.Timestamp;
+  created_at?: googleTypes.Timestamp;
 }
 export interface CreditBundleUsageList {
   // CreditBundleUsage
