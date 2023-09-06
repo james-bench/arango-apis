@@ -133,6 +133,11 @@ export interface ListCreditBundleUsageRequest {
   // googleTypes.Timestamp
   ends_at?: googleTypes.Timestamp;
   
+  // If set, list the usage for the specified usage item only.
+  // This is an optional field.
+  // string
+  usage_item_id?: string;
+  
   // Common list options
   // context_id is ignored.
   // arangodb.cloud.common.v1.ListOptions
