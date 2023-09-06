@@ -582,7 +582,19 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.credits.v1.CreditBundleUsage"><span class="badge">M</span>CreditBundleUsage</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.credits.v1.CreditBundleUsageList"><span class="badge">M</span>CreditBundleUsageList</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.credits.v1.CreditBundlesList"><span class="badge">M</span>CreditBundlesList</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.credits.v1.ListCreditBundleUsageRequest"><span class="badge">M</span>ListCreditBundleUsageRequest</a>
                 </li>
               
                 <li>
@@ -7055,6 +7067,103 @@ This is a read-only value. </p></td>
 This is a read-only value. </p></td>
                 </tr>
               
+                <tr>
+                  <td>last_used_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Timestamp of when this credit bundle was last used. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.credits.v1.CreditBundleUsage">CreditBundleUsage</h3>
+        <p>Usage of credit bundle.</p><p>All fields are read-only.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Unique identifier of this credit bundle usage. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>usage_item_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the usage item this credit bundle usage corresponds to. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>credit_bundle_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the credit bundle from which credit was used. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the organization this credit bundle (and usage) belongs to. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>usage</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Amount of credits used from the specified credit_bundle_id. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>remaining</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Amount of credits remaining after this usage. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Timestamp at which this credit usage was created. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.credits.v1.CreditBundleUsageList">CreditBundleUsageList</h3>
+        <p>List of CreditBundleUsages.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#arangodb.cloud.credits.v1.CreditBundleUsage">CreditBundleUsage</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -7077,6 +7186,66 @@ This is a read-only value. </p></td>
                   <td><a href="#arangodb.cloud.credits.v1.CreditBundle">CreditBundle</a></td>
                   <td>repeated</td>
                   <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.credits.v1.ListCreditBundleUsageRequest">ListCreditBundleUsageRequest</h3>
+        <p>Request for listing credit bundle usages.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The organization this credit bundle belongs to.
+This is a required field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>credit_bundle_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>If set, list the usage for the specified credit bundle only.
+By default, returns the usage for all credit bundles in this organization.
+This is an optional field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>starts_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The date from which credit usage should be listed.
+If unspecified, defaults to the date 7 days before `ends_at`.
+This is an optional field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ends_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The date until which credit usage should be listed.
+If unspecified, defaults to the current date (at the time of calling the API).
+This is an optional field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>options</td>
+                  <td><a href="#arangodb.cloud.common.v1.ListOptions">arangodb.cloud.common.v1.ListOptions</a></td>
+                  <td></td>
+                  <td><p>Common list options
+context_id is ignored. </p></td>
                 </tr>
               
             </tbody>
@@ -7136,9 +7305,18 @@ This is a required field. </p></td>
                 <td>ListCreditBundles</td>
                 <td><a href="#arangodb.cloud.credits.v1.ListCreditBundlesRequest">ListCreditBundlesRequest</a></td>
                 <td><a href="#arangodb.cloud.credits.v1.CreditBundlesList">CreditBundlesList</a></td>
-                <td><p>List credit bundles for an organization.
+                <td><p>List credit bundles for an organization based on the provided request.
 Required permissions:
 - credit.creditbundle.list on the organization identified by the given organization ID</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListCreditBundlesUsage</td>
+                <td><a href="#arangodb.cloud.credits.v1.ListCreditBundleUsageRequest">ListCreditBundleUsageRequest</a></td>
+                <td><a href="#arangodb.cloud.credits.v1.CreditBundleUsageList">CreditBundleUsageList</a></td>
+                <td><p>List credit bundle usages for an organization based on the provided request.
+Required permisisons:
+- credit.creditbundleusage.list on the organization identified by the given organization ID.</p></td>
               </tr>
             
           </tbody>
@@ -7164,7 +7342,17 @@ Required permissions:
               <tr>
                 <td>ListCreditBundles</td>
                 <td>GET</td>
-                <td>/api/credits/v1/{organization_id}/creditbundles</td>
+                <td>/api/credit/v1/{organization_id}/creditbundles</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>ListCreditBundlesUsage</td>
+                <td>GET</td>
+                <td>/api/credit/v1/{organization_id}/creditbundleusages</td>
                 <td></td>
               </tr>
               

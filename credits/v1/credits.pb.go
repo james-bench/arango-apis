@@ -7,7 +7,7 @@ import (
 	context "context"
 	encoding_binary "encoding/binary"
 	fmt "fmt"
-	_ "github.com/arangodb-managed/apis/common/v1"
+	v1 "github.com/arangodb-managed/apis/common/v1"
 	types "github.com/gogo/protobuf/types"
 	proto "github.com/golang/protobuf/proto"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
@@ -30,6 +30,99 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+// Request for listing credit bundle usages.
+type ListCreditBundleUsageRequest struct {
+	// The organization this credit bundle belongs to.
+	// This is a required field.
+	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	// If set, list the usage for the specified credit bundle only.
+	// By default, returns the usage for all credit bundles in this organization.
+	// This is an optional field.
+	CreditBundleId string `protobuf:"bytes,2,opt,name=credit_bundle_id,json=creditBundleId,proto3" json:"credit_bundle_id,omitempty"`
+	// The date from which credit usage should be listed.
+	// If unspecified, defaults to the date 7 days before `ends_at`.
+	// This is an optional field.
+	StartsAt *types.Timestamp `protobuf:"bytes,3,opt,name=starts_at,json=startsAt,proto3" json:"starts_at,omitempty"`
+	// The date until which credit usage should be listed.
+	// If unspecified, defaults to the current date (at the time of calling the API).
+	// This is an optional field.
+	EndsAt *types.Timestamp `protobuf:"bytes,4,opt,name=ends_at,json=endsAt,proto3" json:"ends_at,omitempty"`
+	// Common list options
+	// context_id is ignored.
+	Options              *v1.ListOptions `protobuf:"bytes,20,opt,name=options,proto3" json:"options,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *ListCreditBundleUsageRequest) Reset()         { *m = ListCreditBundleUsageRequest{} }
+func (m *ListCreditBundleUsageRequest) String() string { return proto.CompactTextString(m) }
+func (*ListCreditBundleUsageRequest) ProtoMessage()    {}
+func (*ListCreditBundleUsageRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a0331d70383bb145, []int{0}
+}
+func (m *ListCreditBundleUsageRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ListCreditBundleUsageRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ListCreditBundleUsageRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ListCreditBundleUsageRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListCreditBundleUsageRequest.Merge(m, src)
+}
+func (m *ListCreditBundleUsageRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *ListCreditBundleUsageRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListCreditBundleUsageRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListCreditBundleUsageRequest proto.InternalMessageInfo
+
+func (m *ListCreditBundleUsageRequest) GetOrganizationId() string {
+	if m != nil {
+		return m.OrganizationId
+	}
+	return ""
+}
+
+func (m *ListCreditBundleUsageRequest) GetCreditBundleId() string {
+	if m != nil {
+		return m.CreditBundleId
+	}
+	return ""
+}
+
+func (m *ListCreditBundleUsageRequest) GetStartsAt() *types.Timestamp {
+	if m != nil {
+		return m.StartsAt
+	}
+	return nil
+}
+
+func (m *ListCreditBundleUsageRequest) GetEndsAt() *types.Timestamp {
+	if m != nil {
+		return m.EndsAt
+	}
+	return nil
+}
+
+func (m *ListCreditBundleUsageRequest) GetOptions() *v1.ListOptions {
+	if m != nil {
+		return m.Options
+	}
+	return nil
+}
+
 // Request for listing credit bundles
 type ListCreditBundlesRequest struct {
 	// ID of the organization for which credit bundles are listed.
@@ -46,7 +139,7 @@ func (m *ListCreditBundlesRequest) Reset()         { *m = ListCreditBundlesReque
 func (m *ListCreditBundlesRequest) String() string { return proto.CompactTextString(m) }
 func (*ListCreditBundlesRequest) ProtoMessage()    {}
 func (*ListCreditBundlesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a0331d70383bb145, []int{0}
+	return fileDescriptor_a0331d70383bb145, []int{1}
 }
 func (m *ListCreditBundlesRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -101,7 +194,7 @@ func (m *CreditBundlesList) Reset()         { *m = CreditBundlesList{} }
 func (m *CreditBundlesList) String() string { return proto.CompactTextString(m) }
 func (*CreditBundlesList) ProtoMessage()    {}
 func (*CreditBundlesList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a0331d70383bb145, []int{1}
+	return fileDescriptor_a0331d70383bb145, []int{2}
 }
 func (m *CreditBundlesList) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -167,7 +260,9 @@ type CreditBundle struct {
 	ValidFrom *types.Timestamp `protobuf:"bytes,10,opt,name=valid_from,json=validFrom,proto3" json:"valid_from,omitempty"`
 	// The date until which this bundle is valid.
 	// This is a read-only value.
-	ValidUntil           *types.Timestamp `protobuf:"bytes,11,opt,name=valid_until,json=validUntil,proto3" json:"valid_until,omitempty"`
+	ValidUntil *types.Timestamp `protobuf:"bytes,11,opt,name=valid_until,json=validUntil,proto3" json:"valid_until,omitempty"`
+	// Timestamp of when this credit bundle was last used.
+	LastUsedAt           *types.Timestamp `protobuf:"bytes,12,opt,name=last_used_at,json=lastUsedAt,proto3" json:"last_used_at,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
 	XXX_unrecognized     []byte           `json:"-"`
 	XXX_sizecache        int32            `json:"-"`
@@ -177,7 +272,7 @@ func (m *CreditBundle) Reset()         { *m = CreditBundle{} }
 func (m *CreditBundle) String() string { return proto.CompactTextString(m) }
 func (*CreditBundle) ProtoMessage()    {}
 func (*CreditBundle) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a0331d70383bb145, []int{2}
+	return fileDescriptor_a0331d70383bb145, []int{3}
 }
 func (m *CreditBundle) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -276,50 +371,227 @@ func (m *CreditBundle) GetValidUntil() *types.Timestamp {
 	return nil
 }
 
+func (m *CreditBundle) GetLastUsedAt() *types.Timestamp {
+	if m != nil {
+		return m.LastUsedAt
+	}
+	return nil
+}
+
+// Usage of credit bundle.
+// All fields are read-only.
+type CreditBundleUsage struct {
+	// Unique identifier of this credit bundle usage.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// ID of the usage item this credit bundle usage corresponds to.
+	UsageItemId string `protobuf:"bytes,2,opt,name=usage_item_id,json=usageItemId,proto3" json:"usage_item_id,omitempty"`
+	// ID of the credit bundle from which credit was used.
+	CreditBundleId string `protobuf:"bytes,3,opt,name=credit_bundle_id,json=creditBundleId,proto3" json:"credit_bundle_id,omitempty"`
+	// ID of the organization this credit bundle (and usage) belongs to.
+	OrganizationId string `protobuf:"bytes,4,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	// Amount of credits used from the specified credit_bundle_id.
+	Usage float32 `protobuf:"fixed32,5,opt,name=usage,proto3" json:"usage,omitempty"`
+	// Amount of credits remaining after this usage.
+	Remaining float32 `protobuf:"fixed32,6,opt,name=remaining,proto3" json:"remaining,omitempty"`
+	// Timestamp at which this credit usage was created.
+	CreatedAt            *types.Timestamp `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
+}
+
+func (m *CreditBundleUsage) Reset()         { *m = CreditBundleUsage{} }
+func (m *CreditBundleUsage) String() string { return proto.CompactTextString(m) }
+func (*CreditBundleUsage) ProtoMessage()    {}
+func (*CreditBundleUsage) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a0331d70383bb145, []int{4}
+}
+func (m *CreditBundleUsage) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *CreditBundleUsage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_CreditBundleUsage.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *CreditBundleUsage) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreditBundleUsage.Merge(m, src)
+}
+func (m *CreditBundleUsage) XXX_Size() int {
+	return m.Size()
+}
+func (m *CreditBundleUsage) XXX_DiscardUnknown() {
+	xxx_messageInfo_CreditBundleUsage.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CreditBundleUsage proto.InternalMessageInfo
+
+func (m *CreditBundleUsage) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *CreditBundleUsage) GetUsageItemId() string {
+	if m != nil {
+		return m.UsageItemId
+	}
+	return ""
+}
+
+func (m *CreditBundleUsage) GetCreditBundleId() string {
+	if m != nil {
+		return m.CreditBundleId
+	}
+	return ""
+}
+
+func (m *CreditBundleUsage) GetOrganizationId() string {
+	if m != nil {
+		return m.OrganizationId
+	}
+	return ""
+}
+
+func (m *CreditBundleUsage) GetUsage() float32 {
+	if m != nil {
+		return m.Usage
+	}
+	return 0
+}
+
+func (m *CreditBundleUsage) GetRemaining() float32 {
+	if m != nil {
+		return m.Remaining
+	}
+	return 0
+}
+
+func (m *CreditBundleUsage) GetCreatedAt() *types.Timestamp {
+	if m != nil {
+		return m.CreatedAt
+	}
+	return nil
+}
+
+// List of CreditBundleUsages.
+type CreditBundleUsageList struct {
+	Items                []*CreditBundleUsage `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
+	XXX_unrecognized     []byte               `json:"-"`
+	XXX_sizecache        int32                `json:"-"`
+}
+
+func (m *CreditBundleUsageList) Reset()         { *m = CreditBundleUsageList{} }
+func (m *CreditBundleUsageList) String() string { return proto.CompactTextString(m) }
+func (*CreditBundleUsageList) ProtoMessage()    {}
+func (*CreditBundleUsageList) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a0331d70383bb145, []int{5}
+}
+func (m *CreditBundleUsageList) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *CreditBundleUsageList) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_CreditBundleUsageList.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *CreditBundleUsageList) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreditBundleUsageList.Merge(m, src)
+}
+func (m *CreditBundleUsageList) XXX_Size() int {
+	return m.Size()
+}
+func (m *CreditBundleUsageList) XXX_DiscardUnknown() {
+	xxx_messageInfo_CreditBundleUsageList.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CreditBundleUsageList proto.InternalMessageInfo
+
+func (m *CreditBundleUsageList) GetItems() []*CreditBundleUsage {
+	if m != nil {
+		return m.Items
+	}
+	return nil
+}
+
 func init() {
+	proto.RegisterType((*ListCreditBundleUsageRequest)(nil), "arangodb.cloud.credits.v1.ListCreditBundleUsageRequest")
 	proto.RegisterType((*ListCreditBundlesRequest)(nil), "arangodb.cloud.credits.v1.ListCreditBundlesRequest")
 	proto.RegisterType((*CreditBundlesList)(nil), "arangodb.cloud.credits.v1.CreditBundlesList")
 	proto.RegisterType((*CreditBundle)(nil), "arangodb.cloud.credits.v1.CreditBundle")
+	proto.RegisterType((*CreditBundleUsage)(nil), "arangodb.cloud.credits.v1.CreditBundleUsage")
+	proto.RegisterType((*CreditBundleUsageList)(nil), "arangodb.cloud.credits.v1.CreditBundleUsageList")
 }
 
 func init() { proto.RegisterFile("credits.proto", fileDescriptor_a0331d70383bb145) }
 
 var fileDescriptor_a0331d70383bb145 = []byte{
-	// 543 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x53, 0x4f, 0x6f, 0xd3, 0x3c,
-	0x1c, 0x7e, 0xdd, 0xbe, 0x1b, 0xad, 0x33, 0xca, 0xea, 0x03, 0x32, 0x15, 0x2a, 0x55, 0x2f, 0xab,
-	0x34, 0x48, 0xd4, 0xee, 0x80, 0xd0, 0xd4, 0x03, 0x43, 0x20, 0x21, 0x71, 0x98, 0x02, 0x5c, 0xb8,
-	0x44, 0x6e, 0xec, 0x65, 0x96, 0x12, 0x3b, 0xf8, 0x4f, 0xb5, 0x81, 0xb8, 0xf0, 0x15, 0xb8, 0xf0,
-	0x0d, 0x38, 0xf2, 0x1d, 0x38, 0x71, 0x44, 0xe2, 0x0b, 0xa0, 0xc2, 0x07, 0x41, 0x71, 0x92, 0x92,
-	0xc1, 0xc6, 0xb8, 0x39, 0xcf, 0xef, 0x79, 0xf2, 0x3c, 0xb6, 0x1f, 0xc3, 0xab, 0xb1, 0x62, 0x94,
-	0x1b, 0xed, 0xe7, 0x4a, 0x1a, 0x89, 0x6e, 0x10, 0x45, 0x44, 0x22, 0xe9, 0xc2, 0x8f, 0x53, 0x69,
-	0xa9, 0x5f, 0x4f, 0x97, 0xd3, 0xc1, 0xf5, 0x58, 0x66, 0x99, 0x14, 0xc1, 0x72, 0x1a, 0x94, 0xab,
-	0x52, 0x32, 0xd8, 0x4f, 0xb8, 0x39, 0xb6, 0x0b, 0x3f, 0x96, 0x59, 0x90, 0xc8, 0x94, 0x88, 0x24,
-	0x70, 0x83, 0x85, 0x3d, 0x0a, 0x72, 0x73, 0x9a, 0x33, 0x1d, 0x18, 0x9e, 0x31, 0x6d, 0x48, 0x96,
-	0xff, 0x5a, 0x55, 0xe2, 0x9b, 0x89, 0x94, 0x49, 0xca, 0x02, 0x92, 0xf3, 0x80, 0x08, 0x21, 0x0d,
-	0x31, 0x5c, 0x8a, 0x2a, 0xcd, 0x38, 0x85, 0xf8, 0x09, 0xd7, 0xe6, 0x81, 0x0b, 0x71, 0x60, 0x05,
-	0x4d, 0x99, 0x0e, 0xd9, 0x4b, 0xcb, 0xb4, 0x41, 0x3b, 0xf0, 0x9a, 0x54, 0x09, 0x11, 0xfc, 0x95,
-	0x93, 0x44, 0x9c, 0x62, 0x30, 0x02, 0x93, 0x6e, 0xd8, 0x6b, 0xc2, 0x8f, 0x69, 0x41, 0x64, 0x27,
-	0x71, 0x6a, 0x29, 0x8b, 0xd8, 0x49, 0xce, 0x15, 0xa3, 0xb8, 0x35, 0x02, 0x93, 0x4e, 0xd8, 0xab,
-	0xe0, 0x87, 0x25, 0x3a, 0x0e, 0x61, 0xff, 0x8c, 0x53, 0x61, 0x8d, 0xe6, 0x70, 0x83, 0x1b, 0x96,
-	0x69, 0x0c, 0x46, 0xed, 0x89, 0x37, 0xdb, 0xf1, 0x2f, 0x3c, 0x20, 0xbf, 0x29, 0x0e, 0x4b, 0xd5,
-	0xf8, 0x43, 0x1b, 0x6e, 0x35, 0x71, 0xd4, 0x83, 0xad, 0x75, 0xd2, 0x16, 0xa7, 0x68, 0x1b, 0xb6,
-	0xad, 0x4a, 0x5d, 0xa2, 0x6e, 0x58, 0x2c, 0xcf, 0xdb, 0xd8, 0xff, 0xe7, 0x6e, 0x6c, 0x17, 0xf6,
-	0x2b, 0xf7, 0x28, 0xb7, 0x2a, 0x3e, 0x26, 0x9a, 0x51, 0xbc, 0x31, 0x02, 0x93, 0x56, 0xb8, 0x5d,
-	0x0d, 0x0e, 0x6b, 0x1c, 0xdd, 0x82, 0x9e, 0x91, 0x86, 0xa4, 0x51, 0xae, 0x78, 0xcc, 0xf0, 0xa6,
-	0xa3, 0x41, 0x07, 0x1d, 0x16, 0x08, 0x1a, 0xc0, 0x4e, 0x6c, 0x95, 0x62, 0x22, 0x3e, 0xc5, 0x57,
-	0x9c, 0xdf, 0xfa, 0xbb, 0xe9, 0xa4, 0x58, 0x46, 0xb8, 0xe0, 0x22, 0xc1, 0x9d, 0x33, 0x4e, 0x61,
-	0x8d, 0xa3, 0x39, 0xdc, 0x5a, 0xc7, 0x89, 0x88, 0xc1, 0xdd, 0x11, 0x98, 0x78, 0xb3, 0x81, 0x5f,
-	0xde, 0xb4, 0x5f, 0x77, 0xc3, 0x7f, 0x56, 0x57, 0x21, 0xf4, 0xd6, 0xfc, 0xfb, 0x06, 0xdd, 0x83,
-	0x70, 0x49, 0x52, 0x4e, 0xa3, 0x23, 0x25, 0x33, 0x0c, 0x2f, 0x15, 0x77, 0x1d, 0xfb, 0x91, 0x92,
-	0x19, 0xda, 0x87, 0x5e, 0x29, 0xb5, 0xc2, 0xf0, 0x14, 0x7b, 0x97, 0x6a, 0x4b, 0xa7, 0xe7, 0x05,
-	0x7b, 0xf6, 0x09, 0xc0, 0x5e, 0x79, 0x53, 0xfa, 0x29, 0x53, 0xcb, 0xe2, 0x48, 0x3e, 0x02, 0xd8,
-	0xff, 0xa3, 0x7f, 0x68, 0xef, 0x2f, 0x15, 0xb8, 0xa8, 0xad, 0x83, 0xdb, 0xff, 0xd8, 0x1b, 0x57,
-	0xba, 0xf1, 0xdd, 0xb7, 0x5f, 0x7f, 0xbc, 0x6b, 0x4d, 0x51, 0xe0, 0xde, 0x45, 0x45, 0x2d, 0x1e,
-	0xde, 0xeb, 0xdf, 0x9a, 0xf1, 0xa6, 0x1a, 0x2e, 0x4a, 0xf1, 0xc1, 0xfc, 0xf3, 0x6a, 0x08, 0xbe,
-	0xac, 0x86, 0xe0, 0xdb, 0x6a, 0x08, 0xde, 0x7f, 0x1f, 0xfe, 0xf7, 0x62, 0xb7, 0xf1, 0x3a, 0xeb,
-	0x08, 0x77, 0x32, 0x22, 0x48, 0xc2, 0x68, 0xf1, 0x77, 0xdd, 0xf8, 0xfd, 0x62, 0xd3, 0x9d, 0xd1,
-	0xde, 0xcf, 0x00, 0x00, 0x00, 0xff, 0xff, 0x2c, 0x27, 0x62, 0x50, 0x15, 0x04, 0x00, 0x00,
+	// 775 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x55, 0xcd, 0x6e, 0xd3, 0x4a,
+	0x14, 0xbe, 0x4e, 0xda, 0x26, 0x99, 0xa4, 0x69, 0x3b, 0xea, 0xad, 0x7c, 0xa3, 0x2a, 0x37, 0xb2,
+	0x84, 0x1a, 0xa9, 0x60, 0x37, 0x8d, 0xa0, 0x42, 0xa5, 0x42, 0x29, 0x02, 0xa9, 0x12, 0x12, 0x95,
+	0xa1, 0x1b, 0x58, 0x58, 0x13, 0x7b, 0xea, 0x8e, 0x64, 0x7b, 0xcc, 0xcc, 0x38, 0x6a, 0x41, 0x6c,
+	0x10, 0x1b, 0xd6, 0x6c, 0x58, 0xf2, 0x04, 0x3c, 0x03, 0x4b, 0x96, 0x48, 0xbc, 0x00, 0x2a, 0xf0,
+	0x1e, 0xc8, 0x33, 0xce, 0x5f, 0xd3, 0x92, 0x66, 0x67, 0x9f, 0xf9, 0xbe, 0x39, 0xdf, 0x9c, 0xf3,
+	0x9d, 0x19, 0xb0, 0xe8, 0x32, 0xec, 0x11, 0xc1, 0xcd, 0x98, 0x51, 0x41, 0xe1, 0x7f, 0x88, 0xa1,
+	0xc8, 0xa7, 0x5e, 0xd7, 0x74, 0x03, 0x9a, 0x78, 0x66, 0x7f, 0xb5, 0xd7, 0xaa, 0xad, 0xb9, 0x34,
+	0x0c, 0x69, 0x64, 0xf5, 0x5a, 0x96, 0xfa, 0x52, 0x94, 0xda, 0xae, 0x4f, 0xc4, 0x49, 0xd2, 0x35,
+	0x5d, 0x1a, 0x5a, 0x3e, 0x0d, 0x50, 0xe4, 0x5b, 0x72, 0xa1, 0x9b, 0x1c, 0x5b, 0xb1, 0x38, 0x8b,
+	0x31, 0xb7, 0x04, 0x09, 0x31, 0x17, 0x28, 0x8c, 0x87, 0x5f, 0x19, 0x79, 0xdd, 0xa7, 0xd4, 0x0f,
+	0xb0, 0x85, 0x62, 0x62, 0xa1, 0x28, 0xa2, 0x02, 0x09, 0x42, 0xa3, 0x4c, 0x8d, 0xf1, 0x29, 0x07,
+	0xd6, 0x1f, 0x13, 0x2e, 0x1e, 0x48, 0x15, 0xfb, 0x49, 0xe4, 0x05, 0xf8, 0x88, 0x23, 0x1f, 0xdb,
+	0xf8, 0x65, 0x82, 0xb9, 0x80, 0x1b, 0x60, 0x89, 0x32, 0x1f, 0x45, 0xe4, 0x95, 0xe4, 0x39, 0xc4,
+	0xd3, 0xb5, 0x86, 0xd6, 0x2c, 0xd9, 0xd5, 0xd1, 0xf0, 0x81, 0x07, 0x9b, 0x60, 0x59, 0x1d, 0xc5,
+	0xe9, 0xca, 0x5d, 0x52, 0x64, 0x4e, 0x21, 0xdd, 0x91, 0xcd, 0x0f, 0x3c, 0xb8, 0x03, 0x4a, 0x5c,
+	0x20, 0x26, 0xb8, 0x83, 0x84, 0x9e, 0x6f, 0x68, 0xcd, 0xf2, 0x76, 0xcd, 0x54, 0x2a, 0xcd, 0xfe,
+	0xb9, 0xcc, 0x67, 0xfd, 0x63, 0xd8, 0x45, 0x05, 0xee, 0x08, 0xd8, 0x06, 0x05, 0x1c, 0x79, 0x92,
+	0x36, 0x37, 0x95, 0xb6, 0x90, 0x42, 0x3b, 0x02, 0xde, 0x07, 0x05, 0x1a, 0xcb, 0x23, 0xeb, 0xab,
+	0x92, 0x74, 0xc3, 0xbc, 0xd8, 0x01, 0x55, 0xeb, 0x5e, 0xcb, 0x4c, 0x2b, 0xf1, 0x44, 0x81, 0xed,
+	0x3e, 0xcb, 0x08, 0x80, 0x7e, 0xb1, 0x42, 0x7c, 0xe6, 0xea, 0x6c, 0x80, 0x25, 0x7c, 0xea, 0x06,
+	0x89, 0x87, 0x1d, 0x7c, 0x1a, 0x13, 0x86, 0x55, 0x71, 0x8a, 0x76, 0x35, 0x0b, 0x3f, 0x54, 0x51,
+	0xc3, 0x06, 0x2b, 0x63, 0x99, 0xd2, 0xd4, 0x70, 0x0f, 0xcc, 0x13, 0x81, 0x43, 0xae, 0x6b, 0x8d,
+	0x7c, 0xb3, 0xbc, 0xbd, 0x61, 0x5e, 0xe9, 0x21, 0x73, 0x94, 0x6c, 0x2b, 0x96, 0xf1, 0x3b, 0x0f,
+	0x2a, 0xa3, 0x71, 0x58, 0x05, 0xb9, 0x81, 0xd2, 0x1c, 0xf1, 0xe0, 0x32, 0xc8, 0x27, 0x2c, 0xc8,
+	0xda, 0x95, 0x7e, 0x5e, 0x76, 0xb0, 0xb9, 0x4b, 0x0f, 0xb6, 0x09, 0x56, 0xb2, 0xec, 0x4e, 0x9c,
+	0x30, 0xf7, 0x04, 0x71, 0xec, 0xe9, 0xf3, 0x0d, 0xad, 0x99, 0xb3, 0x33, 0x3f, 0xf0, 0xc3, 0x7e,
+	0x1c, 0xfe, 0x0f, 0xca, 0x82, 0x0a, 0x14, 0x38, 0x31, 0x23, 0x2e, 0xd6, 0x17, 0x24, 0x0c, 0xc8,
+	0xd0, 0x61, 0x1a, 0x81, 0x35, 0x50, 0x74, 0x13, 0xc6, 0x70, 0xe4, 0x9e, 0xe9, 0x05, 0x99, 0x6f,
+	0xf0, 0x3f, 0x9a, 0x89, 0xe1, 0x10, 0x91, 0x88, 0x44, 0xbe, 0x5e, 0x1c, 0xcb, 0x64, 0xf7, 0xe3,
+	0x70, 0x0f, 0x54, 0x06, 0x72, 0x52, 0xbf, 0x94, 0xa6, 0xfa, 0xa5, 0x3c, 0xc0, 0x77, 0x04, 0xbc,
+	0x0b, 0x40, 0x0f, 0x05, 0xc4, 0x73, 0x8e, 0x19, 0x0d, 0x75, 0x30, 0x95, 0x5c, 0x92, 0xe8, 0x47,
+	0x8c, 0x86, 0x70, 0x17, 0x94, 0x15, 0x35, 0x89, 0x04, 0x09, 0xf4, 0xf2, 0x54, 0xae, 0xca, 0x74,
+	0x94, 0xa2, 0xe1, 0x3d, 0x50, 0x09, 0x10, 0x17, 0x4e, 0x92, 0xc9, 0xae, 0x4c, 0x67, 0xa7, 0xf8,
+	0x23, 0xa9, 0xda, 0x78, 0x9f, 0x1b, 0x37, 0x8f, 0x1c, 0xe4, 0x89, 0x66, 0x1b, 0x60, 0x31, 0x49,
+	0x17, 0x9c, 0xd4, 0x1c, 0xc3, 0x29, 0x2d, 0xcb, 0xe0, 0x81, 0xc0, 0xe1, 0x15, 0xc3, 0x9c, 0xbf,
+	0x74, 0x98, 0xaf, 0x6d, 0x94, 0x55, 0x30, 0x2f, 0x33, 0x64, 0xe6, 0x50, 0x3f, 0x70, 0x1d, 0x94,
+	0x86, 0xcd, 0x54, 0x7e, 0x18, 0x06, 0xd2, 0x36, 0xb8, 0x0c, 0x23, 0xa1, 0x8a, 0x51, 0x98, 0xde,
+	0x86, 0x0c, 0xdd, 0x11, 0xc6, 0x0b, 0xf0, 0xef, 0x44, 0x29, 0xe4, 0x2c, 0xed, 0x8f, 0xcf, 0xd2,
+	0xcd, 0x6b, 0xce, 0x92, 0xba, 0x14, 0x15, 0x75, 0xfb, 0x5d, 0x1e, 0x54, 0xd5, 0x22, 0x7f, 0x8a,
+	0x59, 0x2f, 0x75, 0xee, 0x67, 0x0d, 0xac, 0x4c, 0x5c, 0x13, 0xb0, 0xfd, 0x97, 0xdd, 0xaf, 0xba,
+	0x54, 0x6a, 0xd7, 0x95, 0x24, 0xef, 0x06, 0xe3, 0xce, 0xdb, 0xef, 0xbf, 0x3e, 0xe4, 0xb6, 0xa0,
+	0x29, 0x6f, 0x78, 0x05, 0x4d, 0x5f, 0x90, 0xd7, 0x17, 0xda, 0xf2, 0x26, 0x5b, 0xeb, 0x66, 0xd2,
+	0xbe, 0x68, 0x60, 0x6d, 0x42, 0x82, 0x72, 0xcc, 0xce, 0x0c, 0xaa, 0x47, 0x1f, 0x8b, 0xda, 0xd6,
+	0x2c, 0xc5, 0x94, 0xea, 0x77, 0xa5, 0xfa, 0xdb, 0xb0, 0x3d, 0x93, 0x7a, 0xe9, 0x1d, 0xbe, 0xbf,
+	0xf7, 0xf5, 0xbc, 0xae, 0x7d, 0x3b, 0xaf, 0x6b, 0x3f, 0xce, 0xeb, 0xda, 0xc7, 0x9f, 0xf5, 0x7f,
+	0x9e, 0x6f, 0x8e, 0xbc, 0x94, 0x7d, 0x29, 0xb7, 0x42, 0x14, 0x21, 0x1f, 0x7b, 0x69, 0x06, 0x9e,
+	0x6d, 0xc3, 0xad, 0x5e, 0xab, 0xbb, 0x20, 0x1d, 0xd4, 0xfe, 0x13, 0x00, 0x00, 0xff, 0xff, 0x93,
+	0x67, 0xa6, 0x52, 0xa1, 0x07, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -334,10 +606,14 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type CreditsServiceClient interface {
-	// List credit bundles for an organization.
+	// List credit bundles for an organization based on the provided request.
 	// Required permissions:
 	// - credit.creditbundle.list on the organization identified by the given organization ID
 	ListCreditBundles(ctx context.Context, in *ListCreditBundlesRequest, opts ...grpc.CallOption) (*CreditBundlesList, error)
+	// List credit bundle usages for an organization based on the provided request.
+	// Required permisisons:
+	// - credit.creditbundleusage.list on the organization identified by the given organization ID.
+	ListCreditBundlesUsage(ctx context.Context, in *ListCreditBundleUsageRequest, opts ...grpc.CallOption) (*CreditBundleUsageList, error)
 }
 
 type creditsServiceClient struct {
@@ -357,12 +633,25 @@ func (c *creditsServiceClient) ListCreditBundles(ctx context.Context, in *ListCr
 	return out, nil
 }
 
+func (c *creditsServiceClient) ListCreditBundlesUsage(ctx context.Context, in *ListCreditBundleUsageRequest, opts ...grpc.CallOption) (*CreditBundleUsageList, error) {
+	out := new(CreditBundleUsageList)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.credits.v1.CreditsService/ListCreditBundlesUsage", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CreditsServiceServer is the server API for CreditsService service.
 type CreditsServiceServer interface {
-	// List credit bundles for an organization.
+	// List credit bundles for an organization based on the provided request.
 	// Required permissions:
 	// - credit.creditbundle.list on the organization identified by the given organization ID
 	ListCreditBundles(context.Context, *ListCreditBundlesRequest) (*CreditBundlesList, error)
+	// List credit bundle usages for an organization based on the provided request.
+	// Required permisisons:
+	// - credit.creditbundleusage.list on the organization identified by the given organization ID.
+	ListCreditBundlesUsage(context.Context, *ListCreditBundleUsageRequest) (*CreditBundleUsageList, error)
 }
 
 // UnimplementedCreditsServiceServer can be embedded to have forward compatible implementations.
@@ -371,6 +660,9 @@ type UnimplementedCreditsServiceServer struct {
 
 func (*UnimplementedCreditsServiceServer) ListCreditBundles(ctx context.Context, req *ListCreditBundlesRequest) (*CreditBundlesList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCreditBundles not implemented")
+}
+func (*UnimplementedCreditsServiceServer) ListCreditBundlesUsage(ctx context.Context, req *ListCreditBundleUsageRequest) (*CreditBundleUsageList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCreditBundlesUsage not implemented")
 }
 
 func RegisterCreditsServiceServer(s *grpc.Server, srv CreditsServiceServer) {
@@ -395,6 +687,24 @@ func _CreditsService_ListCreditBundles_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CreditsService_ListCreditBundlesUsage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCreditBundleUsageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CreditsServiceServer).ListCreditBundlesUsage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.credits.v1.CreditsService/ListCreditBundlesUsage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CreditsServiceServer).ListCreditBundlesUsage(ctx, req.(*ListCreditBundleUsageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _CreditsService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "arangodb.cloud.credits.v1.CreditsService",
 	HandlerType: (*CreditsServiceServer)(nil),
@@ -403,9 +713,92 @@ var _CreditsService_serviceDesc = grpc.ServiceDesc{
 			MethodName: "ListCreditBundles",
 			Handler:    _CreditsService_ListCreditBundles_Handler,
 		},
+		{
+			MethodName: "ListCreditBundlesUsage",
+			Handler:    _CreditsService_ListCreditBundlesUsage_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "credits.proto",
+}
+
+func (m *ListCreditBundleUsageRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ListCreditBundleUsageRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ListCreditBundleUsageRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Options != nil {
+		{
+			size, err := m.Options.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintCredits(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xa2
+	}
+	if m.EndsAt != nil {
+		{
+			size, err := m.EndsAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintCredits(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x22
+	}
+	if m.StartsAt != nil {
+		{
+			size, err := m.StartsAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintCredits(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.CreditBundleId) > 0 {
+		i -= len(m.CreditBundleId)
+		copy(dAtA[i:], m.CreditBundleId)
+		i = encodeVarintCredits(dAtA, i, uint64(len(m.CreditBundleId)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.OrganizationId) > 0 {
+		i -= len(m.OrganizationId)
+		copy(dAtA[i:], m.OrganizationId)
+		i = encodeVarintCredits(dAtA, i, uint64(len(m.OrganizationId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *ListCreditBundlesRequest) Marshal() (dAtA []byte, err error) {
@@ -517,6 +910,18 @@ func (m *CreditBundle) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
+	if m.LastUsedAt != nil {
+		{
+			size, err := m.LastUsedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintCredits(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x62
+	}
 	if m.ValidUntil != nil {
 		{
 			size, err := m.ValidUntil.MarshalToSizedBuffer(dAtA[:i])
@@ -602,6 +1007,126 @@ func (m *CreditBundle) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *CreditBundleUsage) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CreditBundleUsage) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CreditBundleUsage) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.CreatedAt != nil {
+		{
+			size, err := m.CreatedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintCredits(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x3a
+	}
+	if m.Remaining != 0 {
+		i -= 4
+		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.Remaining))))
+		i--
+		dAtA[i] = 0x35
+	}
+	if m.Usage != 0 {
+		i -= 4
+		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.Usage))))
+		i--
+		dAtA[i] = 0x2d
+	}
+	if len(m.OrganizationId) > 0 {
+		i -= len(m.OrganizationId)
+		copy(dAtA[i:], m.OrganizationId)
+		i = encodeVarintCredits(dAtA, i, uint64(len(m.OrganizationId)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.CreditBundleId) > 0 {
+		i -= len(m.CreditBundleId)
+		copy(dAtA[i:], m.CreditBundleId)
+		i = encodeVarintCredits(dAtA, i, uint64(len(m.CreditBundleId)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.UsageItemId) > 0 {
+		i -= len(m.UsageItemId)
+		copy(dAtA[i:], m.UsageItemId)
+		i = encodeVarintCredits(dAtA, i, uint64(len(m.UsageItemId)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintCredits(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *CreditBundleUsageList) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CreditBundleUsageList) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CreditBundleUsageList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Items) > 0 {
+		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Items[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintCredits(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintCredits(dAtA []byte, offset int, v uint64) int {
 	offset -= sovCredits(v)
 	base := offset
@@ -613,6 +1138,38 @@ func encodeVarintCredits(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
+func (m *ListCreditBundleUsageRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.OrganizationId)
+	if l > 0 {
+		n += 1 + l + sovCredits(uint64(l))
+	}
+	l = len(m.CreditBundleId)
+	if l > 0 {
+		n += 1 + l + sovCredits(uint64(l))
+	}
+	if m.StartsAt != nil {
+		l = m.StartsAt.Size()
+		n += 1 + l + sovCredits(uint64(l))
+	}
+	if m.EndsAt != nil {
+		l = m.EndsAt.Size()
+		n += 1 + l + sovCredits(uint64(l))
+	}
+	if m.Options != nil {
+		l = m.Options.Size()
+		n += 2 + l + sovCredits(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *ListCreditBundlesRequest) Size() (n int) {
 	if m == nil {
 		return 0
@@ -693,6 +1250,66 @@ func (m *CreditBundle) Size() (n int) {
 		l = m.ValidUntil.Size()
 		n += 1 + l + sovCredits(uint64(l))
 	}
+	if m.LastUsedAt != nil {
+		l = m.LastUsedAt.Size()
+		n += 1 + l + sovCredits(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *CreditBundleUsage) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovCredits(uint64(l))
+	}
+	l = len(m.UsageItemId)
+	if l > 0 {
+		n += 1 + l + sovCredits(uint64(l))
+	}
+	l = len(m.CreditBundleId)
+	if l > 0 {
+		n += 1 + l + sovCredits(uint64(l))
+	}
+	l = len(m.OrganizationId)
+	if l > 0 {
+		n += 1 + l + sovCredits(uint64(l))
+	}
+	if m.Usage != 0 {
+		n += 5
+	}
+	if m.Remaining != 0 {
+		n += 5
+	}
+	if m.CreatedAt != nil {
+		l = m.CreatedAt.Size()
+		n += 1 + l + sovCredits(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *CreditBundleUsageList) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Items) > 0 {
+		for _, e := range m.Items {
+			l = e.Size()
+			n += 1 + l + sovCredits(uint64(l))
+		}
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -704,6 +1321,229 @@ func sovCredits(x uint64) (n int) {
 }
 func sozCredits(x uint64) (n int) {
 	return sovCredits(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *ListCreditBundleUsageRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowCredits
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ListCreditBundleUsageRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ListCreditBundleUsageRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OrganizationId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCredits
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthCredits
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthCredits
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OrganizationId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CreditBundleId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCredits
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthCredits
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthCredits
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.CreditBundleId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StartsAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCredits
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthCredits
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthCredits
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.StartsAt == nil {
+				m.StartsAt = &types.Timestamp{}
+			}
+			if err := m.StartsAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field EndsAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCredits
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthCredits
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthCredits
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.EndsAt == nil {
+				m.EndsAt = &types.Timestamp{}
+			}
+			if err := m.EndsAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 20:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Options", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCredits
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthCredits
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthCredits
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Options == nil {
+				m.Options = &v1.ListOptions{}
+			}
+			if err := m.Options.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipCredits(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthCredits
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
 }
 func (m *ListCreditBundlesRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -1188,6 +2028,364 @@ func (m *CreditBundle) Unmarshal(dAtA []byte) error {
 				m.ValidUntil = &types.Timestamp{}
 			}
 			if err := m.ValidUntil.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 12:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LastUsedAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCredits
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthCredits
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthCredits
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.LastUsedAt == nil {
+				m.LastUsedAt = &types.Timestamp{}
+			}
+			if err := m.LastUsedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipCredits(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthCredits
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *CreditBundleUsage) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowCredits
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CreditBundleUsage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CreditBundleUsage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCredits
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthCredits
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthCredits
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UsageItemId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCredits
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthCredits
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthCredits
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.UsageItemId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CreditBundleId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCredits
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthCredits
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthCredits
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.CreditBundleId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OrganizationId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCredits
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthCredits
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthCredits
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OrganizationId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 5 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Usage", wireType)
+			}
+			var v uint32
+			if (iNdEx + 4) > l {
+				return io.ErrUnexpectedEOF
+			}
+			v = uint32(encoding_binary.LittleEndian.Uint32(dAtA[iNdEx:]))
+			iNdEx += 4
+			m.Usage = float32(math.Float32frombits(v))
+		case 6:
+			if wireType != 5 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Remaining", wireType)
+			}
+			var v uint32
+			if (iNdEx + 4) > l {
+				return io.ErrUnexpectedEOF
+			}
+			v = uint32(encoding_binary.LittleEndian.Uint32(dAtA[iNdEx:]))
+			iNdEx += 4
+			m.Remaining = float32(math.Float32frombits(v))
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCredits
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthCredits
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthCredits
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.CreatedAt == nil {
+				m.CreatedAt = &types.Timestamp{}
+			}
+			if err := m.CreatedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipCredits(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthCredits
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *CreditBundleUsageList) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowCredits
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CreditBundleUsageList: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CreditBundleUsageList: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Items", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCredits
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthCredits
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthCredits
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Items = append(m.Items, &CreditBundleUsage{})
+			if err := m.Items[len(m.Items)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
