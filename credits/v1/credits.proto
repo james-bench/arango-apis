@@ -67,6 +67,9 @@ message ListCreditBundleUsageRequest {
     // If unspecified, defaults to the current date (at the time of calling the API).
     // This is an optional field.
     google.protobuf.Timestamp ends_at = 4;
+    // If set, list the usage for the specified usage item only.
+    // This is an optional field.
+    string usage_item_id = 5;
     // Common list options
     // context_id is ignored.
     common.v1.ListOptions options = 20;
