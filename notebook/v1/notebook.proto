@@ -267,6 +267,9 @@ message Status {
     }
     // The timestamp of when this notebook was last reported to be active.
     google.protobuf.Timestamp last_active_at = 5;
+    // Endpoint URL used to reach the notebook on default port 443
+    // This value will be empty during the creation of the notebook.
+    string endpoint_default = 6;
     // Resource usage of the notebook.
     Usage usage = 10;
 }

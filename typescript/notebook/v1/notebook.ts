@@ -208,6 +208,11 @@ export interface Status {
   // googleTypes.Timestamp
   last_active_at?: googleTypes.Timestamp;
   
+  // Endpoint URL used to reach the notebook on default port 443
+  // This value will be empty during the creation of the notebook.
+  // string
+  endpoint_default?: string;
+  
   // Resource usage of the notebook.
   // Status_Usage
   usage?: Status_Usage;
