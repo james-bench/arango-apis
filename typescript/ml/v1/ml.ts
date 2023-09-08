@@ -110,12 +110,6 @@ export interface IMLService {
   // Required permissions:
   // - ml.mlservices.get
   GetMLServices: (req: arangodb_cloud_common_v1_IDOptions) => Promise<MLServices>;
-  
-  // Update an existing MLServices resource. If it does not exist, this will create a new one.
-  // Pass the desired updated state of MLServices to this call.
-  // Required permissions:
-  // - ml.mlservices.update
-  UpdateMLServices: (req: MLServices) => Promise<MLServices>;
 }
 
 // MLService is the API used to configure ArangoML on ArangoGraph Insights Platform.
@@ -136,14 +130,5 @@ export class MLService implements IMLService {
     const path = `/api/ml/v1/mlservices/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
-  }
-  
-  // Update an existing MLServices resource. If it does not exist, this will create a new one.
-  // Pass the desired updated state of MLServices to this call.
-  // Required permissions:
-  // - ml.mlservices.update
-  async UpdateMLServices(req: MLServices): Promise<MLServices> {
-    const url = `/api/ml/v1/mlservices/${encodeURIComponent(req.deployment_id || '')}`;
-    return api.put(url, req);
   }
 }
