@@ -204,14 +204,19 @@ export interface Status {
   // string
   endpoint?: string;
   
-  // The timestamp of when this notebook was last reported to be active.
-  // googleTypes.Timestamp
-  last_active_at?: googleTypes.Timestamp;
-  
   // Endpoint URL used to reach the notebook on default port 443
   // This value will be empty during the creation of the notebook.
   // string
   endpoint_default?: string;
+  
+  // Endpoint URL used to reach the notebook with self signed certificate on port 18829
+  // This value will be empty during the creation of the notebook.
+  // string
+  endpoint_self_signed?: string;
+  
+  // The timestamp of when this notebook was last reported to be active.
+  // googleTypes.Timestamp
+  last_active_at?: googleTypes.Timestamp;
   
   // Resource usage of the notebook.
   // Status_Usage

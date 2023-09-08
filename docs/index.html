@@ -9480,8 +9480,7 @@ This field always contains the URL of the low port (8529) of the
 deployment.
 If a certificate with well known certificate is used, this
 port is using the well known certificate.
-Otherwise this port is using the self-signed certificate.
-This endpoint is recommended for human-to-database connections. </p></td>
+Otherwise this port is using the self-signed certificate. </p></td>
                 </tr>
               
                 <tr>
@@ -9549,6 +9548,18 @@ this will go to false until the downtime is over. </p></td>
                   <td><p>Endpoint URL used to reach the deployment on the port that uses 
 the self-signed certificate.
 This endpoint is recommended for machine-to-database connections. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>endpoint_default</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Endpoint URL used to reach the deployment on default port (443)
+This value will be empty during the creation of the deployment.
+If a certificate with well known certificate is used, this
+port is using the well known certificate.
+Otherwise this port is using the self-signed certificate.
+This endpoint is recommended for human-to-database connections. </p></td>
                 </tr>
               
                 <tr>
@@ -9622,18 +9633,6 @@ This field will be set to empty if a new revision of the spec is available </p><
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>Set if the deployment is up-to-date and has no pending updates. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>endpoint_default</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Endpoint URL used to reach the deployment on default port (443)
-This value will be empty during the creation of the deployment.
-If a certificate with well known certificate is used, this
-port is using the well known certificate.
-Otherwise this port is using the self-signed certificate.
-This endpoint is recommended for human-to-database connections. </p></td>
                 </tr>
               
             </tbody>
@@ -14714,6 +14713,14 @@ Context_id is ignored. </p></td>
 If no valid metrics tokens are configured this field is empty. </p></td>
                 </tr>
               
+                <tr>
+                  <td>endpoint_self_signed</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Endpoint URL used to reach the metrics server with self signed certificate on port 18829
+ If no valid metrics tokens are configured this field is empty. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -16703,18 +16710,26 @@ This value will be empty during the creation of the notebook. </p></td>
                 </tr>
               
                 <tr>
-                  <td>last_active_at</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>The timestamp of when this notebook was last reported to be active. </p></td>
-                </tr>
-              
-                <tr>
                   <td>endpoint_default</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Endpoint URL used to reach the notebook on default port 443
 This value will be empty during the creation of the notebook. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>endpoint_self_signed</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Endpoint URL used to reach the notebook with self signed certificate on port 18829
+This value will be empty during the creation of the notebook. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_active_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The timestamp of when this notebook was last reported to be active. </p></td>
                 </tr>
               
                 <tr>

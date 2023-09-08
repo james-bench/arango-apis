@@ -248,6 +248,12 @@ message Status {
     // Endpoint URL used to reach the notebook
     // This value will be empty during the creation of the notebook.
     string endpoint = 4;
+    // Endpoint URL used to reach the notebook on default port 443
+    // This value will be empty during the creation of the notebook.
+    string endpoint_default = 5;
+    // Endpoint URL used to reach the notebook with self signed certificate on port 18829
+    // This value will be empty during the creation of the notebook.
+    string endpoint_self_signed = 6;
     // Resource usage of the notebook.
     message Usage {
         // Information about the data volume used to store the data
@@ -266,10 +272,7 @@ message Status {
         float last_gpu_limit = 7; 
     }
     // The timestamp of when this notebook was last reported to be active.
-    google.protobuf.Timestamp last_active_at = 5;
-    // Endpoint URL used to reach the notebook on default port 443
-    // This value will be empty during the creation of the notebook.
-    string endpoint_default = 6;
+    google.protobuf.Timestamp last_active_at = 7;
     // Resource usage of the notebook.
     Usage usage = 10;
 }

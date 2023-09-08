@@ -194,4 +194,7 @@ message MetricsEndpoint {
     // Endpoint (url) to get metrics from.
     // If no valid metrics tokens are configured this field is empty.
     string endpoint = 1;
+    // Endpoint URL used to reach the metrics server with self signed certificate on port 18829
+    //  If no valid metrics tokens are configured this field is empty.
+    string endpoint_self_signed = 2;
 }

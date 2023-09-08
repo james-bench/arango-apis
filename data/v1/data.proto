@@ -624,7 +624,6 @@ message Deployment {
         // If a certificate with well known certificate is used, this
         // port is using the well known certificate.
         // Otherwise this port is using the self-signed certificate.
-        // This endpoint is recommended for human-to-database connections.
         string endpoint = 1;
         // Human readable description of the status of the deployment.
         string description = 2;
@@ -648,6 +647,13 @@ message Deployment {
         // the self-signed certificate.
         // This endpoint is recommended for machine-to-database connections.
         string endpoint_self_signed = 10;
+        // Endpoint URL used to reach the deployment on default port (443)
+        // This value will be empty during the creation of the deployment.
+        // If a certificate with well known certificate is used, this
+        // port is using the well known certificate.
+        // Otherwise this port is using the self-signed certificate.
+        // This endpoint is recommended for human-to-database connections.
+        string endpoint_default = 11;
         // If set, this deployment has a private endpoint, however can contain the public endpoint as well.
         // When switching from a public endpoint to a private endpoint the public endpoint will 
         // be available for an hour to support seemlessly migration to the private endpoint.
@@ -681,13 +687,6 @@ message Deployment {
         bool backup_upload_in_progress = 102;
         // Set if the deployment is up-to-date and has no pending updates.
         bool is_up_to_date = 103;
-        // Endpoint URL used to reach the deployment on default port (443)
-        // This value will be empty during the creation of the deployment.
-        // If a certificate with well known certificate is used, this
-        // port is using the well known certificate.
-        // Otherwise this port is using the self-signed certificate.
-        // This endpoint is recommended for human-to-database connections.
-        string endpoint_default = 104;
     }
     Status status = 201;
 
