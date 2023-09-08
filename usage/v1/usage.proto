@@ -107,6 +107,8 @@ message UsageItem {
         google.protobuf.Timestamp prepaid_deployment_starts_at = 17;
         // Timestamp when the prepaid_deployment ends (relevant when prepaid_deployment_id is set only)
         google.protobuf.Timestamp prepaid_deployment_ends_at = 18;
+        // Identifiers of the credit bundles (if any) that were used to pay for this usage item.
+        repeated string credit_bundle_ids = 19;
     }
     // Identification of the resource covered by this usage item
     Resource resource = 4;

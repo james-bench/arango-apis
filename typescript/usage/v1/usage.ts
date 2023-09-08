@@ -435,6 +435,10 @@ export interface UsageItem_Resource {
   // Timestamp when the prepaid_deployment ends (relevant when prepaid_deployment_id is set only)
   // googleTypes.Timestamp
   prepaid_deployment_ends_at?: googleTypes.Timestamp;
+  
+  // Identifiers of the credit bundles (if any) that were used to pay for this usage item.
+  // string
+  credit_bundle_ids?: string[];
 }
 
 // List of UsageItems.
