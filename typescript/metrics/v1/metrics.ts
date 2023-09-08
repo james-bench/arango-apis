@@ -54,6 +54,12 @@ export interface MetricsEndpoint {
   // If no valid metrics tokens are configured this field is empty.
   // string
   endpoint_self_signed?: string;
+  
+  // Endpoint URL used to reach the metrics server on default port 443
+  // If no valid metrics tokens are configured this field is empty.
+  // This endpoint is recommended for human-to-metrics-server connections.
+  // string
+  endpoint_default?: string;
 }
 
 // A Token is represents an access token used to authenticate requests for metrics.

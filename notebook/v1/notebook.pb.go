@@ -624,6 +624,7 @@ type Status struct {
 	Endpoint string `protobuf:"bytes,4,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
 	// Endpoint URL used to reach the notebook on default port 443
 	// This value will be empty during the creation of the notebook.
+	// This endpoint is recommended for human-to-notebook connections.
 	EndpointDefault string `protobuf:"bytes,5,opt,name=endpoint_default,json=endpointDefault,proto3" json:"endpoint_default,omitempty"`
 	// Endpoint URL used to reach the notebook with self signed certificate on port 18829
 	// This value will be empty during the creation of the notebook.

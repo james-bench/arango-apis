@@ -206,6 +206,7 @@ export interface Status {
   
   // Endpoint URL used to reach the notebook on default port 443
   // This value will be empty during the creation of the notebook.
+  // This endpoint is recommended for human-to-notebook connections.
   // string
   endpoint_default?: string;
   

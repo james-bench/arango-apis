@@ -14718,7 +14718,16 @@ If no valid metrics tokens are configured this field is empty. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Endpoint URL used to reach the metrics server with self signed certificate on port 18829
- If no valid metrics tokens are configured this field is empty. </p></td>
+If no valid metrics tokens are configured this field is empty. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>endpoint_default</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Endpoint URL used to reach the metrics server on default port 443
+If no valid metrics tokens are configured this field is empty.
+This endpoint is recommended for human-to-metrics-server connections. </p></td>
                 </tr>
               
             </tbody>
@@ -16714,7 +16723,8 @@ This value will be empty during the creation of the notebook. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Endpoint URL used to reach the notebook on default port 443
-This value will be empty during the creation of the notebook. </p></td>
+This value will be empty during the creation of the notebook.
+This endpoint is recommended for human-to-notebook connections. </p></td>
                 </tr>
               
                 <tr>
