@@ -25,6 +25,4 @@ const (
 
 	// PermissionGetMLServices is needed for getting MLServices.
 	PermissionGetMLServices = "ml.mlservices.get"
-	// PermissionUpdateMLServices is needed for updating MLServices.
-	PermissionUpdateMLServices = "ml.mlservices.update"
 )
