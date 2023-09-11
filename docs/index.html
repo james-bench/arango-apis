@@ -8874,7 +8874,9 @@ This is a read-only property </p></td>
                   <td>disk_auto_size_settings</td>
                   <td><a href="#arangodb.cloud.data.v1.Deployment.DiskAutoSizeSettings">Deployment.DiskAutoSizeSettings</a></td>
                   <td></td>
-                  <td><p>Deployment&#39;s disk autoscaling settings </p></td>
+                  <td><p>Deployment&#39;s disk autoscaling settings
+[Deprecated] This setting isn&#39;t supported anymore.
+             To increase disk space you need to switch to a larger node-size [e.g. A8 (with 80Gib)--&gt; A16 (with 160 Gib)] </p></td>
                 </tr>
               
                 <tr>
@@ -9071,7 +9073,7 @@ rotation of the deployment is required, which will result in some downtime. </p>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
                   <td><p>Maximum allowed disk size that a node can reach (in GB).
-This field is ignored, if the flexible model is used. </p></td>
+[Deprecated] This setting isn&#39;t supported anymore. </p></td>
                 </tr>
               
             </tbody>

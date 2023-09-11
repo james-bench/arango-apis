@@ -768,10 +768,12 @@ message Deployment {
     // Deployment's disk autoscaling settings
     message DiskAutoSizeSettings {
         // Maximum allowed disk size that a node can reach (in GB).
-        // This field is ignored, if the flexible model is used.
+        // [Deprecated] This setting isn't supported anymore.
         int32 maximum_node_disk_size = 1;
     }
     // Deployment's disk autoscaling settings
+    // [Deprecated] This setting isn't supported anymore.
+    //              To increase disk space you need to switch to a larger node-size [e.g. A8 (with 80Gib)--> A16 (with 160 Gib)]
     DiskAutoSizeSettings disk_auto_size_settings = 611;
 
     // Determines if root's password scheduled rotation is enabled for the deployment.

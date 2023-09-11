@@ -406,6 +406,8 @@ export interface Deployment {
   notification_settings?: Deployment_NotificationSettings;
   
   // Deployment's disk autoscaling settings
+  // [Deprecated] This setting isn't supported anymore.
+  // To increase disk space you need to switch to a larger node-size [e.g. A8 (with 80Gib)--> A16 (with 160 Gib)]
   // Deployment_DiskAutoSizeSettings
   disk_auto_size_settings?: Deployment_DiskAutoSizeSettings;
   
@@ -495,7 +497,7 @@ export interface Deployment_CertificateSpec {
 // Deployment's disk autoscaling settings
 export interface Deployment_DiskAutoSizeSettings {
   // Maximum allowed disk size that a node can reach (in GB).
-  // This field is ignored, if the flexible model is used.
+  // [Deprecated] This setting isn't supported anymore.
   // number
   maximum_node_disk_size?: number;
 }
