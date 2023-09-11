@@ -419,6 +419,8 @@ type Deployment struct {
 	// Deployment's notification settings
 	NotificationSettings *Deployment_NotificationSettings `protobuf:"bytes,610,opt,name=notification_settings,json=notificationSettings,proto3" json:"notification_settings,omitempty"`
 	// Deployment's disk autoscaling settings
+	// [Deprecated] This setting isn't supported anymore.
+	//              To increase disk space you need to switch to a larger node-size [e.g. A8 (with 80Gib)--> A16 (with 160 Gib)]
 	DiskAutoSizeSettings *Deployment_DiskAutoSizeSettings `protobuf:"bytes,611,opt,name=disk_auto_size_settings,json=diskAutoSizeSettings,proto3" json:"disk_auto_size_settings,omitempty"`
 	// Determines if root's password scheduled rotation is enabled for the deployment.
 	// This is a readonly field.
@@ -1866,7 +1868,7 @@ func (m *Deployment_NotificationSettings) GetEmailAddresses() []string {
 // Deployment's disk autoscaling settings
 type Deployment_DiskAutoSizeSettings struct {
 	// Maximum allowed disk size that a node can reach (in GB).
-	// This field is ignored, if the flexible model is used.
+	// [Deprecated] This setting isn't supported anymore.
 	MaximumNodeDiskSize  int32    `protobuf:"varint,1,opt,name=maximum_node_disk_size,json=maximumNodeDiskSize,proto3" json:"maximum_node_disk_size,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
