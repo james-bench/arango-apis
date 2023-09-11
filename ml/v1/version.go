@@ -24,9 +24,9 @@ const (
 	// APIID contains identifier of this API
 	APIID = "ml/v1"
 	// APIMajorVersion contains major version of this API
-	APIMajorVersion = 1
+	APIMajorVersion = 2
 	// APIMinorVersion contains minor version of this API
-	APIMinorVersion = 1
+	APIMinorVersion = 0
 	// APIPatchVersion contains patch version of this API
-	APIPatchVersion = 2
+	APIPatchVersion = 0
 )
