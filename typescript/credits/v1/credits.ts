@@ -4,7 +4,9 @@
 ///
 import api from '../../api'
 import * as googleTypes from '../../googleTypes'
+import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
 import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
+import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 
 // File: credits/v1/credits.proto
 // Package: arangodb.cloud.credits.v1
@@ -158,6 +160,11 @@ export interface ListCreditBundlesRequest {
 
 // CreditsService is the API used for managing credits.
 export interface ICreditsService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None (authenticated only)
+  GetAPIVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<arangodb_cloud_common_v1_Version>;
+  
   // List credit bundles for an organization based on the provided request.
   // Required permissions:
   // - credit.creditbundle.list on the organization identified by the given organization ID
@@ -171,6 +178,15 @@ export interface ICreditsService {
 
 // CreditsService is the API used for managing credits.
 export class CreditsService implements ICreditsService {
+  // Get the current API version of this service.
+  // Required permissions:
+  // - None (authenticated only)
+  async GetAPIVersion(req?: arangodb_cloud_common_v1_Empty): Promise<arangodb_cloud_common_v1_Version> {
+    const path = `/api/credit/v1/api-version`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
+  }
+  
   // List credit bundles for an organization based on the provided request.
   // Required permissions:
   // - credit.creditbundle.list on the organization identified by the given organization ID
