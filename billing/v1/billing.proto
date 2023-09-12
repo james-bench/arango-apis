@@ -264,6 +264,8 @@ message Invoice {
         string description = 3;
         // If set, this invoice item is already prepaid
         bool is_prepaid = 5;
+        // If set, this invoice item is already prepaid in credits.
+        bool is_prepaid_credits = 6;
     }
     // All items of the invoice
     repeated Item items = 100;

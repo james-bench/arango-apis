@@ -5510,6 +5510,13 @@ This is the amount that the customer will be charged for. </p></td>
                   <td><p>If set, this invoice item is already prepaid </p></td>
                 </tr>
               
+                <tr>
+                  <td>is_prepaid_credits</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, this invoice item is already prepaid in credits. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -23414,6 +23421,13 @@ This field is not filled-out when the kind is AuditLogSize </p></td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
                   <td><p>Timestamp when the prepaid_deployment ends (relevant when prepaid_deployment_id is set only) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>credit_bundle_ids</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Identifiers of the credit bundles (if any) that were used to pay for this usage item. </p></td>
                 </tr>
               
             </tbody>

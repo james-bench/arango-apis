@@ -221,6 +221,10 @@ export interface Invoice_Item {
   // If set, this invoice item is already prepaid
   // boolean
   is_prepaid?: boolean;
+  
+  // If set, this invoice item is already prepaid in credits.
+  // boolean
+  is_prepaid_credits?: boolean;
 }
 
 // Payment (attempt) of the invoice
