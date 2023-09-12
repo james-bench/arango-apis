@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2022 ArangoDB GmbH, Cologne, Germany
+// Copyright 2023 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,12 +21,12 @@
 package v1
 
 const (
-	// APIID contains identifier of this API
-	APIID = "notebook/v1"
-	// APIMajorVersion contains major version of this API
-	APIMajorVersion = 1
-	// APIMinorVersion contains minor version of this API
-	APIMinorVersion = 0
-	// APIPatchVersion contains patch version of this API
-	APIPatchVersion = 4
+	// DeploymentLowerPort is the lower port number for the deployment, used with well-known certificates
+	DeploymentLowerPort = 8529
+	// DeploymentHigherPort is the higher port number for the deployment, used with self-signed certificates
+	DeploymentHigherPort = 18529
+	// ExternalServicesLowerPort is the lower port number for the external services, used with well-known certificates
+	ExternalServicesLowerPort = 8829
+	// ExternalServicesHigherPort is the higher port number for the external services, used with self-signed certificates
+	ExternalServicesHigherPort = 18829
 )

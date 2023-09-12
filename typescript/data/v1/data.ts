@@ -701,7 +701,6 @@ export interface Deployment_Status {
   // If a certificate with well known certificate is used, this
   // port is using the well known certificate.
   // Otherwise this port is using the self-signed certificate.
-  // This endpoint is recommended for human-to-database connections.
   // string
   endpoint?: string;
   
@@ -744,6 +743,15 @@ export interface Deployment_Status {
   // This endpoint is recommended for machine-to-database connections.
   // string
   endpoint_self_signed?: string;
+  
+  // Endpoint URL used to reach the deployment on default port (443)
+  // This value will be empty during the creation of the deployment.
+  // If a certificate with well known certificate is used, this
+  // port is using the well known certificate.
+  // Otherwise this port is using the self-signed certificate.
+  // This endpoint is recommended for human-to-database connections.
+  // string
+  endpoint_default?: string;
   
   // If set, this deployment has a private endpoint, however can contain the public endpoint as well.
   // When switching from a public endpoint to a private endpoint the public endpoint will
