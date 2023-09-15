@@ -58,4 +58,7 @@ const (
 	// for a given deployment
 	// This kind of quota must be requested on project level.
 	QuotaKindTotalBackupPoliciesPerDeployment = "backup.total-backup-policy-per-deployment"
+	// QuotaKindFreeDeploymentsPerOrganization limits the number of free deployments in a single organization.
+	// This kinds of quota must be requested on organization level.
+	QuotaKindFreeDeploymentsPerOrganization = "data.free-deployments-per-organization"
 )
