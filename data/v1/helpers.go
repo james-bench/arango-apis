@@ -29,6 +29,11 @@ import (
 	rm "github.com/arangodb-managed/apis/resourcemanager/v1"
 )
 
+// IsSingleServer returns true if the model yields a single server deployment.
+func (model *Deployment_ModelSpec) IsSingleServer() bool {
+	return model.GetModel() == ModelFree || model.GetModel() == ModelDeveloper
+}
+
 // GetOrganizationID returns the organization ID of a deployment based on the URL.
 func (depl *Deployment) GetOrganizationID() (string, error) {
 	resURL, err := rm.ParseResourceURL(depl.GetUrl())
