@@ -141,4 +141,8 @@ message ListRegionsRequest {
     // organization identified by this ID.
     // If not set, only regions are returned that are available to all organizations.
     string organization_id = 3;
+    // If set, the result includes only those regions where the specified deployment model
+    // is supported.
+    // This is an optional field.
+    string model_id = 4;
 }

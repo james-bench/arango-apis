@@ -40,6 +40,12 @@ export interface ListRegionsRequest {
   // If not set, only regions are returned that are available to all organizations.
   // string
   organization_id?: string;
+  
+  // If set, the result includes only those regions where the specified deployment model
+  // is supported.
+  // This is an optional field.
+  // string
+  model_id?: string;
 }
 
 // Provider represents a specific cloud provider such as AWS or GCP.

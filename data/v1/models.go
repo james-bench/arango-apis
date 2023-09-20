@@ -54,4 +54,11 @@ const (
 	// - no limitation of shards per collection
 	// - a minimum replication factor of 1 (per collection)
 	ModelFlexible = "flexible"
+
+	// ModelFree is the model that yields a deployment with:
+	// - a single A4 node
+	// - a maximum of 3 databases
+	// - not for production use
+	// - not highly available
+	ModelFree = "free"
 )
