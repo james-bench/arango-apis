@@ -23,7 +23,7 @@ package v1
 const (
 	// Notebook related quotas
 
-	// QuotaKindNotebooksPerDeployment limits the number of notebooks in a single deployment.
+	// QuotaKindNotebooksPerDeployment limits the number of notebooks in a single (non-free) deployment.
 	// This kind of quota must be requested on a deployment level.
 	QuotaKindNotebooksPerDeployment = "notebook.total-notebook-per-deployment"
 
