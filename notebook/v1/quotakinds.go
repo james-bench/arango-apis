@@ -26,4 +26,8 @@ const (
 	// QuotaKindNotebooksPerDeployment limits the number of notebooks in a single deployment.
 	// This kind of quota must be requested on a deployment level.
 	QuotaKindNotebooksPerDeployment = "notebook.total-notebook-per-deployment"
+
+	// QuotaKindNotebooksPerFreeDeployment limits the number of notebooks in a single free deployment.
+	// This kind of quota must be requested on a deployment level.
+	QuotaKindNotebooksPerFreeDeployment = "notebook.total-notebook-per-free-deployment"
 )
