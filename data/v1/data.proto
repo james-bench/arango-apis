@@ -1278,6 +1278,8 @@ message DeploymentFeatures {
     bool pause = 2;
     // Is the use of the ML features available?
     bool ml = 3;
+    // Is the use of monitoring feature available?
+    bool monitoring = 4;
 }
 
 // Request arguments for GetDeploymentFeatures
