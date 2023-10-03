@@ -175,12 +175,6 @@ export interface ListPDFReportsRequest {
   // string
   organization_id?: string;
 }
-
-// Response for ListPDFReports
-export interface ListPDFReportsResponse {
-  // PDFReport
-  items?: PDFReport[];
-}
 export interface PDFReport {
   // ID of this PDF report.
   // This is a read-only field.
@@ -240,6 +234,13 @@ export interface PDFReport_Status {
   expires_at?: googleTypes.Timestamp;
 }
 
+// List of PDF reports.
+// Note that the items in this list will not contain the PDF content bytes.
+export interface PDFReportList {
+  // PDFReport
+  items?: PDFReport[];
+}
+
 // CreditsService is the API used for managing credits.
 export interface ICreditsService {
   // Get the current API version of this service.
@@ -278,7 +279,7 @@ export interface ICreditsService {
   // Use `GetCreditBundleUsagePDFReport` rpc for getting the content bytes of a ready PDFReport.
   // Required permissions:
   // - credit.pdf.list on organization identified by the given organization ID.
-  ListUsagePDFReports: (req: ListPDFReportsRequest) => Promise<ListPDFReportsResponse>;
+  ListUsagePDFReports: (req: ListPDFReportsRequest) => Promise<PDFReportList>;
 }
 
 // CreditsService is the API used for managing credits.
@@ -339,7 +340,7 @@ export class CreditsService implements ICreditsService {
   // Use `GetCreditBundleUsagePDFReport` rpc for getting the content bytes of a ready PDFReport.
   // Required permissions:
   // - credit.pdf.list on organization identified by the given organization ID.
-  async ListUsagePDFReports(req: ListPDFReportsRequest): Promise<ListPDFReportsResponse> {
+  async ListUsagePDFReports(req: ListPDFReportsRequest): Promise<PDFReportList> {
     const path = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/pdfs`;
     const url = path + api.queryString(req, [`organization_id`]);
     return api.get(url, undefined);

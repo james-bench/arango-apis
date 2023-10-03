@@ -610,15 +610,15 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
-                  <a href="#arangodb.cloud.credits.v1.ListPDFReportsResponse"><span class="badge">M</span>ListPDFReportsResponse</a>
-                </li>
-              
-                <li>
                   <a href="#arangodb.cloud.credits.v1.PDFReport"><span class="badge">M</span>PDFReport</a>
                 </li>
               
                 <li>
                   <a href="#arangodb.cloud.credits.v1.PDFReport.Status"><span class="badge">M</span>PDFReport.Status</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.credits.v1.PDFReportList"><span class="badge">M</span>PDFReportList</a>
                 </li>
               
               
@@ -7379,30 +7379,6 @@ This is a required field. </p></td>
 
         
       
-        <h3 id="arangodb.cloud.credits.v1.ListPDFReportsResponse">ListPDFReportsResponse</h3>
-        <p>Response for ListPDFReports</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>items</td>
-                  <td><a href="#arangodb.cloud.credits.v1.PDFReport">PDFReport</a></td>
-                  <td>repeated</td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
         <h3 id="arangodb.cloud.credits.v1.PDFReport">PDFReport</h3>
         <p></p>
 
@@ -7520,6 +7496,30 @@ This is a read-only field. </p></td>
 
         
       
+        <h3 id="arangodb.cloud.credits.v1.PDFReportList">PDFReportList</h3>
+        <p>List of PDF reports.</p><p>Note that the items in this list will not contain the PDF content bytes.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#arangodb.cloud.credits.v1.PDFReport">PDFReport</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
 
@@ -7588,7 +7588,7 @@ Required permissions:
               <tr>
                 <td>ListUsagePDFReports</td>
                 <td><a href="#arangodb.cloud.credits.v1.ListPDFReportsRequest">ListPDFReportsRequest</a></td>
-                <td><a href="#arangodb.cloud.credits.v1.ListPDFReportsResponse">ListPDFReportsResponse</a></td>
+                <td><a href="#arangodb.cloud.credits.v1.PDFReportList">PDFReportList</a></td>
                 <td><p>List the PDF reports for the organization identified by the ID.
 The response will not include the PDF content bytes.
 Use `GetCreditBundleUsagePDFReport` rpc for getting the content bytes of a ready PDFReport.

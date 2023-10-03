@@ -87,7 +87,7 @@ service CreditsService {
     // Use `GetCreditBundleUsagePDFReport` rpc for getting the content bytes of a ready PDFReport.
     // Required permissions:
     // - credit.pdf.list on organization identified by the given organization ID.
-    rpc ListUsagePDFReports(ListPDFReportsRequest) returns (ListPDFReportsResponse) {
+    rpc ListUsagePDFReports(ListPDFReportsRequest) returns (PDFReportList) {
         option (google.api.http) = {
             get: "/api/credit/v1/{organization_id}/pdfs"
         };
@@ -103,8 +103,9 @@ message GetUsagePDFReportRequest {
     string organization_id = 2;
 }
 
-// Response for ListPDFReports
-message ListPDFReportsResponse {
+// List of PDF reports.
+// Note that the items in this list will not contain the PDF content bytes.
+message PDFReportList {
     repeated PDFReport items = 1;
 }
 
