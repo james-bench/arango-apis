@@ -594,11 +594,7 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
-                  <a href="#arangodb.cloud.credits.v1.CreditUsageReportPDF"><span class="badge">M</span>CreditUsageReportPDF</a>
-                </li>
-              
-                <li>
-                  <a href="#arangodb.cloud.credits.v1.GetCreditUsageReportPDFRequest"><span class="badge">M</span>GetCreditUsageReportPDFRequest</a>
+                  <a href="#arangodb.cloud.credits.v1.GetUsagePDFReportRequest"><span class="badge">M</span>GetUsagePDFReportRequest</a>
                 </li>
               
                 <li>
@@ -607,6 +603,22 @@ title: "ArangoGraph Insights Platform API"
               
                 <li>
                   <a href="#arangodb.cloud.credits.v1.ListCreditBundlesRequest"><span class="badge">M</span>ListCreditBundlesRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.credits.v1.ListPDFReportsRequest"><span class="badge">M</span>ListPDFReportsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.credits.v1.ListPDFReportsResponse"><span class="badge">M</span>ListPDFReportsResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.credits.v1.PDFReport"><span class="badge">M</span>PDFReport</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.credits.v1.PDFReport.Status"><span class="badge">M</span>PDFReport.Status</a>
                 </li>
               
               
@@ -7210,8 +7222,8 @@ This is a read-only value. </p></td>
 
         
       
-        <h3 id="arangodb.cloud.credits.v1.CreditUsageReportPDF">CreditUsageReportPDF</h3>
-        <p>Credit usage report PDF.</p>
+        <h3 id="arangodb.cloud.credits.v1.GetUsagePDFReportRequest">GetUsagePDFReportRequest</h3>
+        <p></p>
 
         
           <table class="field-table">
@@ -7221,59 +7233,19 @@ This is a read-only value. </p></td>
             <tbody>
               
                 <tr>
-                  <td>content</td>
-                  <td><a href="#bytes">bytes</a></td>
-                  <td></td>
-                  <td><p>Contents of the PDF document. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>filename</td>
+                  <td>report_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Filename of the document. </p></td>
+                  <td><p>ID of the PDF report that needs to be fetched.
+This is a read-only field. </p></td>
                 </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="arangodb.cloud.credits.v1.GetCreditUsageReportPDFRequest">GetCreditUsageReportPDFRequest</h3>
-        <p>Request for getting credit usage PDF report.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
               
                 <tr>
                   <td>organization_id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>ID of the organization for which the credit usage PDF is generated. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>starts_at</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>The date from which credit usage should be listed.
-Note: only day, month &amp; year are used.
-This is a required field. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>ends_at</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>The date until which credit usage should be listed.
-Note: only day, month &amp; year are used.
-This is a required field. </p></td>
+                  <td><p>ID of the organization that owns this report.
+This is a read-only field. </p></td>
                 </tr>
               
             </tbody>
@@ -7383,6 +7355,171 @@ This is a required field. </p></td>
 
         
       
+        <h3 id="arangodb.cloud.credits.v1.ListPDFReportsRequest">ListPDFReportsRequest</h3>
+        <p>Request for listing PDF reports.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the organization for which PDF reports are requested. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.credits.v1.ListPDFReportsResponse">ListPDFReportsResponse</h3>
+        <p>Response for ListPDFReports</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#arangodb.cloud.credits.v1.PDFReport">PDFReport</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.credits.v1.PDFReport">PDFReport</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of this PDF report.
+This is a read-only field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the organization to which this report belongs to.
+This is a required field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>starts_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The date from which credit usage is listed.
+This is a required field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ends_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The date until which credit usage is listed.
+This is a required field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>requested_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The timestamp at which this report was requested.
+This is a read-only field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#arangodb.cloud.credits.v1.PDFReport.Status">PDFReport.Status</a></td>
+                  <td></td>
+                  <td><p>Status of the PDF report.
+This is a read-only field. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.credits.v1.PDFReport.Status">PDFReport.Status</h3>
+        <p>Status of the PDF report.</p><p>This is a read-only block.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>contents</td>
+                  <td><a href="#bytes">bytes</a></td>
+                  <td></td>
+                  <td><p>The contents of the PDF.
+This is filled in by the server.
+This is a read-only field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_ready</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, this PDF report is ready.
+The contents may be read from the contents field.
+This is a read-only field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ready_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The timestamp at which this report was ready.
+This is a read-only field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>expires_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The timestamp at which this report expires.
+Once this timestamp is met, the report is no longer available in the system.
+This is a read-only field. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
 
@@ -7420,17 +7557,43 @@ Required permissions:
                 <td><a href="#arangodb.cloud.credits.v1.ListCreditBundleUsageRequest">ListCreditBundleUsageRequest</a></td>
                 <td><a href="#arangodb.cloud.credits.v1.CreditBundleUsageList">CreditBundleUsageList</a></td>
                 <td><p>List credit bundle usages for an organization based on the provided request.
-Required permisisons:
+Required permissions:
 - credit.creditbundleusage.list on the organization identified by the given organization ID.</p></td>
               </tr>
             
               <tr>
-                <td>GetCreditUsageReportPDF</td>
-                <td><a href="#arangodb.cloud.credits.v1.GetCreditUsageReportPDFRequest">GetCreditUsageReportPDFRequest</a></td>
-                <td><a href="#arangodb.cloud.credits.v1.CreditUsageReportPDF">CreditUsageReportPDF</a></td>
-                <td><p>Get the credit report usage PDF for an organization for the given year/month (provided in the request).
-Required permisisons:
-- credit.creditbundleusage.get-pdf on the organization identified by the given organization ID.</p></td>
+                <td>CreateUsagePDFReport</td>
+                <td><a href="#arangodb.cloud.credits.v1.PDFReport">PDFReport</a></td>
+                <td><a href="#arangodb.cloud.credits.v1.PDFReport">PDFReport</a></td>
+                <td><p>Request the creation of a new credit usage PDF report.
+The server returns a response immediately and handles the actual
+PDF creation asynchronously.
+The client is expected to poll the status of the PDF report.
+Once the PDF report is ready, the contents may be obtained using GetCreditBundleUsagePDFReport rpc.
+Required permissions:
+- credit.pdfreport.create on organization identified by the given organization ID.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetUsagePDFReport</td>
+                <td><a href="#arangodb.cloud.credits.v1.GetUsagePDFReportRequest">GetUsagePDFReportRequest</a></td>
+                <td><a href="#arangodb.cloud.credits.v1.PDFReport">PDFReport</a></td>
+                <td><p>Get a credit bundle usage PDF report identified by the given id,
+owned by the organization identified by the `organization_id`
+Returns an error if the PDFReport is not yet ready.
+Required permissions:
+- credit.pdfreport.get on organization identified by the given organization ID.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListUsagePDFReports</td>
+                <td><a href="#arangodb.cloud.credits.v1.ListPDFReportsRequest">ListPDFReportsRequest</a></td>
+                <td><a href="#arangodb.cloud.credits.v1.ListPDFReportsResponse">ListPDFReportsResponse</a></td>
+                <td><p>List the PDF reports for the organization identified by the ID.
+The response will not include the PDF content bytes.
+Use `GetCreditBundleUsagePDFReport` rpc for getting the content bytes of a ready PDFReport.
+Required permissions:
+- credit.pdfreport.list on organization identified by the given organization ID.</p></td>
               </tr>
             
           </tbody>
@@ -7484,9 +7647,29 @@ Required permisisons:
               
               
               <tr>
-                <td>GetCreditUsageReportPDF</td>
+                <td>CreateUsagePDFReport</td>
+                <td>POST</td>
+                <td>/api/credit/v1/{organization_id}/pdf</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetUsagePDFReport</td>
                 <td>GET</td>
-                <td>/api/credit/v1/{organization_id}/creditbundleusage/pdf</td>
+                <td>/api/credit/v1/{organization_id}/pdf/{report_id}</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>ListUsagePDFReports</td>
+                <td>GET</td>
+                <td>/api/credit/v1/{organization_id}/pdfs</td>
                 <td></td>
               </tr>
               
