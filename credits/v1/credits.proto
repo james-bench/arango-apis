@@ -57,6 +57,37 @@ service CreditsService {
             get: "/api/credit/v1/{organization_id}/creditbundleusages"
         };
     };
+
+    // Get the credit report usage PDF for an organization for the given year/month (provided in the request).
+    // Required permisisons:
+    // - credit.creditusagepdf.get on the organization identified by the given organization ID.
+    rpc GetCreditUsageReportPDF(GetCreditUsageReportPDFRequest) returns (CreditUsageReportPDF) {
+        option (google.api.http) = {
+            get: "/api/credit/v1/{organization_id}/creditbundleusage/pdf"
+        };
+    };
+}
+
+// Request for getting credit usage PDF report.
+message GetCreditUsageReportPDFRequest {
+    // ID of the organization for which the credit usage PDF is generated.
+    string organization_id = 1;
+    // The date from which credit usage should be listed.
+    // Note: only day, month & year are used.
+    // This is a required field.
+    google.protobuf.Timestamp starts_at = 3;
+    // The date until which credit usage should be listed.
+    // Note: only day, month & year are used.
+    // This is a required field.
+    google.protobuf.Timestamp ends_at = 4;
+}
+
+// Credit usage report PDF.
+message CreditUsageReportPDF {
+    // Contents of the PDF document.
+    bytes content = 1;
+    // Filename of the document.
+    string filename = 2;
 }
 
 // Request for listing credit bundle usages.

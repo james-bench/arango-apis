@@ -110,6 +110,36 @@ export interface CreditBundlesList {
   items?: CreditBundle[];
 }
 
+// Credit usage report PDF.
+export interface CreditUsageReportPDF {
+  // Contents of the PDF document.
+  // string
+  content?: string;
+  
+  // Filename of the document.
+  // string
+  filename?: string;
+}
+
+// Request for getting credit usage PDF report.
+export interface GetCreditUsageReportPDFRequest {
+  // ID of the organization for which the credit usage PDF is generated.
+  // string
+  organization_id?: string;
+  
+  // The date from which credit usage should be listed.
+  // Note: only day, month & year are used.
+  // This is a required field.
+  // googleTypes.Timestamp
+  starts_at?: googleTypes.Timestamp;
+  
+  // The date until which credit usage should be listed.
+  // Note: only day, month & year are used.
+  // This is a required field.
+  // googleTypes.Timestamp
+  ends_at?: googleTypes.Timestamp;
+}
+
 // Request for listing credit bundle usages.
 export interface ListCreditBundleUsageRequest {
   // The organization this credit bundle belongs to.
@@ -174,6 +204,11 @@ export interface ICreditsService {
   // Required permisisons:
   // - credit.creditbundleusage.list on the organization identified by the given organization ID.
   ListCreditBundlesUsage: (req: ListCreditBundleUsageRequest) => Promise<CreditBundleUsageList>;
+  
+  // Get the credit report usage PDF for an organization for the given year/month (provided in the request).
+  // Required permisisons:
+  // - credit.creditusagepdf.get on the organization identified by the given organization ID.
+  GetCreditUsageReportPDF: (req: GetCreditUsageReportPDFRequest) => Promise<CreditUsageReportPDF>;
 }
 
 // CreditsService is the API used for managing credits.
@@ -201,6 +236,15 @@ export class CreditsService implements ICreditsService {
   // - credit.creditbundleusage.list on the organization identified by the given organization ID.
   async ListCreditBundlesUsage(req: ListCreditBundleUsageRequest): Promise<CreditBundleUsageList> {
     const path = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/creditbundleusages`;
+    const url = path + api.queryString(req, [`organization_id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Get the credit report usage PDF for an organization for the given year/month (provided in the request).
+  // Required permisisons:
+  // - credit.creditusagepdf.get on the organization identified by the given organization ID.
+  async GetCreditUsageReportPDF(req: GetCreditUsageReportPDFRequest): Promise<CreditUsageReportPDF> {
+    const path = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/creditbundleusage/pdf`;
     const url = path + api.queryString(req, [`organization_id`]);
     return api.get(url, undefined);
   }
