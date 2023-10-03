@@ -207,7 +207,7 @@ export interface ICreditsService {
   
   // Get the credit report usage PDF for an organization for the given year/month (provided in the request).
   // Required permisisons:
-  // - credit.creditusagepdf.get on the organization identified by the given organization ID.
+  // - credit.creditbundleusage.get-pdf on the organization identified by the given organization ID.
   GetCreditUsageReportPDF: (req: GetCreditUsageReportPDFRequest) => Promise<CreditUsageReportPDF>;
 }
 
@@ -242,7 +242,7 @@ export class CreditsService implements ICreditsService {
   
   // Get the credit report usage PDF for an organization for the given year/month (provided in the request).
   // Required permisisons:
-  // - credit.creditusagepdf.get on the organization identified by the given organization ID.
+  // - credit.creditbundleusage.get-pdf on the organization identified by the given organization ID.
   async GetCreditUsageReportPDF(req: GetCreditUsageReportPDFRequest): Promise<CreditUsageReportPDF> {
     const path = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/creditbundleusage/pdf`;
     const url = path + api.queryString(req, [`organization_id`]);

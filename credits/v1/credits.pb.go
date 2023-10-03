@@ -770,7 +770,7 @@ type CreditsServiceClient interface {
 	ListCreditBundlesUsage(ctx context.Context, in *ListCreditBundleUsageRequest, opts ...grpc.CallOption) (*CreditBundleUsageList, error)
 	// Get the credit report usage PDF for an organization for the given year/month (provided in the request).
 	// Required permisisons:
-	// - credit.creditusagepdf.get on the organization identified by the given organization ID.
+	// - credit.creditbundleusage.get-pdf on the organization identified by the given organization ID.
 	GetCreditUsageReportPDF(ctx context.Context, in *GetCreditUsageReportPDFRequest, opts ...grpc.CallOption) (*CreditUsageReportPDF, error)
 }
 
@@ -834,7 +834,7 @@ type CreditsServiceServer interface {
 	ListCreditBundlesUsage(context.Context, *ListCreditBundleUsageRequest) (*CreditBundleUsageList, error)
 	// Get the credit report usage PDF for an organization for the given year/month (provided in the request).
 	// Required permisisons:
-	// - credit.creditusagepdf.get on the organization identified by the given organization ID.
+	// - credit.creditbundleusage.get-pdf on the organization identified by the given organization ID.
 	GetCreditUsageReportPDF(context.Context, *GetCreditUsageReportPDFRequest) (*CreditUsageReportPDF, error)
 }
 

@@ -60,7 +60,7 @@ service CreditsService {
 
     // Get the credit report usage PDF for an organization for the given year/month (provided in the request).
     // Required permisisons:
-    // - credit.creditusagepdf.get on the organization identified by the given organization ID.
+    // - credit.creditbundleusage.get-pdf on the organization identified by the given organization ID.
     rpc GetCreditUsageReportPDF(GetCreditUsageReportPDFRequest) returns (CreditUsageReportPDF) {
         option (google.api.http) = {
             get: "/api/credit/v1/{organization_id}/creditbundleusage/pdf"
