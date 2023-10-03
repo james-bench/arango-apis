@@ -32,6 +32,15 @@ const (
 
 	// PermissionCreditBundlesList is needed for listing credit bundle usages.
 	PermissionCreditBundleUsageList = "credit.creditbundleusage.list"
-	// PermissionCreditBundleUsageGetPDF is needed for getting the credit bundle usage PDF report.
-	PermissionCreditBundleUsageGetPDF = "credit.creditbundleusage.get-pdf"
+)
+
+const (
+	// Credit usage PDF report permissions
+
+	// PermissionPDFCreate is needed for creating a credit usage PDF report.
+	PermissionPDFCreate = "credit.pdf.create"
+	// PermissionPDFCreate is needed for getting a credit usage PDF report.
+	PermissionPDFGet = "credit.pdf.get"
+	// PermissionPDFCreate is needed for listing credit usage PDF reports.
+	PermissionPDFList = "credit.pdf.list"
 )

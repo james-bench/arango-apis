@@ -998,19 +998,19 @@ type CreditsServiceClient interface {
 	// The client is expected to poll the status of the PDF report.
 	// Once the PDF report is ready, the contents may be obtained using GetCreditBundleUsagePDFReport rpc.
 	// Required permissions:
-	// - credit.pdfreport.create on organization identified by the given organization ID.
+	// - credit.pdf.create on organization identified by the given organization ID.
 	CreateUsagePDFReport(ctx context.Context, in *PDFReport, opts ...grpc.CallOption) (*PDFReport, error)
 	// Get a credit bundle usage PDF report identified by the given id,
-	// owned by the organization identified by the `organization_id`
+	// owned by the organization identified by the `organization_id`.
 	// Returns an error if the PDFReport is not yet ready.
 	// Required permissions:
-	// - credit.pdfreport.get on organization identified by the given organization ID.
+	// - credit.pdf.get on organization identified by the given organization ID.
 	GetUsagePDFReport(ctx context.Context, in *GetUsagePDFReportRequest, opts ...grpc.CallOption) (*PDFReport, error)
 	// List the PDF reports for the organization identified by the ID.
 	// The response will not include the PDF content bytes.
 	// Use `GetCreditBundleUsagePDFReport` rpc for getting the content bytes of a ready PDFReport.
 	// Required permissions:
-	// - credit.pdfreport.list on organization identified by the given organization ID.
+	// - credit.pdf.list on organization identified by the given organization ID.
 	ListUsagePDFReports(ctx context.Context, in *ListPDFReportsRequest, opts ...grpc.CallOption) (*ListPDFReportsResponse, error)
 }
 
@@ -1096,19 +1096,19 @@ type CreditsServiceServer interface {
 	// The client is expected to poll the status of the PDF report.
 	// Once the PDF report is ready, the contents may be obtained using GetCreditBundleUsagePDFReport rpc.
 	// Required permissions:
-	// - credit.pdfreport.create on organization identified by the given organization ID.
+	// - credit.pdf.create on organization identified by the given organization ID.
 	CreateUsagePDFReport(context.Context, *PDFReport) (*PDFReport, error)
 	// Get a credit bundle usage PDF report identified by the given id,
-	// owned by the organization identified by the `organization_id`
+	// owned by the organization identified by the `organization_id`.
 	// Returns an error if the PDFReport is not yet ready.
 	// Required permissions:
-	// - credit.pdfreport.get on organization identified by the given organization ID.
+	// - credit.pdf.get on organization identified by the given organization ID.
 	GetUsagePDFReport(context.Context, *GetUsagePDFReportRequest) (*PDFReport, error)
 	// List the PDF reports for the organization identified by the ID.
 	// The response will not include the PDF content bytes.
 	// Use `GetCreditBundleUsagePDFReport` rpc for getting the content bytes of a ready PDFReport.
 	// Required permissions:
-	// - credit.pdfreport.list on organization identified by the given organization ID.
+	// - credit.pdf.list on organization identified by the given organization ID.
 	ListUsagePDFReports(context.Context, *ListPDFReportsRequest) (*ListPDFReportsResponse, error)
 }
 

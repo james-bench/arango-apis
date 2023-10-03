@@ -263,21 +263,21 @@ export interface ICreditsService {
   // The client is expected to poll the status of the PDF report.
   // Once the PDF report is ready, the contents may be obtained using GetCreditBundleUsagePDFReport rpc.
   // Required permissions:
-  // - credit.pdfreport.create on organization identified by the given organization ID.
+  // - credit.pdf.create on organization identified by the given organization ID.
   CreateUsagePDFReport: (req: PDFReport) => Promise<PDFReport>;
   
   // Get a credit bundle usage PDF report identified by the given id,
-  // owned by the organization identified by the `organization_id`
+  // owned by the organization identified by the `organization_id`.
   // Returns an error if the PDFReport is not yet ready.
   // Required permissions:
-  // - credit.pdfreport.get on organization identified by the given organization ID.
+  // - credit.pdf.get on organization identified by the given organization ID.
   GetUsagePDFReport: (req: GetUsagePDFReportRequest) => Promise<PDFReport>;
   
   // List the PDF reports for the organization identified by the ID.
   // The response will not include the PDF content bytes.
   // Use `GetCreditBundleUsagePDFReport` rpc for getting the content bytes of a ready PDFReport.
   // Required permissions:
-  // - credit.pdfreport.list on organization identified by the given organization ID.
+  // - credit.pdf.list on organization identified by the given organization ID.
   ListUsagePDFReports: (req: ListPDFReportsRequest) => Promise<ListPDFReportsResponse>;
 }
 
@@ -316,7 +316,7 @@ export class CreditsService implements ICreditsService {
   // The client is expected to poll the status of the PDF report.
   // Once the PDF report is ready, the contents may be obtained using GetCreditBundleUsagePDFReport rpc.
   // Required permissions:
-  // - credit.pdfreport.create on organization identified by the given organization ID.
+  // - credit.pdf.create on organization identified by the given organization ID.
   async CreateUsagePDFReport(req: PDFReport): Promise<PDFReport> {
     const path = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/pdf`;
     const url = path + api.queryString(req, [`organization_id`]);
@@ -324,10 +324,10 @@ export class CreditsService implements ICreditsService {
   }
   
   // Get a credit bundle usage PDF report identified by the given id,
-  // owned by the organization identified by the `organization_id`
+  // owned by the organization identified by the `organization_id`.
   // Returns an error if the PDFReport is not yet ready.
   // Required permissions:
-  // - credit.pdfreport.get on organization identified by the given organization ID.
+  // - credit.pdf.get on organization identified by the given organization ID.
   async GetUsagePDFReport(req: GetUsagePDFReportRequest): Promise<PDFReport> {
     const path = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/pdf/${encodeURIComponent(req.report_id || '')}`;
     const url = path + api.queryString(req, [`organization_id`, `report_id`]);
@@ -338,7 +338,7 @@ export class CreditsService implements ICreditsService {
   // The response will not include the PDF content bytes.
   // Use `GetCreditBundleUsagePDFReport` rpc for getting the content bytes of a ready PDFReport.
   // Required permissions:
-  // - credit.pdfreport.list on organization identified by the given organization ID.
+  // - credit.pdf.list on organization identified by the given organization ID.
   async ListUsagePDFReports(req: ListPDFReportsRequest): Promise<ListPDFReportsResponse> {
     const path = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/pdfs`;
     const url = path + api.queryString(req, [`organization_id`]);

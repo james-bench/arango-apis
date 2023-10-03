@@ -7571,7 +7571,7 @@ PDF creation asynchronously.
 The client is expected to poll the status of the PDF report.
 Once the PDF report is ready, the contents may be obtained using GetCreditBundleUsagePDFReport rpc.
 Required permissions:
-- credit.pdfreport.create on organization identified by the given organization ID.</p></td>
+- credit.pdf.create on organization identified by the given organization ID.</p></td>
               </tr>
             
               <tr>
@@ -7579,10 +7579,10 @@ Required permissions:
                 <td><a href="#arangodb.cloud.credits.v1.GetUsagePDFReportRequest">GetUsagePDFReportRequest</a></td>
                 <td><a href="#arangodb.cloud.credits.v1.PDFReport">PDFReport</a></td>
                 <td><p>Get a credit bundle usage PDF report identified by the given id,
-owned by the organization identified by the `organization_id`
+owned by the organization identified by the `organization_id`.
 Returns an error if the PDFReport is not yet ready.
 Required permissions:
-- credit.pdfreport.get on organization identified by the given organization ID.</p></td>
+- credit.pdf.get on organization identified by the given organization ID.</p></td>
               </tr>
             
               <tr>
@@ -7593,7 +7593,7 @@ Required permissions:
 The response will not include the PDF content bytes.
 Use `GetCreditBundleUsagePDFReport` rpc for getting the content bytes of a ready PDFReport.
 Required permissions:
-- credit.pdfreport.list on organization identified by the given organization ID.</p></td>
+- credit.pdf.list on organization identified by the given organization ID.</p></td>
               </tr>
             
           </tbody>

@@ -64,7 +64,7 @@ service CreditsService {
     // The client is expected to poll the status of the PDF report.
     // Once the PDF report is ready, the contents may be obtained using GetCreditBundleUsagePDFReport rpc.
     // Required permissions:
-    // - credit.pdfreport.create on organization identified by the given organization ID.
+    // - credit.pdf.create on organization identified by the given organization ID.
     rpc CreateUsagePDFReport(PDFReport) returns (PDFReport) {
         option (google.api.http) = {
             post: "/api/credit/v1/{organization_id}/pdf"
@@ -72,10 +72,10 @@ service CreditsService {
     };
 
     // Get a credit bundle usage PDF report identified by the given id,
-    // owned by the organization identified by the `organization_id`
+    // owned by the organization identified by the `organization_id`.
     // Returns an error if the PDFReport is not yet ready.
     // Required permissions:
-    // - credit.pdfreport.get on organization identified by the given organization ID.
+    // - credit.pdf.get on organization identified by the given organization ID.
     rpc GetUsagePDFReport(GetUsagePDFReportRequest) returns (PDFReport) {
         option (google.api.http) = {
             get: "/api/credit/v1/{organization_id}/pdf/{report_id}"
@@ -86,7 +86,7 @@ service CreditsService {
     // The response will not include the PDF content bytes.
     // Use `GetCreditBundleUsagePDFReport` rpc for getting the content bytes of a ready PDFReport.
     // Required permissions:
-    // - credit.pdfreport.list on organization identified by the given organization ID.
+    // - credit.pdf.list on organization identified by the given organization ID.
     rpc ListUsagePDFReports(ListPDFReportsRequest) returns (ListPDFReportsResponse) {
         option (google.api.http) = {
             get: "/api/credit/v1/{organization_id}/pdfs"
