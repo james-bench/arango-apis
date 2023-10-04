@@ -175,6 +175,9 @@ export interface ListPDFReportsRequest {
   // string
   organization_id?: string;
 }
+
+// PDFReport contains the metadata and PDF content for a requested credit usage report.
+// Note that PDFs are available only for a limited duration after creation.
 export interface PDFReport {
   // ID of this PDF report.
   // This is a read-only field.
@@ -216,22 +219,11 @@ export interface PDFReport_Status {
   // string
   contents?: string;
   
-  // If set, this PDF report is ready.
-  // The contents may be read from the contents field.
-  // This is a read-only field.
-  // boolean
-  is_ready?: boolean;
-  
   // The timestamp at which this report was ready.
+  // If not set, the PDF is not yet prepared.
   // This is a read-only field.
   // googleTypes.Timestamp
   ready_at?: googleTypes.Timestamp;
-  
-  // The timestamp at which this report expires.
-  // Once this timestamp is met, the report is no longer available in the system.
-  // This is a read-only field.
-  // googleTypes.Timestamp
-  expires_at?: googleTypes.Timestamp;
 }
 
 // List of PDF reports.

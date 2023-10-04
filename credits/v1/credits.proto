@@ -115,6 +115,8 @@ message ListPDFReportsRequest {
     string organization_id = 1;
 }
 
+// PDFReport contains the metadata and PDF content for a requested credit usage report.
+// Note that PDFs are available only for a limited duration after creation.
 message PDFReport {
     // ID of this PDF report.
     // This is a read-only field.
@@ -140,17 +142,10 @@ message PDFReport {
         // This is filled in by the server.
         // This is a read-only field.
         bytes contents = 1;
-        // If set, this PDF report is ready.
-        // The contents may be read from the contents field.
-        // This is a read-only field.
-        bool is_ready = 2;
         // The timestamp at which this report was ready.
+        // If not set, the PDF is not yet prepared.
         // This is a read-only field.
-        google.protobuf.Timestamp ready_at = 3;
-        // The timestamp at which this report expires.
-        // Once this timestamp is met, the report is no longer available in the system.
-        // This is a read-only field.
-        google.protobuf.Timestamp expires_at = 4;
+        google.protobuf.Timestamp ready_at = 2;
     }
     // Status of the PDF report.
     // This is a read-only field.

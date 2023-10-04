@@ -7380,7 +7380,7 @@ This is a required field. </p></td>
         
       
         <h3 id="arangodb.cloud.credits.v1.PDFReport">PDFReport</h3>
-        <p></p>
+        <p>PDFReport contains the metadata and PDF content for a requested credit usage report.</p><p>Note that PDFs are available only for a limited duration after creation.</p>
 
         
           <table class="field-table">
@@ -7464,28 +7464,11 @@ This is a read-only field. </p></td>
                 </tr>
               
                 <tr>
-                  <td>is_ready</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>If set, this PDF report is ready.
-The contents may be read from the contents field.
-This is a read-only field. </p></td>
-                </tr>
-              
-                <tr>
                   <td>ready_at</td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
                   <td><p>The timestamp at which this report was ready.
-This is a read-only field. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>expires_at</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>The timestamp at which this report expires.
-Once this timestamp is met, the report is no longer available in the system.
+If not set, the PDF is not yet prepared.
 This is a read-only field. </p></td>
                 </tr>
               
