@@ -68,6 +68,7 @@ service CreditsService {
     rpc CreateUsagePDFReport(PDFReport) returns (PDFReport) {
         option (google.api.http) = {
             post: "/api/credit/v1/{organization_id}/pdf"
+            body: "*"
         };
     };
 

@@ -311,9 +311,8 @@ export class CreditsService implements ICreditsService {
   // Required permissions:
   // - credit.pdf.create on organization identified by the given organization ID.
   async CreateUsagePDFReport(req: PDFReport): Promise<PDFReport> {
-    const path = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/pdf`;
-    const url = path + api.queryString(req, [`organization_id`]);
-    return api.post(url, undefined);
+    const url = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/pdf`;
+    return api.post(url, req);
   }
   
   // Get a credit bundle usage PDF report identified by the given id,
