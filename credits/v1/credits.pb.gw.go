@@ -194,7 +194,7 @@ func local_request_CreditsService_ListCreditBundlesUsage_0(ctx context.Context, 
 
 }
 
-func request_CreditsService_CreateUsagePDFReport_0(ctx context.Context, marshaler runtime.Marshaler, client CreditsServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_CreditsService_CreateUsagePDFReport_0(ctx context.Context, marshaler runtime.Marshaler, client CreditsServiceClient, req *http.Request, pathParams map[string]string) (CreditsService_CreateUsagePDFReportClient, runtime.ServerMetadata, error) {
 	var protoReq PDFReport
 	var metadata runtime.ServerMetadata
 
@@ -224,43 +224,16 @@ func request_CreditsService_CreateUsagePDFReport_0(ctx context.Context, marshale
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "organization_id", err)
 	}
 
-	msg, err := client.CreateUsagePDFReport(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
-
-}
-
-func local_request_CreditsService_CreateUsagePDFReport_0(ctx context.Context, marshaler runtime.Marshaler, server CreditsServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq PDFReport
-	var metadata runtime.ServerMetadata
-
-	newReader, berr := utilities.IOReaderFactory(req.Body)
-	if berr != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
-	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["organization_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "organization_id")
-	}
-
-	protoReq.OrganizationId, err = runtime.String(val)
-
+	stream, err := client.CreateUsagePDFReport(ctx, &protoReq)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "organization_id", err)
+		return nil, metadata, err
 	}
-
-	msg, err := server.CreateUsagePDFReport(ctx, &protoReq)
-	return msg, metadata, err
+	header, err := stream.Header()
+	if err != nil {
+		return nil, metadata, err
+	}
+	metadata.HeaderMD = header
+	return stream, metadata, nil
 
 }
 
@@ -460,23 +433,10 @@ func RegisterCreditsServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 	})
 
 	mux.Handle("POST", pattern_CreditsService_CreateUsagePDFReport_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_CreditsService_CreateUsagePDFReport_0(rctx, inboundMarshaler, server, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_CreditsService_CreateUsagePDFReport_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
+		err := status.Error(codes.Unimplemented, "streaming calls are not yet supported in the in-process transport")
+		_, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+		return
 	})
 
 	mux.Handle("GET", pattern_CreditsService_GetUsagePDFReport_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
@@ -636,7 +596,7 @@ func RegisterCreditsServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 			return
 		}
 
-		forward_CreditsService_CreateUsagePDFReport_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CreditsService_CreateUsagePDFReport_0(ctx, mux, outboundMarshaler, w, req, func() (proto.Message, error) { return resp.Recv() }, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -704,7 +664,7 @@ var (
 
 	forward_CreditsService_ListCreditBundlesUsage_0 = runtime.ForwardResponseMessage
 
-	forward_CreditsService_CreateUsagePDFReport_0 = runtime.ForwardResponseMessage
+	forward_CreditsService_CreateUsagePDFReport_0 = runtime.ForwardResponseStream
 
 	forward_CreditsService_GetUsagePDFReport_0 = runtime.ForwardResponseMessage
 
