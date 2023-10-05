@@ -110,15 +110,19 @@ export interface CreditBundlesList {
   items?: CreditBundle[];
 }
 export interface GetUsagePDFReportRequest {
-  // ID of the PDF report that needs to be fetched.
-  // This is a read-only field.
-  // string
-  report_id?: string;
-  
-  // ID of the organization that owns this report.
-  // This is a read-only field.
+  // ID of the organization for which the report is being requested.
   // string
   organization_id?: string;
+  
+  // The date from which credit usage should be listed.
+  // This is a required field.
+  // googleTypes.Timestamp
+  starts_at?: googleTypes.Timestamp;
+  
+  // The date from which credit usage should be listed.
+  // This is a required field.
+  // googleTypes.Timestamp
+  ends_at?: googleTypes.Timestamp;
 }
 
 // Request for listing credit bundle usages.
@@ -169,68 +173,17 @@ export interface ListCreditBundlesRequest {
   exclude_expired?: boolean;
 }
 
-// Request for listing PDF reports.
-export interface ListPDFReportsRequest {
-  // ID of the organization for which PDF reports are requested.
-  // string
-  organization_id?: string;
-}
-
-// PDFReport contains the metadata and PDF content for a requested credit usage report.
-// Note that PDFs are available only for a limited duration after creation.
+// PDFReport contains a PDF with a credit usage report.
 export interface PDFReport {
-  // ID of this PDF report.
-  // This is a read-only field.
-  // string
-  id?: string;
-  
-  // ID of the organization to which this report belongs to.
-  // This is a required field.
-  // string
-  organization_id?: string;
-  
-  // The date from which credit usage is listed.
-  // This is a required field.
-  // googleTypes.Timestamp
-  starts_at?: googleTypes.Timestamp;
-  
-  // The date until which credit usage is listed.
-  // This is a required field.
-  // googleTypes.Timestamp
-  ends_at?: googleTypes.Timestamp;
-  
-  // The timestamp at which this report was requested.
-  // This is a read-only field.
-  // googleTypes.Timestamp
-  requested_at?: googleTypes.Timestamp;
-  
-  // Status of the PDF report.
-  // This is a read-only field.
-  // PDFReport_Status
-  status?: PDFReport_Status;
-}
-
-// Status of the PDF report.
-// This is a read-only block.
-export interface PDFReport_Status {
   // The contents of the PDF.
-  // This is filled in by the server.
   // This is a read-only field.
   // string
   contents?: string;
   
-  // The timestamp at which this report was ready.
-  // If not set, the PDF is not yet prepared.
-  // This is a read-only field.
-  // googleTypes.Timestamp
-  ready_at?: googleTypes.Timestamp;
-}
-
-// List of PDF reports.
-// Note that the items in this list will not contain the PDF content bytes.
-export interface PDFReportList {
-  // PDFReport
-  items?: PDFReport[];
+  // Name of the PDF file.
+  // This is a ready-only field.
+  // string
+  filename?: string;
 }
 
 // CreditsService is the API used for managing credits.
@@ -250,27 +203,13 @@ export interface ICreditsService {
   // - credit.creditbundleusage.list on the organization identified by the given organization ID.
   ListCreditBundlesUsage: (req: ListCreditBundleUsageRequest) => Promise<CreditBundleUsageList>;
   
-  // Request the creation of a new credit usage PDF report.
-  // The server returns a response immediately, and renders the PDF asynchronously.
-  // Use `GetUsagePDFReport` rpc to get the PDF content.
-  // Required permissions:
-  // - credit.pdf.create on organization identified by the given organization ID.
-  CreateUsagePDFReport: (req: PDFReport) => Promise<PDFReport>;
-  
   // Get a credit usage PDF report identified by the given id,
   // owned by the organization identified by the `organization_id`.
   // The server sends a PDF over the returned stream once its contents are ready.
-  // Once the prepared PDF is sent, the stream is ended by the server.
+  // Once the PDF is sent, the stream is ended by the server.
   // Required permissions:
   // - credit.pdf.get on organization identified by the given organization ID.
   GetUsagePDFReport: (req: GetUsagePDFReportRequest, cb: (obj: IStreamMessage<PDFReport>) => void) => Promise<IServerStream>;
-  
-  // List the PDF reports for the organization identified by the ID.
-  // The response will not include the PDF content bytes.
-  // Use `GetCreditBundleUsagePDFReport` rpc for getting the content bytes of a ready PDFReport.
-  // Required permissions:
-  // - credit.pdf.list on organization identified by the given organization ID.
-  ListUsagePDFReports: (req: ListPDFReportsRequest) => Promise<PDFReportList>;
 }
 
 // CreditsService is the API used for managing credits.
@@ -302,35 +241,14 @@ export class CreditsService implements ICreditsService {
     return api.get(url, undefined);
   }
   
-  // Request the creation of a new credit usage PDF report.
-  // The server returns a response immediately, and renders the PDF asynchronously.
-  // Use `GetUsagePDFReport` rpc to get the PDF content.
-  // Required permissions:
-  // - credit.pdf.create on organization identified by the given organization ID.
-  async CreateUsagePDFReport(req: PDFReport): Promise<PDFReport> {
-    const url = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/pdf`;
-    return api.post(url, req);
-  }
-  
   // Get a credit usage PDF report identified by the given id,
   // owned by the organization identified by the `organization_id`.
   // The server sends a PDF over the returned stream once its contents are ready.
-  // Once the prepared PDF is sent, the stream is ended by the server.
+  // Once the PDF is sent, the stream is ended by the server.
   // Required permissions:
   // - credit.pdf.get on organization identified by the given organization ID.
   async GetUsagePDFReport(req: GetUsagePDFReportRequest, cb: (obj: IStreamMessage<PDFReport>) => void): Promise<IServerStream> {
-    const url = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/pdf/${encodeURIComponent(req.report_id || '')}`;
+    const url = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/creditbundleusages/pdf`;
     return api.server_stream(url, "POST", req, cb);
-  }
-  
-  // List the PDF reports for the organization identified by the ID.
-  // The response will not include the PDF content bytes.
-  // Use `GetCreditBundleUsagePDFReport` rpc for getting the content bytes of a ready PDFReport.
-  // Required permissions:
-  // - credit.pdf.list on organization identified by the given organization ID.
-  async ListUsagePDFReports(req: ListPDFReportsRequest): Promise<PDFReportList> {
-    const path = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/pdfs`;
-    const url = path + api.queryString(req, [`organization_id`]);
-    return api.get(url, undefined);
   }
 }

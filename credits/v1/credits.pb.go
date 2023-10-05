@@ -31,15 +31,17 @@ var _ = math.Inf
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type GetUsagePDFReportRequest struct {
-	// ID of the PDF report that needs to be fetched.
-	// This is a read-only field.
-	ReportId string `protobuf:"bytes,1,opt,name=report_id,json=reportId,proto3" json:"report_id,omitempty"`
-	// ID of the organization that owns this report.
-	// This is a read-only field.
-	OrganizationId       string   `protobuf:"bytes,2,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	// ID of the organization for which the report is being requested.
+	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	// The date from which credit usage should be listed.
+	// This is a required field.
+	StartsAt *types.Timestamp `protobuf:"bytes,2,opt,name=starts_at,json=startsAt,proto3" json:"starts_at,omitempty"`
+	// The date from which credit usage should be listed.
+	// This is a required field.
+	EndsAt               *types.Timestamp `protobuf:"bytes,4,opt,name=ends_at,json=endsAt,proto3" json:"ends_at,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
 }
 
 func (m *GetUsagePDFReportRequest) Reset()         { *m = GetUsagePDFReportRequest{} }
@@ -75,13 +77,6 @@ func (m *GetUsagePDFReportRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_GetUsagePDFReportRequest proto.InternalMessageInfo
 
-func (m *GetUsagePDFReportRequest) GetReportId() string {
-	if m != nil {
-		return m.ReportId
-	}
-	return ""
-}
-
 func (m *GetUsagePDFReportRequest) GetOrganizationId() string {
 	if m != nil {
 		return m.OrganizationId
@@ -89,135 +84,38 @@ func (m *GetUsagePDFReportRequest) GetOrganizationId() string {
 	return ""
 }
 
-// List of PDF reports.
-// Note that the items in this list will not contain the PDF content bytes.
-type PDFReportList struct {
-	Items                []*PDFReport `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
-	XXX_unrecognized     []byte       `json:"-"`
-	XXX_sizecache        int32        `json:"-"`
-}
-
-func (m *PDFReportList) Reset()         { *m = PDFReportList{} }
-func (m *PDFReportList) String() string { return proto.CompactTextString(m) }
-func (*PDFReportList) ProtoMessage()    {}
-func (*PDFReportList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a0331d70383bb145, []int{1}
-}
-func (m *PDFReportList) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *PDFReportList) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_PDFReportList.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *PDFReportList) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PDFReportList.Merge(m, src)
-}
-func (m *PDFReportList) XXX_Size() int {
-	return m.Size()
-}
-func (m *PDFReportList) XXX_DiscardUnknown() {
-	xxx_messageInfo_PDFReportList.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_PDFReportList proto.InternalMessageInfo
-
-func (m *PDFReportList) GetItems() []*PDFReport {
+func (m *GetUsagePDFReportRequest) GetStartsAt() *types.Timestamp {
 	if m != nil {
-		return m.Items
+		return m.StartsAt
 	}
 	return nil
 }
 
-// Request for listing PDF reports.
-type ListPDFReportsRequest struct {
-	// ID of the organization for which PDF reports are requested.
-	OrganizationId       string   `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+func (m *GetUsagePDFReportRequest) GetEndsAt() *types.Timestamp {
+	if m != nil {
+		return m.EndsAt
+	}
+	return nil
+}
+
+// PDFReport contains a PDF with a credit usage report.
+type PDFReport struct {
+	// The contents of the PDF.
+	// This is a read-only field.
+	Contents []byte `protobuf:"bytes,1,opt,name=contents,proto3" json:"contents,omitempty"`
+	// Name of the PDF file.
+	// This is a ready-only field.
+	Filename             string   `protobuf:"bytes,2,opt,name=filename,proto3" json:"filename,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *ListPDFReportsRequest) Reset()         { *m = ListPDFReportsRequest{} }
-func (m *ListPDFReportsRequest) String() string { return proto.CompactTextString(m) }
-func (*ListPDFReportsRequest) ProtoMessage()    {}
-func (*ListPDFReportsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a0331d70383bb145, []int{2}
-}
-func (m *ListPDFReportsRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *ListPDFReportsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_ListPDFReportsRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *ListPDFReportsRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ListPDFReportsRequest.Merge(m, src)
-}
-func (m *ListPDFReportsRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *ListPDFReportsRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_ListPDFReportsRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_ListPDFReportsRequest proto.InternalMessageInfo
-
-func (m *ListPDFReportsRequest) GetOrganizationId() string {
-	if m != nil {
-		return m.OrganizationId
-	}
-	return ""
-}
-
-// PDFReport contains the metadata and PDF content for a requested credit usage report.
-// Note that PDFs are available only for a limited duration after creation.
-type PDFReport struct {
-	// ID of this PDF report.
-	// This is a read-only field.
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// ID of the organization to which this report belongs to.
-	// This is a required field.
-	OrganizationId string `protobuf:"bytes,2,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
-	// The date from which credit usage is listed.
-	// This is a required field.
-	StartsAt *types.Timestamp `protobuf:"bytes,3,opt,name=starts_at,json=startsAt,proto3" json:"starts_at,omitempty"`
-	// The date until which credit usage is listed.
-	// This is a required field.
-	EndsAt *types.Timestamp `protobuf:"bytes,4,opt,name=ends_at,json=endsAt,proto3" json:"ends_at,omitempty"`
-	// The timestamp at which this report was requested.
-	// This is a read-only field.
-	RequestedAt *types.Timestamp `protobuf:"bytes,5,opt,name=requested_at,json=requestedAt,proto3" json:"requested_at,omitempty"`
-	// Status of the PDF report.
-	// This is a read-only field.
-	Status               *PDFReport_Status `protobuf:"bytes,20,opt,name=status,proto3" json:"status,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
-	XXX_unrecognized     []byte            `json:"-"`
-	XXX_sizecache        int32             `json:"-"`
 }
 
 func (m *PDFReport) Reset()         { *m = PDFReport{} }
 func (m *PDFReport) String() string { return proto.CompactTextString(m) }
 func (*PDFReport) ProtoMessage()    {}
 func (*PDFReport) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a0331d70383bb145, []int{3}
+	return fileDescriptor_a0331d70383bb145, []int{1}
 }
 func (m *PDFReport) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -246,109 +144,18 @@ func (m *PDFReport) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_PDFReport proto.InternalMessageInfo
 
-func (m *PDFReport) GetId() string {
-	if m != nil {
-		return m.Id
-	}
-	return ""
-}
-
-func (m *PDFReport) GetOrganizationId() string {
-	if m != nil {
-		return m.OrganizationId
-	}
-	return ""
-}
-
-func (m *PDFReport) GetStartsAt() *types.Timestamp {
-	if m != nil {
-		return m.StartsAt
-	}
-	return nil
-}
-
-func (m *PDFReport) GetEndsAt() *types.Timestamp {
-	if m != nil {
-		return m.EndsAt
-	}
-	return nil
-}
-
-func (m *PDFReport) GetRequestedAt() *types.Timestamp {
-	if m != nil {
-		return m.RequestedAt
-	}
-	return nil
-}
-
-func (m *PDFReport) GetStatus() *PDFReport_Status {
-	if m != nil {
-		return m.Status
-	}
-	return nil
-}
-
-// Status of the PDF report.
-// This is a read-only block.
-type PDFReport_Status struct {
-	// The contents of the PDF.
-	// This is filled in by the server.
-	// This is a read-only field.
-	Contents []byte `protobuf:"bytes,1,opt,name=contents,proto3" json:"contents,omitempty"`
-	// The timestamp at which this report was ready.
-	// If not set, the PDF is not yet prepared.
-	// This is a read-only field.
-	ReadyAt              *types.Timestamp `protobuf:"bytes,2,opt,name=ready_at,json=readyAt,proto3" json:"ready_at,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
-	XXX_unrecognized     []byte           `json:"-"`
-	XXX_sizecache        int32            `json:"-"`
-}
-
-func (m *PDFReport_Status) Reset()         { *m = PDFReport_Status{} }
-func (m *PDFReport_Status) String() string { return proto.CompactTextString(m) }
-func (*PDFReport_Status) ProtoMessage()    {}
-func (*PDFReport_Status) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a0331d70383bb145, []int{3, 0}
-}
-func (m *PDFReport_Status) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *PDFReport_Status) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_PDFReport_Status.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *PDFReport_Status) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PDFReport_Status.Merge(m, src)
-}
-func (m *PDFReport_Status) XXX_Size() int {
-	return m.Size()
-}
-func (m *PDFReport_Status) XXX_DiscardUnknown() {
-	xxx_messageInfo_PDFReport_Status.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_PDFReport_Status proto.InternalMessageInfo
-
-func (m *PDFReport_Status) GetContents() []byte {
+func (m *PDFReport) GetContents() []byte {
 	if m != nil {
 		return m.Contents
 	}
 	return nil
 }
 
-func (m *PDFReport_Status) GetReadyAt() *types.Timestamp {
+func (m *PDFReport) GetFilename() string {
 	if m != nil {
-		return m.ReadyAt
+		return m.Filename
 	}
-	return nil
+	return ""
 }
 
 // Request for listing credit bundle usages.
@@ -383,7 +190,7 @@ func (m *ListCreditBundleUsageRequest) Reset()         { *m = ListCreditBundleUs
 func (m *ListCreditBundleUsageRequest) String() string { return proto.CompactTextString(m) }
 func (*ListCreditBundleUsageRequest) ProtoMessage()    {}
 func (*ListCreditBundleUsageRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a0331d70383bb145, []int{4}
+	return fileDescriptor_a0331d70383bb145, []int{2}
 }
 func (m *ListCreditBundleUsageRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -470,7 +277,7 @@ func (m *ListCreditBundlesRequest) Reset()         { *m = ListCreditBundlesReque
 func (m *ListCreditBundlesRequest) String() string { return proto.CompactTextString(m) }
 func (*ListCreditBundlesRequest) ProtoMessage()    {}
 func (*ListCreditBundlesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a0331d70383bb145, []int{5}
+	return fileDescriptor_a0331d70383bb145, []int{3}
 }
 func (m *ListCreditBundlesRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -525,7 +332,7 @@ func (m *CreditBundlesList) Reset()         { *m = CreditBundlesList{} }
 func (m *CreditBundlesList) String() string { return proto.CompactTextString(m) }
 func (*CreditBundlesList) ProtoMessage()    {}
 func (*CreditBundlesList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a0331d70383bb145, []int{6}
+	return fileDescriptor_a0331d70383bb145, []int{4}
 }
 func (m *CreditBundlesList) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -603,7 +410,7 @@ func (m *CreditBundle) Reset()         { *m = CreditBundle{} }
 func (m *CreditBundle) String() string { return proto.CompactTextString(m) }
 func (*CreditBundle) ProtoMessage()    {}
 func (*CreditBundle) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a0331d70383bb145, []int{7}
+	return fileDescriptor_a0331d70383bb145, []int{5}
 }
 func (m *CreditBundle) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -735,7 +542,7 @@ func (m *CreditBundleUsage) Reset()         { *m = CreditBundleUsage{} }
 func (m *CreditBundleUsage) String() string { return proto.CompactTextString(m) }
 func (*CreditBundleUsage) ProtoMessage()    {}
 func (*CreditBundleUsage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a0331d70383bb145, []int{8}
+	return fileDescriptor_a0331d70383bb145, []int{6}
 }
 func (m *CreditBundleUsage) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -825,7 +632,7 @@ func (m *CreditBundleUsageList) Reset()         { *m = CreditBundleUsageList{} }
 func (m *CreditBundleUsageList) String() string { return proto.CompactTextString(m) }
 func (*CreditBundleUsageList) ProtoMessage()    {}
 func (*CreditBundleUsageList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a0331d70383bb145, []int{9}
+	return fileDescriptor_a0331d70383bb145, []int{7}
 }
 func (m *CreditBundleUsageList) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -863,10 +670,7 @@ func (m *CreditBundleUsageList) GetItems() []*CreditBundleUsage {
 
 func init() {
 	proto.RegisterType((*GetUsagePDFReportRequest)(nil), "arangodb.cloud.credits.v1.GetUsagePDFReportRequest")
-	proto.RegisterType((*PDFReportList)(nil), "arangodb.cloud.credits.v1.PDFReportList")
-	proto.RegisterType((*ListPDFReportsRequest)(nil), "arangodb.cloud.credits.v1.ListPDFReportsRequest")
 	proto.RegisterType((*PDFReport)(nil), "arangodb.cloud.credits.v1.PDFReport")
-	proto.RegisterType((*PDFReport_Status)(nil), "arangodb.cloud.credits.v1.PDFReport.Status")
 	proto.RegisterType((*ListCreditBundleUsageRequest)(nil), "arangodb.cloud.credits.v1.ListCreditBundleUsageRequest")
 	proto.RegisterType((*ListCreditBundlesRequest)(nil), "arangodb.cloud.credits.v1.ListCreditBundlesRequest")
 	proto.RegisterType((*CreditBundlesList)(nil), "arangodb.cloud.credits.v1.CreditBundlesList")
@@ -878,74 +682,65 @@ func init() {
 func init() { proto.RegisterFile("credits.proto", fileDescriptor_a0331d70383bb145) }
 
 var fileDescriptor_a0331d70383bb145 = []byte{
-	// 1067 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x57, 0x4d, 0x73, 0xdb, 0x44,
-	0x18, 0x46, 0x76, 0x13, 0xdb, 0xaf, 0x93, 0xd0, 0x2c, 0x69, 0x47, 0x88, 0x4c, 0x1a, 0x34, 0xed,
-	0x24, 0x34, 0x44, 0xca, 0xc7, 0x94, 0x0e, 0x09, 0x19, 0x70, 0x42, 0xdb, 0xc9, 0xc0, 0x0c, 0x19,
-	0x95, 0x70, 0xa0, 0x07, 0xb3, 0x96, 0x36, 0xae, 0x66, 0xf4, 0xc5, 0xee, 0xca, 0x34, 0x74, 0x7a,
-	0xe1, 0xc6, 0x39, 0x17, 0x8e, 0xfc, 0x01, 0xf8, 0x0d, 0x1c, 0x38, 0x70, 0x64, 0x86, 0x3f, 0xc0,
-	0x84, 0x8f, 0xdf, 0xc1, 0xec, 0xae, 0xe4, 0xd8, 0xb1, 0x13, 0xc9, 0x17, 0x6e, 0xd2, 0xab, 0xf7,
-	0xd9, 0x7d, 0xf6, 0x7d, 0xde, 0xe7, 0xf5, 0x1a, 0x66, 0x5d, 0x4a, 0x3c, 0x9f, 0x33, 0x2b, 0xa1,
-	0x31, 0x8f, 0xd1, 0x9b, 0x98, 0xe2, 0xa8, 0x1b, 0x7b, 0x1d, 0xcb, 0x0d, 0xe2, 0xd4, 0xb3, 0xf2,
-	0xaf, 0xbd, 0x4d, 0xe3, 0xb6, 0x1b, 0x87, 0x61, 0x1c, 0xd9, 0xbd, 0x4d, 0x5b, 0x3d, 0x29, 0x88,
-	0xb1, 0xdb, 0xf5, 0xf9, 0xf3, 0xb4, 0x63, 0xb9, 0x71, 0x68, 0x77, 0xe3, 0x00, 0x47, 0x5d, 0x5b,
-	0x7e, 0xe8, 0xa4, 0x27, 0x76, 0xc2, 0x4f, 0x13, 0xc2, 0x6c, 0xee, 0x87, 0x84, 0x71, 0x1c, 0x26,
-	0x17, 0x4f, 0x19, 0x78, 0xb1, 0x1b, 0xc7, 0xdd, 0x80, 0xd8, 0x38, 0xf1, 0x6d, 0x1c, 0x45, 0x31,
-	0xc7, 0xdc, 0x8f, 0xa3, 0x8c, 0x8d, 0xf9, 0x15, 0xe8, 0x4f, 0x08, 0x3f, 0x66, 0xb8, 0x4b, 0x8e,
-	0x3e, 0x7e, 0xec, 0x90, 0x24, 0xa6, 0xdc, 0x21, 0x5f, 0xa7, 0x84, 0x71, 0xf4, 0x16, 0x34, 0xa8,
-	0x0c, 0xb4, 0x7d, 0x4f, 0xd7, 0x96, 0xb5, 0xd5, 0x86, 0x53, 0x57, 0x81, 0x43, 0x0f, 0xad, 0xc0,
-	0xeb, 0x31, 0xed, 0xe2, 0xc8, 0xff, 0x56, 0xae, 0x27, 0x52, 0x2a, 0x32, 0x65, 0x6e, 0x30, 0x7c,
-	0xe8, 0x99, 0x9f, 0xc0, 0x6c, 0x7f, 0xe5, 0x4f, 0x7d, 0xc6, 0xd1, 0x0e, 0x4c, 0xf9, 0x9c, 0x84,
-	0x4c, 0xd7, 0x96, 0xab, 0xab, 0xcd, 0xad, 0xbb, 0xd6, 0x95, 0x05, 0xb1, 0x2e, 0x28, 0x29, 0x88,
-	0xf9, 0x11, 0xdc, 0x12, 0x6b, 0xf4, 0xe3, 0x2c, 0xe7, 0x3a, 0x86, 0x8e, 0x36, 0x96, 0xce, 0x59,
-	0x15, 0x1a, 0x7d, 0x38, 0x9a, 0x83, 0x4a, 0x3f, 0xb3, 0xe2, 0x97, 0x3f, 0x15, 0x7a, 0x08, 0x0d,
-	0xc6, 0x31, 0xe5, 0xac, 0x8d, 0xb9, 0x5e, 0x5d, 0xd6, 0x56, 0x9b, 0x5b, 0x86, 0xa5, 0x2a, 0x6d,
-	0xe5, 0xda, 0x58, 0x9f, 0xe7, 0x52, 0x38, 0x75, 0x95, 0xdc, 0xe2, 0x68, 0x1b, 0x6a, 0x24, 0xf2,
-	0x24, 0xec, 0x46, 0x21, 0x6c, 0x5a, 0xa4, 0xb6, 0x38, 0xda, 0x83, 0x19, 0xaa, 0x0e, 0x4a, 0x3c,
-	0x81, 0x9c, 0x2a, 0x44, 0x36, 0xfb, 0xf9, 0x2d, 0x8e, 0x0e, 0x60, 0x9a, 0x71, 0xcc, 0x53, 0xa6,
-	0x2f, 0x48, 0xe0, 0x5a, 0x99, 0x92, 0x5b, 0x4f, 0x25, 0xc4, 0xc9, 0xa0, 0xc6, 0x33, 0x98, 0x56,
-	0x11, 0x64, 0x40, 0xdd, 0x8d, 0x23, 0x4e, 0x22, 0xce, 0x64, 0xe9, 0x66, 0x9c, 0xfe, 0x3b, 0x7a,
-	0x00, 0x75, 0x4a, 0xb0, 0x77, 0x2a, 0x58, 0x56, 0x0a, 0x59, 0xd6, 0x64, 0x6e, 0x8b, 0x9b, 0xbf,
-	0x56, 0x60, 0x51, 0x08, 0x7b, 0x20, 0x89, 0xec, 0xa7, 0x91, 0x17, 0x10, 0xd9, 0x94, 0x93, 0xea,
-	0x8b, 0x56, 0xe1, 0xa6, 0x3a, 0x4d, 0xbb, 0x23, 0x57, 0x19, 0x90, 0xd0, 0x1d, 0x58, 0xfc, 0x7f,
-	0x97, 0xd0, 0x84, 0xd9, 0x54, 0x1c, 0xa8, 0x2d, 0x1a, 0x59, 0x90, 0x9a, 0x92, 0xa4, 0x9a, 0x32,
-	0x78, 0xc8, 0x49, 0x78, 0xe8, 0xa1, 0x0f, 0xa1, 0x16, 0x27, 0xd2, 0x9d, 0x99, 0x50, 0xf7, 0x46,
-	0x84, 0x52, 0x63, 0xa1, 0xb7, 0x69, 0x89, 0x6a, 0x7d, 0xa6, 0x92, 0x9d, 0x1c, 0x65, 0x06, 0xa0,
-	0x5f, 0xae, 0xe2, 0xc4, 0x0e, 0x11, 0x89, 0xe4, 0x85, 0x1b, 0xa4, 0x1e, 0x69, 0x93, 0x17, 0x89,
-	0x4f, 0x89, 0x2a, 0x60, 0xdd, 0x99, 0xcb, 0xc2, 0x8f, 0x54, 0xd4, 0x74, 0x60, 0x7e, 0x68, 0x27,
-	0xe9, 0xee, 0xbd, 0x61, 0x77, 0xaf, 0x5c, 0xd3, 0x6a, 0x83, 0xe0, 0xdc, 0xe0, 0xff, 0x54, 0x61,
-	0x66, 0x30, 0x3e, 0xe2, 0xd0, 0x9b, 0x50, 0x4d, 0x69, 0x90, 0x49, 0x2a, 0x1e, 0xc7, 0x1d, 0xec,
-	0xc6, 0xd8, 0x83, 0xad, 0xc1, 0x7c, 0xb6, 0x7b, 0x3b, 0x49, 0xa9, 0xfb, 0x1c, 0x33, 0xa2, 0x64,
-	0xa8, 0x38, 0x59, 0xcf, 0xb0, 0xa3, 0x3c, 0x8e, 0xee, 0x40, 0x93, 0xc7, 0x1c, 0x07, 0xed, 0x84,
-	0xfa, 0x2e, 0xd1, 0xa7, 0x65, 0x1a, 0xc8, 0xd0, 0x91, 0x88, 0x48, 0x17, 0xa4, 0x94, 0x92, 0xc8,
-	0x3d, 0xd5, 0x6b, 0x6a, 0x38, 0xe6, 0xef, 0x83, 0x3b, 0x51, 0x12, 0x62, 0x3f, 0xf2, 0xa3, 0xae,
-	0x5e, 0x1f, 0xda, 0xc9, 0xc9, 0xe3, 0xc2, 0xdc, 0x7d, 0x3a, 0xa2, 0xa7, 0x1a, 0xc5, 0xe6, 0xee,
-	0xe7, 0xb7, 0x38, 0x7a, 0x1f, 0xa0, 0x87, 0x03, 0xdf, 0x6b, 0x9f, 0xd0, 0x38, 0xd4, 0xa1, 0x10,
-	0xdc, 0x90, 0xd9, 0x8f, 0x69, 0x1c, 0xa2, 0x5d, 0x68, 0x2a, 0x68, 0x1a, 0x71, 0x3f, 0xd0, 0x9b,
-	0x85, 0x58, 0xb5, 0xd3, 0xb1, 0xc8, 0x46, 0x1f, 0xc0, 0x4c, 0x80, 0x19, 0x6f, 0xa7, 0x19, 0xed,
-	0x99, 0x62, 0xb4, 0xc8, 0x3f, 0x96, 0xac, 0xcd, 0xef, 0x2b, 0xc3, 0xcd, 0x23, 0xcd, 0x3e, 0x22,
-	0xf6, 0x88, 0x69, 0x2a, 0xa3, 0xa6, 0x19, 0x67, 0xf8, 0xea, 0x58, 0xc3, 0x97, 0x6e, 0x94, 0x05,
-	0x98, 0x92, 0x3b, 0x64, 0xcd, 0xa1, 0x5e, 0xd0, 0xa2, 0xf8, 0x39, 0xcc, 0xc5, 0x54, 0xfd, 0x70,
-	0x11, 0x10, 0x32, 0xb8, 0x94, 0xe0, 0x6c, 0x40, 0xd7, 0x8a, 0x65, 0xc8, 0xb2, 0x5b, 0xdc, 0x7c,
-	0x06, 0xb7, 0x46, 0x4a, 0x21, 0xbd, 0xb4, 0x3f, 0xec, 0xa5, 0x77, 0x4b, 0x7a, 0x49, 0x0d, 0x4e,
-	0x05, 0xdd, 0xfa, 0xb7, 0x06, 0x73, 0xea, 0x23, 0x7b, 0x4a, 0x68, 0x4f, 0x74, 0xee, 0x37, 0x30,
-	0xfb, 0x84, 0xf0, 0xd6, 0xd1, 0xe1, 0x17, 0x84, 0x32, 0x3f, 0x8e, 0xd0, 0x9d, 0xab, 0xc7, 0xcc,
-	0xa3, 0x30, 0xe1, 0xa7, 0xc6, 0xdb, 0x57, 0x27, 0x64, 0x6b, 0x98, 0xe6, 0x77, 0x7f, 0xfc, 0x7d,
-	0x56, 0x59, 0x44, 0x86, 0xbc, 0x68, 0x28, 0x66, 0xe2, 0x22, 0x83, 0x13, 0x7f, 0xbd, 0x97, 0xed,
-	0xf3, 0xb3, 0x06, 0xf3, 0x23, 0xf3, 0x09, 0x6d, 0x5f, 0x73, 0xac, 0xab, 0xa6, 0x99, 0x51, 0xb6,
-	0x16, 0x72, 0x28, 0x99, 0xef, 0x49, 0x72, 0x1b, 0xc8, 0xba, 0x44, 0xee, 0xe5, 0xa5, 0x7e, 0x78,
-	0x95, 0x7d, 0xeb, 0x64, 0xd4, 0x7e, 0xd1, 0xe0, 0xf6, 0x08, 0x05, 0xd5, 0xaa, 0x0f, 0x27, 0x60,
-	0x3d, 0xf8, 0x4b, 0x66, 0x6c, 0x4c, 0xa2, 0xa2, 0x64, 0xbf, 0x2b, 0xd9, 0x3f, 0x40, 0xdb, 0x13,
-	0xb1, 0x97, 0x4d, 0xcb, 0xd0, 0x99, 0x06, 0x0b, 0x07, 0xb2, 0xd5, 0x86, 0x2f, 0x79, 0xa8, 0xd4,
-	0xbd, 0xcb, 0x28, 0x95, 0x65, 0xda, 0x92, 0xe1, 0x3b, 0xe6, 0xdd, 0x42, 0x86, 0x89, 0x77, 0xb2,
-	0xa3, 0xdd, 0x47, 0x3f, 0x69, 0x30, 0x3f, 0x72, 0xef, 0xbc, 0xb6, 0x13, 0xae, 0xba, 0xa5, 0x96,
-	0x64, 0x98, 0xd5, 0xd0, 0xdc, 0x28, 0xc3, 0xd0, 0x7e, 0xd9, 0xbf, 0xf7, 0xbe, 0xda, 0xd1, 0xee,
-	0x6f, 0x68, 0xe8, 0x47, 0x0d, 0xde, 0x10, 0x5a, 0x0c, 0x53, 0x60, 0x68, 0xa3, 0xa0, 0x0b, 0x46,
-	0x2e, 0xaa, 0xc6, 0x6a, 0x19, 0xba, 0x52, 0xf6, 0x75, 0x49, 0x79, 0x05, 0xdd, 0x2b, 0x43, 0x99,
-	0xed, 0xef, 0xfd, 0x76, 0xbe, 0xa4, 0xfd, 0x7e, 0xbe, 0xa4, 0xfd, 0x79, 0xbe, 0xa4, 0xfd, 0xf0,
-	0xd7, 0xd2, 0x6b, 0x5f, 0xae, 0x0d, 0xfc, 0x6d, 0xc8, 0x37, 0x5d, 0x0f, 0x71, 0x84, 0xbb, 0xc4,
-	0x13, 0x6b, 0xb2, 0x6c, 0x51, 0x66, 0xf7, 0x36, 0x3b, 0xd3, 0x72, 0x46, 0x6d, 0xff, 0x17, 0x00,
-	0x00, 0xff, 0xff, 0xc9, 0x9a, 0xda, 0xf2, 0xae, 0x0c, 0x00, 0x00,
+	// 922 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x56, 0x4f, 0x6f, 0x1b, 0x45,
+	0x14, 0x67, 0xed, 0xa6, 0x89, 0x9f, 0x1d, 0xb7, 0x19, 0x95, 0x6a, 0xb1, 0xa2, 0xb4, 0xac, 0x40,
+	0x89, 0x28, 0xdd, 0xcd, 0x1f, 0x41, 0x04, 0x69, 0x84, 0x9c, 0xd2, 0x56, 0x91, 0x90, 0x88, 0x16,
+	0xc2, 0x01, 0x0e, 0xab, 0xf1, 0xee, 0x64, 0x3b, 0xd2, 0xee, 0xcc, 0x32, 0x33, 0x6b, 0x1a, 0x10,
+	0x17, 0x6e, 0x9c, 0xb9, 0xf0, 0x29, 0x90, 0x90, 0xfa, 0x01, 0x38, 0x70, 0xe0, 0x88, 0xc4, 0x17,
+	0x40, 0x01, 0xbe, 0x07, 0x9a, 0x99, 0xb5, 0xe3, 0xd8, 0x71, 0x1c, 0x23, 0x71, 0xdb, 0x79, 0xf3,
+	0x7e, 0xf3, 0x7e, 0xef, 0xbd, 0xdf, 0x9b, 0x1d, 0x58, 0x8e, 0x05, 0x49, 0xa8, 0x92, 0x7e, 0x21,
+	0xb8, 0xe2, 0xe8, 0x35, 0x2c, 0x30, 0x4b, 0x79, 0xd2, 0xf3, 0xe3, 0x8c, 0x97, 0x89, 0x3f, 0xd8,
+	0xed, 0x6f, 0x75, 0xee, 0xc6, 0x3c, 0xcf, 0x39, 0x0b, 0xfa, 0x5b, 0x81, 0xfd, 0xb2, 0x90, 0xce,
+	0x5e, 0x4a, 0xd5, 0xf3, 0xb2, 0xe7, 0xc7, 0x3c, 0x0f, 0x52, 0x9e, 0x61, 0x96, 0x06, 0x66, 0xa3,
+	0x57, 0x9e, 0x04, 0x85, 0x3a, 0x2d, 0x88, 0x0c, 0x14, 0xcd, 0x89, 0x54, 0x38, 0x2f, 0xce, 0xbf,
+	0x2a, 0xf0, 0x6a, 0xca, 0x79, 0x9a, 0x91, 0x00, 0x17, 0x34, 0xc0, 0x8c, 0x71, 0x85, 0x15, 0xe5,
+	0xac, 0x62, 0xe3, 0xfd, 0xec, 0x80, 0xfb, 0x8c, 0xa8, 0x63, 0x89, 0x53, 0x72, 0xf4, 0xe1, 0xd3,
+	0x90, 0x14, 0x5c, 0xa8, 0x90, 0x7c, 0x59, 0x12, 0xa9, 0xd0, 0x3a, 0xdc, 0xe2, 0x22, 0xc5, 0x8c,
+	0x7e, 0x6d, 0x30, 0x11, 0x4d, 0x5c, 0xe7, 0xbe, 0xb3, 0xd1, 0x08, 0xdb, 0xa3, 0xe6, 0xc3, 0x04,
+	0xed, 0x42, 0x43, 0x2a, 0x2c, 0x94, 0x8c, 0xb0, 0x72, 0x6b, 0xf7, 0x9d, 0x8d, 0xe6, 0x76, 0xc7,
+	0xb7, 0x71, 0xfd, 0x01, 0x53, 0xff, 0xd3, 0x01, 0xb1, 0x70, 0xc9, 0x3a, 0x77, 0x15, 0xda, 0x81,
+	0x45, 0xc2, 0x12, 0x03, 0xbb, 0x31, 0x13, 0x76, 0x53, 0xbb, 0x76, 0x95, 0xf7, 0x18, 0x1a, 0x43,
+	0xaa, 0xa8, 0x03, 0x4b, 0x31, 0x67, 0x8a, 0x30, 0x25, 0x0d, 0xb9, 0x56, 0x38, 0x5c, 0xeb, 0xbd,
+	0x13, 0x9a, 0x11, 0x86, 0x73, 0x62, 0x58, 0x35, 0xc2, 0xe1, 0xda, 0xfb, 0xb5, 0x06, 0xab, 0x1f,
+	0x51, 0xa9, 0x1e, 0x9b, 0xf2, 0x1f, 0x94, 0x2c, 0xc9, 0x88, 0xa9, 0xc2, 0xdc, 0xc9, 0x6f, 0xc0,
+	0x6d, 0xdb, 0xc3, 0xa8, 0x67, 0x4e, 0xd1, 0x9e, 0x36, 0x5a, 0x3b, 0x1e, 0x39, 0x7c, 0xbc, 0x4c,
+	0xf5, 0xff, 0xb9, 0x4c, 0xc8, 0x83, 0xe5, 0x52, 0x27, 0x14, 0x51, 0x45, 0x72, 0x4d, 0x6a, 0xc1,
+	0x90, 0x6a, 0x1a, 0xe3, 0xa1, 0x22, 0xf9, 0x61, 0x82, 0x3e, 0x80, 0x45, 0x5e, 0x18, 0x3d, 0xb8,
+	0x77, 0xcc, 0xc1, 0x6f, 0xfa, 0xe3, 0xf2, 0xb4, 0x42, 0xec, 0x6f, 0xf9, 0xba, 0x5a, 0x1f, 0x5b,
+	0xe7, 0x70, 0x80, 0xf2, 0x32, 0x70, 0xc7, 0xab, 0x28, 0xe7, 0xae, 0xe0, 0x3a, 0xdc, 0x22, 0x2f,
+	0xe2, 0xac, 0x4c, 0x48, 0x44, 0x5e, 0x14, 0x54, 0x10, 0x5b, 0xc0, 0xa5, 0xb0, 0x5d, 0x99, 0x9f,
+	0x58, 0xab, 0x17, 0xc2, 0xca, 0x85, 0x48, 0x3a, 0x34, 0xda, 0x87, 0x05, 0x9d, 0xa1, 0x6e, 0x7f,
+	0x7d, 0xa3, 0xb9, 0xbd, 0xee, 0x4f, 0x1d, 0x30, 0x7f, 0x14, 0x1c, 0x5a, 0x94, 0xf7, 0x4f, 0x1d,
+	0x5a, 0xa3, 0x76, 0xd4, 0x86, 0xda, 0x90, 0x69, 0x8d, 0x26, 0xe8, 0x36, 0xd4, 0x4b, 0x91, 0x55,
+	0x2d, 0xd5, 0x9f, 0x97, 0x25, 0x76, 0xe3, 0xd2, 0xc4, 0x1e, 0xc0, 0x4a, 0x15, 0x3d, 0x2a, 0x4a,
+	0x11, 0x3f, 0xc7, 0x92, 0xd8, 0x36, 0xd4, 0xc2, 0x4a, 0x33, 0xf2, 0x68, 0x60, 0x47, 0xf7, 0xa0,
+	0xa9, 0xb8, 0xc2, 0x59, 0x54, 0x08, 0x1a, 0x13, 0xf7, 0xa6, 0x71, 0x03, 0x63, 0x3a, 0xd2, 0x16,
+	0x23, 0xf5, 0x52, 0x08, 0xc2, 0xe2, 0x53, 0x77, 0xd1, 0xca, 0x79, 0xb0, 0x1e, 0x8d, 0x24, 0x48,
+	0x8e, 0x29, 0xa3, 0x2c, 0x75, 0x97, 0x2e, 0x44, 0x0a, 0x07, 0x76, 0xb4, 0x0f, 0xad, 0x21, 0x1d,
+	0xad, 0xa9, 0xc6, 0x4c, 0x4d, 0x35, 0x87, 0xfe, 0x5d, 0x85, 0xde, 0x03, 0xe8, 0xe3, 0x8c, 0x26,
+	0xd1, 0x89, 0xe0, 0xb9, 0x0b, 0x33, 0xc1, 0x0d, 0xe3, 0xfd, 0x54, 0xf0, 0x1c, 0xed, 0x41, 0xd3,
+	0x42, 0x4b, 0xa6, 0x68, 0xe6, 0x36, 0x67, 0x62, 0x6d, 0xa4, 0x63, 0xed, 0x8d, 0x1e, 0x41, 0x2b,
+	0xc3, 0x52, 0x45, 0x65, 0x45, 0xbb, 0x35, 0x1b, 0xad, 0xfd, 0x8f, 0x0d, 0x6b, 0xef, 0xfb, 0xda,
+	0x45, 0xf1, 0x98, 0x61, 0x9f, 0x68, 0xf6, 0xc4, 0xd0, 0xd4, 0x26, 0x87, 0xe6, 0xb2, 0x81, 0xaf,
+	0x5f, 0x3a, 0xf0, 0xd7, 0x16, 0xca, 0x1d, 0x58, 0x30, 0x11, 0x2a, 0x71, 0xd8, 0x05, 0x5a, 0x85,
+	0xc6, 0x79, 0x33, 0xad, 0x1e, 0xce, 0x0d, 0xba, 0x0d, 0xb1, 0x20, 0x58, 0xd9, 0x62, 0x2c, 0xce,
+	0x6e, 0x43, 0xe5, 0xdd, 0x55, 0xde, 0x17, 0xf0, 0xea, 0x44, 0x29, 0xcc, 0x2c, 0x1d, 0x5c, 0x9c,
+	0xa5, 0xb7, 0xaf, 0x39, 0x4b, 0xf6, 0xe2, 0xb4, 0xd0, 0xed, 0x97, 0x0b, 0xd0, 0xb6, 0x9b, 0xf2,
+	0x13, 0x22, 0xfa, 0x5a, 0xb9, 0x5f, 0xc1, 0xf2, 0x33, 0xa2, 0xba, 0x47, 0x87, 0x9f, 0x11, 0x21,
+	0x29, 0x67, 0xe8, 0xde, 0xf4, 0x6b, 0xe6, 0x49, 0x5e, 0xa8, 0xd3, 0xce, 0xeb, 0xd3, 0x1d, 0xaa,
+	0x33, 0x3c, 0xef, 0xbb, 0x3f, 0xfe, 0xfe, 0xa1, 0xb6, 0x8a, 0x3a, 0xe6, 0xd7, 0x66, 0x99, 0xe9,
+	0x5f, 0x27, 0x2e, 0xe8, 0xc3, 0x7e, 0x15, 0xe7, 0x27, 0x07, 0x56, 0x26, 0xee, 0x27, 0xb4, 0x73,
+	0x45, 0x5a, 0xd3, 0x6e, 0xb3, 0xce, 0x75, 0x6b, 0x61, 0x2e, 0x25, 0xef, 0x5d, 0x43, 0x6e, 0x13,
+	0xf9, 0x63, 0xe4, 0xbe, 0x19, 0xd3, 0xc3, 0xb7, 0xd5, 0x5e, 0xaf, 0xa2, 0xf6, 0x8b, 0x03, 0x77,
+	0x27, 0x28, 0x58, 0xa9, 0xee, 0xce, 0xc1, 0x7a, 0xf4, 0x4f, 0xd6, 0xd9, 0x9c, 0xa7, 0x8b, 0x86,
+	0xfd, 0x9e, 0x61, 0xff, 0x0e, 0xda, 0x99, 0x8b, 0xbd, 0x11, 0xad, 0x44, 0x2f, 0x1d, 0x58, 0x99,
+	0x78, 0x52, 0x5c, 0x59, 0xf3, 0x69, 0x0f, 0x90, 0xce, 0x1b, 0x57, 0x80, 0x86, 0xce, 0xde, 0x81,
+	0x61, 0xfb, 0xc8, 0xdb, 0xfd, 0x0f, 0x6c, 0x83, 0x22, 0x39, 0x79, 0xdf, 0x79, 0x6b, 0xd3, 0x39,
+	0xd8, 0xff, 0xed, 0x6c, 0xcd, 0xf9, 0xfd, 0x6c, 0xcd, 0xf9, 0xf3, 0x6c, 0xcd, 0xf9, 0xf1, 0xaf,
+	0xb5, 0x57, 0x3e, 0x7f, 0x30, 0xf2, 0xec, 0x1a, 0xf0, 0x78, 0x98, 0x63, 0x86, 0x53, 0x92, 0xe8,
+	0x50, 0xb2, 0x3a, 0x4f, 0x06, 0xfd, 0xad, 0xde, 0x4d, 0x33, 0x71, 0x3b, 0xff, 0x06, 0x00, 0x00,
+	0xff, 0xff, 0x8a, 0x3c, 0xe1, 0x0a, 0xee, 0x09, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -972,25 +767,13 @@ type CreditsServiceClient interface {
 	// Required permissions:
 	// - credit.creditbundleusage.list on the organization identified by the given organization ID.
 	ListCreditBundlesUsage(ctx context.Context, in *ListCreditBundleUsageRequest, opts ...grpc.CallOption) (*CreditBundleUsageList, error)
-	// Request the creation of a new credit usage PDF report.
-	// The server returns a response immediately, and renders the PDF asynchronously.
-	// Use `GetUsagePDFReport` rpc to get the PDF content.
-	// Required permissions:
-	// - credit.pdf.create on organization identified by the given organization ID.
-	CreateUsagePDFReport(ctx context.Context, in *PDFReport, opts ...grpc.CallOption) (*PDFReport, error)
 	// Get a credit usage PDF report identified by the given id,
 	// owned by the organization identified by the `organization_id`.
 	// The server sends a PDF over the returned stream once its contents are ready.
-	// Once the prepared PDF is sent, the stream is ended by the server.
+	// Once the PDF is sent, the stream is ended by the server.
 	// Required permissions:
 	// - credit.pdf.get on organization identified by the given organization ID.
 	GetUsagePDFReport(ctx context.Context, in *GetUsagePDFReportRequest, opts ...grpc.CallOption) (CreditsService_GetUsagePDFReportClient, error)
-	// List the PDF reports for the organization identified by the ID.
-	// The response will not include the PDF content bytes.
-	// Use `GetCreditBundleUsagePDFReport` rpc for getting the content bytes of a ready PDFReport.
-	// Required permissions:
-	// - credit.pdf.list on organization identified by the given organization ID.
-	ListUsagePDFReports(ctx context.Context, in *ListPDFReportsRequest, opts ...grpc.CallOption) (*PDFReportList, error)
 }
 
 type creditsServiceClient struct {
@@ -1022,15 +805,6 @@ func (c *creditsServiceClient) ListCreditBundles(ctx context.Context, in *ListCr
 func (c *creditsServiceClient) ListCreditBundlesUsage(ctx context.Context, in *ListCreditBundleUsageRequest, opts ...grpc.CallOption) (*CreditBundleUsageList, error) {
 	out := new(CreditBundleUsageList)
 	err := c.cc.Invoke(ctx, "/arangodb.cloud.credits.v1.CreditsService/ListCreditBundlesUsage", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *creditsServiceClient) CreateUsagePDFReport(ctx context.Context, in *PDFReport, opts ...grpc.CallOption) (*PDFReport, error) {
-	out := new(PDFReport)
-	err := c.cc.Invoke(ctx, "/arangodb.cloud.credits.v1.CreditsService/CreateUsagePDFReport", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1069,15 +843,6 @@ func (x *creditsServiceGetUsagePDFReportClient) Recv() (*PDFReport, error) {
 	return m, nil
 }
 
-func (c *creditsServiceClient) ListUsagePDFReports(ctx context.Context, in *ListPDFReportsRequest, opts ...grpc.CallOption) (*PDFReportList, error) {
-	out := new(PDFReportList)
-	err := c.cc.Invoke(ctx, "/arangodb.cloud.credits.v1.CreditsService/ListUsagePDFReports", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // CreditsServiceServer is the server API for CreditsService service.
 type CreditsServiceServer interface {
 	// Get the current API version of this service.
@@ -1092,25 +857,13 @@ type CreditsServiceServer interface {
 	// Required permissions:
 	// - credit.creditbundleusage.list on the organization identified by the given organization ID.
 	ListCreditBundlesUsage(context.Context, *ListCreditBundleUsageRequest) (*CreditBundleUsageList, error)
-	// Request the creation of a new credit usage PDF report.
-	// The server returns a response immediately, and renders the PDF asynchronously.
-	// Use `GetUsagePDFReport` rpc to get the PDF content.
-	// Required permissions:
-	// - credit.pdf.create on organization identified by the given organization ID.
-	CreateUsagePDFReport(context.Context, *PDFReport) (*PDFReport, error)
 	// Get a credit usage PDF report identified by the given id,
 	// owned by the organization identified by the `organization_id`.
 	// The server sends a PDF over the returned stream once its contents are ready.
-	// Once the prepared PDF is sent, the stream is ended by the server.
+	// Once the PDF is sent, the stream is ended by the server.
 	// Required permissions:
 	// - credit.pdf.get on organization identified by the given organization ID.
 	GetUsagePDFReport(*GetUsagePDFReportRequest, CreditsService_GetUsagePDFReportServer) error
-	// List the PDF reports for the organization identified by the ID.
-	// The response will not include the PDF content bytes.
-	// Use `GetCreditBundleUsagePDFReport` rpc for getting the content bytes of a ready PDFReport.
-	// Required permissions:
-	// - credit.pdf.list on organization identified by the given organization ID.
-	ListUsagePDFReports(context.Context, *ListPDFReportsRequest) (*PDFReportList, error)
 }
 
 // UnimplementedCreditsServiceServer can be embedded to have forward compatible implementations.
@@ -1126,14 +879,8 @@ func (*UnimplementedCreditsServiceServer) ListCreditBundles(ctx context.Context,
 func (*UnimplementedCreditsServiceServer) ListCreditBundlesUsage(ctx context.Context, req *ListCreditBundleUsageRequest) (*CreditBundleUsageList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCreditBundlesUsage not implemented")
 }
-func (*UnimplementedCreditsServiceServer) CreateUsagePDFReport(ctx context.Context, req *PDFReport) (*PDFReport, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateUsagePDFReport not implemented")
-}
 func (*UnimplementedCreditsServiceServer) GetUsagePDFReport(req *GetUsagePDFReportRequest, srv CreditsService_GetUsagePDFReportServer) error {
 	return status.Errorf(codes.Unimplemented, "method GetUsagePDFReport not implemented")
-}
-func (*UnimplementedCreditsServiceServer) ListUsagePDFReports(ctx context.Context, req *ListPDFReportsRequest) (*PDFReportList, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListUsagePDFReports not implemented")
 }
 
 func RegisterCreditsServiceServer(s *grpc.Server, srv CreditsServiceServer) {
@@ -1194,24 +941,6 @@ func _CreditsService_ListCreditBundlesUsage_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CreditsService_CreateUsagePDFReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PDFReport)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CreditsServiceServer).CreateUsagePDFReport(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/arangodb.cloud.credits.v1.CreditsService/CreateUsagePDFReport",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CreditsServiceServer).CreateUsagePDFReport(ctx, req.(*PDFReport))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _CreditsService_GetUsagePDFReport_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(GetUsagePDFReportRequest)
 	if err := stream.RecvMsg(m); err != nil {
@@ -1233,24 +962,6 @@ func (x *creditsServiceGetUsagePDFReportServer) Send(m *PDFReport) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func _CreditsService_ListUsagePDFReports_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListPDFReportsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CreditsServiceServer).ListUsagePDFReports(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/arangodb.cloud.credits.v1.CreditsService/ListUsagePDFReports",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CreditsServiceServer).ListUsagePDFReports(ctx, req.(*ListPDFReportsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 var _CreditsService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "arangodb.cloud.credits.v1.CreditsService",
 	HandlerType: (*CreditsServiceServer)(nil),
@@ -1266,14 +977,6 @@ var _CreditsService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListCreditBundlesUsage",
 			Handler:    _CreditsService_ListCreditBundlesUsage_Handler,
-		},
-		{
-			MethodName: "CreateUsagePDFReport",
-			Handler:    _CreditsService_CreateUsagePDFReport_Handler,
-		},
-		{
-			MethodName: "ListUsagePDFReports",
-			Handler:    _CreditsService_ListUsagePDFReports_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
@@ -1310,87 +1013,29 @@ func (m *GetUsagePDFReportRequest) MarshalToSizedBuffer(dAtA []byte) (int, error
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.OrganizationId) > 0 {
-		i -= len(m.OrganizationId)
-		copy(dAtA[i:], m.OrganizationId)
-		i = encodeVarintCredits(dAtA, i, uint64(len(m.OrganizationId)))
+	if m.EndsAt != nil {
+		{
+			size, err := m.EndsAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintCredits(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x22
+	}
+	if m.StartsAt != nil {
+		{
+			size, err := m.StartsAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintCredits(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0x12
-	}
-	if len(m.ReportId) > 0 {
-		i -= len(m.ReportId)
-		copy(dAtA[i:], m.ReportId)
-		i = encodeVarintCredits(dAtA, i, uint64(len(m.ReportId)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *PDFReportList) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *PDFReportList) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *PDFReportList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if len(m.Items) > 0 {
-		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Items[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintCredits(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0xa
-		}
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *ListPDFReportsRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *ListPDFReportsRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ListPDFReportsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.OrganizationId) > 0 {
 		i -= len(m.OrganizationId)
@@ -1426,106 +1071,10 @@ func (m *PDFReport) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if m.Status != nil {
-		{
-			size, err := m.Status.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintCredits(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x1
-		i--
-		dAtA[i] = 0xa2
-	}
-	if m.RequestedAt != nil {
-		{
-			size, err := m.RequestedAt.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintCredits(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x2a
-	}
-	if m.EndsAt != nil {
-		{
-			size, err := m.EndsAt.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintCredits(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x22
-	}
-	if m.StartsAt != nil {
-		{
-			size, err := m.StartsAt.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintCredits(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x1a
-	}
-	if len(m.OrganizationId) > 0 {
-		i -= len(m.OrganizationId)
-		copy(dAtA[i:], m.OrganizationId)
-		i = encodeVarintCredits(dAtA, i, uint64(len(m.OrganizationId)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.Id) > 0 {
-		i -= len(m.Id)
-		copy(dAtA[i:], m.Id)
-		i = encodeVarintCredits(dAtA, i, uint64(len(m.Id)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *PDFReport_Status) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *PDFReport_Status) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *PDFReport_Status) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.ReadyAt != nil {
-		{
-			size, err := m.ReadyAt.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintCredits(dAtA, i, uint64(size))
-		}
+	if len(m.Filename) > 0 {
+		i -= len(m.Filename)
+		copy(dAtA[i:], m.Filename)
+		i = encodeVarintCredits(dAtA, i, uint64(len(m.Filename)))
 		i--
 		dAtA[i] = 0x12
 	}
@@ -1968,46 +1517,16 @@ func (m *GetUsagePDFReportRequest) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.ReportId)
-	if l > 0 {
-		n += 1 + l + sovCredits(uint64(l))
-	}
 	l = len(m.OrganizationId)
 	if l > 0 {
 		n += 1 + l + sovCredits(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
+	if m.StartsAt != nil {
+		l = m.StartsAt.Size()
+		n += 1 + l + sovCredits(uint64(l))
 	}
-	return n
-}
-
-func (m *PDFReportList) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if len(m.Items) > 0 {
-		for _, e := range m.Items {
-			l = e.Size()
-			n += 1 + l + sovCredits(uint64(l))
-		}
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *ListPDFReportsRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.OrganizationId)
-	if l > 0 {
+	if m.EndsAt != nil {
+		l = m.EndsAt.Size()
 		n += 1 + l + sovCredits(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
@@ -2022,48 +1541,12 @@ func (m *PDFReport) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Id)
-	if l > 0 {
-		n += 1 + l + sovCredits(uint64(l))
-	}
-	l = len(m.OrganizationId)
-	if l > 0 {
-		n += 1 + l + sovCredits(uint64(l))
-	}
-	if m.StartsAt != nil {
-		l = m.StartsAt.Size()
-		n += 1 + l + sovCredits(uint64(l))
-	}
-	if m.EndsAt != nil {
-		l = m.EndsAt.Size()
-		n += 1 + l + sovCredits(uint64(l))
-	}
-	if m.RequestedAt != nil {
-		l = m.RequestedAt.Size()
-		n += 1 + l + sovCredits(uint64(l))
-	}
-	if m.Status != nil {
-		l = m.Status.Size()
-		n += 2 + l + sovCredits(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *PDFReport_Status) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
 	l = len(m.Contents)
 	if l > 0 {
 		n += 1 + l + sovCredits(uint64(l))
 	}
-	if m.ReadyAt != nil {
-		l = m.ReadyAt.Size()
+	l = len(m.Filename)
+	if l > 0 {
 		n += 1 + l + sovCredits(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
@@ -2291,7 +1774,7 @@ func (m *GetUsagePDFReportRequest) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ReportId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field OrganizationId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2319,324 +1802,9 @@ func (m *GetUsagePDFReportRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ReportId = string(dAtA[iNdEx:postIndex])
+			m.OrganizationId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OrganizationId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCredits
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthCredits
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthCredits
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.OrganizationId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipCredits(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthCredits
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *PDFReportList) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowCredits
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: PDFReportList: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: PDFReportList: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Items", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCredits
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCredits
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCredits
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Items = append(m.Items, &PDFReport{})
-			if err := m.Items[len(m.Items)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipCredits(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthCredits
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *ListPDFReportsRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowCredits
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: ListPDFReportsRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ListPDFReportsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OrganizationId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCredits
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthCredits
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthCredits
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.OrganizationId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipCredits(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthCredits
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *PDFReport) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowCredits
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: PDFReport: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: PDFReport: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCredits
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthCredits
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthCredits
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Id = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OrganizationId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCredits
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthCredits
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthCredits
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.OrganizationId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field StartsAt", wireType)
 			}
@@ -2708,78 +1876,6 @@ func (m *PDFReport) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 5:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequestedAt", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCredits
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCredits
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCredits
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.RequestedAt == nil {
-				m.RequestedAt = &types.Timestamp{}
-			}
-			if err := m.RequestedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 20:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCredits
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCredits
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCredits
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Status == nil {
-				m.Status = &PDFReport_Status{}
-			}
-			if err := m.Status.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipCredits(dAtA[iNdEx:])
@@ -2802,7 +1898,7 @@ func (m *PDFReport) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *PDFReport_Status) Unmarshal(dAtA []byte) error {
+func (m *PDFReport) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -2825,10 +1921,10 @@ func (m *PDFReport_Status) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Status: wiretype end group for non-group")
+			return fmt.Errorf("proto: PDFReport: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Status: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: PDFReport: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -2867,9 +1963,9 @@ func (m *PDFReport_Status) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ReadyAt", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Filename", wireType)
 			}
-			var msglen int
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowCredits
@@ -2879,27 +1975,23 @@ func (m *PDFReport_Status) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			if msglen < 0 {
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
 				return ErrInvalidLengthCredits
 			}
-			postIndex := iNdEx + msglen
+			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
 				return ErrInvalidLengthCredits
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.ReadyAt == nil {
-				m.ReadyAt = &types.Timestamp{}
-			}
-			if err := m.ReadyAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Filename = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

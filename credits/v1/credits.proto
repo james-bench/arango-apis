@@ -58,99 +58,40 @@ service CreditsService {
         };
     };
 
-    // Request the creation of a new credit usage PDF report.
-    // The server returns a response immediately, and renders the PDF asynchronously.
-    // Use `GetUsagePDFReport` rpc to get the PDF content.
-    // Required permissions:
-    // - credit.pdf.create on organization identified by the given organization ID.
-    rpc CreateUsagePDFReport(PDFReport) returns (PDFReport) {
-        option (google.api.http) = {
-            post: "/api/credit/v1/{organization_id}/pdf"
-            body: "*"
-        };
-    };
-
     // Get a credit usage PDF report identified by the given id,
     // owned by the organization identified by the `organization_id`.
     // The server sends a PDF over the returned stream once its contents are ready.
-    // Once the prepared PDF is sent, the stream is ended by the server.
+    // Once the PDF is sent, the stream is ended by the server.
     // Required permissions:
     // - credit.pdf.get on organization identified by the given organization ID.
     rpc GetUsagePDFReport(GetUsagePDFReportRequest) returns (stream PDFReport) {
         option (google.api.http) = {
-            post: "/api/credit/v1/{organization_id}/pdf/{report_id}"
+            post: "/api/credit/v1/{organization_id}/creditbundleusages/pdf"
             body: "*"
         };
     }
 
-    // List the PDF reports for the organization identified by the ID.
-    // The response will not include the PDF content bytes.
-    // Use `GetCreditBundleUsagePDFReport` rpc for getting the content bytes of a ready PDFReport.
-    // Required permissions:
-    // - credit.pdf.list on organization identified by the given organization ID.
-    rpc ListUsagePDFReports(ListPDFReportsRequest) returns (PDFReportList) {
-        option (google.api.http) = {
-            get: "/api/credit/v1/{organization_id}/pdfs"
-        };
-    }
 }
 
 message GetUsagePDFReportRequest {
-    // ID of the PDF report that needs to be fetched.
-    // This is a read-only field.
-    string report_id = 1;
-    // ID of the organization that owns this report.
-    // This is a read-only field.
-    string organization_id = 2;
-}
-
-// List of PDF reports.
-// Note that the items in this list will not contain the PDF content bytes.
-message PDFReportList {
-    repeated PDFReport items = 1;
-}
-
-// Request for listing PDF reports.
-message ListPDFReportsRequest {
-    // ID of the organization for which PDF reports are requested.
+    // ID of the organization for which the report is being requested.
     string organization_id = 1;
-}
-
-// PDFReport contains the metadata and PDF content for a requested credit usage report.
-// Note that PDFs are available only for a limited duration after creation.
-message PDFReport {
-    // ID of this PDF report.
-    // This is a read-only field.
-    string id = 1;
-    // ID of the organization to which this report belongs to.
+    // The date from which credit usage should be listed.
     // This is a required field.
-    string organization_id = 2;
-    // The date from which credit usage is listed.
-    // This is a required field.
-    google.protobuf.Timestamp starts_at = 3;
-    // The date until which credit usage is listed.
+    google.protobuf.Timestamp starts_at = 2;
+    // The date from which credit usage should be listed.
     // This is a required field.
     google.protobuf.Timestamp ends_at = 4;
+}
 
-    // The timestamp at which this report was requested.
+// PDFReport contains a PDF with a credit usage report.
+message PDFReport {
+    // The contents of the PDF.
     // This is a read-only field.
-    google.protobuf.Timestamp requested_at = 5;
-
-    // Status of the PDF report.
-    // This is a read-only block.
-    message Status {
-        // The contents of the PDF.
-        // This is filled in by the server.
-        // This is a read-only field.
-        bytes contents = 1;
-        // The timestamp at which this report was ready.
-        // If not set, the PDF is not yet prepared.
-        // This is a read-only field.
-        google.protobuf.Timestamp ready_at = 2;
-    }
-    // Status of the PDF report.
-    // This is a read-only field.
-    Status status = 20;
+    bytes contents = 1;
+    // Name of the PDF file.
+    // This is a ready-only field.
+    string filename = 2;
 }
 
 
