@@ -59,26 +59,27 @@ service CreditsService {
     };
 
     // Request the creation of a new credit usage PDF report.
-    // The actual PDF creation is handled asynchronously by the server.
-    // The PDFReport with the contents will be sent over the returned server stream
-    // once the PDF is ready.
+    // The server returns a response immediately, and renders the PDF asynchronously.
+    // Use `GetUsagePDFReport` rpc to get the PDF content.
     // Required permissions:
     // - credit.pdf.create on organization identified by the given organization ID.
-    rpc CreateUsagePDFReport(PDFReport) returns (stream PDFReport) {
+    rpc CreateUsagePDFReport(PDFReport) returns (PDFReport) {
         option (google.api.http) = {
             post: "/api/credit/v1/{organization_id}/pdf"
             body: "*"
         };
     };
 
-    // Get a credit bundle usage PDF report identified by the given id,
+    // Get a credit usage PDF report identified by the given id,
     // owned by the organization identified by the `organization_id`.
-    // Returns an error if the PDFReport is not yet ready.
+    // The server sends a PDF over the returned stream once its contents are ready.
+    // Once the prepared PDF is sent, the stream is ended by the server.
     // Required permissions:
     // - credit.pdf.get on organization identified by the given organization ID.
-    rpc GetUsagePDFReport(GetUsagePDFReportRequest) returns (PDFReport) {
+    rpc GetUsagePDFReport(GetUsagePDFReportRequest) returns (stream PDFReport) {
         option (google.api.http) = {
-            get: "/api/credit/v1/{organization_id}/pdf/{report_id}"
+            post: "/api/credit/v1/{organization_id}/pdf/{report_id}"
+            body: "*"
         };
     }
 

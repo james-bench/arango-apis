@@ -251,19 +251,19 @@ export interface ICreditsService {
   ListCreditBundlesUsage: (req: ListCreditBundleUsageRequest) => Promise<CreditBundleUsageList>;
   
   // Request the creation of a new credit usage PDF report.
-  // The actual PDF creation is handled asynchronously by the server.
-  // The PDFReport with the contents will be sent over the returned server stream
-  // once the PDF is ready.
+  // The server returns a response immediately, and renders the PDF asynchronously.
+  // Use `GetUsagePDFReport` rpc to get the PDF content.
   // Required permissions:
   // - credit.pdf.create on organization identified by the given organization ID.
-  CreateUsagePDFReport: (req: PDFReport, cb: (obj: IStreamMessage<PDFReport>) => void) => Promise<IServerStream>;
+  CreateUsagePDFReport: (req: PDFReport) => Promise<PDFReport>;
   
-  // Get a credit bundle usage PDF report identified by the given id,
+  // Get a credit usage PDF report identified by the given id,
   // owned by the organization identified by the `organization_id`.
-  // Returns an error if the PDFReport is not yet ready.
+  // The server sends a PDF over the returned stream once its contents are ready.
+  // Once the prepared PDF is sent, the stream is ended by the server.
   // Required permissions:
   // - credit.pdf.get on organization identified by the given organization ID.
-  GetUsagePDFReport: (req: GetUsagePDFReportRequest) => Promise<PDFReport>;
+  GetUsagePDFReport: (req: GetUsagePDFReportRequest, cb: (obj: IStreamMessage<PDFReport>) => void) => Promise<IServerStream>;
   
   // List the PDF reports for the organization identified by the ID.
   // The response will not include the PDF content bytes.
@@ -303,25 +303,24 @@ export class CreditsService implements ICreditsService {
   }
   
   // Request the creation of a new credit usage PDF report.
-  // The actual PDF creation is handled asynchronously by the server.
-  // The PDFReport with the contents will be sent over the returned server stream
-  // once the PDF is ready.
+  // The server returns a response immediately, and renders the PDF asynchronously.
+  // Use `GetUsagePDFReport` rpc to get the PDF content.
   // Required permissions:
   // - credit.pdf.create on organization identified by the given organization ID.
-  async CreateUsagePDFReport(req: PDFReport, cb: (obj: IStreamMessage<PDFReport>) => void): Promise<IServerStream> {
+  async CreateUsagePDFReport(req: PDFReport): Promise<PDFReport> {
     const url = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/pdf`;
-    return api.server_stream(url, "POST", req, cb);
+    return api.post(url, req);
   }
   
-  // Get a credit bundle usage PDF report identified by the given id,
+  // Get a credit usage PDF report identified by the given id,
   // owned by the organization identified by the `organization_id`.
-  // Returns an error if the PDFReport is not yet ready.
+  // The server sends a PDF over the returned stream once its contents are ready.
+  // Once the prepared PDF is sent, the stream is ended by the server.
   // Required permissions:
   // - credit.pdf.get on organization identified by the given organization ID.
-  async GetUsagePDFReport(req: GetUsagePDFReportRequest): Promise<PDFReport> {
-    const path = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/pdf/${encodeURIComponent(req.report_id || '')}`;
-    const url = path + api.queryString(req, [`organization_id`, `report_id`]);
-    return api.get(url, undefined);
+  async GetUsagePDFReport(req: GetUsagePDFReportRequest, cb: (obj: IStreamMessage<PDFReport>) => void): Promise<IServerStream> {
+    const url = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/pdf/${encodeURIComponent(req.report_id || '')}`;
+    return api.server_stream(url, "POST", req, cb);
   }
   
   // List the PDF reports for the organization identified by the ID.
