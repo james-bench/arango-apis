@@ -767,8 +767,8 @@ type CreditsServiceClient interface {
 	// Required permissions:
 	// - credit.creditbundleusage.list on the organization identified by the given organization ID.
 	ListCreditBundlesUsage(ctx context.Context, in *ListCreditBundleUsageRequest, opts ...grpc.CallOption) (*CreditBundleUsageList, error)
-	// Get a credit usage PDF report identified by the given id,
-	// owned by the organization identified by the `organization_id`.
+	// Get a credit usage PDF report for an organization specified by the organization_id,
+	// and using the provided request.
 	// The server sends a PDF over the returned stream once its contents are ready.
 	// Once the PDF is sent, the stream is ended by the server.
 	// Required permissions:
@@ -857,8 +857,8 @@ type CreditsServiceServer interface {
 	// Required permissions:
 	// - credit.creditbundleusage.list on the organization identified by the given organization ID.
 	ListCreditBundlesUsage(context.Context, *ListCreditBundleUsageRequest) (*CreditBundleUsageList, error)
-	// Get a credit usage PDF report identified by the given id,
-	// owned by the organization identified by the `organization_id`.
+	// Get a credit usage PDF report for an organization specified by the organization_id,
+	// and using the provided request.
 	// The server sends a PDF over the returned stream once its contents are ready.
 	// Once the PDF is sent, the stream is ended by the server.
 	// Required permissions:
