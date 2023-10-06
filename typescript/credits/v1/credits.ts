@@ -138,10 +138,12 @@ export interface CreditUsageReport {
   closing_balance?: number;
   
   // Date from which the credit usage are listed in this report.
+  // Credit usage on this day are included.
   // googleTypes.Timestamp
   starts_at?: googleTypes.Timestamp;
   
   // Date until which the credit usage are listed in this report.
+  // Credit usage on this day are included.
   // googleTypes.Timestamp
   ends_at?: googleTypes.Timestamp;
   
@@ -221,6 +223,11 @@ export interface ListCreditUsageReportsRequest {
   // Identifier of the organization for which credit reports are listed.
   // string
   organization_id?: string;
+  
+  // Common list options
+  // context_id is ignored.
+  // arangodb.cloud.common.v1.ListOptions
+  options?: arangodb_cloud_common_v1_ListOptions;
 }
 
 // PDFDocument contains the PDF representation of a CreditUsageReport.
