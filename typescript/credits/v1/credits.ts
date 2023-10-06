@@ -265,6 +265,8 @@ export interface ICreditsService {
   GetCreditUsageReport: (req: arangodb_cloud_common_v1_IDOptions) => Promise<CreditUsageReport>;
   
   // Get a credit usage report identified by the given ID, as a PDF document.
+  // The server sends the PDF over a stream once rendered.
+  // The stream is closed after the PDF is sent.
   // Required permissions:
   // - credit.creditusagereport.get on the organization identified by the given organization ID
   GetCreditUsageReportPDF: (req: arangodb_cloud_common_v1_IDOptions, cb: (obj: IStreamMessage<PDFDocument>) => void) => Promise<IServerStream>;
@@ -319,6 +321,8 @@ export class CreditsService implements ICreditsService {
   }
   
   // Get a credit usage report identified by the given ID, as a PDF document.
+  // The server sends the PDF over a stream once rendered.
+  // The stream is closed after the PDF is sent.
   // Required permissions:
   // - credit.creditusagereport.get on the organization identified by the given organization ID
   async GetCreditUsageReportPDF(req: arangodb_cloud_common_v1_IDOptions, cb: (obj: IStreamMessage<PDFDocument>) => void): Promise<IServerStream> {

@@ -1008,6 +1008,8 @@ type CreditsServiceClient interface {
 	// - credit.creditusagereport.get on the organization identified by the given organization ID
 	GetCreditUsageReport(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*CreditUsageReport, error)
 	// Get a credit usage report identified by the given ID, as a PDF document.
+	// The server sends the PDF over a stream once rendered.
+	// The stream is closed after the PDF is sent.
 	// Required permissions:
 	// - credit.creditusagereport.get on the organization identified by the given organization ID
 	GetCreditUsageReportPDF(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (CreditsService_GetCreditUsageReportPDFClient, error)
@@ -1122,6 +1124,8 @@ type CreditsServiceServer interface {
 	// - credit.creditusagereport.get on the organization identified by the given organization ID
 	GetCreditUsageReport(context.Context, *v1.IDOptions) (*CreditUsageReport, error)
 	// Get a credit usage report identified by the given ID, as a PDF document.
+	// The server sends the PDF over a stream once rendered.
+	// The stream is closed after the PDF is sent.
 	// Required permissions:
 	// - credit.creditusagereport.get on the organization identified by the given organization ID
 	GetCreditUsageReportPDF(*v1.IDOptions, CreditsService_GetCreditUsageReportPDFServer) error
