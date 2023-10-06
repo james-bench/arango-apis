@@ -99,6 +99,12 @@ message CreditUsageReportList {
 message ListCreditUsageReportsRequest {
     // Identifier of the organization for which credit reports are listed.
     string organization_id = 1;
+    // Request reports that are created at or after this timestamp.
+    // This is an optional field.
+    google.protobuf.Timestamp from = 2;
+    // Request reports that are created before this timestamp.
+    // This is an optional field.
+    google.protobuf.Timestamp to = 3;
     // Common list options
     // context_id is ignored.
     common.v1.ListOptions options = 20;
@@ -118,12 +124,9 @@ message CreditUsageReport {
     float opening_balance = 5;
     // Credit balance at the end of the month.
     float closing_balance = 6;
-    // Date from which the credit usage are listed in this report.
-    // Credit usage on this day are included.
-    google.protobuf.Timestamp starts_at = 7;
-    // Date until which the credit usage are listed in this report.
-    // Credit usage on this day are included.
-    google.protobuf.Timestamp ends_at = 8;
+    // Date at which this report was created.
+    // This report will contain the monthly usage of the month specified in this timestamp.
+    google.protobuf.Timestamp created_at = 7;
     
     message Item {
         // Identifiers of the Credit usages that this item covers.

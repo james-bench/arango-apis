@@ -137,15 +137,10 @@ export interface CreditUsageReport {
   // number
   closing_balance?: number;
   
-  // Date from which the credit usage are listed in this report.
-  // Credit usage on this day are included.
+  // Date at which this report was created.
+  // This report will contain the monthly usage of the month specified in this timestamp.
   // googleTypes.Timestamp
-  starts_at?: googleTypes.Timestamp;
-  
-  // Date until which the credit usage are listed in this report.
-  // Credit usage on this day are included.
-  // googleTypes.Timestamp
-  ends_at?: googleTypes.Timestamp;
+  created_at?: googleTypes.Timestamp;
   
   // List of items in this credit usage report.
   // CreditUsageReport_Item
@@ -223,6 +218,16 @@ export interface ListCreditUsageReportsRequest {
   // Identifier of the organization for which credit reports are listed.
   // string
   organization_id?: string;
+  
+  // Request reports that are created at or after this timestamp.
+  // This is an optional field.
+  // googleTypes.Timestamp
+  from?: googleTypes.Timestamp;
+  
+  // Request reports that are created before this timestamp.
+  // This is an optional field.
+  // googleTypes.Timestamp
+  to?: googleTypes.Timestamp;
   
   // Common list options
   // context_id is ignored.

@@ -7275,19 +7275,11 @@ This is a read-only value. </p></td>
                 </tr>
               
                 <tr>
-                  <td>starts_at</td>
+                  <td>created_at</td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
-                  <td><p>Date from which the credit usage are listed in this report.
-Credit usage on this day are included. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>ends_at</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>Date until which the credit usage are listed in this report.
-Credit usage on this day are included. </p></td>
+                  <td><p>Date at which this report was created.
+This report will contain the monthly usage of the month specified in this timestamp. </p></td>
                 </tr>
               
                 <tr>
@@ -7481,6 +7473,22 @@ This is a required field. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Identifier of the organization for which credit reports are listed. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>from</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Request reports that are created at or after this timestamp.
+This is an optional field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>to</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Request reports that are created before this timestamp.
+This is an optional field. </p></td>
                 </tr>
               
                 <tr>
