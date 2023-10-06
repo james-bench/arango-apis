@@ -5,6 +5,7 @@
 import api, { IStreamMessage, IServerStream } from '../../api'
 import * as googleTypes from '../../googleTypes'
 import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
+import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1/common'
 import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
 import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
 
@@ -109,20 +110,62 @@ export interface CreditBundlesList {
   // CreditBundle
   items?: CreditBundle[];
 }
-export interface GetUsagePDFReportRequest {
-  // ID of the organization for which the report is being requested.
+
+// CreditUsageReport describes the monthly credit usage for a given organization.
+export interface CreditUsageReport {
+  // System identifier of the report.
+  // string
+  id?: string;
+  
+  // URL of this resource
+  // string
+  url?: string;
+  
+  // ID of the organization to which this report belongs.
   // string
   organization_id?: string;
   
-  // The date from which credit usage should be listed.
-  // This is a required field.
+  // Amount of credits consumed between the interval in this report (between starts_at and ends_at).
+  // number
+  amount?: number;
+  
+  // Credit balance at the start of the month.
+  // number
+  opening_balance?: number;
+  
+  // Credit balance at the end of the month.
+  // number
+  closing_balance?: number;
+  
+  // Date from which the credit usage are listed in this report.
   // googleTypes.Timestamp
   starts_at?: googleTypes.Timestamp;
   
-  // The date from which credit usage should be listed.
-  // This is a required field.
+  // Date until which the credit usage are listed in this report.
   // googleTypes.Timestamp
   ends_at?: googleTypes.Timestamp;
+  
+  // List of items in this credit usage report.
+  // CreditUsageReport_Item
+  items?: CreditUsageReport_Item[];
+}
+export interface CreditUsageReport_Item {
+  // Identifiers of the Credit usages that this item covers.
+  // string
+  creditusage_ids?: string[];
+  
+  // Amount of credits for this item.
+  // number
+  amount?: number;
+  
+  // Human readable description of this item
+  // string
+  description?: string;
+}
+export interface CreditUsageReportList {
+  // List of credit usage reports.
+  // CreditUsageReport
+  items?: CreditUsageReport[];
 }
 
 // Request for listing credit bundle usages.
@@ -173,8 +216,15 @@ export interface ListCreditBundlesRequest {
   exclude_expired?: boolean;
 }
 
-// PDFReport contains a PDF with a credit usage report.
-export interface PDFReport {
+// Request for ListCreditUsageReports rpc.
+export interface ListCreditUsageReportsRequest {
+  // Identifier of the organization for which credit reports are listed.
+  // string
+  organization_id?: string;
+}
+
+// PDFDocument contains the PDF representation of a CreditUsageReport.
+export interface PDFDocument {
   // The contents of the PDF.
   // This is a read-only field.
   // string
@@ -203,13 +253,21 @@ export interface ICreditsService {
   // - credit.creditbundleusage.list on the organization identified by the given organization ID.
   ListCreditBundlesUsage: (req: ListCreditBundleUsageRequest) => Promise<CreditBundleUsageList>;
   
-  // Get a credit usage PDF report for an organization specified by the organization_id,
-  // and using the provided request.
-  // The server sends a PDF over the returned stream once its contents are ready.
-  // Once the PDF is sent, the stream is ended by the server.
+  // List the credit reports for the organization identified by the given
+  // organization ID that match the given criteria.
   // Required permissions:
-  // - credit.pdf.get on organization identified by the given organization ID.
-  GetUsagePDFReport: (req: GetUsagePDFReportRequest, cb: (obj: IStreamMessage<PDFReport>) => void) => Promise<IServerStream>;
+  // - credit.creditusagereport.list on the organization identified by the given organization ID
+  ListCreditUsageReports: (req: ListCreditUsageReportsRequest) => Promise<CreditUsageReportList>;
+  
+  // Get a credit usage report identified by the given ID.
+  // Required permissions:
+  // - credit.creditusagereport.get on the organization identified by the given organization ID
+  GetCreditUsageReport: (req: arangodb_cloud_common_v1_IDOptions) => Promise<CreditUsageReport>;
+  
+  // Get a credit usage report identified by the given ID, as a PDF document.
+  // Required permissions:
+  // - credit.creditusagereport.get on the organization identified by the given organization ID
+  GetCreditUsageReportPDF: (req: arangodb_cloud_common_v1_IDOptions, cb: (obj: IStreamMessage<PDFDocument>) => void) => Promise<IServerStream>;
 }
 
 // CreditsService is the API used for managing credits.
@@ -241,14 +299,30 @@ export class CreditsService implements ICreditsService {
     return api.get(url, undefined);
   }
   
-  // Get a credit usage PDF report for an organization specified by the organization_id,
-  // and using the provided request.
-  // The server sends a PDF over the returned stream once its contents are ready.
-  // Once the PDF is sent, the stream is ended by the server.
+  // List the credit reports for the organization identified by the given
+  // organization ID that match the given criteria.
   // Required permissions:
-  // - credit.pdf.get on organization identified by the given organization ID.
-  async GetUsagePDFReport(req: GetUsagePDFReportRequest, cb: (obj: IStreamMessage<PDFReport>) => void): Promise<IServerStream> {
-    const url = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/creditbundleusages/pdf`;
+  // - credit.creditusagereport.list on the organization identified by the given organization ID
+  async ListCreditUsageReports(req: ListCreditUsageReportsRequest): Promise<CreditUsageReportList> {
+    const path = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/creditusagereports`;
+    const url = path + api.queryString(req, [`organization_id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Get a credit usage report identified by the given ID.
+  // Required permissions:
+  // - credit.creditusagereport.get on the organization identified by the given organization ID
+  async GetCreditUsageReport(req: arangodb_cloud_common_v1_IDOptions): Promise<CreditUsageReport> {
+    const path = `/api/credit/v1/creditusagereport/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Get a credit usage report identified by the given ID, as a PDF document.
+  // Required permissions:
+  // - credit.creditusagereport.get on the organization identified by the given organization ID
+  async GetCreditUsageReportPDF(req: arangodb_cloud_common_v1_IDOptions, cb: (obj: IStreamMessage<PDFDocument>) => void): Promise<IServerStream> {
+    const url = `/api/credit/v1/creditusagereport/${encodeURIComponent(req.id || '')}/pdf`;
     return api.server_stream(url, "POST", req, cb);
   }
 }

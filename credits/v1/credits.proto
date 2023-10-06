@@ -58,34 +58,80 @@ service CreditsService {
         };
     };
 
-    // Get a credit usage PDF report for an organization specified by the organization_id,
-    // and using the provided request.
-    // The server sends a PDF over the returned stream once its contents are ready.
-    // Once the PDF is sent, the stream is ended by the server.
+    // List the credit reports for the organization identified by the given
+    // organization ID that match the given criteria.
     // Required permissions:
-    // - credit.pdf.get on organization identified by the given organization ID.
-    rpc GetUsagePDFReport(GetUsagePDFReportRequest) returns (stream PDFReport) {
+    // - credit.creditusagereport.list on the organization identified by the given organization ID
+    rpc ListCreditUsageReports(ListCreditUsageReportsRequest) returns (CreditUsageReportList) {
         option (google.api.http) = {
-            post: "/api/credit/v1/{organization_id}/creditbundleusages/pdf"
-            body: "*"
+            get: "/api/credit/v1/{organization_id}/creditusagereports"
         };
     }
 
+    // Get a credit usage report identified by the given ID.
+    // Required permissions:
+    // - credit.creditusagereport.get on the organization identified by the given organization ID
+    rpc GetCreditUsageReport(common.v1.IDOptions) returns (CreditUsageReport) {
+        option (google.api.http) = {
+            get: "/api/credit/v1/creditusagereport/{id}"
+        };
+    };
+
+    // Get a credit usage report identified by the given ID, as a PDF document.
+    // Required permissions:
+    // - credit.creditusagereport.get on the organization identified by the given organization ID
+    rpc GetCreditUsageReportPDF(common.v1.IDOptions) returns (stream PDFDocument) {
+        option (google.api.http) = {
+            post: "/api/credit/v1/creditusagereport/{id}/pdf"
+            body: "*"
+        };
+    };
 }
 
-message GetUsagePDFReportRequest {
-    // ID of the organization for which the report is being requested.
+message CreditUsageReportList {
+    // List of credit usage reports.
+    repeated CreditUsageReport items = 1;
+}
+
+// Request for ListCreditUsageReports rpc.
+message ListCreditUsageReportsRequest {
+    // Identifier of the organization for which credit reports are listed.
     string organization_id = 1;
-    // The date from which credit usage should be listed.
-    // This is a required field.
-    google.protobuf.Timestamp starts_at = 2;
-    // The date from which credit usage should be listed.
-    // This is a required field.
-    google.protobuf.Timestamp ends_at = 4;
 }
 
-// PDFReport contains a PDF with a credit usage report.
-message PDFReport {
+// CreditUsageReport describes the monthly credit usage for a given organization.
+message CreditUsageReport {
+    // System identifier of the report.
+    string id = 1;
+    // URL of this resource
+    string url = 2;
+    // ID of the organization to which this report belongs.
+    string organization_id = 3;
+    // Amount of credits consumed between the interval in this report (between starts_at and ends_at).
+    float amount = 4;
+    // Credit balance at the start of the month.
+    float opening_balance = 5;
+    // Credit balance at the end of the month.
+    float closing_balance = 6;
+    // Date from which the credit usage are listed in this report.
+    google.protobuf.Timestamp starts_at = 7;
+    // Date until which the credit usage are listed in this report.
+    google.protobuf.Timestamp ends_at = 8;
+    
+    message Item {
+        // Identifiers of the Credit usages that this item covers.
+        repeated string creditusage_ids = 1;
+        // Amount of credits for this item.
+        float amount = 2;
+        // Human readable description of this item
+        string description = 3;
+    }
+    // List of items in this credit usage report.
+    repeated Item items = 100;
+}
+
+// PDFDocument contains the PDF representation of a CreditUsageReport.
+message PDFDocument {
     // The contents of the PDF.
     // This is a read-only field.
     bytes contents = 1;
