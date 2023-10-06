@@ -509,6 +509,10 @@ export interface User {
   // Defines other DBs that the user has used
   // string
   other_dbs?: string[];
+  
+  // Defines if the user has opted out of enhanced troubleshooting
+  // boolean
+  disable_enhanced_troobleshooting?: boolean;
 }
 
 // Request arguments for VerifyUserMobilePhone
