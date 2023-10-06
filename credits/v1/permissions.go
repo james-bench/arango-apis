@@ -35,12 +35,10 @@ const (
 )
 
 const (
-	// Credit usage PDF report permissions
+	// Credit usage report permissions
 
-	// PermissionPDFCreate is needed for creating a credit usage PDF report.
-	PermissionPDFCreate = "credit.pdf.create"
-	// PermissionPDFCreate is needed for getting a credit usage PDF report.
-	PermissionPDFGet = "credit.pdf.get"
-	// PermissionPDFCreate is needed for listing credit usage PDF reports.
-	PermissionPDFList = "credit.pdf.list"
+	// PermissionCreditUsageReportList is needed for listing credit usage reports.
+	PermissionCreditUsageReportList = "credit.creditusagereport.list"
+	// PermissionCreditUsageReportGet is needed for getting a single credit usage report.
+	PermissionCreditUsageReportGet = "credit.creditusagereport.get"
 )
