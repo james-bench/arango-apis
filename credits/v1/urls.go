@@ -37,6 +37,7 @@ func CreditBundleURL(organizationURL, bundleID string) string {
 	return path.Join(organizationURL, KindCreditBundle, url.PathEscape(bundleID))
 }
 
+// CreditUsageReportURL creates a resource URL for a credit usage report with the given ID.
 func CreditUsageReportURL(organizationURL, reportID string) string {
 	return path.Join(organizationURL, KindCreditUsageReport, url.PathEscape(reportID))
 }
