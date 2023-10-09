@@ -512,7 +512,7 @@ export interface User {
   
   // Defines if the user has opted out of enhanced troubleshooting
   // boolean
-  disable_enhanced_troobleshooting?: boolean;
+  disable_enhanced_troubleshooting?: boolean;
 }
 
 // Request arguments for VerifyUserMobilePhone
