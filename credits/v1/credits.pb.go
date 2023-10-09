@@ -1034,7 +1034,7 @@ type CreditsServiceClient interface {
 	// The server sends the PDF over a stream once rendered.
 	// The stream is closed after the PDF is sent.
 	// Required permissions:
-	// - credit.creditusagereport.get on the organization identified by the given organization ID
+	// - credit.creditusagereport.get on the organization that owns the report.
 	GetCreditUsageReportPDF(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (CreditsService_GetCreditUsageReportPDFClient, error)
 }
 
@@ -1150,7 +1150,7 @@ type CreditsServiceServer interface {
 	// The server sends the PDF over a stream once rendered.
 	// The stream is closed after the PDF is sent.
 	// Required permissions:
-	// - credit.creditusagereport.get on the organization identified by the given organization ID
+	// - credit.creditusagereport.get on the organization that owns the report.
 	GetCreditUsageReportPDF(*v1.IDOptions, CreditsService_GetCreditUsageReportPDFServer) error
 }
 

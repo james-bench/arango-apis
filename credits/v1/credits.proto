@@ -81,7 +81,7 @@ service CreditsService {
     // The server sends the PDF over a stream once rendered.
     // The stream is closed after the PDF is sent.
     // Required permissions:
-    // - credit.creditusagereport.get on the organization identified by the given organization ID
+    // - credit.creditusagereport.get on the organization that owns the report.
     rpc GetCreditUsageReportPDF(common.v1.IDOptions) returns (stream PDFDocument) {
         option (google.api.http) = {
             post: "/api/credit/v1/creditusagereport/{id}/pdf"

@@ -280,7 +280,7 @@ export interface ICreditsService {
   // The server sends the PDF over a stream once rendered.
   // The stream is closed after the PDF is sent.
   // Required permissions:
-  // - credit.creditusagereport.get on the organization identified by the given organization ID
+  // - credit.creditusagereport.get on the organization that owns the report.
   GetCreditUsageReportPDF: (req: arangodb_cloud_common_v1_IDOptions, cb: (obj: IStreamMessage<PDFDocument>) => void) => Promise<IServerStream>;
 }
 
@@ -336,7 +336,7 @@ export class CreditsService implements ICreditsService {
   // The server sends the PDF over a stream once rendered.
   // The stream is closed after the PDF is sent.
   // Required permissions:
-  // - credit.creditusagereport.get on the organization identified by the given organization ID
+  // - credit.creditusagereport.get on the organization that owns the report.
   async GetCreditUsageReportPDF(req: arangodb_cloud_common_v1_IDOptions, cb: (obj: IStreamMessage<PDFDocument>) => void): Promise<IServerStream> {
     const url = `/api/credit/v1/creditusagereport/${encodeURIComponent(req.id || '')}/pdf`;
     return api.server_stream(url, "POST", req, cb);
