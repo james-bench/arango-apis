@@ -467,6 +467,8 @@ message User {
     string experience = 20;
     // Defines other DBs that the user has used
     repeated string other_dbs = 21;
+    // Defines if the user has opted out of enhanced troubleshooting
+    bool disable_enhanced_troubleshooting = 22;
 }
 
 // Request arguments for VerifyUserMobilePhone
