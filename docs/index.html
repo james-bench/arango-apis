@@ -602,6 +602,10 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.credits.v1.CreditUsageReport.Status"><span class="badge">M</span>CreditUsageReport.Status</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.credits.v1.CreditUsageReportList"><span class="badge">M</span>CreditUsageReportList</a>
                 </li>
               
@@ -7289,6 +7293,13 @@ This report will contain the monthly usage of the month specified in this timest
                   <td><p>List of items in this credit usage report. </p></td>
                 </tr>
               
+                <tr>
+                  <td>status</td>
+                  <td><a href="#arangodb.cloud.credits.v1.CreditUsageReport.Status">CreditUsageReport.Status</a></td>
+                  <td></td>
+                  <td><p>Status of the report. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -7325,6 +7336,31 @@ This report will contain the monthly usage of the month specified in this timest
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Human readable description of this item </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.credits.v1.CreditUsageReport.Status">CreditUsageReport.Status</h3>
+        <p>Status of the report.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>is_complete</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, the items in this report are complete for the month specified in `created_at`.
+No more items will be added to this report once this field is set. </p></td>
                 </tr>
               
             </tbody>

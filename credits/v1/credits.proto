@@ -138,6 +138,15 @@ message CreditUsageReport {
     }
     // List of items in this credit usage report.
     repeated Item items = 100;
+
+    // Status of the report.
+    message Status {
+        // If set, the items in this report are complete for the month specified in `created_at`.
+        // No more items will be added to this report once this field is set.
+        bool is_complete = 1;
+    }
+    // Status of the report.
+    Status status = 200;
 }
 
 // PDFDocument contains the PDF representation of a CreditUsageReport.

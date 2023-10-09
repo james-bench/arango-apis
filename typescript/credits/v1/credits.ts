@@ -145,6 +145,10 @@ export interface CreditUsageReport {
   // List of items in this credit usage report.
   // CreditUsageReport_Item
   items?: CreditUsageReport_Item[];
+  
+  // Status of the report.
+  // CreditUsageReport_Status
+  status?: CreditUsageReport_Status;
 }
 export interface CreditUsageReport_Item {
   // Identifiers of the Credit usages that this item covers.
@@ -158,6 +162,14 @@ export interface CreditUsageReport_Item {
   // Human readable description of this item
   // string
   description?: string;
+}
+
+// Status of the report.
+export interface CreditUsageReport_Status {
+  // If set, the items in this report are complete for the month specified in `created_at`.
+  // No more items will be added to this report once this field is set.
+  // boolean
+  is_complete?: boolean;
 }
 export interface CreditUsageReportList {
   // List of credit usage reports.
