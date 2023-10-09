@@ -70,7 +70,7 @@ service CreditsService {
 
     // Get a credit usage report identified by the given ID.
     // Required permissions:
-    // - credit.creditusagereport.get on the organization identified by the given organization ID
+    // - credit.creditusagereport.get on the organization that owns the report.
     rpc GetCreditUsageReport(common.v1.IDOptions) returns (CreditUsageReport) {
         option (google.api.http) = {
             get: "/api/credit/v1/creditusagereport/{id}"

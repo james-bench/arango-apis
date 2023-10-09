@@ -273,7 +273,7 @@ export interface ICreditsService {
   
   // Get a credit usage report identified by the given ID.
   // Required permissions:
-  // - credit.creditusagereport.get on the organization identified by the given organization ID
+  // - credit.creditusagereport.get on the organization that owns the report.
   GetCreditUsageReport: (req: arangodb_cloud_common_v1_IDOptions) => Promise<CreditUsageReport>;
   
   // Get a credit usage report identified by the given ID, as a PDF document.
@@ -325,7 +325,7 @@ export class CreditsService implements ICreditsService {
   
   // Get a credit usage report identified by the given ID.
   // Required permissions:
-  // - credit.creditusagereport.get on the organization identified by the given organization ID
+  // - credit.creditusagereport.get on the organization that owns the report.
   async GetCreditUsageReport(req: arangodb_cloud_common_v1_IDOptions): Promise<CreditUsageReport> {
     const path = `/api/credit/v1/creditusagereport/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
