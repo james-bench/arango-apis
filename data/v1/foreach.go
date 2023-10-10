@@ -65,7 +65,8 @@ func ForEachDeployment(ctx context.Context, listFunc func(ctx context.Context, r
 
 // ForEachVersion iterates over all (ArangoDB) versions that match the given filter
 // invoking the given callback for each version.
-func ForEachVersion(ctx context.Context, listFunc func(ctx context.Context, req *ListVersionsRequest) (*VersionList, error),
+func ForEachVersion(ctx context.Context,
+	listFunc func(ctx context.Context, req *ListVersionsRequest) (*VersionList, error),
 	req ListVersionsRequest, cb VersionCallback) error {
 	req.Options = req.Options.CloneOrDefault()
 	for {

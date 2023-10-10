@@ -29,3 +29,7 @@ import (
 func TestCreditBundleURL(t *testing.T) {
 	assert.Equal(t, "/Organization/123/CreditBundle/54321", CreditBundleURL("/Organization/123", "54321"))
 }
+
+func TestCreditUsageReportURL(t *testing.T) {
+	assert.Equal(t, "/Organization/123/CreditUsageReport/54321", CreditUsageReportURL("/Organization/123", "54321"))
+}

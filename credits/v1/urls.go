@@ -28,9 +28,16 @@ import (
 const (
 	// KindCreditBundle is a constant for the kind of CreditBundle resources.
 	KindCreditBundle = "CreditBundle"
+	// KindCreditUsageReport is a constant for the kind of CreditUsageReport resources.
+	KindCreditUsageReport = "CreditUsageReport"
 )
 
 // CreditBundleURL creates a resource URL for a credit bundle with the given ID.
 func CreditBundleURL(organizationURL, bundleID string) string {
 	return path.Join(organizationURL, KindCreditBundle, url.PathEscape(bundleID))
+}
+
+// CreditUsageReportURL creates a resource URL for a credit usage report with the given ID.
+func CreditUsageReportURL(organizationURL, reportID string) string {
+	return path.Join(organizationURL, KindCreditUsageReport, url.PathEscape(reportID))
 }

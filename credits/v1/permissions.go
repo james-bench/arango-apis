@@ -33,3 +33,12 @@ const (
 	// PermissionCreditBundlesList is needed for listing credit bundle usages.
 	PermissionCreditBundleUsageList = "credit.creditbundleusage.list"
 )
+
+const (
+	// Credit usage report permissions
+
+	// PermissionCreditUsageReportList is needed for listing credit usage reports.
+	PermissionCreditUsageReportList = "credit.creditusagereport.list"
+	// PermissionCreditUsageReportGet is needed for getting a single credit usage report.
+	PermissionCreditUsageReportGet = "credit.creditusagereport.get"
+)
