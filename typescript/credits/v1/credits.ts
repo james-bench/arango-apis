@@ -104,6 +104,20 @@ export interface CreditBundleUsageList {
   // CreditBundleUsage
   items?: CreditBundleUsage[];
 }
+export interface CreditBundleUsageProjection {
+  // List of credit usage projections.
+  // CreditBundleUsageProjection_Projection
+  projections?: CreditBundleUsageProjection_Projection[];
+}
+export interface CreditBundleUsageProjection_Projection {
+  // Projected value for the given timestamp.
+  // number
+  value?: number;
+  
+  // Timestamp for which the given usage value is projected.
+  // googleTypes.Timestamp
+  timestamp?: googleTypes.Timestamp;
+}
 
 // List of credit bundles
 export interface CreditBundlesList {
@@ -175,6 +189,13 @@ export interface CreditUsageReportList {
   // List of credit usage reports.
   // CreditUsageReport
   items?: CreditUsageReport[];
+}
+
+// Request for GetCreditBundleUsageProjection rpc.
+export interface GetCreditBundleUsageProjectionRequest {
+  // Identifier of the organization for which a credit usage projection is requested.
+  // string
+  organization_id?: string;
 }
 
 // Request for listing credit bundle usages.
@@ -294,6 +315,12 @@ export interface ICreditsService {
   // Required permissions:
   // - credit.creditusagereport.get on the organization that owns the report.
   GetCreditUsageReportPDF: (req: arangodb_cloud_common_v1_IDOptions, cb: (obj: IStreamMessage<PDFDocument>) => void) => Promise<IServerStream>;
+  
+  // Get credit usage projection for an organization identified by the given organization ID.
+  // This will return a projected credit usage for each month in the future, until the credits run out.
+  // Required permissions:
+  // - credit.creditbundleusage.project on the organization identified by the given organization ID.
+  GetCreditBundleUsageProjection: (req: GetCreditBundleUsageProjectionRequest) => Promise<CreditBundleUsageProjection>;
 }
 
 // CreditsService is the API used for managing credits.
@@ -352,5 +379,15 @@ export class CreditsService implements ICreditsService {
   async GetCreditUsageReportPDF(req: arangodb_cloud_common_v1_IDOptions, cb: (obj: IStreamMessage<PDFDocument>) => void): Promise<IServerStream> {
     const url = `/api/credit/v1/creditusagereport/${encodeURIComponent(req.id || '')}/pdf`;
     return api.server_stream(url, "POST", req, cb);
+  }
+  
+  // Get credit usage projection for an organization identified by the given organization ID.
+  // This will return a projected credit usage for each month in the future, until the credits run out.
+  // Required permissions:
+  // - credit.creditbundleusage.project on the organization identified by the given organization ID.
+  async GetCreditBundleUsageProjection(req: GetCreditBundleUsageProjectionRequest): Promise<CreditBundleUsageProjection> {
+    const path = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/creditbundleusages/projection`;
+    const url = path + api.queryString(req, [`organization_id`]);
+    return api.get(url, undefined);
   }
 }
