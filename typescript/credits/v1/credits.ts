@@ -104,17 +104,19 @@ export interface CreditBundleUsageList {
   // CreditBundleUsage
   items?: CreditBundleUsage[];
 }
+
+// CreditBundleUsageProjection contains a series of monthly credit usage projections.
 export interface CreditBundleUsageProjection {
   // List of credit usage projections.
   // CreditBundleUsageProjection_Projection
   projections?: CreditBundleUsageProjection_Projection[];
 }
 export interface CreditBundleUsageProjection_Projection {
-  // Projected value for the given timestamp.
+  // Usage value projected for the month in the provided timestamp.
   // number
   value?: number;
   
-  // Timestamp for which the given usage value is projected.
+  // Timestamp (month) for which the given usage value is projected.
   // googleTypes.Timestamp
   timestamp?: googleTypes.Timestamp;
 }

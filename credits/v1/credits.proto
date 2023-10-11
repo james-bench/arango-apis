@@ -100,11 +100,12 @@ service CreditsService {
     };
 }
 
+// CreditBundleUsageProjection contains a series of monthly credit usage projections.
 message CreditBundleUsageProjection {
     message Projection {
-        // Projected value for the given timestamp.
+        // Usage value projected for the month in the provided timestamp.
         float value = 1;
-        // Timestamp for which the given usage value is projected.
+        // Timestamp (month) for which the given usage value is projected.
         google.protobuf.Timestamp timestamp = 2;
     }
     // List of credit usage projections.

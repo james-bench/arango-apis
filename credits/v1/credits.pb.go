@@ -30,6 +30,7 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+// CreditBundleUsageProjection contains a series of monthly credit usage projections.
 type CreditBundleUsageProjection struct {
 	// List of credit usage projections.
 	Projections          []*CreditBundleUsageProjection_Projection `protobuf:"bytes,1,rep,name=projections,proto3" json:"projections,omitempty"`
@@ -79,9 +80,9 @@ func (m *CreditBundleUsageProjection) GetProjections() []*CreditBundleUsageProje
 }
 
 type CreditBundleUsageProjection_Projection struct {
-	// Projected value for the given timestamp.
+	// Usage value projected for the month in the provided timestamp.
 	Value float32 `protobuf:"fixed32,1,opt,name=value,proto3" json:"value,omitempty"`
-	// Timestamp for which the given usage value is projected.
+	// Timestamp (month) for which the given usage value is projected.
 	Timestamp            *types.Timestamp `protobuf:"bytes,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
 	XXX_unrecognized     []byte           `json:"-"`
