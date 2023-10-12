@@ -321,7 +321,7 @@ export interface ICreditsService {
   // Get credit usage projection for an organization identified by the given organization ID.
   // This will return a projected credit usage for each month in the future, until the credits run out.
   // Required permissions:
-  // - credit.creditbundleusage.project on the organization identified by the given organization ID.
+  // - credit.creditbundleusageprojection.get on the organization identified by the given organization ID.
   GetCreditBundleUsageProjection: (req: GetCreditBundleUsageProjectionRequest) => Promise<CreditBundleUsageProjection>;
 }
 
@@ -386,7 +386,7 @@ export class CreditsService implements ICreditsService {
   // Get credit usage projection for an organization identified by the given organization ID.
   // This will return a projected credit usage for each month in the future, until the credits run out.
   // Required permissions:
-  // - credit.creditbundleusage.project on the organization identified by the given organization ID.
+  // - credit.creditbundleusageprojection.get on the organization identified by the given organization ID.
   async GetCreditBundleUsageProjection(req: GetCreditBundleUsageProjectionRequest): Promise<CreditBundleUsageProjection> {
     const path = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/creditbundleusages/projection`;
     const url = path + api.queryString(req, [`organization_id`]);

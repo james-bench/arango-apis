@@ -1268,7 +1268,7 @@ type CreditsServiceClient interface {
 	// Get credit usage projection for an organization identified by the given organization ID.
 	// This will return a projected credit usage for each month in the future, until the credits run out.
 	// Required permissions:
-	// - credit.creditbundleusage.project on the organization identified by the given organization ID.
+	// - credit.creditbundleusageprojection.get on the organization identified by the given organization ID.
 	GetCreditBundleUsageProjection(ctx context.Context, in *GetCreditBundleUsageProjectionRequest, opts ...grpc.CallOption) (*CreditBundleUsageProjection, error)
 }
 
@@ -1398,7 +1398,7 @@ type CreditsServiceServer interface {
 	// Get credit usage projection for an organization identified by the given organization ID.
 	// This will return a projected credit usage for each month in the future, until the credits run out.
 	// Required permissions:
-	// - credit.creditbundleusage.project on the organization identified by the given organization ID.
+	// - credit.creditbundleusageprojection.get on the organization identified by the given organization ID.
 	GetCreditBundleUsageProjection(context.Context, *GetCreditBundleUsageProjectionRequest) (*CreditBundleUsageProjection, error)
 }
 
