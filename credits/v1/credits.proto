@@ -116,6 +116,11 @@ message CreditBundleUsageProjection {
 message GetCreditBundleUsageProjectionRequest {
     // Identifier of the organization for which a credit usage projection is requested.
     string organization_id = 1;
+
+    // Maximum number of projections to return.
+    // This is an optional field.
+    // If unspecified, defaults to 3.
+    int32 projections_limit = 2;
 }
 
 message CreditUsageReportList {

@@ -198,6 +198,12 @@ export interface GetCreditBundleUsageProjectionRequest {
   // Identifier of the organization for which a credit usage projection is requested.
   // string
   organization_id?: string;
+  
+  // Maximum number of projections to return.
+  // This is an optional field.
+  // If unspecified, defaults to 3.
+  // number
+  projections_limit?: number;
 }
 
 // Request for listing credit bundle usages.
