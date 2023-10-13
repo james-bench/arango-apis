@@ -42,3 +42,10 @@ const (
 	// PermissionCreditUsageReportGet is needed for getting a single credit usage report.
 	PermissionCreditUsageReportGet = "credit.creditusagereport.get"
 )
+
+const (
+	// Credit usage projection permissions
+
+	// PermissionCreditUsageProjectionGet is needed for getting credit usage projection.
+	PermissionCreditUsageProjectionGet = "credit.creditbundleusageprojection.get"
+)

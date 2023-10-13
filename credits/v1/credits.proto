@@ -88,6 +88,39 @@ service CreditsService {
             body: "*"
         };
     };
+
+    // Get credit usage projection for an organization identified by the given organization ID.
+    // This will return a projected credit usage for each month in the future, until the credits run out.
+    // Required permissions:
+    // - credit.creditbundleusageprojection.get on the organization identified by the given organization ID.
+    rpc GetCreditBundleUsageProjection(GetCreditBundleUsageProjectionRequest) returns (CreditBundleUsageProjection) {
+        option (google.api.http) = {
+            get: "/api/credit/v1/{organization_id}/creditbundleusages/projection"
+        };
+    };
+}
+
+// CreditBundleUsageProjection contains a series of monthly credit usage projections.
+message CreditBundleUsageProjection {
+    message Projection {
+        // Usage value projected for the month in the provided timestamp.
+        float value = 1;
+        // Timestamp (month) for which the given usage value is projected.
+        google.protobuf.Timestamp timestamp = 2;
+    }
+    // List of credit usage projections.
+    repeated Projection projections = 1;
+}
+
+// Request for GetCreditBundleUsageProjection rpc.
+message GetCreditBundleUsageProjectionRequest {
+    // Identifier of the organization for which a credit usage projection is requested.
+    string organization_id = 1;
+
+    // Maximum number of projections to return.
+    // This is an optional field.
+    // If unspecified, defaults to 3.
+    int32 projections_limit = 2;
 }
 
 message CreditUsageReportList {

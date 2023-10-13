@@ -590,6 +590,14 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.credits.v1.CreditBundleUsageProjection"><span class="badge">M</span>CreditBundleUsageProjection</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.credits.v1.CreditBundleUsageProjection.Projection"><span class="badge">M</span>CreditBundleUsageProjection.Projection</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.credits.v1.CreditBundlesList"><span class="badge">M</span>CreditBundlesList</a>
                 </li>
               
@@ -607,6 +615,10 @@ title: "ArangoGraph Insights Platform API"
               
                 <li>
                   <a href="#arangodb.cloud.credits.v1.CreditUsageReportList"><span class="badge">M</span>CreditUsageReportList</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.credits.v1.GetCreditBundleUsageProjectionRequest"><span class="badge">M</span>GetCreditBundleUsageProjectionRequest</a>
                 </li>
               
                 <li>
@@ -7202,6 +7214,61 @@ This is a read-only value. </p></td>
 
         
       
+        <h3 id="arangodb.cloud.credits.v1.CreditBundleUsageProjection">CreditBundleUsageProjection</h3>
+        <p>CreditBundleUsageProjection contains a series of monthly credit usage projections.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>projections</td>
+                  <td><a href="#arangodb.cloud.credits.v1.CreditBundleUsageProjection.Projection">CreditBundleUsageProjection.Projection</a></td>
+                  <td>repeated</td>
+                  <td><p>List of credit usage projections. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.credits.v1.CreditBundleUsageProjection.Projection">CreditBundleUsageProjection.Projection</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Usage value projected for the month in the provided timestamp. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>timestamp</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Timestamp (month) for which the given usage value is projected. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.credits.v1.CreditBundlesList">CreditBundlesList</h3>
         <p>List of credit bundles</p>
 
@@ -7385,6 +7452,39 @@ No more items will be added to this report once this field is set. </p></td>
                   <td><a href="#arangodb.cloud.credits.v1.CreditUsageReport">CreditUsageReport</a></td>
                   <td>repeated</td>
                   <td><p>List of credit usage reports. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.credits.v1.GetCreditBundleUsageProjectionRequest">GetCreditBundleUsageProjectionRequest</h3>
+        <p>Request for GetCreditBundleUsageProjection rpc.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the organization for which a credit usage projection is requested. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>projections_limit</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Maximum number of projections to return.
+This is an optional field.
+If unspecified, defaults to 3. </p></td>
                 </tr>
               
             </tbody>
@@ -7646,6 +7746,16 @@ Required permissions:
 - credit.creditusagereport.get on the organization that owns the report.</p></td>
               </tr>
             
+              <tr>
+                <td>GetCreditBundleUsageProjection</td>
+                <td><a href="#arangodb.cloud.credits.v1.GetCreditBundleUsageProjectionRequest">GetCreditBundleUsageProjectionRequest</a></td>
+                <td><a href="#arangodb.cloud.credits.v1.CreditBundleUsageProjection">CreditBundleUsageProjection</a></td>
+                <td><p>Get credit usage projection for an organization identified by the given organization ID.
+This will return a projected credit usage for each month in the future, until the credits run out.
+Required permissions:
+- credit.creditbundleusageprojection.get on the organization identified by the given organization ID.</p></td>
+              </tr>
+            
           </tbody>
         </table>
 
@@ -7721,6 +7831,16 @@ Required permissions:
                 <td>POST</td>
                 <td>/api/credit/v1/creditusagereport/{id}/pdf</td>
                 <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetCreditBundleUsageProjection</td>
+                <td>GET</td>
+                <td>/api/credit/v1/{organization_id}/creditbundleusages/projection</td>
+                <td></td>
               </tr>
               
             
