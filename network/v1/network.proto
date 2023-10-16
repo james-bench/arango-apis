@@ -137,10 +137,13 @@ message PrivateEndpointService {
     // Identifier of the deployment
     // After creation, this value cannot be changed.
     string deployment_id = 10;
-    // Zero or more DNS names to include in the TLS certificate of the deployment.
+    // Zero or more DNS names to include in the Self Signed TLS certificate of the deployment.
     // This name should be resolvable in the private network (vNET/VPC) and can be used to connect 
     // to the private endpoint to establish a SSL connection (where the name will be used during the handshake).
     repeated string alternate_dns_names = 11;
+
+    // If set, private DNS zone integration is enabled for this private endpoint service.
+    bool enable_private_dns = 12;
 
     // Specific AKS setting.
     message Aks {
