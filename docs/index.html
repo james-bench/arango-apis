@@ -9934,6 +9934,14 @@ This field is ignored set unless the flexible model is used. </p></td>
 defined by all databases and all collections. </p></td>
                 </tr>
               
+                <tr>
+                  <td>minimum_dbserver_disk_size</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>The minimum amount of disk space (in GB) to allocate for dbservers based on the highest usage of all running DB servers.
+The nearest size (larger then indicated here) need to be depected if the provider doesn&#39;t support all values (See GetServersSpecLimits) </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
