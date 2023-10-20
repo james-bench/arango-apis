@@ -259,6 +259,10 @@ message PrivateEndpointService {
         bool needs_attention = 10;
         // Free text message describing the status.
         string message = 11;
+        // The private DNS status of the private endpoint service.
+        string private_dns_status = 12;
+        // The timestamp the private DNS status has been set.
+        google.protobuf.Timestamp private_dns_ready_at = 13;
 
         // Specific AKS status fields.
         // All fields are read-only.

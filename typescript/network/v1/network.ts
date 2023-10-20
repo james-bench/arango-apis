@@ -263,6 +263,14 @@ export interface PrivateEndpointService_Status {
   // string
   message?: string;
   
+  // The private DNS status of the private endpoint service.
+  // string
+  private_dns_status?: string;
+  
+  // The timestamp the private DNS status has been set.
+  // googleTypes.Timestamp
+  private_dns_ready_at?: googleTypes.Timestamp;
+  
   // Specific AKS status fields.
   // All fields are read-only.
   // PrivateEndpointService_AksStatus
