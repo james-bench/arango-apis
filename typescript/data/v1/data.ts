@@ -435,6 +435,11 @@ export interface Deployment {
   // The (optional) intended use-case for this deployment
   // string
   intended_use_case?: string;
+  
+  // If set to true, drop support for VST protocol and improve resilence.
+  // Defaults to false.
+  // boolean
+  drop_depracated_protocol_support?: boolean;
 }
 
 // Information about a backup restore.
