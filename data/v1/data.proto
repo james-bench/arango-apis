@@ -799,9 +799,9 @@ message Deployment {
     // The (optional) intended use-case for this deployment
     string intended_use_case = 616;
 
-    // If set to true, drop support for VST protocol and improve resilence.
+    // If set to true, drop support for deprecated VST protocol and improve resilience.
     // Defaults to false.
-    bool drop_depracated_protocol_support = 617;
+    bool drop_vst_support = 617;
 }
 
 // NodeSize specifies the size constraints of different data nodes.
