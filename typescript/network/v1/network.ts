@@ -81,11 +81,15 @@ export interface PrivateEndpointService {
   // string
   deployment_id?: string;
   
-  // Zero or more DNS names to include in the TLS certificate of the deployment.
+  // Zero or more DNS names to include in the Self Signed TLS certificate of the deployment.
   // This name should be resolvable in the private network (vNET/VPC) and can be used to connect
   // to the private endpoint to establish a SSL connection (where the name will be used during the handshake).
   // string
   alternate_dns_names?: string[];
+  
+  // If set, private DNS zone integration is enabled for this private endpoint service.
+  // boolean
+  enable_private_dns?: boolean;
   
   // Specific AKS setting.
   // PrivateEndpointService_Aks
@@ -258,6 +262,14 @@ export interface PrivateEndpointService_Status {
   // Free text message describing the status.
   // string
   message?: string;
+  
+  // The private DNS status of the private endpoint service.
+  // string
+  private_dns_status?: string;
+  
+  // The timestamp the private DNS status has been set.
+  // googleTypes.Timestamp
+  private_dns_ready_at?: googleTypes.Timestamp;
   
   // Specific AKS status fields.
   // All fields are read-only.

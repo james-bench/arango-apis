@@ -10096,6 +10096,15 @@ If no private endpoint is configured this field will be empty. </p></td>
                 </tr>
               
                 <tr>
+                  <td>endpoint_private_endpoint_default</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Private Endpoint URL used to reach the deployment on default port (443)
+This value will be empty during the creation of the deployment &amp; private endpoint.
+this port is using the well known certificate. </p></td>
+                </tr>
+              
+                <tr>
                   <td>backup_restore_status</td>
                   <td><a href="#arangodb.cloud.data.v1.Deployment.BackupRestoreStatus">Deployment.BackupRestoreStatus</a></td>
                   <td></td>
@@ -16188,9 +16197,16 @@ After creation, this value cannot be changed. </p></td>
                   <td>alternate_dns_names</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>Zero or more DNS names to include in the TLS certificate of the deployment.
+                  <td><p>Zero or more DNS names to include in the Self Signed TLS certificate of the deployment.
 This name should be resolvable in the private network (vNET/VPC) and can be used to connect 
 to the private endpoint to establish a SSL connection (where the name will be used during the handshake). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>enable_private_dns</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, private DNS zone integration is enabled for this private endpoint service. </p></td>
                 </tr>
               
                 <tr>
@@ -16609,6 +16625,20 @@ After a private endpoint connection has been made this field cannot be modified 
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Free text message describing the status. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>private_dns_status</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The private DNS status of the private endpoint service. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>private_dns_ready_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The timestamp the private DNS status has been set. </p></td>
                 </tr>
               
                 <tr>
