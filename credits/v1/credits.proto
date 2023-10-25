@@ -120,7 +120,7 @@ message CreditDebt {
     // Zero means no debt.
     float amount = 2;
     // Timestamp at which this organization first ran out of credits (and went into debt).
-    // Not set if there is not debt.
+    // Not set if there is no debt.
     google.protobuf.Timestamp created_at = 3;
 }
 

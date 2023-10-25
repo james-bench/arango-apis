@@ -139,7 +139,7 @@ export interface CreditDebt {
   amount?: number;
   
   // Timestamp at which this organization first ran out of credits (and went into debt).
-  // Not set if there is not debt.
+  // Not set if there is no debt.
   // googleTypes.Timestamp
   created_at?: googleTypes.Timestamp;
 }

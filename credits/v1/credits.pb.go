@@ -38,7 +38,7 @@ type CreditDebt struct {
 	// Zero means no debt.
 	Amount float32 `protobuf:"fixed32,2,opt,name=amount,proto3" json:"amount,omitempty"`
 	// Timestamp at which this organization first ran out of credits (and went into debt).
-	// Not set if there is not debt.
+	// Not set if there is no debt.
 	CreatedAt            *types.Timestamp `protobuf:"bytes,3,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
 	XXX_unrecognized     []byte           `json:"-"`
