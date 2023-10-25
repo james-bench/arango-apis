@@ -7318,14 +7318,16 @@ This is a read-only value. </p></td>
                   <td>amount</td>
                   <td><a href="#float">float</a></td>
                   <td></td>
-                  <td><p>Amount of debt currently accrued by the specified organization. </p></td>
+                  <td><p>Amount of debt currently accrued by the specified organization.
+Zero means no debt. </p></td>
                 </tr>
               
                 <tr>
                   <td>created_at</td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
-                  <td><p>Timestamp at which this organization first ran out of credits (and went into debt). </p></td>
+                  <td><p>Timestamp at which this organization first ran out of credits (and went into debt).
+Not set if there is not debt. </p></td>
                 </tr>
               
             </tbody>

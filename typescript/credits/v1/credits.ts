@@ -134,10 +134,12 @@ export interface CreditDebt {
   organization_id?: string;
   
   // Amount of debt currently accrued by the specified organization.
+  // Zero means no debt.
   // number
   amount?: number;
   
   // Timestamp at which this organization first ran out of credits (and went into debt).
+  // Not set if there is not debt.
   // googleTypes.Timestamp
   created_at?: googleTypes.Timestamp;
 }

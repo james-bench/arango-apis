@@ -117,8 +117,10 @@ message CreditDebt {
     // ID of the organization in debt.
     string organization_id = 1;
     // Amount of debt currently accrued by the specified organization.
+    // Zero means no debt.
     float amount = 2;
     // Timestamp at which this organization first ran out of credits (and went into debt).
+    // Not set if there is not debt.
     google.protobuf.Timestamp created_at = 3;
 }
 
