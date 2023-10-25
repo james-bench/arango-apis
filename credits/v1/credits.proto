@@ -98,7 +98,32 @@ service CreditsService {
             get: "/api/credit/v1/{organization_id}/creditbundleusages/projection"
         };
     };
+
+    // Get the total amount of credit debt accrued by an organization identified by the ID.
+    // An organization starts accumulating debt from the moment it runs out of credits.
+    // The debt is paid off upon purchasing additional credit bundles.
+    // Note: debt usage is allowed only for a limited period of time, after which the organization's deployments are paused.
+    // Required permissions:
+    // - credit.creditdebt.get on the organization identified by the given organization ID.
+    rpc GetOrganizationCreditDebt(common.v1.IDOptions) returns (CreditDebt) {
+        option (google.api.http) = {
+            get: "/api/credit/v1/{id}/creditdebt"
+        };
+    };
 }
+
+// CreditDebt contains the details regarding an organization's credit debt.
+message CreditDebt {
+    // ID of the organization in debt.
+    string organization_id = 1;
+    // Amount of debt currently accrued by the specified organization.
+    // Zero means no debt.
+    float amount = 2;
+    // Timestamp at which this organization first ran out of credits (and went into debt).
+    // Not set if there is no debt.
+    google.protobuf.Timestamp created_at = 3;
+}
+
 
 // CreditBundleUsageProjection contains a series of monthly credit usage projections.
 message CreditBundleUsageProjection {

@@ -795,6 +795,12 @@ export interface Deployment_Status {
   // string
   endpoint_private_endpoint_self_signed?: string;
   
+  // Private Endpoint URL used to reach the deployment on default port (443)
+  // This value will be empty during the creation of the deployment & private endpoint.
+  // this port is using the well known certificate.
+  // string
+  endpoint_private_endpoint_default?: string;
+  
   // The status of backup restore (if applicable).
   // This field will be set to empty if a new revision of the spec is available
   // Deployment_BackupRestoreStatus

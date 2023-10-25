@@ -602,6 +602,10 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.credits.v1.CreditDebt"><span class="badge">M</span>CreditDebt</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.credits.v1.CreditUsageReport"><span class="badge">M</span>CreditUsageReport</a>
                 </li>
               
@@ -7293,6 +7297,46 @@ This is a read-only value. </p></td>
 
         
       
+        <h3 id="arangodb.cloud.credits.v1.CreditDebt">CreditDebt</h3>
+        <p>CreditDebt contains the details regarding an organization's credit debt.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>organization_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the organization in debt. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>amount</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Amount of debt currently accrued by the specified organization.
+Zero means no debt. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Timestamp at which this organization first ran out of credits (and went into debt).
+Not set if there is no debt. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.credits.v1.CreditUsageReport">CreditUsageReport</h3>
         <p>CreditUsageReport describes the monthly credit usage for a given organization.</p>
 
@@ -7756,6 +7800,18 @@ Required permissions:
 - credit.creditbundleusageprojection.get on the organization identified by the given organization ID.</p></td>
               </tr>
             
+              <tr>
+                <td>GetOrganizationCreditDebt</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.credits.v1.CreditDebt">CreditDebt</a></td>
+                <td><p>Get the total amount of credit debt accrued by an organization identified by the ID.
+An organization starts accumulating debt from the moment it runs out of credits.
+The debt is paid off upon purchasing additional credit bundles.
+Note: debt usage is allowed only for a limited period of time, after which the organization&#39;s deployments are paused.
+Required permissions:
+- credit.creditdebt.get on the organization identified by the given organization ID.</p></td>
+              </tr>
+            
           </tbody>
         </table>
 
@@ -7840,6 +7896,16 @@ Required permissions:
                 <td>GetCreditBundleUsageProjection</td>
                 <td>GET</td>
                 <td>/api/credit/v1/{organization_id}/creditbundleusages/projection</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetOrganizationCreditDebt</td>
+                <td>GET</td>
+                <td>/api/credit/v1/{id}/creditdebt</td>
                 <td></td>
               </tr>
               
@@ -10101,6 +10167,15 @@ This certificate will contain the specified alternate DNS names as well,
 so a secure TLS connection can be establised.
 This endpoint is recommended for machine-to-database connections.
 If no private endpoint is configured this field will be empty. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>endpoint_private_endpoint_default</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Private Endpoint URL used to reach the deployment on default port (443)
+This value will be empty during the creation of the deployment &amp; private endpoint.
+this port is using the well known certificate. </p></td>
                 </tr>
               
                 <tr>
@@ -16196,9 +16271,16 @@ After creation, this value cannot be changed. </p></td>
                   <td>alternate_dns_names</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>Zero or more DNS names to include in the TLS certificate of the deployment.
+                  <td><p>Zero or more DNS names to include in the Self Signed TLS certificate of the deployment.
 This name should be resolvable in the private network (vNET/VPC) and can be used to connect 
 to the private endpoint to establish a SSL connection (where the name will be used during the handshake). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>enable_private_dns</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, private DNS zone integration is enabled for this private endpoint service. </p></td>
                 </tr>
               
                 <tr>
@@ -16617,6 +16699,20 @@ After a private endpoint connection has been made this field cannot be modified 
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Free text message describing the status. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>private_dns_status</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The private DNS status of the private endpoint service. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>private_dns_ready_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The timestamp the private DNS status has been set. </p></td>
                 </tr>
               
                 <tr>
