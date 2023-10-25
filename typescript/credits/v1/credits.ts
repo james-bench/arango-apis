@@ -127,6 +127,23 @@ export interface CreditBundlesList {
   items?: CreditBundle[];
 }
 
+// CreditDebt contains the details regarding an organization's credit debt.
+export interface CreditDebt {
+  // ID of the organization in debt.
+  // string
+  organization_id?: string;
+  
+  // Amount of debt currently accrued by the specified organization.
+  // Zero means no debt.
+  // number
+  amount?: number;
+  
+  // Timestamp at which this organization first ran out of credits (and went into debt).
+  // Not set if there is no debt.
+  // googleTypes.Timestamp
+  created_at?: googleTypes.Timestamp;
+}
+
 // CreditUsageReport describes the monthly credit usage for a given organization.
 export interface CreditUsageReport {
   // System identifier of the report.
@@ -329,6 +346,14 @@ export interface ICreditsService {
   // Required permissions:
   // - credit.creditbundleusageprojection.get on the organization identified by the given organization ID.
   GetCreditBundleUsageProjection: (req: GetCreditBundleUsageProjectionRequest) => Promise<CreditBundleUsageProjection>;
+  
+  // Get the total amount of credit debt accrued by an organization identified by the ID.
+  // An organization starts accumulating debt from the moment it runs out of credits.
+  // The debt is paid off upon purchasing additional credit bundles.
+  // Note: debt usage is allowed only for a limited period of time, after which the organization's deployments are paused.
+  // Required permissions:
+  // - credit.creditdebt.get on the organization identified by the given organization ID.
+  GetOrganizationCreditDebt: (req: arangodb_cloud_common_v1_IDOptions) => Promise<CreditDebt>;
 }
 
 // CreditsService is the API used for managing credits.
@@ -396,6 +421,18 @@ export class CreditsService implements ICreditsService {
   async GetCreditBundleUsageProjection(req: GetCreditBundleUsageProjectionRequest): Promise<CreditBundleUsageProjection> {
     const path = `/api/credit/v1/${encodeURIComponent(req.organization_id || '')}/creditbundleusages/projection`;
     const url = path + api.queryString(req, [`organization_id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Get the total amount of credit debt accrued by an organization identified by the ID.
+  // An organization starts accumulating debt from the moment it runs out of credits.
+  // The debt is paid off upon purchasing additional credit bundles.
+  // Note: debt usage is allowed only for a limited period of time, after which the organization's deployments are paused.
+  // Required permissions:
+  // - credit.creditdebt.get on the organization identified by the given organization ID.
+  async GetOrganizationCreditDebt(req: arangodb_cloud_common_v1_IDOptions): Promise<CreditDebt> {
+    const path = `/api/credit/v1/${encodeURIComponent(req.id || '')}/creditdebt`;
+    const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
 }

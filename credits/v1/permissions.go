@@ -49,3 +49,10 @@ const (
 	// PermissionCreditUsageProjectionGet is needed for getting credit usage projection.
 	PermissionCreditUsageProjectionGet = "credit.creditbundleusageprojection.get"
 )
+
+const (
+	// Credit debt permissions.
+
+	// PermissionCreditDebtGet is needed for getting credit debt.
+	PermissionCreditDebtGet = "credit.creditdebt.get"
+)
