@@ -1029,6 +1029,10 @@ export interface DeploymentPriceRequest {
   // Identifier of disk performance used for this deployment (if any).
   // string
   disk_performance_id?: string;
+  
+  // If set, request for prices based on ArangoGraph credits.
+  // boolean
+  use_credit_pricing?: boolean;
 }
 
 // Result of CalculateDeploymentSize

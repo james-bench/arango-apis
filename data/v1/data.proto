@@ -1243,6 +1243,10 @@ message DeploymentPriceRequest {
     
     // Identifier of disk performance used for this deployment (if any).
     string disk_performance_id = 15;
+    
+    // If set, request for prices based on ArangoGraph credits.
+    bool use_credit_pricing = 16;
+
 }
 
 message DeploymentPrice {
