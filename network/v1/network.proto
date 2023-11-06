@@ -143,6 +143,7 @@ message PrivateEndpointService {
     repeated string alternate_dns_names = 11;
 
     // If set, private DNS zone integration is enabled for this private endpoint service.
+    // For GCP this bool is immutable, so can nly be set during the creation.
     bool enable_private_dns = 12;
 
     // Specific AKS setting.

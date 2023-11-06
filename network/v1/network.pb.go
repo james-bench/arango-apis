@@ -195,6 +195,7 @@ type PrivateEndpointService struct {
 	// to the private endpoint to establish a SSL connection (where the name will be used during the handshake).
 	AlternateDnsNames []string `protobuf:"bytes,11,rep,name=alternate_dns_names,json=alternateDnsNames,proto3" json:"alternate_dns_names,omitempty"`
 	// If set, private DNS zone integration is enabled for this private endpoint service.
+	// For GCP this bool is immutable, so can nly be set during the creation.
 	EnablePrivateDns bool `protobuf:"varint,12,opt,name=enable_private_dns,json=enablePrivateDns,proto3" json:"enable_private_dns,omitempty"`
 	// Specific AKS setting.
 	Aks *PrivateEndpointService_Aks `protobuf:"bytes,20,opt,name=aks,proto3" json:"aks,omitempty"`

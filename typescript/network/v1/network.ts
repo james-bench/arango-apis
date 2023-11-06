@@ -88,6 +88,7 @@ export interface PrivateEndpointService {
   alternate_dns_names?: string[];
   
   // If set, private DNS zone integration is enabled for this private endpoint service.
+  // For GCP this bool is immutable, so can nly be set during the creation.
   // boolean
   enable_private_dns?: boolean;
   
