@@ -53,7 +53,7 @@ service MonitoringService {
     }
 
     // Get the memory usage metrics for the deployment based on the given request.
-    // Required perissions:
+    // Required permissions:
     // - monitoring.metrics.get on the deployment identified by the given deployment ID.
     rpc GetDeploymentMemoryUsageMetrics(GetDeploymentMetricsRequest) returns (DeploymentMetrics) {
         option (google.api.http) = {
@@ -62,7 +62,7 @@ service MonitoringService {
     }
 
     // Get the CPU usage metrics for the deployment based on the given request.
-    // Required perissions:
+    // Required permissions:
     // - monitoring.metrics.get on the deployment identified by the given deployment ID.
     rpc GetDeploymentCPUUsageMetrics(GetDeploymentMetricsRequest) returns (DeploymentMetrics) {
         option (google.api.http) = {
@@ -72,7 +72,7 @@ service MonitoringService {
 
     // Get the disk usage metrics for the deployment based on the given request.
     // Note: The response will contain an empty list for coordinators.
-    // Required perissions:
+    // Required permissions:
     // - monitoring.metrics.get on the deployment identified by the given deployment ID.
     rpc GetDeploymentDiskUsageMetrics(GetDeploymentMetricsRequest) returns (DeploymentMetrics) {
         option (google.api.http) = {
@@ -89,7 +89,7 @@ message GetDeploymentMetricsRequest {
     // Start time for the query.
     // This is a required field.
     google.protobuf.Timestamp start_at = 2;
-	// The end time for the query.
+    // The end time for the query.
     // This is a required field.
     google.protobuf.Timestamp end_at = 3;
     // Granularity defines the interval between each metric sample.

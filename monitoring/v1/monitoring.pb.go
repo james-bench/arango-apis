@@ -462,16 +462,16 @@ type MonitoringServiceClient interface {
 	// - monitoring.logs.get on the deployment identified by the given deployment ID.
 	GetDeploymentLogs(ctx context.Context, in *GetDeploymentLogsRequest, opts ...grpc.CallOption) (MonitoringService_GetDeploymentLogsClient, error)
 	// Get the memory usage metrics for the deployment based on the given request.
-	// Required perissions:
+	// Required permissions:
 	// - monitoring.metrics.get on the deployment identified by the given deployment ID.
 	GetDeploymentMemoryUsageMetrics(ctx context.Context, in *GetDeploymentMetricsRequest, opts ...grpc.CallOption) (*DeploymentMetrics, error)
 	// Get the CPU usage metrics for the deployment based on the given request.
-	// Required perissions:
+	// Required permissions:
 	// - monitoring.metrics.get on the deployment identified by the given deployment ID.
 	GetDeploymentCPUUsageMetrics(ctx context.Context, in *GetDeploymentMetricsRequest, opts ...grpc.CallOption) (*DeploymentMetrics, error)
 	// Get the disk usage metrics for the deployment based on the given request.
 	// Note: The response will contain an empty list for coordinators.
-	// Required perissions:
+	// Required permissions:
 	// - monitoring.metrics.get on the deployment identified by the given deployment ID.
 	GetDeploymentDiskUsageMetrics(ctx context.Context, in *GetDeploymentMetricsRequest, opts ...grpc.CallOption) (*DeploymentMetrics, error)
 }
@@ -563,16 +563,16 @@ type MonitoringServiceServer interface {
 	// - monitoring.logs.get on the deployment identified by the given deployment ID.
 	GetDeploymentLogs(*GetDeploymentLogsRequest, MonitoringService_GetDeploymentLogsServer) error
 	// Get the memory usage metrics for the deployment based on the given request.
-	// Required perissions:
+	// Required permissions:
 	// - monitoring.metrics.get on the deployment identified by the given deployment ID.
 	GetDeploymentMemoryUsageMetrics(context.Context, *GetDeploymentMetricsRequest) (*DeploymentMetrics, error)
 	// Get the CPU usage metrics for the deployment based on the given request.
-	// Required perissions:
+	// Required permissions:
 	// - monitoring.metrics.get on the deployment identified by the given deployment ID.
 	GetDeploymentCPUUsageMetrics(context.Context, *GetDeploymentMetricsRequest) (*DeploymentMetrics, error)
 	// Get the disk usage metrics for the deployment based on the given request.
 	// Note: The response will contain an empty list for coordinators.
-	// Required perissions:
+	// Required permissions:
 	// - monitoring.metrics.get on the deployment identified by the given deployment ID.
 	GetDeploymentDiskUsageMetrics(context.Context, *GetDeploymentMetricsRequest) (*DeploymentMetrics, error)
 }

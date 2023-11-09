@@ -109,18 +109,18 @@ export interface IMonitoringService {
   GetDeploymentLogs: (req: GetDeploymentLogsRequest, cb: (obj: IStreamMessage<DeploymentLogsChunk>) => void) => Promise<IServerStream>;
   
   // Get the memory usage metrics for the deployment based on the given request.
-  // Required perissions:
+  // Required permissions:
   // - monitoring.metrics.get on the deployment identified by the given deployment ID.
   GetDeploymentMemoryUsageMetrics: (req: GetDeploymentMetricsRequest) => Promise<DeploymentMetrics>;
   
   // Get the CPU usage metrics for the deployment based on the given request.
-  // Required perissions:
+  // Required permissions:
   // - monitoring.metrics.get on the deployment identified by the given deployment ID.
   GetDeploymentCPUUsageMetrics: (req: GetDeploymentMetricsRequest) => Promise<DeploymentMetrics>;
   
   // Get the disk usage metrics for the deployment based on the given request.
   // Note: The response will contain an empty list for coordinators.
-  // Required perissions:
+  // Required permissions:
   // - monitoring.metrics.get on the deployment identified by the given deployment ID.
   GetDeploymentDiskUsageMetrics: (req: GetDeploymentMetricsRequest) => Promise<DeploymentMetrics>;
 }
@@ -145,7 +145,7 @@ export class MonitoringService implements IMonitoringService {
   }
   
   // Get the memory usage metrics for the deployment based on the given request.
-  // Required perissions:
+  // Required permissions:
   // - monitoring.metrics.get on the deployment identified by the given deployment ID.
   async GetDeploymentMemoryUsageMetrics(req: GetDeploymentMetricsRequest): Promise<DeploymentMetrics> {
     const path = `/api/monitoring/v1/metrics/memory`;
@@ -154,7 +154,7 @@ export class MonitoringService implements IMonitoringService {
   }
   
   // Get the CPU usage metrics for the deployment based on the given request.
-  // Required perissions:
+  // Required permissions:
   // - monitoring.metrics.get on the deployment identified by the given deployment ID.
   async GetDeploymentCPUUsageMetrics(req: GetDeploymentMetricsRequest): Promise<DeploymentMetrics> {
     const path = `/api/monitoring/v1/metrics/cpu`;
@@ -164,7 +164,7 @@ export class MonitoringService implements IMonitoringService {
   
   // Get the disk usage metrics for the deployment based on the given request.
   // Note: The response will contain an empty list for coordinators.
-  // Required perissions:
+  // Required permissions:
   // - monitoring.metrics.get on the deployment identified by the given deployment ID.
   async GetDeploymentDiskUsageMetrics(req: GetDeploymentMetricsRequest): Promise<DeploymentMetrics> {
     const path = `/api/monitoring/v1/metrics/disk`;
