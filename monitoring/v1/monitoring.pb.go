@@ -5,6 +5,7 @@ package v1
 
 import (
 	context "context"
+	encoding_binary "encoding/binary"
 	fmt "fmt"
 	v1 "github.com/arangodb-managed/apis/common/v1"
 	types "github.com/gogo/protobuf/types"
@@ -28,6 +29,206 @@ var _ = math.Inf
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
+
+// Request for getting deployment metrics
+type GetDeploymentMetricsRequest struct {
+	// ID of the deployment for which metrics are being requested.
+	// This is a required field.
+	DeploymentId string `protobuf:"bytes,1,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
+	// Start time for the query.
+	// This is a required field.
+	StartAt *types.Timestamp `protobuf:"bytes,2,opt,name=start_at,json=startAt,proto3" json:"start_at,omitempty"`
+	// The end time for the query.
+	// This is a required field.
+	EndAt *types.Timestamp `protobuf:"bytes,3,opt,name=end_at,json=endAt,proto3" json:"end_at,omitempty"`
+	// Granularity defines the interval between each metric sample.
+	// This needs to be a valid duration.
+	// Example: 1m, 2m, 30s, 1d, etc.
+	// Defaults to 30s.
+	// This is an optional field.
+	Granularity          string   `protobuf:"bytes,4,opt,name=granularity,proto3" json:"granularity,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetDeploymentMetricsRequest) Reset()         { *m = GetDeploymentMetricsRequest{} }
+func (m *GetDeploymentMetricsRequest) String() string { return proto.CompactTextString(m) }
+func (*GetDeploymentMetricsRequest) ProtoMessage()    {}
+func (*GetDeploymentMetricsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b9068e71705f3706, []int{0}
+}
+func (m *GetDeploymentMetricsRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetDeploymentMetricsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetDeploymentMetricsRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *GetDeploymentMetricsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetDeploymentMetricsRequest.Merge(m, src)
+}
+func (m *GetDeploymentMetricsRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetDeploymentMetricsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetDeploymentMetricsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetDeploymentMetricsRequest proto.InternalMessageInfo
+
+func (m *GetDeploymentMetricsRequest) GetDeploymentId() string {
+	if m != nil {
+		return m.DeploymentId
+	}
+	return ""
+}
+
+func (m *GetDeploymentMetricsRequest) GetStartAt() *types.Timestamp {
+	if m != nil {
+		return m.StartAt
+	}
+	return nil
+}
+
+func (m *GetDeploymentMetricsRequest) GetEndAt() *types.Timestamp {
+	if m != nil {
+		return m.EndAt
+	}
+	return nil
+}
+
+func (m *GetDeploymentMetricsRequest) GetGranularity() string {
+	if m != nil {
+		return m.Granularity
+	}
+	return ""
+}
+
+// DeploymentMetrics contains the deployment metrics
+type DeploymentMetrics struct {
+	// Timeseries metrics for the DBServers
+	Dbservers []*DeploymentMetrics_Sample `protobuf:"bytes,1,rep,name=dbservers,proto3" json:"dbservers,omitempty"`
+	// Timeseries metrics for the Coordinators
+	Coordinators         []*DeploymentMetrics_Sample `protobuf:"bytes,2,rep,name=coordinators,proto3" json:"coordinators,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                    `json:"-"`
+	XXX_unrecognized     []byte                      `json:"-"`
+	XXX_sizecache        int32                       `json:"-"`
+}
+
+func (m *DeploymentMetrics) Reset()         { *m = DeploymentMetrics{} }
+func (m *DeploymentMetrics) String() string { return proto.CompactTextString(m) }
+func (*DeploymentMetrics) ProtoMessage()    {}
+func (*DeploymentMetrics) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b9068e71705f3706, []int{1}
+}
+func (m *DeploymentMetrics) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DeploymentMetrics) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DeploymentMetrics.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *DeploymentMetrics) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeploymentMetrics.Merge(m, src)
+}
+func (m *DeploymentMetrics) XXX_Size() int {
+	return m.Size()
+}
+func (m *DeploymentMetrics) XXX_DiscardUnknown() {
+	xxx_messageInfo_DeploymentMetrics.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DeploymentMetrics proto.InternalMessageInfo
+
+func (m *DeploymentMetrics) GetDbservers() []*DeploymentMetrics_Sample {
+	if m != nil {
+		return m.Dbservers
+	}
+	return nil
+}
+
+func (m *DeploymentMetrics) GetCoordinators() []*DeploymentMetrics_Sample {
+	if m != nil {
+		return m.Coordinators
+	}
+	return nil
+}
+
+// Sample defines a single data point.
+// It contains the value of the sample and the timestamp at which it was captured.
+type DeploymentMetrics_Sample struct {
+	// Timestamp at which this sample is captured.
+	Timestamp *types.Timestamp `protobuf:"bytes,1,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	// Value of the given sample.
+	Value                float32  `protobuf:"fixed32,2,opt,name=value,proto3" json:"value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *DeploymentMetrics_Sample) Reset()         { *m = DeploymentMetrics_Sample{} }
+func (m *DeploymentMetrics_Sample) String() string { return proto.CompactTextString(m) }
+func (*DeploymentMetrics_Sample) ProtoMessage()    {}
+func (*DeploymentMetrics_Sample) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b9068e71705f3706, []int{1, 0}
+}
+func (m *DeploymentMetrics_Sample) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DeploymentMetrics_Sample) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DeploymentMetrics_Sample.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *DeploymentMetrics_Sample) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeploymentMetrics_Sample.Merge(m, src)
+}
+func (m *DeploymentMetrics_Sample) XXX_Size() int {
+	return m.Size()
+}
+func (m *DeploymentMetrics_Sample) XXX_DiscardUnknown() {
+	xxx_messageInfo_DeploymentMetrics_Sample.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DeploymentMetrics_Sample proto.InternalMessageInfo
+
+func (m *DeploymentMetrics_Sample) GetTimestamp() *types.Timestamp {
+	if m != nil {
+		return m.Timestamp
+	}
+	return nil
+}
+
+func (m *DeploymentMetrics_Sample) GetValue() float32 {
+	if m != nil {
+		return m.Value
+	}
+	return 0
+}
 
 // GetDeploymentLogsRequest contains request arguments for GetDeploymentLogs.
 type GetDeploymentLogsRequest struct {
@@ -55,7 +256,7 @@ func (m *GetDeploymentLogsRequest) Reset()         { *m = GetDeploymentLogsReque
 func (m *GetDeploymentLogsRequest) String() string { return proto.CompactTextString(m) }
 func (*GetDeploymentLogsRequest) ProtoMessage()    {}
 func (*GetDeploymentLogsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b9068e71705f3706, []int{0}
+	return fileDescriptor_b9068e71705f3706, []int{2}
 }
 func (m *GetDeploymentLogsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -145,7 +346,7 @@ func (m *DeploymentLogsChunk) Reset()         { *m = DeploymentLogsChunk{} }
 func (m *DeploymentLogsChunk) String() string { return proto.CompactTextString(m) }
 func (*DeploymentLogsChunk) ProtoMessage()    {}
 func (*DeploymentLogsChunk) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b9068e71705f3706, []int{1}
+	return fileDescriptor_b9068e71705f3706, []int{3}
 }
 func (m *DeploymentLogsChunk) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -182,6 +383,9 @@ func (m *DeploymentLogsChunk) GetChunk() []byte {
 }
 
 func init() {
+	proto.RegisterType((*GetDeploymentMetricsRequest)(nil), "arangodb.cloud.monitoring.v1.GetDeploymentMetricsRequest")
+	proto.RegisterType((*DeploymentMetrics)(nil), "arangodb.cloud.monitoring.v1.DeploymentMetrics")
+	proto.RegisterType((*DeploymentMetrics_Sample)(nil), "arangodb.cloud.monitoring.v1.DeploymentMetrics.Sample")
 	proto.RegisterType((*GetDeploymentLogsRequest)(nil), "arangodb.cloud.monitoring.v1.GetDeploymentLogsRequest")
 	proto.RegisterType((*DeploymentLogsChunk)(nil), "arangodb.cloud.monitoring.v1.DeploymentLogsChunk")
 }
@@ -189,39 +393,52 @@ func init() {
 func init() { proto.RegisterFile("monitoring.proto", fileDescriptor_b9068e71705f3706) }
 
 var fileDescriptor_b9068e71705f3706 = []byte{
-	// 498 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x52, 0xcf, 0x8a, 0x13, 0x4f,
-	0x10, 0xfe, 0x4d, 0x7e, 0x9b, 0xb8, 0xdb, 0xee, 0x82, 0xdb, 0xca, 0x32, 0xc4, 0x25, 0xc6, 0x08,
-	0x12, 0xd4, 0xf4, 0x38, 0x2b, 0x2a, 0xe8, 0xc5, 0xf8, 0x87, 0x25, 0xa0, 0x20, 0x51, 0x3c, 0x78,
-	0x59, 0x3a, 0x99, 0xca, 0x6c, 0xe3, 0x74, 0xd7, 0xd8, 0x5d, 0x19, 0x08, 0xde, 0x3c, 0x79, 0xf7,
-	0xe2, 0xab, 0xf8, 0x06, 0x1e, 0x3c, 0x08, 0xbe, 0x80, 0x44, 0x1f, 0x44, 0xe6, 0x4f, 0x36, 0xbb,
-	0xba, 0xbb, 0xde, 0xaa, 0xea, 0xab, 0xaf, 0xba, 0xaa, 0xbf, 0x8f, 0x9d, 0xd3, 0x68, 0x14, 0xa1,
-	0x55, 0x26, 0x16, 0xa9, 0x45, 0x42, 0xbe, 0x2d, 0xad, 0x34, 0x31, 0x46, 0x23, 0x31, 0x4e, 0x70,
-	0x1a, 0x89, 0x43, 0x0d, 0x59, 0xd8, 0xdc, 0x1a, 0xa3, 0xd6, 0x68, 0x82, 0x2c, 0x0c, 0xca, 0xa8,
-	0x64, 0x35, 0xef, 0xc7, 0x8a, 0xf6, 0xa7, 0x23, 0x31, 0x46, 0x1d, 0xc4, 0x98, 0x48, 0x13, 0x07,
-	0x05, 0x30, 0x9a, 0x4e, 0x82, 0x94, 0x66, 0x29, 0xb8, 0x80, 0x94, 0x06, 0x47, 0x52, 0xa7, 0xcb,
-	0xa8, 0x22, 0x6f, 0xc7, 0x88, 0x71, 0x02, 0x81, 0x4c, 0x55, 0x20, 0x8d, 0x41, 0x92, 0xa4, 0xd0,
-	0xb8, 0x12, 0xed, 0x7c, 0xa8, 0x31, 0x7f, 0x17, 0xe8, 0x31, 0xa4, 0x09, 0xce, 0x34, 0x18, 0x7a,
-	0x8a, 0xb1, 0x1b, 0xc2, 0xdb, 0x29, 0x38, 0xe2, 0x57, 0xd8, 0x46, 0x74, 0x00, 0xec, 0xa9, 0xc8,
-	0xf7, 0xda, 0x5e, 0x77, 0x6d, 0xb8, 0xbe, 0x2c, 0x0e, 0x22, 0xce, 0xd9, 0x8a, 0xc5, 0x04, 0xfc,
-	0x5a, 0x81, 0x15, 0x31, 0xdf, 0x62, 0x8d, 0x09, 0x5a, 0x2d, 0xc9, 0xff, 0xbf, 0xa8, 0x56, 0x19,
-	0xbf, 0xc8, 0xd6, 0x1c, 0xd8, 0x0c, 0x6c, 0x3e, 0x6c, 0xa5, 0x80, 0x56, 0xcb, 0xc2, 0x20, 0xe2,
-	0xb7, 0xd9, 0xaa, 0x23, 0x69, 0x69, 0x4f, 0x92, 0x1f, 0xb5, 0xbd, 0xee, 0xd9, 0x9d, 0xa6, 0x28,
-	0x77, 0x17, 0x8b, 0x6b, 0xc5, 0xcb, 0xc5, 0x71, 0xc3, 0x33, 0x45, 0x6f, 0x9f, 0x78, 0xc8, 0x1a,
-	0x60, 0xa2, 0x9c, 0x04, 0xff, 0x24, 0xd5, 0xc1, 0x44, 0x7d, 0xe2, 0x17, 0x58, 0x3d, 0x51, 0x5a,
-	0x91, 0x3f, 0x69, 0x7b, 0xdd, 0xfa, 0xb0, 0x4c, 0x3a, 0xd7, 0xd9, 0xf9, 0xa3, 0xdf, 0xf0, 0x68,
-	0x7f, 0x6a, 0xde, 0xe4, 0xcd, 0xe3, 0x3c, 0x28, 0x8e, 0x5f, 0x1f, 0x96, 0xc9, 0xce, 0xd7, 0x1a,
-	0xdb, 0x7c, 0x76, 0x20, 0xde, 0x0b, 0xb0, 0x99, 0x1a, 0x03, 0x7f, 0xc7, 0x36, 0x76, 0x81, 0xfa,
-	0xcf, 0x07, 0xaf, 0xc0, 0x3a, 0x85, 0x86, 0x5f, 0x12, 0x7f, 0x08, 0x5e, 0xe9, 0x9a, 0x85, 0xe2,
-	0x89, 0x4e, 0x69, 0xd6, 0xbc, 0x7c, 0x72, 0x43, 0x35, 0xa3, 0x73, 0xf5, 0xfd, 0xf7, 0x5f, 0x1f,
-	0x6b, 0x6d, 0xde, 0x2a, 0x24, 0x5c, 0x3a, 0x26, 0xb7, 0x89, 0x4c, 0x55, 0x2f, 0xab, 0xde, 0xfa,
-	0xec, 0xb1, 0xcd, 0xbf, 0xa4, 0xe4, 0x77, 0xc4, 0x69, 0x96, 0x13, 0x27, 0x69, 0xdf, 0x0c, 0x4f,
-	0xe7, 0x1d, 0xf3, 0x53, 0x9d, 0xbb, 0xc5, 0xa2, 0x61, 0xe7, 0xc6, 0x31, 0x8b, 0x3a, 0xb2, 0x20,
-	0x75, 0x9e, 0x2c, 0xcd, 0xd3, 0x4b, 0x30, 0x76, 0xf7, 0xbc, 0x6b, 0x37, 0xbd, 0x87, 0x0f, 0xbe,
-	0xcc, 0x5b, 0xde, 0xb7, 0x79, 0xcb, 0xfb, 0x31, 0x6f, 0x79, 0x9f, 0x7e, 0xb6, 0xfe, 0x7b, 0x2d,
-	0x0e, 0x79, 0x7e, 0xb1, 0x49, 0x4f, 0x4b, 0x23, 0x63, 0x88, 0xf2, 0xf9, 0xee, 0xe8, 0x03, 0xa3,
-	0x46, 0x21, 0xf7, 0xad, 0xdf, 0x01, 0x00, 0x00, 0xff, 0xff, 0xe2, 0x37, 0xa0, 0xd7, 0x74, 0x03,
-	0x00, 0x00,
+	// 711 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x55, 0xcb, 0x4e, 0x14, 0x4d,
+	0x14, 0xfe, 0x6b, 0x60, 0xe6, 0x67, 0x0a, 0x48, 0x7e, 0xea, 0x27, 0x64, 0xd2, 0xe0, 0x30, 0x34,
+	0x89, 0x8e, 0x17, 0xba, 0x1d, 0x8c, 0xf7, 0x8d, 0x08, 0x86, 0x90, 0x48, 0x42, 0x1a, 0x30, 0x86,
+	0x0d, 0xa9, 0xe9, 0x2e, 0x9a, 0x0a, 0x5d, 0x55, 0x6d, 0x55, 0x75, 0x27, 0x13, 0x77, 0xae, 0xdc,
+	0xbb, 0x71, 0xe7, 0x3b, 0x18, 0x17, 0xfa, 0x06, 0xae, 0x8c, 0x89, 0x2f, 0x60, 0xd0, 0x37, 0xf0,
+	0x05, 0x4c, 0x77, 0xcf, 0x85, 0xe6, 0x32, 0x80, 0x2e, 0xd8, 0xd5, 0xa9, 0x3e, 0xf5, 0x9d, 0xef,
+	0x9c, 0xef, 0xab, 0x6a, 0xf8, 0x1f, 0x13, 0x9c, 0x6a, 0x21, 0x29, 0xf7, 0xad, 0x50, 0x0a, 0x2d,
+	0xd0, 0x14, 0x96, 0x98, 0xfb, 0xc2, 0x6b, 0x5a, 0x6e, 0x20, 0x22, 0xcf, 0x3a, 0x90, 0x10, 0x37,
+	0x8c, 0x09, 0x57, 0x30, 0x26, 0xb8, 0x1d, 0x37, 0xec, 0x6c, 0x95, 0x9d, 0x32, 0x1e, 0xfa, 0x54,
+	0xef, 0x46, 0x4d, 0xcb, 0x15, 0xcc, 0xf6, 0x45, 0x80, 0xb9, 0x6f, 0xa7, 0x1f, 0x9a, 0xd1, 0x8e,
+	0x1d, 0xea, 0x56, 0x48, 0x94, 0xad, 0x29, 0x23, 0x4a, 0x63, 0x16, 0xf6, 0x56, 0xed, 0xc3, 0x53,
+	0xbe, 0x10, 0x7e, 0x40, 0x6c, 0x1c, 0x52, 0x1b, 0x73, 0x2e, 0x34, 0xd6, 0x54, 0x70, 0x95, 0x7d,
+	0x35, 0xbf, 0x00, 0x38, 0xb9, 0x4c, 0xf4, 0x12, 0x09, 0x03, 0xd1, 0x62, 0x84, 0xeb, 0x55, 0xa2,
+	0x25, 0x75, 0x95, 0x43, 0x5e, 0x44, 0x44, 0x69, 0x34, 0x0b, 0x47, 0xbd, 0xee, 0xb7, 0x6d, 0xea,
+	0x55, 0x40, 0x0d, 0xd4, 0xcb, 0xce, 0x48, 0x6f, 0x73, 0xc5, 0x43, 0xb7, 0xe1, 0x90, 0xd2, 0x58,
+	0xea, 0x6d, 0xac, 0x2b, 0x85, 0x1a, 0xa8, 0x0f, 0xcf, 0x1b, 0x56, 0x56, 0xd5, 0xea, 0xf0, 0xb4,
+	0x36, 0x3a, 0xb4, 0x9c, 0x7f, 0xd3, 0xdc, 0x05, 0x8d, 0x1a, 0xb0, 0x44, 0xb8, 0x97, 0x1c, 0x1a,
+	0x38, 0xf5, 0x50, 0x91, 0x70, 0x6f, 0x41, 0xa3, 0x1a, 0x1c, 0xf6, 0x25, 0xe6, 0x51, 0x80, 0x25,
+	0xd5, 0xad, 0xca, 0x60, 0x4a, 0xe6, 0xe0, 0x96, 0xf9, 0xae, 0x00, 0xc7, 0x8e, 0x74, 0x83, 0x36,
+	0x60, 0xd9, 0x6b, 0x2a, 0x22, 0x63, 0x22, 0x55, 0x05, 0xd4, 0x06, 0xea, 0xc3, 0xf3, 0x77, 0xac,
+	0x7e, 0x5a, 0x58, 0x47, 0x30, 0xac, 0x75, 0xcc, 0xc2, 0x80, 0x38, 0x3d, 0x20, 0xb4, 0x05, 0x47,
+	0x5c, 0x21, 0xa4, 0x47, 0x39, 0xd6, 0x42, 0xaa, 0x4a, 0xe1, 0xaf, 0x80, 0x73, 0x58, 0xc6, 0x73,
+	0x58, 0xca, 0xf6, 0xd1, 0x3d, 0x58, 0xee, 0x6a, 0x9a, 0x8e, 0xbf, 0xff, 0xa4, 0x7a, 0xc9, 0x68,
+	0x1c, 0x16, 0x63, 0x1c, 0x44, 0x24, 0x15, 0xa5, 0xe0, 0x64, 0x81, 0xf9, 0xba, 0x00, 0x2b, 0x39,
+	0xc9, 0x9f, 0x0a, 0xff, 0x7c, 0x7a, 0x23, 0x38, 0x28, 0x45, 0x90, 0xc1, 0x96, 0x9d, 0x74, 0x8d,
+	0x26, 0x60, 0x69, 0x47, 0x48, 0xd6, 0x16, 0xb3, 0xec, 0xb4, 0x23, 0x34, 0x09, 0xcb, 0xd9, 0xb8,
+	0x12, 0xb0, 0x4c, 0xaf, 0xa1, 0x6c, 0xe3, 0x90, 0x71, 0xbc, 0x3f, 0x31, 0x0e, 0x39, 0xab, 0x71,
+	0xc6, 0x61, 0x31, 0xa0, 0x8c, 0xea, 0xca, 0x4e, 0x0d, 0xd4, 0x8b, 0x4e, 0x16, 0x98, 0xd7, 0xe1,
+	0xff, 0xf9, 0x31, 0x2c, 0xee, 0x46, 0x7c, 0x2f, 0x49, 0x76, 0x93, 0x45, 0xda, 0xfc, 0x88, 0x93,
+	0x05, 0xf3, 0xbf, 0x4a, 0x70, 0x6c, 0xb5, 0x2b, 0xe5, 0x3a, 0x91, 0x31, 0x75, 0x09, 0x7a, 0x09,
+	0x47, 0x97, 0x89, 0x5e, 0x58, 0x5b, 0x79, 0x46, 0xa4, 0xa2, 0x82, 0xa3, 0xe9, 0xc3, 0xf2, 0xb7,
+	0xaf, 0x72, 0xdc, 0xb0, 0x9e, 0xb0, 0x50, 0xb7, 0x8c, 0x99, 0x93, 0x13, 0xda, 0x18, 0xe6, 0xe5,
+	0x57, 0xdf, 0x7e, 0xbe, 0x29, 0xd4, 0x50, 0x35, 0xbd, 0xb5, 0x3d, 0xff, 0x24, 0x2f, 0x03, 0x0e,
+	0xe9, 0x5c, 0xdc, 0xae, 0xf5, 0x09, 0xc0, 0xb1, 0x23, 0x52, 0xa2, 0x53, 0x0c, 0x78, 0x92, 0xf6,
+	0x46, 0xe3, 0xac, 0xc6, 0xed, 0x4e, 0xca, 0xbc, 0x9b, 0x12, 0x6d, 0x98, 0x37, 0x8e, 0x21, 0xaa,
+	0xb4, 0x24, 0x98, 0x25, 0x41, 0xcf, 0x3c, 0x73, 0x81, 0xf0, 0xd5, 0x03, 0x70, 0xed, 0x26, 0x40,
+	0x1f, 0x01, 0x9c, 0x3e, 0xf4, 0xf2, 0x30, 0x21, 0x5b, 0x9b, 0x0a, 0xfb, 0xa4, 0x73, 0x6d, 0xef,
+	0x9f, 0xa3, 0x93, 0xfc, 0xc3, 0x65, 0xd8, 0xe7, 0xbc, 0x85, 0xe6, 0xd5, 0xb4, 0x95, 0x59, 0x34,
+	0x73, 0x4c, 0x2b, 0x2c, 0xcb, 0xb1, 0x59, 0x4a, 0x11, 0xbd, 0x07, 0x70, 0x2a, 0x57, 0x7b, 0x71,
+	0x6d, 0xf3, 0xc2, 0x78, 0xf7, 0xf3, 0x4a, 0x87, 0xb7, 0x1b, 0x46, 0xe8, 0x03, 0x80, 0x97, 0x72,
+	0x85, 0x97, 0xa8, 0xda, 0xbb, 0x30, 0xd6, 0x57, 0x52, 0xd6, 0x33, 0x68, 0xba, 0x0f, 0x6b, 0x8f,
+	0xaa, 0xbd, 0xc7, 0x8f, 0x3e, 0xef, 0x57, 0xc1, 0xd7, 0xfd, 0x2a, 0xf8, 0xbe, 0x5f, 0x05, 0x6f,
+	0x7f, 0x54, 0xff, 0xd9, 0xb2, 0x0e, 0xfc, 0x0d, 0x3b, 0x55, 0xe7, 0x18, 0xe6, 0xd8, 0x27, 0x5e,
+	0x82, 0xa6, 0xf2, 0x70, 0xcd, 0x52, 0xfa, 0x2a, 0xdc, 0xfa, 0x1d, 0x00, 0x00, 0xff, 0xff, 0xdd,
+	0x7e, 0x4e, 0xd3, 0x8e, 0x07, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -244,6 +461,19 @@ type MonitoringServiceClient interface {
 	// Required permissions:
 	// - monitoring.logs.get on the deployment identified by the given deployment ID.
 	GetDeploymentLogs(ctx context.Context, in *GetDeploymentLogsRequest, opts ...grpc.CallOption) (MonitoringService_GetDeploymentLogsClient, error)
+	// Get the memory usage metrics for the deployment based on the given request.
+	// Required perissions:
+	// - monitoring.metrics.get on the deployment identified by the given deployment ID.
+	GetDeploymentMemoryUsageMetrics(ctx context.Context, in *GetDeploymentMetricsRequest, opts ...grpc.CallOption) (*DeploymentMetrics, error)
+	// Get the CPU usage metrics for the deployment based on the given request.
+	// Required perissions:
+	// - monitoring.metrics.get on the deployment identified by the given deployment ID.
+	GetDeploymentCPUUsageMetrics(ctx context.Context, in *GetDeploymentMetricsRequest, opts ...grpc.CallOption) (*DeploymentMetrics, error)
+	// Get the disk usage metrics for the deployment based on the given request.
+	// Note: The response will contain an empty list for coordinators.
+	// Required perissions:
+	// - monitoring.metrics.get on the deployment identified by the given deployment ID.
+	GetDeploymentDiskUsageMetrics(ctx context.Context, in *GetDeploymentMetricsRequest, opts ...grpc.CallOption) (*DeploymentMetrics, error)
 }
 
 type monitoringServiceClient struct {
@@ -295,6 +525,33 @@ func (x *monitoringServiceGetDeploymentLogsClient) Recv() (*DeploymentLogsChunk,
 	return m, nil
 }
 
+func (c *monitoringServiceClient) GetDeploymentMemoryUsageMetrics(ctx context.Context, in *GetDeploymentMetricsRequest, opts ...grpc.CallOption) (*DeploymentMetrics, error) {
+	out := new(DeploymentMetrics)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.monitoring.v1.MonitoringService/GetDeploymentMemoryUsageMetrics", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *monitoringServiceClient) GetDeploymentCPUUsageMetrics(ctx context.Context, in *GetDeploymentMetricsRequest, opts ...grpc.CallOption) (*DeploymentMetrics, error) {
+	out := new(DeploymentMetrics)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.monitoring.v1.MonitoringService/GetDeploymentCPUUsageMetrics", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *monitoringServiceClient) GetDeploymentDiskUsageMetrics(ctx context.Context, in *GetDeploymentMetricsRequest, opts ...grpc.CallOption) (*DeploymentMetrics, error) {
+	out := new(DeploymentMetrics)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.monitoring.v1.MonitoringService/GetDeploymentDiskUsageMetrics", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MonitoringServiceServer is the server API for MonitoringService service.
 type MonitoringServiceServer interface {
 	// Get the current API version of this service.
@@ -305,6 +562,19 @@ type MonitoringServiceServer interface {
 	// Required permissions:
 	// - monitoring.logs.get on the deployment identified by the given deployment ID.
 	GetDeploymentLogs(*GetDeploymentLogsRequest, MonitoringService_GetDeploymentLogsServer) error
+	// Get the memory usage metrics for the deployment based on the given request.
+	// Required perissions:
+	// - monitoring.metrics.get on the deployment identified by the given deployment ID.
+	GetDeploymentMemoryUsageMetrics(context.Context, *GetDeploymentMetricsRequest) (*DeploymentMetrics, error)
+	// Get the CPU usage metrics for the deployment based on the given request.
+	// Required perissions:
+	// - monitoring.metrics.get on the deployment identified by the given deployment ID.
+	GetDeploymentCPUUsageMetrics(context.Context, *GetDeploymentMetricsRequest) (*DeploymentMetrics, error)
+	// Get the disk usage metrics for the deployment based on the given request.
+	// Note: The response will contain an empty list for coordinators.
+	// Required perissions:
+	// - monitoring.metrics.get on the deployment identified by the given deployment ID.
+	GetDeploymentDiskUsageMetrics(context.Context, *GetDeploymentMetricsRequest) (*DeploymentMetrics, error)
 }
 
 // UnimplementedMonitoringServiceServer can be embedded to have forward compatible implementations.
@@ -316,6 +586,15 @@ func (*UnimplementedMonitoringServiceServer) GetAPIVersion(ctx context.Context, 
 }
 func (*UnimplementedMonitoringServiceServer) GetDeploymentLogs(req *GetDeploymentLogsRequest, srv MonitoringService_GetDeploymentLogsServer) error {
 	return status.Errorf(codes.Unimplemented, "method GetDeploymentLogs not implemented")
+}
+func (*UnimplementedMonitoringServiceServer) GetDeploymentMemoryUsageMetrics(ctx context.Context, req *GetDeploymentMetricsRequest) (*DeploymentMetrics, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDeploymentMemoryUsageMetrics not implemented")
+}
+func (*UnimplementedMonitoringServiceServer) GetDeploymentCPUUsageMetrics(ctx context.Context, req *GetDeploymentMetricsRequest) (*DeploymentMetrics, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDeploymentCPUUsageMetrics not implemented")
+}
+func (*UnimplementedMonitoringServiceServer) GetDeploymentDiskUsageMetrics(ctx context.Context, req *GetDeploymentMetricsRequest) (*DeploymentMetrics, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDeploymentDiskUsageMetrics not implemented")
 }
 
 func RegisterMonitoringServiceServer(s *grpc.Server, srv MonitoringServiceServer) {
@@ -361,6 +640,60 @@ func (x *monitoringServiceGetDeploymentLogsServer) Send(m *DeploymentLogsChunk) 
 	return x.ServerStream.SendMsg(m)
 }
 
+func _MonitoringService_GetDeploymentMemoryUsageMetrics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDeploymentMetricsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MonitoringServiceServer).GetDeploymentMemoryUsageMetrics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.monitoring.v1.MonitoringService/GetDeploymentMemoryUsageMetrics",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MonitoringServiceServer).GetDeploymentMemoryUsageMetrics(ctx, req.(*GetDeploymentMetricsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MonitoringService_GetDeploymentCPUUsageMetrics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDeploymentMetricsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MonitoringServiceServer).GetDeploymentCPUUsageMetrics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.monitoring.v1.MonitoringService/GetDeploymentCPUUsageMetrics",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MonitoringServiceServer).GetDeploymentCPUUsageMetrics(ctx, req.(*GetDeploymentMetricsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MonitoringService_GetDeploymentDiskUsageMetrics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDeploymentMetricsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MonitoringServiceServer).GetDeploymentDiskUsageMetrics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.monitoring.v1.MonitoringService/GetDeploymentDiskUsageMetrics",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MonitoringServiceServer).GetDeploymentDiskUsageMetrics(ctx, req.(*GetDeploymentMetricsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _MonitoringService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "arangodb.cloud.monitoring.v1.MonitoringService",
 	HandlerType: (*MonitoringServiceServer)(nil),
@@ -368,6 +701,18 @@ var _MonitoringService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAPIVersion",
 			Handler:    _MonitoringService_GetAPIVersion_Handler,
+		},
+		{
+			MethodName: "GetDeploymentMemoryUsageMetrics",
+			Handler:    _MonitoringService_GetDeploymentMemoryUsageMetrics_Handler,
+		},
+		{
+			MethodName: "GetDeploymentCPUUsageMetrics",
+			Handler:    _MonitoringService_GetDeploymentCPUUsageMetrics_Handler,
+		},
+		{
+			MethodName: "GetDeploymentDiskUsageMetrics",
+			Handler:    _MonitoringService_GetDeploymentDiskUsageMetrics_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
@@ -378,6 +723,171 @@ var _MonitoringService_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Metadata: "monitoring.proto",
+}
+
+func (m *GetDeploymentMetricsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetDeploymentMetricsRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetDeploymentMetricsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Granularity) > 0 {
+		i -= len(m.Granularity)
+		copy(dAtA[i:], m.Granularity)
+		i = encodeVarintMonitoring(dAtA, i, uint64(len(m.Granularity)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if m.EndAt != nil {
+		{
+			size, err := m.EndAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintMonitoring(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.StartAt != nil {
+		{
+			size, err := m.StartAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintMonitoring(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.DeploymentId) > 0 {
+		i -= len(m.DeploymentId)
+		copy(dAtA[i:], m.DeploymentId)
+		i = encodeVarintMonitoring(dAtA, i, uint64(len(m.DeploymentId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *DeploymentMetrics) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *DeploymentMetrics) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DeploymentMetrics) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Coordinators) > 0 {
+		for iNdEx := len(m.Coordinators) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Coordinators[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintMonitoring(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x12
+		}
+	}
+	if len(m.Dbservers) > 0 {
+		for iNdEx := len(m.Dbservers) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Dbservers[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintMonitoring(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *DeploymentMetrics_Sample) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *DeploymentMetrics_Sample) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DeploymentMetrics_Sample) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Value != 0 {
+		i -= 4
+		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.Value))))
+		i--
+		dAtA[i] = 0x15
+	}
+	if m.Timestamp != nil {
+		{
+			size, err := m.Timestamp.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintMonitoring(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *GetDeploymentLogsRequest) Marshal() (dAtA []byte, err error) {
@@ -515,6 +1025,77 @@ func encodeVarintMonitoring(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
+func (m *GetDeploymentMetricsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.DeploymentId)
+	if l > 0 {
+		n += 1 + l + sovMonitoring(uint64(l))
+	}
+	if m.StartAt != nil {
+		l = m.StartAt.Size()
+		n += 1 + l + sovMonitoring(uint64(l))
+	}
+	if m.EndAt != nil {
+		l = m.EndAt.Size()
+		n += 1 + l + sovMonitoring(uint64(l))
+	}
+	l = len(m.Granularity)
+	if l > 0 {
+		n += 1 + l + sovMonitoring(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *DeploymentMetrics) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Dbservers) > 0 {
+		for _, e := range m.Dbservers {
+			l = e.Size()
+			n += 1 + l + sovMonitoring(uint64(l))
+		}
+	}
+	if len(m.Coordinators) > 0 {
+		for _, e := range m.Coordinators {
+			l = e.Size()
+			n += 1 + l + sovMonitoring(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *DeploymentMetrics_Sample) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Timestamp != nil {
+		l = m.Timestamp.Size()
+		n += 1 + l + sovMonitoring(uint64(l))
+	}
+	if m.Value != 0 {
+		n += 5
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *GetDeploymentLogsRequest) Size() (n int) {
 	if m == nil {
 		return 0
@@ -575,6 +1156,410 @@ func sovMonitoring(x uint64) (n int) {
 }
 func sozMonitoring(x uint64) (n int) {
 	return sovMonitoring(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *GetDeploymentMetricsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMonitoring
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetDeploymentMetricsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetDeploymentMetricsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DeploymentId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMonitoring
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMonitoring
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMonitoring
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DeploymentId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StartAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMonitoring
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthMonitoring
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthMonitoring
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.StartAt == nil {
+				m.StartAt = &types.Timestamp{}
+			}
+			if err := m.StartAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field EndAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMonitoring
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthMonitoring
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthMonitoring
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.EndAt == nil {
+				m.EndAt = &types.Timestamp{}
+			}
+			if err := m.EndAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Granularity", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMonitoring
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMonitoring
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMonitoring
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Granularity = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMonitoring(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMonitoring
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *DeploymentMetrics) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMonitoring
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: DeploymentMetrics: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: DeploymentMetrics: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Dbservers", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMonitoring
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthMonitoring
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthMonitoring
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Dbservers = append(m.Dbservers, &DeploymentMetrics_Sample{})
+			if err := m.Dbservers[len(m.Dbservers)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Coordinators", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMonitoring
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthMonitoring
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthMonitoring
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Coordinators = append(m.Coordinators, &DeploymentMetrics_Sample{})
+			if err := m.Coordinators[len(m.Coordinators)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMonitoring(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMonitoring
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *DeploymentMetrics_Sample) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMonitoring
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Sample: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Sample: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Timestamp", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMonitoring
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthMonitoring
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthMonitoring
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Timestamp == nil {
+				m.Timestamp = &types.Timestamp{}
+			}
+			if err := m.Timestamp.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 5 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+			}
+			var v uint32
+			if (iNdEx + 4) > l {
+				return io.ErrUnexpectedEOF
+			}
+			v = uint32(encoding_binary.LittleEndian.Uint32(dAtA[iNdEx:]))
+			iNdEx += 4
+			m.Value = float32(math.Float32frombits(v))
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMonitoring(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMonitoring
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
 }
 func (m *GetDeploymentLogsRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)

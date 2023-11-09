@@ -27,4 +27,6 @@ const (
 
 	// PermissionLogsGet is needed for gettings logs from a deployment.
 	PermissionLogsGet = "monitoring.logs.get"
+	// PermissionLogsGet is needed for gettings metrics from a deployment.
+	PermissionMetricsGet = "monitoring.metrics.get"
 )

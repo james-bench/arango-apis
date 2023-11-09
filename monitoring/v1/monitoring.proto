@@ -51,6 +51,71 @@ service MonitoringService {
             body: "*"
         };
     }
+
+    // Get the memory usage metrics for the deployment based on the given request.
+    // Required perissions:
+    // - monitoring.metrics.get on the deployment identified by the given deployment ID.
+    rpc GetDeploymentMemoryUsageMetrics(GetDeploymentMetricsRequest) returns (DeploymentMetrics) {
+        option (google.api.http) = {
+            get: "/api/monitoring/v1/metrics/memory"
+        };
+    }
+
+    // Get the CPU usage metrics for the deployment based on the given request.
+    // Required perissions:
+    // - monitoring.metrics.get on the deployment identified by the given deployment ID.
+    rpc GetDeploymentCPUUsageMetrics(GetDeploymentMetricsRequest) returns (DeploymentMetrics) {
+        option (google.api.http) = {
+            get: "/api/monitoring/v1/metrics/cpu"
+        };
+    }
+
+    // Get the disk usage metrics for the deployment based on the given request.
+    // Note: The response will contain an empty list for coordinators.
+    // Required perissions:
+    // - monitoring.metrics.get on the deployment identified by the given deployment ID.
+    rpc GetDeploymentDiskUsageMetrics(GetDeploymentMetricsRequest) returns (DeploymentMetrics) {
+        option (google.api.http) = {
+            get: "/api/monitoring/v1/metrics/disk"
+        };
+    }
+}
+
+// Request for getting deployment metrics
+message GetDeploymentMetricsRequest {
+    // ID of the deployment for which metrics are being requested.
+    // This is a required field.
+    string deployment_id = 1;
+    // Start time for the query.
+    // This is a required field.
+    google.protobuf.Timestamp start_at = 2;
+	// The end time for the query.
+    // This is a required field.
+    google.protobuf.Timestamp end_at = 3;
+    // Granularity defines the interval between each metric sample.
+    // This needs to be a valid duration.
+    // Example: 1m, 2m, 30s, 1d, etc.
+    // Defaults to 30s.
+    // This is an optional field.
+    string granularity = 4;
+}
+
+
+// DeploymentMetrics contains the deployment metrics
+message DeploymentMetrics {
+    // Sample defines a single data point.
+    // It contains the value of the sample and the timestamp at which it was captured.
+    message Sample {
+        // Timestamp at which this sample is captured.
+        google.protobuf.Timestamp timestamp = 1;
+        // Value of the given sample.
+        float value = 2;
+    }
+
+    // Timeseries metrics for the DBServers
+    repeated Sample dbservers = 1;
+    // Timeseries metrics for the Coordinators
+    repeated Sample coordinators = 2;
 }
 
 // GetDeploymentLogsRequest contains request arguments for GetDeploymentLogs.
