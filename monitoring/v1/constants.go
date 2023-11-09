@@ -33,11 +33,11 @@ const (
 )
 
 const (
-	// MetricsServerTypeDBServer indicates that the metrics are being requested
-	// for dbservers.
+	// MetricsServerTypeDBServer should be set in GetDeploymentUsageMetricsRequest to indicate
+	// that metrics are being requested for DBServers
 	MetricsServerTypeDBServer = "dbserver"
-	// MetricsServerTypeCoordinator indicates that metrics are being requested
-	// for coordinators
+	// MetricsServerTypeCoordinator should be set in GetDeploymentUsageMetricsRequest to indicate
+	// that metrics are being requested for Coordinators
 	MetricsServerTypeCoordinator = "coordinators"
 
 	// MetricTypeCPU should be set in GetDeploymentUsageMetricsRequest when CPU metrics
