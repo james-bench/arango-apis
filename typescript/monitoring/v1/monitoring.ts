@@ -17,13 +17,9 @@ export interface DeploymentLogsChunk {
 
 // DeploymentMetrics contains the deployment metrics
 export interface DeploymentMetrics {
-  // Timeseries metrics for the DBServers
-  // DeploymentMetrics_Sample
-  dbservers?: DeploymentMetrics_Sample[];
-  
-  // Timeseries metrics for the Coordinators
-  // DeploymentMetrics_Sample
-  coordinators?: DeploymentMetrics_Sample[];
+  // Contains a list of timeseries metrics for each server (of type specified in the request).
+  // DeploymentMetrics_Timeseries
+  metrics?: DeploymentMetrics_Timeseries[];
 }
 
 // Sample defines a single data point.
@@ -36,6 +32,18 @@ export interface DeploymentMetrics_Sample {
   // Value of the given sample.
   // number
   value?: number;
+}
+
+// A timeseries contains a list of samples recorded at different (regular) intervals
+// for a single database server identified by server_id.
+export interface DeploymentMetrics_Timeseries {
+  // ID of the server.
+  // string
+  server_id?: string;
+  
+  // List of metric samples for the server identified by the server_id.
+  // DeploymentMetrics_Sample
+  samples?: DeploymentMetrics_Sample[];
 }
 
 // GetDeploymentLogsRequest contains request arguments for GetDeploymentLogs.
@@ -78,22 +86,31 @@ export interface GetDeploymentMetricsRequest {
   deployment_id?: string;
   
   // Start time for the query.
+  // Note: maximum allowed range is 1 week.
   // This is a required field.
   // googleTypes.Timestamp
   start_at?: googleTypes.Timestamp;
   
   // The end time for the query.
+  // Note: maximum allowed range is 1 week.
   // This is a required field.
   // googleTypes.Timestamp
   end_at?: googleTypes.Timestamp;
   
-  // Granularity defines the interval between each metric sample.
-  // This needs to be a valid duration.
-  // Example: 1m, 2m, 30s, 1d, etc.
-  // Defaults to 30s.
-  // This is an optional field.
+  // The type of server for which metrics are being requested.
+  // Should be one of the following values:
+  // - dbservers
+  // - coordinators
   // string
-  granularity?: string;
+  server_type?: string;
+  
+  // The type of metric being requested.
+  // Should be one of the following values:
+  // - cpu
+  // - memory
+  // - disk
+  // string
+  metric_type?: string;
 }
 
 // MonitoringService is the API used to monitor deployments.
@@ -108,21 +125,11 @@ export interface IMonitoringService {
   // - monitoring.logs.get on the deployment identified by the given deployment ID.
   GetDeploymentLogs: (req: GetDeploymentLogsRequest, cb: (obj: IStreamMessage<DeploymentLogsChunk>) => void) => Promise<IServerStream>;
   
-  // Get the memory usage metrics for the deployment based on the given request.
+  // Get the usage metrics for the deployment based on the given request.
+  // Note: Only at most 1 week worth of data may be requested.
   // Required permissions:
   // - monitoring.metrics.get on the deployment identified by the given deployment ID.
-  GetDeploymentMemoryUsageMetrics: (req: GetDeploymentMetricsRequest) => Promise<DeploymentMetrics>;
-  
-  // Get the CPU usage metrics for the deployment based on the given request.
-  // Required permissions:
-  // - monitoring.metrics.get on the deployment identified by the given deployment ID.
-  GetDeploymentCPUUsageMetrics: (req: GetDeploymentMetricsRequest) => Promise<DeploymentMetrics>;
-  
-  // Get the disk usage metrics for the deployment based on the given request.
-  // Note: The response will contain an empty list for coordinators.
-  // Required permissions:
-  // - monitoring.metrics.get on the deployment identified by the given deployment ID.
-  GetDeploymentDiskUsageMetrics: (req: GetDeploymentMetricsRequest) => Promise<DeploymentMetrics>;
+  GetDeploymentUsageMetrics: (req: GetDeploymentMetricsRequest) => Promise<DeploymentMetrics>;
 }
 
 // MonitoringService is the API used to monitor deployments.
@@ -144,30 +151,12 @@ export class MonitoringService implements IMonitoringService {
     return api.server_stream(url, "POST", req, cb);
   }
   
-  // Get the memory usage metrics for the deployment based on the given request.
+  // Get the usage metrics for the deployment based on the given request.
+  // Note: Only at most 1 week worth of data may be requested.
   // Required permissions:
   // - monitoring.metrics.get on the deployment identified by the given deployment ID.
-  async GetDeploymentMemoryUsageMetrics(req: GetDeploymentMetricsRequest): Promise<DeploymentMetrics> {
-    const path = `/api/monitoring/v1/metrics/memory`;
-    const url = path + api.queryString(req, []);
-    return api.get(url, undefined);
-  }
-  
-  // Get the CPU usage metrics for the deployment based on the given request.
-  // Required permissions:
-  // - monitoring.metrics.get on the deployment identified by the given deployment ID.
-  async GetDeploymentCPUUsageMetrics(req: GetDeploymentMetricsRequest): Promise<DeploymentMetrics> {
-    const path = `/api/monitoring/v1/metrics/cpu`;
-    const url = path + api.queryString(req, []);
-    return api.get(url, undefined);
-  }
-  
-  // Get the disk usage metrics for the deployment based on the given request.
-  // Note: The response will contain an empty list for coordinators.
-  // Required permissions:
-  // - monitoring.metrics.get on the deployment identified by the given deployment ID.
-  async GetDeploymentDiskUsageMetrics(req: GetDeploymentMetricsRequest): Promise<DeploymentMetrics> {
-    const path = `/api/monitoring/v1/metrics/disk`;
+  async GetDeploymentUsageMetrics(req: GetDeploymentMetricsRequest): Promise<DeploymentMetrics> {
+    const path = `/api/monitoring/v1/metrics`;
     const url = path + api.queryString(req, []);
     return api.get(url, undefined);
   }

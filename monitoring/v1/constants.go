@@ -31,3 +31,22 @@ const (
 	// In JSON format, log lines are encoded as a single line JSON object.
 	FormatJSON = "json"
 )
+
+const (
+	// MetricsServerTypeDBServer indicates that the metrics are being requested
+	// for dbservers.
+	MetricsServerTypeDBServer = "dbserver"
+	// MetricsServerTypeCoordinator indicates that metrics are being requested
+	// for coordinators
+	MetricsServerTypeCoordinator = "coordinators"
+
+	// MetricTypeCPU should be set in GetDeploymentUsageMetricsRequest when CPU metrics
+	// are being requested
+	MetricTypeCPU = "cpu"
+	// MetricTypeMemory should be set in GetDeploymentUsageMetricsRequest when Memory metrics
+	// are being requested
+	MetricTypeMemory = "memory"
+	// MetricTypeDisk should be set in GetDeploymentUsageMetricsRequest when Disk metrics
+	// are being requested
+	MetricTypeDisk = "disk"
+)
