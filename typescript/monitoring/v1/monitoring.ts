@@ -99,7 +99,7 @@ export interface GetDeploymentMetricsRequest {
   
   // The type of server for which metrics are being requested.
   // Should be one of the following values:
-  // - DBServer
+  // - Dbserver
   // - Coordinator
   // - Single
   // string

@@ -78,7 +78,7 @@ message GetDeploymentMetricsRequest {
     google.protobuf.Timestamp end_at = 3;
     // The type of server for which metrics are being requested.
     // Should be one of the following values:
-    // - DBServer
+    // - Dbserver
     // - Coordinator
     // - Single
     string server_type = 4;

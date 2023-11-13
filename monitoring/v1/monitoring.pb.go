@@ -45,7 +45,7 @@ type GetDeploymentMetricsRequest struct {
 	EndAt *types.Timestamp `protobuf:"bytes,3,opt,name=end_at,json=endAt,proto3" json:"end_at,omitempty"`
 	// The type of server for which metrics are being requested.
 	// Should be one of the following values:
-	// - DBServer
+	// - Dbserver
 	// - Coordinator
 	// - Single
 	ServerType string `protobuf:"bytes,4,opt,name=server_type,json=serverType,proto3" json:"server_type,omitempty"`
