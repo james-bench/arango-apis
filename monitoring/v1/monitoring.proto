@@ -51,6 +51,68 @@ service MonitoringService {
             body: "*"
         };
     }
+
+    // Get the usage metrics for the deployment based on the given request.
+    // Note: Only at most 1 week worth of data may be requested.
+    // Required permissions:
+    // - monitoring.metrics.get on the deployment identified by the given deployment ID.
+    rpc GetDeploymentUsageMetrics(GetDeploymentMetricsRequest) returns (DeploymentMetrics) {
+        option (google.api.http) = {
+            get: "/api/monitoring/v1/metrics"
+        };
+    }
+}
+
+// Request for getting deployment metrics
+message GetDeploymentMetricsRequest {
+    // ID of the deployment for which metrics are being requested.
+    // This is a required field.
+    string deployment_id = 1;
+    // Start time for the query.
+    // Note: maximum allowed range is 1 week.
+    // This is a required field.
+    google.protobuf.Timestamp start_at = 2;
+    // The end time for the query.
+    // Note: maximum allowed range is 1 week.
+    // This is a required field.
+    google.protobuf.Timestamp end_at = 3;
+    // The type of server for which metrics are being requested.
+    // Should be one of the following values:
+    // - Dbserver
+    // - Coordinator
+    // - Single
+    string server_type = 4;
+    // The type of metric being requested.
+    // Should be one of the following values:
+    // - cpu
+    // - memory
+    // - disk
+    string metric_type = 5;
+}
+
+
+// DeploymentMetrics contains the deployment metrics
+message DeploymentMetrics {
+    // Sample defines a single data point.
+    // It contains the value of the sample and the timestamp at which it was captured.
+    message Sample {
+        // Timestamp at which this sample is captured.
+        google.protobuf.Timestamp timestamp = 1;
+        // Value of the given sample.
+        float value = 2;
+    }
+
+    // A timeseries contains a list of samples recorded at different (regular) intervals
+    // for a single database server identified by server_id.
+    message Timeseries {
+        // ID of the server.
+        string server_id = 1;
+        // List of metric samples for the server identified by the server_id.
+        repeated Sample samples = 2;
+    }
+    
+    // Contains a list of timeseries metrics for each server (of type specified in the request).
+    repeated Timeseries metrics = 1;
 }
 
 // GetDeploymentLogsRequest contains request arguments for GetDeploymentLogs.

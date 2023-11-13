@@ -1217,7 +1217,23 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.monitoring.v1.DeploymentMetrics"><span class="badge">M</span>DeploymentMetrics</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.monitoring.v1.DeploymentMetrics.Sample"><span class="badge">M</span>DeploymentMetrics.Sample</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.monitoring.v1.DeploymentMetrics.Timeseries"><span class="badge">M</span>DeploymentMetrics.Timeseries</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.monitoring.v1.GetDeploymentLogsRequest"><span class="badge">M</span>GetDeploymentLogsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.monitoring.v1.GetDeploymentMetricsRequest"><span class="badge">M</span>GetDeploymentMetricsRequest</a>
                 </li>
               
               
@@ -15982,6 +15998,92 @@ Required permissions:
 
         
       
+        <h3 id="arangodb.cloud.monitoring.v1.DeploymentMetrics">DeploymentMetrics</h3>
+        <p>DeploymentMetrics contains the deployment metrics</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>metrics</td>
+                  <td><a href="#arangodb.cloud.monitoring.v1.DeploymentMetrics.Timeseries">DeploymentMetrics.Timeseries</a></td>
+                  <td>repeated</td>
+                  <td><p>Contains a list of timeseries metrics for each server (of type specified in the request). </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.monitoring.v1.DeploymentMetrics.Sample">DeploymentMetrics.Sample</h3>
+        <p>Sample defines a single data point.</p><p>It contains the value of the sample and the timestamp at which it was captured.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>timestamp</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Timestamp at which this sample is captured. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Value of the given sample. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.monitoring.v1.DeploymentMetrics.Timeseries">DeploymentMetrics.Timeseries</h3>
+        <p>A timeseries contains a list of samples recorded at different (regular) intervals</p><p>for a single database server identified by server_id.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>server_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the server. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>samples</td>
+                  <td><a href="#arangodb.cloud.monitoring.v1.DeploymentMetrics.Sample">DeploymentMetrics.Sample</a></td>
+                  <td>repeated</td>
+                  <td><p>List of metric samples for the server identified by the server_id. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.monitoring.v1.GetDeploymentLogsRequest">GetDeploymentLogsRequest</h3>
         <p>GetDeploymentLogsRequest contains request arguments for GetDeploymentLogs.</p>
 
@@ -16049,6 +16151,71 @@ The possible values are text and json, with default value being text. </p></td>
 
         
       
+        <h3 id="arangodb.cloud.monitoring.v1.GetDeploymentMetricsRequest">GetDeploymentMetricsRequest</h3>
+        <p>Request for getting deployment metrics</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the deployment for which metrics are being requested.
+This is a required field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>start_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Start time for the query.
+Note: maximum allowed range is 1 week.
+This is a required field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>end_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The end time for the query.
+Note: maximum allowed range is 1 week.
+This is a required field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>server_type</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The type of server for which metrics are being requested.
+Should be one of the following values:
+- Dbserver
+- Coordinator
+- Single </p></td>
+                </tr>
+              
+                <tr>
+                  <td>metric_type</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The type of metric being requested.
+Should be one of the following values:
+- cpu
+- memory
+- disk </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
 
@@ -16079,6 +16246,16 @@ Required permissions:
                 <td><p>Fetch all logs of the deployment that matches the given request.
 Required permissions:
 - monitoring.logs.get on the deployment identified by the given deployment ID.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetDeploymentUsageMetrics</td>
+                <td><a href="#arangodb.cloud.monitoring.v1.GetDeploymentMetricsRequest">GetDeploymentMetricsRequest</a></td>
+                <td><a href="#arangodb.cloud.monitoring.v1.DeploymentMetrics">DeploymentMetrics</a></td>
+                <td><p>Get the usage metrics for the deployment based on the given request.
+Note: Only at most 1 week worth of data may be requested.
+Required permissions:
+- monitoring.metrics.get on the deployment identified by the given deployment ID.</p></td>
               </tr>
             
           </tbody>
@@ -16116,6 +16293,16 @@ Required permissions:
                 <td>POST</td>
                 <td>/api/monitoring/v1/streaming/deployment-logs</td>
                 <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetDeploymentUsageMetrics</td>
+                <td>GET</td>
+                <td>/api/monitoring/v1/metrics</td>
+                <td></td>
               </tr>
               
             

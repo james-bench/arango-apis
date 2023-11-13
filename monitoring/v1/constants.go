@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2023 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,9 +16,6 @@
 // limitations under the License.
 //
 // Copyright holder is ArangoDB GmbH, Cologne, Germany
-//
-// Author Gergrely Brautigam
-//
 
 package v1
 
@@ -30,4 +27,26 @@ const (
 	// FormatJson defines the log format to be json.
 	// In JSON format, log lines are encoded as a single line JSON object.
 	FormatJSON = "json"
+)
+
+const (
+	// MetricsServerTypeDBServer should be set in GetDeploymentUsageMetricsRequest to indicate
+	// that metrics are being requested for DBServers
+	MetricsServerTypeDBServer = "Dbserver"
+	// MetricsServerTypeCoordinator should be set in GetDeploymentUsageMetricsRequest to indicate
+	// that metrics are being requested for Coordinators
+	MetricsServerTypeCoordinator = "Coordinator"
+	// MetricsServerTypeSingle should be set in GetDeploymentUsageMetricsRequest to indicate
+	// that metrics are being requested for Single server
+	MetricsServerTypeSingle = "Single"
+
+	// MetricTypeCPU should be set in GetDeploymentUsageMetricsRequest when CPU metrics
+	// are being requested
+	MetricTypeCPU = "cpu"
+	// MetricTypeMemory should be set in GetDeploymentUsageMetricsRequest when Memory metrics
+	// are being requested
+	MetricTypeMemory = "memory"
+	// MetricTypeDisk should be set in GetDeploymentUsageMetricsRequest when Disk metrics
+	// are being requested
+	MetricTypeDisk = "disk"
 )

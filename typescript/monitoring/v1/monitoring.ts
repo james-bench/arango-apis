@@ -15,6 +15,37 @@ export interface DeploymentLogsChunk {
   chunk?: string;
 }
 
+// DeploymentMetrics contains the deployment metrics
+export interface DeploymentMetrics {
+  // Contains a list of timeseries metrics for each server (of type specified in the request).
+  // DeploymentMetrics_Timeseries
+  metrics?: DeploymentMetrics_Timeseries[];
+}
+
+// Sample defines a single data point.
+// It contains the value of the sample and the timestamp at which it was captured.
+export interface DeploymentMetrics_Sample {
+  // Timestamp at which this sample is captured.
+  // googleTypes.Timestamp
+  timestamp?: googleTypes.Timestamp;
+  
+  // Value of the given sample.
+  // number
+  value?: number;
+}
+
+// A timeseries contains a list of samples recorded at different (regular) intervals
+// for a single database server identified by server_id.
+export interface DeploymentMetrics_Timeseries {
+  // ID of the server.
+  // string
+  server_id?: string;
+  
+  // List of metric samples for the server identified by the server_id.
+  // DeploymentMetrics_Sample
+  samples?: DeploymentMetrics_Sample[];
+}
+
 // GetDeploymentLogsRequest contains request arguments for GetDeploymentLogs.
 export interface GetDeploymentLogsRequest {
   // Identifier of the deployment to get the logs from.
@@ -47,6 +78,42 @@ export interface GetDeploymentLogsRequest {
   limit?: number;
 }
 
+// Request for getting deployment metrics
+export interface GetDeploymentMetricsRequest {
+  // ID of the deployment for which metrics are being requested.
+  // This is a required field.
+  // string
+  deployment_id?: string;
+  
+  // Start time for the query.
+  // Note: maximum allowed range is 1 week.
+  // This is a required field.
+  // googleTypes.Timestamp
+  start_at?: googleTypes.Timestamp;
+  
+  // The end time for the query.
+  // Note: maximum allowed range is 1 week.
+  // This is a required field.
+  // googleTypes.Timestamp
+  end_at?: googleTypes.Timestamp;
+  
+  // The type of server for which metrics are being requested.
+  // Should be one of the following values:
+  // - Dbserver
+  // - Coordinator
+  // - Single
+  // string
+  server_type?: string;
+  
+  // The type of metric being requested.
+  // Should be one of the following values:
+  // - cpu
+  // - memory
+  // - disk
+  // string
+  metric_type?: string;
+}
+
 // MonitoringService is the API used to monitor deployments.
 export interface IMonitoringService {
   // Get the current API version of this service.
@@ -58,6 +125,12 @@ export interface IMonitoringService {
   // Required permissions:
   // - monitoring.logs.get on the deployment identified by the given deployment ID.
   GetDeploymentLogs: (req: GetDeploymentLogsRequest, cb: (obj: IStreamMessage<DeploymentLogsChunk>) => void) => Promise<IServerStream>;
+  
+  // Get the usage metrics for the deployment based on the given request.
+  // Note: Only at most 1 week worth of data may be requested.
+  // Required permissions:
+  // - monitoring.metrics.get on the deployment identified by the given deployment ID.
+  GetDeploymentUsageMetrics: (req: GetDeploymentMetricsRequest) => Promise<DeploymentMetrics>;
 }
 
 // MonitoringService is the API used to monitor deployments.
@@ -77,5 +150,15 @@ export class MonitoringService implements IMonitoringService {
   async GetDeploymentLogs(req: GetDeploymentLogsRequest, cb: (obj: IStreamMessage<DeploymentLogsChunk>) => void): Promise<IServerStream> {
     const url = `/api/monitoring/v1/streaming/deployment-logs`;
     return api.server_stream(url, "POST", req, cb);
+  }
+  
+  // Get the usage metrics for the deployment based on the given request.
+  // Note: Only at most 1 week worth of data may be requested.
+  // Required permissions:
+  // - monitoring.metrics.get on the deployment identified by the given deployment ID.
+  async GetDeploymentUsageMetrics(req: GetDeploymentMetricsRequest): Promise<DeploymentMetrics> {
+    const path = `/api/monitoring/v1/metrics`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
   }
 }
