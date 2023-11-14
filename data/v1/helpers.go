@@ -155,6 +155,7 @@ func DeploymentStatusEqual(a, b *Deployment_Status, ignoreTimestamps, ignoreVola
 		a.GetDescription() == b.GetDescription() &&
 		a.GetCreated() == b.GetCreated() &&
 		a.GetReady() == b.GetReady() &&
+		a.GetReadOnly() == b.GetReadOnly() &&
 		a.GetUpgrading() == b.GetUpgrading() &&
 		a.GetBootstrapped() == b.GetBootstrapped() &&
 		strings.Join(a.GetServerVersions(), ",") == strings.Join(b.GetServerVersions(), ",") &&
