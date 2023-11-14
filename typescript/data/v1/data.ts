@@ -817,6 +817,10 @@ export interface Deployment_Status {
   // Set if the deployment is up-to-date and has no pending updates.
   // boolean
   is_up_to_date?: boolean;
+  
+  // Set if the deployment is in read-only mode.
+  // boolean
+  read_only?: boolean;
 }
 
 // Result for GetDeploymentCredentials
