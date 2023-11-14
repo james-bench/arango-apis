@@ -694,6 +694,8 @@ message Deployment {
         bool backup_upload_in_progress = 102;
         // Set if the deployment is up-to-date and has no pending updates.
         bool is_up_to_date = 103;
+        // Set if the deployment is in read-only mode.
+        bool read_only = 104;
     }
     Status status = 201;
 
