@@ -86,7 +86,7 @@ service ReplicationService {
     // Create a new deployment migration.
     // Note: currently migration is supported only for Deployments with 'free' model.
     // Required permissions:
-    // - replication.deploymentmigration.create
+    // - replication.deploymentmigration.create on the specified deployment ID
     rpc CreateDeploymentMigration(DeploymentMigration) returns (DeploymentMigration) {
         option (google.api.http) = {
             post: "/api/replication/v1/deploymentmigration"
@@ -95,7 +95,7 @@ service ReplicationService {
 
     // Get info about the deployment migration for a deployment identified by the given ID.
     // Required permissions:
-    // - replication.deploymentmigration.get
+    // - replication.deploymentmigration.get on the specified deployment ID
     rpc GetDeploymentMigration(common.v1.IDOptions) returns (DeploymentMigration) {
         option (google.api.http) = {
             get: "/api/replication/v1/deploymentmigration/{id}"
