@@ -19710,6 +19710,16 @@ This is a read-only value that can be empty. </p></td>
 This is a read-only value. </p></td>
                 </tr>
               
+                <tr>
+                  <td>created_with</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The application/tool which created this event.
+This information is collected by inspecting headers: 
+First the x-arango-graph-user-agent will be tried, if this isn&#39;t set, the first service name from oasis-trace will be used, otherwise an empty string.
+This is a read-only value that can be empty. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 

@@ -126,6 +126,13 @@ export interface Event {
   // This is a read-only value.
   // boolean
   status_only?: boolean;
+  
+  // The application/tool which created this event.
+  // This information is collected by inspecting headers:
+  // First the x-arango-graph-user-agent will be tried, if this isn't set, the first service name from oasis-trace will be used, otherwise an empty string.
+  // This is a read-only value that can be empty.
+  // string
+  created_with?: string;
 }
 export interface Event_PayloadEntry {
   // string
