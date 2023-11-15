@@ -182,14 +182,12 @@ message DeploymentReplication {
     Status status = 100;
 }
 
-
 // DeploymentMigration defines a request for performing the migration of a deployment.
 message DeploymentMigration {
     // Identifier of the source deployment that needs to be migrated.
     // This is a required field.
     string source_deployment_id = 1;
     // Specification of the target deployment.
-    // Only model, disk_performance_id and region_id are required.
     data.v1.Deployment target_deployment = 2;
     // Timestamp of when this migration was initiated.
     // This is a read-only field.
