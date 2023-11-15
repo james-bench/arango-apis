@@ -45,7 +45,6 @@ export interface DeploymentMigration {
   source_deployment_id?: string;
   
   // Specification of the target deployment.
-  // Only model, disk_performance_id and region_id are required.
   // arangodb.cloud.data.v1.Deployment
   target_deployment?: arangodb_cloud_data_v1_Deployment;
   
@@ -216,12 +215,12 @@ export interface IReplicationService {
   // Create a new deployment migration.
   // Note: currently migration is supported only for Deployments with 'free' model.
   // Required permissions:
-  // - replication.deploymentmigration.create
+  // - replication.deploymentmigration.create on the specified deployment ID
   CreateDeploymentMigration: (req: DeploymentMigration) => Promise<DeploymentMigration>;
   
   // Get info about the deployment migration for a deployment identified by the given ID.
   // Required permissions:
-  // - replication.deploymentmigration.get
+  // - replication.deploymentmigration.get on the specified deployment ID
   GetDeploymentMigration: (req: arangodb_cloud_common_v1_IDOptions) => Promise<DeploymentMigration>;
 }
 
@@ -277,7 +276,7 @@ export class ReplicationService implements IReplicationService {
   // Create a new deployment migration.
   // Note: currently migration is supported only for Deployments with 'free' model.
   // Required permissions:
-  // - replication.deploymentmigration.create
+  // - replication.deploymentmigration.create on the specified deployment ID
   async CreateDeploymentMigration(req: DeploymentMigration): Promise<DeploymentMigration> {
     const path = `/api/replication/v1/deploymentmigration`;
     const url = path + api.queryString(req, []);
@@ -286,7 +285,7 @@ export class ReplicationService implements IReplicationService {
   
   // Get info about the deployment migration for a deployment identified by the given ID.
   // Required permissions:
-  // - replication.deploymentmigration.get
+  // - replication.deploymentmigration.get on the specified deployment ID
   async GetDeploymentMigration(req: arangodb_cloud_common_v1_IDOptions): Promise<DeploymentMigration> {
     const path = `/api/replication/v1/deploymentmigration/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);

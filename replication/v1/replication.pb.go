@@ -395,7 +395,6 @@ type DeploymentMigration struct {
 	// This is a required field.
 	SourceDeploymentId string `protobuf:"bytes,1,opt,name=source_deployment_id,json=sourceDeploymentId,proto3" json:"source_deployment_id,omitempty"`
 	// Specification of the target deployment.
-	// Only model, disk_performance_id and region_id are required.
 	TargetDeployment *v1.Deployment `protobuf:"bytes,2,opt,name=target_deployment,json=targetDeployment,proto3" json:"target_deployment,omitempty"`
 	// Timestamp of when this migration was initiated.
 	// This is a read-only field.
@@ -687,11 +686,11 @@ type ReplicationServiceClient interface {
 	// Create a new deployment migration.
 	// Note: currently migration is supported only for Deployments with 'free' model.
 	// Required permissions:
-	// - replication.deploymentmigration.create
+	// - replication.deploymentmigration.create on the specified deployment ID
 	CreateDeploymentMigration(ctx context.Context, in *DeploymentMigration, opts ...grpc.CallOption) (*DeploymentMigration, error)
 	// Get info about the deployment migration for a deployment identified by the given ID.
 	// Required permissions:
-	// - replication.deploymentmigration.get
+	// - replication.deploymentmigration.get on the specified deployment ID
 	GetDeploymentMigration(ctx context.Context, in *v11.IDOptions, opts ...grpc.CallOption) (*DeploymentMigration, error)
 }
 
@@ -791,11 +790,11 @@ type ReplicationServiceServer interface {
 	// Create a new deployment migration.
 	// Note: currently migration is supported only for Deployments with 'free' model.
 	// Required permissions:
-	// - replication.deploymentmigration.create
+	// - replication.deploymentmigration.create on the specified deployment ID
 	CreateDeploymentMigration(context.Context, *DeploymentMigration) (*DeploymentMigration, error)
 	// Get info about the deployment migration for a deployment identified by the given ID.
 	// Required permissions:
-	// - replication.deploymentmigration.get
+	// - replication.deploymentmigration.get on the specified deployment ID
 	GetDeploymentMigration(context.Context, *v11.IDOptions) (*DeploymentMigration, error)
 }
 

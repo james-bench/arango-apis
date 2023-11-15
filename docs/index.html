@@ -19211,8 +19211,7 @@ This is a required field. </p></td>
                   <td>target_deployment</td>
                   <td><a href="#arangodb.cloud.data.v1.Deployment">arangodb.cloud.data.v1.Deployment</a></td>
                   <td></td>
-                  <td><p>Specification of the target deployment.
-Only model, disk_performance_id and region_id are required. </p></td>
+                  <td><p>Specification of the target deployment. </p></td>
                 </tr>
               
                 <tr>
@@ -19541,7 +19540,7 @@ Required permissions:
                 <td><p>Create a new deployment migration.
 Note: currently migration is supported only for Deployments with &#39;free&#39; model.
 Required permissions:
-- replication.deploymentmigration.create</p></td>
+- replication.deploymentmigration.create on the specified deployment ID</p></td>
               </tr>
             
               <tr>
@@ -19550,7 +19549,7 @@ Required permissions:
                 <td><a href="#arangodb.cloud.replication.v1.DeploymentMigration">DeploymentMigration</a></td>
                 <td><p>Get info about the deployment migration for a deployment identified by the given ID.
 Required permissions:
-- replication.deploymentmigration.get</p></td>
+- replication.deploymentmigration.get on the specified deployment ID</p></td>
               </tr>
             
           </tbody>
