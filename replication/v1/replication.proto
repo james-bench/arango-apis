@@ -82,6 +82,25 @@ service ReplicationService {
             body: "*"
         };
     }
+
+    // Create a new deployment migration.
+    // Note: currently migration is supported only for Deployments with 'free' model.
+    // Required permissions:
+    // - replication.deploymentmigration.create
+    rpc CreateDeploymentMigration(DeploymentMigration) returns (DeploymentMigration) {
+        option (google.api.http) = {
+            post: "/api/replication/v1/deploymentmigration"
+        };
+    }
+
+    // Get info about the deployment migration for a deployment identified by the given ID.
+    // Required permissions:
+    // - replication.deploymentmigration.get
+    rpc GetDeploymentMigration(common.v1.IDOptions) returns (DeploymentMigration) {
+        option (google.api.http) = {
+            get: "/api/replication/v1/deploymentmigration/{id}"
+        };
+    }
 }
 
 // CloneDeploymentFromBackupRequest defines a request object for clone deployment call.
@@ -160,5 +179,43 @@ message DeploymentReplication {
         float progress = 8;
     }
     // Status of the DeploymentReplication.
+    Status status = 100;
+}
+
+
+// DeploymentMigration defines a request for performing the migration of a deployment.
+message DeploymentMigration {
+    // Identifier of the source deployment that needs to be migrated.
+    // This is a required field.
+    string source_deployment_id = 1;
+    // Specification of the target deployment.
+    // Only model, disk_performance_id and region_id are required.
+    data.v1.Deployment target_deployment = 2;
+    // Timestamp of when this migration was initiated.
+    // This is a read-only field.
+    google.protobuf.Timestamp created_at = 3;
+
+    // Status of the DeploymentMigration.
+    message Status {
+        // The current phase of the migration.
+        // This will contain only one of the following values:
+        // - SourceBackupInProgress:                Creation of backup of source deployment is in progress
+        // - TargetDeploymentCreationInProgress:    Creation of target deployment is in progress
+        // - TargetDeploymentModelChangeInProgress: The model of the target deployment is being updated.
+        // - Failed:                                Migration process has failed
+        // - Complete:                              Migration process has completed
+        string phase = 1;
+        // Additional information regarding the phase
+        string description = 2;
+        // Timestamp of when the status was last updated.
+        google.protobuf.Timestamp last_updated_at = 3;
+        // ID of the backup at the source deployment.
+        // This backup will be used to perform a restore at the target deployment.
+        string backup_id = 4;
+        // ID of the target deployment.
+        string target_deployment_id = 5;
+    }
+    // Status of the migration.
+    // This is a read-only field.
     Status status = 100;
 }

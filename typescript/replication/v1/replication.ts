@@ -37,6 +37,59 @@ export interface CloneDeploymentFromBackupRequest {
   project_id?: string;
 }
 
+// DeploymentMigration defines a request for performing the migration of a deployment.
+export interface DeploymentMigration {
+  // Identifier of the source deployment that needs to be migrated.
+  // This is a required field.
+  // string
+  source_deployment_id?: string;
+  
+  // Specification of the target deployment.
+  // Only model, disk_performance_id and region_id are required.
+  // arangodb.cloud.data.v1.Deployment
+  target_deployment?: arangodb_cloud_data_v1_Deployment;
+  
+  // Timestamp of when this migration was initiated.
+  // This is a read-only field.
+  // googleTypes.Timestamp
+  created_at?: googleTypes.Timestamp;
+  
+  // Status of the migration.
+  // This is a read-only field.
+  // DeploymentMigration_Status
+  status?: DeploymentMigration_Status;
+}
+
+// Status of the DeploymentMigration.
+export interface DeploymentMigration_Status {
+  // The current phase of the migration.
+  // This will contain only one of the following values:
+  // - SourceBackupInProgress:                Creation of backup of source deployment is in progress
+  // - TargetDeploymentCreationInProgress:    Creation of target deployment is in progress
+  // - TargetDeploymentModelChangeInProgress: The model of the target deployment is being updated.
+  // - Failed:                                Migration process has failed
+  // - Complete:                              Migration process has completed
+  // string
+  phase?: string;
+  
+  // Additional information regarding the phase
+  // string
+  description?: string;
+  
+  // Timestamp of when the status was last updated.
+  // googleTypes.Timestamp
+  last_updated_at?: googleTypes.Timestamp;
+  
+  // ID of the backup at the source deployment.
+  // This backup will be used to perform a restore at the target deployment.
+  // string
+  backup_id?: string;
+  
+  // ID of the target deployment.
+  // string
+  target_deployment_id?: string;
+}
+
 // DeploymentReplication defines a request object for creating or updating a deployment replication
 export interface DeploymentReplication {
   // Identifier of the deployment for a given DeploymentReplication
@@ -159,6 +212,17 @@ export interface IReplicationService {
   // Required permissions:
   // - replication.deploymentreplication.update
   UpdateDeploymentReplication: (req: DeploymentReplication) => Promise<DeploymentReplication>;
+  
+  // Create a new deployment migration.
+  // Note: currently migration is supported only for Deployments with 'free' model.
+  // Required permissions:
+  // - replication.deploymentmigration.create
+  CreateDeploymentMigration: (req: DeploymentMigration) => Promise<DeploymentMigration>;
+  
+  // Get info about the deployment migration for a deployment identified by the given ID.
+  // Required permissions:
+  // - replication.deploymentmigration.get
+  GetDeploymentMigration: (req: arangodb_cloud_common_v1_IDOptions) => Promise<DeploymentMigration>;
 }
 
 // ReplicationService is the API used to replicate a deployment.
@@ -208,5 +272,24 @@ export class ReplicationService implements IReplicationService {
   async UpdateDeploymentReplication(req: DeploymentReplication): Promise<DeploymentReplication> {
     const url = `/api/replication/v1/deployment/${encodeURIComponent(req.deployment_id || '')}/replication`;
     return api.put(url, req);
+  }
+  
+  // Create a new deployment migration.
+  // Note: currently migration is supported only for Deployments with 'free' model.
+  // Required permissions:
+  // - replication.deploymentmigration.create
+  async CreateDeploymentMigration(req: DeploymentMigration): Promise<DeploymentMigration> {
+    const path = `/api/replication/v1/deploymentmigration`;
+    const url = path + api.queryString(req, []);
+    return api.post(url, undefined);
+  }
+  
+  // Get info about the deployment migration for a deployment identified by the given ID.
+  // Required permissions:
+  // - replication.deploymentmigration.get
+  async GetDeploymentMigration(req: arangodb_cloud_common_v1_IDOptions): Promise<DeploymentMigration> {
+    const path = `/api/replication/v1/deploymentmigration/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
   }
 }

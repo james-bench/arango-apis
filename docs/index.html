@@ -1503,6 +1503,14 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.replication.v1.DeploymentMigration"><span class="badge">M</span>DeploymentMigration</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.replication.v1.DeploymentMigration.Status"><span class="badge">M</span>DeploymentMigration.Status</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.replication.v1.DeploymentReplication"><span class="badge">M</span>DeploymentReplication</a>
                 </li>
               
@@ -19181,6 +19189,114 @@ This is an optional field </p></td>
 
         
       
+        <h3 id="arangodb.cloud.replication.v1.DeploymentMigration">DeploymentMigration</h3>
+        <p>DeploymentMigration defines a request for performing the migration of a deployment.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>source_deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the source deployment that needs to be migrated.
+This is a required field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>target_deployment</td>
+                  <td><a href="#arangodb.cloud.data.v1.Deployment">arangodb.cloud.data.v1.Deployment</a></td>
+                  <td></td>
+                  <td><p>Specification of the target deployment.
+Only model, disk_performance_id and region_id are required. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Timestamp of when this migration was initiated.
+This is a read-only field. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#arangodb.cloud.replication.v1.DeploymentMigration.Status">DeploymentMigration.Status</a></td>
+                  <td></td>
+                  <td><p>Status of the migration.
+This is a read-only field. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.replication.v1.DeploymentMigration.Status">DeploymentMigration.Status</h3>
+        <p>Status of the DeploymentMigration.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>phase</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The current phase of the migration.
+This will contain only one of the following values:
+- SourceBackupInProgress:                Creation of backup of source deployment is in progress
+- TargetDeploymentCreationInProgress:    Creation of target deployment is in progress
+- TargetDeploymentModelChangeInProgress: The model of the target deployment is being updated.
+- Failed:                                Migration process has failed
+- Complete:                              Migration process has completed </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Additional information regarding the phase </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_updated_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Timestamp of when the status was last updated. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>backup_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the backup at the source deployment.
+This backup will be used to perform a restore at the target deployment. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>target_deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the target deployment. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.replication.v1.DeploymentReplication">DeploymentReplication</h3>
         <p>DeploymentReplication defines a request object for creating or updating a deployment replication</p>
 
@@ -19418,6 +19534,25 @@ Required permissions:
 - replication.deploymentreplication.update</p></td>
               </tr>
             
+              <tr>
+                <td>CreateDeploymentMigration</td>
+                <td><a href="#arangodb.cloud.replication.v1.DeploymentMigration">DeploymentMigration</a></td>
+                <td><a href="#arangodb.cloud.replication.v1.DeploymentMigration">DeploymentMigration</a></td>
+                <td><p>Create a new deployment migration.
+Note: currently migration is supported only for Deployments with &#39;free&#39; model.
+Required permissions:
+- replication.deploymentmigration.create</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetDeploymentMigration</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.replication.v1.DeploymentMigration">DeploymentMigration</a></td>
+                <td><p>Get info about the deployment migration for a deployment identified by the given ID.
+Required permissions:
+- replication.deploymentmigration.get</p></td>
+              </tr>
+            
           </tbody>
         </table>
 
@@ -19473,6 +19608,26 @@ Required permissions:
                 <td>PUT</td>
                 <td>/api/replication/v1/deployment/{deployment_id}/replication</td>
                 <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>CreateDeploymentMigration</td>
+                <td>POST</td>
+                <td>/api/replication/v1/deploymentmigration</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetDeploymentMigration</td>
+                <td>GET</td>
+                <td>/api/replication/v1/deploymentmigration/{id}</td>
+                <td></td>
               </tr>
               
             
