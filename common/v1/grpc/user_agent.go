@@ -47,3 +47,11 @@ func WithUserAgent(ctx context.Context, userAgent string) context.Context {
 	md.Set(metadataKeyUA, userAgent)
 	return metadata.NewOutgoingContext(ctx, md)
 }
+
+// WithUserAgentForTest sets grpc incoming context to have given user agent
+// This can be used to mimic incoming traffic.
+func WithUserAgentForTest(ctx context.Context, userAgent string) context.Context {
+	md := metadata.New(nil)
+	md.Set(metadataKeyUA, userAgent)
+	return metadata.NewIncomingContext(ctx, md)
+}
