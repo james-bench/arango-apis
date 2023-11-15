@@ -33,3 +33,12 @@ const (
 	// SubjectID contains the Deployment ID of the DeploymentReplication.
 	EventTypeDeploymentReplicationDeleted = "replication.deploymentreplication.deleted"
 )
+
+const (
+	// EventTypeDeploymentMigrationCreated is the type of event fired after a DeploymentMigration has been created.
+	// SubjectID contains the ID of the deployment being migrated.
+	EventTypeDeploymentMigrationCreated = "replication.deploymentmigration.created"
+	// EventTypeDeploymentMigrationUpdated is the type of event fired after a DeploymentMigration has been updated.
+	// SubjectID contains the ID of the deployment being migrated.
+	EventTypeDeploymentMigrationUpdated = "replication.deploymentmigration.updated"
+)
