@@ -187,8 +187,27 @@ message DeploymentMigration {
     // Identifier of the source deployment that needs to be migrated.
     // This is a required field.
     string source_deployment_id = 1;
+
     // Specification of the target deployment.
-    data.v1.Deployment target_deployment = 2;
+    message DeploymentSpec {
+        // Type of model being used
+        string model = 1;
+        // Size of nodes being used
+        // This field is ignored set in case the flexible model is used.
+        string node_size_id = 2;
+        // Number of nodes being used
+         // This field is ignored set in case the flexible model is used.
+        int32 node_count = 3;
+        // Amount of disk space per node (in GB)
+        // This field is ignored set in case the flexible model is used.
+        int32 node_disk_size = 4;
+        // Identifier of the region in which the deployment is created.
+        // After creation, this value cannot be changed.
+        string region_id = 5;
+    }
+    // Specification of the target deployment.
+    DeploymentSpec target_deployment = 2;
+
     // Timestamp of when this migration was initiated.
     // This is a read-only field.
     google.protobuf.Timestamp created_at = 3;

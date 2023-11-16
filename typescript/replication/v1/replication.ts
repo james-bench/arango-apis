@@ -45,8 +45,8 @@ export interface DeploymentMigration {
   source_deployment_id?: string;
   
   // Specification of the target deployment.
-  // arangodb.cloud.data.v1.Deployment
-  target_deployment?: arangodb_cloud_data_v1_Deployment;
+  // DeploymentMigration_DeploymentSpec
+  target_deployment?: DeploymentMigration_DeploymentSpec;
   
   // Timestamp of when this migration was initiated.
   // This is a read-only field.
@@ -57,6 +57,33 @@ export interface DeploymentMigration {
   // This is a read-only field.
   // DeploymentMigration_Status
   status?: DeploymentMigration_Status;
+}
+
+// Specification of the target deployment.
+export interface DeploymentMigration_DeploymentSpec {
+  // Type of model being used
+  // string
+  model?: string;
+  
+  // Size of nodes being used
+  // This field is ignored set in case the flexible model is used.
+  // string
+  node_size_id?: string;
+  
+  // Number of nodes being used
+  // This field is ignored set in case the flexible model is used.
+  // number
+  node_count?: number;
+  
+  // Amount of disk space per node (in GB)
+  // This field is ignored set in case the flexible model is used.
+  // number
+  node_disk_size?: number;
+  
+  // Identifier of the region in which the deployment is created.
+  // After creation, this value cannot be changed.
+  // string
+  region_id?: string;
 }
 
 // Status of the DeploymentMigration.
