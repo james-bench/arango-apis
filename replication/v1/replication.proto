@@ -196,7 +196,7 @@ message DeploymentMigration {
         // This field is ignored set in case the flexible model is used.
         string node_size_id = 2;
         // Number of nodes being used
-         // This field is ignored set in case the flexible model is used.
+        // This field is ignored set in case the flexible model is used.
         int32 node_count = 3;
         // Amount of disk space per node (in GB)
         // This field is ignored set in case the flexible model is used.
