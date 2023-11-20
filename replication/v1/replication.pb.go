@@ -389,72 +389,354 @@ func (m *DeploymentReplication_Status) GetProgress() float32 {
 	return 0
 }
 
+// DeploymentMigration defines a request for performing the migration of a deployment.
+type DeploymentMigration struct {
+	// Identifier of the source deployment that needs to be migrated.
+	// This is a required field.
+	SourceDeploymentId string `protobuf:"bytes,1,opt,name=source_deployment_id,json=sourceDeploymentId,proto3" json:"source_deployment_id,omitempty"`
+	// Specification of the target deployment.
+	TargetDeployment *DeploymentMigration_DeploymentSpec `protobuf:"bytes,2,opt,name=target_deployment,json=targetDeployment,proto3" json:"target_deployment,omitempty"`
+	// Timestamp of when this migration was initiated.
+	// This is a read-only field.
+	CreatedAt *types.Timestamp `protobuf:"bytes,3,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	// Status of the migration.
+	// This is a read-only field.
+	Status               *DeploymentMigration_Status `protobuf:"bytes,100,opt,name=status,proto3" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                    `json:"-"`
+	XXX_unrecognized     []byte                      `json:"-"`
+	XXX_sizecache        int32                       `json:"-"`
+}
+
+func (m *DeploymentMigration) Reset()         { *m = DeploymentMigration{} }
+func (m *DeploymentMigration) String() string { return proto.CompactTextString(m) }
+func (*DeploymentMigration) ProtoMessage()    {}
+func (*DeploymentMigration) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ed0454e9e09fb71a, []int{2}
+}
+func (m *DeploymentMigration) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DeploymentMigration) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DeploymentMigration.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *DeploymentMigration) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeploymentMigration.Merge(m, src)
+}
+func (m *DeploymentMigration) XXX_Size() int {
+	return m.Size()
+}
+func (m *DeploymentMigration) XXX_DiscardUnknown() {
+	xxx_messageInfo_DeploymentMigration.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DeploymentMigration proto.InternalMessageInfo
+
+func (m *DeploymentMigration) GetSourceDeploymentId() string {
+	if m != nil {
+		return m.SourceDeploymentId
+	}
+	return ""
+}
+
+func (m *DeploymentMigration) GetTargetDeployment() *DeploymentMigration_DeploymentSpec {
+	if m != nil {
+		return m.TargetDeployment
+	}
+	return nil
+}
+
+func (m *DeploymentMigration) GetCreatedAt() *types.Timestamp {
+	if m != nil {
+		return m.CreatedAt
+	}
+	return nil
+}
+
+func (m *DeploymentMigration) GetStatus() *DeploymentMigration_Status {
+	if m != nil {
+		return m.Status
+	}
+	return nil
+}
+
+// Specification of the target deployment.
+type DeploymentMigration_DeploymentSpec struct {
+	// Type of model being used
+	Model string `protobuf:"bytes,1,opt,name=model,proto3" json:"model,omitempty"`
+	// Size of nodes being used
+	// This field is ignored set in case the flexible model is used.
+	NodeSizeId string `protobuf:"bytes,2,opt,name=node_size_id,json=nodeSizeId,proto3" json:"node_size_id,omitempty"`
+	// Number of nodes being used
+	// This field is ignored set in case the flexible model is used.
+	NodeCount int32 `protobuf:"varint,3,opt,name=node_count,json=nodeCount,proto3" json:"node_count,omitempty"`
+	// Amount of disk space per node (in GB)
+	// This field is ignored set in case the flexible model is used.
+	NodeDiskSize int32 `protobuf:"varint,4,opt,name=node_disk_size,json=nodeDiskSize,proto3" json:"node_disk_size,omitempty"`
+	// Identifier of the region in which the deployment is created.
+	// After creation, this value cannot be changed.
+	RegionId             string   `protobuf:"bytes,5,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *DeploymentMigration_DeploymentSpec) Reset()         { *m = DeploymentMigration_DeploymentSpec{} }
+func (m *DeploymentMigration_DeploymentSpec) String() string { return proto.CompactTextString(m) }
+func (*DeploymentMigration_DeploymentSpec) ProtoMessage()    {}
+func (*DeploymentMigration_DeploymentSpec) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ed0454e9e09fb71a, []int{2, 0}
+}
+func (m *DeploymentMigration_DeploymentSpec) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DeploymentMigration_DeploymentSpec) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DeploymentMigration_DeploymentSpec.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *DeploymentMigration_DeploymentSpec) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeploymentMigration_DeploymentSpec.Merge(m, src)
+}
+func (m *DeploymentMigration_DeploymentSpec) XXX_Size() int {
+	return m.Size()
+}
+func (m *DeploymentMigration_DeploymentSpec) XXX_DiscardUnknown() {
+	xxx_messageInfo_DeploymentMigration_DeploymentSpec.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DeploymentMigration_DeploymentSpec proto.InternalMessageInfo
+
+func (m *DeploymentMigration_DeploymentSpec) GetModel() string {
+	if m != nil {
+		return m.Model
+	}
+	return ""
+}
+
+func (m *DeploymentMigration_DeploymentSpec) GetNodeSizeId() string {
+	if m != nil {
+		return m.NodeSizeId
+	}
+	return ""
+}
+
+func (m *DeploymentMigration_DeploymentSpec) GetNodeCount() int32 {
+	if m != nil {
+		return m.NodeCount
+	}
+	return 0
+}
+
+func (m *DeploymentMigration_DeploymentSpec) GetNodeDiskSize() int32 {
+	if m != nil {
+		return m.NodeDiskSize
+	}
+	return 0
+}
+
+func (m *DeploymentMigration_DeploymentSpec) GetRegionId() string {
+	if m != nil {
+		return m.RegionId
+	}
+	return ""
+}
+
+// Status of the DeploymentMigration.
+type DeploymentMigration_Status struct {
+	// The current phase of the migration.
+	// This will contain only one of the following values:
+	// - SourceBackupInProgress:                Creation of backup of source deployment is in progress.
+	// - TargetDeploymentCreationInProgress:    Creation of target deployment is in progress.
+	// - TargetDeploymentModelChangeInProgress: The model of the target deployment is being updated.
+	// - Error:                                 An error has occured during the migration process.
+	// - Failed:                                Migration has failed due to errors.
+	// - Complete:                              Migration process has completed.
+	Phase string `protobuf:"bytes,1,opt,name=phase,proto3" json:"phase,omitempty"`
+	// Additional information regarding the status.
+	Description string `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
+	// Timestamp of when the status was last updated.
+	LastUpdatedAt *types.Timestamp `protobuf:"bytes,3,opt,name=last_updated_at,json=lastUpdatedAt,proto3" json:"last_updated_at,omitempty"`
+	// ID of the backup at the source deployment.
+	// This backup will be used to perform a restore at the target deployment.
+	BackupId string `protobuf:"bytes,4,opt,name=backup_id,json=backupId,proto3" json:"backup_id,omitempty"`
+	// ID of the target deployment.
+	TargetDeploymentId   string   `protobuf:"bytes,5,opt,name=target_deployment_id,json=targetDeploymentId,proto3" json:"target_deployment_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *DeploymentMigration_Status) Reset()         { *m = DeploymentMigration_Status{} }
+func (m *DeploymentMigration_Status) String() string { return proto.CompactTextString(m) }
+func (*DeploymentMigration_Status) ProtoMessage()    {}
+func (*DeploymentMigration_Status) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ed0454e9e09fb71a, []int{2, 1}
+}
+func (m *DeploymentMigration_Status) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DeploymentMigration_Status) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DeploymentMigration_Status.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *DeploymentMigration_Status) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeploymentMigration_Status.Merge(m, src)
+}
+func (m *DeploymentMigration_Status) XXX_Size() int {
+	return m.Size()
+}
+func (m *DeploymentMigration_Status) XXX_DiscardUnknown() {
+	xxx_messageInfo_DeploymentMigration_Status.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DeploymentMigration_Status proto.InternalMessageInfo
+
+func (m *DeploymentMigration_Status) GetPhase() string {
+	if m != nil {
+		return m.Phase
+	}
+	return ""
+}
+
+func (m *DeploymentMigration_Status) GetDescription() string {
+	if m != nil {
+		return m.Description
+	}
+	return ""
+}
+
+func (m *DeploymentMigration_Status) GetLastUpdatedAt() *types.Timestamp {
+	if m != nil {
+		return m.LastUpdatedAt
+	}
+	return nil
+}
+
+func (m *DeploymentMigration_Status) GetBackupId() string {
+	if m != nil {
+		return m.BackupId
+	}
+	return ""
+}
+
+func (m *DeploymentMigration_Status) GetTargetDeploymentId() string {
+	if m != nil {
+		return m.TargetDeploymentId
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*CloneDeploymentFromBackupRequest)(nil), "arangodb.cloud.replication.v1.CloneDeploymentFromBackupRequest")
 	proto.RegisterType((*DeploymentReplication)(nil), "arangodb.cloud.replication.v1.DeploymentReplication")
 	proto.RegisterType((*DeploymentReplication_CancelationOptions)(nil), "arangodb.cloud.replication.v1.DeploymentReplication.CancelationOptions")
 	proto.RegisterType((*DeploymentReplication_Status)(nil), "arangodb.cloud.replication.v1.DeploymentReplication.Status")
+	proto.RegisterType((*DeploymentMigration)(nil), "arangodb.cloud.replication.v1.DeploymentMigration")
+	proto.RegisterType((*DeploymentMigration_DeploymentSpec)(nil), "arangodb.cloud.replication.v1.DeploymentMigration.DeploymentSpec")
+	proto.RegisterType((*DeploymentMigration_Status)(nil), "arangodb.cloud.replication.v1.DeploymentMigration.Status")
 }
 
 func init() { proto.RegisterFile("replication.proto", fileDescriptor_ed0454e9e09fb71a) }
 
 var fileDescriptor_ed0454e9e09fb71a = []byte{
-	// 874 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x55, 0x4b, 0x6f, 0x1c, 0x45,
-	0x10, 0x66, 0x02, 0xde, 0xac, 0xdb, 0x71, 0x20, 0xcd, 0x43, 0xcb, 0xc4, 0x8f, 0xcd, 0x72, 0x88,
-	0x15, 0xe1, 0x19, 0x39, 0x20, 0x21, 0x39, 0x87, 0x68, 0xfd, 0x88, 0xb5, 0x42, 0x22, 0xd1, 0x38,
-	0x70, 0xe0, 0x32, 0xea, 0xed, 0x2e, 0x4f, 0x06, 0xcf, 0x74, 0x77, 0xba, 0x7b, 0x16, 0x46, 0x81,
-	0x0b, 0x7f, 0x81, 0x0b, 0x37, 0x6e, 0x1c, 0xb9, 0x73, 0xe6, 0xc2, 0x31, 0x82, 0x3f, 0x80, 0x0c,
-	0x67, 0x7e, 0x03, 0xea, 0x9e, 0xde, 0x9d, 0xb5, 0x63, 0x63, 0xc9, 0x27, 0x6f, 0x7f, 0xf5, 0xfa,
-	0x6a, 0xea, 0xab, 0x32, 0xba, 0xa5, 0x40, 0x16, 0x39, 0x25, 0x26, 0x17, 0x3c, 0x92, 0x4a, 0x18,
-	0x81, 0x57, 0x89, 0x22, 0x3c, 0x13, 0x6c, 0x1c, 0xd1, 0x42, 0x54, 0x2c, 0x9a, 0xf7, 0x98, 0x6c,
-	0x85, 0xef, 0x51, 0x51, 0x96, 0x82, 0xc7, 0x93, 0xad, 0xb8, 0xf9, 0xd5, 0x84, 0x85, 0x98, 0x11,
-	0x43, 0x2c, 0x6a, 0xff, 0x7a, 0xec, 0x41, 0x96, 0x9b, 0x67, 0xd5, 0x38, 0xa2, 0xa2, 0x8c, 0x33,
-	0x51, 0x10, 0x9e, 0xc5, 0xce, 0x30, 0xae, 0x8e, 0x62, 0x69, 0x6a, 0x09, 0x3a, 0x36, 0x79, 0x09,
-	0xda, 0x90, 0x52, 0xb6, 0xbf, 0x7c, 0xf0, 0x4a, 0x26, 0x44, 0x56, 0x40, 0x4c, 0x64, 0x1e, 0x13,
-	0xce, 0x85, 0x71, 0x14, 0x74, 0x63, 0x1d, 0xfc, 0x16, 0xa0, 0xfe, 0x6e, 0x21, 0x38, 0xec, 0x81,
-	0x2c, 0x44, 0x5d, 0x02, 0x37, 0x8f, 0x94, 0x28, 0x77, 0x08, 0x3d, 0xae, 0x64, 0x02, 0xcf, 0x2b,
-	0xd0, 0x06, 0xdf, 0x46, 0x8b, 0x63, 0x07, 0xa4, 0x39, 0xeb, 0x05, 0xfd, 0x60, 0x63, 0x31, 0xe9,
-	0x36, 0xc0, 0x88, 0x59, 0xa3, 0x82, 0x2c, 0x17, 0xdc, 0x1a, 0xaf, 0x35, 0xc6, 0x06, 0x18, 0x31,
-	0xfc, 0x08, 0xf5, 0x09, 0xa5, 0x20, 0x0d, 0xb0, 0xd4, 0x80, 0x2a, 0x75, 0x4a, 0x38, 0x4b, 0xa9,
-	0xe0, 0x2c, 0x77, 0x2c, 0x6c, 0xcc, 0xeb, 0x2e, 0x66, 0x65, 0xea, 0xf7, 0xd4, 0xba, 0x0d, 0x39,
-	0xdb, 0x9d, 0x39, 0x8d, 0x18, 0x5e, 0x45, 0x48, 0x2a, 0xf1, 0x15, 0x50, 0x63, 0x23, 0xde, 0x70,
-	0x11, 0x8b, 0x1e, 0x19, 0xb1, 0xc1, 0xcf, 0x1d, 0xf4, 0x6e, 0xdb, 0x40, 0xd2, 0x7e, 0x69, 0xfc,
-	0x01, 0x5a, 0x66, 0x33, 0x43, 0x4b, 0xff, 0x46, 0x0b, 0x8e, 0x18, 0xee, 0xa1, 0xeb, 0xda, 0x10,
-	0x65, 0xa0, 0x69, 0xa0, 0x9b, 0x4c, 0x9f, 0xf8, 0x2e, 0x7a, 0x93, 0x82, 0x32, 0xf9, 0x91, 0xcd,
-	0x07, 0xa9, 0x84, 0xd2, 0xd3, 0xbd, 0x39, 0x07, 0x3f, 0x81, 0x12, 0xaf, 0xa3, 0x25, 0x53, 0xe8,
-	0xf4, 0x18, 0xea, 0xa3, 0xbc, 0x00, 0xcf, 0x10, 0x99, 0x42, 0x7f, 0xda, 0x20, 0x78, 0x80, 0x96,
-	0x7d, 0xd2, 0x74, 0x5c, 0x5b, 0x22, 0x0b, 0xce, 0x65, 0xc9, 0x83, 0x3b, 0xf5, 0x88, 0xe1, 0x6f,
-	0xd0, 0xdb, 0x94, 0x70, 0x0a, 0x85, 0xe3, 0x9e, 0x0a, 0xe9, 0xda, 0xef, 0xa1, 0x7e, 0xb0, 0xb1,
-	0x74, 0xff, 0x20, 0xfa, 0x5f, 0x41, 0x45, 0xe7, 0xf6, 0x1f, 0xed, 0xb6, 0xf9, 0x1e, 0x37, 0xe9,
-	0x12, 0x4c, 0x5f, 0xc1, 0xf0, 0x21, 0xea, 0x68, 0x43, 0x4c, 0xa5, 0x7b, 0xcc, 0x15, 0x7b, 0x70,
-	0xa5, 0x62, 0x87, 0x2e, 0x45, 0xe2, 0x53, 0x85, 0x3f, 0x05, 0x08, 0xbf, 0x5a, 0x1f, 0x0f, 0xd1,
-	0xaa, 0xd5, 0xb6, 0x55, 0x81, 0xce, 0xb5, 0x01, 0x4e, 0xeb, 0x94, 0x0b, 0x93, 0x2a, 0x78, 0x5e,
-	0xe5, 0x0a, 0x9a, 0x11, 0x75, 0x93, 0xd0, 0x3a, 0xed, 0xb6, 0x3e, 0x9f, 0x09, 0x93, 0x78, 0x0f,
-	0x2b, 0xab, 0x92, 0x1c, 0x43, 0xaa, 0x45, 0xa5, 0x28, 0xa4, 0x73, 0x13, 0x56, 0x40, 0x58, 0x2a,
-	0x78, 0x51, 0xfb, 0x49, 0xae, 0x58, 0xbf, 0x43, 0xe7, 0x36, 0xcf, 0x99, 0xb0, 0xc7, 0xbc, 0xa8,
-	0xc3, 0x7f, 0x03, 0xd4, 0x69, 0x48, 0xe3, 0x77, 0xd0, 0x82, 0x7c, 0x46, 0x34, 0x78, 0x81, 0x34,
-	0x0f, 0xab, 0x8c, 0x12, 0xb4, 0x26, 0x19, 0x78, 0x69, 0x4f, 0x9f, 0x56, 0x58, 0xba, 0xe6, 0x34,
-	0x05, 0xce, 0xa4, 0xc8, 0xb9, 0xf1, 0xf3, 0xbc, 0x61, 0xc1, 0x7d, 0x8f, 0xe1, 0x3d, 0xf4, 0x96,
-	0xcb, 0x93, 0x56, 0x92, 0x11, 0x3b, 0x7a, 0x62, 0x7a, 0x1d, 0xf7, 0x81, 0xc3, 0xa8, 0x59, 0xcb,
-	0x68, 0xba, 0xc8, 0xd1, 0xd3, 0xe9, 0xde, 0x26, 0x37, 0x5d, 0xcc, 0xe7, 0x4d, 0xc8, 0xd0, 0xe0,
-	0x4d, 0x84, 0x8f, 0x84, 0xfa, 0x9a, 0x28, 0x06, 0xaa, 0xad, 0x77, 0xdd, 0xd5, 0xbb, 0x35, 0xb3,
-	0xcc, 0x8a, 0x86, 0xa8, 0x2b, 0x95, 0xc8, 0x14, 0x68, 0xdd, 0xeb, 0xf6, 0x83, 0x8d, 0x6b, 0xc9,
-	0xec, 0x7d, 0xff, 0x8f, 0x05, 0x84, 0xe7, 0x26, 0x76, 0x08, 0x6a, 0x92, 0x53, 0xc0, 0xdf, 0xa2,
-	0xe5, 0x03, 0x30, 0xc3, 0x27, 0xa3, 0x2f, 0x40, 0x69, 0xbb, 0x36, 0xeb, 0x67, 0xe7, 0xef, 0x6f,
-	0xd4, 0x64, 0x2b, 0xda, 0x2f, 0xa5, 0xa9, 0xc3, 0x3b, 0x17, 0x3b, 0xf8, 0x1c, 0x83, 0xbb, 0xdf,
-	0xff, 0xf9, 0xcf, 0x0f, 0xd7, 0xee, 0xe0, 0x75, 0x77, 0x7a, 0xe6, 0x04, 0x64, 0xaf, 0x1b, 0x91,
-	0xf9, 0xe6, 0xc4, 0x17, 0xfb, 0x35, 0x40, 0xef, 0x5f, 0x78, 0x83, 0xf0, 0xc3, 0x4b, 0xa4, 0x78,
-	0xd9, 0xf5, 0x0a, 0x07, 0x67, 0x13, 0xb8, 0xcb, 0x7a, 0x4a, 0xc4, 0x83, 0x4f, 0x1c, 0xd7, 0xad,
-	0xc1, 0x87, 0xe7, 0x71, 0x6d, 0x4e, 0x5d, 0xfc, 0x62, 0x76, 0x03, 0xbf, 0x8b, 0xa9, 0x2d, 0xba,
-	0x1d, 0xdc, 0xc3, 0xbf, 0x04, 0xa8, 0x77, 0x00, 0xe6, 0x82, 0xe3, 0x73, 0xf1, 0x47, 0x1a, 0xed,
-	0xf9, 0x75, 0x08, 0x3f, 0xbe, 0xca, 0xaa, 0x4d, 0x09, 0xe3, 0xf8, 0x3c, 0xc2, 0xed, 0x3e, 0xc4,
-	0x2f, 0x2c, 0xdb, 0x39, 0x33, 0x7e, 0x19, 0xa0, 0xdb, 0x8d, 0xb4, 0xce, 0xe7, 0x7c, 0x25, 0x3a,
-	0x57, 0x6c, 0x62, 0xdf, 0x35, 0xf1, 0x30, 0xdc, 0xbe, 0xac, 0x89, 0x53, 0x27, 0xfc, 0x54, 0x3f,
-	0xdb, 0xc1, 0xbd, 0x9d, 0xe1, 0xef, 0x27, 0x6b, 0xc1, 0xcb, 0x93, 0xb5, 0xe0, 0xaf, 0x93, 0xb5,
-	0xe0, 0xc7, 0xbf, 0xd7, 0x5e, 0xfb, 0x32, 0x9e, 0xfb, 0x87, 0x39, 0x25, 0xb6, 0x59, 0x12, 0x4e,
-	0x32, 0x60, 0xb6, 0x96, 0x3e, 0x53, 0x6c, 0xdc, 0x71, 0x6b, 0xf8, 0xd1, 0x7f, 0x01, 0x00, 0x00,
-	0xff, 0xff, 0x53, 0x40, 0x15, 0xd1, 0xc8, 0x07, 0x00, 0x00,
+	// 1163 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x56, 0xcf, 0x6f, 0x13, 0xc7,
+	0x17, 0xff, 0x2e, 0xe0, 0x10, 0x4f, 0x48, 0x80, 0x81, 0x2f, 0x32, 0x0b, 0x24, 0xc6, 0xad, 0x94,
+	0x08, 0x25, 0xbb, 0x24, 0x45, 0xaa, 0x80, 0x03, 0x72, 0x7e, 0x10, 0x59, 0x55, 0x0b, 0x5d, 0xd3,
+	0x1e, 0x7a, 0x59, 0x8d, 0x77, 0x5e, 0x96, 0x6d, 0x76, 0x67, 0x96, 0x99, 0x71, 0x5a, 0x43, 0x7b,
+	0xe9, 0xbf, 0xd0, 0x43, 0x7b, 0xeb, 0xad, 0x95, 0x7a, 0xe8, 0xb5, 0xea, 0xb9, 0x17, 0x8e, 0x91,
+	0xf8, 0x07, 0xaa, 0xb4, 0xe7, 0xfe, 0x0d, 0xd5, 0xcc, 0xae, 0xbd, 0x6b, 0xc7, 0xc1, 0xc1, 0x27,
+	0x7b, 0x3e, 0xf3, 0xde, 0x9b, 0xcf, 0x7b, 0xf3, 0x99, 0xf7, 0x16, 0x5d, 0x16, 0x90, 0xc6, 0x51,
+	0x40, 0x54, 0xc4, 0x99, 0x93, 0x0a, 0xae, 0x38, 0xbe, 0x45, 0x04, 0x61, 0x21, 0xa7, 0x1d, 0x27,
+	0x88, 0x79, 0x97, 0x3a, 0x65, 0x8b, 0x83, 0x75, 0xfb, 0x5a, 0xc0, 0x93, 0x84, 0x33, 0xf7, 0x60,
+	0xdd, 0xcd, 0xfe, 0x65, 0x6e, 0x36, 0xa6, 0x44, 0x11, 0x8d, 0xea, 0xdf, 0x1c, 0x7b, 0x18, 0x46,
+	0xea, 0x79, 0xb7, 0xe3, 0x04, 0x3c, 0x71, 0x43, 0x1e, 0x13, 0x16, 0xba, 0x66, 0xa3, 0xd3, 0xdd,
+	0x73, 0x53, 0xd5, 0x4b, 0x41, 0xba, 0x2a, 0x4a, 0x40, 0x2a, 0x92, 0xa4, 0xc5, 0xbf, 0xdc, 0xf9,
+	0x66, 0xc8, 0x79, 0x18, 0x83, 0x4b, 0xd2, 0xc8, 0x25, 0x8c, 0x71, 0x65, 0x28, 0xc8, 0x6c, 0xb7,
+	0xf1, 0xa7, 0x85, 0xea, 0x5b, 0x31, 0x67, 0xb0, 0x0d, 0x69, 0xcc, 0x7b, 0x09, 0x30, 0xf5, 0x58,
+	0xf0, 0x64, 0x93, 0x04, 0xfb, 0xdd, 0xd4, 0x83, 0x17, 0x5d, 0x90, 0x0a, 0xdf, 0x40, 0xd5, 0x8e,
+	0x01, 0xfc, 0x88, 0xd6, 0xac, 0xba, 0xb5, 0x52, 0xf5, 0x66, 0x33, 0xa0, 0x45, 0xf5, 0xa6, 0x80,
+	0x30, 0xe2, 0x4c, 0x6f, 0x9e, 0xc9, 0x36, 0x33, 0xa0, 0x45, 0xf1, 0x63, 0x54, 0x27, 0x41, 0x00,
+	0xa9, 0x02, 0xea, 0x2b, 0x10, 0x89, 0xf4, 0x09, 0xa3, 0x7e, 0xc0, 0x19, 0x8d, 0x0c, 0x0b, 0xed,
+	0x73, 0xd6, 0xf8, 0xdc, 0xec, 0xdb, 0x3d, 0xd3, 0x66, 0x4d, 0x46, 0xb7, 0x06, 0x46, 0x2d, 0x8a,
+	0x6f, 0x21, 0x94, 0x0a, 0xfe, 0x25, 0x04, 0x4a, 0x7b, 0x9c, 0x33, 0x1e, 0xd5, 0x1c, 0x69, 0xd1,
+	0xc6, 0xcf, 0x33, 0xe8, 0xff, 0x45, 0x02, 0x5e, 0x51, 0x69, 0xfc, 0x1e, 0x9a, 0xa7, 0x83, 0x8d,
+	0x82, 0xfe, 0x85, 0x02, 0x6c, 0x51, 0x5c, 0x43, 0xe7, 0xa5, 0x22, 0x42, 0x41, 0x96, 0xc0, 0xac,
+	0xd7, 0x5f, 0xe2, 0x65, 0x74, 0x31, 0x00, 0xa1, 0xa2, 0x3d, 0x1d, 0x0f, 0xfc, 0x14, 0x92, 0x9c,
+	0xee, 0x42, 0x09, 0x7e, 0x0a, 0x09, 0x5e, 0x42, 0x73, 0x2a, 0x96, 0xfe, 0x3e, 0xf4, 0xf6, 0xa2,
+	0x18, 0x72, 0x86, 0x48, 0xc5, 0xf2, 0xa3, 0x0c, 0xc1, 0x0d, 0x34, 0x9f, 0x07, 0xf5, 0x3b, 0x3d,
+	0x4d, 0xa4, 0x62, 0x4c, 0xe6, 0x72, 0x70, 0xb3, 0xd7, 0xa2, 0xf8, 0x6b, 0x74, 0x25, 0x20, 0x2c,
+	0x80, 0xd8, 0x70, 0xf7, 0x79, 0x6a, 0xd2, 0xaf, 0xa1, 0xba, 0xb5, 0x32, 0xb7, 0xb1, 0xeb, 0xbc,
+	0x55, 0x50, 0xce, 0xd8, 0xfc, 0x9d, 0xad, 0x22, 0xde, 0x93, 0x2c, 0x9c, 0x87, 0x83, 0x63, 0x18,
+	0x6e, 0xa3, 0x19, 0xa9, 0x88, 0xea, 0xca, 0x1a, 0x35, 0x87, 0x3d, 0x9c, 0xea, 0xb0, 0xb6, 0x09,
+	0xe1, 0xe5, 0xa1, 0xec, 0x9f, 0x2c, 0x84, 0x8f, 0x9f, 0x8f, 0x9b, 0xe8, 0x96, 0xd6, 0xb6, 0x56,
+	0x81, 0x8c, 0xa4, 0x02, 0x16, 0xf4, 0x7c, 0xc6, 0x95, 0x2f, 0xe0, 0x45, 0x37, 0x12, 0x90, 0x5d,
+	0xd1, 0xac, 0x67, 0x6b, 0xa3, 0xad, 0xc2, 0xe6, 0x13, 0xae, 0xbc, 0xdc, 0x42, 0xcb, 0x2a, 0x21,
+	0xfb, 0xe0, 0x4b, 0xde, 0x15, 0x01, 0xf8, 0xa5, 0x1b, 0x16, 0x40, 0xa8, 0xcf, 0x59, 0xdc, 0xcb,
+	0x6f, 0xf2, 0xa6, 0xb6, 0x6b, 0x1b, 0xb3, 0x32, 0x67, 0x42, 0x9f, 0xb0, 0xb8, 0x67, 0xff, 0x6b,
+	0xa1, 0x99, 0x8c, 0x34, 0xbe, 0x8a, 0x2a, 0xe9, 0x73, 0x22, 0x21, 0x17, 0x48, 0xb6, 0xd0, 0xca,
+	0x48, 0x40, 0x4a, 0x12, 0x42, 0x2e, 0xed, 0xfe, 0x52, 0x0b, 0x4b, 0xf6, 0x58, 0xe0, 0x03, 0xa3,
+	0x29, 0x8f, 0x98, 0xca, 0xef, 0xf3, 0x82, 0x06, 0x77, 0x72, 0x0c, 0x6f, 0xa3, 0x4b, 0x26, 0x8e,
+	0xdf, 0x4d, 0x29, 0xd1, 0x57, 0x4f, 0x54, 0x6d, 0xc6, 0x14, 0xd8, 0x76, 0xb2, 0x67, 0xe9, 0xf4,
+	0x1f, 0xb2, 0xf3, 0xac, 0xff, 0x6e, 0xbd, 0x05, 0xe3, 0xf3, 0x59, 0xe6, 0xd2, 0x54, 0x78, 0x0d,
+	0xe1, 0x3d, 0x2e, 0xbe, 0x22, 0x82, 0x82, 0x28, 0xce, 0x3b, 0x6f, 0xce, 0xbb, 0x3c, 0xd8, 0x19,
+	0x1c, 0x6a, 0xa3, 0xd9, 0x54, 0xf0, 0x50, 0x80, 0x94, 0xb5, 0xd9, 0xba, 0xb5, 0x72, 0xc6, 0x1b,
+	0xac, 0x1b, 0xaf, 0x2b, 0xe8, 0x4a, 0x51, 0x87, 0x8f, 0xa3, 0x50, 0x64, 0xcf, 0xe4, 0x2e, 0xba,
+	0x7a, 0xbc, 0x96, 0x83, 0xd7, 0x82, 0xe5, 0x48, 0x01, 0x5b, 0x14, 0x33, 0x74, 0x59, 0x11, 0x11,
+	0x82, 0x2a, 0x79, 0x98, 0x1a, 0xcd, 0x6d, 0x34, 0x4f, 0x2d, 0x9e, 0x01, 0x81, 0x12, 0xd6, 0x4e,
+	0x21, 0xf0, 0x2e, 0x65, 0xb1, 0x0b, 0x14, 0xdf, 0x47, 0x28, 0x10, 0xd0, 0x2f, 0xe2, 0xd9, 0x89,
+	0x45, 0xac, 0xe6, 0xd6, 0x4d, 0x85, 0x3f, 0x1d, 0x11, 0xf7, 0xfd, 0x29, 0xf8, 0x8d, 0x48, 0xfb,
+	0x57, 0x0b, 0x2d, 0x0c, 0x53, 0xd6, 0x02, 0x4a, 0x38, 0x85, 0xb8, 0x2f, 0x20, 0xb3, 0xc0, 0x75,
+	0x74, 0x81, 0x71, 0x0a, 0xbe, 0x8c, 0x5e, 0x42, 0xd1, 0x20, 0x91, 0xc6, 0xda, 0xd1, 0x4b, 0xc8,
+	0x5a, 0x9b, 0xb1, 0x08, 0x78, 0x97, 0x65, 0x89, 0x55, 0xbc, 0xaa, 0x46, 0xb6, 0x34, 0x80, 0xdf,
+	0x47, 0x0b, 0x66, 0x9b, 0x46, 0x72, 0xdf, 0x44, 0x31, 0xbd, 0xa5, 0xe2, 0x99, 0xb0, 0xdb, 0x91,
+	0xdc, 0xd7, 0x61, 0x86, 0x9b, 0x70, 0x65, 0xb8, 0x09, 0xdb, 0x6f, 0x26, 0xa9, 0xbc, 0x8e, 0xe6,
+	0x28, 0xc8, 0x40, 0x44, 0xe6, 0x85, 0xe6, 0x1c, 0xcb, 0x10, 0xde, 0x44, 0x17, 0x63, 0x22, 0x55,
+	0x59, 0xc7, 0x93, 0xaf, 0x60, 0x5e, 0xbb, 0x14, 0x32, 0x1e, 0x9a, 0x22, 0xe7, 0x46, 0xa6, 0xc8,
+	0x5d, 0x74, 0xf5, 0x98, 0x9c, 0x8a, 0x5c, 0xf0, 0xa8, 0x1c, 0x5a, 0x74, 0xe3, 0xb0, 0x8a, 0x70,
+	0xa9, 0xf9, 0xb4, 0x41, 0x1c, 0x44, 0x01, 0xe0, 0x6f, 0xd0, 0xfc, 0x2e, 0xa8, 0xe6, 0xd3, 0xd6,
+	0xe7, 0x20, 0xa4, 0xa6, 0xbe, 0x34, 0x7a, 0xdb, 0xf9, 0xb8, 0x3d, 0x58, 0x77, 0x76, 0x92, 0x54,
+	0xf5, 0xec, 0xdb, 0x27, 0x1b, 0xe4, 0x31, 0x1a, 0xcb, 0xdf, 0xbd, 0xf9, 0xe7, 0xfb, 0x33, 0xb7,
+	0xf1, 0x92, 0x99, 0xa2, 0x25, 0xb9, 0xe8, 0x41, 0x4d, 0xd2, 0x68, 0xed, 0x20, 0x3f, 0xec, 0x0f,
+	0x0b, 0x5d, 0x3f, 0x71, 0x9c, 0xe2, 0x47, 0x13, 0x84, 0x37, 0x69, 0x10, 0xdb, 0x8d, 0xd1, 0x00,
+	0xe6, 0x23, 0x61, 0x48, 0xb2, 0x8d, 0x0f, 0x0d, 0xd7, 0xf5, 0xc6, 0xea, 0x38, 0xae, 0x59, 0xbd,
+	0xdd, 0x57, 0x83, 0x8b, 0xf8, 0xd6, 0x0d, 0xf4, 0xa1, 0x0f, 0xac, 0x3b, 0xf8, 0x37, 0x0b, 0xd5,
+	0x76, 0xcb, 0x45, 0x1e, 0x9a, 0xa3, 0x27, 0x17, 0xa9, 0xb5, 0x9d, 0x77, 0x76, 0xfb, 0xde, 0x34,
+	0x53, 0xa3, 0x4f, 0x18, 0xbb, 0xe3, 0x08, 0x17, 0x6a, 0x70, 0x5f, 0x69, 0xb6, 0xa5, 0x6d, 0x7c,
+	0x68, 0xa1, 0x1b, 0x99, 0xbc, 0xc6, 0x73, 0x9e, 0x8a, 0xce, 0x94, 0x49, 0xec, 0x98, 0x24, 0x1e,
+	0xd9, 0x0f, 0x26, 0x25, 0x31, 0x24, 0xef, 0xa1, 0x7c, 0xf4, 0x1d, 0xfc, 0xae, 0xf5, 0x63, 0x1a,
+	0xd7, 0xb8, 0x2e, 0xbd, 0xf1, 0xee, 0x8d, 0xcb, 0x9e, 0xc2, 0xa7, 0xb1, 0x61, 0x92, 0x59, 0x6d,
+	0x2c, 0xbf, 0x3d, 0x99, 0xa4, 0xef, 0xa0, 0x99, 0xff, 0x62, 0xa1, 0x6b, 0x43, 0xea, 0x29, 0x68,
+	0x9f, 0x4a, 0x3b, 0xd3, 0xf0, 0xbc, 0x67, 0x78, 0x3a, 0x78, 0xf5, 0x94, 0x3c, 0x8d, 0x84, 0xf0,
+	0x0f, 0x16, 0xba, 0xbe, 0x0d, 0x31, 0x8c, 0xaf, 0xf1, 0xa9, 0xc8, 0x4e, 0xea, 0x29, 0x7d, 0x66,
+	0x77, 0xde, 0x89, 0xd9, 0x66, 0xf3, 0xf5, 0xd1, 0xa2, 0x75, 0x78, 0xb4, 0x68, 0xfd, 0x75, 0xb4,
+	0x68, 0xfd, 0xf8, 0xf7, 0xe2, 0xff, 0xbe, 0x70, 0x4b, 0x5f, 0xfe, 0xfd, 0x23, 0xd7, 0x12, 0xc2,
+	0x48, 0x08, 0x54, 0x87, 0x96, 0x23, 0xb1, 0x3b, 0x33, 0xa6, 0x0f, 0x7f, 0xf0, 0x5f, 0x00, 0x00,
+	0x00, 0xff, 0xff, 0xb1, 0xec, 0xad, 0xb3, 0x91, 0x0c, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -498,6 +780,20 @@ type ReplicationServiceClient interface {
 	// Required permissions:
 	// - replication.deploymentreplication.update
 	UpdateDeploymentReplication(ctx context.Context, in *DeploymentReplication, opts ...grpc.CallOption) (*DeploymentReplication, error)
+	// Create a new deployment migration.
+	// Note: currently migration is supported only for Deployments with 'free' model.
+	// Required permissions:
+	// - replication.deploymentmigration.create on the specified deployment ID
+	CreateDeploymentMigration(ctx context.Context, in *DeploymentMigration, opts ...grpc.CallOption) (*DeploymentMigration, error)
+	// Get info about the deployment migration for a deployment identified by the given ID.
+	// Required permissions:
+	// - replication.deploymentmigration.get on the specified deployment ID
+	GetDeploymentMigration(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*DeploymentMigration, error)
+	// Delete an existing DeploymentMigration.
+	// A DeploymentMigration may be deleted only if it is in COMPLETE or FAILED state.
+	// Required permissions:
+	// - replication.deploymentmigration.delete on the specified deployment ID.
+	DeleteDeploymentMigration(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error)
 }
 
 type replicationServiceClient struct {
@@ -544,6 +840,33 @@ func (c *replicationServiceClient) UpdateDeploymentReplication(ctx context.Conte
 	return out, nil
 }
 
+func (c *replicationServiceClient) CreateDeploymentMigration(ctx context.Context, in *DeploymentMigration, opts ...grpc.CallOption) (*DeploymentMigration, error) {
+	out := new(DeploymentMigration)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.replication.v1.ReplicationService/CreateDeploymentMigration", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *replicationServiceClient) GetDeploymentMigration(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*DeploymentMigration, error) {
+	out := new(DeploymentMigration)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.replication.v1.ReplicationService/GetDeploymentMigration", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *replicationServiceClient) DeleteDeploymentMigration(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v1.Empty, error) {
+	out := new(v1.Empty)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.replication.v1.ReplicationService/DeleteDeploymentMigration", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ReplicationServiceServer is the server API for ReplicationService service.
 type ReplicationServiceServer interface {
 	// Get the current API version of this service.
@@ -575,6 +898,20 @@ type ReplicationServiceServer interface {
 	// Required permissions:
 	// - replication.deploymentreplication.update
 	UpdateDeploymentReplication(context.Context, *DeploymentReplication) (*DeploymentReplication, error)
+	// Create a new deployment migration.
+	// Note: currently migration is supported only for Deployments with 'free' model.
+	// Required permissions:
+	// - replication.deploymentmigration.create on the specified deployment ID
+	CreateDeploymentMigration(context.Context, *DeploymentMigration) (*DeploymentMigration, error)
+	// Get info about the deployment migration for a deployment identified by the given ID.
+	// Required permissions:
+	// - replication.deploymentmigration.get on the specified deployment ID
+	GetDeploymentMigration(context.Context, *v1.IDOptions) (*DeploymentMigration, error)
+	// Delete an existing DeploymentMigration.
+	// A DeploymentMigration may be deleted only if it is in COMPLETE or FAILED state.
+	// Required permissions:
+	// - replication.deploymentmigration.delete on the specified deployment ID.
+	DeleteDeploymentMigration(context.Context, *v1.IDOptions) (*v1.Empty, error)
 }
 
 // UnimplementedReplicationServiceServer can be embedded to have forward compatible implementations.
@@ -592,6 +929,15 @@ func (*UnimplementedReplicationServiceServer) GetDeploymentReplication(ctx conte
 }
 func (*UnimplementedReplicationServiceServer) UpdateDeploymentReplication(ctx context.Context, req *DeploymentReplication) (*DeploymentReplication, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateDeploymentReplication not implemented")
+}
+func (*UnimplementedReplicationServiceServer) CreateDeploymentMigration(ctx context.Context, req *DeploymentMigration) (*DeploymentMigration, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateDeploymentMigration not implemented")
+}
+func (*UnimplementedReplicationServiceServer) GetDeploymentMigration(ctx context.Context, req *v1.IDOptions) (*DeploymentMigration, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDeploymentMigration not implemented")
+}
+func (*UnimplementedReplicationServiceServer) DeleteDeploymentMigration(ctx context.Context, req *v1.IDOptions) (*v1.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteDeploymentMigration not implemented")
 }
 
 func RegisterReplicationServiceServer(s *grpc.Server, srv ReplicationServiceServer) {
@@ -670,6 +1016,60 @@ func _ReplicationService_UpdateDeploymentReplication_Handler(srv interface{}, ct
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ReplicationService_CreateDeploymentMigration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeploymentMigration)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReplicationServiceServer).CreateDeploymentMigration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.replication.v1.ReplicationService/CreateDeploymentMigration",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReplicationServiceServer).CreateDeploymentMigration(ctx, req.(*DeploymentMigration))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReplicationService_GetDeploymentMigration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.IDOptions)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReplicationServiceServer).GetDeploymentMigration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.replication.v1.ReplicationService/GetDeploymentMigration",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReplicationServiceServer).GetDeploymentMigration(ctx, req.(*v1.IDOptions))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReplicationService_DeleteDeploymentMigration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.IDOptions)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReplicationServiceServer).DeleteDeploymentMigration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.replication.v1.ReplicationService/DeleteDeploymentMigration",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReplicationServiceServer).DeleteDeploymentMigration(ctx, req.(*v1.IDOptions))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _ReplicationService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "arangodb.cloud.replication.v1.ReplicationService",
 	HandlerType: (*ReplicationServiceServer)(nil),
@@ -689,6 +1089,18 @@ var _ReplicationService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateDeploymentReplication",
 			Handler:    _ReplicationService_UpdateDeploymentReplication_Handler,
+		},
+		{
+			MethodName: "CreateDeploymentMigration",
+			Handler:    _ReplicationService_CreateDeploymentMigration_Handler,
+		},
+		{
+			MethodName: "GetDeploymentMigration",
+			Handler:    _ReplicationService_GetDeploymentMigration_Handler,
+		},
+		{
+			MethodName: "DeleteDeploymentMigration",
+			Handler:    _ReplicationService_DeleteDeploymentMigration_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -961,6 +1373,203 @@ func (m *DeploymentReplication_Status) MarshalToSizedBuffer(dAtA []byte) (int, e
 	return len(dAtA) - i, nil
 }
 
+func (m *DeploymentMigration) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *DeploymentMigration) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DeploymentMigration) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Status != nil {
+		{
+			size, err := m.Status.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintReplication(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x6
+		i--
+		dAtA[i] = 0xa2
+	}
+	if m.CreatedAt != nil {
+		{
+			size, err := m.CreatedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintReplication(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.TargetDeployment != nil {
+		{
+			size, err := m.TargetDeployment.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintReplication(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.SourceDeploymentId) > 0 {
+		i -= len(m.SourceDeploymentId)
+		copy(dAtA[i:], m.SourceDeploymentId)
+		i = encodeVarintReplication(dAtA, i, uint64(len(m.SourceDeploymentId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *DeploymentMigration_DeploymentSpec) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *DeploymentMigration_DeploymentSpec) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DeploymentMigration_DeploymentSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.RegionId) > 0 {
+		i -= len(m.RegionId)
+		copy(dAtA[i:], m.RegionId)
+		i = encodeVarintReplication(dAtA, i, uint64(len(m.RegionId)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if m.NodeDiskSize != 0 {
+		i = encodeVarintReplication(dAtA, i, uint64(m.NodeDiskSize))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.NodeCount != 0 {
+		i = encodeVarintReplication(dAtA, i, uint64(m.NodeCount))
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.NodeSizeId) > 0 {
+		i -= len(m.NodeSizeId)
+		copy(dAtA[i:], m.NodeSizeId)
+		i = encodeVarintReplication(dAtA, i, uint64(len(m.NodeSizeId)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Model) > 0 {
+		i -= len(m.Model)
+		copy(dAtA[i:], m.Model)
+		i = encodeVarintReplication(dAtA, i, uint64(len(m.Model)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *DeploymentMigration_Status) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *DeploymentMigration_Status) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DeploymentMigration_Status) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.TargetDeploymentId) > 0 {
+		i -= len(m.TargetDeploymentId)
+		copy(dAtA[i:], m.TargetDeploymentId)
+		i = encodeVarintReplication(dAtA, i, uint64(len(m.TargetDeploymentId)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.BackupId) > 0 {
+		i -= len(m.BackupId)
+		copy(dAtA[i:], m.BackupId)
+		i = encodeVarintReplication(dAtA, i, uint64(len(m.BackupId)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if m.LastUpdatedAt != nil {
+		{
+			size, err := m.LastUpdatedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintReplication(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Description) > 0 {
+		i -= len(m.Description)
+		copy(dAtA[i:], m.Description)
+		i = encodeVarintReplication(dAtA, i, uint64(len(m.Description)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Phase) > 0 {
+		i -= len(m.Phase)
+		copy(dAtA[i:], m.Phase)
+		i = encodeVarintReplication(dAtA, i, uint64(len(m.Phase)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintReplication(dAtA []byte, offset int, v uint64) int {
 	offset -= sovReplication(v)
 	base := offset
@@ -1085,6 +1694,96 @@ func (m *DeploymentReplication_Status) Size() (n int) {
 	}
 	if m.Progress != 0 {
 		n += 5
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *DeploymentMigration) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.SourceDeploymentId)
+	if l > 0 {
+		n += 1 + l + sovReplication(uint64(l))
+	}
+	if m.TargetDeployment != nil {
+		l = m.TargetDeployment.Size()
+		n += 1 + l + sovReplication(uint64(l))
+	}
+	if m.CreatedAt != nil {
+		l = m.CreatedAt.Size()
+		n += 1 + l + sovReplication(uint64(l))
+	}
+	if m.Status != nil {
+		l = m.Status.Size()
+		n += 2 + l + sovReplication(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *DeploymentMigration_DeploymentSpec) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Model)
+	if l > 0 {
+		n += 1 + l + sovReplication(uint64(l))
+	}
+	l = len(m.NodeSizeId)
+	if l > 0 {
+		n += 1 + l + sovReplication(uint64(l))
+	}
+	if m.NodeCount != 0 {
+		n += 1 + sovReplication(uint64(m.NodeCount))
+	}
+	if m.NodeDiskSize != 0 {
+		n += 1 + sovReplication(uint64(m.NodeDiskSize))
+	}
+	l = len(m.RegionId)
+	if l > 0 {
+		n += 1 + l + sovReplication(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *DeploymentMigration_Status) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Phase)
+	if l > 0 {
+		n += 1 + l + sovReplication(uint64(l))
+	}
+	l = len(m.Description)
+	if l > 0 {
+		n += 1 + l + sovReplication(uint64(l))
+	}
+	if m.LastUpdatedAt != nil {
+		l = m.LastUpdatedAt.Size()
+		n += 1 + l + sovReplication(uint64(l))
+	}
+	l = len(m.BackupId)
+	if l > 0 {
+		n += 1 + l + sovReplication(uint64(l))
+	}
+	l = len(m.TargetDeploymentId)
+	if l > 0 {
+		n += 1 + l + sovReplication(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1843,6 +2542,597 @@ func (m *DeploymentReplication_Status) Unmarshal(dAtA []byte) error {
 			v = uint32(encoding_binary.LittleEndian.Uint32(dAtA[iNdEx:]))
 			iNdEx += 4
 			m.Progress = float32(math.Float32frombits(v))
+		default:
+			iNdEx = preIndex
+			skippy, err := skipReplication(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *DeploymentMigration) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowReplication
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: DeploymentMigration: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: DeploymentMigration: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SourceDeploymentId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReplication
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SourceDeploymentId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TargetDeployment", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthReplication
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.TargetDeployment == nil {
+				m.TargetDeployment = &DeploymentMigration_DeploymentSpec{}
+			}
+			if err := m.TargetDeployment.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthReplication
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.CreatedAt == nil {
+				m.CreatedAt = &types.Timestamp{}
+			}
+			if err := m.CreatedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 100:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthReplication
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Status == nil {
+				m.Status = &DeploymentMigration_Status{}
+			}
+			if err := m.Status.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipReplication(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *DeploymentMigration_DeploymentSpec) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowReplication
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: DeploymentSpec: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: DeploymentSpec: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Model", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReplication
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Model = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NodeSizeId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReplication
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NodeSizeId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NodeCount", wireType)
+			}
+			m.NodeCount = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.NodeCount |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NodeDiskSize", wireType)
+			}
+			m.NodeDiskSize = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.NodeDiskSize |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RegionId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReplication
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RegionId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipReplication(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *DeploymentMigration_Status) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowReplication
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Status: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Status: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Phase", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReplication
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Phase = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReplication
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Description = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LastUpdatedAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthReplication
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.LastUpdatedAt == nil {
+				m.LastUpdatedAt = &types.Timestamp{}
+			}
+			if err := m.LastUpdatedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BackupId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReplication
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.BackupId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TargetDeploymentId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplication
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReplication
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplication
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TargetDeploymentId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipReplication(dAtA[iNdEx:])

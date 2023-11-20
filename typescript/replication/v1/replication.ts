@@ -37,6 +37,86 @@ export interface CloneDeploymentFromBackupRequest {
   project_id?: string;
 }
 
+// DeploymentMigration defines a request for performing the migration of a deployment.
+export interface DeploymentMigration {
+  // Identifier of the source deployment that needs to be migrated.
+  // This is a required field.
+  // string
+  source_deployment_id?: string;
+  
+  // Specification of the target deployment.
+  // DeploymentMigration_DeploymentSpec
+  target_deployment?: DeploymentMigration_DeploymentSpec;
+  
+  // Timestamp of when this migration was initiated.
+  // This is a read-only field.
+  // googleTypes.Timestamp
+  created_at?: googleTypes.Timestamp;
+  
+  // Status of the migration.
+  // This is a read-only field.
+  // DeploymentMigration_Status
+  status?: DeploymentMigration_Status;
+}
+
+// Specification of the target deployment.
+export interface DeploymentMigration_DeploymentSpec {
+  // Type of model being used
+  // string
+  model?: string;
+  
+  // Size of nodes being used
+  // This field is ignored set in case the flexible model is used.
+  // string
+  node_size_id?: string;
+  
+  // Number of nodes being used
+  // This field is ignored set in case the flexible model is used.
+  // number
+  node_count?: number;
+  
+  // Amount of disk space per node (in GB)
+  // This field is ignored set in case the flexible model is used.
+  // number
+  node_disk_size?: number;
+  
+  // Identifier of the region in which the deployment is created.
+  // After creation, this value cannot be changed.
+  // string
+  region_id?: string;
+}
+
+// Status of the DeploymentMigration.
+export interface DeploymentMigration_Status {
+  // The current phase of the migration.
+  // This will contain only one of the following values:
+  // - SourceBackupInProgress:                Creation of backup of source deployment is in progress.
+  // - TargetDeploymentCreationInProgress:    Creation of target deployment is in progress.
+  // - TargetDeploymentModelChangeInProgress: The model of the target deployment is being updated.
+  // - Error:                                 An error has occured during the migration process.
+  // - Failed:                                Migration has failed due to errors.
+  // - Complete:                              Migration process has completed.
+  // string
+  phase?: string;
+  
+  // Additional information regarding the status.
+  // string
+  description?: string;
+  
+  // Timestamp of when the status was last updated.
+  // googleTypes.Timestamp
+  last_updated_at?: googleTypes.Timestamp;
+  
+  // ID of the backup at the source deployment.
+  // This backup will be used to perform a restore at the target deployment.
+  // string
+  backup_id?: string;
+  
+  // ID of the target deployment.
+  // string
+  target_deployment_id?: string;
+}
+
 // DeploymentReplication defines a request object for creating or updating a deployment replication
 export interface DeploymentReplication {
   // Identifier of the deployment for a given DeploymentReplication
@@ -159,6 +239,23 @@ export interface IReplicationService {
   // Required permissions:
   // - replication.deploymentreplication.update
   UpdateDeploymentReplication: (req: DeploymentReplication) => Promise<DeploymentReplication>;
+  
+  // Create a new deployment migration.
+  // Note: currently migration is supported only for Deployments with 'free' model.
+  // Required permissions:
+  // - replication.deploymentmigration.create on the specified deployment ID
+  CreateDeploymentMigration: (req: DeploymentMigration) => Promise<DeploymentMigration>;
+  
+  // Get info about the deployment migration for a deployment identified by the given ID.
+  // Required permissions:
+  // - replication.deploymentmigration.get on the specified deployment ID
+  GetDeploymentMigration: (req: arangodb_cloud_common_v1_IDOptions) => Promise<DeploymentMigration>;
+  
+  // Delete an existing DeploymentMigration.
+  // A DeploymentMigration may be deleted only if it is in COMPLETE or FAILED state.
+  // Required permissions:
+  // - replication.deploymentmigration.delete on the specified deployment ID.
+  DeleteDeploymentMigration: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
 }
 
 // ReplicationService is the API used to replicate a deployment.
@@ -208,5 +305,33 @@ export class ReplicationService implements IReplicationService {
   async UpdateDeploymentReplication(req: DeploymentReplication): Promise<DeploymentReplication> {
     const url = `/api/replication/v1/deployment/${encodeURIComponent(req.deployment_id || '')}/replication`;
     return api.put(url, req);
+  }
+  
+  // Create a new deployment migration.
+  // Note: currently migration is supported only for Deployments with 'free' model.
+  // Required permissions:
+  // - replication.deploymentmigration.create on the specified deployment ID
+  async CreateDeploymentMigration(req: DeploymentMigration): Promise<DeploymentMigration> {
+    const url = `/api/replication/v1/deploymentmigration`;
+    return api.post(url, req);
+  }
+  
+  // Get info about the deployment migration for a deployment identified by the given ID.
+  // Required permissions:
+  // - replication.deploymentmigration.get on the specified deployment ID
+  async GetDeploymentMigration(req: arangodb_cloud_common_v1_IDOptions): Promise<DeploymentMigration> {
+    const path = `/api/replication/v1/deploymentmigration/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Delete an existing DeploymentMigration.
+  // A DeploymentMigration may be deleted only if it is in COMPLETE or FAILED state.
+  // Required permissions:
+  // - replication.deploymentmigration.delete on the specified deployment ID.
+  async DeleteDeploymentMigration(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
+    const path = `/api/replication/v1/deploymentmigration/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.delete(url, undefined);
   }
 }
