@@ -311,9 +311,8 @@ export class ReplicationService implements IReplicationService {
   // Required permissions:
   // - replication.deploymentmigration.create on the specified deployment ID
   async CreateDeploymentMigration(req: DeploymentMigration): Promise<DeploymentMigration> {
-    const path = `/api/replication/v1/deploymentmigration`;
-    const url = path + api.queryString(req, []);
-    return api.post(url, undefined);
+    const url = `/api/replication/v1/deploymentmigration`;
+    return api.post(url, req);
   }
   
   // Get info about the deployment migration for a deployment identified by the given ID.

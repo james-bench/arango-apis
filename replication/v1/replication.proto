@@ -90,6 +90,7 @@ service ReplicationService {
     rpc CreateDeploymentMigration(DeploymentMigration) returns (DeploymentMigration) {
         option (google.api.http) = {
             post: "/api/replication/v1/deploymentmigration"
+            body: "*"
         };
     }
 
