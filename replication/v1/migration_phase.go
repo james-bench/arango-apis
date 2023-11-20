@@ -27,6 +27,8 @@ var (
 	MigrationPhaseTargetDeploymentCreationInProgress = "TargetDeploymentCreationInProgress"
 	// Target deployment model update is in progress.
 	MigrationPhaseTargetDeploymentModelUpdateInProgress = "TargetDeploymentModelUpdateInProgress"
+	// An error has occurred during the migration process.
+	MigrationPhaseError = "Error"
 	// Migration has failed.
 	MigrationPhaseFailed = "Failed"
 	// Migration has completed.

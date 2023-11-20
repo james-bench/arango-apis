@@ -90,15 +90,16 @@ export interface DeploymentMigration_DeploymentSpec {
 export interface DeploymentMigration_Status {
   // The current phase of the migration.
   // This will contain only one of the following values:
-  // - SourceBackupInProgress:                Creation of backup of source deployment is in progress
-  // - TargetDeploymentCreationInProgress:    Creation of target deployment is in progress
+  // - SourceBackupInProgress:                Creation of backup of source deployment is in progress.
+  // - TargetDeploymentCreationInProgress:    Creation of target deployment is in progress.
   // - TargetDeploymentModelChangeInProgress: The model of the target deployment is being updated.
-  // - Failed:                                Migration process has failed
-  // - Complete:                              Migration process has completed
+  // - Error:                                 An error has occured during the migration process.
+  // - Failed:                                Migration has failed due to errors.
+  // - Complete:                              Migration process has completed.
   // string
   phase?: string;
   
-  // Additional information regarding the phase
+  // Additional information regarding the status.
   // string
   description?: string;
   

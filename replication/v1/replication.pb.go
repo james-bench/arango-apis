@@ -561,13 +561,14 @@ func (m *DeploymentMigration_DeploymentSpec) GetRegionId() string {
 type DeploymentMigration_Status struct {
 	// The current phase of the migration.
 	// This will contain only one of the following values:
-	// - SourceBackupInProgress:                Creation of backup of source deployment is in progress
-	// - TargetDeploymentCreationInProgress:    Creation of target deployment is in progress
+	// - SourceBackupInProgress:                Creation of backup of source deployment is in progress.
+	// - TargetDeploymentCreationInProgress:    Creation of target deployment is in progress.
 	// - TargetDeploymentModelChangeInProgress: The model of the target deployment is being updated.
-	// - Failed:                                Migration process has failed
-	// - Complete:                              Migration process has completed
+	// - Error:                                 An error has occured during the migration process.
+	// - Failed:                                Migration has failed due to errors.
+	// - Complete:                              Migration process has completed.
 	Phase string `protobuf:"bytes,1,opt,name=phase,proto3" json:"phase,omitempty"`
-	// Additional information regarding the phase
+	// Additional information regarding the status.
 	Description string `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
 	// Timestamp of when the status was last updated.
 	LastUpdatedAt *types.Timestamp `protobuf:"bytes,3,opt,name=last_updated_at,json=lastUpdatedAt,proto3" json:"last_updated_at,omitempty"`
