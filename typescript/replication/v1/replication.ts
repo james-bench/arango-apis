@@ -249,6 +249,12 @@ export interface IReplicationService {
   // Required permissions:
   // - replication.deploymentmigration.get on the specified deployment ID
   GetDeploymentMigration: (req: arangodb_cloud_common_v1_IDOptions) => Promise<DeploymentMigration>;
+  
+  // Delete an existing DeploymentMigration.
+  // A DeploymentMigration may be deleted only if it is in COMPLETE or FAILED state.
+  // Required permissions:
+  // - replication.deploymentmigration.delete on the specified deployment ID.
+  DeleteDeploymentMigration: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
 }
 
 // ReplicationService is the API used to replicate a deployment.
@@ -317,5 +323,15 @@ export class ReplicationService implements IReplicationService {
     const path = `/api/replication/v1/deploymentmigration/${encodeURIComponent(req.id || '')}`;
     const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
+  }
+  
+  // Delete an existing DeploymentMigration.
+  // A DeploymentMigration may be deleted only if it is in COMPLETE or FAILED state.
+  // Required permissions:
+  // - replication.deploymentmigration.delete on the specified deployment ID.
+  async DeleteDeploymentMigration(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
+    const path = `/api/replication/v1/deploymentmigration/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.delete(url, undefined);
   }
 }

@@ -334,6 +334,60 @@ func local_request_ReplicationService_GetDeploymentMigration_0(ctx context.Conte
 
 }
 
+func request_ReplicationService_DeleteDeploymentMigration_0(ctx context.Context, marshaler runtime.Marshaler, client ReplicationServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq v1.IDOptions
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+	}
+
+	protoReq.Id, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+	}
+
+	msg, err := client.DeleteDeploymentMigration(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_ReplicationService_DeleteDeploymentMigration_0(ctx context.Context, marshaler runtime.Marshaler, server ReplicationServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq v1.IDOptions
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+	}
+
+	protoReq.Id, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+	}
+
+	msg, err := server.DeleteDeploymentMigration(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
 // RegisterReplicationServiceHandlerServer registers the http handlers for service ReplicationService to "mux".
 // UnaryRPC     :call ReplicationServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
@@ -456,6 +510,26 @@ func RegisterReplicationServiceHandlerServer(ctx context.Context, mux *runtime.S
 		}
 
 		forward_ReplicationService_GetDeploymentMigration_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("DELETE", pattern_ReplicationService_DeleteDeploymentMigration_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_ReplicationService_DeleteDeploymentMigration_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ReplicationService_DeleteDeploymentMigration_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -620,6 +694,26 @@ func RegisterReplicationServiceHandlerClient(ctx context.Context, mux *runtime.S
 
 	})
 
+	mux.Handle("DELETE", pattern_ReplicationService_DeleteDeploymentMigration_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_ReplicationService_DeleteDeploymentMigration_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ReplicationService_DeleteDeploymentMigration_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
 	return nil
 }
 
@@ -635,6 +729,8 @@ var (
 	pattern_ReplicationService_CreateDeploymentMigration_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "replication", "v1", "deploymentmigration"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_ReplicationService_GetDeploymentMigration_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "replication", "v1", "deploymentmigration", "id"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_ReplicationService_DeleteDeploymentMigration_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "replication", "v1", "deploymentmigration", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
@@ -649,4 +745,6 @@ var (
 	forward_ReplicationService_CreateDeploymentMigration_0 = runtime.ForwardResponseMessage
 
 	forward_ReplicationService_GetDeploymentMigration_0 = runtime.ForwardResponseMessage
+
+	forward_ReplicationService_DeleteDeploymentMigration_0 = runtime.ForwardResponseMessage
 )

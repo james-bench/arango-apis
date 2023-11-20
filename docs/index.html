@@ -19612,6 +19612,16 @@ Required permissions:
 - replication.deploymentmigration.get on the specified deployment ID</p></td>
               </tr>
             
+              <tr>
+                <td>DeleteDeploymentMigration</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.common.v1.Empty">.arangodb.cloud.common.v1.Empty</a></td>
+                <td><p>Delete an existing DeploymentMigration.
+A DeploymentMigration may be deleted only if it is in COMPLETE or FAILED state.
+Required permissions:
+- replication.deploymentmigration.delete on the specified deployment ID.</p></td>
+              </tr>
+            
           </tbody>
         </table>
 
@@ -19685,6 +19695,16 @@ Required permissions:
               <tr>
                 <td>GetDeploymentMigration</td>
                 <td>GET</td>
+                <td>/api/replication/v1/deploymentmigration/{id}</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>DeleteDeploymentMigration</td>
+                <td>DELETE</td>
                 <td>/api/replication/v1/deploymentmigration/{id}</td>
                 <td></td>
               </tr>
