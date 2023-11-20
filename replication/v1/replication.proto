@@ -101,6 +101,17 @@ service ReplicationService {
             get: "/api/replication/v1/deploymentmigration/{id}"
         };
     }
+
+    // Delete an existing DeploymentMigration.
+    // A DeploymentMigration may be deleted only if it is in COMPLETE or FAILED state.
+    // Required permissions:
+    // - replication.deploymentmigration.delete on the specified deployment ID.
+    rpc DeleteDeploymentMigration(arangodb.cloud.common.v1.IDOptions) returns (arangodb.cloud.common.v1.Empty) {
+        option (google.api.http) = {
+            delete: "/api/replication/v1/deploymentmigration/{id}"
+        };
+    };
+
 }
 
 // CloneDeploymentFromBackupRequest defines a request object for clone deployment call.

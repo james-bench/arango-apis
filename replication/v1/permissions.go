@@ -47,4 +47,6 @@ const (
 	PermissionCreateDeploymentMigration = "replication.deploymentmigration.create"
 	// PermissionGetDeploymentMigration is needed for getting a DeploymentMigration for a given deployment.
 	PermissionGetDeploymentMigration = "replication.deploymentmigration.get"
+	// PermissionDeleteDeploymentMigration is needed for deleting a DeploymentMigration for a given deployment.
+	PermissionDeleteDeploymentMigration = "replication.deploymentmigration.delete"
 )
