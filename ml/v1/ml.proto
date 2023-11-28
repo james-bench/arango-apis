@@ -134,6 +134,9 @@ message Status {
 
     // Status of each ArangoGraphML components/services.
     repeated ServiceStatus services = 4;
+
+    // Total number of hours ML jobs have run for this Deployment.
+    float job_runtime_hours = 5;
 }
 
 // Status of a single ArangoGraphML component.
