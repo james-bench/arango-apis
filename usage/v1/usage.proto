@@ -301,7 +301,7 @@ message UsageItem {
     }
     // Amount of compute resources used by a given ML job.
     // This field is only set when the usage item is of kind MLJobSize.
-    MLServicesSize mljob_size = 108;
+    MLJobSize mljob_size = 108;
 }
 
 // List of UsageItems.

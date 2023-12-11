@@ -168,8 +168,8 @@ export interface UsageItem {
   
   // Amount of compute resources used by a given ML job.
   // This field is only set when the usage item is of kind MLJobSize.
-  // UsageItem_MLServicesSize
-  mljob_size?: UsageItem_MLServicesSize;
+  // UsageItem_MLJobSize
+  mljob_size?: UsageItem_MLJobSize;
 }
 
 // Amount of audit log related resources used by the resource covered by this usage item.
