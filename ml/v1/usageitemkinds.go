@@ -25,4 +25,6 @@ const (
 
 	// UsageItemResourceKindMLServices is the kind used inside the UsageItem.Resource to refer to a MLServices resource.
 	UsageItemResourceKindMLServices = "MLServices"
+	// UsageItemResourceKindMLJob is the kind used inside the UsageItem.Resource to refer to a ML Job.
+	UsageItemResourceKindMLJob = "MLJob"
 )

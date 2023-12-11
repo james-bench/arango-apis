@@ -53,7 +53,11 @@ const (
 	// UsageItems from this kind will not be closed automatically, so open items can exists.
 	UsageItemKindNotebookSize = "NotebookSize"
 	// UsageItemKindMLServicesSize indicates a UsageItem that contains
-	// the amount of resources used by a MLServices resoruse (of a deployment).
+	// the amount of resources used by a MLServices resources (of a deployment).
 	// UsageItems from this kind will not be closed automatically, so open items can exist.
 	UsageItemKindMLServicesSize = "MLServicesSize"
+	// UsageItemKindMLJobSize indicates a UsageItem that contains
+	// the amount of resources used by a ML job (of a MLServices).
+	// UsageItems of this kind are closed on creation itself, so open items cannot exist.
+	UsageItemKindMLJobSize = "MLJobSize"
 )
