@@ -277,6 +277,10 @@ export interface UsageItem_MLJobSize {
   // Amount of GPU units allocated to the job.
   // number
   gpu_size?: number;
+  
+  // ID of the ML job.
+  // string
+  job_id?: string;
 }
 
 // Amount of compute resources used by a given MLServices resource.
