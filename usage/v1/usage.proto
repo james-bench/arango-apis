@@ -298,6 +298,8 @@ message UsageItem {
         int32 gpu_size = 3;
         // ID of the ML job.
         string job_id = 4;
+        // Type of ML Job (training/prediction)
+        string job_type = 5;
     }
     // Amount of compute resources used by a given ML job.
     // This field is only set when the usage item is of kind MLJobSize.

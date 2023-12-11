@@ -281,6 +281,10 @@ export interface UsageItem_MLJobSize {
   // ID of the ML job.
   // string
   job_id?: string;
+  
+  // Type of ML Job (training/prediction)
+  // string
+  job_type?: string;
 }
 
 // Amount of compute resources used by a given MLServices resource.
