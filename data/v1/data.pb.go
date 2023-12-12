@@ -5724,6 +5724,7 @@ type DataServiceClient interface {
 	// If project ID "all" is used, then all node sizes for the region with given
 	// ID are returned.
 	// Required permissions:
+	// - data.nodesize.list on the requested deployment (if deployment ID is set)
 	// - data.nodesize.list on the requested project (if project ID does not equal "all")
 	// - data.nodesize.list on the requested organization (if organization ID is set)
 	// - None if project ID does equals "all"
@@ -6176,6 +6177,7 @@ type DataServiceServer interface {
 	// If project ID "all" is used, then all node sizes for the region with given
 	// ID are returned.
 	// Required permissions:
+	// - data.nodesize.list on the requested deployment (if deployment ID is set)
 	// - data.nodesize.list on the requested project (if project ID does not equal "all")
 	// - data.nodesize.list on the requested organization (if organization ID is set)
 	// - None if project ID does equals "all"
