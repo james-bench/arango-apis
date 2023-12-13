@@ -48,6 +48,18 @@ service MLService {
             get: "/api/ml/v1/mlservices/{id}"
         };
     }
+
+    // Update an existing MLServices resource. If it does not exist, this will create a new one.
+    // Pass the desired updated state of MLServices to this call.
+    // Required permissions:
+    // - ml.mlservices.update
+    rpc UpdateMLServices(MLServices) returns (MLServices) {
+        option (google.api.http) = {
+            put: "/api/ml/v1/mlservices/{deployment_id}"
+            body: "*"
+        };
+    }
+
 }
 
 // MLServices is a single resource which represents the state and configuration

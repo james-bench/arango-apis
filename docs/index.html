@@ -16042,6 +16042,16 @@ Required permissions:
 - ml.mlservices.get</p></td>
               </tr>
             
+              <tr>
+                <td>UpdateMLServices</td>
+                <td><a href="#arangodb.cloud.ml.v1.MLServices">MLServices</a></td>
+                <td><a href="#arangodb.cloud.ml.v1.MLServices">MLServices</a></td>
+                <td><p>Update an existing MLServices resource. If it does not exist, this will create a new one.
+Pass the desired updated state of MLServices to this call.
+Required permissions:
+- ml.mlservices.update</p></td>
+              </tr>
+            
           </tbody>
         </table>
 
@@ -16077,6 +16087,16 @@ Required permissions:
                 <td>GET</td>
                 <td>/api/ml/v1/mlservices/{id}</td>
                 <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>UpdateMLServices</td>
+                <td>PUT</td>
+                <td>/api/ml/v1/mlservices/{deployment_id}</td>
+                <td>*</td>
               </tr>
               
             
