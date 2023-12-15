@@ -16131,10 +16131,18 @@ It will contain only one of the following values:
                 </tr>
               
                 <tr>
-                  <td>job_runtime_hours</td>
+                  <td>hours_used</td>
                   <td><a href="#float">float</a></td>
                   <td></td>
-                  <td><p>Total number of hours ML jobs have run for this Deployment. </p></td>
+                  <td><p>Total number of hours ML Jobs have run for this Deployment. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>hours_allowed</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Total number of runtime hours allowed for ML Jobs for this Deployment.
+Set to 0 if unlimited (i.e, no restriction). </p></td>
                 </tr>
               
             </tbody>

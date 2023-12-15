@@ -142,9 +142,14 @@ export interface Status {
   // ServiceStatus
   services?: ServiceStatus[];
   
-  // Total number of hours ML jobs have run for this Deployment.
+  // Total number of hours ML Jobs have run for this Deployment.
   // number
-  job_runtime_hours?: number;
+  hours_used?: number;
+  
+  // Total number of runtime hours allowed for ML Jobs for this Deployment.
+  // Set to 0 if unlimited (i.e, no restriction).
+  // number
+  hours_allowed?: number;
 }
 
 // MLService is the API used to configure ArangoML on ArangoGraph Insights Platform.
