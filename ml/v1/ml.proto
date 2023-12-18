@@ -99,6 +99,11 @@ message MLServices {
     string deployment_id = 1;
     // Set to true if ML services are enabled for this deployment.
     bool enabled = 2;
+    // Size to use for the ML Jobs.
+    // Use `ListMLServicesSizes` to get a list of available sizes.
+    // If unspecified, defaults to 'small'.
+    // This is an optional field.
+    string size = 3;
     // Status of the MLServices.
     // This is a read-only value.
     Status status = 100;

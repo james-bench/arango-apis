@@ -29,6 +29,13 @@ export interface MLServices {
   // boolean
   enabled?: boolean;
   
+  // Size to use for the ML Jobs.
+  // Use `ListMLServicesSizes` to get a list of available sizes.
+  // If unspecified, defaults to 'small'.
+  // This is an optional field.
+  // string
+  size?: string;
+  
   // Status of the MLServices.
   // This is a read-only value.
   // Status
