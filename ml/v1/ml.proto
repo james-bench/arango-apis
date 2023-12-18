@@ -85,10 +85,12 @@ message ListMLServicesSizesRequest {
 message MLServicesSize {
     // Identifier of the size configuration.
     string size_id = 1;
+    // If set, this is the default size when unspecified in MLServices.
+    bool is_default = 2;
     // Amount of CPU allocated (in vCPU units)
-    float cpu = 2;
+    float cpu = 3;
     // Amount of Memory allocated (in GB)
-    int32 memory = 3;
+    int32 memory = 4;
 }
 
 // MLServices is a single resource which represents the state and configuration
@@ -101,7 +103,7 @@ message MLServices {
     bool enabled = 2;
     // Size to use for the ML Jobs.
     // Use `ListMLServicesSizes` to get a list of available sizes.
-    // If unspecified, defaults to 'small'.
+    // If unspecified, the MLServiceSize marked as `is_default` is used.
     // This is an optional field.
     string size = 3;
     // Status of the MLServices.

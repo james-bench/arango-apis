@@ -31,7 +31,7 @@ export interface MLServices {
   
   // Size to use for the ML Jobs.
   // Use `ListMLServicesSizes` to get a list of available sizes.
-  // If unspecified, defaults to 'small'.
+  // If unspecified, the MLServiceSize marked as `is_default` is used.
   // This is an optional field.
   // string
   size?: string;
@@ -48,6 +48,10 @@ export interface MLServicesSize {
   // Identifier of the size configuration.
   // string
   size_id?: string;
+  
+  // If set, this is the default size when unspecified in MLServices.
+  // boolean
+  is_default?: boolean;
   
   // Amount of CPU allocated (in vCPU units)
   // number
