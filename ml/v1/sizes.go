@@ -21,17 +21,13 @@
 package v1
 
 const (
-	// MLServices permissions
-
-	// PermissionGetMLServices is needed for getting MLServices.
-	PermissionGetMLServices = "ml.mlservices.get"
-	// PermissionUpdateMLServices is needed for updating MLServices.
-	PermissionUpdateMLServices = "ml.mlservices.update"
-)
-
-const (
-	// MLServicesSize permissions
-
-	// PermissionListMLServicesSize is needed for listing MLServicesSize.
-	PermissionListMLServicesSize = "ml.mlservicessize.list"
+	// SizeSmall specifies the Size ID for small MLServices size.
+	// 4 vCPU / 16GB Memory
+	SizeSmall = "small"
+	// SizeMedium specifies the Size ID for medium MLServices size.
+	// 8 vCPU / 32GB Memory
+	SizeMedium = "medium"
+	// SizeLarge specifies the Size ID for large MLServices size.
+	// 16 vCPU / 64GB Memory
+	SizeLarge = "large"
 )

@@ -30,6 +30,172 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+// List of MLServicesSize.
+type MLServicesSizeList struct {
+	// Items in this list.
+	Items                []*MLServicesSize `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
+}
+
+func (m *MLServicesSizeList) Reset()         { *m = MLServicesSizeList{} }
+func (m *MLServicesSizeList) String() string { return proto.CompactTextString(m) }
+func (*MLServicesSizeList) ProtoMessage()    {}
+func (*MLServicesSizeList) Descriptor() ([]byte, []int) {
+	return fileDescriptor_378f7d136b22f2a8, []int{0}
+}
+func (m *MLServicesSizeList) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MLServicesSizeList) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MLServicesSizeList.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MLServicesSizeList) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MLServicesSizeList.Merge(m, src)
+}
+func (m *MLServicesSizeList) XXX_Size() int {
+	return m.Size()
+}
+func (m *MLServicesSizeList) XXX_DiscardUnknown() {
+	xxx_messageInfo_MLServicesSizeList.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MLServicesSizeList proto.InternalMessageInfo
+
+func (m *MLServicesSizeList) GetItems() []*MLServicesSize {
+	if m != nil {
+		return m.Items
+	}
+	return nil
+}
+
+type ListMLServicesSizesRequest struct {
+	// Optional ID of the Deployment for which sizes are being requested.
+	// If set, the response will exclude any sizes that are unavailable for the specified deployment model.
+	DeploymentId         string   `protobuf:"bytes,1,opt,name=deployment_id,json=deploymentId,proto3" json:"deployment_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ListMLServicesSizesRequest) Reset()         { *m = ListMLServicesSizesRequest{} }
+func (m *ListMLServicesSizesRequest) String() string { return proto.CompactTextString(m) }
+func (*ListMLServicesSizesRequest) ProtoMessage()    {}
+func (*ListMLServicesSizesRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_378f7d136b22f2a8, []int{1}
+}
+func (m *ListMLServicesSizesRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ListMLServicesSizesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ListMLServicesSizesRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ListMLServicesSizesRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListMLServicesSizesRequest.Merge(m, src)
+}
+func (m *ListMLServicesSizesRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *ListMLServicesSizesRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListMLServicesSizesRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListMLServicesSizesRequest proto.InternalMessageInfo
+
+func (m *ListMLServicesSizesRequest) GetDeploymentId() string {
+	if m != nil {
+		return m.DeploymentId
+	}
+	return ""
+}
+
+// MLServicesSize represents the resources allocated for MLServices.
+// Note that the specified configuration is applied for the ML jobs.
+type MLServicesSize struct {
+	// Identifier of the size configuration.
+	SizeId string `protobuf:"bytes,1,opt,name=size_id,json=sizeId,proto3" json:"size_id,omitempty"`
+	// Amount of CPU allocated (in vCPU units)
+	Cpu float32 `protobuf:"fixed32,2,opt,name=cpu,proto3" json:"cpu,omitempty"`
+	// Amount of Memory allocated (in GB)
+	Memory               int32    `protobuf:"varint,3,opt,name=memory,proto3" json:"memory,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *MLServicesSize) Reset()         { *m = MLServicesSize{} }
+func (m *MLServicesSize) String() string { return proto.CompactTextString(m) }
+func (*MLServicesSize) ProtoMessage()    {}
+func (*MLServicesSize) Descriptor() ([]byte, []int) {
+	return fileDescriptor_378f7d136b22f2a8, []int{2}
+}
+func (m *MLServicesSize) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MLServicesSize) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MLServicesSize.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MLServicesSize) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MLServicesSize.Merge(m, src)
+}
+func (m *MLServicesSize) XXX_Size() int {
+	return m.Size()
+}
+func (m *MLServicesSize) XXX_DiscardUnknown() {
+	xxx_messageInfo_MLServicesSize.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MLServicesSize proto.InternalMessageInfo
+
+func (m *MLServicesSize) GetSizeId() string {
+	if m != nil {
+		return m.SizeId
+	}
+	return ""
+}
+
+func (m *MLServicesSize) GetCpu() float32 {
+	if m != nil {
+		return m.Cpu
+	}
+	return 0
+}
+
+func (m *MLServicesSize) GetMemory() int32 {
+	if m != nil {
+		return m.Memory
+	}
+	return 0
+}
+
 // MLServices is a single resource which represents the state and configuration
 // of ML Services (ArangoGraphML) for a deployment specified by deployment_id.
 type MLServices struct {
@@ -50,7 +216,7 @@ func (m *MLServices) Reset()         { *m = MLServices{} }
 func (m *MLServices) String() string { return proto.CompactTextString(m) }
 func (*MLServices) ProtoMessage()    {}
 func (*MLServices) Descriptor() ([]byte, []int) {
-	return fileDescriptor_378f7d136b22f2a8, []int{0}
+	return fileDescriptor_378f7d136b22f2a8, []int{3}
 }
 func (m *MLServices) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -125,7 +291,7 @@ func (m *Status) Reset()         { *m = Status{} }
 func (m *Status) String() string { return proto.CompactTextString(m) }
 func (*Status) ProtoMessage()    {}
 func (*Status) Descriptor() ([]byte, []int) {
-	return fileDescriptor_378f7d136b22f2a8, []int{1}
+	return fileDescriptor_378f7d136b22f2a8, []int{4}
 }
 func (m *Status) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -206,7 +372,7 @@ func (m *ServiceStatus) Reset()         { *m = ServiceStatus{} }
 func (m *ServiceStatus) String() string { return proto.CompactTextString(m) }
 func (*ServiceStatus) ProtoMessage()    {}
 func (*ServiceStatus) Descriptor() ([]byte, []int) {
-	return fileDescriptor_378f7d136b22f2a8, []int{2}
+	return fileDescriptor_378f7d136b22f2a8, []int{5}
 }
 func (m *ServiceStatus) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -289,7 +455,7 @@ func (m *ServiceStatus_Usage) Reset()         { *m = ServiceStatus_Usage{} }
 func (m *ServiceStatus_Usage) String() string { return proto.CompactTextString(m) }
 func (*ServiceStatus_Usage) ProtoMessage()    {}
 func (*ServiceStatus_Usage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_378f7d136b22f2a8, []int{2, 0}
+	return fileDescriptor_378f7d136b22f2a8, []int{5, 0}
 }
 func (m *ServiceStatus_Usage) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -347,6 +513,9 @@ func (m *ServiceStatus_Usage) GetLastCpuLimit() float32 {
 }
 
 func init() {
+	proto.RegisterType((*MLServicesSizeList)(nil), "arangodb.cloud.ml.v1.MLServicesSizeList")
+	proto.RegisterType((*ListMLServicesSizesRequest)(nil), "arangodb.cloud.ml.v1.ListMLServicesSizesRequest")
+	proto.RegisterType((*MLServicesSize)(nil), "arangodb.cloud.ml.v1.MLServicesSize")
 	proto.RegisterType((*MLServices)(nil), "arangodb.cloud.ml.v1.MLServices")
 	proto.RegisterType((*Status)(nil), "arangodb.cloud.ml.v1.Status")
 	proto.RegisterType((*ServiceStatus)(nil), "arangodb.cloud.ml.v1.ServiceStatus")
@@ -356,48 +525,54 @@ func init() {
 func init() { proto.RegisterFile("ml.proto", fileDescriptor_378f7d136b22f2a8) }
 
 var fileDescriptor_378f7d136b22f2a8 = []byte{
-	// 643 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x54, 0xcd, 0x6e, 0x13, 0x3d,
-	0x14, 0xfd, 0x9c, 0xbf, 0x2f, 0x71, 0x1b, 0x7e, 0xac, 0xaa, 0x1a, 0x8d, 0xa2, 0x10, 0x52, 0x40,
-	0xa1, 0x52, 0x67, 0x68, 0x61, 0x81, 0x60, 0x51, 0xb5, 0x80, 0x50, 0xa5, 0x56, 0xa0, 0x29, 0x65,
-	0xc1, 0x26, 0x72, 0x32, 0xee, 0xd4, 0x92, 0x3d, 0xb6, 0x62, 0x4f, 0xa4, 0x80, 0xba, 0x80, 0x0d,
-	0xec, 0xd9, 0xf0, 0x0e, 0x3c, 0x03, 0x7b, 0x96, 0x48, 0xbc, 0x00, 0x2a, 0x7d, 0x10, 0x34, 0xb6,
-	0xd3, 0x24, 0x28, 0x11, 0xdd, 0xf9, 0x5e, 0x9f, 0x7b, 0x8e, 0xef, 0xb1, 0xaf, 0x61, 0x95, 0xb3,
-	0x40, 0x0e, 0x84, 0x16, 0x68, 0x05, 0x0f, 0x70, 0x9a, 0x88, 0xb8, 0x17, 0xf4, 0x99, 0xc8, 0xe2,
-	0x80, 0xb3, 0x60, 0xb8, 0xe9, 0xaf, 0xf6, 0x05, 0xe7, 0x22, 0x0d, 0x87, 0x9b, 0xa1, 0x5d, 0x59,
-	0xb4, 0xff, 0x38, 0xa1, 0xfa, 0x24, 0xeb, 0x05, 0x7d, 0xc1, 0xc3, 0x44, 0x30, 0x9c, 0x26, 0xa1,
-	0xd9, 0xe8, 0x65, 0xc7, 0xa1, 0xd4, 0x23, 0x49, 0x54, 0xa8, 0x29, 0x27, 0x4a, 0x63, 0x2e, 0x27,
-	0x2b, 0x57, 0xdc, 0x48, 0x84, 0x48, 0x18, 0x09, 0xb1, 0xa4, 0x21, 0x4e, 0x53, 0xa1, 0xb1, 0xa6,
-	0x22, 0x55, 0x76, 0xb7, 0xfd, 0x1e, 0x40, 0x78, 0xb0, 0x7f, 0x48, 0x06, 0x43, 0xda, 0x27, 0x0a,
-	0xad, 0xc1, 0x7a, 0x4c, 0x24, 0x13, 0x23, 0x4e, 0x52, 0xdd, 0xa5, 0xb1, 0x07, 0x5a, 0xa0, 0x53,
-	0x8b, 0x96, 0x27, 0xc9, 0xbd, 0x18, 0x79, 0xf0, 0x7f, 0x92, 0xe2, 0x1e, 0x23, 0xb1, 0x57, 0x68,
-	0x81, 0x4e, 0x35, 0x1a, 0x87, 0xe8, 0x01, 0xac, 0x28, 0x8d, 0x75, 0xa6, 0xbc, 0xb8, 0x05, 0x3a,
-	0x4b, 0x5b, 0x8d, 0x60, 0x5e, 0x9f, 0xc1, 0xa1, 0xc1, 0x44, 0x0e, 0xdb, 0xfe, 0x06, 0x60, 0xc5,
-	0xa6, 0xd0, 0x0a, 0x2c, 0xcb, 0x13, 0xac, 0x88, 0xd3, 0xb5, 0x41, 0x2e, 0xc8, 0x89, 0x52, 0x38,
-	0x21, 0x46, 0xb0, 0x16, 0x8d, 0x43, 0xb4, 0x0b, 0xaf, 0x32, 0xac, 0x74, 0x37, 0x93, 0x31, 0xd6,
-	0x24, 0xee, 0x62, 0xed, 0x15, 0x8d, 0xb2, 0x1f, 0xd8, 0xb6, 0x83, 0xb1, 0x51, 0xc1, 0xab, 0xb1,
-	0x2f, 0x51, 0x3d, 0x2f, 0x39, 0xb2, 0x15, 0x3b, 0x1a, 0x6d, 0xc3, 0xaa, 0x72, 0xfd, 0x7b, 0xa5,
-	0x56, 0xb1, 0xb3, 0xb4, 0xb5, 0xb6, 0xe0, 0xd8, 0x16, 0xe5, 0x4e, 0x7f, 0x51, 0xd4, 0x3e, 0x2f,
-	0xc0, 0xfa, 0xcc, 0x1e, 0x42, 0xb0, 0x94, 0x5f, 0x8b, 0xeb, 0xc2, 0xac, 0x51, 0x03, 0xd6, 0xf0,
-	0x10, 0x53, 0x96, 0x3b, 0xe5, 0x7c, 0x9b, 0x24, 0xd0, 0x2a, 0xac, 0x1c, 0x63, 0x9a, 0x5b, 0x5a,
-	0x34, 0x5b, 0x2e, 0x42, 0xdb, 0xb0, 0x9c, 0x99, 0xc6, 0x4b, 0xa6, 0xad, 0xbb, 0x97, 0x38, 0x59,
-	0x70, 0x94, 0x17, 0x44, 0xb6, 0x0e, 0xf9, 0xb0, 0x3a, 0x20, 0x92, 0xd1, 0x3e, 0x56, 0x5e, 0xb9,
-	0x05, 0x3a, 0xe5, 0xe8, 0x22, 0xf6, 0xbf, 0x02, 0x58, 0x36, 0x60, 0xb4, 0x0e, 0xaf, 0x1b, 0x1f,
-	0x39, 0xe1, 0x62, 0x30, 0xea, 0x5a, 0xc9, 0xfc, 0xf4, 0xc5, 0xc8, 0x18, 0x7c, 0x60, 0xf2, 0x16,
-	0x7b, 0x0b, 0x5e, 0x31, 0xd8, 0xbe, 0xcc, 0x1c, 0x30, 0xef, 0xa6, 0x10, 0x2d, 0xe7, 0xd9, 0x27,
-	0x32, 0x9b, 0xcb, 0xc8, 0x28, 0xa7, 0xf6, 0x6e, 0x66, 0x18, 0xf7, 0xf3, 0xf4, 0x0c, 0xa3, 0x05,
-	0x96, 0x66, 0x18, 0x0d, 0x6a, 0xeb, 0x63, 0x11, 0xd6, 0x2e, 0x9e, 0x2a, 0x52, 0xb0, 0xfe, 0x9c,
-	0xe8, 0x9d, 0x97, 0x7b, 0xaf, 0xc9, 0x40, 0x51, 0x91, 0xa2, 0x1b, 0x7f, 0x5b, 0xe3, 0x46, 0x68,
-	0xb8, 0x19, 0x3c, 0xe3, 0x52, 0x8f, 0xfc, 0x9b, 0x8b, 0x01, 0x8e, 0xa3, 0xdd, 0xfc, 0xf0, 0xf3,
-	0xfc, 0x73, 0xc1, 0x43, 0xab, 0x66, 0x5a, 0x38, 0xcb, 0x27, 0x11, 0x4b, 0xba, 0x31, 0x74, 0x1a,
-	0x6f, 0x8d, 0xe8, 0xf4, 0xbc, 0x2c, 0xe6, 0xdc, 0x7b, 0xfa, 0x42, 0x9a, 0x49, 0xf3, 0x5b, 0xf3,
-	0x2f, 0x6d, 0x42, 0xd3, 0x6e, 0x1b, 0xdd, 0x06, 0xf2, 0xa7, 0x74, 0x39, 0x1b, 0x3f, 0xb0, 0xf0,
-	0x1d, 0x8d, 0x4f, 0xd1, 0x27, 0x00, 0xaf, 0xd9, 0x47, 0x3b, 0xa5, 0xff, 0x4f, 0xea, 0x4b, 0x88,
-	0xdf, 0x33, 0xe2, 0xeb, 0xfe, 0xed, 0x05, 0xe2, 0x33, 0x1f, 0xc2, 0xe9, 0x23, 0xb0, 0xbe, 0xfb,
-	0xf0, 0xfb, 0x59, 0x13, 0xfc, 0x38, 0x6b, 0x82, 0x5f, 0x67, 0x4d, 0xf0, 0xe5, 0x77, 0xf3, 0xbf,
-	0x37, 0x77, 0xa6, 0x7e, 0xa8, 0xb1, 0xde, 0x06, 0xc7, 0x29, 0x4e, 0x48, 0x9c, 0xd3, 0x2a, 0xcb,
-	0xdb, 0xab, 0x98, 0x71, 0xbc, 0xff, 0x27, 0x00, 0x00, 0xff, 0xff, 0xe4, 0x6f, 0x2b, 0x84, 0x0a,
-	0x05, 0x00, 0x00,
+	// 749 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x54, 0x4f, 0x4f, 0xdb, 0x48,
+	0x14, 0x5f, 0xe7, 0x1f, 0xc9, 0x40, 0x58, 0x76, 0x16, 0xb1, 0x96, 0x15, 0x65, 0xb3, 0x86, 0x5d,
+	0x65, 0x91, 0xb0, 0x21, 0xbb, 0x87, 0x8a, 0x1e, 0x10, 0xb4, 0x55, 0x15, 0x09, 0x54, 0xe4, 0x94,
+	0x1e, 0x7a, 0x89, 0x26, 0xf1, 0x60, 0x46, 0xf2, 0xd8, 0x43, 0x66, 0x1c, 0x29, 0x54, 0x1c, 0xda,
+	0x53, 0xef, 0xbd, 0xf4, 0x3b, 0xf4, 0x33, 0xf4, 0xde, 0x63, 0xa5, 0x7e, 0x81, 0x8a, 0xf2, 0x29,
+	0x7a, 0xaa, 0x66, 0xc6, 0x21, 0x71, 0x95, 0x88, 0xdc, 0xfc, 0x66, 0x7e, 0xbf, 0xf7, 0x7b, 0xef,
+	0xcd, 0xf3, 0x0f, 0x94, 0x69, 0xe8, 0xb0, 0x41, 0x2c, 0x62, 0xb8, 0x8e, 0x06, 0x28, 0x0a, 0x62,
+	0xbf, 0xe7, 0xf4, 0xc3, 0x38, 0xf1, 0x1d, 0x1a, 0x3a, 0xc3, 0x3d, 0x6b, 0xa3, 0x1f, 0x53, 0x1a,
+	0x47, 0xee, 0x70, 0xcf, 0xd5, 0x5f, 0x1a, 0x6d, 0x3d, 0x0c, 0x88, 0xb8, 0x48, 0x7a, 0x4e, 0x3f,
+	0xa6, 0x6e, 0x10, 0x87, 0x28, 0x0a, 0x5c, 0x75, 0xd1, 0x4b, 0xce, 0x5d, 0x26, 0x46, 0x0c, 0x73,
+	0x57, 0x10, 0x8a, 0xb9, 0x40, 0x94, 0x4d, 0xbe, 0x52, 0x72, 0x2d, 0x88, 0xe3, 0x20, 0xc4, 0x2e,
+	0x62, 0xc4, 0x45, 0x51, 0x14, 0x0b, 0x24, 0x48, 0x1c, 0x71, 0x7d, 0x6b, 0x9f, 0x02, 0x78, 0x72,
+	0xdc, 0xc1, 0x83, 0x21, 0xe9, 0x63, 0xde, 0x21, 0x57, 0xf8, 0x98, 0x70, 0x01, 0xf7, 0x41, 0x91,
+	0x08, 0x4c, 0xb9, 0x69, 0x34, 0xf2, 0xcd, 0xe5, 0xd6, 0x96, 0x33, 0xab, 0x5c, 0x27, 0x4b, 0xf4,
+	0x34, 0xc5, 0x3e, 0x04, 0x96, 0xcc, 0x91, 0xbd, 0xe4, 0x1e, 0xbe, 0x4c, 0x30, 0x17, 0x70, 0x13,
+	0x54, 0x7d, 0xcc, 0xc2, 0x78, 0x44, 0x71, 0x24, 0xba, 0xc4, 0x37, 0x8d, 0x86, 0xd1, 0xac, 0x78,
+	0x2b, 0x93, 0xc3, 0xb6, 0x6f, 0x77, 0xc0, 0x6a, 0x96, 0x0e, 0xff, 0x00, 0x4b, 0x9c, 0x5c, 0xe1,
+	0x09, 0xa1, 0x24, 0xc3, 0xb6, 0x0f, 0xd7, 0x40, 0xbe, 0xcf, 0x12, 0x33, 0xd7, 0x30, 0x9a, 0x39,
+	0x4f, 0x7e, 0xc2, 0x0d, 0x50, 0xa2, 0x98, 0xc6, 0x83, 0x91, 0x99, 0x6f, 0x18, 0xcd, 0xa2, 0x97,
+	0x46, 0xf6, 0x6b, 0x03, 0x80, 0x49, 0xd6, 0x85, 0x0a, 0x81, 0x26, 0x58, 0xc2, 0x11, 0xea, 0x85,
+	0xd8, 0x57, 0x0a, 0x65, 0x6f, 0x1c, 0xc2, 0xff, 0x41, 0x89, 0x0b, 0x24, 0x12, 0x6e, 0xfa, 0x0d,
+	0xa3, 0xb9, 0xdc, 0xaa, 0xcd, 0x1e, 0x51, 0x47, 0x61, 0xbc, 0x14, 0x6b, 0x7f, 0x34, 0x40, 0x49,
+	0x1f, 0xc1, 0x75, 0x50, 0x64, 0x17, 0x88, 0xe3, 0x54, 0x57, 0x07, 0x52, 0x90, 0x62, 0xce, 0x51,
+	0x80, 0x95, 0x60, 0xc5, 0x1b, 0x87, 0xf0, 0x08, 0xfc, 0x1a, 0x22, 0x2e, 0xba, 0x09, 0xf3, 0x91,
+	0xc0, 0x7e, 0x17, 0x09, 0xd5, 0xdf, 0x72, 0xcb, 0x72, 0xf4, 0x03, 0x3b, 0xe3, 0x95, 0x70, 0x9e,
+	0x8f, 0x37, 0xc0, 0xab, 0x4a, 0xca, 0x99, 0x66, 0x1c, 0x0a, 0x78, 0x00, 0xca, 0x3c, 0xed, 0xdf,
+	0x2c, 0xa8, 0x97, 0xdd, 0x9c, 0x53, 0xb6, 0x46, 0xa5, 0xd5, 0xdf, 0x91, 0xec, 0xdb, 0x1c, 0xa8,
+	0x66, 0xee, 0x20, 0x04, 0x05, 0xb9, 0x80, 0x69, 0x17, 0xea, 0x1b, 0xd6, 0x40, 0x05, 0x0d, 0x11,
+	0x09, 0xe5, 0xa4, 0xd2, 0xb9, 0x4d, 0x0e, 0xe4, 0xfb, 0x9c, 0x23, 0x22, 0x47, 0x9a, 0x57, 0x57,
+	0x69, 0x04, 0x0f, 0x40, 0x31, 0x51, 0x8d, 0x17, 0x54, 0x5b, 0xff, 0x2e, 0x50, 0x99, 0x73, 0x26,
+	0x09, 0x9e, 0xe6, 0x41, 0x0b, 0x94, 0x07, 0x98, 0x85, 0xa4, 0x8f, 0xb8, 0x59, 0x54, 0x4f, 0x7f,
+	0x17, 0x5b, 0x1f, 0x0c, 0x50, 0x54, 0x60, 0xb8, 0x0d, 0x7e, 0x53, 0x73, 0xd4, 0x5b, 0xd1, 0xd5,
+	0x92, 0xb2, 0xfa, 0xbc, 0xa7, 0x06, 0x7c, 0xa2, 0xce, 0x35, 0x76, 0x0b, 0xac, 0x2a, 0x6c, 0x9f,
+	0x25, 0x29, 0x50, 0xef, 0xd9, 0x8a, 0x3c, 0x7d, 0xc4, 0x92, 0x99, 0x19, 0x43, 0x42, 0x89, 0x7e,
+	0x9b, 0x4c, 0xc6, 0x63, 0x79, 0x9c, 0xc9, 0xa8, 0x81, 0x85, 0x4c, 0x46, 0x85, 0x6a, 0x7d, 0xcf,
+	0x83, 0xca, 0xdd, 0xaa, 0x42, 0x0e, 0xaa, 0x4f, 0xb1, 0x38, 0x3c, 0x6d, 0xbf, 0xc0, 0x03, 0x4e,
+	0xe2, 0x08, 0xfe, 0xf9, 0xf3, 0x68, 0x52, 0xb3, 0x18, 0xee, 0x39, 0x4f, 0x28, 0x13, 0x23, 0xeb,
+	0xaf, 0xf9, 0x80, 0x34, 0x87, 0x5d, 0x7f, 0xf3, 0xe5, 0xf6, 0x5d, 0xce, 0x84, 0x1b, 0xca, 0x17,
+	0x68, 0x28, 0x3d, 0x07, 0x31, 0xb2, 0x33, 0x4c, 0x35, 0xae, 0x94, 0xe8, 0xf4, 0xff, 0x32, 0x3f,
+	0x67, 0xfb, 0xf1, 0x33, 0xa6, 0x3c, 0xc5, 0x6a, 0xdc, 0x67, 0x14, 0xb6, 0xad, 0x74, 0x6b, 0xd0,
+	0x9a, 0xd2, 0xa5, 0xe1, 0x78, 0xc1, 0xdc, 0x57, 0xc4, 0xbf, 0x86, 0x6f, 0x0d, 0xb0, 0xa6, 0x97,
+	0x76, 0x4a, 0xff, 0xde, 0xd4, 0x0b, 0x88, 0xef, 0x2a, 0xf1, 0x6d, 0xeb, 0xef, 0x39, 0xe2, 0x19,
+	0x43, 0xb8, 0xde, 0x37, 0xb6, 0xe1, 0x25, 0xf8, 0x7d, 0x86, 0x99, 0xc1, 0xdd, 0xd9, 0x52, 0xf3,
+	0x7d, 0xcf, 0x6a, 0x2e, 0x62, 0xa1, 0x92, 0x7f, 0xf4, 0xe0, 0xd3, 0x4d, 0xdd, 0xf8, 0x7c, 0x53,
+	0x37, 0xbe, 0xde, 0xd4, 0x8d, 0xf7, 0xdf, 0xea, 0xbf, 0xbc, 0xfc, 0x67, 0xca, 0xfe, 0xc7, 0x59,
+	0x76, 0x28, 0x8a, 0x50, 0x80, 0x7d, 0xd9, 0x09, 0xd7, 0xad, 0xf4, 0x4a, 0xca, 0x01, 0xfe, 0xfb,
+	0x11, 0x00, 0x00, 0xff, 0xff, 0x95, 0x8e, 0x21, 0x5f, 0x67, 0x06, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -425,6 +600,12 @@ type MLServiceClient interface {
 	// Required permissions:
 	// - ml.mlservices.update
 	UpdateMLServices(ctx context.Context, in *MLServices, opts ...grpc.CallOption) (*MLServices, error)
+	// List the available size configurations for MLServices.
+	// Note that the returned size specifications are applied for ML Jobs.
+	// Required permissions:
+	// - ml.mlservicessize.list on the deployment (if deployment_id is provided)
+	// - None, authenticated only
+	ListMLServicesSizes(ctx context.Context, in *ListMLServicesSizesRequest, opts ...grpc.CallOption) (*MLServicesSizeList, error)
 }
 
 type mLServiceClient struct {
@@ -462,6 +643,15 @@ func (c *mLServiceClient) UpdateMLServices(ctx context.Context, in *MLServices, 
 	return out, nil
 }
 
+func (c *mLServiceClient) ListMLServicesSizes(ctx context.Context, in *ListMLServicesSizesRequest, opts ...grpc.CallOption) (*MLServicesSizeList, error) {
+	out := new(MLServicesSizeList)
+	err := c.cc.Invoke(ctx, "/arangodb.cloud.ml.v1.MLService/ListMLServicesSizes", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MLServiceServer is the server API for MLService service.
 type MLServiceServer interface {
 	// Get the current API version of this service.
@@ -477,6 +667,12 @@ type MLServiceServer interface {
 	// Required permissions:
 	// - ml.mlservices.update
 	UpdateMLServices(context.Context, *MLServices) (*MLServices, error)
+	// List the available size configurations for MLServices.
+	// Note that the returned size specifications are applied for ML Jobs.
+	// Required permissions:
+	// - ml.mlservicessize.list on the deployment (if deployment_id is provided)
+	// - None, authenticated only
+	ListMLServicesSizes(context.Context, *ListMLServicesSizesRequest) (*MLServicesSizeList, error)
 }
 
 // UnimplementedMLServiceServer can be embedded to have forward compatible implementations.
@@ -491,6 +687,9 @@ func (*UnimplementedMLServiceServer) GetMLServices(ctx context.Context, req *v1.
 }
 func (*UnimplementedMLServiceServer) UpdateMLServices(ctx context.Context, req *MLServices) (*MLServices, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateMLServices not implemented")
+}
+func (*UnimplementedMLServiceServer) ListMLServicesSizes(ctx context.Context, req *ListMLServicesSizesRequest) (*MLServicesSizeList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListMLServicesSizes not implemented")
 }
 
 func RegisterMLServiceServer(s *grpc.Server, srv MLServiceServer) {
@@ -551,6 +750,24 @@ func _MLService_UpdateMLServices_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MLService_ListMLServicesSizes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListMLServicesSizesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MLServiceServer).ListMLServicesSizes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/arangodb.cloud.ml.v1.MLService/ListMLServicesSizes",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MLServiceServer).ListMLServicesSizes(ctx, req.(*ListMLServicesSizesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _MLService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "arangodb.cloud.ml.v1.MLService",
 	HandlerType: (*MLServiceServer)(nil),
@@ -567,9 +784,133 @@ var _MLService_serviceDesc = grpc.ServiceDesc{
 			MethodName: "UpdateMLServices",
 			Handler:    _MLService_UpdateMLServices_Handler,
 		},
+		{
+			MethodName: "ListMLServicesSizes",
+			Handler:    _MLService_ListMLServicesSizes_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "ml.proto",
+}
+
+func (m *MLServicesSizeList) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MLServicesSizeList) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MLServicesSizeList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Items) > 0 {
+		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Items[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintMl(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ListMLServicesSizesRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ListMLServicesSizesRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ListMLServicesSizesRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.DeploymentId) > 0 {
+		i -= len(m.DeploymentId)
+		copy(dAtA[i:], m.DeploymentId)
+		i = encodeVarintMl(dAtA, i, uint64(len(m.DeploymentId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MLServicesSize) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MLServicesSize) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MLServicesSize) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Memory != 0 {
+		i = encodeVarintMl(dAtA, i, uint64(m.Memory))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.Cpu != 0 {
+		i -= 4
+		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.Cpu))))
+		i--
+		dAtA[i] = 0x15
+	}
+	if len(m.SizeId) > 0 {
+		i -= len(m.SizeId)
+		copy(dAtA[i:], m.SizeId)
+		i = encodeVarintMl(dAtA, i, uint64(len(m.SizeId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *MLServices) Marshal() (dAtA []byte, err error) {
@@ -828,6 +1169,62 @@ func encodeVarintMl(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
+func (m *MLServicesSizeList) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Items) > 0 {
+		for _, e := range m.Items {
+			l = e.Size()
+			n += 1 + l + sovMl(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *ListMLServicesSizesRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.DeploymentId)
+	if l > 0 {
+		n += 1 + l + sovMl(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *MLServicesSize) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.SizeId)
+	if l > 0 {
+		n += 1 + l + sovMl(uint64(l))
+	}
+	if m.Cpu != 0 {
+		n += 5
+	}
+	if m.Memory != 0 {
+		n += 1 + sovMl(uint64(m.Memory))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *MLServices) Size() (n int) {
 	if m == nil {
 		return 0
@@ -939,6 +1336,287 @@ func sovMl(x uint64) (n int) {
 }
 func sozMl(x uint64) (n int) {
 	return sovMl(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *MLServicesSizeList) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMl
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MLServicesSizeList: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MLServicesSizeList: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Items", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthMl
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthMl
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Items = append(m.Items, &MLServicesSize{})
+			if err := m.Items[len(m.Items)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMl(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMl
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ListMLServicesSizesRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMl
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ListMLServicesSizesRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ListMLServicesSizesRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DeploymentId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMl
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMl
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DeploymentId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMl(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMl
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MLServicesSize) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMl
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MLServicesSize: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MLServicesSize: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SizeId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMl
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMl
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SizeId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 5 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Cpu", wireType)
+			}
+			var v uint32
+			if (iNdEx + 4) > l {
+				return io.ErrUnexpectedEOF
+			}
+			v = uint32(encoding_binary.LittleEndian.Uint32(dAtA[iNdEx:]))
+			iNdEx += 4
+			m.Cpu = float32(math.Float32frombits(v))
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Memory", wireType)
+			}
+			m.Memory = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMl
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Memory |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMl(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMl
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
 }
 func (m *MLServices) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)

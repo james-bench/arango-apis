@@ -10,6 +10,12 @@ import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/com
 
 // File: ml/v1/ml.proto
 // Package: arangodb.cloud.ml.v1
+export interface ListMLServicesSizesRequest {
+  // Optional ID of the Deployment for which sizes are being requested.
+  // If set, the response will exclude any sizes that are unavailable for the specified deployment model.
+  // string
+  deployment_id?: string;
+}
 
 // MLServices is a single resource which represents the state and configuration
 // of ML Services (ArangoGraphML) for a deployment specified by deployment_id.
@@ -27,6 +33,29 @@ export interface MLServices {
   // This is a read-only value.
   // Status
   status?: Status;
+}
+
+// MLServicesSize represents the resources allocated for MLServices.
+// Note that the specified configuration is applied for the ML jobs.
+export interface MLServicesSize {
+  // Identifier of the size configuration.
+  // string
+  size_id?: string;
+  
+  // Amount of CPU allocated (in vCPU units)
+  // number
+  cpu?: number;
+  
+  // Amount of Memory allocated (in GB)
+  // number
+  memory?: number;
+}
+
+// List of MLServicesSize.
+export interface MLServicesSizeList {
+  // Items in this list.
+  // MLServicesSize
+  items?: MLServicesSize[];
 }
 
 // Status of a single ArangoGraphML component.
