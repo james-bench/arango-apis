@@ -61,9 +61,9 @@ export interface MLServicesSize {
   // number
   memory?: number;
   
-  // Amount of GPU Memory allocated (in GB)
+  // Amount of GPUs allocated
   // number
-  gpu_memory?: number;
+  gpu?: number;
 }
 
 // List of MLServicesSize.
