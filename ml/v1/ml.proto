@@ -91,6 +91,8 @@ message MLServicesSize {
     float cpu = 3;
     // Amount of Memory allocated (in GB)
     int32 memory = 4;
+    // Amount og GPU Memory allocated (in GB)
+    int32 gpu_memory = 5;
 }
 
 // MLServices is a single resource which represents the state and configuration
