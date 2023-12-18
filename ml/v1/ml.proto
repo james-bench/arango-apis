@@ -91,7 +91,7 @@ message MLServicesSize {
     float cpu = 3;
     // Amount of Memory allocated (in GB)
     int32 memory = 4;
-    // Amount og GPU Memory allocated (in GB)
+    // Amount of GPU Memory allocated (in GB)
     int32 gpu_memory = 5;
 }
 

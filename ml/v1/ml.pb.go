@@ -139,7 +139,7 @@ type MLServicesSize struct {
 	Cpu float32 `protobuf:"fixed32,3,opt,name=cpu,proto3" json:"cpu,omitempty"`
 	// Amount of Memory allocated (in GB)
 	Memory int32 `protobuf:"varint,4,opt,name=memory,proto3" json:"memory,omitempty"`
-	// Amount og GPU Memory allocated (in GB)
+	// Amount of GPU Memory allocated (in GB)
 	GpuMemory            int32    `protobuf:"varint,5,opt,name=gpu_memory,json=gpuMemory,proto3" json:"gpu_memory,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
