@@ -65,7 +65,11 @@ service MLService {
     // Required permissions:
     // - ml.mlservicessize.list on the deployment (if deployment_id is provided)
     // - None, authenticated only
-    rpc ListMLServicesSizes(ListMLServicesSizesRequest) returns (MLServicesSizeList);
+    rpc ListMLServicesSizes(ListMLServicesSizesRequest) returns (MLServicesSizeList) {
+        option (google.api.http) = {
+            get: "/api/ml/v1/sizes"
+        };
+    };
 }
 
 // List of MLServicesSize.

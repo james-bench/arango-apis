@@ -160,6 +160,13 @@ export interface IMLService {
   // Required permissions:
   // - ml.mlservices.update
   UpdateMLServices: (req: MLServices) => Promise<MLServices>;
+  
+  // List the available size configurations for MLServices.
+  // Note that the returned size specifications are applied for ML Jobs.
+  // Required permissions:
+  // - ml.mlservicessize.list on the deployment (if deployment_id is provided)
+  // - None, authenticated only
+  ListMLServicesSizes: (req: ListMLServicesSizesRequest) => Promise<MLServicesSizeList>;
 }
 
 // MLService is the API used to configure ArangoML on ArangoGraph Insights Platform.
@@ -189,5 +196,16 @@ export class MLService implements IMLService {
   async UpdateMLServices(req: MLServices): Promise<MLServices> {
     const url = `/api/ml/v1/mlservices/${encodeURIComponent(req.deployment_id || '')}`;
     return api.put(url, req);
+  }
+  
+  // List the available size configurations for MLServices.
+  // Note that the returned size specifications are applied for ML Jobs.
+  // Required permissions:
+  // - ml.mlservicessize.list on the deployment (if deployment_id is provided)
+  // - None, authenticated only
+  async ListMLServicesSizes(req: ListMLServicesSizesRequest): Promise<MLServicesSizeList> {
+    const path = `/api/ml/v1/sizes`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
   }
 }
