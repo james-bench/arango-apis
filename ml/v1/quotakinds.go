@@ -25,10 +25,10 @@ const (
 
 	// QuotaKindMLTrialJobUsageHours limits the total number of hours ML jobs can be run for,
 	// for free deployments.
-	// This kind of quota must be requested on a deployment level.
+	// This kind of quota must be requested on a project level.
 	QuotaKindMLTrialJobUsageHours = "ml.trial-usage-hours"
 
 	// QuotaKindMLTrialExpiryDays limits the number of days ML may be enabled for free deployments.
-	// This kind of quota must be requested on a deployment level.
+	// This kind of quota must be requested on a project level.
 	QuotaKindMLTrialExpiryDays = "ml.trial-expiry-days"
 )
