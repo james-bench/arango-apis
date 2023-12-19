@@ -29,12 +29,20 @@ export interface MLServices {
   // boolean
   enabled?: boolean;
   
+<<<<<<< HEAD
   // Size to use for the ML Jobs.
   // Use `ListMLServicesSizes` to get a list of available sizes.
   // If unspecified, the MLServiceSize marked as `is_default` is used.
   // This is an optional field.
   // string
   size?: string;
+=======
+  // The creation timestamp of the MLServices.
+  // This also serves as a timestamp of when MLServices were first enabled.
+  // This is a read-only value.
+  // googleTypes.Timestamp
+  created_at?: googleTypes.Timestamp;
+>>>>>>> 2a0e348 (first_enabled_at -> created_at)
   
   // Status of the MLServices.
   // This is a read-only value.
@@ -156,10 +164,6 @@ export interface Status {
   // If unset, no expiry.
   // googleTypes.Timestamp
   expires_at?: googleTypes.Timestamp;
-  
-  // Timestamp of when MLServices were first enabled for this deployment.
-  // googleTypes.Timestamp
-  first_enabled_at?: googleTypes.Timestamp;
   
   // Timestamp of when MLServices were last enabled for this deployment.
   // googleTypes.Timestamp
