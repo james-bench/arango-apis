@@ -59,7 +59,44 @@ service MLService {
             body: "*"
         };
     }
+    
+    // List the available size configurations for MLServices.
+    // Note that the returned size specifications are applied for ML Jobs.
+    // Required permissions:
+    // - ml.mlservicessize.list on the deployment (if deployment_id is provided)
+    // - None, authenticated only
+    rpc ListMLServicesSizes(ListMLServicesSizesRequest) returns (MLServicesSizeList) {
+        option (google.api.http) = {
+            get: "/api/ml/v1/sizes"
+        };
+    };
+}
 
+// List of MLServicesSize.
+message MLServicesSizeList {
+    // Items in this list.
+    repeated MLServicesSize items = 1;
+}
+
+message ListMLServicesSizesRequest {
+    // Optional ID of the Deployment for which sizes are being requested.
+    // If set, the response will exclude any sizes that are unavailable for the specified deployment model.
+    string deployment_id = 1;
+}
+
+// MLServicesSize represents the resources allocated for MLServices.
+// Note that the specified configuration is applied for the ML jobs.
+message MLServicesSize {
+    // Identifier of the size configuration.
+    string size_id = 1;
+    // If set, this is the default size when unspecified in MLServices.
+    bool is_default = 2;
+    // Amount of CPU allocated (in vCPU units)
+    float cpu = 3;
+    // Amount of Memory allocated (in GB)
+    int32 memory = 4;
+    // Amount of GPUs allocated
+    float gpu = 5;
 }
 
 // MLServices is a single resource which represents the state and configuration
@@ -70,6 +107,11 @@ message MLServices {
     string deployment_id = 1;
     // Set to true if ML services are enabled for this deployment.
     bool enabled = 2;
+    // Size to use for the ML Jobs.
+    // Use `ListMLServicesSizes` to get a list of available sizes.
+    // If unspecified, the MLServiceSize marked as `is_default` is used.
+    // This is an optional field.
+    string size = 3;
     // Status of the MLServices.
     // This is a read-only value.
     Status status = 100;

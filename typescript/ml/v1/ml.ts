@@ -10,6 +10,12 @@ import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/com
 
 // File: ml/v1/ml.proto
 // Package: arangodb.cloud.ml.v1
+export interface ListMLServicesSizesRequest {
+  // Optional ID of the Deployment for which sizes are being requested.
+  // If set, the response will exclude any sizes that are unavailable for the specified deployment model.
+  // string
+  deployment_id?: string;
+}
 
 // MLServices is a single resource which represents the state and configuration
 // of ML Services (ArangoGraphML) for a deployment specified by deployment_id.
@@ -23,10 +29,48 @@ export interface MLServices {
   // boolean
   enabled?: boolean;
   
+  // Size to use for the ML Jobs.
+  // Use `ListMLServicesSizes` to get a list of available sizes.
+  // If unspecified, the MLServiceSize marked as `is_default` is used.
+  // This is an optional field.
+  // string
+  size?: string;
+  
   // Status of the MLServices.
   // This is a read-only value.
   // Status
   status?: Status;
+}
+
+// MLServicesSize represents the resources allocated for MLServices.
+// Note that the specified configuration is applied for the ML jobs.
+export interface MLServicesSize {
+  // Identifier of the size configuration.
+  // string
+  size_id?: string;
+  
+  // If set, this is the default size when unspecified in MLServices.
+  // boolean
+  is_default?: boolean;
+  
+  // Amount of CPU allocated (in vCPU units)
+  // number
+  cpu?: number;
+  
+  // Amount of Memory allocated (in GB)
+  // number
+  memory?: number;
+  
+  // Amount of GPUs allocated
+  // number
+  gpu?: number;
+}
+
+// List of MLServicesSize.
+export interface MLServicesSizeList {
+  // Items in this list.
+  // MLServicesSize
+  items?: MLServicesSize[];
 }
 
 // Status of a single ArangoGraphML component.
@@ -116,6 +160,13 @@ export interface IMLService {
   // Required permissions:
   // - ml.mlservices.update
   UpdateMLServices: (req: MLServices) => Promise<MLServices>;
+  
+  // List the available size configurations for MLServices.
+  // Note that the returned size specifications are applied for ML Jobs.
+  // Required permissions:
+  // - ml.mlservicessize.list on the deployment (if deployment_id is provided)
+  // - None, authenticated only
+  ListMLServicesSizes: (req: ListMLServicesSizesRequest) => Promise<MLServicesSizeList>;
 }
 
 // MLService is the API used to configure ArangoML on ArangoGraph Insights Platform.
@@ -145,5 +196,16 @@ export class MLService implements IMLService {
   async UpdateMLServices(req: MLServices): Promise<MLServices> {
     const url = `/api/ml/v1/mlservices/${encodeURIComponent(req.deployment_id || '')}`;
     return api.put(url, req);
+  }
+  
+  // List the available size configurations for MLServices.
+  // Note that the returned size specifications are applied for ML Jobs.
+  // Required permissions:
+  // - ml.mlservicessize.list on the deployment (if deployment_id is provided)
+  // - None, authenticated only
+  async ListMLServicesSizes(req: ListMLServicesSizesRequest): Promise<MLServicesSizeList> {
+    const path = `/api/ml/v1/sizes`;
+    const url = path + api.queryString(req, []);
+    return api.get(url, undefined);
   }
 }

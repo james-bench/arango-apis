@@ -1197,7 +1197,19 @@ title: "ArangoGraph Insights Platform API"
             <ul>
               
                 <li>
+                  <a href="#arangodb.cloud.ml.v1.ListMLServicesSizesRequest"><span class="badge">M</span>ListMLServicesSizesRequest</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.ml.v1.MLServices"><span class="badge">M</span>MLServices</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.ml.v1.MLServicesSize"><span class="badge">M</span>MLServicesSize</a>
+                </li>
+              
+                <li>
+                  <a href="#arangodb.cloud.ml.v1.MLServicesSizeList"><span class="badge">M</span>MLServicesSizeList</a>
                 </li>
               
                 <li>
@@ -15820,6 +15832,31 @@ Required permissions:
       <p></p>
 
       
+        <h3 id="arangodb.cloud.ml.v1.ListMLServicesSizesRequest">ListMLServicesSizesRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>deployment_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional ID of the Deployment for which sizes are being requested.
+If set, the response will exclude any sizes that are unavailable for the specified deployment model. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="arangodb.cloud.ml.v1.MLServices">MLServices</h3>
         <p>MLServices is a single resource which represents the state and configuration</p><p>of ML Services (ArangoGraphML) for a deployment specified by deployment_id.</p>
 
@@ -15846,11 +15883,97 @@ This is a ready-only value. </p></td>
                 </tr>
               
                 <tr>
+                  <td>size</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Size to use for the ML Jobs.
+Use `ListMLServicesSizes` to get a list of available sizes.
+If unspecified, the MLServiceSize marked as `is_default` is used.
+This is an optional field. </p></td>
+                </tr>
+              
+                <tr>
                   <td>status</td>
                   <td><a href="#arangodb.cloud.ml.v1.Status">Status</a></td>
                   <td></td>
                   <td><p>Status of the MLServices.
 This is a read-only value. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.ml.v1.MLServicesSize">MLServicesSize</h3>
+        <p>MLServicesSize represents the resources allocated for MLServices.</p><p>Note that the specified configuration is applied for the ML jobs.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>size_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Identifier of the size configuration. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_default</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, this is the default size when unspecified in MLServices. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cpu</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Amount of CPU allocated (in vCPU units) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>memory</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Amount of Memory allocated (in GB) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>gpu</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Amount of GPUs allocated </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.ml.v1.MLServicesSizeList">MLServicesSizeList</h3>
+        <p>List of MLServicesSize.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#arangodb.cloud.ml.v1.MLServicesSize">MLServicesSize</a></td>
+                  <td>repeated</td>
+                  <td><p>Items in this list. </p></td>
                 </tr>
               
             </tbody>
@@ -16052,6 +16175,17 @@ Required permissions:
 - ml.mlservices.update</p></td>
               </tr>
             
+              <tr>
+                <td>ListMLServicesSizes</td>
+                <td><a href="#arangodb.cloud.ml.v1.ListMLServicesSizesRequest">ListMLServicesSizesRequest</a></td>
+                <td><a href="#arangodb.cloud.ml.v1.MLServicesSizeList">MLServicesSizeList</a></td>
+                <td><p>List the available size configurations for MLServices.
+Note that the returned size specifications are applied for ML Jobs.
+Required permissions:
+- ml.mlservicessize.list on the deployment (if deployment_id is provided)
+- None, authenticated only</p></td>
+              </tr>
+            
           </tbody>
         </table>
 
@@ -16097,6 +16231,16 @@ Required permissions:
                 <td>PUT</td>
                 <td>/api/ml/v1/mlservices/{deployment_id}</td>
                 <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>ListMLServicesSizes</td>
+                <td>GET</td>
+                <td>/api/ml/v1/sizes</td>
+                <td></td>
               </tr>
               
             

@@ -28,3 +28,10 @@ const (
 	// PermissionUpdateMLServices is needed for updating MLServices.
 	PermissionUpdateMLServices = "ml.mlservices.update"
 )
+
+const (
+	// MLServicesSize permissions
+
+	// PermissionListMLServicesSize is needed for listing MLServicesSize.
+	PermissionListMLServicesSize = "ml.mlservicessize.list"
+)
