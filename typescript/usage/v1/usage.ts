@@ -275,6 +275,7 @@ export interface UsageItem_MLJobSize {
   cpu_size?: number;
   
   // Amount of GPU units allocated to the job.
+  // 1 CPU unit equals 1 physical / virtual GPU.
   // number
   gpu_size?: number;
   
@@ -282,7 +283,7 @@ export interface UsageItem_MLJobSize {
   // string
   job_id?: string;
   
-  // Type of ML Job (training/prediction)
+  // Type of ML Job (training, prediction, etc.)
   // string
   job_type?: string;
 }

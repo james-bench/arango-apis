@@ -16145,6 +16145,29 @@ It will contain only one of the following values:
 Set to 0 if unlimited (i.e, no restriction). </p></td>
                 </tr>
               
+                <tr>
+                  <td>expires_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Timestamp after which MLServices are no longer usable.
+This is set during trial use.
+If unset, no expiry. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>first_enabled_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Timestamp of when MLServices were first enabled for this deployment. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_enabled_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Timestamp of when MLServices were last enabled for this deployment. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -24456,9 +24479,10 @@ Set when destination_type is &#34;https-post&#34; only </p></td>
               
                 <tr>
                   <td>gpu_size</td>
-                  <td><a href="#int32">int32</a></td>
+                  <td><a href="#float">float</a></td>
                   <td></td>
-                  <td><p>Amount of GPU units allocated to the job. </p></td>
+                  <td><p>Amount of GPU units allocated to the job.
+1 CPU unit equals 1 physical / virtual GPU. </p></td>
                 </tr>
               
                 <tr>
@@ -24472,7 +24496,7 @@ Set when destination_type is &#34;https-post&#34; only </p></td>
                   <td>job_type</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Type of ML Job (training/prediction) </p></td>
+                  <td><p>Type of ML Job (training, prediction, etc.) </p></td>
                 </tr>
               
             </tbody>

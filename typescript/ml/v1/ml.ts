@@ -150,6 +150,20 @@ export interface Status {
   // Set to 0 if unlimited (i.e, no restriction).
   // number
   hours_allowed?: number;
+  
+  // Timestamp after which MLServices are no longer usable.
+  // This is set during trial use.
+  // If unset, no expiry.
+  // googleTypes.Timestamp
+  expires_at?: googleTypes.Timestamp;
+  
+  // Timestamp of when MLServices were first enabled for this deployment.
+  // googleTypes.Timestamp
+  first_enabled_at?: googleTypes.Timestamp;
+  
+  // Timestamp of when MLServices were last enabled for this deployment.
+  // googleTypes.Timestamp
+  last_enabled_at?: googleTypes.Timestamp;
 }
 
 // MLService is the API used to configure ArangoML on ArangoGraph Insights Platform.

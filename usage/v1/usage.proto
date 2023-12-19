@@ -295,10 +295,11 @@ message UsageItem {
         // 1 CPU unit equals 1 physical / virtual CPU.
         float cpu_size = 2;
         // Amount of GPU units allocated to the job.
-        int32 gpu_size = 3;
+        // 1 CPU unit equals 1 physical / virtual GPU.
+        float gpu_size = 3;
         // ID of the ML job.
         string job_id = 4;
-        // Type of ML Job (training/prediction)
+        // Type of ML Job (training, prediction, etc.)
         string job_type = 5;
     }
     // Amount of compute resources used by a given ML job.

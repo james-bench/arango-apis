@@ -141,6 +141,17 @@ message Status {
     // Total number of runtime hours allowed for ML Jobs for this Deployment.
     // Set to 0 if unlimited (i.e, no restriction).
     float hours_allowed = 6;
+
+    // Timestamp after which MLServices are no longer usable.
+    // This is set during trial use.
+    // If unset, no expiry.
+    google.protobuf.Timestamp expires_at = 7;
+    
+    // Timestamp of when MLServices were first enabled for this deployment.
+    google.protobuf.Timestamp first_enabled_at = 8;
+
+    // Timestamp of when MLServices were last enabled for this deployment.
+    google.protobuf.Timestamp last_enabled_at = 9;
 }
 
 // Status of a single ArangoGraphML component.
