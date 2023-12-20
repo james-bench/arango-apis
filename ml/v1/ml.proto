@@ -112,6 +112,10 @@ message MLServices {
     // If unspecified, the MLServiceSize marked as `is_default` is used.
     // This is an optional field.
     string size = 3;
+    // The creation timestamp of the MLServices.
+    // This also serves as a timestamp of when MLServices were first enabled.
+    // This is a read-only value.
+    google.protobuf.Timestamp created_at = 4;
     // Status of the MLServices.
     // This is a read-only value.
     Status status = 100;
@@ -134,6 +138,21 @@ message Status {
 
     // Status of each ArangoGraphML components/services.
     repeated ServiceStatus services = 4;
+
+    // Total number of hours ML Jobs have run for this Deployment.
+    float hours_used = 5;
+
+    // Total number of runtime hours allowed for ML Jobs for this Deployment.
+    // Set to 0 if unlimited (i.e, no restriction).
+    float hours_allowed = 6;
+
+    // Timestamp after which MLServices are no longer usable.
+    // This is set during trial use.
+    // If unset, no expiry.
+    google.protobuf.Timestamp expires_at = 7;
+    
+    // Timestamp of when MLServices were last enabled for this deployment.
+    google.protobuf.Timestamp last_enabled_at = 8;
 }
 
 // Status of a single ArangoGraphML component.

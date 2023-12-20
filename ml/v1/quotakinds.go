@@ -21,10 +21,14 @@
 package v1
 
 const (
-	// ML usage item resource kinds
+	// ML quotas
 
-	// UsageItemResourceKindMLServices is the kind used inside the UsageItem.Resource to refer to a MLServices resource.
-	UsageItemResourceKindMLServices = "MLServices"
-	// UsageItemResourceKindMLJob is the kind used inside the UsageItem.Resource to refer to a ML Job.
-	UsageItemResourceKindMLServicesJob = "MLServicesJob"
+	// QuotaKindMLTrialJobUsageHours limits the total number of hours ML jobs can be run for,
+	// for free deployments.
+	// This kind of quota must be requested on a project level.
+	QuotaKindMLTrialJobUsageHours = "ml.trial-usage-hours"
+
+	// QuotaKindMLTrialExpiryDays limits the number of days ML may be enabled for free deployments.
+	// This kind of quota must be requested on a project level.
+	QuotaKindMLTrialExpiryDays = "ml.trial-expiry-days"
 )

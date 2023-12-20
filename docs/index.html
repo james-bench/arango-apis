@@ -1864,6 +1864,10 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.usage.v1.UsageItem.MLJobSize"><span class="badge">M</span>UsageItem.MLJobSize</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.usage.v1.UsageItem.MLServicesSize"><span class="badge">M</span>UsageItem.MLServicesSize</a>
                 </li>
               
@@ -15893,6 +15897,15 @@ This is an optional field. </p></td>
                 </tr>
               
                 <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>The creation timestamp of the MLServices.
+This also serves as a timestamp of when MLServices were first enabled.
+This is a read-only value. </p></td>
+                </tr>
+              
+                <tr>
                   <td>status</td>
                   <td><a href="#arangodb.cloud.ml.v1.Status">Status</a></td>
                   <td></td>
@@ -16124,6 +16137,37 @@ It will contain only one of the following values:
                   <td><a href="#arangodb.cloud.ml.v1.ServiceStatus">ServiceStatus</a></td>
                   <td>repeated</td>
                   <td><p>Status of each ArangoGraphML components/services. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>hours_used</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Total number of hours ML Jobs have run for this Deployment. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>hours_allowed</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Total number of runtime hours allowed for ML Jobs for this Deployment.
+Set to 0 if unlimited (i.e, no restriction). </p></td>
+                </tr>
+              
+                <tr>
+                  <td>expires_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Timestamp after which MLServices are no longer usable.
+This is set during trial use.
+If unset, no expiry. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_enabled_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>Timestamp of when MLServices were last enabled for this deployment. </p></td>
                 </tr>
               
             </tbody>
@@ -24195,6 +24239,14 @@ This field is only set when the usage item is of kind NotebookSize. </p></td>
 This field is only set when the usage item is of kind MLServicesSize. </p></td>
                 </tr>
               
+                <tr>
+                  <td>mljob_size</td>
+                  <td><a href="#arangodb.cloud.usage.v1.UsageItem.MLJobSize">UsageItem.MLJobSize</a></td>
+                  <td></td>
+                  <td><p>Amount of compute resources used by a given ML job.
+This field is only set when the usage item is of kind MLJobSize. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -24393,6 +24445,60 @@ Set when destination_type is &#34;https-post&#34; only </p></td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>IF true the deployment was in paused state </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.usage.v1.UsageItem.MLJobSize">UsageItem.MLJobSize</h3>
+        <p>Amount of compute resources used by a ML Job.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>memory_size</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>Amount of memory (in GB) allocated for the job. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cpu_size</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Amount of CPU units allocated to the job.
+1 CPU unit equals 1 physical / virtual CPU. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>gpu_size</td>
+                  <td><a href="#float">float</a></td>
+                  <td></td>
+                  <td><p>Amount of GPU units allocated to the job.
+1 CPU unit equals 1 physical / virtual GPU. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>job_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the ML job. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>job_type</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Type of ML Job (training, prediction, etc.) </p></td>
                 </tr>
               
             </tbody>

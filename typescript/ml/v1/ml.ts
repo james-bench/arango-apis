@@ -36,6 +36,12 @@ export interface MLServices {
   // string
   size?: string;
   
+  // The creation timestamp of the MLServices.
+  // This also serves as a timestamp of when MLServices were first enabled.
+  // This is a read-only value.
+  // googleTypes.Timestamp
+  created_at?: googleTypes.Timestamp;
+  
   // Status of the MLServices.
   // This is a read-only value.
   // Status
@@ -141,6 +147,25 @@ export interface Status {
   // Status of each ArangoGraphML components/services.
   // ServiceStatus
   services?: ServiceStatus[];
+  
+  // Total number of hours ML Jobs have run for this Deployment.
+  // number
+  hours_used?: number;
+  
+  // Total number of runtime hours allowed for ML Jobs for this Deployment.
+  // Set to 0 if unlimited (i.e, no restriction).
+  // number
+  hours_allowed?: number;
+  
+  // Timestamp after which MLServices are no longer usable.
+  // This is set during trial use.
+  // If unset, no expiry.
+  // googleTypes.Timestamp
+  expires_at?: googleTypes.Timestamp;
+  
+  // Timestamp of when MLServices were last enabled for this deployment.
+  // googleTypes.Timestamp
+  last_enabled_at?: googleTypes.Timestamp;
 }
 
 // MLService is the API used to configure ArangoML on ArangoGraph Insights Platform.

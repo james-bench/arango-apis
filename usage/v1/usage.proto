@@ -286,6 +286,25 @@ message UsageItem {
     // Amount of compute resources used by a given MLServices resource.
     // This field is only set when the usage item is of kind MLServicesSize.
     MLServicesSize mlservices_size = 107;
+
+    // Amount of compute resources used by a ML Job.
+    message MLJobSize {
+        // Amount of memory (in GB) allocated for the job.
+        int32 memory_size = 1;
+        // Amount of CPU units allocated to the job.
+        // 1 CPU unit equals 1 physical / virtual CPU.
+        float cpu_size = 2;
+        // Amount of GPU units allocated to the job.
+        // 1 CPU unit equals 1 physical / virtual GPU.
+        float gpu_size = 3;
+        // ID of the ML job.
+        string job_id = 4;
+        // Type of ML Job (training, prediction, etc.)
+        string job_type = 5;
+    }
+    // Amount of compute resources used by a given ML job.
+    // This field is only set when the usage item is of kind MLJobSize.
+    MLJobSize mljob_size = 108;
 }
 
 // List of UsageItems.

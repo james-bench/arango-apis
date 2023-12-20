@@ -165,6 +165,11 @@ export interface UsageItem {
   // This field is only set when the usage item is of kind MLServicesSize.
   // UsageItem_MLServicesSize
   mlservices_size?: UsageItem_MLServicesSize;
+  
+  // Amount of compute resources used by a given ML job.
+  // This field is only set when the usage item is of kind MLJobSize.
+  // UsageItem_MLJobSize
+  mljob_size?: UsageItem_MLJobSize;
 }
 
 // Amount of audit log related resources used by the resource covered by this usage item.
@@ -256,6 +261,31 @@ export interface UsageItem_DeploymentSize {
   // IF true the deployment was in paused state
   // boolean
   is_paused?: boolean;
+}
+
+// Amount of compute resources used by a ML Job.
+export interface UsageItem_MLJobSize {
+  // Amount of memory (in GB) allocated for the job.
+  // number
+  memory_size?: number;
+  
+  // Amount of CPU units allocated to the job.
+  // 1 CPU unit equals 1 physical / virtual CPU.
+  // number
+  cpu_size?: number;
+  
+  // Amount of GPU units allocated to the job.
+  // 1 CPU unit equals 1 physical / virtual GPU.
+  // number
+  gpu_size?: number;
+  
+  // ID of the ML job.
+  // string
+  job_id?: string;
+  
+  // Type of ML Job (training, prediction, etc.)
+  // string
+  job_type?: string;
 }
 
 // Amount of compute resources used by a given MLServices resource.
