@@ -905,6 +905,16 @@ export interface DeploymentModel {
   // Human readable name of the model (e.g. One shard)
   // string
   name?: string;
+  
+  // DeploymentModel_Features
+  features?: DeploymentModel_Features;
+}
+
+// Features that are available to deployments of this model type.
+export interface DeploymentModel_Features {
+  // If set, ML is available as a trial only.
+  // boolean
+  ml_free_trial?: boolean;
 }
 
 // List of deployment models.
@@ -1686,6 +1696,11 @@ export interface IDataService {
   // - data.cpusize.list on the requested project
   ListCPUSizes: (req: ListCPUSizesRequest) => Promise<CPUSizeList>;
   
+  // Get the deployment model identified by the provided ID.
+  // Required permissions:
+  // - None (authenticated only)
+  GetDeploymentModel: (req: arangodb_cloud_common_v1_IDOptions) => Promise<DeploymentModel>;
+  
   // Calculate the total size of a deployment with given arguments.
   // Required permissions:
   // - none
@@ -1928,6 +1943,15 @@ export class DataService implements IDataService {
   async ListCPUSizes(req: ListCPUSizesRequest): Promise<CPUSizeList> {
     const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id || '')}/cpusizes`;
     const url = path + api.queryString(req, [`project_id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Get the deployment model identified by the provided ID.
+  // Required permissions:
+  // - None (authenticated only)
+  async GetDeploymentModel(req: arangodb_cloud_common_v1_IDOptions): Promise<DeploymentModel> {
+    const path = `/api/data/v1/deploymentmodel/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
   

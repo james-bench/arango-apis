@@ -209,6 +209,16 @@ service DataService {
         };
     }
 
+    
+    // Get the deployment model identified by the provided ID.
+    // Required permissions:
+    // - None (authenticated only)
+    rpc GetDeploymentModel(common.v1.IDOptions) returns (DeploymentModel) {
+        option (google.api.http) = {
+            get: "/api/data/v1/deploymentmodel/{id}"
+        };
+    }
+
     // Calculate the total size of a deployment with given arguments.
     // Required permissions:
     // - none
@@ -866,6 +876,12 @@ message DeploymentModel {
     string id = 1;
     // Human readable name of the model (e.g. One shard)
     string name = 2;
+    // Features that are available to deployments of this model type.
+    message Features {
+        // If set, ML is available as a trial only.
+        bool ml_free_trial = 1;
+    }
+    Features features = 3;
 }
 
 // List of deployment models.
