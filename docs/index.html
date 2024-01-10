@@ -834,6 +834,10 @@ title: "ArangoGraph Insights Platform API"
                 </li>
               
                 <li>
+                  <a href="#arangodb.cloud.data.v1.DeploymentModel.Features"><span class="badge">M</span>DeploymentModel.Features</a>
+                </li>
+              
+                <li>
                   <a href="#arangodb.cloud.data.v1.DeploymentModelList"><span class="badge">M</span>DeploymentModelList</a>
                 </li>
               
@@ -10571,6 +10575,37 @@ Default to username of root user. </p></td>
                   <td><p>Human readable name of the model (e.g. One shard) </p></td>
                 </tr>
               
+                <tr>
+                  <td>features</td>
+                  <td><a href="#arangodb.cloud.data.v1.DeploymentModel.Features">DeploymentModel.Features</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="arangodb.cloud.data.v1.DeploymentModel.Features">DeploymentModel.Features</h3>
+        <p>Features that are available to deployments of this model type.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>ml_free_trial</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If set, ML is available as a trial only. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -12281,6 +12316,15 @@ Required permissions:
               </tr>
             
               <tr>
+                <td>GetDeploymentModel</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.data.v1.DeploymentModel">DeploymentModel</a></td>
+                <td><p>Get the deployment model identified by the provided ID.
+Required permissions:
+- None (authenticated only)</p></td>
+              </tr>
+            
+              <tr>
                 <td>CalculateDeploymentSize</td>
                 <td><a href="#arangodb.cloud.data.v1.CalculateDeploymentSizeRequest">CalculateDeploymentSizeRequest</a></td>
                 <td><a href="#arangodb.cloud.data.v1.DeploymentSize">DeploymentSize</a></td>
@@ -12589,6 +12633,16 @@ Required permissions:
                 <td>ListCPUSizes</td>
                 <td>GET</td>
                 <td>/api/data/v1/projects/{project_id}/cpusizes</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetDeploymentModel</td>
+                <td>GET</td>
+                <td>/api/data/v1/deploymentmodel/{id}</td>
                 <td></td>
               </tr>
               
