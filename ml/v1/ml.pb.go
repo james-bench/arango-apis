@@ -316,6 +316,7 @@ type Status struct {
 	// "Initialising"   - The services needed for ArangoGraphML are being installed.
 	// "Running"        - ArangoGraphML is setup and running correctly.
 	// "Error"          - Indicates that there was an error with setting up ArangoGraphML. Check `message` field for additional info.
+	// "Hibernated"     - Indicates that ArangoGraphML and all its associated services are hibernated.
 	Phase string `protobuf:"bytes,1,opt,name=phase,proto3" json:"phase,omitempty"`
 	// Supporting information about the phase of MLServices (such as error messages in case of failures).
 	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`

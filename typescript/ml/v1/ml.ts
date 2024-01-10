@@ -133,6 +133,7 @@ export interface Status {
   // "Initialising"   - The services needed for ArangoGraphML are being installed.
   // "Running"        - ArangoGraphML is setup and running correctly.
   // "Error"          - Indicates that there was an error with setting up ArangoGraphML. Check `message` field for additional info.
+  // "Hibernated"     - Indicates that ArangoGraphML and all its associated services are hibernated.
   // string
   phase?: string;
   
