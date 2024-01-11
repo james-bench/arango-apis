@@ -33,6 +33,8 @@ const (
 	MLServicesPhaseRunning = "Running"
 	// Indicates that there was an error with setting up ArangoGraphML. Check `message` field for additional info.
 	MLServicesPhaseError = "Error"
+	// Indicates that ArangoGraphML and all its associated services are hibernated.
+	MLServicesPhaseHibernated = "Hibernated"
 )
 
 const (
