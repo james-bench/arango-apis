@@ -880,6 +880,12 @@ message DeploymentModel {
     message Features {
         // If set, ML is available as a trial only.
         bool ml_free_trial = 1;
+        // If set, private endpoints are allowed for this deployment model.
+        bool private_endpoint = 2;
+        // If set, metrics endpoint integration is allowed for this deployment model.
+        bool metrics_endpoint = 3;
+        // If set, backups for this deployment model are allowed to be uploaded to the cloud.
+        bool backup_uploads = 4;
     }
     Features features = 3;
 }

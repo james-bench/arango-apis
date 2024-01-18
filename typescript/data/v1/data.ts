@@ -915,6 +915,18 @@ export interface DeploymentModel_Features {
   // If set, ML is available as a trial only.
   // boolean
   ml_free_trial?: boolean;
+  
+  // If set, private endpoints are allowed for this deployment model.
+  // boolean
+  private_endpoint?: boolean;
+  
+  // If set, metrics endpoint integration is allowed for this deployment model.
+  // boolean
+  metrics_endpoint?: boolean;
+  
+  // If set, backups for this deployment model are allowed to be uploaded to the cloud.
+  // boolean
+  backup_uploads?: boolean;
 }
 
 // List of deployment models.
