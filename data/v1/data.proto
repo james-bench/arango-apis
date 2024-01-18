@@ -881,7 +881,7 @@ message DeploymentModel {
         // If set, ML is available as a trial only.
         bool ml_free_trial = 1;
         // If set, private endpoints are allowed for this deployment model.
-        bool private_endpoint = 2;
+        bool private_endpoints = 2;
         // If set, metrics endpoint integration is allowed for this deployment model.
         bool metrics_endpoint = 3;
         // If set, backups for this deployment model are allowed to be uploaded to the cloud.

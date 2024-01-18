@@ -918,7 +918,7 @@ export interface DeploymentModel_Features {
   
   // If set, private endpoints are allowed for this deployment model.
   // boolean
-  private_endpoint?: boolean;
+  private_endpoints?: boolean;
   
   // If set, metrics endpoint integration is allowed for this deployment model.
   // boolean
