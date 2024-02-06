@@ -1,7 +1,7 @@
 // 
 // DISCLAIMER
 // 
-// Copyright 2020-2023 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2024 ArangoDB GmbH, Cologne, Germany
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -66,6 +66,7 @@ service ReplicationService {
     // Get an existing DeploymentReplication using its deployment ID
     // Required permissions:
     // - replication.deploymentreplication.get
+    // [Deprecated] This method shouldn't be used anymore, the permission is removed from the system already to prevent usage.
     rpc GetDeploymentReplication(common.v1.IDOptions) returns (DeploymentReplication) {
         option (google.api.http) = {
             get: "/api/replication/v1/deployment/{id}/replication"
@@ -76,6 +77,7 @@ service ReplicationService {
     // This call expects the complete entity with the updated fields.
     // Required permissions:
     // - replication.deploymentreplication.update
+    // [Deprecated] This method shouldn't be used anymore, the permission is removed from the system already to prevent usage.
     rpc UpdateDeploymentReplication(DeploymentReplication) returns (DeploymentReplication) {
         option (google.api.http) = {
             put: "/api/replication/v1/deployment/{deployment_id}/replication"
