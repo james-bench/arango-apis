@@ -60,4 +60,8 @@ const (
 	// the amount of resources used by a ML job (of a MLServices).
 	// UsageItems of this kind are closed on creation itself, so open items cannot exist.
 	UsageItemKindMLJobSize = "MLJobSize"
+	// UsageItemKindGraphAnalyticsJobSize indicates a UsageItem that contains
+	// the amount of resources used by a GraphAnalytics job.
+	// UsageItems of this kind are closed on creation, so open items cannot exist.
+	UsageItemKindGraphAnalyticsJobSize = "GraphAnalyticsJobSize"
 )
