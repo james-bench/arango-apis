@@ -232,12 +232,14 @@ export interface IReplicationService {
   // Get an existing DeploymentReplication using its deployment ID
   // Required permissions:
   // - replication.deploymentreplication.get
+  // [Deprecated] This method shouldn't be used anymore, the permission is removed from the system already to prevent usage.
   GetDeploymentReplication: (req: arangodb_cloud_common_v1_IDOptions) => Promise<DeploymentReplication>;
   
   // Update an existing DeploymentReplication spec. If does not exist, this will create a new one.
   // This call expects the complete entity with the updated fields.
   // Required permissions:
   // - replication.deploymentreplication.update
+  // [Deprecated] This method shouldn't be used anymore, the permission is removed from the system already to prevent usage.
   UpdateDeploymentReplication: (req: DeploymentReplication) => Promise<DeploymentReplication>;
   
   // Create a new deployment migration.
@@ -292,6 +294,7 @@ export class ReplicationService implements IReplicationService {
   // Get an existing DeploymentReplication using its deployment ID
   // Required permissions:
   // - replication.deploymentreplication.get
+  // [Deprecated] This method shouldn't be used anymore, the permission is removed from the system already to prevent usage.
   async GetDeploymentReplication(req: arangodb_cloud_common_v1_IDOptions): Promise<DeploymentReplication> {
     const path = `/api/replication/v1/deployment/${encodeURIComponent(req.id || '')}/replication`;
     const url = path + api.queryString(req, [`id`]);
@@ -302,6 +305,7 @@ export class ReplicationService implements IReplicationService {
   // This call expects the complete entity with the updated fields.
   // Required permissions:
   // - replication.deploymentreplication.update
+  // [Deprecated] This method shouldn't be used anymore, the permission is removed from the system already to prevent usage.
   async UpdateDeploymentReplication(req: DeploymentReplication): Promise<DeploymentReplication> {
     const url = `/api/replication/v1/deployment/${encodeURIComponent(req.deployment_id || '')}/replication`;
     return api.put(url, req);

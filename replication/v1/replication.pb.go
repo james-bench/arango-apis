@@ -774,11 +774,13 @@ type ReplicationServiceClient interface {
 	// Get an existing DeploymentReplication using its deployment ID
 	// Required permissions:
 	// - replication.deploymentreplication.get
+	// [Deprecated] This method shouldn't be used anymore, the permission is removed from the system already to prevent usage.
 	GetDeploymentReplication(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*DeploymentReplication, error)
 	// Update an existing DeploymentReplication spec. If does not exist, this will create a new one.
 	// This call expects the complete entity with the updated fields.
 	// Required permissions:
 	// - replication.deploymentreplication.update
+	// [Deprecated] This method shouldn't be used anymore, the permission is removed from the system already to prevent usage.
 	UpdateDeploymentReplication(ctx context.Context, in *DeploymentReplication, opts ...grpc.CallOption) (*DeploymentReplication, error)
 	// Create a new deployment migration.
 	// Note: currently migration is supported only for Deployments with 'free' model.
@@ -892,11 +894,13 @@ type ReplicationServiceServer interface {
 	// Get an existing DeploymentReplication using its deployment ID
 	// Required permissions:
 	// - replication.deploymentreplication.get
+	// [Deprecated] This method shouldn't be used anymore, the permission is removed from the system already to prevent usage.
 	GetDeploymentReplication(context.Context, *v1.IDOptions) (*DeploymentReplication, error)
 	// Update an existing DeploymentReplication spec. If does not exist, this will create a new one.
 	// This call expects the complete entity with the updated fields.
 	// Required permissions:
 	// - replication.deploymentreplication.update
+	// [Deprecated] This method shouldn't be used anymore, the permission is removed from the system already to prevent usage.
 	UpdateDeploymentReplication(context.Context, *DeploymentReplication) (*DeploymentReplication, error)
 	// Create a new deployment migration.
 	// Note: currently migration is supported only for Deployments with 'free' model.

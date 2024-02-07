@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2020-2022 ArangoDB GmbH, Cologne, Germany
+// Copyright 2020-2024 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,12 +31,15 @@ const (
 	// Deployment replication permissions
 
 	// PermissionGetDeploymentReplication is needed to get a DeploymentReplication for a given Deployment
+	// [Deprecated] Deployment replication shouldn't be used anymore, the permission is removed from the system already to prevent usage.
 	PermissionGetDeploymentReplication = "replication.deploymentreplication.get"
 
 	// PermissionUpdateDeploymentReplication is needed to update / create a DeploymentReplication
+	// [Deprecated] Deployment replication shouldn't be used anymore, the permission is removed from the system already to prevent usage.
 	PermissionUpdateDeploymentReplication = "replication.deploymentreplication.update"
 
 	// PermissionUpgradeConnectionToForwarder is needed to start streaming connection via migration-forwarder
+	// [Deprecated] Deployment replication shouldn't be used anymore, the permission is removed from the system already to prevent usage.
 	PermissionUpgradeConnectionToForwarder = "replication.migration-forwarder.upgrade-connection"
 )
 
