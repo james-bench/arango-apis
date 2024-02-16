@@ -908,6 +908,12 @@ export interface DeploymentModel {
   
   // DeploymentModel_Features
   features?: DeploymentModel_Features;
+  
+  // Limit the time-to-live of deployments created with this model.
+  // Time-to-live (till expiration) is expressed in seconds.
+  // A value of '0' means no expiration.
+  // number
+  deployment_ttl?: number;
 }
 
 // Features that are available to deployments of this model type.

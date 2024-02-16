@@ -888,6 +888,10 @@ message DeploymentModel {
         bool backup_uploads = 4;
     }
     Features features = 3;
+    // Limit the time-to-live of deployments created with this model.
+    // Time-to-live (till expiration) is expressed in seconds.
+    // A value of '0' means no expiration.
+    int64 deployment_ttl = 4;
 }
 
 // List of deployment models.
