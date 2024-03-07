@@ -1292,6 +1292,11 @@ export interface ListDeploymentModelsRequest {
   // Identifier of project that will own a deployment.
   // string
   project_id?: string;
+  
+  // Optional identifier of a deployment, so the current model can be added to the list if needed
+  // This deployment should be inside the provided project
+  // string
+  deployment_id?: string;
 }
 
 // Request arguments for ListDeploymentsByFilter.
