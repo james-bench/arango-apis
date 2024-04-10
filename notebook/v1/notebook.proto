@@ -216,7 +216,9 @@ message NotebookModel {
     int32 min_disk_size = 6;
     // GPU units allocated to the notebook.
     // 1 GPU unit equals 1 physical / virtual GPU.
-    float gpu = 7; 
+    float gpu = 7;
+    // Initial amount of disk space (in GiB) available to the notebook.
+    int32 initial_disk_size = 8;
 }
 
 // List of notebook models.
