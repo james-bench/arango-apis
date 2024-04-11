@@ -4,12 +4,14 @@
 ///
 import api from '../../api'
 import * as googleTypes from '../../googleTypes'
-import { Budget as arangodb_cloud_common_v1_Budget } from '../../common/v1/common'
-import { Empty as arangodb_cloud_common_v1_Empty } from '../../common/v1/common'
-import { IDOptions as arangodb_cloud_common_v1_IDOptions } from '../../common/v1/common'
-import { ListOptions as arangodb_cloud_common_v1_ListOptions } from '../../common/v1/common'
-import { Version as arangodb_cloud_common_v1_Version } from '../../common/v1/common'
-import { DataVolumeInfo as arangodb_cloud_data_v1_DataVolumeInfo } from '../../data/v1/data'
+import {
+  Budget as arangodb_cloud_common_v1_Budget,
+  Empty as arangodb_cloud_common_v1_Empty,
+  IDOptions as arangodb_cloud_common_v1_IDOptions,
+  ListOptions as arangodb_cloud_common_v1_ListOptions,
+  Version as arangodb_cloud_common_v1_Version
+} from '../../common/v1/common'
+import {DataVolumeInfo as arangodb_cloud_data_v1_DataVolumeInfo} from '../../data/v1/data'
 
 // File: notebook/v1/notebook.proto
 // Package: arangodb.cloud.notebook.v1
@@ -170,6 +172,10 @@ export interface NotebookModel {
   // 1 GPU unit equals 1 physical / virtual GPU.
   // number
   gpu?: number;
+
+    // Initial amount of disk space (in GiB) available to the notebook.
+    // number
+    initial_disk_size?: number;
 }
 
 // List of notebook models.
