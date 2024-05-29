@@ -26,8 +26,8 @@ option go_package = "github.com/arangodb-managed/apis/data/v1";
 
 import "common/v1/common.proto";
 
-import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
-import "github.com/golang/protobuf/ptypes/duration/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
 import "google/api/annotations.proto";
 
 // DataService is the API used to configure data objects.

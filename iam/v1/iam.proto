@@ -28,8 +28,8 @@ option go_package = "github.com/arangodb-managed/apis/iam/v1";
 
 import "common/v1/common.proto";
 
-import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
-import "github.com/golang/protobuf/ptypes/duration/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
 import "google/api/annotations.proto";
 
 // IAMService is the API used to configure IAM objects.

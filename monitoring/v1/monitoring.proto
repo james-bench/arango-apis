@@ -28,7 +28,7 @@ option go_package = "github.com/arangodb-managed/apis/monitoring/v1";
 
 import "common/v1/common.proto";
 
-import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
+import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
 
 // MonitoringService is the API used to monitor deployments.

@@ -30,7 +30,7 @@ option go_package = "github.com/arangodb-managed/apis/prepaid/v1";
 import "common/v1/common.proto";
 import "data/v1/data.proto";
 
-import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
+import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
 
 // PrepaidService is the API used to configure prepaid objects.

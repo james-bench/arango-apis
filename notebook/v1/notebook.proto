@@ -27,7 +27,7 @@ option go_package = "github.com/arangodb-managed/apis/notebook/v1";
 import "common/v1/common.proto";
 import "data/v1/data.proto";
 
-import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
+import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
 
 // Notebook service is used to manage notebooks.

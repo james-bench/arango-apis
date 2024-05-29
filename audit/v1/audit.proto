@@ -26,8 +26,8 @@ option go_package = "github.com/arangodb-managed/apis/audit/v1";
 
 import "common/v1/common.proto";
 
-import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
-import "github.com/golang/protobuf/ptypes/duration/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
 import "google/api/annotations.proto";
 
 // AuditService is the API used to provide access to audit events.

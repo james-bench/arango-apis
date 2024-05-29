@@ -28,7 +28,7 @@ option go_package = "github.com/arangodb-managed/apis/notification/v1";
 
 import "common/v1/common.proto";
 
-import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
+import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
 
 // NotificationService is the API used to interact with deployment notifications.

@@ -27,7 +27,7 @@ option go_package = "github.com/arangodb-managed/apis/replication/v1";
 import "common/v1/common.proto";
 import "data/v1/data.proto";
 
-import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
+import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
 
 // ReplicationService is the API used to replicate a deployment.
